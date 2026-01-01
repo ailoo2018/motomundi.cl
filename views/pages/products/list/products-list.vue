@@ -53,6 +53,7 @@ const products = computed(() => rs.value?.products)
               id="resultscontainer"
               class="row products banner--right has-banner"
             >
+
               <div
                 v-for="product in products"
                 :key="product.id"
