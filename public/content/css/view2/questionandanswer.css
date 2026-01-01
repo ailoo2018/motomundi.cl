@@ -1,0 +1,764 @@
+.qandas {
+    padding: 2rem;
+}
+.icon-vote {
+    width: 30px;
+    fill: rgba(0, 0, 0, 0.5);
+}
+.vote-active {
+    fill: #c74044;
+}
+.qanda-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.qa-content {
+    font-family: sans-serif;
+    font-size: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    box-sizing: inherit;
+    margin: 0 0 3rem;
+    /*float: right;*/
+}
+
+.qa-main-form {
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    font-size: 100%;
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    margin: 0 0 10px;
+    padding: 2rem;
+    background-color: #f0f4f5;
+}
+
+    .qa-main-form h3 {
+        -webkit-font-smoothing: antialiased;
+        box-sizing: inherit;
+        margin: 0;
+        padding: 0;
+        font-style: normal;
+        color: #c74044;
+        text-rendering: optimizeLegibility;
+        line-height: 1.4;
+        margin-top: 0;
+        margin-bottom: .5rem;
+        font-family: Open Sans, sans-serif !important;
+        font-size: .9rem;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+        .qa-main-form h3 img {
+            -webkit-font-smoothing: antialiased;
+            font-style: normal;
+            color: #c74044;
+            text-rendering: optimizeLegibility;
+            line-height: 1.4;
+            font-family: Open Sans, sans-serif !important;
+            font-size: .9rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-sizing: inherit;
+            border-style: none;
+            max-width: 100%;
+            height: auto;
+            display: inline-block;
+            margin-right: .3rem;
+            vertical-align: -4px;
+        }
+
+
+    .qa-main-form p {
+        color: #0a0a0a;
+        -webkit-font-smoothing: antialiased;
+        font-family: Open Sans, sans-serif;
+        box-sizing: inherit;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 1rem;
+        font-size: inherit;
+        line-height: 1.6;
+        text-rendering: optimizeLegibility;
+        font-weight: 600;
+    }
+
+    .qa-main-form textarea {
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.15;
+        overflow: auto;
+        display: block;
+        width: 100%;
+        height: 2.4375rem;
+        margin: 0 0 1rem;
+        padding: .5rem;
+        border: 1px solid #cacaca;
+        border-radius: 3px;
+        background-color: #fefefe;
+        box-shadow: inset 0 1px 2px hsla(0, 0%, 4%, .1);
+        font-family: inherit;
+        font-weight: 400;
+        color: #0a0a0a;
+        transition: box-shadow .5s, border-color .25s ease-in-out;
+        -webkit-appearance: none;
+        max-width: 100%;
+        min-height: 6rem;
+        resize: none;
+        font-size: .8rem;
+        box-sizing: border-box;
+        border-color: #ddd;
+    }
+
+    .qa-main-form button {
+        -webkit-font-smoothing: antialiased;
+        box-sizing: inherit;
+        outline: 0;
+        /*background: transparent;*/
+        font-family: Open Sans, sans-serif;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0 1rem;
+        -webkit-appearance: none;
+        border-radius: 3px;
+        line-height: 1;
+        text-align: center;
+        cursor: pointer;
+        font-size: .7rem;
+        padding: .6rem 2.5rem;
+        text-transform: uppercase;
+        border: 1px solid #e6eaeb;
+        position: relative;
+        opacity: 1;
+        margin-bottom: 0;
+        color: #fff;
+        border-color: #c74044;
+        background-color: #c74044;
+        transition: all .3s ease !important;
+        overflow: hidden;
+    }
+
+        .qa-main-form button .ladda-label {
+            -webkit-font-smoothing: antialiased;
+            font-family: Open Sans, sans-serif;
+            line-height: 1;
+            text-align: center;
+            cursor: pointer;
+            font-size: .7rem;
+            text-transform: uppercase;
+            color: #fff;
+            box-sizing: inherit;
+            z-index: 3;
+            transition: all .3s ease !important;
+            position: relative;
+            display: inline-block;
+        }
+
+        .qa-main-form button .ladda-spinner {
+            -webkit-font-smoothing: antialiased;
+            font-family: Open Sans, sans-serif;
+            line-height: 1;
+            text-align: center;
+            cursor: pointer;
+            font-size: .7rem;
+            text-transform: uppercase;
+            color: #fff;
+            box-sizing: inherit;
+            position: absolute;
+            z-index: 2;
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            top: 50%;
+            margin-top: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: all .3s ease !important;
+            left: 50%;
+            margin-left: -16px;
+            transform: scale(.2);
+        }
+
+.qa-empty {
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    font-size: .9em;
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 4rem 0;
+    text-align: center;
+    text-transform: uppercase;
+    display: none !important;
+}
+
+    .qa-empty img {
+        text-rendering: optimizeLegibility;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #0a0a0a;
+        -webkit-font-smoothing: antialiased;
+        font-size: .9em;
+        font-family: Open Sans, sans-serif;
+        text-align: center;
+        text-transform: uppercase;
+        box-sizing: inherit;
+        border-style: none;
+        display: inline-block;
+        vertical-align: middle;
+        max-width: 100%;
+        width: 36px;
+        height: 36px;
+        margin-bottom: .8rem;
+    }
+
+.qa-emtpy h3 {
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    text-transform: uppercase;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-size: 1.3125rem;
+    font-family: Open Sans, sans-serif !important;
+    font-weight: 900;
+    line-height: 1;
+    color: #3b3b3b;
+}
+
+.qa-empty h3 a {
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    text-transform: uppercase;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+    font-size: 1.3125rem;
+    font-family: Open Sans, sans-serif !important;
+    font-weight: 900;
+    box-sizing: inherit;
+    background-color: transparent;
+    line-height: inherit;
+    color: #c74044;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    margin-top: .8rem;
+}
+
+
+/* Skipping qa-empty */
+
+.qa-main-form .row {
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    font-size: .9em;
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    max-width: none !important;
+    margin-right: -.9375rem;
+    margin-left: -.9375rem;
+}
+
+.qa-main-form .columns {
+    font-size: 100%;
+    text-rendering: optimizeLegibility;
+    font-family: sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    float: left;
+    padding-right: .9375rem;
+    padding-left: .9375rem;
+    width: 100%;
+}
+
+.user-questions {
+    font-size: 100%;
+    text-rendering: optimizeLegibility;
+    font-family: sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+.question {
+    display: flex;
+    font-size: 100%;
+    text-rendering: optimizeLegibility;
+    font-family: sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    margin-bottom: 1rem;
+}
+
+.qa-q-block-first {
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    font-size: .9em;
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    margin-top: 1.8rem;
+    padding-top: 1.8rem;
+    border-top: 1px solid #ebebeb;
+}
+
+.qa-q-block {
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    font-size: .9em;
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    margin-top: 1.8rem;
+    padding-top: 1.8rem;
+    border-top: 1px solid #ebebeb;
+}
+
+/* .qa-q-block from original source */
+.qa-vote-block {
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    /*font-size: .9em;*/
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    float: left;
+    margin: 0 1rem 0 0;
+    padding: .1rem 0 0;
+    text-align: center;
+}
+
+    .qa-vote-block button {
+        -webkit-font-smoothing: antialiased;
+        box-sizing: inherit;
+        outline: 0;
+        font-size: 100%;
+        margin: 0;
+        overflow: visible;
+        text-transform: none;
+        /*padding: 0;*/
+        -webkit-appearance: none;
+        border: 0;
+        border-radius: 3px;
+        background: transparent;
+        line-height: 1;
+        cursor: pointer;
+        font-family: Open Sans, sans-serif;
+    }
+
+    .qa-vote-block strong {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        font-size: 100%;
+        font-family: Open Sans, sans-serif;
+        text-align: center;
+        box-sizing: inherit;
+        display: block;
+        font-weight: 900;
+        line-height: 1.5;
+        margin-bottom: -2px;
+        color: #c74044;
+    }
+
+.qa-q-block__question {
+    width: 100%;
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    font-size: 100%;
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    padding-top: .6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-left: 4px solid #c74044;
+}
+.qanda-info {
+    font-style: italic;
+    color: #9c9c9c;
+}
+
+.qanda-alert {
+    color: #9c9c9c;
+}
+
+    .qa-q-block__question a.qanda-product {
+        display: flex;
+        align-items: center;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        font-family: Open Sans, sans-serif;
+        box-sizing: inherit;
+        background-color: transparent;
+        line-height: inherit;
+        /*color: #c74044;*/
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 100%;
+        font-weight: 600;
+        float: right;
+    }
+
+        .qa-q-block__question a img {
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            font-family: Open Sans, sans-serif;
+            line-height: inherit;
+            color: #c74044;
+            cursor: pointer;
+            font-size: 100%;
+            font-weight: 600;
+            box-sizing: inherit;
+            display: inline-block;
+            vertical-align: middle;
+            max-width: 100%;
+            border: 0;
+            width: 32px;
+            height: 32px;
+            margin-left: .3rem;
+        }
+
+    .qa-q-block__question p {
+        color: #0a0a0a;
+        -webkit-font-smoothing: antialiased;
+        font-family: Open Sans, sans-serif;
+        box-sizing: inherit;
+        margin: 0;
+        padding: 0;
+        font-size: inherit;
+        line-height: 1.6;
+        text-rendering: optimizeLegibility;
+        font-weight: 600;
+        margin-bottom: .7rem;
+        margin-top: 12px;
+    }
+
+.answer {
+    display: flex;
+    font-size: 100%;
+    text-rendering: optimizeLegibility;
+    font-family: sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    margin-bottom: .7rem;
+    margin-left: 2rem;
+}
+
+/* Revision 20200524 hasta este punto.. */
+
+/* .qa-vote-block line 304 */
+
+.qa-q-block__answer {
+    width: 100%;
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    /*color: #0a0a0a;*/
+    -webkit-font-smoothing: antialiased;
+    font-size: 100%;
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    padding-top: .6rem;
+}
+
+    .qa-q-block__answer p {
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        font-family: Open Sans, sans-serif;
+        box-sizing: inherit;
+        margin: 0;
+        padding: 0;
+        margin-top: 12px;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+        text-rendering: optimizeLegibility;
+        font-size: 100%;
+        /*color: #484848;*/
+    }
+
+.qa-answer-form {
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    font-size: .9em;
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 1rem;
+    margin-top: 1rem;
+    margin-left: 4rem;
+}
+
+    /* Provoca conflicto con botones */
+    /*.qa-answer-form div {
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    font-size: .9em;
+    font-family: Open Sans, sans-serif;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    display: none !important;
+}*/
+
+    /*.qa-answer-form div qa-textarea{*/
+    .qa-answer-form div textarea {
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.15;
+        overflow: auto;
+        display: block;
+        width: 100%;
+        height: 2.4375rem;
+        border-radius: 3px;
+        box-shadow: inset 0 1px 2px hsla(0, 0%, 4%, .1);
+        font-family: inherit;
+        font-weight: 400;
+        color: #0a0a0a;
+        transition: box-shadow .5s, border-color .25s ease-in-out;
+        -webkit-appearance: none;
+        max-width: 100%;
+        min-height: 6rem;
+        resize: none;
+        font-size: .8rem;
+        box-sizing: border-box;
+        margin: 2rem 0 1rem;
+        padding: .8rem;
+        border: 1px solid #eaeeee;
+        background-color: #fafbfc;
+    }
+
+    /* Cancelar respuesta */
+    /*.qa-answer-form div button {*/
+    .qa-answer-form div .qa-button {
+        -webkit-font-smoothing: antialiased;
+        box-sizing: inherit;
+        outline: 0;
+        overflow: visible;
+        background: transparent;
+        font-family: Open Sans, sans-serif;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0 1rem;
+        -webkit-appearance: none;
+        border-radius: 3px;
+        transition: background-color .25s ease-out, color .25s ease-out;
+        line-height: 1;
+        text-align: center;
+        cursor: pointer;
+        color: #484848;
+        font-size: .7rem;
+        padding: .6rem 2.5rem;
+        text-transform: uppercase;
+        border: 1px solid #e6eaeb;
+        background-color: #f0f4f5;
+        margin-right: .5rem;
+    }
+
+    /* Responder a respuesta */
+    /*.qa-answer-form div button {*/
+    .qa-answer-form div .qa-button-mc {
+        -webkit-font-smoothing: antialiased;
+        box-sizing: inherit;
+        outline: 0;
+        background: transparent;
+        font-family: Open Sans, sans-serif;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0 1rem;
+        -webkit-appearance: none;
+        border-radius: 3px;
+        line-height: 1;
+        text-align: center;
+        cursor: pointer;
+        font-size: .7rem;
+        padding: .6rem 2.5rem;
+        text-transform: uppercase;
+        border: 1px solid #e6eaeb;
+        position: relative;
+        margin-right: .5rem;
+        color: #fff;
+        border-color: #c74044;
+        background-color: #c74044;
+        transition: all .3s ease !important;
+        overflow: hidden;
+    }
+
+        .qa-answer-form div .qa-button-mc .ladda-label {
+            -webkit-font-smoothing: antialiased;
+            font-family: Open Sans, sans-serif;
+            line-height: 1;
+            text-align: center;
+            cursor: pointer;
+            font-size: .7rem;
+            text-transform: uppercase;
+            color: #fff;
+            box-sizing: inherit;
+            z-index: 3;
+            transition: all .3s ease !important;
+            position: relative;
+            display: inline-block;
+        }
+
+            .qa-answer-form div .qa-button-mc .ladda-label svg {
+                -webkit-font-smoothing: antialiased;
+                font-family: Open Sans, sans-serif;
+                line-height: 1;
+                text-align: center;
+                cursor: pointer;
+                font-size: .7rem;
+                text-transform: uppercase;
+                color: #fff;
+                box-sizing: inherit;
+                overflow: hidden;
+                margin-right: .5rem;
+            }
+
+        .qa-answer-form div .qa-button-mc .ladda-spinner {
+            -webkit-font-smoothing: antialiased;
+            font-family: Open Sans, sans-serif;
+            line-height: 1;
+            text-align: center;
+            cursor: pointer;
+            font-size: .7rem;
+            text-transform: uppercase;
+            color: #fff;
+            box-sizing: inherit;
+            position: absolute;
+            z-index: 2;
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            top: 50%;
+            margin-top: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: all .3s ease !important;
+            left: 50%;
+            margin-left: -16px;
+            transform: scale(.2);
+        }
+
+/* Responder a Pregunta */
+.qa-button-mc {
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    outline: 0;
+    overflow: visible;
+    background: transparent;
+    font-family: Open Sans, sans-serif;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0 1rem;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    transition: background-color .25s ease-out, color .25s ease-out;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    color: #484848;
+    font-size: .7rem;
+    padding: .6rem 2.5rem;
+    text-transform: uppercase;
+    border: 1px solid #e6eaeb;
+    background-color: #f0f4f5;
+    margin-right: .5rem;
+}
+
+    .qa-button-mc svg {
+        -webkit-font-smoothing: antialiased;
+        font-family: Open Sans, sans-serif;
+        line-height: 1;
+        text-align: center;
+        cursor: pointer;
+        color: #484848;
+        font-size: .7rem;
+        text-transform: uppercase;
+        box-sizing: inherit;
+        overflow: hidden;
+        margin-right: .5rem;
+    }
+
+/* Boton Preguntar*/
+div.qa-main-form > button {
+    height: 2.1rem;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    outline: 0;
+    background: transparent;
+    font-family: Open Sans, sans-serif;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0 1rem;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    font-size: .7rem;
+    padding: .6rem 3.5rem;
+    text-transform: uppercase;
+    border: 1px solid #e6eaeb;
+    position: relative;
+    opacity: 1;
+    margin-bottom: 0;
+    color: #fff;
+    border-color: #c74044;
+    background-color: #c74044;
+    transition: all .3s ease !important;
+    overflow: hidden;
+}

@@ -1,0 +1,997 @@
+﻿@import url("//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700");
+@import url("//fonts.googleapis.com/css?family=Oswald:400,300,700");
+
+h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+    color: #282828;
+    border: 0;
+}
+
+a {
+    color: #c00;
+}
+
+    a:hover {
+        color: #282828;
+    }
+
+.ui-bg-cart {
+    width: 240px;
+    height: 24px;
+    background-position: 0 0;
+}
+
+.ui-bg-cart-on {
+    width: 240px;
+    height: 24px;
+    background-position: 0 0;
+}
+
+.button, .button_screen {
+    color: #fff;
+    background: #c00;
+    border: 0;
+    border-radius: 0;
+    padding: 12px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+    .button:hover, .button_screen:hover {
+        background: #606060;
+        border: 0;
+    }
+
+.button_screen {
+    background: #282828;
+}
+
+.home-widget-header, .widget-header {
+    background: #b30000;
+    background: -webkit-gradient(linear,left top,left bottom,from(#c00),to(#b30000));
+    background: -webkit-linear-gradient(top,#c00,#b30000);
+    background: -moz-linear-gradient(top,#c00,#b30000);
+    background: -ms-linear-gradient(top,#c00,#b30000);
+    background: -o-linear-gradient(top,#c00,#b30000);
+    background: linear-gradient(top,#c00,#b30000);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0000', endColorstr='#b30000')";
+}
+
+.home-widget-content, .widget-content {
+    border: 1px solid #b30000;
+}
+
+.home-widget-footer, .widget-footer {
+    background-color: #b30000;
+}
+
+.tblhdr, #cart .carthdr {
+    color: #fff;
+    background: #737373;
+    border-radius: 0;
+}
+
+    .tblhdr p, #cart .carthdr p {
+        text-transform: uppercase;
+        font-size: 11px;
+    }
+
+#cart .carthdr {
+    margin-top: 20px;
+}
+
+#cart .cartitem .edit a {
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+#havePromo {
+    text-transform: uppercase;
+}
+
+.cartsummary {
+    position: relative;
+    background-color: #eee;
+    border: 1px solid #d5d5d5;
+    padding: 20px 0 20px 0;
+}
+
+    .cartsummary div.shippingestimate div.widget {
+        border: 0;
+        padding: 0 10px;
+        margin-bottom: 0;
+        background: transparent;
+    }
+
+        .cartsummary div.shippingestimate div.widget p {
+            font-style: italic;
+        }
+
+        .cartsummary div.shippingestimate div.widget input {
+            border-radius: 0;
+            border: 1px solid #d5d5d5;
+            padding: 8px 4px;
+        }
+
+        .cartsummary div.shippingestimate div.widget select {
+            border-radius: 0;
+            border: 1px solid #d5d5d5;
+            padding: 7px 4px;
+        }
+
+        .cartsummary div.shippingestimate div.widget input[type=submit] {
+            background: #c00;
+            padding: 9px 0 8px;
+            margin-top: 24px;
+            border: 0;
+        }
+
+            .cartsummary div.shippingestimate div.widget input[type=submit]:hover {
+                background: #606060;
+                border: 0;
+            }
+
+    .cartsummary div.ordertotals div {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .cartsummary div.ordertotals p.label {
+        text-transform: uppercase;
+    }
+
+    .cartsummary:after {
+        content: "";
+        position: absolute;
+        height: auto;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        border-left: 1px solid #d5d5d5;
+    }
+
+div.paging a:hover {
+    color: #fff;
+    background-color: #c00;
+    border: 1px solid #c00;
+}
+
+.crumbnav {
+    background-color: transparent;
+    border: 0;
+    height: 12px;
+    margin-bottom: 15px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 0 transparent;
+    -moz-box-shadow: 0 0 0 transparent;
+    -o-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent;
+}
+
+    .crumbnav li {
+        line-height: 12px;
+    }
+
+div.brandlinks ul {
+    padding-top: 15px;
+}
+
+div.brandlinks li {
+    font-size: 13px;
+    padding: 5px 0;
+}
+
+    div.brandlinks li a {
+        text-decoration: underline;
+    }
+
+        div.brandlinks li a:hover {
+            color: #656565;
+            text-decoration: none;
+        }
+
+#wrapper {
+    background-color: #fff;
+}
+
+#wrapper-head {
+    height: 126px;
+    margin-top: 0;
+    background-color: #fff;
+    background-image: url("/assets/hondahouse/images/header-bg.png");
+    background-position: 50% 0%;
+    background-repeat: repeat-x;
+}
+
+    #wrapper-head div.logo {
+        position: absolute;
+        top: 50px;
+        left: 20px;
+    }
+
+        #wrapper-head div.logo img {
+            width: 225px;
+            height: auto;
+        }
+
+    #wrapper-head div.contact {
+        position: absolute;
+        top: 95px;
+        right: 20px;
+        width: 360px;
+        text-align: center;
+    }
+
+        #wrapper-head div.contact p {
+            padding-bottom: 0;
+            font-size: 13px;
+            color: #939393;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+            #wrapper-head div.contact p span {
+                color: #282828;
+            }
+
+    #wrapper-head #minicartbtn {
+        position: absolute;
+        right: 20px;
+        top: 49px;
+        width: 180px;
+        height: 46px;
+        margin: 0;
+        padding: 0 10px 0 170px;
+        color: #fff;
+        background-image: url("/assets/hondahouse/images/cart.png");
+        background-repeat: no-repeat;
+        background-color: #282828;
+        background-size: 360px 46px;
+    }
+
+        #wrapper-head #minicartbtn a.mini {
+            line-height: 46px;
+            height: 46px;
+            font-weight: bold;
+            text-align: left;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+            #wrapper-head #minicartbtn a.mini:hover {
+                color: #d0d0d0;
+                text-decoration: none;
+            }
+
+    #wrapper-head #minicartwrap {
+        top: 90px;
+        right: 40px;
+        width: 290px;
+        padding: 10px;
+    }
+
+    #wrapper-head #minicartlinks {
+        padding: 0;
+        width: auto;
+        float: left;
+        text-align: left;
+    }
+
+    #wrapper-head #addcartlinks {
+        padding-left: 0;
+        text-indent: -9999px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 170px;
+    }
+
+    #wrapper-head #crosssite {
+        margin: 0 auto;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+    }
+
+        #wrapper-head #crosssite li {
+            float: left;
+            color: #5f5f5f;
+            font-size: 10px;
+            line-height: 32px;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 0 6px;
+        }
+
+            #wrapper-head #crosssite li.active {
+                background-color: #fff;
+            }
+
+            #wrapper-head #crosssite li a {
+                color: #bbb;
+                text-decoration: none;
+            }
+
+                #wrapper-head #crosssite li a:hover {
+                    color: #eee;
+                }
+
+            #wrapper-head #crosssite li img.babbitts {
+                width: auto;
+                height: 32px;
+            }
+
+#content-head {
+    padding-top: 0;
+}
+
+    #content-head #persistant-nav {
+        position: absolute;
+        right: 400px;
+        top: 55px;
+        margin-top: 0;
+        font-size: 14px;
+        line-height: 14px;
+        text-align: left;
+        color: #bbb;
+    }
+
+        #content-head #persistant-nav li {
+            border-right: 1px solid #5f5f5f;
+        }
+
+            #content-head #persistant-nav li a {
+                color: #5f5f5f;
+            }
+
+                #content-head #persistant-nav li a:hover {
+                    color: #bbb;
+                    text-decoration: none;
+                }
+
+            #content-head #persistant-nav li.signin a {
+                text-decoration: none;
+            }
+
+                #content-head #persistant-nav li.signin a:hover {
+                    text-decoration: none;
+                }
+
+            #content-head #persistant-nav li span.displayname {
+                position: absolute;
+                top: 20px;
+                right: 0;
+            }
+
+#wrapper-nav {
+    background: #c00;
+    background: -webkit-gradient(linear,left top,left bottom,from(#c00),to(#c00));
+    background: -webkit-linear-gradient(top,#c00,#c00);
+    background: -moz-linear-gradient(top,#c00,#c00);
+    background: -ms-linear-gradient(top,#c00,#c00);
+    background: -o-linear-gradient(top,#c00,#c00);
+    background: linear-gradient(top,#c00,#c00);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0000', endColorstr='#cc0000')";
+    -webkit-box-shadow: #202020 0 0 0;
+    -moz-box-shadow: #202020 0 0 0;
+    -o-box-shadow: #202020 0 0 0;
+    box-shadow: #202020 0 0 0;
+}
+
+#wrapper-main {
+    padding-bottom: 835px;
+}
+
+#content-main {
+    -webkit-box-shadow: 0 0 14px transparent;
+    -moz-box-shadow: 0 0 14px transparent;
+    -o-box-shadow: 0 0 14px transparent;
+    box-shadow: 0 0 14px transparent;
+}
+
+#wrapper-foot {
+    height: 835px;
+    margin-top: -835px;
+    background-color: #fff;
+}
+
+#content-foot {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    color: #282828;
+}
+
+    #content-foot h1, #content-foot h2, #content-foot h3, #content-foot h4, #content-foot h5, #content-foot h6 {
+        color: #282828;
+        text-transform: uppercase;
+    }
+
+    #content-foot div.about {
+        background-color: #fff;
+        padding-top: 10px;
+        padding-bottom: 30px;
+    }
+
+        #content-foot div.about h3 {
+            font-size: 21px;
+            font-family: "Open Sans Condensed","Trebuchet MS",Verdana,Helvetica,Arial,Sans-Serif;
+            padding-bottom: 10px;
+        }
+
+        #content-foot div.about div.aboutus {
+            padding-top: 30px;
+        }
+
+            #content-foot div.about div.aboutus h5 {
+                text-transform: none;
+                line-height: 24px;
+                padding-bottom: 5px;
+            }
+
+            #content-foot div.about div.aboutus p {
+                line-height: 28px;
+                padding-bottom: 0;
+            }
+
+        #content-foot div.about div.searchByPart {
+            border: 1px solid #c1c1c1;
+            padding: 40px 30px;
+        }
+
+            #content-foot div.about div.searchByPart p {
+                line-height: 28px;
+            }
+
+            #content-foot div.about div.searchByPart span {
+                font-weight: 700;
+            }
+
+            #content-foot div.about div.searchByPart form {
+                padding-top: 8px;
+            }
+
+            #content-foot div.about div.searchByPart input[type=text] {
+                font-size: 15px;
+                line-height: 15px;
+                font-family: "Open Sans","Trebuchet MS",Verdana,Helvetica,Arial,Sans-Serif;
+                border: 1px solid #c1c1c1;
+                padding: 18px 8px;
+                width: -moz-calc(70% - 18px);
+                width: -webkit-calc(70% - 18px);
+                width: -o-calc(70% - 18px);
+                width: calc(70% - 18px);
+                border-radius: 0;
+            }
+
+            #content-foot div.about div.searchByPart input[type=submit] {
+                background: #c00;
+                border: 0;
+                height: 58px;
+                width: 28%;
+                font-size: 14px;
+                font-family: "Open Sans","Trebuchet MS",Verdana,Helvetica,Arial,Sans-Serif;
+                border-radius: 0;
+            }
+
+                #content-foot div.about div.searchByPart input[type=submit]:hover {
+                    background: #606060;
+                }
+
+    #content-foot div.newsletter {
+        background-color: #c00;
+        height: 68px;
+        padding: 30px 0;
+    }
+
+        #content-foot div.newsletter div.offer {
+            float: left;
+            width: 38%;
+        }
+
+            #content-foot div.newsletter div.offer p {
+                font-family: "Open Sans Condensed","Trebuchet MS",Verdana,Helvetica,Arial,Sans-Serif;
+                color: #fff;
+                text-align: right;
+                text-transform: uppercase;
+                font-size: 21px;
+                font-weight: 700;
+                padding-top: 10px;
+                padding-right: 25px;
+            }
+
+        #content-foot div.newsletter div.form {
+            float: right;
+            width: 62%;
+        }
+
+            #content-foot div.newsletter div.form input[type=text] {
+                font-size: 15px;
+                line-height: 15px;
+                font-family: "Open Sans","Trebuchet MS",Verdana,Helvetica,Arial,Sans-Serif;
+                border: 1px solid #c1c1c1;
+                padding: 18px 8px;
+                width: -moz-calc(65% - 18px);
+                width: -webkit-calc(65% - 18px);
+                width: -o-calc(65% - 18px);
+                width: calc(65% - 18px);
+                border-radius: 0;
+            }
+
+            #content-foot div.newsletter div.form input[type=submit] {
+                background: #202020;
+                color: #fff;
+                border: 0;
+                height: 58px;
+                width: 32%;
+                font-size: 14px;
+                font-family: "Open Sans","Trebuchet MS",Verdana,Helvetica,Arial,Sans-Serif;
+                border-radius: 0;
+            }
+
+                #content-foot div.newsletter div.form input[type=submit]:hover {
+                    background: #606060;
+                }
+
+        #content-foot div.newsletter #footerContactFormContainer {
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+            #content-foot div.newsletter #footerContactFormContainer p.large {
+                color: #fff;
+                font-weight: 700;
+            }
+
+    #content-foot div.copy {
+        background-color: #fff;
+        padding-top: 30px;
+        padding-bottom: 10px;
+    }
+
+        #content-foot div.copy img.cards {
+            width: 620px;
+            height: auto;
+        }
+
+        #content-foot div.copy p.policy {
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+            #content-foot div.copy p.policy a {
+                color: #282828;
+            }
+
+                #content-foot div.copy p.policy a:hover {
+                    color: #c00;
+                }
+
+        #content-foot div.copy p.copy {
+            font-style: italic;
+            font-size: 13px;
+            line-height: 150%;
+            text-align: center;
+        }
+
+            #content-foot div.copy p.copy a {
+                color: #282828;
+                text-decoration: underline;
+            }
+
+                #content-foot div.copy p.copy a:hover {
+                    color: #c0c0c0;
+                    text-decoration: none;
+                }
+
+        #content-foot div.copy p.address {
+            padding-top: 8px;
+            padding-bottom: 0;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        #content-foot div.copy ul.social {
+            width: 493px;
+            height: 32px;
+            margin-left: 224px;
+            padding-bottom: 20px;
+        }
+
+            #content-foot div.copy ul.social li {
+                float: left;
+                padding: 0 4px;
+            }
+
+                #content-foot div.copy ul.social li img {
+                    width: 325px;
+                    height: auto;
+                    padding-top: 4px;
+                }
+
+                #content-foot div.copy ul.social li a {
+                    display: inline-block;
+                    color: #a2a2a2;
+                    font-size: 12px;
+                    line-height: 12px;
+                }
+
+                    #content-foot div.copy ul.social li a:hover {
+                        color: #c00;
+                    }
+
+        #content-foot div.copy div.trust {
+            position: relative;
+            height: 85px;
+            padding-bottom: 20px;
+            background-image: url("/assets/hondahouse/images/trust-2018.png");
+            background-repeat: no-repeat;
+            background-size: 940px 85px;
+        }
+
+            #content-foot div.copy div.trust div.faq {
+                position: absolute;
+                top: 23px;
+                left: 30px;
+                width: 90px;
+            }
+
+            #content-foot div.copy div.trust div.review {
+                position: absolute;
+                top: 23px;
+                left: 220px;
+                width: 90px;
+            }
+
+            #content-foot div.copy div.trust a {
+                font-size: 15px;
+                line-height: 20px;
+                letter-spacing: .06em;
+                font-family: "Oswald","Open Sans","Trebuchet MS",Verdana,Helvetica,Arial,Sans-Serif;
+                font-weight: 300;
+                color: #c00;
+                text-decoration: underline;
+                text-transform: uppercase;
+            }
+
+                #content-foot div.copy div.trust a:hover {
+                    color: #c00;
+                    text-decoration: none;
+                }
+
+@media only screen and (-webkit-min-device-pixel-ratio:1.5),only screen and (-o-min-device-pixel-ratio:3/2),only screen and (min--moz-device-pixel-ratio:1.5),only screen and (min-device-pixel-ratio:1.5) {
+    #wrapper-head #minicartbtn {
+        background-image: url("/assets/hondahouse/images/cart@2x.png");
+    }
+
+    #content-foot div.copy div.trust {
+        background-image: url("/assets/hondahouse/images/trust@2x-2018.png");
+    }
+}
+
+ul.navlisthorz li a {
+    font-size: 12px;
+    line-height: 14px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 18px 12px;
+    font-weight: 700;
+}
+
+    ul.navlisthorz li a:hover {
+        background-color: #900;
+        color: #fff;
+    }
+
+ul.navlisthorz li.home {
+    display: none;
+}
+
+ul.navlisthorz .subnav {
+    background-color: #900;
+}
+
+    ul.navlisthorz .subnav li a {
+        font-size: 14px;
+        line-height: 14px;
+        background-color: #900;
+        color: #fff;
+        padding: 10px 8px;
+        font-weight: normal;
+    }
+
+        ul.navlisthorz .subnav li a:hover {
+            background-color: #282828;
+            color: #ccc;
+        }
+
+ul.navlist li a {
+    font-size: 14px;
+    line-height: 14px;
+    color: #fff;
+    background-color: #c00;
+}
+
+    ul.navlist li a:hover {
+        background-color: #282828;
+        color: #fff;
+    }
+
+ul.navlist li.subitem {
+    border-left: 0;
+    border-right: 0;
+    margin-bottom: 4px;
+}
+
+    ul.navlist li.subitem a {
+        font-size: 14px;
+        line-height: 14px;
+        color: #505050;
+        padding: 8px 0 8px 12px;
+    }
+
+        ul.navlist li.subitem a:hover {
+            background-color: #d5d5d5;
+            color: #505050;
+        }
+
+.featuredTop {
+    background-image: url(/assets/hondahouse/images/home-featured-top.gif);
+    height: 33px;
+    color: #333;
+    font-size: 16px;
+    line-height: 33px;
+}
+
+.featuredbottom {
+    background-image: url(/assets/hondahouse/images/home-featured-bottom.gif);
+    height: 33px;
+    color: #333;
+    font-size: 16px;
+    line-height: 33px;
+}
+
+.homefeature {
+    border: 1px solid #282828;
+    background-image: url(/assets/hondahouse/images/featured-innershade.gif);
+    background-repeat: repeat-x;
+    text-align: center;
+    font-size: 11px;
+    color: #fff;
+    width: 160px;
+    height: 233px;
+    margin: 5px;
+    padding: 10px 8px;
+}
+
+    .homefeature h2 {
+        font-size: 12px;
+        line-height: 30px;
+        text-align: center;
+    }
+
+        .homefeature h2 a {
+            color: #fff;
+        }
+
+    .homefeature p, .homefeaturebottom p {
+        font-size: 12px;
+        line-height: 16px;
+        font-size: 1.2rem;
+        line-height: 1.6rem;
+    }
+
+.homefeaturebottom {
+    border: 1px solid #7f7f7f;
+    background-image: url(/assets/hondahouse/images/featured-innershadeblack.gif);
+    background-repeat: repeat-x;
+    text-align: center;
+    font-size: 11px;
+    color: #fff;
+    width: 160px;
+    height: 233px;
+    margin: 5px;
+    padding: 10px 8px;
+}
+
+    .homefeaturebottom h2 {
+        font-size: 12px;
+        line-height: 15px;
+        text-align: center;
+        padding-top: 2px;
+    }
+
+        .homefeaturebottom h2 a {
+            color: #fff;
+        }
+
+.home-widget-header {
+    background: none;
+    background-color: transparent;
+    padding: 0;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    height: 18px;
+    border-bottom: 1px solid #aaa;
+}
+
+    .home-widget-header h4 {
+        color: #282828;
+        font-size: 16px;
+        line-height: 18px;
+        margin: 0;
+        font-weight: bold;
+        font-style: normal;
+        text-transform: none;
+        border: 0;
+    }
+
+    .home-widget-header a {
+        color: #282828;
+        font-size: 13px;
+        line-height: 18px;
+        margin: 0;
+        padding: 0;
+        text-decoration: underline;
+    }
+
+.home-widget-content, .home-widget-content.alt {
+    padding: 5px 0;
+    height: 24px;
+    background-color: transparent;
+    margin-bottom: 10px;
+    border: 0;
+}
+
+.home-widget-footer {
+    background-color: #282828;
+}
+
+.news-review p {
+    margin: 0;
+    padding: 0;
+    color: #303030;
+    line-height: 120%;
+}
+
+    .news-review p.title a {
+        font-size: 14px;
+        line-height: 18px;
+        color: #b51313;
+        text-decoration: underline;
+    }
+
+        .news-review p.title a:hover {
+            color: #454545;
+            text-decoration: none;
+        }
+
+div.news-widget div.home-widget-header {
+    display: none;
+}
+
+div.news-widget div.news-review, div.news-widget div.alt.news-review {
+    background-color: #c00;
+    height: 190px;
+    padding: 30px 20px;
+    margin: 10px;
+    float: left;
+    width: -moz-calc(33% - 60px);
+    width: -webkit-calc(33% - 60px);
+    width: -o-calc(33% - 60px);
+    width: calc(33% - 60px);
+    min-width: 130px;
+    text-align: center;
+    box-sizing: content-box !important;
+}
+
+    div.news-widget div.news-review p.date, div.news-widget div.alt.news-review p.date {
+        border: 1px solid #fff;
+        width: 98px;
+        padding: 10px 0 15px;
+        margin: 0 auto 20px;
+    }
+
+    div.news-widget div.news-review img.preview, div.news-widget div.news-review span.year, div.news-widget div.alt.news-review img.preview, div.news-widget div.alt.news-review span.year {
+        display: none;
+    }
+
+    div.news-widget div.news-review span.month, div.news-widget div.alt.news-review span.month {
+        font-family: "Open Sans Condensed","Trebuchet MS",Verdana,Helvetica,Arial,Sans-Serif;
+        font-size: 20px;
+        line-height: 24px;
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+    div.news-widget div.news-review span.day, div.news-widget div.alt.news-review span.day {
+        font-size: 52px;
+        line-height: 52px;
+        color: #fff;
+        font-weight: 700;
+    }
+
+    div.news-widget div.news-review p.title, div.news-widget div.alt.news-review p.title {
+        height: 74px;
+        overflow: hidden;
+        font-family: "Open Sans Condensed","Trebuchet MS",Verdana,Helvetica,Arial,Sans-Serif;
+        font-weight: 700;
+    }
+
+        div.news-widget div.news-review p.title a, div.news-widget div.alt.news-review p.title a {
+            font-size: 18px;
+            line-height: 24px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+            div.news-widget div.news-review p.title a:hover, div.news-widget div.alt.news-review p.title a:hover {
+                color: #a0a0a0 !important;
+            }
+
+    div.news-widget div.news-review:nth-child(2n) {
+        background-color: #c00;
+    }
+
+    div.news-widget div.news-review:nth-child(3n) {
+        background-color: #737373;
+    }
+
+    div.news-widget div.news-review:nth-child(4n) {
+        background-color: #282828;
+    }
+
+div.news-widget div.home-widget-footer {
+    background-color: transparent;
+    min-height: 34px;
+}
+
+    div.news-widget div.home-widget-footer div.right {
+        text-align: center;
+        float: none;
+    }
+
+    div.news-widget div.home-widget-footer a {
+        background-color: #c00;
+        color: #fff;
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 14px;
+        line-height: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin: 0 auto;
+        float: none;
+    }
+
+#partsselectlist {
+    min-height: 20px;
+    margin-bottom: 10px;
+}
+
+    #partsselectlist div.select {
+        border: 1px solid #c1c1c1;
+        padding: 39px 29px;
+        width: -moz-calc(100% - 80px);
+        width: -webkit-calc(100% - 80px);
+        width: -o-calc(100% - 80px);
+        width: calc(100% - 80px);
+    }
+
+        #partsselectlist div.select div.third {
+            position: relative;
+            float: left;
+            width: 33%;
+        }
+
+div.partdisclaimer {
+    display: none;
+}

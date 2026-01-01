@@ -1,0 +1,33 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+$container-width: 970px;
+
+@import "compass/reset";
+@import "compass/typography";
+@import "imports/button";
+@import "imports/button";
+@import "imports/leftnavlinks";
+
+body {
+  background: image-url("grunge_danger_1920x1080.jpg");
+  background-position: 50% -12px;
+  background-attachment:fixed;
+  font-family: arial, helvetica;
+  font-weight: normal;
+  font-size: 12px;
+
+
+}
+
+@import "imports/headermenu";
+@import "imports/header";
+
+
+
+
+
+
+

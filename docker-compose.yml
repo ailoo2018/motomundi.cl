@@ -1,0 +1,12 @@
+
+services:
+  nuxt-app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    extra_hosts:
+      - "developer.products.ailoo.cl:host-gateway"
+      - "developer.cms.ailoo.cl:host-gateway"

@@ -1,0 +1,322 @@
+﻿<style>
+    /*Modal*/
+    .desktop-signin-modal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1050;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+        outline: 0;
+    }
+    .modal-open {
+        overflow: hidden;
+    }
+    .modal.fade .modal-dialog {
+        -webkit-transition: -webkit-transform .3s ease-out;
+        -o-transition:      -o-transform .3s ease-out;
+        transition:         transform .3s ease-out;
+        -webkit-transform: translate(0, -25%);
+        -ms-transform: translate(0, -25%);
+        -o-transform: translate(0, -25%);
+        transform: translate(0, -25%);
+    }
+    .modal.in .modal-dialog {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+    .modal-open .modal {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .modal-dialog {
+        position: relative;
+        width: auto;
+        margin: 10px;
+    }
+    .modal-content {
+        position: relative;
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #999;
+        border: 1px solid rgba(0, 0, 0, .2);
+        border-radius: 6px;
+        outline: 0;
+        -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    }
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1040;
+        background-color: #000;
+    }
+    .modal-backdrop.fade {
+        filter: alpha(opacity=0);
+        opacity: 0;
+    }
+    .modal-backdrop.in {
+        filter: alpha(opacity=50);
+        opacity: .5;
+    }
+    .modal-header {
+        padding: 15px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .modal-header .close {
+        margin-top: -2px;
+    }
+    .modal-title {
+        margin: 0;
+        line-height: 1.42857143;
+    }
+    .modal-body {
+        position: relative;
+        padding: 15px;
+    }
+    .modal-footer {
+        padding: 15px;
+        text-align: right;
+        border-top: 1px solid #e5e5e5;
+    }
+    .modal-footer .btn + .btn {
+        margin-bottom: 0;
+        margin-left: 5px;
+    }
+    .modal-footer .btn-group .btn + .btn {
+        margin-left: -1px;
+    }
+    .modal-footer .btn-block + .btn-block {
+        margin-left: 0;
+    }
+    .modal-scrollbar-measure {
+        position: absolute;
+        top: -9999px;
+        width: 50px;
+        height: 50px;
+        overflow: scroll;
+    }
+    @media (min-width: 768px) {
+        .modal-dialog {
+            width: 600px;
+            margin: 30px auto;
+        }
+        .modal-content {
+            -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+        }
+        .modal-sm {
+            width: 300px;
+        }
+    }
+    @media (min-width: 992px) {
+        .modal-lg {
+            width: 900px;
+        }
+    }
+
+/*    Form*/
+    input[type=text].login-form-control, input[type=password].login-form-control {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+    .btn-login {
+        background-color: #04AA6D;
+        color: white;
+    }
+    .btn:hover {
+        opacity: 0.8;
+    }
+    .login-form-modal {
+        padding: 16px;
+    }
+    .seperator {
+        margin: 10px auto;
+        width: 100%;
+    }
+    .seperator p {
+        text-align: center;
+        background-image:linear-gradient(#000,#000),linear-gradient(#000,#000);
+        background-size:46% 1px;
+        background-position:center left,center right;
+        background-repeat:no-repeat;
+    }
+    .row {
+        display: flex;
+    }
+    .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        margin: 5px 0;
+        display: inline-block;
+        font-size: 15px;
+        line-height: 20px;
+        text-decoration: none;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+    .btn-facebook {
+        text-align: center;
+        background-color: #3B5998;
+        color: white;
+        margin-right: 4px;
+    }
+    .btn-google {
+        text-align: center;
+        background-color: #dd4b39;
+        color: white;
+        margin-left: 4px;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .error-message label {
+        color: #c74044;
+        padding-left: 13px;
+        font-style: normal;
+        font-weight: normal;
+    }
+</style>
+<!--<script type="text/ng-template" id="SigninModal.html">-->
+<div class="login-form-modal">
+    <form name="signinForm">
+        <h2 class="text-center">
+            ENTRA EN TU CUENTA
+        </h2>
+        <div>
+            <label for="signinForm.username">Username</label>
+            <input ng-model="signinForm.username" type="text" class="login-form-control" placeholder="Nombre de usuario"
+                   required="required" autocomplete="on">
+            <p ng-show="signinForm.username.$invalid && !signinForm.username.$pristine" class="help-block">Campo
+                requerido.</p>
+        </div>
+        <div>
+            <label for="signinForm.password">Password</label>
+            <input ng-model="signinForm.password" type="password" class="login-form-control" placeholder="Contraseña"
+                   required="required" autocomplete="on">
+            <p ng-show="signinForm.password.$invalid && !signinForm.password.$pristine" class="help-block">Campo
+                requerido.</p>
+        </div>
+        <div class="error-message">
+            <label for="signinForm.errorMessage">{{signinForm.errorMessage}}</label>
+        </div>
+        <div>
+            <button type="button" ng-click="login()" class="btn btn-login">Login</button>
+        </div>
+
+        <div class="seperator"><p>o</p></div>
+
+        <div class="row">
+            <button type="button" id="signinFacebook" class="btn btn-facebook" ng-click="loginFacebook()">
+                <i class="fa fa-facebook"></i> Entrar
+                con <b>Facebook</b>
+            </button>
+            <!--
+            <a href="#" id="signinTwitter" class="btn btn-info btn-block">
+                <i class="fa fa-twitter"></i> Entrar con
+                <b>Twitter</b>
+            </a>-->
+            <button type="button" id="signinGoogle2" class="btn btn-google" ng-click="loginGoogle()">
+                <i class="fa fa-google"></i> Entrar con
+                <b>Google</b>
+            </button>
+        </div>
+        <!--
+        <div class="clearfix">
+          <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+          <a href="#" class="pull-right text-success">Forgot Password?</a>
+        </div>
+        -->
+
+    </form>
+    <!--        <div class="hint-text small">SI NO TIENES CUENTA TODAVÍA, CREA UNA PULSANDO EL SIGUIENTE BOTÓN<a href="#"                                                                                                           class="text-success">Crear
+                Cuenta</a></div>-->
+</div>
+<!--</script>-->
+
+<script>console.log('javascript check from modal');</script>
+
+
+<!-- Google, Facebook, TODO: Twiter -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+<script>
+    // jQuery check..
+    // jQuery(function () {
+    //     console.log("jQuery check");
+    //
+    //     jQuery('#signinGoogle2').click(function () {
+    //         console.log('Signin: Google');
+    //         // auth2.grantOfflineAccess().then(signInCallback);
+    //     });
+    //     // alert("debe ser nulo:" + jQuery("#signinFacebook"));
+    //     // jQuery("#signinFacebook").click(function () {
+    //     //     alert("click");
+    //     //     console.log('Signin: Facebook');
+    //     //     FB.login(function (response) {
+    //     //         // Handle the response object, like in statusChangeCallback() in our demo
+    //     //         // code.  response.authResponse.accessToken
+    //     //
+    //     //         if (response.authResponse.accessToken) {
+    //     //             jQuery("#fbauthcode").val(response.authResponse.accessToken);
+    //     //             jQuery("#fbauthform").submit();
+    //     //         } else {
+    //     //             // There was an error.
+    //     //         }
+    //     //     }, {scope: 'email,user_likes'});
+    //     // });
+    // });
+
+    function start() {
+        gapi.load('auth2', function () {
+            auth2 = gapi.auth2.init({
+                client_id: '573119085091-10gjskn72s3dsfmncmmhppe6p8o3u1qj.apps.googleusercontent.com',
+                cookiepolicy: 'single_host_origin',
+                // Scopes to request in addition to 'profile' and 'email'
+                //scope: 'additional_scope'
+            });
+        });
+    }
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '291913124255823',
+            xfbml: true,
+            version: 'v2.10'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<form action="/Ajax/DoGoogleLogin.rails" method="post" id="gauthform">
+    <input type="hidden" name="returnUrl" value="$returnUrl"/>
+    <input type="hidden" name="authCode" id="gauthcode" value=""/>
+</form>
+<form action="/Login/DoFacebookLogin.rails" method="post" id="fbauthform">
+    <input type="hidden" name="returnUrl" value="$returnUrl"/>
+    <input type="hidden" name="authCode" id="fbauthcode" value=""/>
+</form>
