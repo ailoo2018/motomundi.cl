@@ -112,7 +112,7 @@ const props = defineProps(
               class="item__price"
               style="font-size: 14px;"
             >
-              $189.900
+              {{ formatMoney( product.minPrice ) }}
             </span>
             <span>
               <img src="/content/images/youtube_icon.svg">
