@@ -10,7 +10,9 @@ const slugArray = Array.isArray(route.params.slug)
 
 const path = `/${slugArray.join('/')}`
 
-// 2. Fetch redirect logic from Express
+
+const { data: config, error } = await useFetch(`/api/friendlyurl?path=${path}`)
+/*
 const { data: config, error } = await useAsyncData(
   `redirect-lookup:${path}`,
   async () => {
@@ -26,6 +28,7 @@ const { data: config, error } = await useAsyncData(
 
   },
 )
+*/
 
 
 if (error.value || !config.value) {
