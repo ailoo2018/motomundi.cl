@@ -56,7 +56,7 @@ useIntersectionObserver([
 
 <template>
 
-  <h1>cms: {{cmsUrl}}</h1>
+  <h1>this is new cms: {{cmsUrl}}</h1>
   <h1>prods: {{productsUrl}}</h1>
   <Component
     :is="componentMap[widget.component]"
