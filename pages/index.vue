@@ -53,7 +53,7 @@ useIntersectionObserver([
 </script>
 
 <template>
-<h1>Changed 4</h1>
+<h1>Changed 5</h1>
   <Component
     :is="componentMap[widget.component]"
     v-for="widget in home?.widgets || []"
