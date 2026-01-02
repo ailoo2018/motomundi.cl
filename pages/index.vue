@@ -34,14 +34,16 @@ const config = useRuntimeConfig()
 const cmsUrl = config.public.cmsBaseUrl
 const productsUrl = config.public.productsBaseUrl
 
+const home = ref()
 
-
-const { data: home, pending } = await useFetch(`/api/home/home`, {
+const { data: homeRs, pending } = await useFetch(`/api/home/home`, {
   key: `home-data-unique-key  `,
   onResponseError({ response }) {
     console.error('[SSR Fetch Error]:', response.status, response._data)
   },
 })
+
+home.value = homeRs.value;
 
 
 useIntersectionObserver([
@@ -53,7 +55,8 @@ useIntersectionObserver([
 </script>
 
 <template>
-<h1>Changed 5</h1>
+
+
   <Component
     :is="componentMap[widget.component]"
     v-for="widget in home?.widgets || []"
@@ -61,6 +64,7 @@ useIntersectionObserver([
     :key="widget.id"
     :widget="widget"
   />
+
 </template>
 
 <style lang="scss">

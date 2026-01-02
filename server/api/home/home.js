@@ -1,47 +1,37 @@
-export default defineEventHandler(async (event) => {
+import { getDomainId } from "@/server/ailoo-domain.js"
 
-  return {
-    widgets: [
-      {
-        id: 1,
-        component: "Swiper",
-        configuration: {},
+export default defineEventHandler(async event => {
+
+  let url= ""
+  try {
+    const config = useRuntimeConfig()
+    const baseUrl = config.public.cmsBaseUrl
+
+    url = `${baseUrl}/${getDomainId()}/widgets?pageId=1`
+
+    const { collectionId } = getQuery(event)
+
+    console.log(`calling: ${url}`)
+
+    // const body = await readBody(event)
+    return await $fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      {
-        id: 2,
-        component: "AddedValues",
-      },
-      {
-        id: 3,
-        component: "HomeCategories",
-      },
-      {
-        id: 4,
-        component: "ScrollingText",
-        configuration: {
-          items: [
-            {
-              text: "PACK – Cómpralo ahora y Recíbelo en 2 horas*",
-              link: "/go/here",
-            },
-            {
-              text: "CLICK&COLLECT: Recoge tu pedido en 2h en tu tienda más cercana",
-              link: "/go/here",
-            },
-            {
-              text: "Si lo encuentras más barato te igualamos el precio",
-              link: "/go/here",
-            },
-          ],
-        },
-      },
-      {
-        id: 5,
-        component: "FeaturedProducts",
-        configuration: {
-          collectionId: "OMmWPJoB_1hwOXfYXpXv",
-        },
-      },
-    ],
+    })
+
+  } catch (error) {
+    console.error(`Error in home : ${url} `, error)
+    console.error('Stack trace:', error.stack)
+    throw createError({
+      statusCode: error.statusCode || 500,
+      message: error.message || 'Failed to lookup friendly URL',
+    })
+
   }
+
+  //  return await res.json()
+
+
 })
