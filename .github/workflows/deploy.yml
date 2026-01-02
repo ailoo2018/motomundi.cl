@@ -35,4 +35,4 @@ jobs:
         with:
           imageToDeploy: ${{ secrets.ACR_LOGIN_SERVER }}/motomundi-www:${{ github.sha }}
           containerAppName: motomundi-www
-          resourceGroup: motomundi-rg
+          resourceGroup: ailoo-rg
