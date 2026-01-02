@@ -46,8 +46,6 @@ const { data: home, pending } = await useFetch(`/api/home/home`, {
 
 useIntersectionObserver([
 
-
-
 ], ([{ isIntersecting, target }]) => {
   if (isIntersecting)
     activeSectionId.value = target.id
