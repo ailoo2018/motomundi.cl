@@ -1,0 +1,16 @@
+Step 1: Gather your Azure Information
+First, you need the unique values Azure uses to verify you own the domain.
+
+Go to the Azure Portal.
+
+Open your Container App: motomundi-web.
+
+On the left sidebar, under Settings, click Custom domains.
+
+Click + Add custom domain.
+
+Select Managed certificate (this is the free one).
+
+Enter beta.motomundi.cl in the domain field.
+
+Important: Look at the "Domain validation" section that appears. It will give you a Value for a CNAME and a TXT record. Keep this window open.
