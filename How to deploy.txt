@@ -1,0 +1,44 @@
+
+
+// run in docker
+1) create Dockerfile
+2) docker-compose.yml // While you can run just the Dockerfile, using Docker Compose makes it much easier to manage ports and environment variables on Windows.
+
+// START DOCKER
+> docker build -t myapp:1.0 .
+or
+> docker-compose up --build -d
+// DOCKER STOP
+docker-compose stop
+
+
+/**
+** DEPLOY TO AZURE
+**/
+
+// login
+az login
+
+// create resource group in eastus
+ az group create --name motomundi-rg --location eastus
+
+// create container registry (like docker registry)
+az acr create --resource-group motomundi-rg --name motomundiregistry --sku Basic
+
+// loginin to container registry
+az acr login --name motomundiregistry
+
+// tag docker image
+docker tag motomundi-app motomundiregistry.azurecr.io/motomundi-nuxt:v1
+
+// upload tagged image to azure registry
+docker push motomundiregistry.azurecr.io/motomundi-web:v1
+
+// add web to  containerapp specifiying eastus
+az containerapp up `
+  --name motomundi-www `
+  --resource-group motomundi-rg `
+  --location eastus `
+  --image motomundiregistry.azurecr.io/motomundi-nuxt:v1 `
+  --ingress external `
+  --target-port 3000
