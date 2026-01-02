@@ -32,7 +32,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cmsBaseUrl: process.env.NODE_ENV === 'production'
-        ? 'http://beta.cms.ailoo.cl'
+        ? 'https://betacms.ailoo.cl'
 
         // : 'http://beta.cms.ailoo.cl',
         : 'http://developer.cms.ailoo.cl:3050', 
