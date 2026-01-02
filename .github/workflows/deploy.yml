@@ -27,12 +27,12 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/ailoo-w3:${{ github.sha }} .
-          docker push ${{ secrets.ACR_LOGIN_SERVER }}/ailoo-w3:${{ github.sha }}
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/motomundi-www:${{ github.sha }} .
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/motomundi-www:${{ github.sha }}
 
       - name: Deploy to Container App
         uses: azure/container-apps-deploy-action@v1
         with:
-          imageToDeploy: ${{ secrets.ACR_LOGIN_SERVER }}/ailoo-w3:${{ github.sha }}
-          containerAppName: ailoo-w3
-          resourceGroup: ailoo-rg
+          imageToDeploy: ${{ secrets.ACR_LOGIN_SERVER }}/motomundi-www:${{ github.sha }}
+          containerAppName: motomundi-www
+          resourceGroup: motomundi-rg
