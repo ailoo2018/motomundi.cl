@@ -61,7 +61,7 @@ useIntersectionObserver([
 </script>
 
 <template>
-  <h1>New</h1>
+  <h1>New 2</h1>
 
   <Component
     :is="componentMap[widget.component]"
