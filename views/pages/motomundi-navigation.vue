@@ -33,7 +33,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div id="main-navigation" class="container">
+  <div id="main-navigation" class="main-container">
     <nav id="nav">
       <DepartmentsMenu />
       <ul

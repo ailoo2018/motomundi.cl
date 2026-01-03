@@ -5,11 +5,12 @@ export default defineEventHandler(async event => {
   let url= ""
   try {
     const config = useRuntimeConfig()
-    const baseUrl = config.public.cmsBaseUrl
+    const baseUrl = config.public.w3BaseUrl
+    const { id } = getQuery(event)
 
-    url = `${baseUrl}/${getDomainId()}/widgets?pageId=1`
+    url = `${baseUrl}/${getDomainId()}/wcc/${id}`
 
-    const { collectionId } = getQuery(event)
+
 
     console.log(`calling: ${url}`)
 

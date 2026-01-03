@@ -12,7 +12,7 @@ const props = defineProps({
 })
 
 
-const collectionId = props.widget.configuration.collectionId
+const collectionId = props.widget.configuration.collection.id
 
 const { data: rs, pending } = await useFetch(`/api/product/collection?collectionId=${collectionId}`, {
   key: `collection-${collectionId}` // Explicit key helps hydration

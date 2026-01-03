@@ -31,17 +31,14 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      cmsBaseUrl: process.env.NODE_ENV === 'production'
-        ? 'https://betacms.ailoo.cl'
+      cmsBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://betacms.ailoo.cl'
 
         // : 'http://beta.cms.ailoo.cl',
         : 'http://developer.cms.ailoo.cl:3050', 
-      productsBaseUrl: process.env.NODE_ENV === 'production'
-        ? 'http://beta.products.ailoo.cl'
-
-      // : 'http://beta.products.ailoo.cl',
-      
+      productsBaseUrl: process.env.NODE_ENV === 'production' ? 'http://beta.products.ailoo.cl'
+        // : 'http://beta.products.ailoo.cl',
         : 'http://developer.products.ailoo.cl:3011',
+      w3BaseUrl: process.env.NODE_ENV === 'production' ? "https://w3.ailoo.cl" : "http://localhost:3080",
     },
   },
 

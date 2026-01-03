@@ -10,6 +10,7 @@ register()
 </script>
 
 <template>
+
   <ClientOnly>
     <swiper-container events-prefix="swiper-">
       <swiper-slide

@@ -5,6 +5,8 @@ import AddedValues from "@/views/pages/home/added-values.vue"
 import HomeCategories from "@/views/pages/home/home-categories.vue"
 import ScrollingText from "@/views/pages/home/scrolling-text.vue"
 import FeaturedProducts from "@/views/pages/home/featured-products.vue"
+import Dummy from "@/views/pages/home/dummy.vue"
+import SingleBanner from "@/views/pages/home/single-banner.vue"
 
 const componentMap = {
   Swiper,
@@ -12,6 +14,8 @@ const componentMap = {
   HomeCategories,
   ScrollingText,
   FeaturedProducts,
+  Dummy,
+  SingleBanner,
 }
 
 const store = useConfigStore()
@@ -36,7 +40,9 @@ const productsUrl = config.public.productsBaseUrl
 
 const home = ref()
 
-const { data: homeRs, pending } = await useFetch(`/api/home/home`, {
+
+
+const { data: homeRs, pending } = await useFetch(`/api/home/home?id=10018`, {
   key: `home-data-unique-key  `,
   onResponseError({ response }) {
     console.error('[SSR Fetch Error]:', response.status, response._data)

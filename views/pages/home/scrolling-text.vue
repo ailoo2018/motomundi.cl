@@ -13,8 +13,10 @@ const props = defineProps({
 })
 
 const modules = [Autoplay]
-
-const scrollItems = props.widget.configuration.items
+let scrollItems = []
+if (props.widget && props.widget.configuration && props.widget.configuration) {
+  scrollItems = props.widget.configuration.items
+}
 </script>
 
 <template>
@@ -25,7 +27,7 @@ const scrollItems = props.widget.configuration.items
         :key="item"
       >
         <a href="item.link">
-        {{item.text}}
+          {{item.text}}
         </a>
       </swiper-slide>
     </swiper-container>
