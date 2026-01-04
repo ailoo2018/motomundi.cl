@@ -8,7 +8,7 @@
         </a>
       </div>
       <div>
-        <VTextField width="300" style="background-color: white;" variant="outline"/>
+        <VTextField width="300" style="background-color: white;" />
       </div>
     </div>
   </VContainer>

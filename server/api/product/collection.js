@@ -9,8 +9,8 @@ export default defineEventHandler(async event => {
 
   console.log(`calling: ${baseUrl}/products/collections/${collectionId}`)
 
-// const body = await readBody(event)
-  const res = await fetch(`${baseUrl}/${getDomainId()}/products/collections/${collectionId}?limit=10`, {
+
+  var rs = await $fetch(`${baseUrl}/${getDomainId()}/products/collections/${collectionId}?limit=10`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -19,5 +19,7 @@ export default defineEventHandler(async event => {
 
   })
 
-  return await res.json()
+  console.log("rs: " + JSON.stringify(rs))
+
+  return rs;
 })

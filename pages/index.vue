@@ -62,11 +62,13 @@ useIntersectionObserver([
 
 <template>
   <h1>New 2</h1>
+  <div v-for="widget in home?.widgets || []">
+    {{widget.name}}: {{widget.id}}
+  </div>
 
   <Component
     :is="componentMap[widget.component]"
     v-for="widget in home?.widgets || []"
-
     :key="widget.id"
     :widget="widget"
   />

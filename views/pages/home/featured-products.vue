@@ -11,12 +11,16 @@ const props = defineProps({
   }
 })
 
+const widgetId = props.widget.id
+const collectionId = computed(() => props.widget.configuration.collection.id)
 
-const collectionId = props.widget.configuration.collection.id
+const { data: rs, pending } = await useFetch(`/api/product/collection`, {
+  query: { collectionId },
+  key: `products-fetch-${collectionId.value}` // Explicit key helps hydration
 
-const { data: rs, pending } = await useFetch(`/api/product/collection?collectionId=${collectionId}`, {
-  key: `collection-${collectionId}` // Explicit key helps hydration
 })
+
+console.log("key:" + `products-fetch-${widgetId}-${collectionId.value}`)
 
 const products = computed(() => rs.value?.products)
 
@@ -45,8 +49,9 @@ register()
 </script>
 
 <template>
+
   <div
-    id="home-block-32423"
+    id="home-block-${{collectionId}}"
     class="block-container"
   >
     <section class="show-products-block" >
@@ -55,7 +60,7 @@ register()
           <div class="col s12 l12">
             <section class="product-list__title d-flex align-center justify-space-between mb-4">
               <h2>
-                Novedades :
+                {{widget.configuration.collection.name}} :
               </h2>
               <a
                 href="ofertas"
