@@ -51,14 +51,14 @@ register()
 <template>
 
   <div
-    id="home-block-${{collectionId}}"
+    id="home-block-{{widget.id}}"
     class="block-container"
   >
     <section class="show-products-block" >
       <VContainer class="v-container">
         <div class="row">
           <div class="col s12 l12">
-            <section class="product-list__title d-flex align-center justify-space-between mb-4">
+            <section class="product-list__title d-flex align-center justify-space-between">
               <h2>
                 {{widget.configuration.collection.name}} :
               </h2>
@@ -227,6 +227,12 @@ register()
 </template>
 
 <style lang="scss" scoped>
+.product-list__title {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 70px 0px 50px;
+}
 .v-container{
   width: 100%;
   padding: 40px 20px;

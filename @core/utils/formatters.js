@@ -84,6 +84,11 @@ export const getDomainId = () => {
   return 1
 }
 
+export const getBaseCDN = () => {
+  return "https://www.motomundi.cl"
+}
+
+
 export const getImageUrl = (guidString, width, domainId) => {
   // Validate input types
   if (typeof guidString !== 'string' || typeof width !== 'number') {

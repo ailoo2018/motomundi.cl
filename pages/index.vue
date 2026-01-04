@@ -7,6 +7,9 @@ import ScrollingText from "@/views/pages/home/scrolling-text.vue"
 import FeaturedProducts from "@/views/pages/home/featured-products.vue"
 import Dummy from "@/views/pages/home/dummy.vue"
 import SingleBanner from "@/views/pages/home/single-banner.vue"
+import BrandsBlock from "@/views/pages/home/brands-block.vue"
+import FeaturedProductsWithBanner from "@/views/pages/home/featured-products-with-banner.vue"
+import Community from "@/views/pages/home/community.vue"
 
 const componentMap = {
   Swiper,
@@ -16,6 +19,9 @@ const componentMap = {
   FeaturedProducts,
   Dummy,
   SingleBanner,
+  BrandsBlock,
+  Community,
+  FeaturedProductsWithBanner,
 }
 
 const store = useConfigStore()
@@ -61,10 +67,6 @@ useIntersectionObserver([
 </script>
 
 <template>
-  <h1>New 2</h1>
-  <div v-for="widget in home?.widgets || []">
-    {{widget.name}}: {{widget.id}}
-  </div>
 
   <Component
     :is="componentMap[widget.component]"
