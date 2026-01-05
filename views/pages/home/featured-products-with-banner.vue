@@ -37,7 +37,7 @@ const products = computed(() => {
 
 <template>
   <div
-    id="home-block-6"
+    :id="`home-block-${widget.id}`"
     class="block-container"
   >
     <section

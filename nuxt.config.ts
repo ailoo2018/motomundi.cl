@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       link: [{
         rel: 'icon',
         type: 'image/x-icon',
-        href: process.env.NUXT_APP_BASE_URL+'/favicon.ico',
+        href: process.env.NUXT_APP_BASE_URL+'/favicon-2.png',
       }],
     },
   },
@@ -31,6 +31,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      youtubeApiKey: "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM",
       cmsBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://betacms.ailoo.cl'
         : 'http://developer.cms.ailoo.cl:3050', 
       productsBaseUrl: process.env.NODE_ENV === 'production' ? 'http://beta.products.ailoo.cl'

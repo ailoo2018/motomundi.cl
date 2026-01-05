@@ -1,19 +1,30 @@
-<template>
+<script setup lang="ts">
+import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-search.vue"
 
+</script>
+<template>
+  <h1>here</h1>
   <VContainer style="color:white">
     <div class="d-flex justify-space-between">
       <div>
         <a href="/">
-        <VImg :src="'https://www.motomundi.cl/Templates/MotoMundiDesktop/content/images/logo-motomundi.png'" width="400" />
+          <VImg
+            src="https://www.motomundi.cl/Templates/MotoMundiDesktop/content/images/logo-motomundi.png"
+            width="400"
+          />
         </a>
       </div>
       <div>
-        <VTextField width="300" style="background-color: white;" />
+
+        <MotomundiHeaderSearch/>
+
       </div>
+
+
     </div>
   </VContainer>
-
 </template>
+
 
 
 <style setup>
@@ -38,6 +49,8 @@
   transform: translateY(-50%);
   width: 10px;
 }
+
+
+
+
 </style>
-<script setup lang="ts">
-</script>

@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import {getDataImageUrl} from "@core/utils/formatters"
 
+const props = defineProps({
+  widget: {
+    type: Object,
+  }
+})
+
 const {data: rs} = await useFetch(`/api/events/latest-events`, {
   query: {limit: 3},
   key: `events-latest-3`, // Explicit key helps hydration
@@ -28,7 +34,7 @@ const events = computed(() => {
 <template>
 
   <div
-    id="home-block-23"
+    :id="`home-block-${widget.id}`"
     class="block-container events-widget"
   >
     <div class="blog-block alt">
@@ -514,6 +520,7 @@ h2[data-v-73681564] {
 
 .blog-link {
   text-align: center;
+  margin-top: 40px;
 }
 
 .button {

@@ -74,7 +74,7 @@ register()
 <template>
 
   <div
-    id="home-block-{{widget.id}}"
+    :id="`home-block-${widget.id}`"
     class="block-container"
   >
     <section class="show-products-block">

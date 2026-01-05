@@ -2,53 +2,107 @@
 const props = defineProps({
   widget: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 })
-
 </script>
 
 <template>
-  <div id="home-block-{{widget.id}}" class="block-container" ng-non-bindable="">
-    <div :block-id="widget.id" block-name="Categorias MOTO" section="home" class="promo-categories__container" style="background-color: rgb(239, 239, 239); background-image: url(&quot;&quot;);">
+  <div
+    :id="`home-block-${widget.id}`"
+    class="block-container"
+    ng-non-bindable=""
+  >
+    <div
+      :block-id="widget.id"
+      block-name="Categorias MOTO"
+      section="home"
+      class="promo-categories__container"
+      style="background-color: rgb(239, 239, 239); background-image: url(&quot;&quot;);"
+    >
       <div class="container">
-
         <div class="col s12 m12 l12">
           <div class="promo-categories__header">
-            <div class="promo-categories__countdown"></div>
+            <div class="promo-categories__countdown" />
           </div>
           <div class="promo-categories">
-            <a href="/cascos-para-moto" data-dr="true" class="mtc-link" style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;">
-              <img src="/content/images/categories/rebajas-cascos.svg" alt="Cascos">
+            <a
+              href="/cascos-para-moto"
+              data-dr="true"
+              class="mtc-link"
+              style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
+            >
+              <img
+                src="/content/images/categories/rebajas-cascos.svg"
+                alt="Cascos"
+              >
               <h2 style="color:#fff;">Cascos</h2>
             </a>
-            <a href="/chaquetas-para-moto" data-dr="true" class="mtc-link" style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"><img src="/content/images/categories/rebajas-chaquetas.svg" alt="Chaquetas">
+            <a
+              href="/chaquetas-para-moto"
+              data-dr="true"
+              class="mtc-link"
+              style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
+            ><img
+               src="/content/images/categories/rebajas-chaquetas.svg"
+               alt="Chaquetas"
+             >
               <h2 style="color:#fff;">Chaquetas</h2></a>
-            <a href="/guantes-para-moto" data-dr="true" class="mtc-link" style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;">
-              <img src="/content/images/categories/rebajas-guantes.svg" alt="Guantes">
+            <a
+              href="/guantes-para-moto"
+              data-dr="true"
+              class="mtc-link"
+              style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
+            >
+              <img
+                src="/content/images/categories/rebajas-guantes.svg"
+                alt="Guantes"
+              >
               <h2 style="color:#fff;">Guantes</h2>
             </a>
-            <a href="/botas-para-moto" data-dr="true" class="mtc-link" style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;">
-              <img src="/content/images/categories/rebajas-botas.svg" alt="Botas">
+            <a
+              href="/botas-para-moto"
+              data-dr="true"
+              class="mtc-link"
+              style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
+            >
+              <img
+                src="/content/images/categories/rebajas-botas.svg"
+                alt="Botas"
+              >
               <h2 style="color:#fff;">Botas</h2>
             </a>
-            <a href="/Pantalones-para-moto" data-dr="true" class="mtc-link" style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;">
-              <img src="/content/images/categories/rebajas-pantalones.svg" alt="Pantalones">
+            <a
+              href="/Pantalones-para-moto"
+              data-dr="true"
+              class="mtc-link"
+              style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
+            >
+              <img
+                src="/content/images/categories/rebajas-pantalones.svg"
+                alt="Pantalones"
+              >
               <h2 style="color:#fff;">Pantalones</h2></a>
-            <a href="/ropa-mx-para-moto" data-dr="true" class="mtc-link" style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;">
-              <img src="/content/images/categories/rebajas-offroad.svg" alt="Off-Road">
+            <a
+              href="/ropa-mx-para-moto"
+              data-dr="true"
+              class="mtc-link"
+              style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
+            >
+              <img
+                src="/content/images/categories/rebajas-offroad.svg"
+                alt="Off-Road"
+              >
               <h2 style="color:#fff;">Off-Road</h2>
             </a>
           </div> <!---->
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-
 .container {
   margin: 0 auto;
   max-width: 1280px;

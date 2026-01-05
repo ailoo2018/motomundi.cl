@@ -13,7 +13,7 @@ const bgImg = computed(() => { return `url('https://www.motomundi.cl${props.widg
 <template>
 
   <div
-    id="home-block-${widget.id}"
+    :id="`home-block-${widget.id}`"
     class="block-container"
   >
     <section

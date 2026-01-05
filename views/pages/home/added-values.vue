@@ -1,8 +1,16 @@
+<script setup>
 
+const props = defineProps({
+  widget: {
+    type: Object,
+  }
+})
+
+</script>
 
 <template>
   <div
-    id="home-block-1"
+    :id="`home-block-${widget.id}`"
     class="block-container hide-on-small-and-down"
     ng-non-bindable=""
   >

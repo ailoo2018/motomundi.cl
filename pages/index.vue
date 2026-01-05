@@ -11,6 +11,8 @@ import BrandsBlock from "@/views/pages/home/brands-block.vue"
 import FeaturedProductsWithBanner from "@/views/pages/home/featured-products-with-banner.vue"
 import Community from "@/views/pages/home/community.vue"
 import LatestEvents from "@/views/pages/home/latest-events.vue"
+import Seo from "@/views/pages/home/seo.vue"
+import YoutubeLatest from "@/views/pages/home/youtube-latest.vue"
 
 const componentMap = {
   Swiper,
@@ -24,8 +26,11 @@ const componentMap = {
   Community,
   FeaturedProductsWithBanner,
   LatestEvents,
+  Seo,
+  YoutubeLatest,
 }
 
+const { isMobile } = useDevice()
 const store = useConfigStore()
 
 store.skin = 'default'
@@ -46,7 +51,7 @@ const config = useRuntimeConfig()
 const cmsUrl = config.public.cmsBaseUrl
 const productsUrl = config.public.productsBaseUrl
 
-const home = ref()
+
 
 
 
@@ -57,7 +62,10 @@ const { data: homeRs, pending } = await useFetch(`/api/home/home?id=10018`, {
   },
 })
 
-home.value = homeRs.value;
+const widgets = computed( () => {
+
+  return homeRs.value?.widgets.filter(w => !isMobile && !(w.name === "Seo") )
+})
 
 
 useIntersectionObserver([
@@ -70,10 +78,12 @@ useIntersectionObserver([
 
 <template>
 
+
   <div style="background-color: rgb(245, 245, 245)">
   <Component
     :is="componentMap[widget.component]"
-    v-for="widget in home?.widgets || []"
+    v-for="widget in widgets"
+
     :key="widget.id"
     :widget="widget"
   />
