@@ -117,3 +117,11 @@ export const getImageUrl = (guidString, width, domainId) => {
   // Construct the new path
   return "https://www.motomundi.cl/content/products/" + domainId + `/${firstChar}/${secondChar}${thirdChar}/${guid}_${width}.${extension}`
 }
+
+
+export const getDataImageUrl = (guidString, width, domainId) => {
+  let imageUrl = getImageUrl(guidString, width, domainId)
+  return imageUrl
+    .replace("/products/" + domainId, "/uploads/" + domainId + "/_data" )
+    .replace("_600.", "_600_original.")
+}

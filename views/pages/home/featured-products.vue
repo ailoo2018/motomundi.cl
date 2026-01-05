@@ -7,22 +7,45 @@ import { register } from 'swiper/element/bundle'
 const props = defineProps({
   widget: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const widgetId = props.widget.id
 const collectionId = computed(() => props.widget.configuration.collection.id)
 
+const getCollectionUrl = w => {
+  return "/" + w.url
+}
+
 const { data: rs, pending } = await useFetch(`/api/product/collection`, {
-  query: { collectionId },
-  key: `products-fetch-${collectionId.value}` // Explicit key helps hydration
+  query: { collectionId, limit: 30 },
+  key: `products-fetch-${collectionId.value}`, // Explicit key helps hydration
 
 })
 
 console.log("key:" + `products-fetch-${widgetId}-${collectionId.value}`)
 
-const products = computed(() => rs.value?.products)
+const url = computed(() => { return rs.value?.url })
+
+const products = computed(() => {
+  const rawProducts = rs.value?.products || []
+
+  if (rawProducts.length === 0) return []
+
+  // Create a shallow copy to avoid mutating the original fetched data
+  const shuffled = [...rawProducts]
+
+  // Fisher-Yates Shuffle Algorithm
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+
+  // 3. Return only the first 10
+  return shuffled.slice(0, 10)
+})
 
 
 const swiperBreakpoints = {
@@ -54,16 +77,16 @@ register()
     id="home-block-{{widget.id}}"
     class="block-container"
   >
-    <section class="show-products-block" >
+    <section class="show-products-block">
       <VContainer class="v-container">
         <div class="row">
           <div class="col s12 l12">
             <section class="product-list__title d-flex align-center justify-space-between">
               <h2>
-                {{widget.configuration.collection.name}} :
+                {{ widget.configuration.collection.name }}
               </h2>
               <a
-                href="ofertas"
+                :href="url"
                 data-dr="true"
                 class="button button--primary hide-on-small-and-down mtc-link"
               >
@@ -92,8 +115,8 @@ register()
                       navigation="true"
                       :breakpoints="swiperBreakpoints"
                       class="pb-10"
-                      :injectStyles="[
-          `
+                      :inject-styles="[
+                        `
         .swiper-button-next, .swiper-button-prev{
           border: none;
   height: 25px;
@@ -113,7 +136,7 @@ register()
         height: 10px; width: 10px;
         }
         `,
-        ]"
+                      ]"
                     >
                       <swiper-slide
                         v-for="product in products"
@@ -532,9 +555,4 @@ swiper-container:not(.swiper-initialized) swiper-slide {
 .product-list {
   position: relative;
 }
-
-
-
-
-
 </style>

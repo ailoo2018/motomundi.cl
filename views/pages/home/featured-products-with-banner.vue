@@ -11,12 +11,28 @@ const props = defineProps({
 const collectionId = computed(() => props.widget.configuration.collection.id)
 
 const { data: rs, pending } = await useFetch(`/api/product/collection`, {
-  query: { collectionId },
+  query: { collectionId, limit: 30 },
   key: `products-fetch-${collectionId.value}`,
 })
 
-const products = computed(() => rs.value?.products.slice(0,3))
+const products = computed(() => {
+  const rawProducts = rs.value?.products || []
 
+  if (rawProducts.length === 0) return []
+
+  // Create a shallow copy to avoid mutating the original fetched data
+  const shuffled = [...rawProducts]
+
+  // Fisher-Yates Shuffle Algorithm
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+
+  // 3. Return only the first 10
+  return shuffled.slice(0, 3)
+})
 </script>
 
 <template>
@@ -33,7 +49,7 @@ const products = computed(() => rs.value?.products.slice(0,3))
         <div class="row">
           <div class="col s12 l12">
             <section class="product-list__title">
-              <h2>{{ widget.configuration.title }} {{widget.configuration.collection.id}}</h2>
+              <h2>{{ widget.configuration.title }}</h2>
               <a
                 href="{{widget.configuration.collection.url}}"
                 class="button button--primary hide-on-small-and-down mtc-link"
@@ -103,7 +119,6 @@ const products = computed(() => rs.value?.products.slice(0,3))
                 </div>
               </div>
             </section>
-
           </div>
         </div>
       </div>
@@ -256,5 +271,4 @@ const products = computed(() => rs.value?.products.slice(0,3))
   max-width: 95%;
   width: auto;
 }
-
 </style>

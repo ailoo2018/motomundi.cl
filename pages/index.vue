@@ -10,6 +10,7 @@ import SingleBanner from "@/views/pages/home/single-banner.vue"
 import BrandsBlock from "@/views/pages/home/brands-block.vue"
 import FeaturedProductsWithBanner from "@/views/pages/home/featured-products-with-banner.vue"
 import Community from "@/views/pages/home/community.vue"
+import LatestEvents from "@/views/pages/home/latest-events.vue"
 
 const componentMap = {
   Swiper,
@@ -22,6 +23,7 @@ const componentMap = {
   BrandsBlock,
   Community,
   FeaturedProductsWithBanner,
+  LatestEvents,
 }
 
 const store = useConfigStore()
@@ -68,13 +70,14 @@ useIntersectionObserver([
 
 <template>
 
+  <div style="background-color: rgb(245, 245, 245)">
   <Component
     :is="componentMap[widget.component]"
     v-for="widget in home?.widgets || []"
     :key="widget.id"
     :widget="widget"
   />
-
+  </div>
 </template>
 
 <style lang="scss">
