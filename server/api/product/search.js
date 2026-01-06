@@ -4,7 +4,7 @@ export default defineEventHandler(async event => {
   let url = ""
   try {
     const config = useRuntimeConfig()
-    const baseUrl = config.public.productsBaseUrl
+    const baseUrl = config.public.w3BaseUrl
 
 
 

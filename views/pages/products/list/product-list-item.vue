@@ -70,6 +70,7 @@ const props = defineProps(
       <section>
         <div class="prod-list-miniatures" />
       </section>
+
       <section class="item__info">
         <a
           class="mtc-link"
@@ -114,7 +115,7 @@ const props = defineProps(
             >
               {{ formatMoney( product.minPrice ) }}
             </span>
-            <span>
+            <span class="pr-2">
               <img src="/content/images/youtube_icon.svg">
             </span>
           </span>
@@ -270,12 +271,13 @@ const props = defineProps(
 
 .item__bottom {
   align-items: center;
-  /* border-top: 1px solid #d8d8d8; */
+  border-top: 1px solid #d8d8d8;
   display: block;
   display: flex;
   justify-content: space-between;
   margin-top: 6px;
   padding-top: 6px;
+
 }
 
 .item .heading-tag strong {

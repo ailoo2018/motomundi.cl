@@ -19,7 +19,6 @@ if(!props.injectedQuery) {
 
 const { data: rs, pending } = await useFetch(`/api/product/search`, {
   query: query,
-
 })
 
 const products = computed(() => rs.value?.products)

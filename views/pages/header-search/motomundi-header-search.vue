@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
+import { watchDebounced } from '@vueuse/core'
+import SearchFilters from "@/views/pages/products/filter/search-filters.vue";
 
-import ProductListItem from "@/views/pages/products/list/product-list-item.vue";
 
 const sword = ref('')
 const showSearchWindow = ref(false)
 const products = ref([]) // Changed from a plain array to a ref
+const filters = ref()
 const total = ref(0)
 
 // Instead of masterSearch.length, we can just use the sword length
@@ -13,31 +16,32 @@ const canShowDropdown = computed(() => {
 })
 
 // Watcher to handle the search logic
-watch(sword, async (newVal) => {
-  if (newVal.length > 2) {
-    try {
-      // Use $fetch for imperative calls (inside functions/watchers)
-      const rs = await $fetch(`/api/product/collection`, {
-        query: {
-          collectionId: "Dy89DoYBEsu4Eahhuwnu",
-          sword: newVal,
-          limit: 30
-        }
-      })
+watchDebounced(
+  sword,
+  async newVal => {
+    if (newVal.length > 2) {
+      try {
+        // Use $fetch for manual triggers inside watchers/methods
+        const rs = await $fetch(`/api/product/search`, {
+          query: { sword: newVal, limit: 30 },
+        })
 
-      if (rs && rs.products) {
-        products.value = rs.products
-        total.value = rs.products.length
-        showSearchWindow.value = true
+        if (rs && rs.products) {
+          products.value = rs.products
+          filters.value = rs.filters
+          total.value = rs.products.length
+          showSearchWindow.value = true
+        }
+      } catch (e) {
+        console.error("Search error:", e)
       }
-    } catch (e) {
-      console.error("Search error:", e)
+    } else {
+      showSearchWindow.value = false
+      products.value = []
     }
-  } else {
-    showSearchWindow.value = false
-    products.value = []
-  }
-})
+  },
+  { debounce: 500, maxWait: 1000 }, // Configurable delay
+)
 
 const closeSearch = () => {
   showSearchWindow.value = false
@@ -45,8 +49,6 @@ const closeSearch = () => {
 </script>
 
 <template>
-
-
   <VTextField
     v-model="sword"
     width="300"
@@ -55,24 +57,36 @@ const closeSearch = () => {
   />
   <div
     v-if="canShowDropdown"
-    class="search__dropdown">
-
-    <div class="search-dropdown__filters" >
-      Here
+    class="search__dropdown"
+  >
+    <div class="search-dropdown__filters">
+      <SearchFilters :filters="filters" />
     </div>
     <!-- /filters panel -->
 
     <div class="search-dropdown__results">
       <div class="search-results__summary">
         <p>
-          <strong>{{total}}</strong> resultados
+          <strong>{{ total }}</strong> resultados
         </p>
-        <a class="button button--tiny button--light" ng-click="redirectToSearch()">Ver todo</a>
-        <button class="close" @click="showSearchWindow=false;">
-          <svg width="9" height="9" xmlns="http://www.w3.org/2000/svg"
-               class="icon sprite-line-icons">
-            <use href="/content/svg/motomundi.svg#i-icon-cross"
-                 xlink:href="/content/svg/motomundi.svg#i-icon-cross"></use>
+        <a
+          class="button button--tiny button--light"
+          ng-click="redirectToSearch()"
+        >Ver todo</a>
+        <button
+          class="close"
+          @click="showSearchWindow=false;"
+        >
+          <svg
+            width="9"
+            height="9"
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon sprite-line-icons"
+          >
+            <use
+              href="/content/svg/motomundi.svg#i-icon-cross"
+              xlink:href="/content/svg/motomundi.svg#i-icon-cross"
+            />
           </svg>
         </button>
       </div>
@@ -81,35 +95,34 @@ const closeSearch = () => {
       <!-- search results -->
       <div
         v-if="products.length > 0"
-        class="vue-virtual-scroller ready direction-vertical">
+        class="vue-virtual-scroller ready direction-vertical"
+      >
         <div
           infinite-scroll-parent="true"
           infinite-scroll-distance="0.5"
           infinite-scroll-disabled="false"
           infinite-scroll="next()"
-          class="row vue-virtual-scroller__item-wrapper search__panel-results">
-
+          class="row vue-virtual-scroller__item-wrapper search__panel-results"
+        >
           <VRow>
-          <VCol cols="3"
-            v-for="product in products"
-            class="vue-virtual-scroller__item-view col s6 m4 l3">
-            <ProductListItem :product="product" />
-          </VCol>
+            <VCol
+              v-for="product in products"
+              cols="3"
+              class="vue-virtual-scroller__item-view col s6 m4 l3"
+              style="padding: 4px"
+            >
+              <ProductListItem :product="product" />
+            </VCol>
           </VRow>
-
         </div>
-        <div class="vue-virtual-scroller__slot"></div>
+        <div class="vue-virtual-scroller__slot" />
       </div>
       <!-- /search results -->
-
-
     </div>
   </div>
-
 </template>
+
 <style scoped lang="scss">
-
-
 .filters__list li label span {
   font-size: 12px !important;
   font-weight: 500;
