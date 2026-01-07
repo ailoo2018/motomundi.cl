@@ -6,13 +6,20 @@ export default defineEventHandler(async event => {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
+    let body
+    if (event.method === 'GET') {
+      body = { ... getQuery(event) }
+    }else{
+      body = await readBody(event)
+    }
 
 
     //const query = getQuery(event)
-    const body = await readBody(event)
+
     //const params = new URLSearchParams(query)
 
     url = `${baseUrl}/${getDomainId()}/products/search`
+
     const res = await $fetch(url, {
       headers: {
         'Content-Type': 'application/json',
@@ -20,6 +27,15 @@ export default defineEventHandler(async event => {
       method: 'POST',
       body: body, // $fetch does support query parameter
     })
+
+    if (res && res.filters) {
+      for (const f of res.filters) {
+        f.expanded = false
+        f.showExtraContent = false
+        f.buckets.forEach(b => b.checked = false)
+      }
+
+    }
 
     return res
   } catch (error) {

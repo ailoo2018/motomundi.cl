@@ -9,6 +9,9 @@ const showSearchWindow = ref(false)
 const products = ref([]) // Changed from a plain array to a ref
 const filters = ref()
 const total = ref(0)
+const currentQuery = ref([])
+const loading = ref(false)
+
 
 // Instead of masterSearch.length, we can just use the sword length
 const canShowDropdown = computed(() => {
@@ -43,8 +46,6 @@ watchDebounced(
   { debounce: 300, maxWait: 1000 }, // Configurable delay
 )
 
-const currentQuery = ref([])
-const loading = ref(false)
 
 const search = async () => {
   try {
@@ -53,6 +54,7 @@ const search = async () => {
     let body = {
       brands: [],
       models: [],
+      colors: [],
       tags: [],
       sizes: [],
       categories: [],
@@ -84,6 +86,11 @@ const search = async () => {
           body.models.push(t)
         })
       }
+      if (facet.type === "colors") {
+        facet.values.forEach(t => {
+          body.colors.push(t)
+        })
+      }
 
     }
 
@@ -96,23 +103,12 @@ const search = async () => {
 
     if (rs && rs.products) {
       products.value = rs.products
-
-      if(!filters.value) {
+      if (!filters.value)
         filters.value = rs.filters
-        for (const f of filters.value) {
 
-          f.expanded = false
-          f.showExtraContent = false
-          f.buckets.forEach(b => b.checked = false)
-        }
-      }
 
       total.value = rs.products.length
       showSearchWindow.value = true
-
-
-
-
     }
   } catch (e) {
     console.log(e.message)
@@ -122,10 +118,12 @@ const search = async () => {
 }
 
 
-watch(filters, (newVal, oldVal) => {
-
+watch(filters, () => {
 
   if (!sword.value || sword.value.trim().length === 0) {
+    return
+  }
+  if(!filters || !filters.value) {
     return
   }
 
@@ -174,8 +172,7 @@ const closeSearch = () => {
     />
     <VIcon
       icon="tabler-search"
-      class="ma-1 mt-2  pa-2"
-
+      class="ml-2 ma-1 mt-2  pa-2"
       color="white"
     />
   </div>
@@ -252,6 +249,7 @@ const closeSearch = () => {
 }
 .search-control{
   margin-top: 14px;
+  padding: 8px;
   background-color: black;
   border-radius: 8px;
   border: 3px solid black;

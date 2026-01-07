@@ -1,167 +1,46 @@
 <script setup lang="ts">
 import FacetGroup from "@/views/pages/products/filter/facet-group.vue"
+import SearchFilters from "@/views/pages/products/filter/search-filters.vue";
+
+const filters = defineModel({
+  type: Array,
+  default: () => []
+})
+
+const orderBy = ref()
+
+/*        <option
+          value="name:asc"
+          selected="selected"
+        >
+          Orden: Marca
+        </option>
+        <!-- <option value="best_seller" >Popularidad</option> -->
+        <option value="newest:asc">
+          Orden: Novedades
+        </option>
+        <option value="bestseller">
+          Orden: Más Vendidos
+        </option>
+        <option value="price:asc">
+          Orden: Precio Menos a Más
+        </option>
+        <option value="price:desc">
+          Orden: Precio Más a Menos
+        </option>*/
+const sorts = [
+  { id: "name:asc", name: "Orden: Marca" },
+  { id: "newest:asc", name: "Orden: Novedades" },
+  { id: "bestseller", name: "Orden: Más Vendidos" },
+  { id: "price:asc", name: "Orden: Precio Menos a Más" },
+  { id: "price:desc", name: "Orden: Precio Más a Menos" },
+]
+
+orderBy.value = sorts[0]
 
 const isShowFilters = ref(false)
-const isShowCategories = ref(false)
 
-const sliderValues = ref([10, 60])
 
-const ft = {
-  "categories": [
-    {
-      "logo": null,
-      "color": null,
-      "selected": false,
-      "disabled": false,
-      "id": "3643",
-      "count": 5,
-      "name": "Intercomunicadores",
-      "type": 2,
-      "order": 0,
-      "propertyType": 0,
-      "uid": null,
-      "entityId": 3643,
-      "parentId": 0,
-    },
-  ],
-  "context": {},
-  "currentPage": 1,
-  "totalPages": 1,
-  "totalItems": 5,
-  "sword": null,
-  "tires": {
-    "widths": [],
-    "aspects": [],
-    "rims": [],
-  },
-  "selectedFilters": [
-    {
-      "id": "Asmax",
-      "name": "Asmax",
-      "type": 1,
-    },
-  ],
-  "maxPrice": 189900.0,
-  "brands": [
-    {
-      "logo": "a512e50381a942c6828cd5e6929dad9e.jpeg",
-      "color": null,
-      "selected": false,
-      "disabled": false,
-      "id": "Asmax",
-      "count": 5,
-      "name": "Asmax",
-      "type": 1,
-      "order": 0,
-      "propertyType": 0,
-      "uid": null,
-      "entityId": 102205,
-      "parentId": 0,
-    },
-  ],
-  "models": [],
-  "colors": [],
-  "items": [],
-  "sizes": [],
-  "isNewCount": 0,
-  "hasDiscountCount": 0,
-  "facetGroups": [
-    {
-      "id": 0,
-      "name": "Precios",
-      "type": 12,
-      "facets": [
-        {
-          "logo": null,
-          "color": null,
-          "selected": false,
-          "disabled": true,
-          "id": "priceRange|0_38000",
-          "count": 0,
-          "name": "$0-$38.000",
-          "type": 12,
-          "order": 0,
-          "propertyType": 0,
-          "uid": null,
-          "entityId": 0,
-          "parentId": 0,
-        },
-        {
-          "logo": null,
-          "color": null,
-          "selected": false,
-          "disabled": true,
-          "id": "priceRange|38000_76000",
-          "count": 0,
-          "name": "$38.000-$76.000",
-          "type": 12,
-          "order": 0,
-          "propertyType": 0,
-          "uid": null,
-          "entityId": 0,
-          "parentId": 0,
-        },
-        {
-          "logo": null,
-          "color": null,
-          "selected": false,
-          "disabled": true,
-          "id": "priceRange|76000_114000",
-          "count": 0,
-          "name": "$76.000-$114.000",
-          "type": 12,
-          "order": 0,
-          "propertyType": 0,
-          "uid": null,
-          "entityId": 0,
-          "parentId": 0,
-        },
-        {
-          "logo": null,
-          "color": null,
-          "selected": false,
-          "disabled": false,
-          "id": "priceRange|114000_152000",
-          "count": 1,
-          "name": "$114.000-$152.000",
-          "type": 12,
-          "order": 0,
-          "propertyType": 0,
-          "uid": null,
-          "entityId": 0,
-          "parentId": 0,
-        },
-        {
-          "logo": null,
-          "color": null,
-          "selected": false,
-          "disabled": false,
-          "id": "priceRange|152000_190000",
-          "count": 4,
-          "name": "$152.000-$190.000",
-          "type": 12,
-          "order": 0,
-          "propertyType": 0,
-          "uid": null,
-          "entityId": 0,
-          "parentId": 0,
-        },
-      ],
-      "propertyType": 0,
-      "order": 0,
-    },
-  ],
-}
-
-const filterTree = ref(ft)
-
-const selectFacet = facet => {
-  facet.selected = true
-}
-
-const isSelected = () => {
-  return true
-}
 
 const removeAllFilters = () => {
 
@@ -214,94 +93,11 @@ const showFilters  = () => {
                         </div>
                       </li>
 
-                      <!-- categorias -->
-                      <FacetGroup :facet-group="filterTree.categories" />
+
+                      <SearchFilters v-model="filters" />
 
 
 
-
-                      <!-- /categorias -->
-
-                      <!-- precios -->
-                      <li
-                        class="facet"
-                        ng-class="isShowPrecio ? 'expanded' : ''"
-                      >
-                        <button ng-click="showPrecio()">
-                          Precio
-                        </button>
-                        <ul
-                          class="filter__price  ng-hide"
-                          ng-show="isShowPrecio"
-                        >
-                          <li>
-                            <p>
-                              Desde $ <input
-                                id="filter-price-from"
-                                ng-model="minPrice"
-                                type="number"
-                                class="ng-pristine ng-untouched ng-valid ng-not-empty"
-                              >
-                              hasta $ <input
-                                id="filter-price-to"
-                                ng-model="maxPrice"
-                                type="number"
-                                class="ng-pristine ng-untouched ng-valid ng-not-empty"
-                              >
-                            </p>
-                            <div>
-                              <VRangeSlider  color="#d6001c" v-model="sliderValues" />
-                            </div>
-                            <div class="filter__price-buttons">
-                              <button
-                                id="apply-price-filter"
-                                class="button button--tiny"
-                                ng-click="updatePriceRange();"
-                                aaadisabled="disabled"
-                              >
-                                Aplicar
-                              </button>
-                            </div>
-                          </li>
-                        </ul>
-                      </li>
-                      <!-- /precios -->
-                      <!-- marcas -->
-                      <li
-                        class="facet"
-                        ng-class="isShowMarcas ? 'expanded' : ''"
-                        ng-init="isShowMarcas = false;"
-                      >
-                        <button ng-click="isShowMarcas = !isShowMarcas;">
-                          Marcas
-                          <!-- ngIf: getTotalSelected(1) > 0 -->
-                        </button>
-                        <ul
-                          class="facets-mobile__list ng-hide"
-                          ng-show="isShowMarcas"
-                        >
-                          <!-- ngRepeat: brand in havingCount(filterTree.brands, 1) --><li
-                            ng-repeat="brand in havingCount(filterTree.brands, 1)"
-                            class="ng-scope"
-                          >
-                            <span
-                              ng-class="isSelected(brand) ? 'checked' : ''"
-                              ng-click="selectFacet(brand)"
-                              class="fake-checkbox"
-                            >
-                              <span class="ng-binding">Asmax</span>
-                            </span>
-                            <div class="filters__extras">
-                              <strong class="facets__total ng-binding">5</strong>
-                            </div>
-                          </li><!-- end ngRepeat: brand in havingCount(filterTree.brands, 1) -->
-                        </ul>
-                      </li>
-                      <!-- /marcas -->
-                      <!-- modelos -->
-                      <!-- ngIf: filterTree.models.length > 0 -->
-                      <!-- /modelos -->
-                      <!-- colores -->
                       <li
                         class="facet"
                         ng-class="isShowColors ? 'expanded' : ''"
@@ -321,27 +117,7 @@ const showFilters  = () => {
                         </ul>
                       </li>
                       <!-- /colores -->
-                      <!-- tallas -->
-                      <li
-                        class="facet"
-                        ng-class="isShowTallas ? 'expanded' : ''"
-                        ng-init="isShowTallas = false;"
-                      >
-                        <button ng-click="isShowTallas = !isShowTallas;">
-                          Tallas
-                          <!-- ngIf: getTotalSelected(7) > 0 -->
-                        </button>
-                        <ul
-                          class="facets-mobile__list ng-hide"
-                          ng-show="isShowTallas"
-                        >
-                          <!-- ngRepeat: size in filterTree.sizes -->
-                        </ul>
-                      </li>
-                      <!-- /tallas -->
-                      <!-- atributos -->
-                      <!-- ngRepeat: attributeCategory in filterTree.items -->
-                      <!-- /atributos -->
+
                     </ul>
                   </nav>
                 </div>
@@ -441,30 +217,7 @@ const showFilters  = () => {
       </div>
     </div>
     <div class="desktop__sort">
-      <select
-        ng-model="orderBy"
-        class="ng-pristine ng-untouched ng-valid ng-not-empty"
-      >
-        <option
-          value="name:asc"
-          selected="selected"
-        >
-          Orden: Marca
-        </option>
-        <!-- <option value="best_seller" >Popularidad</option> -->
-        <option value="newest:asc">
-          Orden: Novedades
-        </option>
-        <option value="bestseller">
-          Orden: Más Vendidos
-        </option>
-        <option value="price:asc">
-          Orden: Precio Menos a Más
-        </option>
-        <option value="price:desc">
-          Orden: Precio Más a Menos
-        </option>
-      </select>
+      <VSelect v-model="orderBy" :items="sorts" return-object item-value="id" item-title="name"></VSelect>
     </div>
   </div>
 </template>

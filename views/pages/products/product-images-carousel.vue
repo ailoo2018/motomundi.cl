@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<script setup >
 import { SwiperSlide } from "swiper/vue"
 import { register } from "swiper/element"
-import {getImageUrl, getDomainId} from "@core/utils/formatters";
+import {getImageUrl, getDomainId, getYouTubeThumbnail} from "@core/utils/formatters"
 
 
 const props = defineProps(
@@ -13,6 +13,25 @@ const props = defineProps(
   },
 )
 
+const product = ref(props.product)
+const mainSwiperRef = ref(null) // Ref for the main swiper element
+const activeIndex = ref(0)
+
+// Function to navigate
+const slideTo = (index) => {
+  console.log("slideTo: " + index)
+  const swiperEl = mainSwiperRef.value
+  if (swiperEl && swiperEl.swiper) {
+    swiperEl.swiper.slideTo(index)
+  }
+}
+
+// Sync active index when swiper moves
+const onSlideChange = (e) => {
+  console.log("onSlideChange")
+  const [swiper] = e.detail
+  activeIndex.value = swiper.activeIndex
+}
 
 // Configuration for breakpoints (Responsive 5 slides)
 const swiperBreakpoints = {
@@ -22,9 +41,28 @@ const swiperBreakpoints = {
   1280: { slidesPerView: 6, spaceBetween: 10 },
 }
 
-const product = ref(props.product)
+const images = computed( () => {
+  if(!product || !product.value)
+    return []
+
+  const imgs = product.value.images.map( img => { return  {type: "image", ...img} })
+
+
+  if(product.value.videos){
+    product.value.videos.forEach(video =>{ imgs.push({
+      type: "video",
+      urlThumb: getYouTubeThumbnail(video.url),
+      url: getYouTubeThumbnail(video.url, "sddefault"),
+    }) })
+  }
+
+
+  return imgs
+})
 
 console.log("product: " + JSON.stringify(product.value))
+
+
 
 register()
 </script>
@@ -52,7 +90,8 @@ register()
         </svg>
         Importante
       </button>
-      <div class="product__notice-text">4
+      <div class="product__notice-text">
+        4
         <p />
       </div>
     </div>
@@ -60,33 +99,15 @@ register()
       <div class="carousel-content">
         <ClientOnly>
           <swiper-container
+            ref="mainSwiperRef"
             events-prefix="swiper-"
             navigation="true"
-
+            @swiper-slidechange="onSlideChange"
             class="pb-10"
-            :inject-styles="[
-              `
-        .swiper-button-next, .swiper-button-prev{
-          border: none;
-  height: 25px;
-  width: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s;
-          background-color: rgba(0, 0, 0, .6) !important;
-          color: #fff !important;
-          padding-inline: 0.45rem !important;
-          padding-block: 0.45rem !important;
-        }
-        .swiper-button-next svg, .swiper-button-prev svg{
-        height: 10px; width: 10px;
-        }
-        `,
-            ]"
+
           >
             <swiper-slide
-              v-for="image in product.images"
+              v-for="image in images"
               :key="image.id"
             >
               <div class="easyzoom easyzoom--overlay">
@@ -96,9 +117,15 @@ register()
                 >
 
                   <img
-                    class=""
-                    alt="HJC i71 Monocolor"
+                    v-if="image.type === 'image'"
+                    :alt="product.brand.name + product.name"
                     :src="getImageUrl(image.image, 600, getDomainId())"
+                  >
+                  <img
+                    style="width: 100%"
+                    v-if="image.type === 'video'"
+                    :alt="product.brand.name + product.name"
+                    :src="image.url"
                   >
                 </a>
               </div>
@@ -109,43 +136,33 @@ register()
         <!-- dot-navigation -->
         <ul
           class="product-media-nav"
-          style=""
         >
-          <!-- ngRepeat: img in product.images -->
           <li
-            ng-repeat="img in product.images"
+            v-for="(img, index) in images"
             class="ng-scope"
           >
             <button
-              id="carousel-nav-dot-1944232"
-              class="product-media-dot current"
-              data-type="image"
-              data-index="image-0"
-              data-nav-index="0"
-            />
-          </li><!-- end ngRepeat: img in product.images -->
-          <li
-            ng-repeat="img in product.images"
-            class="ng-scope"
-          >
-            <button
-              id="carousel-nav-dot-1944233"
+              :id="`carousel-nav-dot-${img.id}`"
               class="product-media-dot"
               data-type="image"
-              data-index="image-1"
-              data-nav-index="1"
-            />
-          </li><!-- end ngRepeat: img in product.images -->
+              :data-index="`image-${index}`"
+              :data-nav-index="index"
+              @click="slideTo(index)"
+              :class="{ 'current': activeIndex === index }"
 
-          <!-- ngRepeat: video in product.ytVideos -->
+            />
+          </li>
           <li
-            ng-repeat="video in product.ytVideos"
+            v-for="(video, index) in product.ytVideos"
             class="ng-scope"
           >
             <button
               data-type="video"
               data-index="video-2"
               data-nav-index="2"
+              @click="slideTo(product.images.length + index)"
+              :class="{ 'current': activeIndex === (product.images.length + index) }"
+
             >
               <svg
                 width="18"
@@ -160,7 +177,6 @@ register()
             </button>
           </li>
         </ul>
-        <!-- dot-navigation -->
       </div>
     </div>
   </div>
@@ -174,27 +190,27 @@ register()
           <div class="product-thumbs">
             <swiper-container
               events-prefix="swiper-"
+              navigation="true"
               :breakpoints="swiperBreakpoints"
             >
-              <swiper-slide v-for="img in product.images">
-                <div>
+              <swiper-slide v-for="(img, index) in images">
+                <div v-if="img.type === 'image'">
                   <img
-                    style="width: 110px; height: 110px; display: inline-block; opacity: 1;"
+                    style="cursor:pointer; width: 110px; height: 110px; display: inline-block; opacity: 1;"
                     data-index="image-1"
-                    :src="'https://www.motomundi.cl' + getImageUrl(img.image)"
+                    @click="slideTo(index)"
+                    :src="getImageUrl(img.image, 300, getDomainId())"
                   >
+                </div>
+                <div v-if="img.type === 'video'">
+                  <VImg :src="img.urlThumb">
+
+                  </VImg>
                 </div>
               </swiper-slide>
             </swiper-container>
-            <div class="owl-nav disabled">
-              <div class="owl-prev disabled">
-                <button><i class="icon-previous" /></button>
-              </div>
-              <div class="owl-next disabled">
-                <button><i class="icon-next" /></button>
-              </div>
-            </div>
-            <div class="owl-dots disabled" />
+
+
           </div>
         </div>
       </div>
@@ -204,9 +220,107 @@ register()
 </template>
 
 <style scoped lang="scss">
-.carousel-content__wrapper {
-  position: relative;
+/* 1. Style the Circle */
+swiper-container::part(button-prev),
+swiper-container::part(button-next) {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  cursor: pointer;
+
+  /* The size of your circular background */
+  width: 36px;
+  height: 36px;
+  margin-top: -16px; /* Half of height to perfectly center */
+
+  border-radius: 50%;
+  background-color: #a5a5a5;
+  color: #a5a5a5;
+  opacity: .6;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Use padding to "squeeze" the internal SVG to a smaller size */
+  padding: 2px 2px;
+  box-sizing: border-box;
 }
 
 
+/* 2. Position Next Button */
+swiper-container::part(button-next) {
+  right: 10px;
+  left: auto;
+}
+
+/* 3. Position Prev Button */
+swiper-container::part(button-prev) {
+  left: 5px;
+}
+
+/* Create the Custom Carret using ::after */
+swiper-container::part(button-prev)::after{
+  margin: 1px 8px 0 0;
+}
+swiper-container::part(button-next)::after {
+  margin: 1px 4px 0 0;
+}
+
+swiper-container::part(button-prev)::after,
+swiper-container::part(button-next)::after {
+  content: "";
+  width: 40px;
+  height: 40px;
+  background-color: white; /* This is the ICON color */
+
+  /* This creates a clean "Carret" using a mask */
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* Define the Left Carret Shape */
+swiper-container::part(button-prev)::after {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 18 9 12 15 6'%3E%3C/polyline%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 18 9 12 15 6'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* Define the Right Carret Shape */
+swiper-container::part(button-next)::after {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+
+.carousel-content__wrapper {
+  position: relative;
+}
+.product .product-media-nav {
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px 0 30px;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.product .product-media-nav li {
+  padding: 0 5px;
+}
+
+.product .product-media-dot {
+  display: block;
+  width: 11px;
+  height: 11px;
+  border-radius: 200px;
+  background-color: #c3c3c3;
+}
+
+.product .product-media-dot.current, .product .product-media-dot:active, .product .product-media-dot:hover {
+  background-color: #c74044;
+}
 </style>

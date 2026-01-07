@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import ProductsList from "@/views/pages/products/list/products-list.vue"
 
 const route = useRoute()

@@ -10,18 +10,163 @@ const props = defineProps({
 
 let query = null
 const route = useRoute()
-if(!props.injectedQuery) {
+if (!props.injectedQuery) {
   query = route.query
-}{
+} else {
   query = props.injectedQuery
 }
 
+const total = ref(0)
+const totalPages = ref(0)
+const currentPage = ref(1)
+const ignoreNextPageWatch = ref(false)
+const pageSize = ref(60)
+const currentQuery = ref([])
+const loading = ref(false)
+const filters = ref()
+let rs = {}
+const products = ref([])
 
-const { data: rs, pending } = await useFetch(`/api/product/search`, {
-  query: query,
+watch(currentPage, async () => {
+// If this was triggered by a filter change, skip this execution
+  if (ignoreNextPageWatch.value) {
+    ignoreNextPageWatch.value = false
+    
+    return
+  }
+
+  if (process.client) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+  await search()
 })
 
-const products = computed(() => rs.value?.products)
+const search = async () => {
+  try {
+    products.value = []
+    loading.value = true
+
+    let body = {
+      brands: [],
+      models: [],
+      colors: [],
+      tags: [],
+      sizes: [],
+      categories: [],
+      limit: pageSize.value,
+      offset: (currentPage.value - 1) * pageSize.value,
+    }
+
+    var cQuery = JSON.parse(JSON.stringify(currentQuery.value))
+
+    // add baseQuery filters if not selected
+    console.log(JSON.stringify(baseQuery))
+    for (const bq of baseQuery) {
+      const fg = cQuery.find(cq => cq.type === bq.type)
+      if (!fg) {
+        cQuery.push(bq)
+      } else {
+        if (fg && !fg.values && fg.values.length === 0) {
+          fg.values = bq.values
+        }
+      }
+    }
+
+    for (const facet of cQuery) {
+      if (facet.type === "brands") {
+        body.brands = facet.values
+      }
+      if (facet.type === "categories") {
+        body.categories = facet.values
+      }
+
+      if (facet.type === "tags") {
+        facet.values.forEach(t => {
+          body.tags.push(t)
+        })
+      }
+
+      if (facet.type === "sizes") {
+        facet.values.forEach(t => {
+          body.sizes.push(t)
+        })
+      }
+      if (facet.type === "models") {
+        facet.values.forEach(t => {
+          body.models.push(t)
+        })
+      }
+      if (facet.type === "colors") {
+        facet.values.forEach(t => {
+          body.colors.push(t)
+        })
+      }
+
+    }
+
+
+    rs = await $fetch(`/api/product/search`, {
+      key: `product-search-` + JSON.stringify(body),
+      method: "POST",
+      body: body,
+    })
+
+    console.log("RS: " + rs.filters)
+    if (rs && rs.products) {
+      total.value = rs.totalHits
+      totalPages.value = rs.totalHits / pageSize.value
+      products.value = rs.products
+      if (!filters.value)
+        filters.value = rs.filters
+
+    }
+  } catch (e) {
+    console.log(e.message)
+  } finally {
+    loading.value = false
+  }
+}
+
+const baseQuery = []
+
+if (query.categoryId) {
+  baseQuery.push({ type: "categories", values: [query.categoryId] })
+}
+
+
+watch(filters, () => {
+
+  const map = new Map()
+  for (const f of filters.value) {
+    for (const b of f.buckets) {
+      if (b.checked) {
+        if (!map.has(f.type))
+          map.set(f.type, { type: f.type, values: [] })
+        map.get(f.type).values.push(b.id)
+      }
+    }
+  }
+
+  const newQuery = [...map.values()]
+  if (currentQuery.value.length === 0 && newQuery.length === 0) {
+    return
+  }
+
+  if (JSON.stringify(currentQuery.value) !== JSON.stringify(newQuery)) {
+
+    if (currentPage.value !== 1) {
+      ignoreNextPageWatch.value = true // Prevent the watcher from calling search()
+      currentPage.value = 1
+    }
+    console.log("NEW QUERY!" + JSON.stringify(newQuery))
+    console.log("OLD QUERY!" + JSON.stringify(currentQuery.value))
+    currentQuery.value = newQuery
+
+    search()
+  }
+}, { deep: true })
+
+search()
 </script>
 
 <template>
@@ -36,23 +181,32 @@ const products = computed(() => rs.value?.products)
                 style="padding-inline-start: 15px;"
               >
                 Por 'asmax' hemos encontrado
-                <span class="total-results ng-binding">5 </span>
+                <span class="total-results ng-binding">{{ rs?.totalHits }} </span>
                 artículos
               </h1>
             </div>
           </div>
         </div>
         <!-- / page title -->
-        <DesktopFilters />
+        <DesktopFilters v-model="filters" />
       </div>
       <section class="container results-list">
+        <div
+          v-if="loading"
+          class="d-flex justify-center align-center py-12"
+        >
+          <VProgressCircular
+            indeterminate
+            color="primary"
+            size="64"
+          />
+        </div>
         <div class="product-list">
           <div>
             <div
               id="resultscontainer"
               class="row products banner--right has-banner"
             >
-
               <div
                 v-for="product in products"
                 :key="product.id"
@@ -65,6 +219,11 @@ const products = computed(() => rs.value?.products)
         </div>
       </section>
     </section>
+
+    <VPagination
+      v-model="currentPage"
+      :length="totalPages"
+    />
   </div>
 </template>
 

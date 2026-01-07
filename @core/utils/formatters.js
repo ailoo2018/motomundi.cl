@@ -121,7 +121,21 @@ export const getImageUrl = (guidString, width, domainId) => {
 
 export const getDataImageUrl = (guidString, width, domainId) => {
   let imageUrl = getImageUrl(guidString, width, domainId)
+  
   return imageUrl
     .replace("/products/" + domainId, "/uploads/" + domainId + "/_data" )
     .replace("_600.", "_600_original.")
+}
+
+export const getYouTubeThumbnail = (videoId, quality = 'default') => {
+  const qualityMap = {
+    max: 'maxresdefault',
+    sd: 'sddefault',
+    mq: 'mqdefault',
+    default: 'default',
+  }
+
+  const suffix = qualityMap[quality] || qualityMap.max
+  
+  return `https://img.youtube.com/vi/${videoId}/${suffix}.jpg`
 }

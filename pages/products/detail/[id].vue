@@ -16,12 +16,6 @@ const route = useRoute()
 const config = useRuntimeConfig()
 
 const { data: product, pending } = await useFetch(`/api/product/${route.params.id}`)
-/*
-const { data: product, pending } = await useFetch(`/api/product/${route.params.id}`, {
-  baseURL: "http://localhost:3050",
-  key: `product-${route.params.id}` // Explicit key helps hydration
-})
-*/
 
 
 store.skin = 'default'
@@ -33,6 +27,8 @@ definePageMeta({
 </script>
 
 <template>
+
+
   <article v-if="product">
     <div class="container product">
       <section class="row product-main ">
@@ -48,8 +44,8 @@ definePageMeta({
               <div class="product-title">
                 <div class="product-title__container">
                   <h1>
-                    HJC
-                    <strong>i71 Monocolor</strong>
+                    {{product.brand.name}}
+                    <strong>{{product.name}}</strong>
                   </h1>
                   <a
                     href="/hjc"
@@ -59,7 +55,7 @@ definePageMeta({
                     <span>
                       <img
                         onerror="this.style.display='none'"
-                        src="/content/images/brands/34118.webp"
+                        :src="`/content/images/brands/${product.brand.id}.webp`"
                         srcset=""
                         alt="HJC"
                         width="98"
@@ -80,23 +76,13 @@ definePageMeta({
           <ProductImagesCarousel :product="product" />
         </div>
 
-        <!-- product-buy -->
         <div class="col s12 m5 l5">
           <PreProductBanner />
-          <!-- product-buy-panel -->
-          <!-- ngIf: product -->
           <ProductBuyPanel :product="product" />
-
-          <!-- /product-buy-panel -->
         </div>
-        <!-- /product-buy -->
 
-        <!-- packs-container -->
         <div class="packs-container" />
-        <!-- /packs-container -->
 
-        <!-- pswp -->
-        <!-- ngIf: showVideo -->
         <div
           tabindex="-1"
           class="pswp"

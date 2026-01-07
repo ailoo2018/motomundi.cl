@@ -5,11 +5,11 @@ const filters = defineModel({
 })
 
 const MAX_SHOW = 5
+const sliderValues = ref([10, 60])
 
 </script>
 
 <template>
-
   <ul>
 
     <li
@@ -23,7 +23,7 @@ const MAX_SHOW = 5
         class="mt-2 mb-2"
         @click="facetGroup.expanded = !facetGroup.expanded;"
       >
-        {{ facetGroup.name }}
+       {{ facetGroup.name }}
       </button>
       <ul
         v-if="facetGroup.expanded"
@@ -70,7 +70,7 @@ const MAX_SHOW = 5
   </ul>
 </template>
 
-<style>
+<style scoped>
 button:focus, input[type="submit"]:focus, button, input[type="submit"] {
   border-color: #d6001c;
 }

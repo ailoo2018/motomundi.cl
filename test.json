@@ -1,0 +1,394 @@
+{
+  "unitsSold": 5,
+  "rating": 10,
+  "discountAmount": 0,
+  "videos": [
+    {
+      "url": "2FLhHAVFl8Q"
+    }
+  ],
+  "availableInStore": true,
+  "linkName": "2356895-cascos-integrales-agv-k1-s-2023-izan",
+  "features": [
+    {
+      "name": "S",
+      "orderWeight": 77,
+      "id": 1,
+      "type": 0
+    },
+    {
+      "name": "M",
+      "orderWeight": 79,
+      "id": 2,
+      "type": 0
+    },
+    {
+      "name": "L",
+      "orderWeight": 81,
+      "id": 3,
+      "type": 0
+    },
+    {
+      "name": "XL",
+      "orderWeight": 90,
+      "id": 4,
+      "type": 0
+    }
+  ],
+  "tireSpecs": [],
+  "discounts": [
+    {
+      "validThru": "2092-06-09T04:00:00Z",
+      "saleTypes": [
+        {
+          "id": 2
+        }
+      ],
+      "amount": 0,
+      "id": 24,
+      "validFrom": "2021-07-07T00:00:00-04:00",
+      "percent": 30
+    }
+  ],
+  "preOrder": false,
+  "model": {
+    "image": "46110af492e248d1999094a5cfc3b2e7.jpg",
+    "name": "K1 S",
+    "videos": [
+      "2FLhHAVFl8Q"
+    ],
+    "id": 10081
+  },
+  "id": 2356895,
+  "motoOrderWeight": 0,
+  "brand": {
+    "featured": true,
+    "isAvailableForInternet": true,
+    "name": "AGV",
+    "logo": "946661483a4f4f0b8ea2db16121f0380.jpg",
+    "id": 136,
+    "linkName": "Cascos AGV",
+    "showNameInWeb": true
+  },
+  "parentCategories": [
+    {
+      "name": "Cascos Integrales",
+      "isDirectCategory": true,
+      "id": 41
+    }
+  ],
+  "image": "47e853efb87641dfa3035d4569e952e4.png",
+  "images": [
+    {
+      "colorTagsIds": [
+        8,
+        6,
+        11
+      ],
+      "image": "47e853efb87641dfa3035d4569e952e4.png",
+      "colorId": 0,
+      "orderWeight": 0,
+      "id": 2218330
+    },
+    {
+      "colorTagsIds": [],
+      "image": "d366dcb03cf5404baabd8e42229bf4f2.png",
+      "colorId": 0,
+      "orderWeight": 1,
+      "id": 2218331
+    },
+    {
+      "colorTagsIds": [],
+      "image": "0cc17c833fa343b3ad1c277b2a4b4be2.png",
+      "colorId": 0,
+      "orderWeight": 2,
+      "id": 2218332
+    },
+    {
+      "colorTagsIds": [],
+      "image": "2ae6631355304968bbbe78f827c405cc.png",
+      "colorId": 0,
+      "orderWeight": 3,
+      "id": 2218333
+    },
+    {
+      "colorTagsIds": [],
+      "image": "02004800926b42cf964f2f0c154a081a.png",
+      "colorId": 0,
+      "orderWeight": 4,
+      "id": 2218334
+    }
+  ],
+  "isAvailableForInternet": true,
+  "categoryPath": "/Motocicleta/Cascos/Cascos Integrales",
+  "salesTaxes": [
+    {
+      "code": 14,
+      "percentage": 19,
+      "name": "I.V.A. 19%",
+      "id": 7878435
+    }
+  ],
+  "isSimpleProduct": false,
+  "isReserved": false,
+  "motorcycles": [],
+  "tags2": [],
+  "priceComponents": [
+    {
+      "country": "CL",
+      "amount": 249900,
+      "productId": 2356895,
+      "tagId": 0,
+      "isCalculated": false,
+      "thruQuantity": 0,
+      "productItemId": 0,
+      "fromQuantity": 0,
+      "saleTypeId": 0,
+      "isBasePrice": true,
+      "isDiscount": false,
+      "type": 0,
+      "percent": 0,
+      "packId": 0,
+      "price": {
+        "amount": 249900,
+        "unit": "CLP"
+      },
+      "brandId": 0,
+      "typeId": 0,
+      "currency": "CLP",
+      "id": 10653139,
+      "ruleId": 0,
+      "categoryId": 0
+    }
+  ],
+  "availableSizes": [
+    {
+      "name": "M",
+      "orderWeight": 79,
+      "id": "M",
+      "key": "M|79"
+    },
+    {
+      "name": "S",
+      "orderWeight": 77,
+      "id": "S",
+      "key": "S|77"
+    },
+    {
+      "name": "XL",
+      "orderWeight": 90,
+      "id": "XL",
+      "key": "XL|90"
+    }
+  ],
+  "domainId": 1,
+  "tags": [
+    {
+      "categoryOrderWeight": 0,
+      "useInFilter": true,
+      "filter": "29596|Sport / Racing|True|attribute|0|Estilo Piloto",
+      "name": "Sport / Racing",
+      "id": 29596,
+      "type": "attribute",
+      "categoryName": "Estilo Piloto",
+      "categoryId": 746
+    },
+    {
+      "categoryOrderWeight": 0,
+      "useInFilter": false,
+      "filter": "43175|Distribucion 40%|False|tag|0|Cyber Distribucion",
+      "name": "Distribucion 40%",
+      "id": 43175,
+      "type": "tag",
+      "categoryName": "Cyber Distribucion",
+      "categoryId": 3049
+    }
+  ],
+  "hasColor": false,
+  "hasSize": true,
+  "minPrice": 249900,
+  "name": "K1 S (2023) Izan",
+  "maxPrice": 249900,
+  "directCategories": [
+    41
+  ],
+  "googleProductCategory": 0,
+  "code": "",
+  "directCategoryisAvailableForInternet": true,
+  "orderWeight": 0,
+  "inventoryControl": 0,
+  "motorbikeVersion": [],
+  "productItems": [
+    {
+      "codes": "8051019574930",
+      "sizeId": 1,
+      "sword": " Cascos Integrales Cascos Motocicleta AGV K1 S (2023) Izan S Sin Tamaño",
+      "productId": 2356895,
+      "colorId": 0,
+      "description": " Cascos Integrales Cascos Motocicleta AGV K1 S (2023) Izan S Sin Tamaño",
+      "id": 2726664,
+      "barcode2": "",
+      "barcode1": "8051019574930"
+    },
+    {
+      "codes": "8051019574947",
+      "sizeId": 2,
+      "sword": " Cascos Integrales Cascos Motocicleta AGV K1 S (2023) Izan M Sin Tamaño",
+      "productId": 2356895,
+      "colorId": 0,
+      "description": " Cascos Integrales Cascos Motocicleta AGV K1 S (2023) Izan M Sin Tamaño",
+      "id": 2726665,
+      "barcode2": "",
+      "barcode1": "8051019574947"
+    },
+    {
+      "codes": "8051019574954",
+      "sizeId": 3,
+      "sword": " Cascos Integrales Cascos Motocicleta AGV K1 S (2023) Izan L Sin Tamaño",
+      "productId": 2356895,
+      "colorId": 0,
+      "description": " Cascos Integrales Cascos Motocicleta AGV K1 S (2023) Izan L Sin Tamaño",
+      "id": 2726666,
+      "barcode2": "",
+      "barcode1": "8051019574954"
+    },
+    {
+      "codes": "8051019574961",
+      "sizeId": 4,
+      "sword": " Cascos Integrales Cascos Motocicleta AGV K1 S (2023) Izan XL Sin Tamaño",
+      "productId": 2356895,
+      "colorId": 0,
+      "description": " Cascos Integrales Cascos Motocicleta AGV K1 S (2023) Izan XL Sin Tamaño",
+      "id": 2726667,
+      "barcode2": "",
+      "barcode1": "8051019574961"
+    }
+  ],
+  "departments": [
+    {
+      "categoryOrderWeight": 0,
+      "useInFilter": false,
+      "name": "Motocicleta",
+      "id": 8907,
+      "categoryId": 0
+    }
+  ],
+  "categories": [
+    {
+      "name": "Cascos Integrales",
+      "isDirectCategory": true,
+      "id": 41
+    },
+    {
+      "name": "Cascos",
+      "isDirectCategory": false,
+      "id": 4
+    },
+    {
+      "name": "Motocicleta",
+      "isDirectCategory": false,
+      "id": 82141
+    }
+  ],
+  "productType": 0,
+  "createDate": "2022-08-25T16:56:20",
+  "requiresFeaturedSelect": false,
+  "quantityInStock": 14,
+  "summary": "",
+  "mercadoLibre": {},
+  "discountPercent": 0,
+  "hasDiscount": false,
+  "isTaxExempt": false,
+  "requiresLot": false,
+  "fullName": "AGV K1 S (2023) Izan",
+  "propertiesMap": {
+    "property_7": "No, preparado para pinlock",
+    "property_12": "Intermedio",
+    "property_6": "Adulto",
+    "property_11": "n/a",
+    "property_9": "1",
+    "property_10": "2",
+    "property_8": "1.500 gr. (en la primera talla de calota)",
+    "property_3": "Resina termoplástica de alta resistencia",
+    "property_2": "0",
+    "property_5": "Si, desmontable",
+    "property_4": "Doble D",
+    "property_1": "ECE 2206"
+  },
+  "isNew": false,
+  "sword": "Cascos Integrales AGV K1 S (2023) Izan cascos casco integrales agv k1 (2023) izan Sport / Racing Distribucion 40% Cascos Integrales Cascos Motocicleta 8051019574930 S Sin Tamaño 8051019574947 M Sin Tamaño 8051019574954 L Sin Tamaño 8051019574961 XL Sin Tamaño ",
+  "universalQuantity": 14,
+  "properties": [
+    {
+      "name": "Certificación",
+      "id": "Certificación|ECE 2206",
+      "value": "ECE 2206"
+    },
+    {
+      "name": "Lente interno",
+      "id": "Lente interno|0",
+      "value": "0"
+    },
+    {
+      "name": "Calota",
+      "id": "Calota|Resina termoplástica de alta resistencia",
+      "value": "Resina termoplástica de alta resistencia"
+    },
+    {
+      "name": "Tipo de cierre",
+      "id": "Tipo de cierre|Doble D",
+      "value": "Doble D"
+    },
+    {
+      "name": "Mentonera",
+      "id": "Mentonera|Si",
+      "value": "Si"
+    },
+    {
+      "name": "Mentonera",
+      "id": "Mentonera| desmontable",
+      "value": " desmontable"
+    },
+    {
+      "name": "Talla",
+      "id": "Talla|Adulto",
+      "value": "Adulto"
+    },
+    {
+      "name": "Antiempañante",
+      "id": "Antiempañante|No",
+      "value": "No"
+    },
+    {
+      "name": "Antiempañante",
+      "id": "Antiempañante| preparado para pinlock",
+      "value": " preparado para pinlock"
+    },
+    {
+      "name": "Peso",
+      "id": "Peso|1.500 gr. (en la primera talla de calota)",
+      "value": "1.500 gr. (en la primera talla de calota)"
+    },
+    {
+      "name": "Interior extraíble y lavable",
+      "id": "Interior extraíble y lavable|1",
+      "value": "1"
+    },
+    {
+      "name": "Numero de calotas",
+      "id": "Numero de calotas|2",
+      "value": "2"
+    },
+    {
+      "name": "Clasificación Sharp",
+      "id": "Clasificación Sharp|n/a",
+      "value": "n/a"
+    },
+    {
+      "name": "Forma de la cabeza",
+      "id": "Forma de la cabeza|Intermedio",
+      "value": "Intermedio"
+    }
+  ],
+  "imageUrl": "/content/products/undefined/4/7e/47e853efb87641dfa3035d4569e952e4_undefined.png"
+}

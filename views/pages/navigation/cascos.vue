@@ -1,15 +1,14 @@
 <script setup>
-
 const props = defineProps({
   href: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const href = props.href
-
 </script>
+
 <template>
   <!-- cascos  -->
   <VMenu
@@ -24,7 +23,8 @@ const href = props.href
     <template #activator="{ props }">
       <li
         v-bind="props"
-        class="l0 c0 main-nav">
+        class="l0 c0 main-nav"
+      >
         <a :href="href">
           <span>Cascos</span>
         </a>
@@ -106,12 +106,12 @@ const href = props.href
                       class="mtc-link"
                       title="Jet"
                     ><img
-                      src="/content/assets/menu/categories/03-moto-equipacion-carretera-cascos-jet.svg"
-                      title="Jet"
-                      width="40"
-                      height="40"
-                      alt="Cascos jet"
-                    >
+                       src="/content/assets/menu/categories/03-moto-equipacion-carretera-cascos-jet.svg"
+                       title="Jet"
+                       width="40"
+                       height="40"
+                       alt="Cascos jet"
+                     >
                       <p>Jet</p>
                     </a>
 
@@ -120,12 +120,12 @@ const href = props.href
                       class="mtc-link"
                       title="Motocross / Enduro"
                     ><img
-                      src="/content/assets/menu/categories/21-moto-equipacion-motocross-cascos.svg"
-                      title="Motocross / Enduro"
-                      width="40"
-                      height="40"
-                      alt="Cascos motocross"
-                    >
+                       src="/content/assets/menu/categories/21-moto-equipacion-motocross-cascos.svg"
+                       title="Motocross / Enduro"
+                       width="40"
+                       height="40"
+                       alt="Cascos motocross"
+                     >
                       <p>Motocross / Enduro</p>
                     </a>
 
@@ -352,8 +352,7 @@ const href = props.href
 
   <!-- /cascos -->
 </template>
-<style lang="scss">
 
-</style>
+
 
 
