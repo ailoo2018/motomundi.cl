@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       link: [{
         rel: 'icon',
         type: 'image/x-icon',
-        href: process.env.NUXT_APP_BASE_URL+'/favicon-2.png',
+        href: '/favicon-2.png',
       }],
     },
   },

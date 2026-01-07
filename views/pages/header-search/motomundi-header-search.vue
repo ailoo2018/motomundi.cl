@@ -52,7 +52,9 @@ const search = async () => {
 
     let body = {
       brands: [],
+      models: [],
       tags: [],
+      sizes: [],
       categories: [],
       sword: sword.value,
       limit: 30,
@@ -71,6 +73,18 @@ const search = async () => {
           body.tags.push(t)
         })
       }
+
+      if (facet.type === "sizes") {
+        facet.values.forEach(t => {
+          body.sizes.push(t)
+        })
+      }
+      if (facet.type === "models") {
+        facet.values.forEach(t => {
+          body.models.push(t)
+        })
+      }
+
     }
 
 
