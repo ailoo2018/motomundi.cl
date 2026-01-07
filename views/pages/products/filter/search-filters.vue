@@ -1,26 +1,17 @@
 <script setup>
-const props = defineProps({
-  filters: {
-    type: Array,
-  },
+const filters = defineModel({
+  type: Array,
+  default: () => []
 })
 
-const MAX_SHOW = ref(5)
+const MAX_SHOW = 5
 
-if(props.filters) {
-  for (const f of props.filters) {
-    f.expanded = false
-    f.showExtraContent = false
-    f.buckets.forEach(b => b.checked = false)
-  }
-}
-
-const brand =ref({})
-const category = ref({})
 </script>
 
 <template>
+
   <ul>
+
     <li
       v-for="facetGroup in filters"
       v-bind:key="facetGroup.name"
@@ -38,21 +29,15 @@ const category = ref({})
         v-if="facetGroup.expanded"
         class="filters__list pa-3"
       >
-        <li 
+        <li
           v-for="(b, index) in facetGroup.buckets"
           v-bind:key="b.id"
           :class="{'extra-content': index >= MAX_SHOW && !facetGroup.showExtraContent}"
         >
-          <label :for="b.name">
-            <input
-              :id="b.name"
-              v-model="b.checked"
-              type="checkbox"
-              value="{{b.name}}"
-              ng-checked="selectedBrands.indexOf(b.key) !== -1"
-              ng-click="manageBrands(b.key)"
-            >
-            <span>{{ b.name }}</span>
+
+          <label :for="b.name" class="d-flex ">
+            <VCheckbox v-model="b.checked"  />
+            <span  style="position: relative; top: 6px">{{ b.name }}</span>
           </label>
           <div class="filters__extras">
             <strong class="facets__total">{{ b.total }} </strong>
@@ -192,7 +177,7 @@ button:focus, input[type="submit"]:focus, button, input[type="submit"] {
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
+  /*margin-bottom: 5px;*/
 }
 
 .filters__list li label {
@@ -231,6 +216,22 @@ button:focus, input[type="submit"]:focus, button, input[type="submit"] {
 .filter.expanded > button:after {
   background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIyIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNFQjAwMTIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjI4IiBkPSJNMTIuNDMuNzc0SDEuNTciLz48L3N2Zz4=) 50% no-repeat;
 }
+
+.fake-checkbox span:before, .fake-radio span:before {
+  border: 1px solid #000;
+  content: "";
+  display: block;
+  flex: 0 0 18px;
+  height: 18px;
+  margin-right: 8px;
+  transition: .2s;
+  width: 18px;
+}
+
+.fake-checkbox.checked span:before {
+  background: #000 url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSI4Ij48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjgiIGQ9Ik05IDFMMy41IDYuNSAxIDQiLz48L3N2Zz4=) 50% no-repeat;
+}
+/*
 
 [type=checkbox] + span {
   cursor: pointer;
@@ -279,6 +280,7 @@ button:focus, input[type="submit"]:focus, button, input[type="submit"] {
   pointer-events: none;
   position: absolute;
 }
+*/
 
 button, input, optgroup, select, textarea {
   border-radius: 0;

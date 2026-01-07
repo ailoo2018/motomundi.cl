@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<script setup>
 import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
 import { watchDebounced } from '@vueuse/core'
-import SearchFilters from "@/views/pages/products/filter/search-filters.vue";
+import SearchFilters from "@/views/pages/products/filter/search-filters.vue"
 
 
 const sword = ref('')
@@ -15,23 +15,23 @@ const canShowDropdown = computed(() => {
   return showSearchWindow.value && sword.value.length > 2
 })
 
+const onChange = val => {
+  console.log("Features selected changed!", val)
+}
+
 // Watcher to handle the search logic
 watchDebounced(
   sword,
-  async newVal => {
+  async (newVal, oldVal) => {
     if (newVal.length > 2) {
       try {
         // Use $fetch for manual triggers inside watchers/methods
-        const rs = await $fetch(`/api/product/search`, {
-          query: { sword: newVal, limit: 30 },
-        })
-
-        if (rs && rs.products) {
-          products.value = rs.products
-          filters.value = rs.filters
-          total.value = rs.products.length
-          showSearchWindow.value = true
+        if(newVal !== oldVal) {
+          filters.value = null
         }
+
+        search()
+
       } catch (e) {
         console.error("Search error:", e)
       }
@@ -40,8 +40,108 @@ watchDebounced(
       products.value = []
     }
   },
-  { debounce: 500, maxWait: 1000 }, // Configurable delay
+  { debounce: 300, maxWait: 1000 }, // Configurable delay
 )
+
+const currentQuery = ref([])
+const loading = ref(false)
+
+const search = async () => {
+  try {
+    loading.value = true
+
+    let body = {
+      brands: [],
+      tags: [],
+      categories: [],
+      sword: sword.value,
+      limit: 30,
+    }
+
+    for (const facet of currentQuery.value) {
+      if (facet.type === "brands") {
+        body.brands = facet.values
+      }
+      if (facet.type === "categories") {
+        body.categories = facet.values
+      }
+
+      if (facet.type === "tags") {
+        facet.values.forEach(t => {
+          body.tags.push(t)
+        })
+      }
+    }
+
+
+    const rs = await $fetch(`/api/product/search`, {
+      method: "POST",
+      body: body,
+    })
+
+
+    if (rs && rs.products) {
+      products.value = rs.products
+
+      if(!filters.value) {
+        filters.value = rs.filters
+        for (const f of filters.value) {
+
+          f.expanded = false
+          f.showExtraContent = false
+          f.buckets.forEach(b => b.checked = false)
+        }
+      }
+
+      total.value = rs.products.length
+      showSearchWindow.value = true
+
+
+
+
+    }
+  } catch (e) {
+    console.log(e.message)
+  } finally {
+    loading.value = false
+  }
+}
+
+
+watch(filters, (newVal, oldVal) => {
+
+
+  if (!sword.value || sword.value.trim().length === 0) {
+    return
+  }
+
+  const map = new Map()
+  for (const f of filters.value) {
+    for (const b of f.buckets) {
+      if (b.checked) {
+        if (!map.has(f.type))
+          map.set(f.type, { type: f.type, values: [] })
+        map.get(f.type).values.push(b.id)
+      }
+    }
+  }
+
+  const newQuery = [...map.values()]
+  if (currentQuery.value.length === 0 && newQuery.length === 0) {
+    return
+  }
+
+  if (JSON.stringify(currentQuery.value) !== JSON.stringify(newQuery)) {
+    console.log("NEW QUERY!" + JSON.stringify(newQuery))
+    console.log("OLD QUERY!" + JSON.stringify(currentQuery.value))
+    currentQuery.value = newQuery
+    search()
+
+  }
+
+
+}, { deep: true })
+
 
 const closeSearch = () => {
   showSearchWindow.value = false
@@ -49,18 +149,28 @@ const closeSearch = () => {
 </script>
 
 <template>
-  <VTextField
-    v-model="sword"
-    width="300"
-    style="background-color: white;"
-    @focus="showSearchWindow = sword.length > 2"
-  />
+  <div class="d-flex search-control">
+
+    <VTextField
+      v-model="sword"
+      width="300"
+      variant="flat"
+      style="background-color: white;"
+      @focus="showSearchWindow = sword.length > 2"
+    />
+    <VIcon
+      icon="tabler-search"
+      class="ma-1 mt-2  pa-2"
+
+      color="white"
+    />
+  </div>
   <div
     v-if="canShowDropdown"
     class="search__dropdown"
   >
     <div class="search-dropdown__filters">
-      <SearchFilters :filters="filters" />
+      <SearchFilters v-model="filters" />
     </div>
     <!-- /filters panel -->
 
@@ -104,7 +214,7 @@ const closeSearch = () => {
           infinite-scroll="next()"
           class="row vue-virtual-scroller__item-wrapper search__panel-results"
         >
-          <VRow>
+          <VRow style="margin:0px;">
             <VCol
               v-for="product in products"
               cols="3"
@@ -123,6 +233,16 @@ const closeSearch = () => {
 </template>
 
 <style scoped lang="scss">
+.v-field {
+  border-radius: 0px;
+}
+.search-control{
+  margin-top: 14px;
+  background-color: black;
+  border-radius: 8px;
+  border: 3px solid black;
+}
+
 .filters__list li label span {
   font-size: 12px !important;
   font-weight: 500;
@@ -422,7 +542,6 @@ const closeSearch = () => {
   padding: 2px 10px;
   text-align: center !important;
 }
-
 
 
 .search__dropdown .search-results__summary .close use {

@@ -10,7 +10,6 @@ export default defineEventHandler(async event => {
   if(!limit)
     limit = 10
 
-  console.log(`calling: ${baseUrl}/products/collections/${collectionId}`)
 
 
   var rs = await $fetch(`${baseUrl}/${getDomainId()}/products/collections/${collectionId}?limit=${limit}`, {
@@ -22,7 +21,6 @@ export default defineEventHandler(async event => {
 
   })
 
-  console.log("rs: " + JSON.stringify(rs))
 
   return rs;
 })

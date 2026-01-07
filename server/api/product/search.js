@@ -8,13 +8,17 @@ export default defineEventHandler(async event => {
 
 
 
-    const query = getQuery(event)
-    const params = new URLSearchParams(query)
+    //const query = getQuery(event)
+    const body = await readBody(event)
+    //const params = new URLSearchParams(query)
 
     url = `${baseUrl}/${getDomainId()}/products/search`
     const res = await $fetch(url, {
-      method: 'GET',
-      query: query, // $fetch does support query parameter
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: body, // $fetch does support query parameter
     })
 
     return res
