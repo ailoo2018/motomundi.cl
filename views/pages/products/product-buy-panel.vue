@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import Financing from "@/pages/products/detail/financing.vue"
 
 
@@ -11,7 +11,54 @@ const props = defineProps(
   },
 )
 
+const emit = defineEmits(['update:size', 'update:color'])
+const isShowCbo = ref(false)
+const showSizeChart = ref(false)
+const selectedSize = ref()
+const selectedColor = ref()
+
+const getColorImageUrl = colorId => {
+  var image = product.value.images.find(img => img.colorId === colorId)
+  if(!image){
+    return getImageUrl(product.value.image, 600, getDomainId())
+  }
+
+  return getImageUrl(image.image, 600, getDomainId())
+
+}
+
+const selectColor = color => {
+  selectedColor.value = color
+  emit('update:color', color)
+}
+
+const onSelectSize = size => {
+  selectedSize.value = size
+  emit('update:size', size)
+}
+
+const isColorAvailable = color => {
+  if(!color)
+    return false
+
+  const prodItem = product.value.productItems.find(pit => pit.colorId === color.id)
+  if(prodItem){
+    return prodItem.quantityInStock > 0
+  }
+
+
+  return false
+}
+
 const product = ref(props.product)
+
+const colors = computed(() => {
+  return product?.value.features.filter(f => f.type === 1)
+})
+
+const sizes = computed(() => {
+  return product?.value.features.filter(f => f.type === 0)
+})
 </script>
 
 <template>
@@ -99,79 +146,51 @@ const product = ref(props.product)
       ng-if="product.type == 0"
       class="ng-scope"
     >
-      <!-- colors -->
+
       <!-- ngIf: product.colors.length > 0 -->
       <div
-        v-if="product.colors?.length > 0"
+        v-if="colors.length > 0"
         class="row ng-scope"
         style="margin-bottom: 16px;"
       >
         <div class="col s12">
           <div class="product-colors ">
             <div class="product-sizes__header">
-              <h2>Elige tu color</h2>
+              <h2>Elige tu color {{ selectedColor }}</h2>
             </div>
             <div class="colors-form product-wrapper product-detail">
               <div class="color-tile swatch-tile-container product-data">
                 <button
-                  v-for="color in product.colors"
-                  class="color-attribute ng-scope"
-                  title="Negro Matte"
-                  aria-label="Negro Matte"
-                  ng-click="selectColor(color)"
+                  v-for="color in colors"
+                  class="color-attribute"
+                  :title="color.name"
+                  :aria-label="color.name"
+                  @click="selectColor(color)"
                 >
                   <span
-                    data-attr-value="424"
-                    data-displayvalue="Negro Matte"
-                    class="swatch color-value swatch-value selectable available lazyloaded selected"
-                    ng-class="{ 'selected': isColorSelected(color), 'unavailable' : !isColorAvailable(color)}"
-                    style="background-image: url(&quot;https://www.motomundi.cl/Content/products/1/2/47/247b2ce5b24f4824908905c70907bc2a_600.jpg&quot;);"
+                    class="swatch color-value swatch-value selectable available"
+                    :class="{ 'selected': selectedColor?.id === color.id, 'unavailable' : !isColorAvailable(color)}"
+                    :style="`background-image: url(&quot;${getColorImageUrl(color.id, 600, getDomainId())}&quot;);`"
                   />
-                  <span
-                    id="013"
-                    class="sr-only selected-assistive-text"
-                  >selected</span>
-                </button><!-- end ngRepeat: color in product.colors --><button
-                  class="color-attribute ng-scope"
-                  title="Nardo Grey"
-                  aria-label="Nardo Grey"
-                  ng-click="selectColor(color)"
-                  ng-repeat="color in product.colors"
-                >
-                  <span
-                    data-attr-value="66903"
-                    data-displayvalue="Nardo Grey"
-                    class="swatch color-value swatch-value  selectable available lazyloaded "
-                    ng-class="{ 'selected': isColorSelected(color), 'unavailable' : !isColorAvailable(color)}"
-                    style="background-image: url(&quot;https://www.motomundi.cl/Content/products/1/0/68/0689f2cf61b04c119d195db458525b7d_600.jpg&quot;);"
-                  />
-                  <span
-                    id="013"
-                    class="sr-only selected-assistive-text"
-                  >selected</span>
-                </button><!-- end ngRepeat: color in product.colors -->
+                  <span class="sr-only selected-assistive-text">selected</span>
+                </button>
 
               </div>
             </div>
 
           </div>
         </div>
-      </div><!-- end ngIf: product.colors.length > 0 -->
-      <!-- /colors -->
+      </div>
 
       <!-- sizes -->
 
-      <!-- ngIf: !product.isSimpleProduct --><div
-
-        ng-if="!product.isSimpleProduct"
+      <!-- ngIf: !product.isSimpleProduct -->
+      <div
+        v-if="!product.isSimpleProduct"
         class="row ng-scope"
         style="margin-top: 20px;"
       >
-        <div
-
-          class="col s12"
-          ng-init="isShowCbo = getIsShowCbo();"
-        >
+        <div class="col s12">
           <div class="product-sizes">
             <div class="product-sizes__header">
               <h2>Elige tu talla</h2>
@@ -180,253 +199,65 @@ const product = ref(props.product)
                 <div>
                   <button
                     id="size-guide-button"
-                    data-v-762b5eeb=""
-
                     type="button"
-                    ng-click="page.showSizeChart = !page.showSizeChart"
                     class="size_guide_button"
+                    @click="showSizeChart = !showSizeChart"
                   >
-                    <span data-v-762b5eeb="">
+                    <span>
                       <svg
-
-                        data-v-762b5eeb=""
                         width="18"
                         height="8"
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon sprite-line-icons"
                       >
                         <use
-
-                          data-v-762b5eeb=""
                           href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-rule"
                           xlink:href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-rule"
                         /></svg>
                       Guía de tallas
                     </span>
                   </button>
-
-
-                  <!-- chart-modal -->
-                  <!-- ngIf: page.showSizeChart -->
-                  <!-- /chart-modal -->
-
-
                 </div>
               </div>
-              <!-- /guia de tallas -->
+
             </div>
+
+            <p>
+              Selected color: {{ selectdColor }} end <br>
+            </p>
 
             <!-- sizes-form -->
             <div class="sizes-form">
-              <!-- ngIf: !isShowCbo --><div
-
-
-                ng-if="!isShowCbo"
+              <div
+                v-if="!isShowCbo"
                 class="default-selector-container ng-scope"
               >
-
-
-                <!-- ngRepeat: size in product.sizes --><div
-
-                                                          data-size-name="XS"
-                                                          class="radio ng-scope"
-                                                          ng-repeat="size in product.sizes"
-                                                        >
-
-                                                          <div
-
-                                                            class="paack-2h-label"
-                                                            style="display: none;"
-                                                          >
-                                                            2H
-                                                          </div>
-                                                          <input
-                                                            id="size-59"
-
-                                                            type="radio"
-                                                            ng-model="productForm.selectedSize"
-                                                            ng-class="{ 'oosk': !isSizeAvailable(size)}"
-                                                            ng-checked="isSizeSelected(size)"
-                                                            class="ng-pristine ng-untouched ng-valid ng-empty oosk"
-                                                            name="41"
-                                                          >
-                                                          <label
-
-                                                            ng-click="onSelectSize(size)"
-                                                            class="ng-binding"
-                                                          >
-                                                            XS
-                                                            <span class="oosk__badge" />
-                                                          </label>
-                                                        </div><!-- end ngRepeat: size in product.sizes --><div
-
-                                                          data-size-name="S"
-                                                          class="radio ng-scope"
-                                                          ng-repeat="size in product.sizes"
-                                                        >
-
-                                                          <div
-
-                                                            class="paack-2h-label"
-                                                            style="display: none;"
-                                                          >
-                                                            2H
-                                                          </div>
-                                                          <input
-                                                            id="size-1"
-
-                                                            type="radio"
-                                                            ng-model="productForm.selectedSize"
-                                                            ng-class="{ 'oosk': !isSizeAvailable(size)}"
-                                                            ng-checked="isSizeSelected(size)"
-                                                            class="ng-pristine ng-untouched ng-valid ng-empty oosk"
-                                                            name="43"
-                                                          >
-                                                          <label
-
-                                                            ng-click="onSelectSize(size)"
-                                                            class="ng-binding"
-                                                          >
-                                                            S
-                                                            <span class="oosk__badge" />
-                                                          </label>
-                                                        </div><!-- end ngRepeat: size in product.sizes --><div
-
-                  data-size-name="M"
+                <div
+                  v-for="size in sizes"
                   class="radio ng-scope"
-                  ng-repeat="size in product.sizes"
                 >
-
                   <div
-
                     class="paack-2h-label"
                     style="display: none;"
                   >
                     2H
                   </div>
                   <input
-                    id="size-2"
-
+                    :id="'size-' + size.id"
+                    v-model="selectedSize"
+                    :value="size"
                     type="radio"
-                    ng-model="productForm.selectedSize"
-                    ng-class="{ 'oosk': !isSizeAvailable(size)}"
-                    ng-checked="isSizeSelected(size)"
-                    class="ng-pristine ng-untouched ng-valid ng-empty oosk"
-                    name="45"
+                    class="oosk"
                   >
-                  <label
-
-                    ng-click="onSelectSize(size)"
-                    class="ng-binding"
-                  >
-                    M
-                    <span class="oosk__badge" />
-                  </label>
-                </div><!-- end ngRepeat: size in product.sizes --><div
-
-                  data-size-name="L"
-                  class="radio ng-scope"
-                  ng-repeat="size in product.sizes"
-                >
-
-                  <div
-
-                    class="paack-2h-label"
-                    style="display: none;"
-                  >
-                    2H
-                  </div>
-                  <input
-                    id="size-3"
-
-                    type="radio"
-                    ng-model="productForm.selectedSize"
-                    ng-class="{ 'oosk': !isSizeAvailable(size)}"
-                    ng-checked="isSizeSelected(size)"
-                    class="ng-pristine ng-untouched ng-valid ng-empty oosk"
-                    name="47"
-                  >
-                  <label
-
-                    ng-click="onSelectSize(size)"
-                    class="ng-binding"
-                  >
-                    L
+                  <label @click="onSelectSize(size)">
+                    {{ size.name }}
                     <span class="oosk__badge" />
                   </label>
                 </div>
-                <div
-
-                  data-size-name="XL"
-                  class="radio ng-scope"
-                  ng-repeat="size in product.sizes"
-                >
-
-                  <div
-
-                    class="paack-2h-label"
-                    style="display: none;"
-                  >
-                    2H
-                  </div>
-                  <input
-                    id="size-4"
-
-                    type="radio"
-                    ng-model="productForm.selectedSize"
-                    ng-class="{ 'oosk': !isSizeAvailable(size)}"
-                    ng-checked="isSizeSelected(size)"
-                    class="ng-pristine ng-untouched ng-valid ng-empty"
-                    name="49"
-                  >
-                  <label
-
-                    ng-click="onSelectSize(size)"
-                    class="ng-binding"
-                  >
-                    XL
-                    <span class="oosk__badge" />
-                  </label>
-                </div>
-                <div
-                  data-size-name="2XL"
-                  class="radio ng-scope"
-                  ng-repeat="size in product.sizes"
-                >
-
-                  <div
-
-                    class="paack-2h-label"
-                    style="display: none;"
-                  >
-                    2H
-                  </div>
-                  <input
-                    id="size-5"
-
-                    type="radio"
-                    ng-model="productForm.selectedSize"
-                    ng-class="{ 'oosk': !isSizeAvailable(size)}"
-                    ng-checked="isSizeSelected(size)"
-                    class="ng-pristine ng-untouched ng-valid ng-empty"
-                    name="51"
-                  >
-                  <label
-
-                    ng-click="onSelectSize(size)"
-                    class="ng-binding"
-                  >
-                    2XL
-                    <span class="oosk__badge" />
-                  </label>
-                </div><!-- end ngRepeat: size in product.sizes -->
-
-
-              </div><!-- end ngIf: !isShowCbo -->
-              <!-- /sizes-form -->
-              <!-- ngIf: isShowCbo -->
-
+              </div>
             </div>
+
+
             <!-- oosk -->
             <div
               id="soofs"
@@ -610,6 +441,10 @@ const product = ref(props.product)
 </template>
 
 <style scoped lang="scss">
+.product-wrapper.product-detail .swatch.color-value.selected, .product-wrapper.product-detail .swatch.size-value.selected {
+  border-color: #000;
+}
+
 /* product info */
 .product-buy-panel__price {
   background-color: #f5f5f5;
@@ -684,7 +519,6 @@ const product = ref(props.product)
   display: flex;
   justify-content: center;
 }
-
 
 
 .buy-button {
@@ -901,7 +735,6 @@ const product = ref(props.product)
 }
 
 
-
 #reviews button, input, optgroup, select, textarea {
   border-radius: 0;
   box-sizing: border-box !important;
@@ -1076,5 +909,9 @@ li .mtc-link, li > a {
   background-color: hsla(0, 0%, 72%, .1);
   border-color: #ccc;
   box-shadow: inset 0 0 0 1px #eee;
+}
+.product-wrapper.product-detail .swatch.color-value.unavailable {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 </style>

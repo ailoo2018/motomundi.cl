@@ -13,7 +13,6 @@ const props = defineProps(
 
 const product = ref(props.product)
 
-console.log("In recommend: " + JSON.stringify(product.value))
 
 // const rs = await fetchRecommendProducts(props.product.id, 10)
 /*

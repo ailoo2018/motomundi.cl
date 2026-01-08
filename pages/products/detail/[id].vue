@@ -10,6 +10,7 @@ import Recommend from "@/views/pages/products/recommend.vue"
 
 const store = useConfigStore()
 const productForm = ref()
+const showVideoDialog = ref(false)
 
 const route = useRoute()
 
@@ -17,6 +18,10 @@ const config = useRuntimeConfig()
 
 const { data: product, pending } = await useFetch(`/api/product/${route.params.id}`)
 
+const onShowVideo = (videoId) => {
+  console.log("showVideo: " + videoId)
+  showVideoDialog.value = true
+}
 
 store.skin = 'default'
 definePageMeta({
@@ -73,7 +78,7 @@ definePageMeta({
           <ShareComponent />
           <!-- /share -->
 
-          <ProductImagesCarousel :product="product" />
+          <ProductImagesCarousel :product="product" @on-show-video="onShowVideo" />
         </div>
 
         <div class="col s12 m5 l5">
@@ -83,64 +88,9 @@ definePageMeta({
 
         <div class="packs-container" />
 
-        <div
-          tabindex="-1"
-          class="pswp"
-          role="dialog"
-          aria-hidden="true"
-        >
-          <div class="pswp__bg" />
-          <div class="pswp__scroll-wrap">
-            <div class="pswp__container">
-              <div class="pswp__item" />
-              <div class="pswp__item" />
-              <div class="pswp__item" />
-            </div>
-            <div class="pswp__ui pswp__ui--hidden">
-              <div class="pswp__top-bar">
-                <div class="pswp__counter" />
-                <button
-                  title="Close (Esc)"
-                  class="pswp__button pswp__button--close"
-                />
-                <button
-                  title="Share"
-                  class="pswp__button pswp__button--share"
-                />
-                <button
-                  title="Toggle fullscreen"
-                  class="pswp__button pswp__button--fs"
-                />
-                <button
-                  title="Zoom in/out"
-                  class="pswp__button pswp__button--zoom"
-                />
 
-                <div class="pswp__preloader">
-                  <div class="pswp__preloader__icn">
-                    <div class="pswp__preloader__cut">
-                      <div class="pswp__preloader__donut" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip" />
-              </div>
-              <button
-                title="Previous (arrow left)"
-                class="pswp__button pswp__button--arrow--left"
-              />
-              <button
-                title="Next (arrow right)"
-                class="pswp__button pswp__button--arrow--right"
-              />
-              <div class="pswp__caption">
-                <div class="pswp__caption__center" />
-              </div>
-            </div>
-          </div>
-        </div>
+
+
       </section>
 
 
@@ -148,9 +98,50 @@ definePageMeta({
 
     </div>
   </article>
+
+  <VDialog v-model="showVideoDialog" max-width="800">
+    <VCard>
+      <VCardTitle class="d-flex justify-space-between pa-2">
+        <h1 class="pa-2">{{product.fullName}}}</h1>
+        <div>
+        <VBtn icon="tabler-x" variant="text" @click="showVideoDialog = false" />
+        </div>
+      </VCardTitle>
+
+      <VCardText class="pa-1">
+        <div class="video-container">
+          <iframe
+            src="https://www.youtube.com/embed/npaJwfAZzQE"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </VCardText>
+    </VCard>
+  </VDialog>
+
 </template>
 
 <style scoped lang="scss">
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .container {
   margin: 0 auto;
   max-width: 1280px;

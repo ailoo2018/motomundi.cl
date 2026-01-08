@@ -1,8 +1,7 @@
-<script setup >
+<script setup>
 import { SwiperSlide } from "swiper/vue"
 import { register } from "swiper/element"
-import {getImageUrl, getDomainId, getYouTubeThumbnail} from "@core/utils/formatters"
-
+import { getImageUrl, getDomainId, getYouTubeThumbnail } from "@core/utils/formatters"
 
 const props = defineProps(
   {
@@ -13,23 +12,38 @@ const props = defineProps(
   },
 )
 
+const emit = defineEmits(['onShowVideo'])
+
 const product = ref(props.product)
 const mainSwiperRef = ref(null) // Ref for the main swiper element
 const activeIndex = ref(0)
 
 // Function to navigate
-const slideTo = (index) => {
+const slideTo = index => {
   console.log("slideTo: " + index)
+
   const swiperEl = mainSwiperRef.value
   if (swiperEl && swiperEl.swiper) {
     swiperEl.swiper.slideTo(index)
   }
 }
 
+const slideToAndShowView = ( index, video) => {
+  slideTo(index)
+
+  emit("onShowVideo", video.videoId)
+}
+
+const showVideo = video => {
+  emit("onShowVideo", video.videoId)
+}
+
 // Sync active index when swiper moves
-const onSlideChange = (e) => {
+const onSlideChange = e => {
   console.log("onSlideChange")
+
   const [swiper] = e.detail
+
   activeIndex.value = swiper.activeIndex
 }
 
@@ -42,27 +56,39 @@ const swiperBreakpoints = {
 }
 
 const images = computed( () => {
-  if(!product || !product.value)
+  if(!product.value)
     return []
 
-  const imgs = product.value.images.map( img => { return  {type: "image", ...img} })
-
-
+  let imgs = []
   if(product.value.videos){
     product.value.videos.forEach(video =>{ imgs.push({
       type: "video",
+      videoId: video.url,
       urlThumb: getYouTubeThumbnail(video.url),
       url: getYouTubeThumbnail(video.url, "sddefault"),
     }) })
   }
 
+  product.value.images.map( img => { return  { type: "image", ...img } }).forEach(i => imgs.push(i))
+
+
+
+
 
   return imgs
 })
 
-console.log("product: " + JSON.stringify(product.value))
 
-
+onMounted(() => {
+  // Check if videos exist and slide to index 1 on load
+  if (product.value?.videos?.length > 0) {
+    // We use nextTick or a small timeout because Swiper Element
+    // initialization can sometimes be asynchronous
+    nextTick(() => {
+      slideTo(1)
+    })
+  }
+})
 
 register()
 </script>
@@ -102,9 +128,8 @@ register()
             ref="mainSwiperRef"
             events-prefix="swiper-"
             navigation="true"
-            @swiper-slidechange="onSlideChange"
             class="pb-10"
-
+            @swiper-slidechange="onSlideChange"
           >
             <swiper-slide
               v-for="image in images"
@@ -112,20 +137,27 @@ register()
             >
               <div class="easyzoom easyzoom--overlay">
                 <a
+                  v-if="image.type === 'image'"
                   :href="image.url"
                   ng-click="showImageZoom($index, $event);"
                 >
 
                   <img
-                    v-if="image.type === 'image'"
+
                     :alt="product.brand.name + product.name"
                     :src="getImageUrl(image.image, 600, getDomainId())"
                   >
+
+                </a>
+
+                <a @click="showVideo(image)">
                   <img
-                    style="width: 100%"
                     v-if="image.type === 'video'"
+                    style="width: 100%"
+
                     :alt="product.brand.name + product.name"
                     :src="image.url"
+
                   >
                 </a>
               </div>
@@ -133,36 +165,28 @@ register()
           </swiper-container>
         </ClientOnly>
 
-        <!-- dot-navigation -->
-        <ul
-          class="product-media-nav"
-        >
+        <ul class="product-media-nav">
           <li
             v-for="(img, index) in images"
             class="ng-scope"
           >
             <button
+              v-if="img.type === 'image'"
               :id="`carousel-nav-dot-${img.id}`"
               class="product-media-dot"
               data-type="image"
               :data-index="`image-${index}`"
               :data-nav-index="index"
-              @click="slideTo(index)"
               :class="{ 'current': activeIndex === index }"
-
+              @click="slideTo(index)"
             />
-          </li>
-          <li
-            v-for="(video, index) in product.ytVideos"
-            class="ng-scope"
-          >
             <button
+              v-if="img.type === 'video'"
               data-type="video"
               data-index="video-2"
               data-nav-index="2"
-              @click="slideTo(product.images.length + index)"
-              :class="{ 'current': activeIndex === (product.images.length + index) }"
-
+              :class="{ 'current': activeIndex === index }"
+              @click="slideTo( index)"
             >
               <svg
                 width="18"
@@ -198,19 +222,22 @@ register()
                   <img
                     style="cursor:pointer; width: 110px; height: 110px; display: inline-block; opacity: 1;"
                     data-index="image-1"
-                    @click="slideTo(index)"
                     :src="getImageUrl(img.image, 300, getDomainId())"
+                    @click="slideTo(index)"
                   >
                 </div>
-                <div v-if="img.type === 'video'">
-                  <VImg :src="img.urlThumb">
-
-                  </VImg>
+                <div
+                  v-if="img.type === 'video'"
+                  class="video-thumb "
+                >
+                  <img
+                    v-if="img.type === 'video'"
+                    :src="img.urlThumb"
+                    @click="slideToAndShowView( index, img)"
+                  >
                 </div>
               </swiper-slide>
             </swiper-container>
-
-
           </div>
         </div>
       </div>
@@ -220,6 +247,39 @@ register()
 </template>
 
 <style scoped lang="scss">
+.product .video-thumb {
+  position: relative;
+  overflow: hidden;
+
+
+}
+
+.product .product-media-nav button.current svg, .product .product-media-nav button:active svg, .product .product-media-nav button:hover svg {
+  fill: #c74044 !important;
+}
+
+.video-thumb > img{
+  width: 108px; height: 108px; display: inline-block; opacity: 1;
+  border-radius: 7px;
+}
+
+.product  .video-thumb:before {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 40px;
+  height: 40px;
+  content: "";
+  transition: all .2s ease;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 200px;
+  background: transparent url(/public/images/svg/video-thumb-play.svg) 50% no-repeat;
+  background-size: 40px auto;
+}
+
 /* 1. Style the Circle */
 swiper-container::part(button-prev),
 swiper-container::part(button-next) {
