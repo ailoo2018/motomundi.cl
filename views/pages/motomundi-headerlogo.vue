@@ -3,7 +3,7 @@ import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-
 
 </script>
 <template>
-  <h1>here</h1>
+
   <VContainer style="color:white">
     <div class="d-flex justify-space-between">
       <div>

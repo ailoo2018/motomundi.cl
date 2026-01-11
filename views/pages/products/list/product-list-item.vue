@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import emptyImage from "@images/empty-image.avif"
 
+
+
 const props = defineProps(
   {
     product: {
@@ -14,6 +16,37 @@ const props = defineProps(
     },
   },
 )
+
+
+
+const onClickMiniture = (img) => {
+  props.product.image = img.image
+}
+
+const miniatures = computed(() => {
+  if (!props.product?.images) return []
+
+  // Create a Map where colorId is the key
+  // This ensures only one image per colorId exists
+  const uniqueImagesMap = new Map()
+
+  props.product.images
+    .filter(img => img.colorId > 0)
+    .forEach(img => {
+      // If you want the FIRST image found for that color, use:
+      if (!uniqueImagesMap.has(img.colorId)) {
+        uniqueImagesMap.set(img.colorId, img)
+      }
+    })
+
+  const uniqueImages = Array.from(uniqueImagesMap.values())
+  if(uniqueImages.length <= 1){
+    return []
+  }
+
+
+  return uniqueImages
+})
 </script>
 
 
@@ -68,7 +101,20 @@ const props = defineProps(
 
       </a>
       <section>
-        <div class="prod-list-miniatures" />
+        <div class="prod-list-miniatures">
+          <div
+            v-for="img in miniatures"
+            class="prod-list-miniatures-item"
+          >
+            <img
+              :title="img.colorName"
+              :src="getImageUrl(img.image, 50, getDomainId())"
+              @click="onClickMiniture(img)"
+              @mouseenter="onClickMiniture(img)"
+              :alt="img.colorName"
+            >
+          </div>
+        </div>
       </section>
 
       <section class="item__info">
@@ -97,8 +143,8 @@ const props = defineProps(
               </span>
             </span>
             <h3 class="heading-tag">
-              <span>{{product.brand.name }}</span>
-              <strong>{{product.name  }}</strong>
+              <span>{{ product.brand.name }}</span>
+              <strong>{{ product.name }}</strong>
             </h3>
           </div>
         </a>
@@ -113,7 +159,7 @@ const props = defineProps(
               class="item__price"
               style="font-size: 14px;"
             >
-              {{ formatMoney( product.minPrice ) }}
+              {{ formatMoney(product.minPrice) }}
             </span>
             <span class="pr-2">
               <img src="/content/images/youtube_icon.svg">
@@ -214,6 +260,7 @@ const props = defineProps(
   -webkit-transform-origin: left;
   transform-origin: left;
 }
+
 .item .item__sizes {
   bottom: 2px;
   color: gray;
@@ -233,6 +280,7 @@ const props = defineProps(
   transition: transform .2s ease-out, opacity .2s ease-out, -webkit-transform .2s ease-out;
   white-space: nowrap;
 }
+
 .item img {
   display: block;
   margin-bottom: 4px;
@@ -246,6 +294,7 @@ const props = defineProps(
   height: 12px;
   width: 68px;
 }
+
 .item .item__sizes {
   color: #999;
   display: block;
@@ -284,6 +333,11 @@ const props = defineProps(
   display: block;
   font-size: 13px;
   font-weight: 700;
+}
+
+.prod-list-miniatures-item
+{
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 993px) {

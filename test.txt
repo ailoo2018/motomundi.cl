@@ -1,0 +1,11 @@
+FetchError: [GET] "http://localhost:3080/1/products/collections/Dy89DoYBEsu4Eahhuwnu?limit=30": 404 Not Found
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async $fetch2 (file:///C:/Projects/Beta/motomundi.cl/node_modules/.pnpm/ofetch@1.5.0/node_modules/ofetch/dist/shared/ofetch.DCGFE0NK.mjs:327:15)
+    at async Object.handler (file:///C:/Projects/Beta/motomundi.cl/.nuxt/dev/index.mjs:2809:14)
+    at async file:///C:/Projects/Beta/motomundi.cl/node_modules/.pnpm/h3@1.15.4/node_modules/h3/dist/index.mjs:2004:19
+    at async Object.callAsync (file:///C:/Projects/Beta/motomundi.cl/node_modules/.pnpm/unctx@2.4.1/node_modules/unctx/dist/index.mjs:72:16)
+    at async toNodeHandle (file:///C:/Projects/Beta/motomundi.cl/node_modules/.pnpm/h3@1.15.4/node_modules/h3/dist/index.mjs:2296:7)
+    at async b (file:///C:/Projects/Beta/motomundi.cl/node_modules/.pnpm/node-mock-http@1.0.3/node_modules/node-mock-http/dist/index.mjs:1:6876)
+    at async C (file:///C:/Projects/Beta/motomundi.cl/node_modules/.pnpm/node-mock-http@1.0.3/node_modules/node-mock-http/dist/index.mjs:1:7159)
+    at async $fetchRaw2 (file:///C:/Projects/Beta/motomundi.cl/node_modules/.pnpm/ofetch@1.5.0/node_modules/ofetch/dist/shared/ofetch.DCGFE0NK.mjs:269:26)
+    at async $fetch2 (file:///C:/Projects/Beta/motomundi.cl/node_modules/.pnpm/ofetch@1.5.0/node_modules/ofetch/dist/shared/ofetch.DCGFE0NK.mjs:327:15)

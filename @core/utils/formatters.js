@@ -139,3 +139,60 @@ export const getYouTubeThumbnail = (videoId, quality = 'default') => {
   
   return `https://img.youtube.com/vi/${videoId}/${suffix}.jpg`
 }
+
+
+export function formatDeliveryDateRange(dateRange) {
+  try {
+    // Parse dates considering the timezone
+    const fromDate = new Date(dateRange.from)
+    const toDate = new Date(dateRange.to)
+
+    // Add 4 days to each date for delivery estimation
+    const deliveryFromDate = new Date(fromDate.setDate(fromDate.getDate() ))
+    const deliveryToDate = new Date(toDate.setDate(toDate.getDate() ))
+
+    // Format dates in Spanish
+    const formatter = new Intl.DateTimeFormat('es', {
+      day: 'numeric',
+      month: 'long',
+    })
+
+    const fromDay = deliveryFromDate.getDate()
+    const toDay = deliveryToDate.getDate()
+    const month = formatter.format(deliveryToDate).split(' de')[1]
+
+    // Check if both dates are the same
+    if (fromDay === toDay) {
+      return `${fromDay} de${month}`
+    }
+
+    return `${fromDay} y el ${toDay} de${month}`
+  } catch (error) {
+    console.error('Error formatting dates:', error)
+    
+    return 'Error al procesar las fechas'
+  }
+}
+
+
+export function isEntre(eta)        {
+  if(eta.from !== eta.to)
+    return " entre el "
+  return " el "
+}
+
+export const formatChileanRUT = rut => {
+  if (!rut) return ''
+
+  // Remove all non-alphanumeric characters
+  rut = rut.replace(/[^0-9k]/gi, '')
+
+  // Separate the body from the verification digit
+  let body = rut.slice(0, -1)
+  let dv = rut.slice(-1).toUpperCase()
+
+  body = body.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+
+  // Return the formatted RUT
+  return `${body}-${dv}`
+}

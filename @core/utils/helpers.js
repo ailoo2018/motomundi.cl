@@ -27,3 +27,7 @@ export const isToday = date => {
         && date.getMonth() === today.getMonth()
         && date.getFullYear() === today.getFullYear())
 }
+
+export const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

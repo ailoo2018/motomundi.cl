@@ -72,9 +72,6 @@ const images = computed( () => {
   product.value.images.map( img => { return  { type: "image", ...img } }).forEach(i => imgs.push(i))
 
 
-
-
-
   return imgs
 })
 
@@ -88,6 +85,29 @@ onMounted(() => {
       slideTo(1)
     })
   }
+})
+
+
+/**
+ * Finds an image index based on a color property
+ * and slides the swiper to that position.
+ */
+const selectSlideByProductColor = colorValue => {
+
+  let idx = 0
+  for(var img of images.value){
+    if(img.type === "image" && img.colorId === colorValue.id){
+      slideTo(idx)
+      break
+    }
+    idx++
+  }
+
+}
+
+// CRITICAL: Export the function to the parent
+defineExpose({
+  selectSlideByProductColor,
 })
 
 register()
@@ -157,7 +177,6 @@ register()
 
                     :alt="product.brand.name + product.name"
                     :src="image.url"
-
                   >
                 </a>
               </div>
@@ -222,7 +241,7 @@ register()
                   <img
                     style="cursor:pointer; width: 110px; height: 110px; display: inline-block; opacity: 1;"
                     data-index="image-1"
-                    :src="getImageUrl(img.image, 300, getDomainId())"
+                    :src="getImageUrl(img.image, 600, getDomainId())"
                     @click="slideTo(index)"
                   >
                 </div>

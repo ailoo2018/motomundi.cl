@@ -11,7 +11,7 @@
         <div class="hmnuentry"><i class="fa fa-home"></i> <a href="https://www.motomundi.cl/tiendas">Tiendas y
           horarios</a></div>
         <div class="hmnuentry">
-          <i class="fa fa-shopping-cart"></i> <a href="https://www.motomundi.cl/Product/ShoppingCart.rails">Carro de
+          <i class="fa fa-shopping-cart"></i> <a href="/cart">Carro de
           compra</a>
         </div>
         <div class="hmnuentry"><a href="https://www.motomundi.cl/10757-contactenos">Contáctenos</a></div>

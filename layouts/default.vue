@@ -39,6 +39,11 @@ injectSkinClasses()
 </template>
 
 <style>
+
+body {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x, linear-gradient(to top, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,url("https://www.motomundi.cl/Content/uploads/1/_data/3/c2/3c25da0755aa485e9a984f5ca30cfe7f.jpg");
+}
+
 .layout-wrapper.layout-blank {
   flex-direction: column;
 }

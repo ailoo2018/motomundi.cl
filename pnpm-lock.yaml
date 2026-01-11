@@ -103,6 +103,9 @@ importers:
       swiper:
         specifier: 11.2.10
         version: 11.2.10
+      transbank-sdk:
+        specifier: ^6.1.1
+        version: 6.1.1
       ufo:
         specifier: 1.6.1
         version: 1.6.1
@@ -2604,6 +2607,9 @@ packages:
 
   axios@1.13.1:
     resolution: {integrity: sha512-hU4EGxxt+j7TQijx1oYdAjw4xuIp1wRQSsbMFwSthCWeBQur1eF+qJ5iQ5sN3Tw8YRzQNKb8jszgBdMDVqwJcw==}
+
+  axios@1.13.2:
+    resolution: {integrity: sha512-VPk9ebNqPcy5lRGuSlKx752IlDatOjT9paPlm8A7yOuW2Fbvp4X3JznJtT4f0GzGLLiWE9W8onz51SqLYwzGaA==}
 
   b4a@1.7.3:
     resolution: {integrity: sha512-5Q2mfq2WfGuFp3uS//0s6baOJLMoVduPYVeNmDYxu5OUA1/cBfvr2RIS7vi62LdNj/urk1hfmj867I3qt6uZ7Q==}
@@ -5974,6 +5980,10 @@ packages:
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
+  transbank-sdk@6.1.1:
+    resolution: {integrity: sha512-T5YJSBl7LfSPLLqbLY3AVieSBCTNfN1nr3qA/5oLc3tTtwzZarYKL5aXirNFYamOT+W8pY04uzGRupSQArHUDA==}
+    engines: {node: '>=18.0.0'}
+
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
 
@@ -9241,6 +9251,14 @@ snapshots:
       possible-typed-array-names: 1.1.0
 
   axios@1.13.1:
+    dependencies:
+      follow-redirects: 1.15.11
+      form-data: 4.0.4
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.13.2:
     dependencies:
       follow-redirects: 1.15.11
       form-data: 4.0.4
@@ -13217,6 +13235,12 @@ snapshots:
   totalist@3.0.1: {}
 
   tr46@0.0.3: {}
+
+  transbank-sdk@6.1.1:
+    dependencies:
+      axios: 1.13.2
+    transitivePeerDependencies:
+      - debug
 
   trim-lines@3.0.1: {}
 

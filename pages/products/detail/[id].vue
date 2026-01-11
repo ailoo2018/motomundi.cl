@@ -7,6 +7,7 @@ import ProductImagesCarousel from "@/views/pages/products/product-images-carouse
 import ProductBuyPanel from "@/views/pages/products/product-buy-panel.vue"
 import PreProductBanner from "@/views/pages/products/pre-product-banner.vue"
 import Recommend from "@/views/pages/products/recommend.vue"
+import { useGuestUser } from "@/composables/useGuestUser.js"
 
 const store = useConfigStore()
 const productForm = ref()
@@ -16,11 +17,36 @@ const route = useRoute()
 
 const config = useRuntimeConfig()
 
+const productCarousel = ref()
+
 const { data: product, pending } = await useFetch(`/api/product/${route.params.id}`)
 
-const onShowVideo = (videoId) => {
+const onShowVideo = videoId => {
   console.log("showVideo: " + videoId)
   showVideoDialog.value = true
+}
+
+const addToCart = async item  => {
+  const wuid = useGuestUser().value
+
+  const { data: product } = await useFetch(`/api/cart/add`, {
+    method: "POST",
+    body: JSON.stringify({
+      wuid: wuid,
+      type: 0,
+      quantity: item.quantity,
+      productItemId: item.productItemId,
+    }),
+  },
+  )
+
+  await navigateTo('/cart')
+}
+
+const onSelectedColor = color =>{
+  // ref="productCarousel"
+  console.log("onSelectedColor", color)
+  productCarousel.value.selectSlideByProductColor(color)
 }
 
 store.skin = 'default'
@@ -32,8 +58,6 @@ definePageMeta({
 </script>
 
 <template>
-
-
   <article v-if="product">
     <div class="container product">
       <section class="row product-main ">
@@ -49,8 +73,8 @@ definePageMeta({
               <div class="product-title">
                 <div class="product-title__container">
                   <h1>
-                    {{product.brand.name}}
-                    <strong>{{product.name}}</strong>
+                    {{ product.brand.name }}
+                    <strong>{{ product.name }}</strong>
                   </h1>
                   <a
                     href="/hjc"
@@ -78,33 +102,45 @@ definePageMeta({
           <ShareComponent />
           <!-- /share -->
 
-          <ProductImagesCarousel :product="product" @on-show-video="onShowVideo" />
+          <ProductImagesCarousel
+            ref="productCarousel"
+            :product="product"
+            @on-show-video="onShowVideo"
+          />
         </div>
 
         <div class="col s12 m5 l5">
           <PreProductBanner />
-          <ProductBuyPanel :product="product" />
+          <ProductBuyPanel
+            :product="product"
+            @update:color="onSelectedColor"
+            @add-to-cart="addToCart"
+          />
         </div>
 
         <div class="packs-container" />
-
-
-
-
       </section>
 
 
       <Recommend :product="product" />
-
     </div>
   </article>
 
-  <VDialog v-model="showVideoDialog" max-width="800">
+  <VDialog
+    v-model="showVideoDialog"
+    max-width="800"
+  >
     <VCard>
       <VCardTitle class="d-flex justify-space-between pa-2">
-        <h1 class="pa-2">{{product.fullName}}}</h1>
+        <h1 class="pa-2">
+          {{ product.fullName }}}
+        </h1>
         <div>
-        <VBtn icon="tabler-x" variant="text" @click="showVideoDialog = false" />
+          <VBtn
+            icon="tabler-x"
+            variant="text"
+            @click="showVideoDialog = false"
+          />
         </div>
       </VCardTitle>
 
@@ -117,16 +153,14 @@ definePageMeta({
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen
-          ></iframe>
+          />
         </div>
       </VCardText>
     </VCard>
   </VDialog>
-
 </template>
 
 <style scoped lang="scss">
-
 .video-container {
   position: relative;
   padding-bottom: 56.25%; /* 16:9 Aspect Ratio */

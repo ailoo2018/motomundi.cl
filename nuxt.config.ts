@@ -31,7 +31,11 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      youtubeApiKey: "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM",
+      baseUrl: process.env.NODE_ENV === 'production'   ? "https://w3.motomundi.cl" : "http://localhost:3000",
+        youtubeApiKey: "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM",
+      geoBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://geo.ailoo.cl'
+        : 'https://geo.ailoo.cl',
+
       cmsBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://betacms.ailoo.cl'
         : 'http://developer.cms.ailoo.cl:3050', 
       productsBaseUrl: process.env.NODE_ENV === 'production' ? 'http://beta.products.ailoo.cl'

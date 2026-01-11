@@ -1,5 +1,6 @@
 <script setup>
 import Financing from "@/pages/products/detail/financing.vue"
+import { useProductsUtils } from "@/composables/useProductsUtils.js"
 
 
 const props = defineProps(
@@ -11,11 +12,24 @@ const props = defineProps(
   },
 )
 
-const emit = defineEmits(['update:size', 'update:color'])
+const emit = defineEmits(['update:size', 'update:color', 'add-to-cart'])
 const isShowCbo = ref(false)
+const prodUtil = useProductsUtils()
 const showSizeChart = ref(false)
-const selectedSize = ref()
-const selectedColor = ref()
+const selectedSize = ref({ id: 0})
+const selectedColor = ref({ id: 0})
+
+const addToCart = () => {
+  const sizeId = selectedSize.value.id
+  const colorId = selectedColor.value.id
+
+
+  const productItem = prodUtil.findProductItemByFeatures(product.value, colorId, sizeId)
+
+
+
+  emit('addToCart', { productItemId: productItem.id, quantity: 1 })
+}
 
 const getColorImageUrl = colorId => {
   var image = product.value.images.find(img => img.colorId === colorId)
@@ -41,14 +55,34 @@ const isColorAvailable = color => {
   if(!color)
     return false
 
-  const prodItem = product.value.productItems.find(pit => pit.colorId === color.id)
-  if(prodItem){
-    return prodItem.quantityInStock > 0
+  const selectedSizeId = selectedSize.value ? selectedSize.value.id : 0
+
+  const prodItems = product.value.productItems.filter(pit => (selectedSizeId === 0 || pit.sizeId === selectedSizeId) &&  pit.colorId === color.id)
+  if(prodItems){
+    return prodItems.some(pit => pit.quantityInStock > 0)
+  }
+
+  return false
+}
+
+const isSizeAvailable = size => {
+
+
+  if(!size)
+    return false
+
+  const selectedColorId = selectedColor.value ? selectedColor.value.id : 0
+
+
+  const prodItems = product.value.productItems.filter(pit => (pit.colorId === selectedColorId || selectedColorId === 0) && size.id === pit.sizeId)
+  if(prodItems.length > 0){
+    return prodItems.some(pit => pit.quantityInStock > 0)
   }
 
 
   return false
 }
+
 
 const product = ref(props.product)
 
@@ -59,6 +93,14 @@ const colors = computed(() => {
 const sizes = computed(() => {
   return product?.value.features.filter(f => f.type === 0)
 })
+
+onMounted(() => {
+  var colorFeature = product.value.features.find(f => f.type === 1)
+  if(colorFeature){
+    selectedColor.value = colorFeature
+
+  }
+});
 </script>
 
 <template>
@@ -222,9 +264,6 @@ const sizes = computed(() => {
 
             </div>
 
-            <p>
-              Selected color: {{ selectdColor }} end <br>
-            </p>
 
             <!-- sizes-form -->
             <div class="sizes-form">
@@ -245,13 +284,14 @@ const sizes = computed(() => {
                   <input
                     :id="'size-' + size.id"
                     v-model="selectedSize"
+                    :class="{ 'oosk': !isSizeAvailable(size)}"
                     :value="size"
+                    :checked="selectedSize.id === size.id"
                     type="radio"
-                    class="oosk"
                   >
                   <label @click="onSelectSize(size)">
                     {{ size.name }}
-                    <span class="oosk__badge" />
+                    <span v-if="!isSizeAvailable(size)" class="oosk__badge" />
                   </label>
                 </div>
               </div>
@@ -391,7 +431,7 @@ const sizes = computed(() => {
           <button
 
             class="buy-button"
-            ng-click="addToCart()"
+            @click="addToCart()"
           >
             <div class="blocked-by-country">
               Este producto no se puede enviar a
@@ -913,5 +953,14 @@ li .mtc-link, li > a {
 .product-wrapper.product-detail .swatch.color-value.unavailable {
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+.radio input[type=radio]:checked + label {
+  color: #fff;
+  font-weight: 600;
+}
+
+.radio input[type=radio]:checked + label:before {
+  opacity: 0;
 }
 </style>

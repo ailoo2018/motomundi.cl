@@ -167,7 +167,7 @@ register()
                             >
                               <div class="product-tags">
                                 <span
-                                  v-if="product.price.discount > 0"
+                                  v-if="product.price?.discount > 0"
                                   class="tag-wrapper"
                                 >
                                   <span class="tag product-tag product-tag--old product-tag--offer">
