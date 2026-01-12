@@ -41,6 +41,9 @@ export default defineNuxtConfig({
       productsBaseUrl: process.env.NODE_ENV === 'production' ? 'http://beta.products.ailoo.cl'
         : 'http://localhost:3011',
       w3BaseUrl: process.env.NODE_ENV === 'production' ? "https://w3.ailoo.cl" : "http://localhost:3080",
+      webPayCommerceCode: '597055555532',
+      webPayApiKey: '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C',
+      testEnv: process.env.TEST_ENV,
     },
   },
 

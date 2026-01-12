@@ -1,4 +1,4 @@
-import { getDomainId } from "../../ailoo-domain.js"
+import { getDomainId } from "../../ailoo-domain"
 
 export default defineEventHandler(async event => {
   let url = ""

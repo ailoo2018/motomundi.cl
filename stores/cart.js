@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    cart: { items: [] },
+    cart: { wuid: null, items: [] },
     loading: false,
   }),
 
@@ -13,8 +13,22 @@ export const useCartStore = defineStore('cart', {
         const data = await $fetch('/api/cart/', { query: { wuid } })
 
         this.cart = data
+        this.cart.wuid = wuid
       } finally {
         this.loading = false
+      }
+    },
+
+    async removeItem(cartItem){
+      try {
+        await $fetch('/api/cart/remove-item', {
+          method: 'GET',
+          query: { wuid: this.cart.wuid, itemId: cartItem.id, type: cartItem.type },
+        })
+
+        cart.items = cart.items.filter(item => !( item.id === cartItem.id && item.type === cartItem.type ) )
+      }catch(e){
+        console.error(e)
       }
     },
 

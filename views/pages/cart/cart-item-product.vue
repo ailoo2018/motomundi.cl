@@ -15,6 +15,10 @@ const decrement = () => {
     cartStore.updateQuantity(wuid, props.cartItem.id, props.cartItem.quantity - 1)
   }
 }
+
+const removeCartItem = () => {
+  cartStore.removeItem(props.cartItem)
+}
 </script>
 
 <template>

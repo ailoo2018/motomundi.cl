@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import transbankSdk from 'transbank-sdk'
+import { getDomainId } from "../../ailoo-domain"
 
 const { WebpayPlus, Options, IntegrationApiKeys, IntegrationCommerceCodes, Environment } = transbankSdk
 
@@ -14,33 +15,37 @@ export default defineEventHandler(async event => {
   }
 
   try {
-    /*
+
     const tx = new WebpayPlus.Transaction(new Options(
       IntegrationCommerceCodes.WEBPAY_PLUS,
       IntegrationApiKeys.WEBPAY,
-      Environment.Integration
+      Environment.Integration,
     ))
 
     const response = await tx.commit(token)
-*/
-    const response = {
-      response_code: 0,
-      amount: 1000,
-      authorization_code: "123",
-      transactionDate: new Date(),
-      responseCode: 0,
-      paymentTypeCode: "TC",
-      installmentsNumber: 3,
-      stauts: 0,
-    }
-
 
     // Response codes:
     // 0 = Approved
     // -1 to -8 = Rejected (different error types)
     const success = response.response_code === 0
 
+    const config = useRuntimeConfig()
+    if(success){
+      const confirmRet = $fetch(`${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
 
+          },
+          body: {
+            orderId: response.buy_order,
+            amount: response.amount,
+            success: success,
+            data: response,
+          },
+        })
+    }
 
 
 

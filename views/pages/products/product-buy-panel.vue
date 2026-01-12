@@ -24,7 +24,13 @@ const addToCart = () => {
   const colorId = selectedColor.value.id
 
 
-  const productItem = prodUtil.findProductItemByFeatures(product.value, colorId, sizeId)
+  let productItem;
+
+  if(sizeId === 0 && colorId === 0 && product.value.productItems.length === 1){
+    productItem = product.value.productItems[0]
+  }else {
+    productItem = prodUtil.findProductItemByFeatures(product.value, colorId, sizeId)
+  }
 
 
 

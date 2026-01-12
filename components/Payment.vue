@@ -3,6 +3,7 @@ import { ref } from "vue"
 import BillingForm from "~/components/Payments/BillingForm.vue"
 import { useCheckoutStore } from '~/stores/checkout'
 import Coupon from "~/components/Cart/Coupon.vue"
+import { useCartStore } from "@/stores/cart.js"
 
 const emit = defineEmits(["acceptPolicy", "paid-with-mp-api"])
 const paymentMethod = ref(0)
@@ -253,7 +254,7 @@ const webpayToken = ref("")
 const webpayUrl = ref("")
 const webpayForm = ref(null)
 const errors = checkoutService.error
-
+const cartStore = useCartStore()
 
 /**
  * Pay
@@ -267,6 +268,7 @@ const pay = async (mercadoPagoApiData = null) => {
     const customerInfo = checkoutStore.customerInfo
     const shippingInfo = checkoutStore.shippingInfo
     const paymentInfo = await getPaymentInfo()
+
 
 
     console.log("paymentInfo", paymentInfo)
@@ -298,6 +300,7 @@ const pay = async (mercadoPagoApiData = null) => {
       "selectedMapData": {
         "store_id": shippingInfo.store ? shippingInfo.store.id : 0,
       },
+      "items": cartStore.cart.items,
       mercadoPagoPaymentData: mercadoPagoApiData,
     }
 
