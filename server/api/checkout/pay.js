@@ -40,7 +40,7 @@ export default defineEventHandler(async event => {
 
 
     const response = await tx.create(
-      `oc-${orderId}}`,
+      `${orderId}`,
       sessionId,
       amount,
       returnUrl,

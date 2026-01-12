@@ -23,6 +23,25 @@ export default defineEventHandler(async event => {
     ))
 
     const response = await tx.commit(token)
+    /**
+     * {
+     *   "vci": "TSY",
+     *   "amount": 1000,
+     *   "status": "AUTHORIZED",
+     *   "buy_order": "oc-189816}",
+     *   "session_id": "session-1768246568905",
+     *   "card_detail": {
+     *     "card_number": "6623"
+     *   },
+     *   "accounting_date": "0112",
+     *   "transaction_date": "2026-01-12T19:36:24.874Z",
+     *   "authorization_code": "1213",
+     *   "payment_type_code": "VN",
+     *   "response_code": 0,
+     *   "installments_number": 0
+     * }
+     */
+
 
     // Response codes:
     // 0 = Approved
@@ -31,7 +50,7 @@ export default defineEventHandler(async event => {
 
     const config = useRuntimeConfig()
     if(success){
-      const confirmRet = $fetch(`${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`,
+      const confirmRet = await $fetch(`${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`,
         {
           method: 'POST',
           headers: {
