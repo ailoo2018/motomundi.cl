@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useCheckoutStore } from '~/stores/checkout'
-import LoginDialog from "~/components/Dialogs/LoginDialog.vue"
+import LoginDialog from "~/components/dialogs/LoginDialog.vue"
 
 const checkoutStore = useCheckoutStore()
 
