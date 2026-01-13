@@ -3,11 +3,9 @@ import { getDomainId } from "../../ailoo-domain"
 export default defineEventHandler(async event => {
   const config = useRuntimeConfig()
   const body = await readBody(event)
-  const { orderId, paymentId, token } = body
+  const { orderId, paymentId, token, gateway } = body
 
-  if (!paymentId) {
-    throw createError({ statusCode: 400, statusMessage: 'Missing paymentId' })
-  }
+
 
   try {
     const confirmRet = await $fetch(`${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`,
@@ -19,7 +17,7 @@ export default defineEventHandler(async event => {
         },
         body: {
           orderId: orderId ? orderId : 0,
-          paymentMethodType: 15,
+          paymentMethodType: gateway,
           paymentId: paymentId ? paymentId : null,
           token: token ? token: null,
         },
@@ -31,7 +29,7 @@ export default defineEventHandler(async event => {
       }
 
     } else {
-      console.warn(`⚠️ Intento de confirmación fallido para Orden ${orderId}. Estado: ${paymentData.status}`)
+      console.warn(`⚠️ Intento de confirmación fallido para Orden ${orderId}. Estado: ${confirmRet?.error}`)
       
       return {
         success: false,

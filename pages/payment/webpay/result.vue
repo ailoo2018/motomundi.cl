@@ -1,22 +1,14 @@
-<script setup lang="ts">
-interface PaymentResult {
-  success: boolean
-  buyOrder: string
-  amount: number
-  authorizationCode: string
-  cardNumber: string
-  transactionDate: string
-  responseCode: number
-  paymentTypeCode?: string
-  installmentsNumber?: number
-}
+<script setup>
+
+
+import PaymentResult from "@/views/pages/payments/payment-result.vue"
 
 const route = useRoute()
 const loading = ref(true)
-const result = ref<PaymentResult | null>(null)
+const result = ref(null)
 
 onMounted(async () => {
-  const token = route.query.token_ws as string
+  const token = route.query.token_ws
   if (!token) {
     loading.value = false
     return
@@ -25,17 +17,21 @@ onMounted(async () => {
   try {
     result.value = await $fetch('/api/payments/confirm-payment', {
       method: 'POST',
-      body: { token }
+      body: {
+        token,
+        gateway: 8 }
     })
+
+    console.log("Result: " + result.value.success)
   } catch (error) {
-    result.value = { success: false, buyOrder: '', amount: 0, authorizationCode: '', cardNumber: '', transactionDate: '', responseCode: -1 }
+    result.value = { success: false, error: error.message, message: error.message }
   } finally {
     loading.value = false
   }
 })
 
-const getPaymentType = (code?: string) => {
-  const types: Record<string, string> = {
+const getPaymentType = (code) => {
+  const types =  {
     'VD': 'Venta Débito', 'VN': 'Venta Normal', 'VC': 'Venta en cuotas',
     'SI': '3 cuotas sin interés', 'VP': 'Venta Prepago'
   }

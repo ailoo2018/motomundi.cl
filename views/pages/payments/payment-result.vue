@@ -12,6 +12,7 @@ const props = defineProps({
 
 <template>
 
+  in: {{result}}
   <VContainer class="fill-height bg-grey-lighten-4 py-12">
     <VRow justify="center">
       <VCol
@@ -139,7 +140,7 @@ const props = defineProps({
                   Autorización
                 </VListItemTitle>
                 <template #append>
-                  <span class="text-body-2 font-mono">{{ result.authorizationCode }}</span>
+                  <span class="text-body-2 font-mono">{{ result.authorization }}</span>
                 </template>
               </VListItem>
             </VList>
