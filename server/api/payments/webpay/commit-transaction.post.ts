@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import transbankSdk from 'transbank-sdk'
-import { getDomainId } from "../../ailoo-domain"
+import { getDomainId } from "../../../ailoo-domain"
 
 const { WebpayPlus, Options, IntegrationApiKeys, IntegrationCommerceCodes, Environment } = transbankSdk
 
@@ -60,7 +60,7 @@ export default defineEventHandler(async event => {
           body: {
             orderId: response.buy_order,
             amount: response.amount,
-            success: success,
+            paymentMethod: 15,
             data: response,
           },
         })

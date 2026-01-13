@@ -13,6 +13,8 @@ const {data: rs} = await useFetch(`/api/events/latest-events`, {
 
 })
 
+
+
 const fmtDate = d => {
   return new Date(d).toLocaleDateString('es-CL', {
     month: 'long',   // "MMMM" (January)
@@ -27,7 +29,7 @@ const truncateText = (text: string, limit: number) => {
 }
 
 const events = computed(() => {
-  return rs.value.events
+  return rs.value?.events || []
 })
 </script>
 
@@ -35,6 +37,7 @@ const events = computed(() => {
 
   <div
     :id="`home-block-${widget.id}`"
+
     class="block-container events-widget"
   >
     <div class="blog-block alt">
@@ -79,7 +82,7 @@ const events = computed(() => {
             </svg>
             Próximos eventos
           </h2>
-          <div class="gt-columns gt-column-3 gt-column-space-30">
+          <div class="gt-columns gt-column-3 gt-column-space-30" v-if="events">
             <div
               v-for="e in events"
               class="gt-col ng-scope"

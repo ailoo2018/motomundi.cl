@@ -30,6 +30,8 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+
+    mercadopagoAccessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN,
     public: {
       baseUrl: process.env.NODE_ENV === 'production'   ? "https://w3.motomundi.cl" : "http://localhost:3000",
         youtubeApiKey: "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM",

@@ -1,30 +1,26 @@
-{
-  "id": "S2i5o5sBeLAK3WjmdDaQ",
-  "wuid": "071882aa-5d83-4b54-b26c-0d9651c0e959",
-  "notificationsCount": 0,
-  "lastNotified": "0001-01-01T00:00:00",
-  "webSiteId": 0,
-  "createDate": "2026-01-09T17:06:37.885Z",
-  "modifiedDate": "2026-01-09T17:06:37.885Z",
-  "currency": "CLP",
-  "userId": 0,
-  "domainId": 1,
-  "items": [
-    {
-      "id": 2726667,
-      "packId": 0,
-      "product": {
-        "productItemId": 2726667,
-        "name": "K1 S (2023) Izan S"
-      },
-      "quantity": 1,
-      "type": 0
-    }
-  ],
-  "shipping": {
-    "cost": 0
-  },
-  "financing": {
-    "installments": 1
+pref = {
+  "body": {
+    "items": [
+      {
+        "id": "152547",
+        "title": "Orden #152547",
+        "quantity": 1,
+        "unit_price": 200,
+        "currency_id": "CLP"
+      }
+    ],
+    "back_urls": {
+      "success": "http://localhost:3000/payment/result",
+      "failure": "http://localhost:3000/payment/result",
+      "pending": "http://localhost:3000/payment/result"
+    },
+    "auto_return": "approved",
+    "external_reference": "152547",
+    "notification_url": "http://localhost:3000/api/webhooks/mercadopago"
   }
 }
+
+when I call this code i get error: auto_return invalid. back_url.success must be defined
+
+const response = await preference.create(pref)
+
