@@ -27,11 +27,11 @@ export default defineEventHandler(async event => {
 
 
     if(body.paymentMethod.gateway === WEBPAY){
-      const commerceCode = config.webPayCommerceCode
-      const apiKey = config.webPayApiKey
+      const commerceCode = process.env.WEBPAY_COMMERCE_CODE
+      const apiKey = process.env.WEBPAY_API_KEY
 
 
-      let tx;
+      let tx
 
       if(process.env.NODE_ENV === 'production') {
         tx = WebpayPlus.Transaction.buildForProduction(commerceCode, apiKey)
@@ -66,7 +66,7 @@ export default defineEventHandler(async event => {
     }else if(body.paymentMethod.gateway === MERCADO_PAGO){
       
       const client = new MercadoPagoConfig({
-        accessToken: config.mercadopagoAccessToken, // Add this to your runtimeConfig
+        accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN, // Add this to your runtimeConfig
         options: { timeout: 5000 },
       })
 
