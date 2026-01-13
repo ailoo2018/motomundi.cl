@@ -27,8 +27,8 @@ export default defineEventHandler(async event => {
 
 
     if(body.paymentMethod.gateway === WEBPAY){
-      const commerceCode = config.public.webPayCommerceCode
-      const apiKey = config.public.webPayApiKey
+      const commerceCode = config.webPayCommerceCode
+      const apiKey = config.webPayApiKey
 
 
       let tx;

@@ -32,19 +32,19 @@ export default defineNuxtConfig({
   runtimeConfig: {
 
     mercadopagoAccessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN,
+    webPayCommerceCode: process.env.WEBPAY_COMMERCE_CODE || '597055555532',
+    webPayApiKey: process.env.WEBPAY_API_KEY ||'579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C',
+
     public: {
-      baseUrl: process.env.NODE_ENV === 'production'   ? "https://w3.motomundi.cl" : "http://localhost:3000",
-        youtubeApiKey: "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM",
+      baseUrl: process.env.NODE_ENV === 'production' ? "https://w3.motomundi.cl" : "http://localhost:3000",
+      youtubeApiKey: "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM",
       geoBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://geo.ailoo.cl'
         : 'https://geo.ailoo.cl',
-
       cmsBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://betacms.ailoo.cl'
-        : 'http://developer.cms.ailoo.cl:3050', 
+        : 'http://developer.cms.ailoo.cl:3050',
       productsBaseUrl: process.env.NODE_ENV === 'production' ? 'http://beta.products.ailoo.cl'
         : 'http://localhost:3011',
       w3BaseUrl: process.env.NODE_ENV === 'production' ? "https://w3.ailoo.cl" : "http://localhost:3080",
-      webPayCommerceCode: '597055555532',
-      webPayApiKey: '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C',
       testEnv: process.env.TEST_ENV,
     },
   },
