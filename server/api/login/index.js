@@ -1,25 +1,22 @@
-/* eslint-disable camelcase */
-
 import { getDomainId } from "@/server/ailoo-domain"
 
 export default defineEventHandler(async event => {
-
   try {
 
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
-    let { authCode, wuid } = getQuery(event)
+    let { user, password } = getQuery(event)
 
-    
-    return await $fetch(`${baseUrl}/${getDomainId()}/auth/google`, {
+
+    return await $fetch(`${baseUrl}/${getDomainId()}/auth/login`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
       query: {
-        authCode,
-        wuid,
+        user,
+        password,
       },
     })
   }catch(error) {
@@ -30,4 +27,5 @@ export default defineEventHandler(async event => {
       message: error.message || 'Failed to check auth',
     })
   }
+
 })
