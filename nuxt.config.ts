@@ -32,12 +32,12 @@ export default defineNuxtConfig({
   runtimeConfig: {
 
     mercadopagoAccessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN,
-    webPayCommerceCode: process.env.WEBPAY_COMMERCE_CODE || '597055555532',
-    webPayApiKey: process.env.WEBPAY_API_KEY ||'579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C',
-
+    webPayCommerceCode: process.env.WEBPAY_COMMERCE_CODE,
+    webPayApiKey: process.env.WEBPAY_API_KEY,
+    youtubeApiKey: process.env.YOUTUBE_API_KEY,
     public: {
       baseUrl: process.env.NODE_ENV === 'production' ? "https://w3.motomundi.cl" : "http://localhost:3000",
-      youtubeApiKey: "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM",
+
       geoBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://geo.ailoo.cl'
         : 'https://geo.ailoo.cl',
       cmsBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://betacms.ailoo.cl'

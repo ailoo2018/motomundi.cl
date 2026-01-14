@@ -204,7 +204,7 @@ onMounted(() => {
         <div class="col s12">
           <div class="product-colors ">
             <div class="product-sizes__header">
-              <h2>Elige tu color {{ selectedColor }}</h2>
+              <h2>Elige tu color</h2>
             </div>
             <div class="colors-form product-wrapper product-detail">
               <div class="color-tile swatch-tile-container product-data">

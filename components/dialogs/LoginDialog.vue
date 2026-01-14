@@ -103,22 +103,33 @@ const handleGoogleLogin = () => {
 }
 
 const handleCallback = async response => {
-  console.log("handleCallback", response)
-  isLoading.value = false
+  try {
+    console.log("handleCallback", response)
+    isLoading.value = false
+    const wuid = useGuestUser().value
+    if (response.code) {
 
-  if (response.code) {
+      const { data } = await useFetch("/api/login/google", {
+        method: "GET",
+        headers: {},
+        query: {
+          authCode: response.code,
+          wuid,
+        },
 
-    const { data } = await useFetch(config.public.LEGACY_URL + "/AJAX/DoGoogleLogin.rails?authCode=" + response.code, {
-      method: "GET",
-      headers: {},
-    })
+      })
 
-    console.log("Result Google Login", data.value)
+      useCookie('user_id').value = data.value.userId
+      useCookie('accessToken').value = data.value.accessToken
 
-    emit("user-logged-in", data.value)
-  } else {
-    console.error('Failed to get access token')
-    emit('error', new Error('Failed to get access token'))
+
+      emit("user-logged-in", data.value)
+    } else {
+      console.error('Failed to get access token')
+      emit('error', new Error('Failed to get access token'))
+    }
+  }catch(e){
+    alert(e.message || e.error)
   }
 }
 

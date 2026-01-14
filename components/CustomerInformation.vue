@@ -46,10 +46,11 @@ const getCurrentUser = async () => {
 
   if (userId) {
 
-    const { data } = await useFetch(config.public.LEGACY_URL + '/AJAX/CurrentUser.rails', {
+    const { data } = await useFetch('/api/account/user', {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
+
     })
 
     console.log("Return CurrentUser.rails", data.value)
@@ -57,13 +58,13 @@ const getCurrentUser = async () => {
       user.value = data.value
     }
 
-    if (data.value && data.value.party && data.value.party.id > 0) {
-      party.value = data.value.party
+    if (data.value && data.value.person && data.value.person.id > 0) {
+      party.value = data.value.person
     }
 
 
     if (user.value)
-      contactEmail.value = user.value.email
+      contactEmail.value = user.value.username
     if (party.value)
       contactPhone.value = party.value.phone
 
@@ -85,7 +86,7 @@ const getAddresses = async () => {
   isLoading.value = true
   try {
 
-    const { data, error: fetchError } = await useFetch(config.public.LEGACY_URL + '/AJAX/ShippingAddresses.rails', {
+    const { data, error: fetchError } = await useFetch('/api/account/addresses', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })

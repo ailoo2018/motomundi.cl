@@ -3,21 +3,26 @@ import { useGuestUser } from "@/composables/useGuestUser.js"
 import CartItemProduct from "@/views/pages/cart/cart-item-product.vue"
 import CartSummary from "@/views/pages/cart/cart-summary.vue"
 
-const loadingCart = ref(false)
+
 const cartStore = useCartStore()
 const wuid = useGuestUser().value
 
 
 // Fetch once on mount
-onMounted(() => {
-  cartStore.fetchCart(wuid)
+onMounted(async () => {
+  try {
+
+    await cartStore.fetchCart(wuid)
+  }finally{
+
+  }
 })
 </script>
 
 <template>
   <main id="shop-cart">
     <div
-      v-if="loadingCart"
+      v-if="cartStore.loading"
       class="pa-10 w-100 text-center"
     >
       <VProgressCircular
@@ -29,8 +34,9 @@ onMounted(() => {
 
     <!-- cart empty -->
     <section
-      v-if="(!loadingCart) && (!cartStore.cart || !cartStore.cart.items || cartStore.cart.items.length === 0)"
-      style="padding: 10px 10px;"
+      v-if="(!cartStore.loading) && (!cartStore.cart || !cartStore.cart.items || cartStore.cart.items.length === 0)"
+      class="text-center pa-10 "
+
     >
       <div class="checkout__empty-content">
         <h2>Carro de Compra</h2>
@@ -40,8 +46,8 @@ onMounted(() => {
         </p>
         <a
           href="/"
-          data-dr="false"
-          class="button button--filled nuxt-link-active mtc-link"
+
+          class="button button--filled nuxt-link-active mtc-link mt-5"
         >
           Continuar comprando
         </a>
@@ -49,7 +55,7 @@ onMounted(() => {
     </section>
     <!-- /cart empty -->
 
-    <span v-if="cartStore.cart && cartStore.cart.items">
+    <span v-if="!cartStore.loading && cartStore.cart && cartStore.cart.items.length > 0">
       <div
         class="cart container"
         style="margin-top:0px;padding-top:20px;"
@@ -69,7 +75,7 @@ onMounted(() => {
         </main>
 
 
-        <CartSummary :cart="cartStore.cart" />
+        <CartSummary v-if="!cartStore.loading && cartStore.cart" :cart="cartStore.cart" />
 
 
 
@@ -80,6 +86,40 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.button {
+  background-color: #bd0019;
+  border-color: #bd0019;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, .3);
+  color: #fff;
+
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  overflow: hidden;
+  padding: 13px 25px;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all .2s ease-in-out;
+  z-index: 1;
+}
+
+.button:active, .button:focus {
+  background-color: #bd0019;
+  border-color: #bd0019;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, .3);
+  color: #fff;
+}
+
+.button:active, .button:focus {
+  background-color: #bd0019;
+  border-color: #bd0019;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, .3);
+  color: #fff;
+}
+
 #shop-cart * {
   box-sizing: border-box;
 }

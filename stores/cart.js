@@ -21,14 +21,20 @@ export const useCartStore = defineStore('cart', {
 
     async removeItem(cartItem){
       try {
+        this.loading = true
         await $fetch('/api/cart/remove-item', {
           method: 'GET',
           query: { wuid: this.cart.wuid, itemId: cartItem.id, type: cartItem.type },
         })
 
         cart.items = cart.items.filter(item => !( item.id === cartItem.id && item.type === cartItem.type ) )
+
+        this.cart = await $fetch('/api/cart/', { query: { wuid } })
+
       }catch(e){
         console.error(e)
+      }finally{
+        this.loading = false
       }
     },
 

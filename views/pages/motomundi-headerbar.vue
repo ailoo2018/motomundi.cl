@@ -16,7 +16,7 @@
         </div>
         <div class="hmnuentry"><a href="https://www.motomundi.cl/10757-contactenos">Contáctenos</a></div>
         <div class="hmnuentry">
-          <a href="https://www.motomundi.cl/cuenta/perfil"> Su cuenta </a>
+          <a href="/cuenta/perfil"> Su cuenta </a>
         </div>
       </div>
       <div id="community_links" class="d-flex gap-2 pt-2">

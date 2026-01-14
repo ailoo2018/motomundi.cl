@@ -8,7 +8,7 @@ const props = defineProps({
 })
 
 const config = useRuntimeConfig()
-const API_KEY = config.public.youtubeApiKey
+const API_KEY = config.youtubeApiKey
 const CHANNEL_ID = 'UClkc3m-0-ZFIqf1gBymlcUA' // Your Channel ID
 
 const { data: youtubeResponse, pending, error } = await useFetch('https://www.googleapis.com/youtube/v3/search', {

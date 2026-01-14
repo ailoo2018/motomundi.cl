@@ -5,6 +5,7 @@ import { MercadoPagoConfig, Preference } from 'mercadopago'
 
 const { WebpayPlus } = transbankSdk
 
+const TEST_COMMERCE_CODE='597055555532'
 const WEBPAY = 8
 const MERCADO_PAGO = 15
 
@@ -33,7 +34,7 @@ export default defineEventHandler(async event => {
 
       let tx
 
-      if(process.env.NODE_ENV === 'production') {
+      if(process.env.NODE_ENV === 'production' && commerceCode !== TEST_COMMERCE_CODE) {
         tx = WebpayPlus.Transaction.buildForProduction(commerceCode, apiKey)
       }else{
         tx = WebpayPlus.Transaction.buildForIntegration(commerceCode, apiKey)
@@ -63,7 +64,8 @@ export default defineEventHandler(async event => {
       }
 
 
-    }else if(body.paymentMethod.gateway === MERCADO_PAGO){
+    }else if(body.paymentMethod.gateway === MERCADO_PAGO)
+    {
       
       const client = new MercadoPagoConfig({
         accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN, // Add this to your runtimeConfig
