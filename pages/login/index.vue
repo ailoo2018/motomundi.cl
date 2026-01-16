@@ -39,6 +39,7 @@ const login = async () => {
       </div>
       <div class="tabs-panels w-100 " >
 
+
         <div v-if="!isShowForgotPassword && currentTab == 'login'"  style="opacity: 1 !important;">
           <LoginForm />
         </div>

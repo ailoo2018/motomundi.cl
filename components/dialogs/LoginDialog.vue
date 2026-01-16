@@ -17,9 +17,15 @@ const error = ref('')
 const errors = ref('')
 const isLoading = ref(false)
 const config = useRuntimeConfig()
+const loginFormValues = ref({ email: '', password: '' })
+
 const isDialogVisible = ref(props.isDialogVisible)
 const googleClient = ref(null)
 
+const serverErrors = ref({
+  email: '',
+  password: '',
+})
 
 watch(props,  props => {
   isDialogVisible.value = props.isDialogVisible
@@ -38,51 +44,33 @@ const handleLogin = async () => {
 
   try {
 
-    console.log(config.public.CHECKOUT_API_BASE_URL)
-
-    const { data, error: fetchError } = await useFetch( config.public.LEGACY_URL + '/AJAX/Login.rails', {
-      method: 'POST',
-      body: {
-        email: username.value,
-        password: password.value,
-      },
+    const data = await $fetch("/api/login/", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-
-      // Add this to ensure error response is parsed
-      async onResponseError({ response }) {
-        // Access error response data here
-        const errorData = response._data  // or response.body
-
-        console.log('Error data:', errorData)
-        errors.value = errorData.errors
+      body: {
+        username: loginFormValues.value.email,
+        password: loginFormValues.value.password,
       },
     })
 
-    console.log("result", error)
+    useCookie('user_id').value = data.userId
+    useCookie('accessToken').value = data.accessToken
 
-    if (fetchError.value) {
-
-      if(fetchError.value.data.errors)
-        errors.value = fetchError.value.data.errors
-
-      return
-    }
-
-    if (data.value) {
-      const { accessToken, userData } = data.value
-
-      useCookie('userData').value = userData
-      useCookie('accessToken').value = accessToken
-
-      console.log("token: " + useCookie('accessToken').value)
-      emit("user-logged-in", userData)
-    } else {
-      throw new Error('No data received from the server')
-    }
+    emit("user-logged-in", data)
   } catch (err) {
-    error.value = err.message || 'Error al tratar de ingresar. Por favor probar nuevamente.'
+    const errorCode = err.data?.data?.code
+
+    if (errorCode === 'USER_NOT_FOUND') {
+      serverErrors.value.email = "No encontramos ninguna cuenta con ese correo."
+    } else if (errorCode === 'WRONG_PASSWORD') {
+      serverErrors.value.password = "Contraseña incorrecta."
+    }else{
+      error.value = err.message || 'Error al tratar de ingresar. Por favor probar nuevamente.'
+    }
+
+
   } finally {
     isLoading.value = false
   }
@@ -96,9 +84,7 @@ const handleLogin = async () => {
 const handleGoogleLogin = () => {
   isLoading.value = true
   if (googleClient.value) {
-    //    googleClient.value.requestAccessToken();
     googleClient.value.requestCode()
-
   }
 }
 
@@ -106,6 +92,7 @@ const handleCallback = async response => {
   try {
     console.log("handleCallback", response)
     isLoading.value = false
+
     const wuid = useGuestUser().value
     if (response.code) {
 
@@ -195,7 +182,7 @@ onMounted(() => {
                   <div class="input__group">
                     <input
                       id="login-email-29"
-                      v-model="username"
+                      v-model="loginFormValues.email"
                       autocomplete="on"
                       type="email"
                       placeholder=" "
@@ -211,15 +198,15 @@ onMounted(() => {
                   </div>
 
                   <span
-                    v-if="errors?.username"
+                    v-if="serverErrors?.email"
                     class="input-hint error"
-                  >{{ errors?.username }}</span>
+                  >{{ serverErrors?.email }}</span>
                 </div>
                 <div class="form-item">
                   <div class="input__group">
                     <input
                       id="login-password-29"
-                      v-model="password"
+                      v-model="loginFormValues.password"
                       autocomplete="on"
                       type="password"
                       placeholder=" "
@@ -233,9 +220,9 @@ onMounted(() => {
                     </label>
                   </div>
                   <span
-                    v-if="errors?.password"
+                    v-if="serverErrors?.password"
                     class="input-hint error"
-                  >{{ errors?.password[0] }}</span>
+                  >{{ serverErrors?.password }}</span>
                 </div>
               </div>
               <div class="form-item text-center">

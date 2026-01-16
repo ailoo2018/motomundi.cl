@@ -6,25 +6,24 @@ export default defineEventHandler(async event => {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
-    let { user, password } = getQuery(event)
+    let { username, password } = await readBody(event)
 
 
     return await $fetch(`${baseUrl}/${getDomainId()}/auth/login`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      query: {
-        user,
+      method: 'POST',
+      body: {
+        username: username,
         password,
       },
     })
   }catch(error) {
-    console.error('Error in google login', error)
-    console.error('Stack trace:', error.stack)
+    const errorData = error.data
     throw createError({
       statusCode: error.statusCode || 500,
       message: error.message || 'Failed to check auth',
+      data: {
+        code: errorData?.code,
+      }
     })
   }
 

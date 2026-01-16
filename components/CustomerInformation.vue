@@ -86,6 +86,11 @@ const getAddresses = async () => {
   isLoading.value = true
   try {
 
+    const accessToken = useCookie('accessToken').value
+    if(!(accessToken || accessToken !== '')) {
+      return
+    }
+
     const { data, error: fetchError } = await useFetch('/api/account/addresses', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },

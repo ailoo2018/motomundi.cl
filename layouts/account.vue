@@ -16,9 +16,19 @@ const { injectSkinClasses } = useSkins()
 const router = useRouter()
 
 const logout = async () => {
-  console.log("Logged out")
+  // 1. Clear the cookies
+  // Setting to null tells Nuxt to expire the cookie
   useCookie("user_id").value = null
-  await navigateTo("/login")
+  useCookie("guest_id").value = null
+  useCookie("accessToken").value = null
+
+  // 2. Clear any reactive state (if you are using useState)
+  const user = useState('user')
+  user.value = null
+
+  // 3. Redirect
+  // Using 'replace: true' prevents the user from hitting 'back' to the logged-in page
+  await navigateTo("/login", { replace: true })
 }
 // ℹ️ This will inject classes in body tag for accurate styling
 injectSkinClasses()
@@ -35,24 +45,25 @@ injectSkinClasses()
       <MotomundiNavigation />
 
       <main class="main-content">
-
-
-
         <div class="row">
-
-          <section class="row col s12 account-container" style="width:95%;">
-            <section class="account container " >
+          <section
+            class="row col s12 account-container"
+            style="width:95%;"
+          >
+            <section class="account container ">
               <div class="v-row">
-                <aside style="max-width: 240px" class="v-col col-sm-12 col-md-3 col-lg-3 hide-on-small-and-down">
+                <aside
+                  style="max-width: 240px"
+                  class="v-col col-sm-12 col-md-3 col-lg-3 hide-on-small-and-down"
+                >
                   <AccountMenu @logout="logout" />
                 </aside>
                 <VCol class="col-sm-12 col-md-9 account__content">
                   <slot />
                 </VCol>
               </div>
-              </section>
+            </section>
           </section>
-
         </div>
 
         <MotomundiFooter />
@@ -285,36 +296,6 @@ body {
   text-transform: uppercase;
 }
 
-.account__user-avatar {
-  border-radius: 200px;
-  color: #fff;
-  font-weight: 700;
-  text-align: center;
-  text-transform: uppercase;
-}
-.profile__club {
-  margin: 25px 0;
-  text-align: center;
-}
-
-.profile__club p {
-  font-size: 14px;
-  line-height: 1.4em;
-}
-
-.profile__orders .order {
-  background-color: #f5f5f5;
-  margin-bottom: 4px;
-}
-
-.profile__name .profile__email {
-  font-size: 14px;
-  text-transform: none;
-}
-
-.profile__name span {
-  display: block;
-}
 
 .account-order__detail {
   background: #f9f9f9;
@@ -385,19 +366,6 @@ body {
   padding-bottom: 15px;
 }
 
-.account[data-v-39c4a0d8] .user-avatar__container.club-member .account__user-avatar:after {
-  background: transparent url(/Templates/MotoMundiDesktop/content/images/mmclub.png) 50% no-repeat;
-  background-size: contain;
-  content: "";
-  display: block;
-  height: 30px;
-  left: 0;
-  margin: -10px auto 10px;
-  position: absolute;
-  right: 0;
-  width: 55px;
-  top: 110px;
-}
 
 @media only screen and (max-width: 600px) {
   .account[data-v-39c4a0d8] .user-avatar__container.club-member .account__user-avatar:after {
@@ -509,64 +477,13 @@ svg:not(:root) {
   stroke-linecap: round;
 }
 
-.profile .profile__avatar-container {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 25px;
-  text-align: center;
-}
-.account__user-avatar .edit-user-avatar {
-  align-items: center;
-  background-color: hsla(0,0%,100%,0);
-  border-radius: 200px;
-  bottom: 0;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  opacity: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transition: all .2s ease;
-  width: 100%;
-}
 .account__user-avatar .edit-user-avatar .upload-image {
   height: 30px;
   width: 45px;
 }
 
-.motocoins-card {
-  align-items: flex-start;
-  aspect-ratio: 9/5;
-  background: #d6001c url(/Templates/MotoMundiDesktop/content/images/mobile-menu/club-motomundi-card-bg.png) no-repeat 50%;
-  background-size: cover;
-  border-radius: 18px;
-  box-sizing: border-box;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
-  gap: 16px;
-  height: auto;
-  justify-content: space-between;
-  margin: 20px auto;
-  max-width: 350px;
-  min-height: 140px;
-  padding: 25px 20px 20px;
-  text-align: left;
-  width: 95%;
-}
 
-.profile__personal-info {
-  color: #4a4a4a;
-  display: flex;
-  font-size: 12px;
-  font-weight: 600;
-  gap: 20px;
-  text-transform: uppercase;
-}
+
 
 .placeholder {
   color: #adadad;

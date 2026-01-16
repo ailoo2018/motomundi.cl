@@ -1,11 +1,13 @@
 export default defineNuxtRouteMiddleware((to, from) => {
   const userId = useCookie('user_id')
-
-  // Convert to number and check if it's greater than 0
   const isAuthenticated = Number(userId.value) > 0
 
+  console.log("defineNuxtRouteMiddleware: " + userId)
+
+  // If already on login, don't redirect again
+  if (to.path === '/login') return
+
   if (!isAuthenticated) {
-    // Redirect to login page if not authenticated
     return navigateTo('/login')
   }
 })
