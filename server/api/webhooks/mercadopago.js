@@ -6,11 +6,16 @@ const MERCADO_PAGO = 15
 export default defineEventHandler(async event => {
   const config = useRuntimeConfig()
   const query = getQuery(event)
+
+  console.log(`!!!!!Webhook called: query: ${query}`)
+
   const body = await readBody(event)
 
   // Mercado Pago envía el ID del recurso en diferentes lugares según el tipo de notificación
   const id = body.data?.id || body.resource?.split('/').pop()
   const topic = body.type || query.topic
+
+
 
   // Solo nos interesan las notificaciones de pagos
   if (topic === 'payment' && id) {
