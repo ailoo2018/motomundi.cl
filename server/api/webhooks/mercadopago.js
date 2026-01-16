@@ -16,7 +16,7 @@ export default defineEventHandler(async event => {
   if (topic === 'payment' && id) {
     try {
       const client = new MercadoPagoConfig({
-        accessToken: config.mercadopagoAccessToken,
+        accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN, // Add this to your runtimeConfig
       })
 
       const payment = new Payment(client)
@@ -32,21 +32,27 @@ export default defineEventHandler(async event => {
         console.log(`💰 Pago aprobado para Orden: ${orderId}`)
 
         // ACTUALIZA TU BASE DE DATOS AQUÍ
-        const confirmRet = await $fetch(`${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
+        try {
+          const confirmRet = await $fetch(`${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
 
-            },
-            body: {
-              orderId: orderId,
-              paymentMethodType: MERCADO_PAGO,
-              paymentId: id,
-              token: null, // used in webpay
-            },
-          })
+              },
+              body: {
+                orderId: orderId,
+                paymentMethodType: MERCADO_PAGO,
+                paymentId: id,
+                token: null, // used in webpay
+              },
+            })
 
+        }catch(e){
+          console.error("Error al intentar notificar pago a ailoo: " + e.message + ` orderId: ${orderId} paymentId: ${id}`)
+          console.error(e)
+          console.error(e.stacktrace)
+        }
 
       } else if (status === 'rejected') {
         console.log(`❌ Pago rechazado para Orden: ${orderId}`)
