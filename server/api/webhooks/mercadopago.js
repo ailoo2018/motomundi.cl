@@ -4,76 +4,92 @@ import { getDomainId } from "@/server/ailoo-domain.js"
 const MERCADO_PAGO = 15
 
 export default defineEventHandler(async event => {
-  const config = useRuntimeConfig()
-  const query = getQuery(event)
+  try {
+    const config = useRuntimeConfig()
+    const query = getQuery(event)
 
-  console.log(`!!!!!Webhook called: query: ${query}`)
+    console.log(`!!!!!Webhook called: query: ${query}`)
 
-  const body = await readBody(event)
+    const body = await readBody(event)
 
-  // Mercado Pago envía el ID del recurso en diferentes lugares según el tipo de notificación
-  const id = body.data?.id || body.resource?.split('/').pop()
-  const topic = body.type || query.topic
+    // Mercado Pago envía el ID del recurso en diferentes lugares según el tipo de notificación
+    const id = body.data?.id || body.resource?.split('/').pop()
+    const topic = body.type || query.topic
 
-  console.log("topic is: " + topic + "  id is: " + id)
+    console.log("topic is: " + topic + "  id is: " + id)
 
-  // Solo nos interesan las notificaciones de pagos
-  if (topic === 'payment' && id) {
-    try {
-      const client = new MercadoPagoConfig({
-        accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN, // Add this to your runtimeConfig
-      })
+    // Solo nos interesan las notificaciones de pagos
+    if (topic === 'payment' && id) {
+      try {
+        const client = new MercadoPagoConfig({
+          accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN, // Add this to your runtimeConfig
+        })
 
-      const payment = new Payment(client)
+        const payment = new Payment(client)
 
-      // 1. Obtener los detalles del pago desde la API oficial de Mercado Pago
-      const paymentData = await payment.get({ id })
+        // 1. Obtener los detalles del pago desde la API oficial de Mercado Pago
+        const paymentData = await payment.get({ id })
 
-      const orderId = paymentData.external_reference
-      const status = paymentData.status // 'approved', 'rejected', 'cancelled', etc.
+        const orderId = paymentData.external_reference
+        const status = paymentData.status // 'approved', 'rejected', 'cancelled', etc.
 
-      // 2. Lógica de negocio según el estado
-      if (status === 'approved') {
-        console.log(`💰 Pago aprobado para Orden: ${orderId}`)
+        // 2. Lógica de negocio según el estado
+        if (status === 'approved') {
+          console.log(`💰 Pago aprobado para Orden: ${orderId}`)
 
-        // ACTUALIZA TU BASE DE DATOS AQUÍ
-        try {
-          const confirmRet = await $fetch(`${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
+          // ACTUALIZA TU BASE DE DATOS AQUÍ
+          try {
+            const confirmRet = await $fetch(`${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
 
-              },
-              body: {
-                orderId: orderId,
-                paymentMethodType: MERCADO_PAGO,
-                paymentId: id,
-                token: null, // used in webpay
-              },
-            })
+                },
+                body: {
+                  orderId: orderId,
+                  paymentMethodType: MERCADO_PAGO,
+                  paymentId: id,
+                  token: null, // used in webpay
+                },
+              })
 
-        }catch(e){
-          console.error("Error al intentar notificar pago a ailoo: " + e.message + ` orderId: ${orderId} paymentId: ${id}`)
-          console.error(e)
-          console.error(e.stacktrace)
+          } catch (e) {
+            console.error("Error al intentar notificar pago a ailoo: " + e.message + ` orderId: ${orderId} paymentId: ${id}`)
+            console.error(e)
+            console.error(e.stack)
+          }
+
+        } else if (status === 'rejected') {
+          console.log(`❌ Pago rechazado para Orden: ${orderId}`)
+
+          // Opcional: marcar como fallida
         }
 
-      } else if (status === 'rejected') {
-        console.log(`❌ Pago rechazado para Orden: ${orderId}`)
+        // 3. SIEMPRE responder con 200 o 201 para que Mercado Pago deje de reintentar
+        return { received: true }
 
-        // Opcional: marcar como fallida
+      } catch (error) {
+        console.error('Error procesando Webhook de MP:', error)
+
+        // Log detailed error for debugging
+        if (error.cause) {
+          console.error('Error cause:', error.cause)
+        }
+
+        // Respondemos 200 igual para evitar que MP nos sature con reintentos si el error es de nuestra lógica
+        return { received: true, error: 'Internal logic error' }
       }
-
-      // 3. SIEMPRE responder con 200 o 201 para que Mercado Pago deje de reintentar
-      return { received: true }
-
-    } catch (error) {
-      console.error('Error procesando Webhook de MP:', error)
-
-      // Respondemos 200 igual para evitar que MP nos sature con reintentos si el error es de nuestra lógica
-      return { received: true, error: 'Internal logic error' }
     }
+  }catch(err1) {
+    console.error("Error al recibir notificacion en webhook: " + err1.message )
+    console.error('Stack trace:', err1.stack)
+
+    // Log detailed error for debugging
+    if (err1.cause) {
+      console.error('Error cause:', err1.cause)
+    }
+
   }
 
   // Si recibimos otro tipo de notificación (ej. plan de suscripción) simplemente respondemos OK
