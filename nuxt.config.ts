@@ -158,6 +158,14 @@ export default defineNuxtConfig({
         },
       }),
     ],
+
+    server: {
+      allowedHosts: [
+        'barratrously-unstationed-edward.ngrok-free.dev',
+        '.ngrok-free.app', // Permite cualquier subdominio de ngrok
+        '.ngrok-free.dev',
+      ],
+    },
   },
 
   build: {
@@ -172,5 +180,7 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-07-15',
+
+
   modules: ['@vueuse/nuxt', '@nuxtjs/i18n', '@nuxtjs/device', '@pinia/nuxt'],
 })

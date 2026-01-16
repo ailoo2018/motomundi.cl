@@ -23,7 +23,7 @@ export default defineEventHandler(async event => {
       message: error.message || 'Failed to check auth',
       data: {
         code: errorData?.code,
-      }
+      },
     })
   }
 
