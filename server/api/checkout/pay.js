@@ -106,6 +106,7 @@ export default defineEventHandler(async event => {
         },
       }
 
+      console.log("pref: " + JSON.stringify(pref))
 
       const response = await preference.create(pref)
 
