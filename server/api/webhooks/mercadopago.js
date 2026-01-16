@@ -8,9 +8,13 @@ export default defineEventHandler(async event => {
     const config = useRuntimeConfig()
     const query = getQuery(event)
 
-    console.log(`!!!!!Webhook called: query: ${query}`)
+
+    if(query)
+      console.log(`!!!!!Webhook called: query: ${JSON.stringify(query)}`)
 
     const body = await readBody(event)
+    console.log('!!!!!Webhook Body:', body)
+
 
     // Mercado Pago envía el ID del recurso en diferentes lugares según el tipo de notificación
     const id = body.data?.id || body.resource?.split('/').pop()
@@ -55,7 +59,6 @@ export default defineEventHandler(async event => {
               })
 
           } catch (e) {
-            console.error("Error al intentar notificar pago a ailoo: " + e.message + ` orderId: ${orderId} paymentId: ${id}`)
             console.error(e)
             console.error(e.stack)
           }
@@ -82,8 +85,7 @@ export default defineEventHandler(async event => {
       }
     }
   }catch(err1) {
-    console.error("Error al recibir notificacion en webhook: " + err1.message )
-    console.error('Stack trace:', err1.stack)
+    console.error("Error al recibir notificacion en webhook: ", err1 )
 
     // Log detailed error for debugging
     if (err1.cause) {
