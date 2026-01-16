@@ -15,7 +15,7 @@ export default defineEventHandler(async event => {
   const id = body.data?.id || body.resource?.split('/').pop()
   const topic = body.type || query.topic
 
-
+  console.log("topic is: " + topic + "  id is: " + id)
 
   // Solo nos interesan las notificaciones de pagos
   if (topic === 'payment' && id) {
