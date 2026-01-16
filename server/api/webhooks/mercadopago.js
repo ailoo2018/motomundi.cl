@@ -58,6 +58,7 @@ export default defineEventHandler(async event => {
                 },
               })
 
+            console.log("CofnrimRet: ", confirmRet)
           } catch (e) {
             console.error(e)
             console.error(e.stack)
