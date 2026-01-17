@@ -8,10 +8,15 @@ import ProductBuyPanel from "@/views/pages/products/product-buy-panel.vue"
 import PreProductBanner from "@/views/pages/products/pre-product-banner.vue"
 import Recommend from "@/views/pages/products/recommend.vue"
 import { useGuestUser } from "@/composables/useGuestUser.js"
+import RelatedBlog from "@/views/pages/products/detail/related-blog.vue"
+import ProductDescription from "@/views/pages/products/detail/product-description.vue"
+import DataSheet from "@/views/pages/products/detail/data-sheet.vue"
+import Packs from "@/views/pages/products/detail/packs.vue"
 
 const store = useConfigStore()
 const productForm = ref()
 const showVideoDialog = ref(false)
+const blogArticle = ref()
 
 const route = useRoute()
 
@@ -26,7 +31,7 @@ const onShowVideo = videoId => {
   showVideoDialog.value = true
 }
 
-const addToCart = async item  => {
+const addToCart = async item => {
   const wuid = useGuestUser().value
 
   const { data: product } = await useFetch(`/api/cart/add`, {
@@ -43,7 +48,7 @@ const addToCart = async item  => {
   await navigateTo('/cart')
 }
 
-const onSelectedColor = color =>{
+const onSelectedColor = color => {
   // ref="productCarousel"
   console.log("onSelectedColor", color)
   productCarousel.value.selectSlideByProductColor(color)
@@ -118,8 +123,27 @@ definePageMeta({
           />
         </div>
 
-        <div class="packs-container" />
+        <Packs :product="product"/>
       </section>
+
+
+      <!-- product-description-container -->
+      <VRow class="row product-description-container mt-10">
+        <VCol cols="12" md="7">
+          <ProductDescription :description="product.description" />
+        </VCol>
+
+
+        <!-- ficha-tecnica -->
+        <VCol cols="12" md="5" >
+          <!-- blog -->
+          <RelatedBlog v-if="blogArticle" />
+          <!-- /blog -->
+          <DataSheet :product="product" />
+        </VCol>
+        <!-- /ficha-tecnica -->
+      </VRow>
+      <!-- /product-description-container -->
 
 
       <Recommend :product="product" />
@@ -160,7 +184,11 @@ definePageMeta({
   </VDialog>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
+h2 {
+  text-align: center;
+}
+
 .video-container {
   position: relative;
   padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
@@ -265,7 +293,6 @@ img {
 }
 
 
-
 @media only screen and (min-width: 993px) {
   .row .col.l5, .row .col.l6 {
     left: auto;
@@ -308,5 +335,11 @@ img {
   .row .col.l7 {
     width: 58.3333333333%;
   }
+}
+
+
+.product-description-container {
+  background-color: #fff;
+  margin: 13px;
 }
 </style>

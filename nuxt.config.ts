@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { fileURLToPath } from 'node:url'
 import vuetify from 'vite-plugin-vuetify'
 import svgLoader from 'vite-svg-loader'
@@ -161,9 +162,8 @@ export default defineNuxtConfig({
 
     server: {
       allowedHosts: [
-        'barratrously-unstationed-edward.ngrok-free.dev',
-        '.ngrok-free.app', // Permite cualquier subdominio de ngrok
-        '.ngrok-free.dev',
+        'subsequent-submissions-sys-writer.trycloudflare.com',
+        '.trycloudflare.com', // Permite cualquier subdominio de ngrok
       ],
     },
   },
@@ -180,6 +180,7 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-07-15',
+
 
 
   modules: ['@vueuse/nuxt', '@nuxtjs/i18n', '@nuxtjs/device', '@pinia/nuxt'],

@@ -80,7 +80,7 @@ export default defineEventHandler(async event => {
 
       let baseUrl = config.public.baseUrl
       if(!baseUrl.startsWith("https")){
-        baseUrl = "https://example.com"
+        baseUrl = "https://subsequent-submissions-sys-writer.trycloudflare.com"
       }
 
       // 3. Create the preference
