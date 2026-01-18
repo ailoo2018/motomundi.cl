@@ -17,6 +17,11 @@ const getSavings = (pack: any) => {
   return "$0";
 };
 
+const products = computed( () => {
+  // return props.selectedPack.products
+  return [props.selectedPack.mainProduct, ...props.selectedPack.products]
+})
+
 </script>
 
 <template>
@@ -95,7 +100,7 @@ const getSavings = (pack: any) => {
               v-if="selectedPack"
             >
               <div>
-                <PackModalItem v-for="packProd in selectedPack.products" :pack-prod="packProd" />
+                <PackModalItem v-for="packProd in products" :pack-prod="packProd" />
               </div>
             </div>
             <div
