@@ -166,7 +166,6 @@ const closeSearch = () => {
     <VTextField
       v-model="sword"
       width="300"
-      variant="flat"
       style="background-color: white;"
       @focus="showSearchWindow = sword.length > 2"
     />

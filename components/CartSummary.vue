@@ -3,6 +3,8 @@ import { formatMoney } from "~/@core/utils/formatters"
 import Coupon from "~/components/Cart/Coupon.vue"
 import { sleep } from "~/@core/utils/helpers"
 import { useGuestUser } from "@/composables/useGuestUser.js"
+import CartItemProduct from "@/views/pages/cart/cart-item-product.vue"
+import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
 
 const props = defineProps({
   isCollapsed: {
@@ -208,144 +210,13 @@ defineExpose({ getCart })
           <ul>
             <li
               v-for="item in cart.items"
+              :key="item.id"
               class="user-menu__cart-product"
             >
               <div class="cart-item">
-                <article
-                  v-if="item.type === 0"
-                  class="cart-product__wrapper"
-                >
-                  <a
-                    href="/"
-                    data-dr="false"
-                    class="cart-product mtc-link"
-                  ><span>
+                <CartItemProduct v-if="item.type === 0" :cartItem="item"  />
+                <CartItemPack v-if="item.type === 3" :cartItem="item" />
 
-                     <img
-                       :src="getImageUrl( item.image, 300, getDomainId())"
-                       :alt="item.name"
-                       width="80"
-                       height="80"
-                       class="cdn-img"
-                     > </span>
-                    <div class="cart-product__info">
-                      <span
-                        class="cart-product__warning"
-                        style="display:none;"
-                      >
-                        ¡Solo quedan 3, date prisa!
-                      </span>
-                      <h1 class="cart-product__name">
-                        {{ item.name }}
-                      </h1>
-                      <p
-                        v-if="item.size"
-                        class="cart-product__details"
-                      >
-                        <span class="cart-product__size">Talla: {{ item.size.name }}</span>
-                      </p>
-                      <p
-                        v-if="item.color"
-                        class="cart-product__details"
-                      >
-                        <span class="cart-product__size">Color:  {{ item.color.name }}</span>
-                      </p>
-                      <p class="cart-product__price">
-                        <span class="tag-wrapper">
-                          <span
-                            v-if="item.discountPercent > 0"
-                            class="tag product-tag product-tag--old product-tag--offer"
-                          >
-                            <span class="discount">-{{ Math.floor(item.discountPercent) }}%</span>
-                          </span>
-                          <span
-                            v-if="item.coupon != null"
-                            class="cart-product__discounts"
-                          >
-                            <span class="discount">{{ item.coupon.name }} -{{ formatMoney(item.couponDiscount) }} </span>
-                          </span>
-                        </span>
-
-
-                        <span class="price-container">
-                          <span class="price"> {{ formatMoney(item.price) }}</span>
-                          <span
-                            v-if="item.discount > 0"
-                            class="product-old-price strike"
-                          >
-                            {{ formatMoney(item.oldPrice) }}
-                          </span>
-                        </span>
-                      </p>
-                    </div>
-                  </a>
-                  <div class="cart-product__tools">
-                    <div class="cart-product__quantity">
-                      <div class="hide-on-med-and-down quantity-buttons">
-                        <button
-                          class="increase"
-                          @click="increase(item)"
-                        >
-                          <svg
-                            width="14"
-                            height="14"
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="icon sprite-line-icons"
-                          >
-                            <use
-                              href="/svg/ailoo.svg#i-icon-angle-up"
-                              xlink:href="/svg/ailoo.svg#i-icon-angle-up"
-                            />
-                          </svg>
-                        </button>
-                        <button
-                          class="decrease"
-                          @click="decrease(item)"
-                        >
-                          <svg
-                            width="14"
-                            height="14"
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="icon sprite-line-icons"
-                          >
-                            <use
-                              href="/svg/ailoo.svg#i-icon-angle-down"
-                              xlink:href="/svg/ailoo.svg#i-icon-angle-down"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                      <input
-                        type="number"
-                        :value="item.quantity"
-                        min="1"
-                        step="1"
-                        value="1"
-                        class="remove-arrows"
-                        @change="quantityChanged(item, $event.target.value)"
-                      >
-                    </div>
-                    <button
-                      tabindex="-1"
-                      class="cart-product__remove"
-                      @click="removeItem(item)"
-                    >
-                      <svg
-                        width="9"
-                        height="9"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon sprite-line-icons"
-                      >
-                        <title>Cross icon</title>
-                        <use
-                          href="/svg/ailoo.svg#i-icon-cross"
-                          xlink:href="/svg/ailoo.svg#i-icon-cross"
-                        />
-                      </svg>
-                      <span>Eliminar</span>
-                    </button>
-                  </div>
-                </article>
               </div>
 
               <header

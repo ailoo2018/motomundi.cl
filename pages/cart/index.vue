@@ -2,6 +2,7 @@
 import { useGuestUser } from "@/composables/useGuestUser.js"
 import CartItemProduct from "@/views/pages/cart/cart-item-product.vue"
 import CartSummary from "@/views/pages/cart/cart-summary.vue"
+import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
 
 
 const cartStore = useCartStore()
@@ -66,6 +67,7 @@ onMounted(async () => {
             <ul>
               <li v-for="(cartItem, index) in cartStore.cart.items" :key="cartItem.id">
                 <CartItemProduct v-if="cartItem.type === 0" :cartItem="cartItem"  />
+                <CartItemPack v-if="cartItem.type === 3" :cartItem="cartItem" />
               </li>
 
             </ul>

@@ -1,13 +1,16 @@
 <script setup lang="ts">
 
 import PackModalItem from "@/views/pages/packs/pack-modal-item.vue";
+import {SaleItemType} from "@/models";
 
-const isShowPackDialog = defineModel<boolean>({ default: false });
+const isShowPackDialog = defineModel<boolean>({default: false});
 
 interface Props {
   selectedPack: any;
   loading?: boolean;
 }
+
+const loading = ref(false)
 
 const props = defineProps<Props>();
 
@@ -17,7 +20,55 @@ const getSavings = (pack: any) => {
   return "$0";
 };
 
-const products = computed( () => {
+const addPackToCart = async () => {
+  const config = useRuntimeConfig()
+  const baseUrl = config.public.w3BaseUrl
+
+  const rq = {
+    wuid: useGuestUser().value,
+    id: props.selectedPack.id,
+    name: props.selectedPack.name,
+    type: SaleItemType.DISCOUNT_RULE,
+    packId: props.selectedPack.id,
+    quantity: 1,
+    packContents: []
+  }
+
+  let validated = true
+  for (const p of products.value) {
+    if (p.selectedVariant == null) {
+      // show error
+      console.log("product not selected: " + p.name)
+      p.error = "Debe seleccionar talla y/o color" + new Date()
+      validated = false;
+      continue
+    }
+    rq.packContents.push({productItemId: p.selectedVariant.id, quantity: 1})
+  }
+  if (!validated) {
+    return
+  }
+
+  try {
+    loading.value = true
+    const res = await $fetch(`${baseUrl}/${getDomainId()}/cart/add`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: rq
+    })
+
+    await navigateTo('/cart')
+    console.log("result cart add: ", res)
+  } catch (e) {
+    loading.value = false
+    alert(e.message)
+  }
+
+}
+
+const products = computed(() => {
   // return props.selectedPack.products
   return [props.selectedPack.mainProduct, ...props.selectedPack.products]
 })
@@ -30,7 +81,7 @@ const products = computed( () => {
     class="modal-wrapper "
     v-if="isShowPackDialog"
   >
-    <div class="modal-backdrop" />
+    <div class="modal-backdrop"/>
     <div
       class="modal"
       role="dialog"
@@ -45,11 +96,11 @@ const products = computed( () => {
             width="9"
             height="9"
           >
-            <use href="/content/svg/motomundi.svg#i-icon-cross" />
+            <use href="/content/svg/motomundi.svg#i-icon-cross"/>
           </svg>
         </button>
       </div>
-      <header class="modal-header" />
+      <header class="modal-header"/>
       <section class="modal-body">
         <div>
           <div class="pack packs-modal-full">
@@ -91,7 +142,7 @@ const products = computed( () => {
             <div class="packs-modal-full__title">
               <h2>
                 {{ selectedPack.title }}
-                <small />
+                <small/>
               </h2>
             </div>
 
@@ -100,7 +151,11 @@ const products = computed( () => {
               v-if="selectedPack"
             >
               <div>
-                <PackModalItem v-for="packProd in products" :pack-prod="packProd" />
+
+
+                <PackModalItem v-for="(packProd, index) in products" v-model="products[index]" :key="packProd.id"
+                               :error="packProd.error"
+                />
               </div>
             </div>
             <div
@@ -112,7 +167,7 @@ const products = computed( () => {
                 width="15"
                 height="12"
               >
-                <use href="/content/svg//motomundi.svg#i-icon-alert" />
+                <use href="/content/svg//motomundi.svg#i-icon-alert"/>
               </svg>
               Parece que algo ha ido mal
             </div>
@@ -124,9 +179,13 @@ const products = computed( () => {
                   <small class="pack__savings">Ahorro de
                     {{getSavings(selectedPack) }}</small>
                 </div>
-                <button
-                  ng-click="addPackToCart($event, selectedPack)"
-                  ng-class="{ 'loading' : loading, 'disabled' : loading}"
+                <VBtn
+                  :rounded="0"
+                  color="rgb(65, 163, 53)"
+                  @click="addPackToCart($event, selectedPack)"
+                  style="height: 100%"
+                  :loading="loading"
+                  :class="{ 'loading' : loading, 'disabled' : loading }"
                 >
                   <svg
                     width="22"
@@ -141,7 +200,7 @@ const products = computed( () => {
                     />
                   </svg>
                   <span v-if="!loading">Comprar pack </span>
-                </button>
+                </VBtn>
               </div>
             </div>
           </div>
@@ -163,6 +222,7 @@ const products = computed( () => {
   margin: 20px auto;
   padding: 0px 60px;
 }
+
 .modal-wrapper {
   align-items: center;
   bottom: 0;
@@ -172,8 +232,9 @@ const products = computed( () => {
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 10000;
+  z-index: 100;
 }
+
 .modal-wrapper .modal-backdrop {
   background: hsla(0, 0%, 96%, .9);
   bottom: 0;
@@ -185,21 +246,25 @@ const products = computed( () => {
   width: 100%;
   z-index: 1;
 }
+
 @media only screen and (max-width: 992px) {
   .modal-wrapper .modal {
     max-height: 90%;
     max-width: 80%;
   }
 }
+
 .modal-wrapper .modal .modal__close-cont {
   position: relative;
 }
+
 .modal-wrapper .modal .modal-header {
   background-color: #f5f5f5;
   padding: 30px 30px 0;
   position: relative;
   z-index: 20;
 }
+
 .modal-wrapper .modal .modal-body {
   max-height: 100%;
   overflow-y: auto;
@@ -234,6 +299,7 @@ const products = computed( () => {
   top: 0px;
   width: 40px;
 }
+
 #packmodal .packs-modal-full__title {
   align-items: center;
   display: flex;
@@ -325,4 +391,29 @@ const products = computed( () => {
   justify-content: space-between;
 }
 
+#packmodal .packs-modal-full__buy .price .vat-included {
+  color: rgb(175, 175, 175);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+#packmodal .packs-modal-full__buy .price strong {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+#packmodal .packs-modal-full__buy .price small {
+  color: rgb(214, 0, 28);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+#packmodal .pack-item__description button {
+  color: rgb(165, 165, 165);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2px 0px;
+}
 </style>

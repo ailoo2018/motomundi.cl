@@ -12,6 +12,10 @@ const checkout = async cart => {
 }
 
 const totalItems =  computed( () => {
+  if(cartStore.cart && cartStore.cart.totalItems > 0) {
+    return cartStore.cart.totalItems
+  }
+
   let total = 0;
   for(var item of cartStore.cart.items){
     total = total + item.quantity

@@ -75,9 +75,9 @@ const showPackDialog = pack => {
             >
               <p class="pack-item__savings">
                 <strong>
-                  <span>ahorro</span> {{ pack.savings }}
+                  <span>ahorro</span> {{ formatMoney( pack.savings * -1 ) }}
                 </strong>
-                <small>Total: {{ pack.total }}</small>
+                <small>Total: {{ formatMoney(pack.total) }}</small>
               </p>
               <svg
                 class="sprite-line-icons"

@@ -2,17 +2,90 @@
 import { register } from 'swiper/element/bundle'
 import { getImageUrl } from "@core/utils/formatters"
 import { SwiperSlide } from "swiper/vue"
+import { ProductHelper } from "@/models/products"
 
-const props = defineProps({
-  packProd: {
-    type: Object,
+const props = defineProps(
+  {
+    error: {
+      type: String,
+    },
   },
+)
+
+const colorSelect = ref(null)
+const sizeSelect = ref(null)
+
+const product = defineModel({
+  type: Object,
+})
+
+product.value.selectedVariant = null
+
+if(!ProductHelper.requiresFeatureSelect(product.value)){
+  product.value.selectedVariant = product.value.productItems[0]
+}
+
+
+watch( () => props.error, () => {
+  // determine which feature selection is missing
+  console.log("error trying to submit, missing selection")
+  if(ProductHelper.requiresColorSelect(product.value) && !selectedColor.value ){
+    colorSelect.value.validate()
+  }
+
+  if(ProductHelper.requiresSizeSelect(product.value) && !selectedSize.value ){
+    sizeSelect.value.validate()
+  }
+
+
+
+})
+
+
+const selectedSize = ref()
+const selectedColor = ref()
+
+const onFeatureSelect = () => {
+  const sizeId = (selectedSize.value && selectedSize.value.id > 0) ? selectedSize.value.id :  0
+  const colorId = (selectedColor.value && selectedColor.value.id > 0) ? selectedColor.value.id : 0
+
+  const pit = ProductHelper.getProductItemByFeatures(product.value, [colorId, sizeId])
+
+  product.value.selectedVariant = null
+  if(pit)
+    product.value.selectedVariant = pit
+}
+
+const colors = computed(() => {
+  if(!product?.value.features)
+    return []
+
+  return product?.value.features.filter(f => f.type === 1)
+})
+
+const sizes = computed(() => {
+  if(!product?.value.features)
+    return []
+
+  return product?.value.features.filter(f => f.type === 0)
+})
+
+
+watch( selectedSize, () => {
+  onFeatureSelect()
+  console.log("size changed:" + product.value.selectedVariant)
+})
+
+watch( selectedColor, () => {
+  onFeatureSelect()
+  console.log("color changed:" + + product.value.selectedVariant)
 })
 
 register()
 </script>
 
 <template>
+
   <div class="pack-item">
     <button
       class="pack-item__change"
@@ -27,7 +100,7 @@ register()
         events-prefix="swiper-"
       >
         <swiper-slide
-          v-for="img in packProd.images"
+          v-for="img in product.images"
           :key="img.image"
         >
           <img
@@ -62,82 +135,84 @@ register()
       </button>
       <div class="pack-item__name">
         <p>
-          <strong>{{ packProd.productName }}</strong>
+          <strong>{{ product.fullName }}</strong>
         </p>
       </div>
       <div class="pack-item__description">
         <p>
-          {{ packProd.productName }}…
+          {{ product.fullName }}…
         </p>
         <a
           class="mtc-link nuxt-link-active nuxt-link-exact-active"
           data-dr="true"
-          href="{{packProd.url}}"
+          href="{{product.url}}"
         >
           <button>Leer más</button>
         </a>
       </div>
     </div>
     <div class="pack-item__size">
-      <select
-        v-if="packProd.availableColors?.length > 0"
-        v-model="packProd.selectedColor.id"
-        class="pack-select-color sm ng-pristine ng-untouched ng-valid ng-not-empty "
-        ng-class="'selectPackColor' + pack.id + '_' + packProd.id "
-        ng-options="option.id as option.name for option in packProd.availableColors"
-        ng-change="onChangeColor(pack, packProd)"
-        data-content="Antes de añadir a la cesta debes seleccionar un color"
-        data-placement="right"
-      >
-        <option
-          label="SELECCIONAR COLOR"
-          value="id:0"
-          selected="selected"
-        >
-          SELECCIONAR COLOR
-        </option>
-      </select>
+      <VSelect
+        v-if="colors.length > 0"
+        ref="colorSelect"
+        v-model="selectedColor"
+        class="pack-select-color mb-2"
+        :items="colors"
+        item-id="id"
+        item-title="name"
+        placeholder="Seleccione um color"
+        :rules="[v => !!v || 'Requerido']"
+        return-object
+      />
 
-      <select
-        class="pack-select-size sm ng-pristine ng-untouched ng-valid ng-not-empty"
-        ng-if="packProd.availableSizes.length > 0"
-        ng-class="'selectPackSize' + selectedPack.id + '_' + packProd.id"
-        ng-model="packProd.selectedSize.id"
-        ng-options="option.id as option.name for option in packProd.availableSizes"
-        ng-change="onChangeSize(selectedPack, packProd)"
-        data-content="Antes de añadir a la cesta debes seleccionar una talla"
-        data-placement="bottom"
-      >
-        <option
-          label="SELECCIONAR TALLA"
-          value="id:0"
-          selected="selected"
-        >
-          SELECCIONAR TALLA
-        </option>
-      </select>
+
+
+      <VSelect
+        v-if="sizes.length > 0"
+        ref="sizeSelect"
+        v-model="selectedSize"
+        class="pack-select-size"
+        :items="sizes"
+        item-id="id"
+        item-title="name"
+        placeholder="Seleccione uma talla"
+        :rules="[v => !!v || 'Requerido']"
+        return-object
+      />
     </div>
     <span class="pack-item__price">
       <span>
         <span
-          ng-if="packProd.discount > 0"
+          v-if="product.discount > 0"
           class="strike"
         >
-          {{ packProd.basePrice }}
+          {{ formatMoney(product.minPrice) }}
         </span>
         <strong>
-          {{ packProd.finalPrice }}
+          {{ formatMoney( product.minPrice - (product.discount ?? 0) ) }}
         </strong>
       </span>
     </span>
   </div>
 </template>
 
-<style  lang="scss">
+<style scoped lang="scss">
 #packmodal .pack-item__info {
   padding: 20px 30px;
 }
 
+#packmodal .pack-item__price, #packmodal .pack-item__price > span {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+#packmodal .pack-item__price .strike {
+  color: rgb(214, 0, 28);
+  display: inline-block;
+  font-size: 13px;
+}
 
 #packmodal .pack-grid__item, #packmodal .pack-item {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 58px 36px, rgba(0, 0, 0, 0.05) 0px 39px 33px, rgba(0, 0, 0, 0.04) 0px 16px 17px, rgba(0, 0, 0, 0.04) 0px 4px 10px, rgba(0, 0, 0, 0.03) 0px -2px 5px, rgba(0, 0, 0, 0.02) 0px -6px 2px;

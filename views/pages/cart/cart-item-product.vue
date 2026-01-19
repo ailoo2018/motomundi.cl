@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import emptyImage from "@images/empty-image.avif"
+
 const props = defineProps({
   cartItem: { type: Object, required: true },
 })
@@ -32,13 +34,21 @@ const removeCartItem = () => {
         >
           <span>
 
-            <img
+            <VImg
               width="120"
               height="120"
-              :src="getImageUrl(cartItem.image, 300, getDomainId())"
+              :src="getImageUrl(cartItem.image, 300, getDomainId()) || emptyImage"
               :alt="cartItem.name"
               class="cdn-img"
-            >
+            >          <template #error>
+              <VImg
+                :src="emptyImage"
+                width="120"
+                height="120"
+                class="cdn-img ma-2"
+              />
+            </template>
+            </VImg>
           </span>
 
           <div class="cart-product__info ml-2">
@@ -130,7 +140,7 @@ const removeCartItem = () => {
             >
           </div>
           <button
-            class="cart-product__remove"
+            class="cart-product__remove ml-3"
             tabindex="-1"
             @click="removeCartItem"
           >
@@ -142,7 +152,7 @@ const removeCartItem = () => {
               <title>Cross icon</title>
               <use href="/content/svg/motomundi.svg#i-icon-cross" />
             </svg>
-            <span>Eliminar</span>
+            <span >Eliminar</span>
           </button>
         </div>
       </article>
