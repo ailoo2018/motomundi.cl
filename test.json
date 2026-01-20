@@ -1,26 +1,664 @@
-pref = {
-  "body": {
-    "items": [
-      {
-        "id": "152547",
-        "title": "Orden #152547",
-        "quantity": 1,
-        "unit_price": 200,
-        "currency_id": "CLP"
+{
+  "viewData": {
+    "product": {
+      "id": 3212224,
+      "name": "Fluid Haul - Azul/Blanco",
+      "isSimpleProduct": true,
+      "requiresFeatureSelect": false,
+      "brand": {
+        "linkName": "Alpinestars",
+        "logo": "3a8ae3f6d9374c0a8195d973dbf6d369.jpg",
+        "id": 130,
+        "name": "Alpinestars",
+        "showNameInWeb": true,
+        "featured": true,
+        "isAvailableForInternet": true
+      },
+      "model": {
+        "id": 10489,
+        "name": "Fluid",
+        "image": null,
+        "videos": null
+      },
+      "productItems": [
+        {
+          "id": 3717453,
+          "sku": null,
+          "barcode1": "",
+          "isInStock": true,
+          "sizeId": 8,
+          "colorId": 0,
+          "price": 159800.0,
+          "msrp": 159800.0,
+          "discount": 0.0,
+          "discountPercent": 0.0
+        }
+      ],
+      "isNew": false,
+      "type": 1,
+      "reviews": [],
+      "minPrice": 159800.0,
+      "maxPrice": 159800.0,
+      "msrp": 159800.0,
+      "price": 159800.0,
+      "discount": {
+        "amount": 0.0,
+        "percent": 0.0
+      },
+      "ytVideos": [],
+      "hasDiscount": false,
+      "financing": [
+        {
+          "installments": 12,
+          "tae": 0
+        }
+      ],
+      "image": "/Content/products/1/9/2c/92c24aa85ae742ee9a2e9ec3ee9f6555_600.jpg",
+      "images": [
+        {
+          "id": 1926803,
+          "imageId": "92c24aa85ae742ee9a2e9ec3ee9f6555.jpg",
+          "orderWeight": 0,
+          "imageURL": "/Content/products/1/9/2c/92c24aa85ae742ee9a2e9ec3ee9f6555_600.jpg",
+          "featureId": 0,
+          "featureDesc": null
+        },
+        {
+          "id": 1926804,
+          "imageId": "52e341631e91491799095581818e8db0.jpg",
+          "orderWeight": 1,
+          "imageURL": "/Content/products/1/5/2e/52e341631e91491799095581818e8db0_600.jpg",
+          "featureId": 0,
+          "featureDesc": null
+        }
+      ],
+      "colors": [],
+      "sizes": [
+        {
+          "id": 8,
+          "name": "Tamaño Unico",
+          "orderWeight": 0,
+          "type": 0
+        }
+      ],
+      "composite": {
+        "associations": [
+          {
+            "id": 121552,
+            "colorId": 42,
+            "requiresColorSelect": false,
+            "sizeId": 0,
+            "requiresSizeSelect": true,
+            "quantity": 1,
+            "product": {
+              "id": 2992941,
+              "url": "motocicleta/2992941-jerseys-alpinestars-jersey-fluid-haul",
+              "name": "Jersey Fluid Haul",
+              "fullName": "Alpinestars Jersey Fluid Haul",
+              "brand": {
+                "linkName": "Alpinestars",
+                "logo": "3a8ae3f6d9374c0a8195d973dbf6d369.jpg",
+                "id": 130,
+                "name": "Alpinestars",
+                "showNameInWeb": true,
+                "featured": true,
+                "isAvailableForInternet": true
+              },
+              "colors": [
+                {
+                  "id": 42,
+                  "name": "Azul/Blanco",
+                  "orderWeight": 0,
+                  "type": 1
+                }
+              ],
+              "sizes": [
+                {
+                  "id": 985,
+                  "name": "S",
+                  "orderWeight": 40,
+                  "type": 0
+                },
+                {
+                  "id": 986,
+                  "name": "M",
+                  "orderWeight": 50,
+                  "type": 0
+                },
+                {
+                  "id": 987,
+                  "name": "L",
+                  "orderWeight": 80,
+                  "type": 0
+                },
+                {
+                  "id": 988,
+                  "name": "XL",
+                  "orderWeight": 90,
+                  "type": 0
+                },
+                {
+                  "id": 992,
+                  "name": "2XL",
+                  "orderWeight": 100,
+                  "type": 0
+                }
+              ],
+              "productItems": [
+                {
+                  "id": 3439757,
+                  "sku": null,
+                  "barcode1": "8059347431918",
+                  "isInStock": false,
+                  "sizeId": 985,
+                  "colorId": 42,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439758,
+                  "sku": null,
+                  "barcode1": "8059347431765",
+                  "isInStock": false,
+                  "sizeId": 985,
+                  "colorId": 41,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439759,
+                  "sku": null,
+                  "barcode1": "8059347431819",
+                  "isInStock": false,
+                  "sizeId": 985,
+                  "colorId": 166050,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439760,
+                  "sku": null,
+                  "barcode1": "8059347431925",
+                  "isInStock": true,
+                  "sizeId": 986,
+                  "colorId": 42,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439761,
+                  "sku": null,
+                  "barcode1": "8059347431772",
+                  "isInStock": false,
+                  "sizeId": 986,
+                  "colorId": 41,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439762,
+                  "sku": null,
+                  "barcode1": "8059347431826",
+                  "isInStock": true,
+                  "sizeId": 986,
+                  "colorId": 166050,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439763,
+                  "sku": null,
+                  "barcode1": "8059347431932",
+                  "isInStock": true,
+                  "sizeId": 987,
+                  "colorId": 42,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439764,
+                  "sku": null,
+                  "barcode1": "8059347431789",
+                  "isInStock": false,
+                  "sizeId": 987,
+                  "colorId": 41,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439765,
+                  "sku": null,
+                  "barcode1": "8059347431833",
+                  "isInStock": true,
+                  "sizeId": 987,
+                  "colorId": 166050,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439766,
+                  "sku": null,
+                  "barcode1": "8059347431949",
+                  "isInStock": true,
+                  "sizeId": 988,
+                  "colorId": 42,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439767,
+                  "sku": null,
+                  "barcode1": "8059347431796",
+                  "isInStock": false,
+                  "sizeId": 988,
+                  "colorId": 41,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439768,
+                  "sku": null,
+                  "barcode1": "8059347431840",
+                  "isInStock": true,
+                  "sizeId": 988,
+                  "colorId": 166050,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439769,
+                  "sku": null,
+                  "barcode1": "8059347431956",
+                  "isInStock": true,
+                  "sizeId": 992,
+                  "colorId": 42,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439770,
+                  "sku": null,
+                  "barcode1": "8059347431802",
+                  "isInStock": false,
+                  "sizeId": 992,
+                  "colorId": 41,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439771,
+                  "sku": null,
+                  "barcode1": "8059347431857",
+                  "isInStock": false,
+                  "sizeId": 992,
+                  "colorId": 166050,
+                  "price": 39900.0,
+                  "msrp": 39900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                }
+              ]
+            }
+          },
+          {
+            "id": 121553,
+            "colorId": 42,
+            "requiresColorSelect": false,
+            "sizeId": 0,
+            "requiresSizeSelect": true,
+            "quantity": 1,
+            "product": {
+              "id": 2992944,
+              "url": "motocicleta/2992944-pantalones-mx-alpinestars-pantalon-fluid-haul",
+              "name": "Pantalón Fluid Haul",
+              "fullName": "Alpinestars Pantalón Fluid Haul",
+              "brand": {
+                "linkName": "Alpinestars",
+                "logo": "3a8ae3f6d9374c0a8195d973dbf6d369.jpg",
+                "id": 130,
+                "name": "Alpinestars",
+                "showNameInWeb": true,
+                "featured": true,
+                "isAvailableForInternet": true
+              },
+              "colors": [
+                {
+                  "id": 42,
+                  "name": "Azul/Blanco",
+                  "orderWeight": 0,
+                  "type": 1
+                }
+              ],
+              "sizes": [
+                {
+                  "id": 123488,
+                  "name": "28",
+                  "orderWeight": 28,
+                  "type": 0
+                },
+                {
+                  "id": 396,
+                  "name": "30",
+                  "orderWeight": 30,
+                  "type": 0
+                },
+                {
+                  "id": 397,
+                  "name": "32",
+                  "orderWeight": 32,
+                  "type": 0
+                },
+                {
+                  "id": 398,
+                  "name": "34",
+                  "orderWeight": 34,
+                  "type": 0
+                },
+                {
+                  "id": 399,
+                  "name": "36",
+                  "orderWeight": 36,
+                  "type": 0
+                },
+                {
+                  "id": 400,
+                  "name": "38",
+                  "orderWeight": 38,
+                  "type": 0
+                },
+                {
+                  "id": 70264,
+                  "name": "40",
+                  "orderWeight": 40,
+                  "type": 0
+                }
+              ],
+              "productItems": [
+                {
+                  "id": 3439774,
+                  "sku": null,
+                  "barcode1": "",
+                  "isInStock": false,
+                  "sizeId": 123488,
+                  "colorId": 42,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439775,
+                  "sku": null,
+                  "barcode1": "8059347430782",
+                  "isInStock": true,
+                  "sizeId": 123488,
+                  "colorId": 41,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439776,
+                  "sku": null,
+                  "barcode1": "",
+                  "isInStock": false,
+                  "sizeId": 123488,
+                  "colorId": 166050,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439777,
+                  "sku": null,
+                  "barcode1": "",
+                  "isInStock": false,
+                  "sizeId": 396,
+                  "colorId": 42,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439778,
+                  "sku": null,
+                  "barcode1": "8059347430799",
+                  "isInStock": true,
+                  "sizeId": 396,
+                  "colorId": 41,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439779,
+                  "sku": null,
+                  "barcode1": "8059347430867",
+                  "isInStock": true,
+                  "sizeId": 396,
+                  "colorId": 166050,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439780,
+                  "sku": null,
+                  "barcode1": "8059347431017",
+                  "isInStock": true,
+                  "sizeId": 397,
+                  "colorId": 42,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439781,
+                  "sku": null,
+                  "barcode1": "8059347430805",
+                  "isInStock": true,
+                  "sizeId": 397,
+                  "colorId": 41,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439782,
+                  "sku": null,
+                  "barcode1": "8059347430874",
+                  "isInStock": true,
+                  "sizeId": 397,
+                  "colorId": 166050,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439783,
+                  "sku": null,
+                  "barcode1": "8059347431024",
+                  "isInStock": true,
+                  "sizeId": 398,
+                  "colorId": 42,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439784,
+                  "sku": null,
+                  "barcode1": "8059347430812",
+                  "isInStock": false,
+                  "sizeId": 398,
+                  "colorId": 41,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439785,
+                  "sku": null,
+                  "barcode1": "8059347430881",
+                  "isInStock": false,
+                  "sizeId": 398,
+                  "colorId": 166050,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439786,
+                  "sku": null,
+                  "barcode1": "8059347431031",
+                  "isInStock": false,
+                  "sizeId": 399,
+                  "colorId": 42,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439787,
+                  "sku": null,
+                  "barcode1": "8059347430829",
+                  "isInStock": false,
+                  "sizeId": 399,
+                  "colorId": 41,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439788,
+                  "sku": null,
+                  "barcode1": "8059347430898",
+                  "isInStock": true,
+                  "sizeId": 399,
+                  "colorId": 166050,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439789,
+                  "sku": null,
+                  "barcode1": "8059347431048",
+                  "isInStock": true,
+                  "sizeId": 400,
+                  "colorId": 42,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439790,
+                  "sku": null,
+                  "barcode1": "8059347430836",
+                  "isInStock": false,
+                  "sizeId": 400,
+                  "colorId": 41,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439791,
+                  "sku": null,
+                  "barcode1": "",
+                  "isInStock": false,
+                  "sizeId": 400,
+                  "colorId": 166050,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439792,
+                  "sku": null,
+                  "barcode1": "",
+                  "isInStock": false,
+                  "sizeId": 70264,
+                  "colorId": 42,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439793,
+                  "sku": null,
+                  "barcode1": "8059347430843",
+                  "isInStock": false,
+                  "sizeId": 70264,
+                  "colorId": 41,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                },
+                {
+                  "id": 3439794,
+                  "sku": null,
+                  "barcode1": "",
+                  "isInStock": false,
+                  "sizeId": 70264,
+                  "colorId": 166050,
+                  "price": 119900.0,
+                  "msrp": 119900.0,
+                  "discount": 0.0,
+                  "discountPercent": 0.0
+                }
+              ]
+            }
+          }
+        ]
       }
-    ],
-    "back_urls": {
-      "success": "http://localhost:3000/payment/result",
-      "failure": "http://localhost:3000/payment/result",
-      "pending": "http://localhost:3000/payment/result"
-    },
-    "auto_return": "approved",
-    "external_reference": "152547",
-    "notification_url": "http://localhost:3000/api/webhooks/mercadopago"
+    }
   }
 }
-
-when I call this code i get error: auto_return invalid. back_url.success must be defined
-
-const response = await preference.create(pref)
-

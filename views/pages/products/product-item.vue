@@ -37,14 +37,14 @@ const props = defineProps(
       <NuxtLink :to="props.product.url" class="mtc-link">
 
         <div class="product-tags" />
-        <span class="product-image">
+        <span class="product-image ">
 
           <VImg
             width="232"
             height="232"
             :src="'https://www.motomundi.cl' + product.imageUrl"
             :alt="product.name"
-            class="cdn-img"
+            class="cdn-img mt-3 "
           >
             <template #error>
               <VImg

@@ -1,6 +1,11 @@
 import { isEqual } from "@/utils/lists.js"
 
 
+const ProductFeatureType = Object.freeze({
+  Size: 0,
+  Color: 1,
+})
+
 const ProductHelper = {
   getProductItemByFeatures(product, features){
 
@@ -45,4 +50,4 @@ const ProductHelper = {
   },
 }
 
-export { ProductHelper }
+export { ProductHelper, ProductFeatureType }

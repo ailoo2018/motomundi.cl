@@ -87,9 +87,10 @@ const getAddresses = async () => {
   try {
 
     const accessToken = useCookie('accessToken').value
-    if(!(accessToken || accessToken !== '')) {
+    if(!accessToken || accessToken === '') {
       return
     }
+    console.log("accesToken: " + accessToken)
 
     const { data, error: fetchError } = await useFetch('/api/account/addresses', {
       method: 'GET',

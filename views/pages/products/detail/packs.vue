@@ -19,7 +19,7 @@ const getSavings = () => {
 
 const packsRs = await $fetch("/api/product/packs?productId=" + props.product.id)
 
-const packs = computed(() => {return packsRs.packs})
+const packs = computed(() => {return packsRs.packs || []})
 
 const getProducts = pack => {
 
@@ -36,7 +36,8 @@ const showPackDialog = pack => {
 <template>
 
   <div
-    v-if="packs.length > 0"
+    v-if="packs && packs.length > 0"
+    :key="packs.id"
     class="row"
   >
     <!-- packs dialog -->

@@ -63,6 +63,7 @@ definePageMeta({
 </script>
 
 <template>
+
   <article v-if="product">
     <div class="container product">
       <section class="row product-main ">
@@ -91,7 +92,7 @@ definePageMeta({
                         onerror="this.style.display='none'"
                         :src="`/content/images/brands/${product.brand.id}.webp`"
                         srcset=""
-                        alt="HJC"
+                        :alt="product.brand.name"
                         width="98"
                         height="50"
                         class="cdn-img"
