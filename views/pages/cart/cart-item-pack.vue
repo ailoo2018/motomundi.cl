@@ -24,17 +24,15 @@ const removeCartItem = () => {
 </script>
 
 <template>
-  <header
-    ng-if="cartItem.packContent && cartItem.packContent.length > 0"
-    tools-enabled="true"
-  >
+  <header v-if="cartItem.packContents && cartItem.packContents.length > 0">
     <div class="cart-product__wrapper header">
       <a
         class="cart-product mtc-link"
-        data-dr="true"
         :href="cartItem.url"
       >
+
         <span
+          v-if="cartItem.packId > 0"
           class="promo-image"
           style="flex: 0 0 45px;"
         >
@@ -44,21 +42,44 @@ const removeCartItem = () => {
             width="40"
             height="40"
             class="cdn-img"
-          ></span>
+          >
+        </span>
+        <span
+          v-if="!(cartItem.packId > 0) && cartItem.product"
+          class="promo-image"
+          style="flex: 0 0 45px;"
+        >
+          <VImg
+            width="120"
+            height="120"
+            :src="getImageUrl(cartItem.product.image, 300, getDomainId()) || emptyImage"
+            alt="packItem.productName"
+            class="cdn-img "
+          >
+            <template #error>
+              <VImg
+                :src="emptyImage"
+                width="120"
+                height="120"
+                class="cdn-img "
+              />
+            </template>
+          </VImg>        </span>
+
         <div class="cart-product__info">
           <h1 class="cart-product__name mb-1">{{ cartItem.name }}</h1>
           <p class="cart-product__price">
             <span class="tag-wrapper">
               <span
                 v-if="cartItem.discount > 0"
-                class="tag product-tag product-tag--old product-tag--sales"
+                class="tag product-tag product-tag--old product-tag--sales mr-3"
               >
                 <span class="discount">
                   Rebajas -{{ Math.round(cartItem.discount / cartItem.oldPrice * 100) }}% pack
                 </span>
               </span>
             </span>
-            <span class="price ml-3">{{ formatMoney(cartItem.price) }}</span>
+            <span class="price ">{{ formatMoney(cartItem.price) }}</span>
             <span
               v-if="cartItem.discount > 0"
               class="product-old-price strike ml-1"
@@ -130,7 +151,6 @@ const removeCartItem = () => {
   >
     <a
       class="cart-product mtc-link"
-      data-dr="true"
       :href="packItem.url"
     >
       <span>
@@ -140,14 +160,14 @@ const removeCartItem = () => {
           height="120"
           :src="getImageUrl(packItem.image, 300, getDomainId()) || emptyImage"
           alt="packItem.productName"
-          class="cdn-img ma-2"
+          class="cdn-img "
         >
           <template #error>
             <VImg
               :src="emptyImage"
               width="120"
               height="120"
-              class="cdn-img ma-2"
+              class="cdn-img "
             />
           </template>
         </VImg>
@@ -159,7 +179,6 @@ const removeCartItem = () => {
           v-if="packItem.color"
           class="cart-product__details"
         >
-
           <span class="cart-product__size">
             Color: {{ packItem.color?.name }}
           </span>
@@ -184,7 +203,7 @@ const removeCartItem = () => {
   </article>
 </template>
 
-<style>
+<style scoped>
 #shop-cart .cart-product .cart-product__info .cart-product__name {
   display: block;
   font-size: 14px;
@@ -253,6 +272,42 @@ const removeCartItem = () => {
   font-weight: 400;
   padding: 0;
   text-transform: none;
+}
+#shop-cart .cart-product .cart-product__info .cart-product__details {
+  display: block;
+  line-height: 1.2em;
+  margin-top: 4px;
+}
+
+#shop-cart .cart-product .cart-product__info {
+  flex-grow: 1;
+  font-size: 13px;
+  margin: 0;
+  max-width: 425px;
+}
+#shop-cart .cart-product .cart-product__info .cart-product__details .cart-product__size {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+}
+
+#shop-cart .cart__content, #shop-cart .cart__content * {
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+#shop-cart .cart-product .cart-product__info {
+  flex-grow: 1;
+  font-size: 13px;
+  margin: 0;
+  max-width: 425px;
+}
+
+#shop-cart .cart-product .cart-product__info .cart-product__price {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 3px 0 0;
+  text-transform: uppercase;
 }
 </style>
 

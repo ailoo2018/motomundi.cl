@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ProductFeatureType } from "@/models/products"
 
-const selectedPit = defineModel({
-  type: Object,
+const selectedPits = defineModel({
+  type: Array,
+  default: () => []
 })
 
+const selectedVariants = ref([])
 
 const props = defineProps(
   {
@@ -15,16 +17,70 @@ const props = defineProps(
   },
 )
 
+console.log("composite: ", props.product.composite)
+
+for(var cmpProd of props.product.composite){
+  selectedVariants.value.push({
+    product: cmpProd.product,
+    size: null,
+    color: cmpProd.colors && cmpProd.colors.length === 1 ? cmpProd.colors[0] : null ,
+  })
+}
+
+console.log("selectedVariants", selectedVariants.value)
+
+const prodUtils = useProductsUtils()
+
+watch( () => selectedVariants.value, () => {
+
+  const updatedPits = [];
+
+  for(var variant of selectedVariants.value){
+    var colorId = 0;
+    var sizeId = 0;
+
+    if(variant.color){
+      colorId = variant.color.id
+    }
+    if(variant.size){
+      sizeId = variant.size.id
+    }
+
+    var pit = prodUtils.findProductItemByFeatures(variant.product, colorId, sizeId)
+
+    if(pit) {
+      console.log("Found pit!: " + pit.id)
+      updatedPits.push({
+        productItemId: pit.id,
+        quantity: 1,
+      })
+
+      console.log("selectedPits: ", selectedPits.value)
+    }
+  }
+
+  selectedPits.value = updatedPits;
+
+
+}, { deep: true, immediate: true })
+
 const getAvlSizes = product => {
+  if(!product || !product.features)
+    return []
+
   return product.features.filter(f => f.type === ProductFeatureType.Size)
 }
 
 const getAvlColors = product => {
-  return product.features.filter(f => f.type === ProductFeatureType.Size)
+  if(!product || !product.features)
+    return []
+
+  return product.features.filter(f => f.type === ProductFeatureType.Color)
 }
 </script>
 
 <template>
+
   <span
     v-if="product.type === 1"
     id="composite-product"
@@ -34,7 +90,7 @@ const getAvlColors = product => {
       <div class="col s12">
         <div class="product-sizes mt-5">
           <div
-            v-for="assoc in product.composite"
+            v-for="assoc in selectedVariants"
             class="item mb-5"
           >
 
@@ -72,10 +128,12 @@ const getAvlColors = product => {
                     </button>
                   </div>
                 </div>
-                <VSelect 
+                <VSelect
+                  v-model="assoc.size"
                   :items="getAvlSizes(assoc.product)"
                   item-title="name"
                   item-id="id"
+                  placeholder="Tallas"
                   :rounded="0"
                   return-object
                 />

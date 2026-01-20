@@ -51,6 +51,7 @@ const search = async () => {
       models: [],
       colors: [],
       tags: [],
+      collectionId: null,
       sizes: [],
       categories: [],
       limit: pageSize.value,
@@ -96,6 +97,9 @@ const search = async () => {
           body.models.push(t)
         })
       }
+      if (facet.type === "collection") {
+        body.collectionId = facet.value
+      }
       if (facet.type === "colors") {
         facet.values.forEach(t => {
           body.colors.push(t)
@@ -105,13 +109,17 @@ const search = async () => {
     }
 
 
+    console.log("currencty Query:", cQuery)
+    console.log("baseQuery Query:", baseQuery)
+    console.log("product list body:", body)
+
     rs = await $fetch(`/api/product/search`, {
       key: `product-search-` + JSON.stringify(body),
       method: "POST",
       body: body,
     })
 
-    console.log("RS: " + rs.filters)
+    // console.log("RS: " + rs.filters)
     if (rs && rs.products) {
       total.value = rs.totalHits
       totalPages.value = rs.totalHits / pageSize.value
@@ -131,6 +139,9 @@ const baseQuery = []
 
 if (query.categoryId) {
   baseQuery.push({ type: "categories", values: [query.categoryId] })
+}
+if (query.collection) {
+  baseQuery.push({ type: "collection", value: query.collection })
 }
 
 

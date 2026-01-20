@@ -12,6 +12,8 @@ const path = `/${slugArray.join('/')}`
 
 
 const { data: config, error } = await useFetch(`/api/friendlyurl?path=${path}`)
+console.log(`Mapping ${path}:`, config)
+
 /*
 const { data: config, error } = await useAsyncData(
   `redirect-lookup:${path}`,

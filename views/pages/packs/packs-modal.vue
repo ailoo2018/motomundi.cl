@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import PackModalItem from "@/views/pages/packs/pack-modal-item.vue";
-import {SaleItemType} from "@/models";
+import {CartItemType, SaleItemType} from "@/models";
 
 const isShowPackDialog = defineModel<boolean>({default: false});
 
@@ -28,7 +28,7 @@ const addPackToCart = async () => {
     wuid: useGuestUser().value,
     id: props.selectedPack.id,
     name: props.selectedPack.name,
-    type: SaleItemType.DISCOUNT_RULE,
+    type: CartItemType.Pack,
     packId: props.selectedPack.id,
     quantity: 1,
     packContents: []

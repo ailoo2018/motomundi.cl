@@ -1,8 +1,9 @@
 <script setup>
 import Financing from "@/pages/products/detail/financing.vue"
-import { useProductsUtils } from "@/composables/useProductsUtils.js"
+import { useProductsUtils } from "@/composables/useProductsUtils"
 import ProductVariantSelector from "@/views/pages/products/detail/product-variant-selector.vue"
 import CompositeVariantSelector from "@/views/pages/products/detail/composite-variant-selector.vue"
+import { ProductType } from "@/models/products"
 
 const props = defineProps(
   {
@@ -18,66 +19,54 @@ const emit = defineEmits(['update:size', 'update:color', 'add-to-cart'])
 const selectedProductItem = ref()
 const selectedProductItems = ref([])
 
-const isShowCbo = ref(false)
 const prodUtil = useProductsUtils()
-const showSizeChart = ref(false)
+
 const selectedSize = ref({ id: 0 })
 const selectedColor = ref({ id: 0 })
 
-const addToCart = () => {
-  const sizeId = selectedSize.value.id
-  const colorId = selectedColor.value.id
+const addToCart = itemsToAdd => {
+
+  if(props.product.type === ProductType.Simple) {
+    let productItemId = null
+
+    if(selectedProductItem.value){
+      productItemId = selectedProductItem.value.id
+    }
+
+    if(!productItemId && !prodUtil.requiresFeatureSelect(props.product)){
+      productItemId = props.product.productItems[0].id
+    }
+
+    if(!productItemId){
+      alert("Debe seleccionar variantes")
+      return
+
+    }
+
+    emit('addToCart',  {
+      productItemId: productItemId,
+      quantity: 1,
+    } ) // { productItemId: productItem.id, quantity: 1 }
+  }else{
+
+    const pits = selectedProductItems.value.filter(f => f.productItemId > 0).map( s => s.productItemId)
+    if(pits.length !== props.product.composite.length){
+      alert(`Debe seleccionar variantes ${pits.length} vs ${props.product.composite.length}`)
+      return
+
+    }
 
 
-  let productItem
-
-  if (sizeId === 0 && colorId === 0 && product.value.productItems.length === 1) {
-    productItem = product.value.productItems[0]
-  } else {
-    productItem = prodUtil.findProductItemByFeatures(product.value, colorId, sizeId)
+    emit('addToCart', pits.map(pit => { return { "quantity": 1, "productItemId": pit } }))
   }
-
-  let compExample = {
-    "productType": 1,
-    "productId": 3212224,
-    "quantity": 1,
-    "packContents": [{  "quantity": 1, "productItemId": 3439760 }, {
-      "sizeId": 398,
-      "colorId": 42,
-      "quantity": 1,
-      "productItemId": 3439783,
-    }],
-  }
-
-
-  emit('addToCart', { productItemId: productItem.id, quantity: 1 })
 }
-
-
-const isColorAvailable = color => {
-  if (!color)
-    return false
-
-  const selectedSizeId = selectedSize.value ? selectedSize.value.id : 0
-
-  const prodItems = product.value.productItems.filter(pit => (selectedSizeId === 0 || pit.sizeId === selectedSizeId) && pit.colorId === color.id)
-  if (prodItems) {
-    return prodItems.some(pit => pit.quantityInStock > 0)
-  }
-
-  return false
-}
-
-
-const product = ref(props.product)
-
 
 const price = computed(() => {
   return props.product.minPrice
 })
 
 onMounted(() => {
-  var colorFeature = product.value.features.find(f => f.type === 1)
+  var colorFeature = props.product.features.find(f => f.type === 1)
   if (colorFeature) {
     selectedColor.value = colorFeature
 
@@ -101,17 +90,15 @@ onMounted(() => {
                   <span class="discount">Novedad</span>
                 </span>
               </span>
-              <span class="tag-wrapper"/>
+              <span class="tag-wrapper" />
             </div>
           </div>
           <!-- price -->
           <div class="product-buy__price">
             <span
-
               class="product-price product-price__offer ng-binding"
               style="font-size: 55px;"
             >{{ formatMoney(price) }}</span>
-            <!-- ngIf: hasDiscount() -->
           </div>
           <!-- /price -->
           <button
@@ -121,7 +108,7 @@ onMounted(() => {
             ¿Lo has visto más barato?
           </button>
 
-          <Financing/>
+          <Financing />
         </div>
         <div
 
@@ -133,7 +120,7 @@ onMounted(() => {
             height="8"
             xmlns="http://www.w3.org/2000/svg"
             class="icon sprite-line-icons"
-          ><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-check"/></svg>
+          ><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-check" /></svg>
             Envío $4.900 todo Chile
           </span>
           <div>
@@ -165,6 +152,7 @@ onMounted(() => {
 
 
     <!-- normal product -->
+
     <ProductVariantSelector
       v-if="product.type === 0"
       v-model="selectedProductItem"
@@ -173,9 +161,10 @@ onMounted(() => {
     <!-- normal product -->
 
     <!-- composite product -->
+
     <CompositeVariantSelector
-      v-model="selectedProductItems"
       v-if="product.type === 1"
+      v-model="selectedProductItems"
       :product="product"
     />
 
@@ -188,7 +177,7 @@ onMounted(() => {
       style="margin-bottom: 25px;"
     >
       <div class="col s12">
-        <div class="product-buy-panel__shipping-options"/>
+        <div class="product-buy-panel__shipping-options" />
       </div>
     </div>
     <div class="row">
@@ -208,29 +197,25 @@ onMounted(() => {
                 height="24"
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon sprite-line-icons"
-              ><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-shopping-bag"/></svg>
+              ><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-shopping-bag" /></svg>
               Añadir a la cesta
             </span>
           </button>
 
           <div class="add-to-favs__product-page">
             <button
-              data-v-1daaf0fa=""
-
               ng-class="isWished(product.id) ? 'wished' : ''"
               class="add-to-favs"
               ng-click="addRemoveToWishList(product.id, $event);"
             >
               <svg
-                data-v-1daaf0fa=""
                 width="29"
                 height="24"
                 xmlns="http://www.w3.org/2000/svg"
                 class="add icon sprite-line-icons"
               >
-                <title data-v-1daaf0fa="">Añadir a favoritos</title>
+                <title >Añadir a favoritos</title>
                 <use
-                  data-v-1daaf0fa=""
                   href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-favorite"
                 />
               </svg>
@@ -245,7 +230,7 @@ onMounted(() => {
   </div><!-- end ngIf: product -->
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .product-wrapper.product-detail .swatch.color-value.selected, .product-wrapper.product-detail .swatch.size-value.selected {
   border-color: #000;
 }

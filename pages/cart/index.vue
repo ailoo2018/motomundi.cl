@@ -3,12 +3,20 @@ import { useGuestUser } from "@/composables/useGuestUser.js"
 import CartItemProduct from "@/views/pages/cart/cart-item-product.vue"
 import CartSummary from "@/views/pages/cart/cart-summary.vue"
 import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
+import { ProductType } from "@/models/products.js"
 
 
 const cartStore = useCartStore()
 const wuid = useGuestUser().value
 
 
+const getProductType = product => {
+  if(!product)
+    return -1
+  if(!product.type)
+    return ProductType.Simple
+  return product.type
+}
 // Fetch once on mount
 onMounted(async () => {
   try {
@@ -66,8 +74,10 @@ onMounted(async () => {
           <div class="cart__content">
             <ul>
               <li v-for="(cartItem, index) in cartStore.cart.items" :key="cartItem.id">
-                <CartItemProduct v-if="cartItem.type === 0" :cartItem="cartItem"  />
-                <CartItemPack v-if="cartItem.type === 3" :cartItem="cartItem" />
+
+
+                <CartItemProduct v-if="cartItem.type === 0 && getProductType(cartItem.product) === ProductType.Simple" :cartItem="cartItem"  />
+                <CartItemPack v-if="cartItem.type === 3 || getProductType(cartItem.product) === ProductType.Composite" :cartItem="cartItem" />
               </li>
 
             </ul>

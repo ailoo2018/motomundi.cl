@@ -12,6 +12,7 @@ import RelatedBlog from "@/views/pages/products/detail/related-blog.vue"
 import ProductDescription from "@/views/pages/products/detail/product-description.vue"
 import DataSheet from "@/views/pages/products/detail/data-sheet.vue"
 import Packs from "@/views/pages/products/detail/packs.vue"
+import { ProductType } from "@/models/products.js"
 
 const store = useConfigStore()
 const productForm = ref()
@@ -32,20 +33,39 @@ const onShowVideo = videoId => {
 }
 
 const addToCart = async item => {
-  const wuid = useGuestUser().value
+  
+  try {
+    const wuid = useGuestUser().value
 
-  const { data: product } = await useFetch(`/api/cart/add`, {
-    method: "POST",
-    body: JSON.stringify({
-      wuid: wuid,
-      type: 0,
-      quantity: item.quantity,
-      productItemId: item.productItemId,
-    }),
-  },
-  )
+    let body = null
+    if(product.value.type === ProductType.Simple){
+      body = JSON.stringify({
+        wuid: wuid,
+        type: 0, // cart item product
+        quantity: item.quantity,
+        productItemId: item.productItemId,
+      })
+    }else{
+      body = JSON.stringify( {
+        wuid: wuid,
+        type: 0, // cart item product
+        quantity: 1,
+        productItemId: product.value.productItems[0].id,
+        packContents: item,
+      })
 
-  await navigateTo('/cart')
+    }
+
+    const resAdd = await $fetch(`/api/cart/add`, {
+      method: "POST",
+      body: body,
+    },
+    )
+
+    await navigateTo('/cart')
+  }catch(e){
+    alert("error: " + e.message)
+  }
 }
 
 const onSelectedColor = color => {
@@ -63,7 +83,6 @@ definePageMeta({
 </script>
 
 <template>
-
   <article v-if="product">
     <div class="container product">
       <section class="row product-main ">
@@ -124,19 +143,25 @@ definePageMeta({
           />
         </div>
 
-        <Packs :product="product"/>
+        <Packs :product="product" />
       </section>
 
 
       <!-- product-description-container -->
       <VRow class="row product-description-container mt-10">
-        <VCol cols="12" md="7">
+        <VCol
+          cols="12"
+          md="7"
+        >
           <ProductDescription :description="product.description" />
         </VCol>
 
 
         <!-- ficha-tecnica -->
-        <VCol cols="12" md="5" >
+        <VCol
+          cols="12"
+          md="5"
+        >
           <!-- blog -->
           <RelatedBlog v-if="blogArticle" />
           <!-- /blog -->

@@ -6,6 +6,12 @@ const ProductFeatureType = Object.freeze({
   Color: 1,
 })
 
+const ProductType = Object.freeze({
+  Simple: 0,
+  Composite: 1,
+})
+
+
 const ProductHelper = {
   getProductItemByFeatures(product, features){
 
@@ -50,4 +56,4 @@ const ProductHelper = {
   },
 }
 
-export { ProductHelper, ProductFeatureType }
+export { ProductHelper, ProductFeatureType, ProductType }
