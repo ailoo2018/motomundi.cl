@@ -8,6 +8,7 @@ import { ProductType } from "@/models/products.js"
 
 const cartStore = useCartStore()
 const wuid = useGuestUser().value
+const hasFetched = ref(true)
 
 
 const getProductType = product => {
@@ -23,7 +24,7 @@ onMounted(async () => {
 
     await cartStore.fetchCart(wuid)
   }finally{
-
+    hasFetched.value = false
   }
 })
 </script>
@@ -31,8 +32,8 @@ onMounted(async () => {
 <template>
   <main id="shop-cart">
     <div
-      v-if="cartStore.loading"
-      class="pa-10 w-100 text-center"
+      v-if="cartStore.loading && (!cartStore.cart?.items || cartStore.cart.items.length === 0)"
+      class="pa-10 w-100 text-center "
     >
       <VProgressCircular
         indeterminate
@@ -43,19 +44,18 @@ onMounted(async () => {
 
     <!-- cart empty -->
     <section
-      v-if="(!cartStore.loading) && (!cartStore.cart || !cartStore.cart.items || cartStore.cart.items.length === 0)"
-      class="text-center pa-10 "
+      v-if="hasFetched && (!cartStore.cart || !cartStore.cart.items || cartStore.cart.items.length === 0)"
+      class="text-center pa-10  "
 
     >
       <div class="checkout__empty-content">
-        <h2>Carro de Compra</h2>
+        <h2>Carro de Compra {{hasFetched}} </h2>
         <p>
           Vaya, parece que no hay nada por aquí... <br>
           ¡Haz click más abajo para poder ver todas nuestras ofertas!
         </p>
         <a
           href="/"
-
           class="button button--filled nuxt-link-active mtc-link mt-5"
         >
           Continuar comprando
