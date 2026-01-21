@@ -31,7 +31,7 @@ onMounted(async () => {
 
 <template>
   <main id="shop-cart">
-    has fetched {{hasFetched}}
+
     <div
       v-if="cartStore.loading || !hasFetched"
       class="pa-10 w-100 text-center "
@@ -74,16 +74,12 @@ onMounted(async () => {
     </span>
 
     <!-- cart empty -->
-
     <section
       v-else-if="hasFetched && cartStore.cart.items.length === 0"
-      v-cloak
       class="text-center pa-10 "
-
-
     >
-      <div class="checkout__empty-content">
-        <h2>Carro de Compra {{hasFetched}} </h2>
+      <div class="checkout__empty-content" >
+        <h2>Carro de Compra  </h2>
         <p>
           Vaya, parece que no hay nada por aquí... <br>
           ¡Haz click más abajo para poder ver todas nuestras ofertas!
