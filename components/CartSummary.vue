@@ -5,6 +5,7 @@ import { sleep } from "~/@core/utils/helpers"
 import { useGuestUser } from "@/composables/useGuestUser.js"
 import CartItemProduct from "@/views/pages/cart/cart-item-product.vue"
 import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
+import { ProductType } from "@/models/products.js"
 
 const props = defineProps({
   isCollapsed: {
@@ -13,6 +14,13 @@ const props = defineProps({
   },
 })
 
+const getProductType = product => {
+  if(!product)
+    return -1
+  if(!product.type)
+    return ProductType.Simple
+  return product.type
+}
 
 const emit = defineEmits(['cartEmpty', 'nextStep', 'collapse'])
 const { isLoading, updateLoading } = inject('loading')
@@ -214,8 +222,9 @@ defineExpose({ getCart })
               class="user-menu__cart-product"
             >
               <div class="cart-item">
-                <CartItemProduct v-if="item.type === 0" :cartItem="item"  />
-                <CartItemPack v-if="item.type === 3" :cartItem="item" />
+                <CartItemProduct v-if="item.type === 0 && getProductType(item.product) === ProductType.Simple" :cartItem="item"  />
+                <CartItemPack v-if="item.type === 3 || getProductType(item.product) === ProductType.Composite" :cartItem="item" />
+
 
               </div>
 

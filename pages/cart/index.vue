@@ -8,7 +8,7 @@ import { ProductType } from "@/models/products.js"
 
 const cartStore = useCartStore()
 const wuid = useGuestUser().value
-const hasFetched = ref(true)
+const hasFetched = ref(false)
 
 
 const getProductType = product => {
@@ -24,15 +24,16 @@ onMounted(async () => {
 
     await cartStore.fetchCart(wuid)
   }finally{
-    hasFetched.value = false
+    hasFetched.value = true
   }
 })
 </script>
 
 <template>
   <main id="shop-cart">
+    has fetched {{hasFetched}}
     <div
-      v-if="cartStore.loading && (!cartStore.cart?.items || cartStore.cart.items.length === 0)"
+      v-if="cartStore.loading || !hasFetched"
       class="pa-10 w-100 text-center "
     >
       <VProgressCircular
@@ -41,30 +42,7 @@ onMounted(async () => {
         size="64"
       />
     </div>
-
-    <!-- cart empty -->
-    <section
-      v-if="hasFetched && (!cartStore.cart || !cartStore.cart.items || cartStore.cart.items.length === 0)"
-      class="text-center pa-10  "
-
-    >
-      <div class="checkout__empty-content">
-        <h2>Carro de Compra {{hasFetched}} </h2>
-        <p>
-          Vaya, parece que no hay nada por aquí... <br>
-          ¡Haz click más abajo para poder ver todas nuestras ofertas!
-        </p>
-        <a
-          href="/"
-          class="button button--filled nuxt-link-active mtc-link mt-5"
-        >
-          Continuar comprando
-        </a>
-      </div>
-    </section>
-    <!-- /cart empty -->
-
-    <span v-if="!cartStore.loading && cartStore.cart && cartStore.cart.items.length > 0">
+    <span v-else-if="hasFetched && cartStore.cart.items.length > 0"">
       <div
         class="cart container"
         style="margin-top:0px;padding-top:20px;"
@@ -94,6 +72,32 @@ onMounted(async () => {
 
       </div>
     </span>
+
+    <!-- cart empty -->
+
+    <section
+      v-else-if="hasFetched && cartStore.cart.items.length === 0"
+      v-cloak
+      class="text-center pa-10 "
+
+
+    >
+      <div class="checkout__empty-content">
+        <h2>Carro de Compra {{hasFetched}} </h2>
+        <p>
+          Vaya, parece que no hay nada por aquí... <br>
+          ¡Haz click más abajo para poder ver todas nuestras ofertas!
+        </p>
+        <a
+          href="/"
+          class="button button--filled nuxt-link-active mtc-link mt-5"
+        >
+          Continuar comprando
+        </a>
+      </div>
+    </section>
+    <!-- /cart empty -->
+
   </main>
 </template>
 

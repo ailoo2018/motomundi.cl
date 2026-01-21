@@ -114,3 +114,7 @@ button {
   max-width: 1300px;
   width: 90%;
 }
+
+[v-cloak] {
+  display: none;
+}
