@@ -1,6 +1,4 @@
-<script setup lang="ts">
 
-</script>
 
 <template>
   <!-- #segments -->
@@ -13,12 +11,12 @@
         title="Motomundi"
         @click="selectDepartment(29673, '/');"
       >
-            <span class="l">
-              <span
-                class="r"
-                style="padding: 0 10px;"
-              >Calle</span>
-            </span>
+        <span class="l">
+          <span
+            class="r"
+            style="padding: 0 10px;"
+          >Calle</span>
+        </span>
       </a>
     </li>
     <li
@@ -26,13 +24,13 @@
       style="background-color: transparent;"
     >
       <a
-        ng-click="selectDepartment(29675, '/cafe-racer');"
+        href="/cafe-racer"
         title="Ropa Café Racer en Motomundi"
       >
-            <span class="l">
-              <span class="r">Café Racer</span>
-              <i style=" font-size: 12px;font-weight: normal;text-transform: lowercase" />
-            </span>
+        <span class="l">
+          <span class="r">Café Racer</span>
+          <i style=" font-size: 12px;font-weight: normal;text-transform: lowercase" />
+        </span>
       </a>
     </li>
     <li
@@ -40,13 +38,13 @@
       style="background-color: transparent;"
     >
       <a
-        ng-click="selectDepartment(29674, '/motocross-enduro-trial');"
+        href="/motocross-enduro-trial"
         title="Off-Road en Motomundi"
       >
-            <span class="l">
-              <span class="r">Off-Road </span>
-              <i style=" font-size: 12px;font-weight: normal;text-transform: lowercase" />
-            </span>
+        <span class="l">
+          <span class="r">Off-Road </span>
+          <i style=" font-size: 12px;font-weight: normal;text-transform: lowercase" />
+        </span>
       </a>
     </li>
     <li
@@ -54,14 +52,13 @@
       style="background-color: transparent;"
     >
       <a
-        xxhref="/ropa-casual"
+        href="/ropa-casual"
         title="Ropa Casual en Motomundi"
-        ng-click="selectDepartment(29676, '/ropa-casual');"
       >
-            <span class="l">
-              <span class="r">Ropa Casual</span>
-              <i style=" font-size: 12px;font-weight: normal;text-transform: lowercase" />
-            </span>
+        <span class="l">
+          <span class="r">Ropa Casual</span>
+          <i style=" font-size: 12px;font-weight: normal;text-transform: lowercase" />
+        </span>
       </a>
     </li>
     <li class="c4 segment-float-right hide-on-med-and-down">
@@ -69,9 +66,9 @@
         href="/moto-blog"
         title="Blog de motos Motomundi"
       >
-            <span class="l">
-              <span class="r">Blog</span>
-            </span>
+        <span class="l">
+          <span class="r">Blog</span>
+        </span>
       </a>
     </li>
     <li class="c5 segment-float-right  hide-on-med-and-down">
@@ -79,9 +76,9 @@
         href="/novedades"
         title="Novedades en equipamiento para moto"
       >
-            <span class="l">
-              <span class="r">Novedades</span>
-            </span>
+        <span class="l">
+          <span class="r">Novedades</span>
+        </span>
       </a>
     </li>
     <li class="c6 segment-float-right  hide-on-med-and-down">
@@ -89,16 +86,13 @@
         href="/outlet"
         title="Ofertas de equipamiento de moto"
       >
-            <span class="l">
-              <span class="r">Ofertas</span>
-            </span>
+        <span class="l">
+          <span class="r">Ofertas</span>
+        </span>
       </a>
     </li>
   </ul>
   <!-- /#segements -->
-
 </template>
 
-<style scoped lang="scss">
 
-</style>

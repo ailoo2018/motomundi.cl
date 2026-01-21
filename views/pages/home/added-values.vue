@@ -1,18 +1,30 @@
 <script setup>
+import { SwiperSlide } from "swiper/vue"
+import { register } from "swiper/element"
+import { onMounted } from "vue"
 
 const props = defineProps({
   widget: {
     type: Object,
-  }
+  },
 })
 
+// Data for the slides
+const features = [
+  '16 años de experiencia',
+  'Pago online 100% seguro',
+  '6 tiendas a lo largo de Chile',
+]
+
+onMounted(() => {
+  register()
+})
 </script>
 
 <template>
   <div
     :id="`home-block-${widget.id}`"
-    class="block-container hide-on-small-and-down"
-    ng-non-bindable=""
+    class="block-container d-none d-md-flex"
   >
     <section
       block-id="10"
@@ -156,6 +168,38 @@ const props = defineProps({
       </div>
     </section>
   </div>
+
+
+  <div
+    id="home-block-2"
+    class="block-container d-md-none"
+  >
+    <section
+      id="minibanner-mundo"
+      class="scrolling-text swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-ios"
+      style="height:40px; background:#000000; border-top:3px solid #000; border-bottom:3px solid #000; color:#fff;"
+    >
+      <ClientOnly>
+        <swiper-container
+          :slides-per-view="1"
+          :autoplay="{
+            delay: 2000,
+            disableOnInteraction: false,
+          }"
+          class="h-full marquee-group swiper-wrapper"
+        >
+          <swiper-slide
+            v-for="(text, index) in features"
+            :key="index"
+          >
+            <div class="marquee-text swiper-slide">
+              <span>{{ text }}</span>
+            </div>
+          </swiper-slide>
+        </swiper-container>
+      </ClientOnly>
+    </section>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -210,5 +254,55 @@ const props = defineProps({
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+
+.swiper-container .swiper-wrapper {
+  align-items: center;
+}
+
+.swiper-container {
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.swiper-slide{
+  text-align: center;
+}
+
+.scrolling-text{
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.scrolling-text .marquee-text {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 3px;
+  justify-content: center;
+  max-width: 100vw;
+  width: 100%;
+}
+
+
+.scrolling-text .marquee-text > span{
+  align-items: center;
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  max-width: 95vw;
 }
 </style>

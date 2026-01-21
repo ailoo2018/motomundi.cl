@@ -56,15 +56,14 @@ const productsUrl = config.public.productsBaseUrl
 
 
 const { data: homeRs, pending } = await useFetch(`/api/home/home?id=10018`, {
-  key: `home-data-unique-key  `,
+  key: `home-data-unique-key`,
   onResponseError({ response }) {
     console.error('[SSR Fetch Error]:', response.status, response._data)
   },
 })
 
 const widgets = computed( () => {
-
-  return homeRs.value?.widgets.filter(w => !isMobile && !(w.name === "Seo") )
+  return homeRs.value?.widgets.filter(w =>  !(isMobile && w.name === "Seo") )
 })
 
 
@@ -77,7 +76,6 @@ useIntersectionObserver([
 </script>
 
 <template>
-
 
   <div style="background-color: rgb(245, 245, 245)">
   <Component
@@ -108,11 +106,11 @@ useIntersectionObserver([
   }
 }
 
-.main-content {
+/*.main-content {
   width: 90%;
   min-width: 800px;
   max-width: 1300px;
   margin: auto;
   background-color: white;
-}
+}*/
 </style>

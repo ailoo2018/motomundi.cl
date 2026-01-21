@@ -2,6 +2,7 @@
 import { register } from 'swiper/element/bundle'
 import { getBaseCDN } from "@core/utils/formatters.js"
 
+const { isMobile, isTablet, isDesktop } = useDevice()
 const props = defineProps({
   widget: {
     type: Object,
@@ -10,6 +11,13 @@ const props = defineProps({
 })
 
 const getBgImg = img =>{
+  if(img.imagePathSmall && img.imagePathSmall.length > 0){
+    return {
+      backgroundImage: `url('${getBaseCDN()}${img.imagePathSmall}')`,
+      backgroundSize: "auto 500px",
+    }
+  }
+
   return {
     backgroundImage: `url('${getBaseCDN()}${img.imagePath}')`,
   }
@@ -21,11 +29,12 @@ register()
 
 <template>
 
-  <ClientOnly>
-    <swiper-container events-prefix="swiper-">
+  <div id="home-block-0" class="block-container" ng-non-bindable>
+    <section class="carousel-block">
+      <ClientOnly>
+    <swiper-container events-prefix="swiper-" style="">
       <swiper-slide
         v-for="img in widget.configuration.images"
-
         :key="img.slideImage"
       >
         <div class="swiper-slide">
@@ -50,6 +59,7 @@ register()
                       <span>
                         <!-- IsMMobile $requestHelper.IsMobile  ShowFG: $img.showForegroundMobile -->
                         <img
+                          v-if="!isMobile"
                           :src="getBaseCDN() + img.slideImage"
                           class="cdn-img carrusel-fg-image"
                         >
@@ -97,7 +107,7 @@ register()
 
 
                         <span
-                          v-if="img.buttonTitle"
+                          v-if="img.buttonTitle && !isMobile"
                           class="slide__button button&#45;&#45;skewed"
                         >
                           {{ img.buttonTitle }}
@@ -123,16 +133,13 @@ register()
               </div>
             </span>
           </a>
-          <!--
-            <a href="/condiciones-generales.html" rel="nofollow" target="_blank"
-            class="slide__conditions">
-            Ver condiciones
-            </a>
-          -->
+
         </div>
       </swiper-slide>
     </swiper-container>
   </ClientOnly>
+    </section>
+  </div>
 </template>
 
 
@@ -146,6 +153,16 @@ register()
   transition-property: transform,-webkit-transform;
   width: 100%;
 }
+
+
+@media only screen and (max-width: 600px) {
+  .swiper-slide {
+    flex-wrap: wrap;
+    max-height: 400px;
+    margin-bottom: 20px;
+  }
+}
+
 .container {
   max-width: 1280px;
   width: 95%;
@@ -232,10 +249,14 @@ register()
   stroke: rgb(255, 255, 255);
 }
 
+
+
 @media (min-width: 700px) {
-  .widget-114930 .slide[data-promotion-position="3"].slide__layout--right .container {
-    align-items: center;
-    margin-left: 70px;
+  .owl-carousel .owl-stage-outer {
+    max-height: 525px;
+  }
+  .carousel-block .swiper-slide-selector__container {
+    margin-bottom: 0px;
   }
 }
 

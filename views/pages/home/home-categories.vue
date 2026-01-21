@@ -108,6 +108,9 @@ const props = defineProps({
   max-width: 1280px;
   width: 95%;
 }
+
+
+
 .block-container {
   background-color: #f5f5f5;
 }
@@ -164,5 +167,18 @@ const props = defineProps({
   text-align: center;
   text-transform: uppercase;
   margin: 0px;
+}
+
+@media (max-width: 500px) {
+  .promo-categories .mtc-link {
+    flex: 0 0 44%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .promo-categories {
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
 }
 </style>
