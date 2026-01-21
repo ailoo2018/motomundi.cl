@@ -314,12 +314,13 @@ const pay = async (mercadoPagoApiData = null) => {
         const errorData = response._data  // or response.body
 
         console.log('Error data:', errorData)
-        alert("Error " + (erroData && errorData.error? errorData.error : JSON.stringify(errorData)))
+        if(errorData)
+          alert("Error " + errorData.message )
       },
     })
 
     if (fetchError.value) {
-      checkoutService.setError(fetchError.value.data.errors)
+      checkoutService.setError(fetchError.value)
       
       return
     }

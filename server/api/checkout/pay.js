@@ -127,7 +127,7 @@ export default defineEventHandler(async event => {
 
     throw createError({
       statusCode: error.statusCode || 500,
-      message: error.data?.error_message || error.message || 'Transbank Connection Failed',
+      message: error.data?.error || error.data?.message || error.message || 'Transbank Connection Failed',
     })
   }
 })

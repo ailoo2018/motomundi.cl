@@ -6,13 +6,11 @@ const props = defineProps({
   },
   loading: {
     type: Boolean,
-  }
+  },
 })
 </script>
 
 <template>
-
-
   <VContainer class="fill-height bg-grey-lighten-4 py-12">
     <VRow justify="center">
       <VCol
