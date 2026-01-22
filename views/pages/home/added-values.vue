@@ -27,10 +27,8 @@ onMounted(() => {
     class="block-container d-none d-md-flex"
   >
     <section
-      block-id="10"
-      block-name="addedValues"
       section="home"
-      class="added-values-block"
+      class="added-values-block w-100 px-3"
     >
       <div class="container">
         <div class="row">
@@ -39,7 +37,6 @@ onMounted(() => {
               <li>
                 <a
                   href="/gastos-de-envio"
-                  data-dr="true"
                   rel="nofollow"
                   class="mtc-link"
                 >
@@ -58,11 +55,7 @@ onMounted(() => {
                   <span><strong>Envío gratis </strong><br> a partir de $150.000</span></a>
               </li>
               <li>
-                <a
-                  href="/devoluciones"
-                  data-dr="true"
-                  class="mtc-link"
-                >
+                <a href="/devoluciones" class="mtc-link">
                   <svg
                     width="14"
                     height="14"
@@ -80,7 +73,6 @@ onMounted(() => {
               <li>
                 <a
                   href="/terminos-y-condiciones-precio-minimo-garantizado"
-                  data-dr="true"
                   class="mtc-link"
                 >
                   <svg
@@ -100,7 +92,7 @@ onMounted(() => {
               <li>
                 <a
                   href="/devoluciones"
-                  data-dr="true"
+                  
                   rel="nofollow"
                   class="mtc-link"
                 >
@@ -122,7 +114,7 @@ onMounted(() => {
               <li>
                 <a
                   href="/devoluciones"
-                  data-dr="true"
+                  
                   rel="nofollow"
                   class="mtc-link"
                 >
@@ -144,7 +136,7 @@ onMounted(() => {
               <li>
                 <a
                   href="/iniciativas"
-                  data-dr="true"
+                  
                   class="mtc-link"
                 >
                   <svg

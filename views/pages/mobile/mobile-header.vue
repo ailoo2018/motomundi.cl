@@ -2,7 +2,7 @@
 import MobileSearch from "@/views/pages/mobile/mobile-search.vue"
 
 
-const cart = ref({ items_quantity: 1 })
+const cart = ref({ items_quantity: 0 })
 
 const currentUser = ref({
   avatar: "https://www.motomundi.cl/Content/uploads/1/_data/9/47/9476a7923b1c47219b0b9d9b2379cbf6_600_original.jpg",
@@ -46,8 +46,8 @@ const getCartTotalItems = () => {
   <header class="header-container">
     <div class="header">
       <div class="container">
-        <div class="row">
-          <div class="col s12">
+        <VRow >
+          <VCol cols="12">
             <div class="header__top">
               <button
                 class="mobile-menu__toggle"
@@ -102,7 +102,7 @@ const getCartTotalItems = () => {
                             xlink:href="/content/svg/motomundi.svg?v=1.4#i-menu-search"
                           />
                         </svg>
-                        <span>Buscar</span>
+                        <span style="position:relative; top:1px">Buscar</span>
                       </a>
                     </div>
                     <MobileSearch v-if="false" />
@@ -202,8 +202,8 @@ const getCartTotalItems = () => {
                 </li>
               </ul>
             </div>
-          </div>
-        </div>
+          </VCol>
+        </VRow>
       </div>
     </div>
   </header>
@@ -217,9 +217,23 @@ const getCartTotalItems = () => {
   max-width: unset;
   margin:unset;
 }
+img {
+  max-width: 100%;
+}
+
+.mobile-menu__toggle span{
+  color: #fff;
+  display: block;
+  font-size: 7px;
+  font-weight: 500;
+  letter-spacing: .2px;
+  line-height: 1;
+  text-transform: uppercase;
+}
 
 .header-container {
   border-bottom: 2px solid #efefef;
+
 }
 
 .header-container > div {
@@ -247,6 +261,7 @@ const getCartTotalItems = () => {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+  padding: 0px 8px
 }
 
 .row .col.s12 {
@@ -262,6 +277,16 @@ const getCartTotalItems = () => {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+.user-menu .user-menu__item a span{
+  color: #000;
+  display: block;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: .8px;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .header__top .user-menu{
@@ -361,6 +386,20 @@ const getCartTotalItems = () => {
   stroke: white;
 }
 
+.mtc-link, .mtc-link .light {
+  display: block;
+}
+
+.motomundi-logo {
+  align-items: center;
+  display: flex;
+}
+
+.user-menu a{
+  display: block;
+  padding: 10px;
+}
+
 @media only screen and (max-width: 600px) {
   .user-menu .user-menu__item a > svg {
     margin: 0 auto -1px;
@@ -379,7 +418,8 @@ const getCartTotalItems = () => {
   li .mtc-link, li > a {
     font-size: 9px;
     letter-spacing: -.5px;
-    padding: 6px;
+    /*padding: 6px;*/
+    padding: 10px;
   }
 }
 
@@ -478,6 +518,32 @@ const getCartTotalItems = () => {
     flex: 0 0 15%;
   }
 }
+
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  .header__top{
+    padding: 5px 0;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  .header__top .motomundi-logo {
+    margin-top: 5px;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  .header__top .motomundi-logo img {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  .mobile-search-toggle {
+    float: none;
+    padding: 10px;
+  }
+}
+
 </style>
 
 

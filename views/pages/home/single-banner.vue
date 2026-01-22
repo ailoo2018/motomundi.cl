@@ -173,5 +173,30 @@ const bgImg = computed(() => { return `url('https://www.motomundi.cl${props.widg
     min-height: 525px;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .banner-block .banner-block__content {
+    max-width: 100%;
+  }
+  .banner-block .container {
+    align-items: center !important;
+    padding: 0;
+  }
+
+
+  .banner-block .banner-block__image{
+    height: auto;
+    max-height: 261px;
+    max-width: 100%;
+    text-align: center;
+    width: 512px;
+  }
+  .banner-block .banner-block__image span .cdn-img {
+    max-height: 261px;
+    width: auto;
+  }
+}
+
+
 </style>
 

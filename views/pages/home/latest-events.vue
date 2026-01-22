@@ -36,13 +36,14 @@ const events = computed(() => {
 <template>
 
   <div
+    v-if="events"
+    style="background-color: #f5f5f5;"
     :id="`home-block-${widget.id}`"
-
     class="block-container events-widget"
   >
     <div class="blog-block alt">
       <div class="container">
-        <div class="row">
+        <VRow >
           <h2>
             <svg
               viewBox="0 0 24 24"
@@ -82,10 +83,10 @@ const events = computed(() => {
             </svg>
             Próximos eventos
           </h2>
-          <div class="gt-columns gt-column-3 gt-column-space-30" v-if="events">
-            <div
+          <div  >
+            <VCol
               v-for="e in events"
-              class="gt-col ng-scope"
+              cols="12"   lg="4"
             >
               <div class="gt-inner">
                 <div
@@ -206,7 +207,7 @@ const events = computed(() => {
                   </div>
                 </div>
               </div>
-            </div>
+            </VCol>
           </div>
 
           <div class="blog-link">
@@ -228,7 +229,7 @@ const events = computed(() => {
               </svg>
             </a>
           </div>
-        </div>
+        </VRow>
       </div>
     </div>
   </div>
@@ -497,15 +498,9 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-not-start.fc-end {
   }
 }
 
-h2[data-v-73681564] {
-  font-weight: 900;
-  margin: 0 0 40px;
-  font-size: 1.5em;
-  text-align: center;
-  text-transform: uppercase;
-}
 
-.blog-block[data-v-73681564] {
+
+.blog-block {
   background-color: #f5f5f5;
   margin-top: 70px;
   padding: 50px 0;
@@ -516,6 +511,14 @@ h2[data-v-73681564] {
   margin: 0 0 40px;
 }
 
+h2 {
+  font-weight: 900;
+  margin: 0 0 40px;
+  font-size: 1.5em;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+}
 
 .gt-title > a {
   color: black;

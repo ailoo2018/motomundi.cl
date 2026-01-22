@@ -214,18 +214,19 @@ search()
         </div>
         <div class="product-list">
           <div>
-            <div
-              id="resultscontainer"
-              class="row products banner--right has-banner"
-            >
-              <div
+            <VRow id="resultscontainer">
+              <VCol
+                cols="6"
+                sm="6"
+                md="4"
+                lg="4"
                 v-for="product in products"
                 :key="product.id"
-                class="col s6 m4 lc5"
+
               >
                 <ProductListItem :product="product" />
-              </div>
-            </div>
+              </VCol>
+            </VRow>
           </div>
         </div>
       </section>

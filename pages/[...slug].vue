@@ -1,6 +1,12 @@
 <script setup>
 import ProductsList from "@/views/pages/products/list/products-list.vue"
 
+definePageMeta({
+  layout: 'motomundi',
+  public: true,
+
+})
+
 const route = useRoute()
 
 

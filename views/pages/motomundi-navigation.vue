@@ -490,10 +490,12 @@ a, span.mtc-link {
   overflow: hidden;
 }
 
+/*
 .desktop {
   display: flex;
   justify-content: space-between;
 }
+*/
 
 #nav ul.u0 ul.u1 a {
   transition: unset;
@@ -513,7 +515,7 @@ a, span.mtc-link {
   justify-content: space-between;
 }
 
-.desktop a, .desktop span.mtc-link {
+/*.desktop a, .desktop span.mtc-link {
   align-items: center;
   color: #000;
   display: block;
@@ -523,7 +525,7 @@ a, span.mtc-link {
   padding: 0 10px;
   text-align: center;
   text-transform: uppercase;
-}
+}*/
 
 .desktop li img {
   display: block;

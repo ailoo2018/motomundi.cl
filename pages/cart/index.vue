@@ -5,6 +5,12 @@ import CartSummary from "@/views/pages/cart/cart-summary.vue"
 import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
 import { ProductType } from "@/models/products.js"
 
+definePageMeta({
+  layout: 'motomundi',
+  public: true,
+
+})
+
 
 const cartStore = useCartStore()
 const wuid = useGuestUser().value

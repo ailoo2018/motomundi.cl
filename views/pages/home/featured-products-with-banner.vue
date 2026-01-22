@@ -1,6 +1,7 @@
 <script setup>
 import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
 
+const { isMobile, isTablet, isDesktop } = useDevice()
 const props = defineProps({
   widget: {
     type: Object,
@@ -31,7 +32,7 @@ const products = computed(() => {
   }
 
   // 3. Return only the first 10
-  return shuffled.slice(0, 3)
+  return shuffled.slice(0, 4)
 })
 </script>
 
@@ -46,8 +47,8 @@ const products = computed(() => {
       :title="widget.configuration.title"
     >
       <div class="container">
-        <div class="row">
-          <div class="col s12 l12">
+        <VRow class="row">
+          <VCol class="col s12 l12">
             <section class="product-list__title">
               <h2>{{ widget.configuration.title }}</h2>
               <a
@@ -69,17 +70,15 @@ const products = computed(() => {
                 </svg>
               </a>
             </section>
-            <section class="home-products-list">
+            <section aclass="home-products-list">
               <div class="product-list">
                 <div>
-                  <div class="row products content-section-banner has-banner">
-                    <div
-                      data-promotion-id="bannerList"
-                      class="col s6 m8 lc5 banner banner-list banner--2x1"
-                    >
+                  <VRow sclass="products content-section-banner has-banner">
+                    <VCol cols="12" aaaclass=" banner banner-list banner--2x1">
                       <a
                         :href="widget.configuration.bannerLink"
                         class="search-results__banner mtc-link banner__theme--light"
+                        style="min-height: 376px;"
                       >
                         <div class="banner__container">
                           <span
@@ -107,20 +106,20 @@ const products = computed(() => {
                         </div>
 
                       </a>
-                    </div>
-
-                    <div
-                      v-for="product in products"
-                      class="col s6 m4 lc5 "
+                    </VCol>
+                    <VCol
+                      v-for="(product, index) in products"
+                      cols="6"
                     >
-                      <ProductListItem :product="product" />
-                    </div>
-                  </div>
+
+                      <ProductListItem v-if="index < (isMobile ? 4 : 3)" :product="product" />
+                    </VCol>
+                  </VRow>
                 </div>
               </div>
             </section>
-          </div>
-        </div>
+          </VCol>
+        </VRow>
       </div>
     </section>
   </div>
@@ -271,4 +270,12 @@ const products = computed(() => {
   max-width: 95%;
   width: auto;
 }
+
+@media only screen and (max-width: 600px) {
+  .product-list__title h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+}
+
 </style>

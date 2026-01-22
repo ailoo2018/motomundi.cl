@@ -49,8 +49,8 @@ const products = computed(() => {
 
 
 const swiperBreakpoints = {
-  320: { slidesPerView: 1.2, spaceBetween: 10 },
-  640: { slidesPerView: 2.5, spaceBetween: 10 },
+  320: { slidesPerView: 2, spaceBetween: 10 },
+  640: { slidesPerView: 2, spaceBetween: 10 },
   1024: { slidesPerView: 4, spaceBetween: 10 },
   1280: { slidesPerView: 5, spaceBetween: 10 },
 }
@@ -555,4 +555,11 @@ swiper-container:not(.swiper-initialized) swiper-slide {
 .product-list {
   position: relative;
 }
+@media only screen and (max-width: 600px) {
+  .product-list__title h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+}
+
 </style>

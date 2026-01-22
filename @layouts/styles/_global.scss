@@ -13,6 +13,16 @@ html {
   font-family: system, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", Helvetica Neue;
 }
 
+@media only screen and (max-width: 600px) {
+  html {
+    line-height: 1.15;
+  }
+  img {
+    max-width: 100%;
+  }
+}
+
+
 body {
   font-family: Verb;
   font-weight: 400;

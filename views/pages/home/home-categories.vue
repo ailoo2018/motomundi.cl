@@ -169,12 +169,19 @@ const props = defineProps({
   margin: 0px;
 }
 
-@media (max-width: 500px) {
+@media only screen and (max-width: 600px) {
   .promo-categories .mtc-link {
-    flex: 0 0 44%;
+    flex: 0 0 45%;
   }
 }
 
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  .promo-categories .mtc-link {
+    flex: 0 0 32%;
+    justify-content: center;
+    padding: 20px 0;
+  }
+}
 @media only screen and (max-width: 600px) {
   .promo-categories {
     flex-wrap: wrap;
