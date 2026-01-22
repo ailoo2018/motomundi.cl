@@ -27,7 +27,7 @@ const componentMap = {
   FeaturedProductsWithBanner,
   LatestEvents,
   Seo,
-  YoutubeLatest,
+
 }
 
 const { isMobile } = useDevice()
@@ -64,7 +64,7 @@ const { data: homeRs, pending } = await useFetch(`/api/home/home?id=10018`, {
 })
 
 const widgets = computed( () => {
-  return homeRs.value?.widgets.filter(w =>  !(isMobile && w.name === "Seo") )
+  return homeRs.value?.widgets.filter(w =>  !(isMobile && w.name === "SEO") )
 })
 
 
@@ -77,15 +77,14 @@ useIntersectionObserver([
 </script>
 
 <template>
-
   <div style="background-color: rgb(245, 245, 245)">
-  <Component
-    :is="componentMap[widget.component]"
-    v-for="widget in widgets"
+    <Component
+      :is="componentMap[widget.component]"
+      v-for="widget in widgets"
 
-    :key="widget.id"
-    :widget="widget"
-  />
+      :key="widget.id"
+      :widget="widget"
+    />
   </div>
 </template>
 

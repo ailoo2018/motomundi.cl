@@ -26,10 +26,7 @@ onMounted(() => {
     :id="`home-block-${widget.id}`"
     class="block-container d-none d-md-flex"
   >
-    <section
-      section="home"
-      class="added-values-block w-100 px-3"
-    >
+    <section class="added-values-block w-100 px-3">
       <div class="container">
         <div class="row">
           <div>

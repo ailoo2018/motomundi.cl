@@ -1,11 +1,17 @@
 <script setup lang="ts">
+const props = defineProps({
+  widget: {
+    type: Object,
+    required: true,
+  },
+})
 
 </script>
 
 <template>
 
   <div id="home-seo-block" class="block-container">
-    <aside class="text-block" block-id="9" block-name="seoText" section="home">
+    <aside class="text-block" >
       <div class="container">
         <div class="row">
           <div class="col s12 m10 offset-m1 l8 offset-l2">

@@ -36,14 +36,13 @@ const events = computed(() => {
 <template>
 
   <div
-    v-if="events"
-    style="background-color: #f5f5f5;"
     :id="`home-block-${widget.id}`"
+
     class="block-container events-widget"
   >
     <div class="blog-block alt">
       <div class="container">
-        <VRow >
+        <div class="row">
           <h2>
             <svg
               viewBox="0 0 24 24"
@@ -83,10 +82,10 @@ const events = computed(() => {
             </svg>
             Próximos eventos
           </h2>
-          <div  >
-            <VCol
+          <div class="gt-columns gt-column-3 gt-column-space-30" v-if="events">
+            <div
               v-for="e in events"
-              cols="12"   lg="4"
+              class="gt-col ng-scope"
             >
               <div class="gt-inner">
                 <div
@@ -207,7 +206,7 @@ const events = computed(() => {
                   </div>
                 </div>
               </div>
-            </VCol>
+            </div>
           </div>
 
           <div class="blog-link">
@@ -229,7 +228,7 @@ const events = computed(() => {
               </svg>
             </a>
           </div>
-        </VRow>
+        </div>
       </div>
     </div>
   </div>
@@ -498,7 +497,13 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-not-start.fc-end {
   }
 }
 
-
+h2 {
+  font-weight: 900;
+  margin: 0 0 40px;
+  font-size: 1.5em;
+  text-align: center;
+  text-transform: uppercase;
+}
 
 .blog-block {
   background-color: #f5f5f5;
@@ -511,14 +516,6 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-not-start.fc-end {
   margin: 0 0 40px;
 }
 
-h2 {
-  font-weight: 900;
-  margin: 0 0 40px;
-  font-size: 1.5em;
-  text-align: center;
-  width: 100%;
-  text-transform: uppercase;
-}
 
 .gt-title > a {
   color: black;
@@ -569,8 +566,43 @@ h2 {
   stroke: #fff;
 }
 
+.gt-columns.gt-column-space-30 > .gt-col > .gt-inner {
+  padding: 0 15px 30px;
+  height: 100%;
+}
 
+@media only screen and (max-width: 767px) {
+  h2 {
+    margin: 0 15px 30px;
+  }
+
+  .gt-columns.gt-column-10 .gt-col, .gt-columns.gt-column-9 .gt-col,
+  .gt-columns.gt-column-8 .gt-col,
+  .gt-columns.gt-column-7 .gt-col, .gt-columns.gt-column-6 .gt-col,
+  .gt-columns.gt-column-5 .gt-col,
+  .gt-columns.gt-column-4 .gt-col, .gt-columns.gt-column-3 .gt-col,
+  .gt-columns.gt-column-2 .gt-col {
+    width: 100%;
+    margin-bottom: 45px;
+  }
+
+  .gt-event-style-3 .gt-image img{
+    width: 100%;
+  }
+
+  .gt-event-style-3 .gt-content {
+    margin-top: -20px;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+    height: 70%;
+  }
+  .gt-event-style-3 .gt-title {
+    font-size: 1.231rem;
+  }
+}
 
 </style>
+
 
 
