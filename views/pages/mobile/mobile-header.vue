@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import MobileSearch from "@/views/pages/mobile/mobile-search.vue"
+import MobileMenu from "@/views/pages/mobile/mobile-menu.vue";
 
 
 const cart = ref({ items_quantity: 0 })
+const isMenuOpen = ref(false)
 
 const currentUser = ref({
   avatar: "https://www.motomundi.cl/Content/uploads/1/_data/9/47/9476a7923b1c47219b0b9d9b2379cbf6_600_original.jpg",
@@ -27,6 +29,7 @@ const toggleCart = () => {
 
 const toggleMenu = () => {
   console.log("toggle menu")
+  isMenuOpen.value = !isMenuOpen.value
 }
 
 const toggleUserMenu = () => {
@@ -43,6 +46,7 @@ const getCartTotalItems = () => {
 </script>
 
 <template>
+  <MobileMenu v-model="isMenuOpen"/>
   <header class="header-container">
     <div class="header">
       <div class="container">
@@ -210,6 +214,16 @@ const getCartTotalItems = () => {
 </template>
 
 <style scoped>
+
+.container {
+  margin: 0 auto;
+  max-width: unset;
+  width: 100%;
+  padding: 4px;
+  background-color: black;
+  color: white;
+}
+
 .content-container, .main-content, body {
   min-height: 100vh;
   width: unset;
@@ -240,33 +254,13 @@ img {
   background-color: #fff;
 }
 
-.container {
-  align-items: center;
-  display: flex;
-  height: 61px;
-  width: 95%;
-}
 
-.container {
-  margin: 0 auto;
-  max-width: unset;
-  width: 100%;
-  padding: 4px;
-  background-color: black;
-  color: white;
-}
 
-.container > .row {
-  margin-bottom: 0;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0px 8px
-}
 
-.row .col.s12 {
-  width: 100%;
-}
+
+
+
+
 
 .user-menu{
   align-content: center;

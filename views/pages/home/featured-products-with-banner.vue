@@ -1,6 +1,8 @@
 <script setup>
 import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
 
+const { isMobile, isTablet, isDesktop } = useDevice()
+
 const props = defineProps({
   widget: {
     type: Object,
@@ -31,7 +33,7 @@ const products = computed(() => {
   }
 
   // 3. Return only the first 10
-  return shuffled.slice(0, 3)
+  return shuffled.slice(0, 4)
 })
 </script>
 
@@ -110,10 +112,10 @@ const products = computed(() => {
                     </div>
 
                     <div
-                      v-for="product in products"
+                      v-for="(product, index) in products"
                       class="col s6 m4 lc5 "
                     >
-                      <ProductListItem :product="product" />
+                      <ProductListItem v-if="isMobile ? index < 4 : index < 3" :product="product" />
                     </div>
                   </div>
                 </div>
@@ -280,6 +282,11 @@ const products = computed(() => {
 }
 
 @media only screen and (max-width: 600px) {
+  .product-list__title h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
   .product-list .products.has-banner {
     grid-template-columns: 1fr 1fr;
   }

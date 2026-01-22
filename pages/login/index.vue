@@ -2,6 +2,13 @@
 import RegisterForm from "@/views/pages/login/register-form.vue"
 import LoginForm from "@/views/pages/login/login-form.vue"
 
+definePageMeta({
+  layout: 'motomundi',
+  public: true,
+
+})
+
+
 const isShowForgotPassword = ref(false)
 const currentTab = ref('register')
 

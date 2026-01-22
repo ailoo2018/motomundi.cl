@@ -10,10 +10,11 @@ import AddedValues from "@/views/pages/home/added-values.vue"
 import HomeCategories from "@/views/pages/home/home-categories.vue"
 import MobileTemplate from "@/views/pages/mobile/mobile-template.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
+import MobileMenu from "@/views/pages/mobile/mobile-menu.vue"
 
 const { injectSkinClasses } = useSkins()
 
-const { isMobile, isTablet, isDesktop } = useDevice()
+  const { isMobile, isTablet, isDesktop } = useDevice()
 
 console.log("isMobile", isMobile)
 console.log("isTable", isTablet)
@@ -34,6 +35,7 @@ injectSkinClasses()
   <!-- mobile -->
   <div v-if="isMobile">
     <main class="main-content" >
+
       <MobileHeader />
       <div class="home-container">
         <slot />

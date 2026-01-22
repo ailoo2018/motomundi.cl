@@ -1,18 +1,20 @@
 <script setup>
+const props= defineProps({
+  componentClass: {
+    type: String,
+    default: '',
+  },
+})
 
-const emit = defineEmits(['logout']);
+const emit = defineEmits(['logout'])
 
 const logout = async () => {
-  emit('logout');
+  emit('logout')
 }
-
 </script>
 
 <template>
-  <ul
-    data-v-afc24b48=""
-    class="account__nav"
-  >
+  <ul class="account__nav" :class="componentClass">
     <li>
       <a
         href="/cuenta/perfil"
@@ -234,8 +236,8 @@ const logout = async () => {
     </li>
     <li class="account-menu__logout">
       <a
-        @click="logout();"
         rel="nofollow"
+        @click="logout"
       >
         <svg
           width="19"
@@ -254,7 +256,7 @@ const logout = async () => {
   </ul>
 </template>
 
-<style lang="scss">
+<style  lang="scss">
 .account__nav a {
   border-left: 3px solid transparent;
   color: #000;
@@ -272,4 +274,5 @@ const logout = async () => {
   transition: all .2s ease;
   vertical-align: -4px;
 }
+
 </style>

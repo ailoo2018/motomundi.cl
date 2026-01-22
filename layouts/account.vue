@@ -9,9 +9,12 @@ import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
 import AddedValues from "@/views/pages/home/added-values.vue"
 import HomeCategories from "@/views/pages/home/home-categories.vue"
 import AccountMenu from "@/views/pages/account/account-menu.vue"
+import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 
 
 const { injectSkinClasses } = useSkins()
+
+const { isMobile, isTablet, isDesktop } = useDevice()
 
 const router = useRouter()
 
@@ -35,10 +38,21 @@ injectSkinClasses()
 </script>
 
 <template>
-  <div
-    class="layout-wrapper layout-blank"
-    data-allow-mismatch
-  >
+
+  <!-- mobile -->
+  <div v-if="isMobile">
+    <main class="main-content" >
+
+      <MobileHeader />
+      <div class="home-container">
+        <slot />
+      </div>
+    </main>
+  </div>
+  <!-- /mobile -->
+
+  <!-- desktop -->
+  <div v-else class="layout-wrapper layout-blank">
     <div class="landing-page-wrapper">
       <MotomundiHeaderbar />
       <MotomundiHeaderlogo />
@@ -70,6 +84,7 @@ injectSkinClasses()
       </main>
     </div>
   </div>
+  <!-- /desktop -->
 </template>
 
 <style>
