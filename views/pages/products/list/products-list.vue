@@ -214,19 +214,18 @@ search()
         </div>
         <div class="product-list">
           <div>
-            <VRow id="resultscontainer">
-              <VCol
-                cols="6"
-                sm="6"
-                md="4"
-                lg="4"
+            <div
+              id="resultscontainer"
+              class="row products banner--right has-banner"
+            >
+              <div
                 v-for="product in products"
                 :key="product.id"
-
+                class="col s6 m4 lc5"
               >
                 <ProductListItem :product="product" />
-              </VCol>
-            </VRow>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -298,6 +297,12 @@ search()
 @media only screen and (min-width: 993px) {
   .filters__header .filters__header-title .header-title {
     font-size: 25px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .product-list .products.has-banner {
+    grid-template-columns: 1fr 1fr;
   }
 }
 </style>

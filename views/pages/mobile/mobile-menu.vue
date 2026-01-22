@@ -72,17 +72,9 @@ const toggleMenu = () => {
             </h1>
           </div>
         </div>
-        <nav
-          v-if="showMainMenu"
-          class="menu-mobile__nav"
-        >
-          <Component :is="getCurrentMenu()" @on-menu-change="onMenuChange" />
-        </nav>
-        <nav
-          id="navSec"
-          class="menu-mobile__nav-sec"
-          ng-show="!showMainMenu"
-          aang-bind-html="navSec"
+        <Component
+          :is="getCurrentMenu()"
+          @on-menu-change="onMenuChange"
         />
       </div>
       <nav
@@ -123,7 +115,10 @@ const toggleMenu = () => {
                 {{ getUserInitials() }}
               </div>
               <span>Mi cuenta</span>
-              <AccountMenu v-if="isShowUserMenuTab" :component-class="'user-menu__account-content'"/>
+              <AccountMenu
+                v-if="isShowUserMenuTab"
+                component-class="user-menu__account-content"
+              />
 
             </span>
           </li>
@@ -570,6 +565,7 @@ const toggleMenu = () => {
   width: 100%
 }
 
+
 .menu-mobile__nav .menu-mobile__grid-nav, .menu-mobile__nav .menu-mobile__list-nav {
   grid-column-gap: 0;
   grid-row-gap: 0;
@@ -774,11 +770,55 @@ const toggleMenu = () => {
 
 
 
+/******************************** secondary menu **********************************************/
+
+.menu-mobile__nav-sec {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.menu-mobile__nav-sec ul {
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: 1fr;
+}
+
+.menu-mobile__nav-sec li {
+  background-color: #fff;
+  box-shadow: inset -1px -1px 0 0 #f5f5f5;
+  min-width: 0;
+  overflow: hidden;
+  padding: 15px 0;
+  text-align: center;
+}
+
+.menu-mobile__nav-sec h2 {
+  background-color: #000;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 25px;
+  margin: 0;
+  padding: 0 12px;
+  text-transform: uppercase;
+}
 
 
-
-
-
+.menu-mobile__nav-sec .mtc-link span {
+  display: block;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: .5px;
+  margin-top: 5px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 
 
 
@@ -865,6 +905,14 @@ const toggleMenu = () => {
   white-space: nowrap;
 }
 
+@media (max-width: 771px) {
+  li .mtc-link, li > a {
+    font-size: 9px;
+    letter-spacing: -.5px;
+    padding: 6px;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .user-menu__account-content {
     padding: 15px;
@@ -886,9 +934,8 @@ const toggleMenu = () => {
     line-height: 22px;
     width: 22px;
   }
-
+  .mobile .mtc-link p {
+    letter-spacing: .5px;
+  }
 }
-
-
-
 </style>

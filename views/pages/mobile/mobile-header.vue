@@ -5,6 +5,7 @@ import MobileMenu from "@/views/pages/mobile/mobile-menu.vue";
 
 const cart = ref({ items_quantity: 0 })
 const isMenuOpen = ref(false)
+const isSearchOpen = ref(false)
 
 const currentUser = ref({
   avatar: "https://www.motomundi.cl/Content/uploads/1/_data/9/47/9476a7923b1c47219b0b9d9b2379cbf6_600_original.jpg",
@@ -21,6 +22,7 @@ const isUserLoggedIn = () => {
 
 const toggleSearch = () =>{
   console.log("toggleSearch")
+  isSearchOpen.value = !isSearchOpen.value
 }
 
 const toggleCart = () => {
@@ -50,7 +52,7 @@ const getCartTotalItems = () => {
   <header class="header-container">
     <div class="header">
       <div class="container">
-        <VRow >
+        <VRow class="margin: 0px">
           <VCol cols="12">
             <div class="header__top">
               <button
@@ -109,7 +111,7 @@ const getCartTotalItems = () => {
                         <span style="position:relative; top:1px">Buscar</span>
                       </a>
                     </div>
-                    <MobileSearch v-if="false" />
+                    <MobileSearch v-model="isSearchOpen" />
                   </div>
                 </li>
                 <!-- /buscar -->
