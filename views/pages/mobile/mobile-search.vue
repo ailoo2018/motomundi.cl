@@ -54,7 +54,8 @@ const search = async () => {
       sizes: [],
       categories: [],
       sword: sword.value,
-      limit: 30,
+      limit: 30, // used for pagination
+      offset: 0,  // used for pagination
     }
 
     for (const facet of currentQuery.value) {
@@ -111,8 +112,6 @@ const search = async () => {
     loading.value = false
   }
 }
-
-
 </script>
 
 <template>
@@ -178,7 +177,7 @@ const search = async () => {
       <div class="search__panel-header">
         <button
           class="search__panel-close"
-          @click="toggleSearch()"
+          @click="toggleSearch"
         >
           <svg
             width="9"
@@ -196,8 +195,8 @@ const search = async () => {
           <form>
             <input
               id="master-search-input"
-              type="search"
               v-model="sword"
+              type="search"
               ng-keyup="fullSearch(1, $event)"
               ng-blur="focus = false"
               ng-focus="focus = true"
@@ -223,8 +222,8 @@ const search = async () => {
         </div>
       </div>
       <div
-        class="search__results-summary"
         v-if="products.length > 0"
+        class="search__results-summary"
       >
         <p>
           <strong>{{ total }}</strong> resultados {{ loading }}
@@ -264,9 +263,8 @@ const search = async () => {
 
 
       <div
-        
         v-if="products.length > 0"
-        style="padding-left:12px;"
+        style="padding-left:12px;overflow-y:auto;"
         class="vue-virtual-scroller ready direction-vertical ng-hide"
       >
         <div
@@ -288,13 +286,13 @@ const search = async () => {
             </VCol>
           </VRow>
         </div>
-        <div class="vue-virtual-scroller__slot"/>
+        <div class="vue-virtual-scroller__slot" />
       </div>
     </section>
   </article>
 </template>
-<style >
 
+<style>
 .search__panel {
   background-color: #fff;
   bottom: 0;
