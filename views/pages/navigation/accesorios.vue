@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import BikeSelector from "@/views/pages/bike-selector.vue";
+</script>
 <template>
   <!-- accesorios -->
   <li
@@ -1192,6 +1195,3 @@
   text-transform: capitalize;
 }
 </style>
-<script setup lang="ts">
-import BikeSelector from "@/views/pages/bike-selector.vue";
-</script>

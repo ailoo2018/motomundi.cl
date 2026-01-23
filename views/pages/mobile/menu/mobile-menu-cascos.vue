@@ -1,12 +1,7 @@
 
 
 <template>
-  <nav
-    id="navSec"
-    class="menu-mobile__nav-sec"
-
-    aang-bind-html="navSec"
-  >
+  <nav id="navSec" class="menu-mobile__nav-sec"  >
     <div>
       <h2>
         Por tipo de producto
@@ -15,12 +10,12 @@
         <li>
           <a
             href="/cascos/novedades"
-            data-dr="true"
+            
             class="mtc-link"
             title="Novedades en cascos"
           >
             <span
-              data-dr="true"
+              
               class="mtc-link"
               title="Novedades"
             >
@@ -36,7 +31,7 @@
         <li>
           <a
             href="/cascos-integrales-para-moto"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos Integrales"
           ><img
@@ -50,7 +45,7 @@
         <li>
           <a
             href="/cascos-abatibles-para-moto"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos modulares"
           ><img
@@ -64,7 +59,7 @@
         <li>
           <a
             href="/cascos-abiertos-para-moto"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos jet"
           ><img
@@ -77,7 +72,7 @@
         <li>
           <a
             href="/cascos-motocross"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos motocross"
           ><img
@@ -90,7 +85,7 @@
         <li>
           <a
             href="/cascos-doble-proposito-para-moto"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos trial"
           ><img
@@ -103,7 +98,7 @@
         <li>
           <a
             href="/intercomunicadores"
-            data-dr="true"
+            
             class="mtc-link"
             title=""
           ><img
@@ -116,7 +111,7 @@
         <li>
           <a
             href="/accesorios-para-cascos"
-            data-dr="true"
+            
             class="mtc-link"
             title="Accesorios de cascos"
           ><img
@@ -133,80 +128,80 @@
         Por riding style
       </h2>
       <ul
-        data-v-071de342=""
+        
       
         class="mobile"
       >
-        <li data-v-071de342="">
+        <li >
           <span
-            data-v-071de342=""
-            data-dr="true"
+            
+            
             class="mtc-link"
           >
             <img
-              data-v-071de342=""
+              
               width="60"
               height="40"
               src="/content/images/mobile-menu/categories/mobile-menu__seg-racing.svg"
               alt="Sport / Racing"
             >
-            <p data-v-071de342="">Sport / Racing</p></span>
+            <p >Sport / Racing</p></span>
         </li>
-        <li data-v-071de342="">
+        <li >
           <span
-            data-v-071de342=""
-            data-dr="true"
+            
+            
             class="mtc-link"
           >
             <img
-              data-v-071de342=""
+              
               width="60"
               height="40"
               src="/content/images/mobile-menu/categories/mobile-menu__seg-touring.svg"
               alt="Touring"
-            > <p data-v-071de342="">Touring</p></span>
+            > <p >Touring</p></span>
         </li>
-        <li data-v-071de342="">
+        <li >
           <span
-            data-v-071de342=""
-            data-dr="true"
+            
+            
             class="mtc-link"
           >
             <img
-              data-v-071de342=""
+              
               width="60"
               height="40"
               src="/content/images/mobile-menu/categories/mobile-menu__seg-trail.svg"
               alt="Trail / Adventure"
-            > <p data-v-071de342="">Trail / Adventure</p></span>
+            > <p >Trail / Adventure</p></span>
         </li>
-        <li data-v-071de342="">
+        <li >
           <span
-            data-v-071de342=""
-            data-dr="true"
+            
+            
             class="mtc-link"
           >
             <img
-              data-v-071de342=""
+              
               width="60"
               height="40"
               src="/content/images/mobile-menu/categories/mobile-menu__seg-urban.svg"
               alt="Scooter / Urban"
-            > <p data-v-071de342="">Scooter / Urban</p></span>
+            > <p >Scooter / Urban</p></span>
         </li>
-        <li data-v-071de342="">
+        <li >
           <span
-            data-v-071de342=""
-            data-dr="true"
+            
+            
             class="mtc-link"
           >
             <img
-              data-v-071de342=""
+              
               width="60"
               height="40"
               src="/content/images/mobile-menu/categories/mobile-menu__seg-caferacer.svg"
               alt="Cafe Racer / Vintage"
-            > <p data-v-071de342="">Cafe Racer / Vintage</p></span>
+            > <p >Cafe Racer / Vintage</p></span>
         </li>
       </ul>
     </div>
@@ -216,7 +211,7 @@
         <li>
           <a
             href="/alpinestars"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos ALPINESTARS"
           ><span><img
@@ -231,7 +226,7 @@
         <li>
           <a
             href="/shoei"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos SHOEI"
           ><span><img
@@ -246,7 +241,7 @@
         <li>
           <a
             href="/agv"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos AGV"
           ><span><img
@@ -261,7 +256,7 @@
         <li>
           <a
             href="/schuberth"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos SCHUBERTH"
           ><span><img
@@ -276,7 +271,7 @@
         <li>
           <a
             href="/shark"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos SHARK"
           ><span><img
@@ -291,7 +286,7 @@
         <li>
           <a
             href="/arai"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos ARAI"
           ><span><img
@@ -306,7 +301,7 @@
         <li>
           <a
             href="/hjc"
-            data-dr="true"
+            
             class="mtc-link"
             title="Cascos HJC"
           ><span><img

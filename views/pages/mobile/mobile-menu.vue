@@ -2,10 +2,14 @@
 import MobileMenuInicio from "@/views/pages/mobile/menu/mobile-menu-inicio.vue"
 import MobileMenuCascos from "@/views/pages/mobile/menu/mobile-menu-cascos.vue"
 import AccountMenu from "@/views/pages/account/account-menu.vue"
+import MobileMenuCalle from "@/views/pages/mobile/menu/mobile-menu-calle.vue";
+import MobileMenuOffroad from "@/views/pages/mobile/menu/mobile-menu-offroad.vue";
+import MobileMenuAccesorios from "@/views/pages/mobile/menu/mobile-menu-accesorios.vue";
+import MobileMenuLifestyle from "@/views/pages/mobile/menu/mobile-menu-lifestyle.vue";
+import MobileMenuBrands from "@/views/pages/mobile/menu/mobile-menu-brands.vue";
 
 
-
-const isMenuOpen = defineModel({ type: Boolean, default: false })
+const isMenuOpen = defineModel({type: Boolean, default: false})
 const isShowUserMenuTab = ref(false)
 
 const currentMenu = ref(MobileMenuInicio)
@@ -15,14 +19,32 @@ const showMainMenu = ref(true)
 
 const backToHome = () => {
   console.log("back to home")
+  currentMenu.value = MobileMenuInicio
+  menuTitle.value = "Inicio"
 }
 
 const getUserInitials = () => {
   return "JC"
 }
 
+const menuMap = {
+  "cascos": MobileMenuCascos,
+  "calle": MobileMenuCalle,
+  "offroad": MobileMenuOffroad,
+  "accesorios": MobileMenuAccesorios,
+  "lifestyle": MobileMenuLifestyle,
+  "marcas": MobileMenuBrands,
+}
+
+
 const onMenuChange = menu => {
-  currentMenu.value = MobileMenuCascos
+  console.log("menu selectd", menu)
+  currentMenu.value = menuMap[menu.name]
+  menuTitle.value = menu.title
+
+  if(currentMenu.value !== MobileMenuInicio){
+    showMainMenu.value = false
+  }
 }
 
 const getCurrentMenu = () => {
@@ -31,7 +53,7 @@ const getCurrentMenu = () => {
 
 const isUserLoggedIn = () => {
   const accessToken = useCookie('accessToken').value
-  
+
   return accessToken && accessToken.length > 0
 }
 
@@ -67,8 +89,7 @@ const toggleMenu = () => {
                 href="{{menuTitleUrl}}"
                 class="mtc-link"
               >{{ menuTitle }}</a>
-
-              <span style="display: none;" />
+              <span style="display: none;"/>
             </h1>
           </div>
         </div>
@@ -77,10 +98,7 @@ const toggleMenu = () => {
           @on-menu-change="onMenuChange"
         />
       </div>
-      <nav
-        class="menu-mobile__tab-bar"
-        ng-init="isShowUserMenuTab = false;"
-      >
+      <nav class="menu-mobile__tab-bar">
         <ul>
           <li class="menu-mobile__account">
             <a
@@ -111,7 +129,6 @@ const toggleMenu = () => {
                   :src="currentUser!.avatar"
                   alt="user-avatar"
                 >
-
                 {{ getUserInitials() }}
               </div>
               <span>Mi cuenta</span>
@@ -141,28 +158,24 @@ const toggleMenu = () => {
                     <li>
                       <label for="order-tracking-input-order-id">Número
                         de Pedido</label> <input
-                        id="order-tracking-input-order-id"
-                        type="text"
-                        required="required"
-                      >
+                      id="order-tracking-input-order-id"
+                      type="text"
+                      required="required"
+                    >
                     </li>
                     <li>
                       <label for="order-tracking-input-email">Correo
                         electrónico</label> <input
-                        id="order-tracking-input-email"
+                      id="order-tracking-input-email"
 
-                        type="email"
-                        required="required"
-                      >
+                      type="email"
+                      required="required"
+                    >
                     </li>
-                    <li class="error" />
+                    <li class="error"/>
                     <li>
-                      <button
-                        data-v-b442d7bc=""
-
-                        type="submit"
-                      >
-                        <span data-v-b442d7bc="">Buscar</span>
+                      <button type="submit">
+                        <span>Buscar</span>
                       </button>
                     </li>
                   </ul>
@@ -173,12 +186,11 @@ const toggleMenu = () => {
           <li class="menu-mobile__favorites">
             <a
               href="/cuenta/favoritos"
-              
+
               class="mtc-link"
               rel="nofollow"
             >
               <img
-
                 src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjIxIiB2aWV3Qm94PSIwIDAgMjEgMjEiIHdpZHRoPSIyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGZpbHRlciBpZD0iYSIgaGVpZ2h0PSIxMjguOCUiIHdpZHRoPSIxNjAlIiB4PSItMzAlIiB5PSItMTQuNCUiPjxmZU9mZnNldCBkeD0iMTAiIGR5PSIwIiBpbj0iU291cmNlQWxwaGEiIHJlc3VsdD0ic2hhZG93T2Zmc2V0T3V0ZXIxIi8+PGZlR2F1c3NpYW5CbHVyIGluPSJzaGFkb3dPZmZzZXRPdXRlcjEiIHJlc3VsdD0ic2hhZG93Qmx1ck91dGVyMSIgc3RkRGV2aWF0aW9uPSIyMCIvPjxmZUNvbG9yTWF0cml4IGluPSJzaGFkb3dCbHVyT3V0ZXIxIiByZXN1bHQ9InNoYWRvd01hdHJpeE91dGVyMSIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgIDAgMCAwIDAgMCAgMCAwIDAgMC41IDAiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49InNoYWRvd01hdHJpeE91dGVyMSIvPjxmZU1lcmdlTm9kZSBpbj0iU291cmNlR3JhcGhpYyIvPjwvZmVNZXJnZT48L2ZpbHRlcj48ZyBmaWxsPSJub25lIiBmaWx0ZXI9InVybCgjYSkiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuODUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yNTcgLTYxOSkiPjxwYXRoIGQ9Im0yIDguNjk1NjUyMTdjMCAxLjEzMDQzNDc5LjE3NTI1NzczIDIuODY5NTY1MjMgMS43NTI1NzczMiA0LjQzNDc4MjYzIDEuNDAyMDYxODYgMS4zOTEzMDQzIDYuMDQ2MzkxNzUgNC41MjE3MzkxIDYuMjIxNjQ5NDggNC42OTU2NTIyLjE3NTI1NzcuMDg2OTU2NS4zNTA1MTU1LjE3MzkxMy41MjU3NzMyLjE3MzkxM3MuMzUwNTE1NS0uMDg2OTU2NS41MjU3NzMyLS4xNzM5MTNjLjE3NTI1NzctLjE3MzkxMzEgNC44MTk1ODc2LTMuMjE3MzkxMyA2LjIyMTY0OTUtNC42OTU2NTIyIDEuNTc3MzE5Ni0xLjU2NTIxNzQgMS43NTI1NzczLTMuMzA0MzQ3ODQgMS43NTI1NzczLTQuNDM0NzgyNjMgMC0yLjYwODY5NTY1LTIuMTAzMDkyOC00LjY5NTY1MjE3LTQuNzMxOTU4OC00LjY5NTY1MjE3LTEuNDAyMDYxOCAwLTIuODA0MTIzNy43ODI2MDg3LTMuNjgwNDEyMyAyLS44NzYyODg2OS0xLjIxNzM5MTMtMi4yNzgzNTA1NS0yLTMuODU1NjcwMTQtMi0yLjU0MTIzNzExIDAtNC43MzE5NTg3NiAyLjA4Njk1NjUyLTQuNzMxOTU4NzYgNC42OTU2NTIxN3oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI1NyA2MTkpIi8+PC9nPjwvc3ZnPg=="
                 alt="Motocard favorites"
               > <span>Favoritos</span>
@@ -197,7 +209,7 @@ const toggleMenu = () => {
               class="modal-wrapper"
               style="display: none;"
             >
-              <div class="modal-backdrop" />
+              <div class="modal-backdrop"/>
               <div
                 role="dialog"
                 class="modal mobile-locale__modal"
@@ -217,10 +229,10 @@ const toggleMenu = () => {
                     </svg>
                   </button>
                 </div>
-                <header class="modal-header" />
+                <header class="modal-header"/>
                 <section class="modal-body">
                   <div>
-                    <div class="change-local-form" />
+                    <div class="change-local-form"/>
                   </div>
                 </section>
               </div>
@@ -743,7 +755,7 @@ const toggleMenu = () => {
 }
 
 
-.account__user-avatar{
+.account__user-avatar {
   border-radius: 200px;
   color: #fff;
   font-weight: 700;
@@ -754,20 +766,6 @@ const toggleMenu = () => {
 .menu-mobile__tab-bar > ul .menu-mobile__account span > div {
   margin-bottom: 2px;
 }
-
-
-
-/*
-.menu-mobile__tab-bar > ul > li {
-  background-color: #f5f5f5;
-  min-width: 0;
-  overflow: hidden;
-  padding: 12px 0;
-  text-align: center;
-}
-*/
-
-
 
 
 /******************************** secondary menu **********************************************/
@@ -781,7 +779,7 @@ const toggleMenu = () => {
   grid-column-gap: 0;
   grid-row-gap: 0;
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr;
 }
 
@@ -819,8 +817,6 @@ const toggleMenu = () => {
   text-transform: uppercase;
   white-space: nowrap;
 }
-
-
 
 
 /*************************************************************************** account menu */
@@ -868,7 +864,7 @@ const toggleMenu = () => {
   z-index: 260;
 }
 
-.menu-mobile__account  > ul li {
+.menu-mobile__account > ul li {
   background-color: #f5f5f5;
   min-width: 0;
   overflow: hidden;
@@ -881,7 +877,6 @@ const toggleMenu = () => {
 }
 
 
-
 .user-menu__account-content {
   background-color: #fff;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, .1), 0 0 35px 0 rgba(0, 0, 0, .15);
@@ -892,7 +887,6 @@ const toggleMenu = () => {
   width: auto;
   z-index: 260;
 }
-
 
 
 .user-menu__account-content a {
@@ -918,22 +912,27 @@ const toggleMenu = () => {
     padding: 15px;
     top: 105%;
   }
+
   .user-menu__account-content:after {
     right: 10px;
   }
+
   .user-menu__account-content a {
     font-size: 10px;
     padding: 5px 0;
   }
+
   .menu-mobile__tab-bar > ul .menu-mobile__account span .account__user-avatar img {
     height: 22px;
     width: 22px;
   }
+
   .small {
     height: 22px;
     line-height: 22px;
     width: 22px;
   }
+
   .mobile .mtc-link p {
     letter-spacing: .5px;
   }

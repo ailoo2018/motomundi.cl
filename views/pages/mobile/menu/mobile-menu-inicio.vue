@@ -1,9 +1,9 @@
 <script setup>
 const emit = defineEmits(['on-menu-change'])
 
-const loadMenu = () => {
+const loadMenu = (name, title) => {
   console.log("loadMenu")
-  emit('on-menu-change', "hey")
+  emit('on-menu-change', { name, title })
 }
 </script>
 
@@ -22,7 +22,7 @@ const loadMenu = () => {
         </button>
       </li>
       <li>
-        <button ng-click="loadMenu('calle', 'Equipación carretera', '/ropa-calle-para-moto')">
+        <button @click="loadMenu('calle', 'Equipación carretera', '/ropa-calle-para-moto')">
           <img
             width="40"
             height="40"
@@ -31,7 +31,7 @@ const loadMenu = () => {
           > <span>Equipación carretera</span>
         </button>
       </li>
-      <li ng-click="loadMenu('offroad', 'Off-road', '/motocross-enduro-trial')">
+      <li @click="loadMenu('offroad', 'Off-road', '/motocross-enduro-trial')">
         <button>
           <img
             width="40"
@@ -41,7 +41,7 @@ const loadMenu = () => {
           > <span>Off-road</span>
         </button>
       </li>
-      <li ng-click="loadMenu('accesorios', 'Accesorios y recambios', '/accesorios-para-motos')">
+      <li @click="loadMenu('accesorios', 'Accesorios y recambios', '/accesorios-para-motos')">
         <button>
           <img
             width="40"
@@ -52,7 +52,7 @@ const loadMenu = () => {
         </button>
       </li>
       <li>
-        <button ng-click="loadMenu('lifestyle', 'Ropa casual', '/ropa-casual')">
+        <button @click="loadMenu('lifestyle', 'Ropa casual', '/ropa-casual')">
           <img
             width="40"
             height="40"
@@ -88,7 +88,7 @@ const loadMenu = () => {
         </button>
       </li>
       <li>
-        <button ng-click="loadMenu('marcas', 'Marcas', '#')">
+        <button @click="loadMenu('marcas', 'Marcas', '#')">
           <img
             width="40"
             height="40"
