@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+
 <template>
   <!-- marcas -->
   <VMenu
@@ -51,12 +50,12 @@
                         class="mtc-link"
                         title="AGV"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-82.png"
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="AGV"
-                        width="80"
-                        height="41"
-                      > </span>
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-82.png"
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="AGV"
+                         width="80"
+                         height="41"
+                       > </span>
                         <div class="submenu__outstanding-icon" />
                       </a>
                       <a
@@ -64,13 +63,13 @@
                         class="mtc-link"
                         title="ALPINESTARS"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-77.png"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-77.png"
 
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="ALPINESTARS"
-                        width="80"
-                        height="41"
-                      > </span>
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="ALPINESTARS"
+                         width="80"
+                         height="41"
+                       > </span>
                         <div class="submenu__outstanding-icon" />
                       </a>
                       <a
@@ -78,13 +77,13 @@
                         class="mtc-link"
                         title="ARAI"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-83.png"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-83.png"
 
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="ARAI"
-                        width="80"
-                        height="41"
-                      > </span>
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="ARAI"
+                         width="80"
+                         height="41"
+                       > </span>
                         <div class="submenu__outstanding-icon" />
                       </a>
 
@@ -94,12 +93,12 @@
                         class="mtc-link"
                         title="DAINESE"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-79.png"
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="DAINESE"
-                        width="80"
-                        height="41"
-                      > </span>
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-79.png"
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="DAINESE"
+                         width="80"
+                         height="41"
+                       > </span>
                         <div class="submenu__outstanding-icon" />
                       </a>
                       <a
@@ -109,7 +108,7 @@
                         title="GIVI"
                       >
                         <span lazy="true"><img
-                          src="https://www.motomundi.cl/Content/assets/brands/brand-86.png"
+                          src="https://www.motomundi.cl/content/assets/brands/brand-86.png"
                           class="cdn-img v-lazy-image v-lazy-image-loaded"
                           alt="GIVI"
                           width="80"
@@ -123,12 +122,12 @@
                         class="mtc-link"
                         title="HJC"
                       ><span lazy="true"><img
-                        src="/content/assets/brands/brand-293.png"
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="HJC"
-                        width="80"
-                        height="41"
-                      > </span>
+                         src="/content/assets/brands/brand-293.png"
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="HJC"
+                         width="80"
+                         height="41"
+                       > </span>
                         <div class="submenu__outstanding-icon" />
                       </a>
 
@@ -137,13 +136,13 @@
                         class="mtc-link"
                         title="SHARK"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-106.png"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-106.png"
 
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="SHARK"
-                        width="80"
-                        height="41"
-                      > </span>
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="SHARK"
+                         width="80"
+                         height="41"
+                       > </span>
                         <div class="submenu__outstanding-icon" />
                       </a>
                       <a
@@ -151,13 +150,13 @@
                         class="mtc-link"
                         title="SHOEI"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-78.png"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-78.png"
 
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="SHOEI"
-                        width="80"
-                        height="41"
-                      > </span>
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="SHOEI"
+                         width="80"
+                         height="41"
+                       > </span>
                         <div class="submenu__outstanding-icon" />
                       </a>
                     </div>
@@ -1005,7 +1004,6 @@
 </template>
 
 <style lang="scss">
-
 #nav ul li {
   display: inline-block;
   line-height: inherit;

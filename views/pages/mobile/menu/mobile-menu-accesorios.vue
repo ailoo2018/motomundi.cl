@@ -23,7 +23,7 @@ const categories = rs.value.categories
           ><img
             width="40"
             height="40"
-            src="/Content/assets/images/mobile-menu/categories/61-moto-accesorios-aceites.svg"
+            src="/content/assets/images/mobile-menu/categories/61-moto-accesorios-aceites.svg"
             alt="Aceites"
           > <span>Aceites</span></a>
         </li>
@@ -34,7 +34,7 @@ const categories = rs.value.categories
           ><img
             width="40"
             height="40"
-            src="/Content/assets/images/mobile-menu/categories/62-moto-accesorios-antirrobos.svg"
+            src="/content/assets/images/mobile-menu/categories/62-moto-accesorios-antirrobos.svg"
             alt="Antirrobos"
           > <span>Antirrobos</span></a>
         </li>
@@ -45,7 +45,7 @@ const categories = rs.value.categories
           ><img
             width="40"
             height="40"
-            src="/Content/assets/images/mobile-menu/categories/63-moto-accesorios-bolsas-motos.svg"
+            src="/content/assets/images/mobile-menu/categories/63-moto-accesorios-bolsas-motos.svg"
             alt="Bolsas"
           > <span>Bolsas</span></a>
         </li>
@@ -57,7 +57,7 @@ const categories = rs.value.categories
             <img
               width="40"
               height="40"
-              src="/Content/assets/images/mobile-menu/categories/64-moto-accesorios-maletas.svg"
+              src="/content/assets/images/mobile-menu/categories/64-moto-accesorios-maletas.svg"
               alt="Maletas"
             > <span>Maletas</span></a>
         </li>
@@ -68,7 +68,7 @@ const categories = rs.value.categories
           ><img
             width="40"
             height="40"
-            src="/Content/assets/images/mobile-menu/categories/packs-maletas-anclajes.svg"
+            src="/content/assets/images/mobile-menu/categories/packs-maletas-anclajes.svg"
             alt="Maletas + anclajes"
           > <span>Maletas + anclajes</span></a>
         </li>
