@@ -7,17 +7,29 @@ const selectedBrand = ref()
 const selectedModel = ref()
 const selectedYear = ref()
 
-watch(selectedBrand, () => {
+const router = useRouter()
+const models = ref([])
+const years = ref([])
+
+watch(selectedBrand, async () => {
   if(selectedBrand.value) {
+
+    const modelsRs = await $fetch("/api/motorcycles/models?brandId=" + selectedBrand.value.id)
+    models.value = modelsRs
+
     enableModels.value = true
   }else{
     enableModels.value = false
   }
 })
 
-watch(selectedModel, () => {
+watch(selectedModel, async () => {
   if(selectedBrand.value) {
     enableYears.value = true
+    const yearsRs = await $fetch("/api/motorcycles/years", {
+      query: { brandId: selectedBrand.value.id, modelId: selectedModel.value.id }
+    })
+    years.value = yearsRs
   }else{
     enableYears.value = false
   }
@@ -31,33 +43,36 @@ watch(selectedYear, () => {
   }
 })
 
-const marcas = [
-  { id: 1, name: "BMW" },
-  { id: 2, name: "Aprilia" },
-]
 
-const models = [
-  { id: 1, name: "BMW GS1200" },
-  { id: 2, name: "Aprilia Shiver 750" },
-]
 
-const years = [
-  { id: 2019, name: "2019" },
-  { id: 2020, name: "2020" },
-]
+
+const marcas = await $fetch("/api/motorcycles/manufacturers", {
+  key: 'motorcycles-manufacturers'
+})
+
+
+const filterMotorbikeProducts = () => {
+  console.log("filterMotorbikeProducts")
+  router.push({
+    path: '/products/list',
+    query: {
+      bikeManufacturer: selectedBrand.value?.id,
+      bikeModel: selectedModel.value?.id,
+      bikeYear: selectedYear.value?.id,
+    },
+  })
+}
 </script>
 
 <template>
   <div
-    class="mt-8"
+    class="bike-selector-wrapper"
     style="padding-right: 12px;"
   >
+
     <VForm>
-      <VRow>
-        <VCol
-          cols="12"
-          class="ma-0 pa-0 pb-2"
-        >
+      <div class="responsive-grid">
+        <div class="grid-item">
           <VSelect
             v-model="selectedBrand"
             :items="marcas"
@@ -65,6 +80,8 @@ const years = [
             item-value="id"
             return-object
             attach
+            class="w-100"
+            style="min-width: 200px"
             :menu-props="{ translateY: '0' }"
             placeholder="SELECCIONE MARCA"
           >
@@ -74,11 +91,8 @@ const years = [
               </div>
             </template>
           </VSelect>
-        </VCol>
-        <VCol
-          cols="12"
-          class="ma-0 pa-0 pb-2"
-        >
+        </div>
+        <div class="grid-item" >
           <VSelect
             v-model="selectedModel"
             :items="models"
@@ -88,6 +102,8 @@ const years = [
             return-object
             attach
             placeholder="SELECCIONE MODELO"
+            class="w-100"
+            style="min-width: 200px"
           >
             <template #prepend-inner>
               <div class="step-number">
@@ -95,11 +111,8 @@ const years = [
               </div>
             </template>
           </VSelect>
-        </VCol>
-        <VCol
-          cols="12"
-          class="ma-0 pa-0 pb-2"
-        >
+        </div>
+        <div class="grid-item"        >
           <VSelect
             v-model="selectedYear"
             :items="years"
@@ -109,6 +122,8 @@ const years = [
             return-object
             attach
             placeholder="SELECCIONE AÑOS"
+            class="w-100"
+            style="min-width: 200px"
           >
             <template #prepend-inner>
               <div class="step-number">
@@ -116,30 +131,55 @@ const years = [
               </div>
             </template>
           </VSelect>
-        </VCol>
-
-        <VCol
-          cols="12"
-          class="ma-0 pa-0  pb-2"
-        >
+        </div>
+        <div class="grid-item">
           <VBtn
-            class="button mc expanded sm"
+            class="button mc expanded sm w-100"
             :disabled="!enableSearch"
             :rounded="0"
             color="#c74044"
-            style="margin-top: 8px; width:100%;"
-            ng-click="filterMotorbikeProducts($event)"
-            data-base-url="/accesorios-moto"
+            @click="filterMotorbikeProducts"
           >
             Buscar
           </VBtn>
-        </VCol>
-      </vrow>
+        </div>
+      </div>
     </VForm>
   </div>
 </template>
 
 <style>
+
+/* 1. Define the container context */
+.bike-selector-wrapper {
+  container-type: inline-size;
+  container-name: bikeSelector;
+  width: 100%;
+}
+
+/* 2. Default Mobile/Small Container Style (Vertical) */
+.responsive-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@container bikeSelector (min-width: 700px) {
+  .responsive-grid {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .grid-item {
+    flex: 1; /* Distributes 25% width to each of the 4 items */
+    min-width: 0;
+  }
+}
+
+.v-input__control{
+  border: 1px solid black;
+  border-radius: 0px;
+}
+
 .bike-search .h3 {
   display: block;
   font-size: 14px;
@@ -165,7 +205,7 @@ const years = [
   margin-right: 8px;
 }
 
-/* Optional: Highlight the number when the field is filled */
+
 .v-field--has-placeholder .step-number {
   background-color: black; /* Vuetify primary blue */
   color: white;

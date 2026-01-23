@@ -15,6 +15,7 @@ if (!props.injectedQuery) {
 } else {
   query = props.injectedQuery
 }
+console.log("the query", query)
 
 const total = ref(0)
 const totalPages = ref(0)
@@ -51,12 +52,14 @@ const search = async () => {
       models: [],
       colors: [],
       tags: [],
+      bike: null,
       collectionId: null,
       sizes: [],
       categories: [],
       limit: pageSize.value,
       offset: (currentPage.value - 1) * pageSize.value,
     }
+
 
     var cQuery = JSON.parse(JSON.stringify(currentQuery.value))
 
@@ -105,7 +108,9 @@ const search = async () => {
           body.colors.push(t)
         })
       }
-
+      if (facet.type === "bike") {
+        body.bike = facet.value
+      }
     }
 
 
@@ -119,7 +124,6 @@ const search = async () => {
       body: body,
     })
 
-    // console.log("RS: " + rs.filters)
     if (rs && rs.products) {
       total.value = rs.totalHits
       totalPages.value = rs.totalHits / pageSize.value
@@ -142,6 +146,9 @@ if (query.categoryId) {
 }
 if (query.collection) {
   baseQuery.push({ type: "collection", value: query.collection })
+}
+if(query.bikeManufacturer){
+  baseQuery.push({ type: "bike", value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear } })
 }
 
 

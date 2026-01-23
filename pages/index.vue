@@ -12,6 +12,7 @@ import FeaturedProductsWithBanner from "@/views/pages/home/featured-products-wit
 import Community from "@/views/pages/home/community.vue"
 import LatestEvents from "@/views/pages/home/latest-events.vue"
 import Seo from "@/views/pages/home/seo.vue"
+import BikeSearch from "@/views/pages/home/bike-search.vue"
 import YoutubeLatest from "@/views/pages/home/youtube-latest.vue"
 
 const componentMap = {
@@ -27,6 +28,7 @@ const componentMap = {
   FeaturedProductsWithBanner,
   LatestEvents,
   Seo,
+  BikeSearch,
 
 }
 
@@ -77,6 +79,7 @@ useIntersectionObserver([
 </script>
 
 <template>
+
   <div style="background-color: rgb(245, 245, 245)">
     <Component
       :is="componentMap[widget.component]"
