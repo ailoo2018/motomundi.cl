@@ -14,7 +14,7 @@ import MobileMenu from "@/views/pages/mobile/mobile-menu.vue"
 
 const { injectSkinClasses } = useSkins()
 
-  const { isMobile, isTablet, isDesktop } = useDevice()
+const { isMobile, isTablet, isDesktop } = useDevice()
 
 console.log("isMobile", isMobile)
 console.log("isTable", isTablet)

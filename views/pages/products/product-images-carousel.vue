@@ -49,8 +49,8 @@ const onSlideChange = e => {
 
 // Configuration for breakpoints (Responsive 5 slides)
 const swiperBreakpoints = {
-  320: { slidesPerView: 1.2, spaceBetween: 10 },
-  640: { slidesPerView: 2.5, spaceBetween: 10 },
+  320: { slidesPerView: 3.5, spaceBetween: 10 },
+  640: { slidesPerView: 4, spaceBetween: 10 },
   1024: { slidesPerView: 5, spaceBetween: 10 },
   1280: { slidesPerView: 6, spaceBetween: 10 },
 }
@@ -187,7 +187,6 @@ register()
         <ul class="product-media-nav">
           <li
             v-for="(img, index) in images"
-            class="ng-scope"
           >
             <button
               v-if="img.type === 'image'"
@@ -201,9 +200,6 @@ register()
             />
             <button
               v-if="img.type === 'video'"
-              data-type="video"
-              data-index="video-2"
-              data-nav-index="2"
               :class="{ 'current': activeIndex === index }"
               @click="slideTo( index)"
             >
@@ -230,8 +226,9 @@ register()
     <div class="row">
       <div class="col s12 l12">
         <div class="product-media">
-          <div class="product-thumbs">
+          <div class="product-thumbs mb-5">
             <swiper-container
+              id="miniatures"
               events-prefix="swiper-"
               navigation="true"
               :breakpoints="swiperBreakpoints"

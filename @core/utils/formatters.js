@@ -178,6 +178,7 @@ export function formatDeliveryDateRange(dateRange) {
 export function isEntre(eta)        {
   if(eta.from !== eta.to)
     return " entre el "
+  
   return " el "
 }
 
@@ -195,4 +196,48 @@ export const formatChileanRUT = rut => {
 
   // Return the formatted RUT
   return `${body}-${dv}`
+}
+
+
+function formatLink(str) {
+  if (str == null)
+    return ''
+
+  str = str.trim().toLowerCase()
+    .replace('/', ' ')
+    .replace('&', 'y')
+    .replace(',', ' ')
+    .replace('á', 'a')
+    .replace('é', 'e')
+    .replace('í', 'i')
+    .replace('ó', 'o')
+    .replace('ú', 'u')
+    .replace('ñ', 'n')
+    .replace("'", "")
+    .replace("mx-enduro", "motocross")
+
+  str = str.replace(/\s+/g, " ").replace(/ /g, "-")
+  str = str.replace(/[^\w.\- ]/g, "")
+
+  return str.length > 255 ? str.substring(0, 254) : str
+}
+
+export const getBrandUrl= function(brand){
+
+  return "/" + formatLink(brand.name)
+}
+
+
+export const getProductUrl= function(product){
+    return "/motocicleta/" + formatLink(product.linkName)
+}
+
+export const getCategoryUrl = function (category) {
+  let prefix = "/"
+
+  if (category.linkName && category.linkName.length > 0) {
+    return prefix + formatLink(category.linkName)
+  }
+
+  return prefix + formatLink(category.name)
 }

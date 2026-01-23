@@ -11,7 +11,7 @@ const props = defineProps({
 })
 
 const getBgImg = img =>{
-  if(img.imagePathSmall && img.imagePathSmall.length > 0){
+  if(isMobile && img.imagePathSmall && img.imagePathSmall.length > 0){
     return {
       backgroundImage: `url('${getBaseCDN()}${img.imagePathSmall}')`,
       backgroundSize: "auto 500px",

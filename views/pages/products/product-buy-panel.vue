@@ -123,7 +123,7 @@ onMounted(() => {
           ><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-check" /></svg>
             Envío $4.900 todo Chile
           </span>
-          <div>
+          <span class="free-shipping">
             <svg
               width="10"
               height="8"
@@ -144,7 +144,7 @@ onMounted(() => {
             >
               Precio mínimo garantizado
             </a>
-          </div>
+          </span>
         </div>
       </div>
     </div>
@@ -470,10 +470,20 @@ onMounted(() => {
 }
 
 .free-shipping {
+
   align-items: center;
   display: flex;
   font-size: 11px;
   justify-content: center;
+}
+
+.free-shipping svg {
+  margin-right: 3px;
+}
+
+.free-shipping svg use {
+  stroke: #41a334;
+  stroke-width: 1.4;
 }
 
 .price-bottom__checks > * a {

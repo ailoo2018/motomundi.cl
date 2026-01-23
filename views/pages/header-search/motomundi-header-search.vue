@@ -2,6 +2,7 @@
 import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
 import { watchDebounced } from '@vueuse/core'
 import SearchFilters from "@/views/pages/products/filter/search-filters.vue"
+import SearchResults from "@/views/search/search-results.vue"
 
 
 const sword = ref('')
@@ -12,11 +13,23 @@ const total = ref(0)
 const currentQuery = ref([])
 const loading = ref(false)
 
+// pagination state
+const offset = ref(0)
+const limit = 20
+const hasMore = ref(true)
+const showFilters = ref(false)
 
 // Instead of masterSearch.length, we can just use the sword length
 const canShowDropdown = computed(() => {
   return showSearchWindow.value && sword.value.length > 2
 })
+
+const nextPage = () => {
+  if (hasMore.value && !loading.value) {
+    offset.value += limit
+    search(true)
+  }
+}
 
 const onChange = val => {
   console.log("Features selected changed!", val)
@@ -47,9 +60,15 @@ watchDebounced(
 )
 
 
-const search = async () => {
+const search = async (isNextPage = false) => {
   try {
     loading.value = true
+
+    // Reset if it's a fresh search
+    if (!isNextPage) {
+      offset.value = 0
+      hasMore.value = true
+    }
 
     let body = {
       brands: [],
@@ -59,7 +78,8 @@ const search = async () => {
       sizes: [],
       categories: [],
       sword: sword.value,
-      limit: 30,
+      limit: limit, // used for pagination
+      offset: offset.value,  // used for pagination
     }
 
     for (const facet of currentQuery.value) {
@@ -96,19 +116,29 @@ const search = async () => {
 
 
     const rs = await $fetch(`/api/product/search`, {
+      key: "product-search-" + sword.value,
       method: "POST",
       body: body,
     })
 
 
     if (rs && rs.products) {
-      products.value = rs.products
-      if (!filters.value)
-        filters.value = rs.filters
+
+      if (isNextPage) {
+        products.value.push(...rs.products)
+      } else {
+        products.value = rs.products
+        if (!filters.value)
+          filters.value = rs.filters
+      }
 
 
       total.value = rs.products.length
       showSearchWindow.value = true
+
+      if (total.value < limit) {
+        hasMore.value = false
+      }
     }
   } catch (e) {
     console.log(e.message)
@@ -116,7 +146,6 @@ const search = async () => {
     loading.value = false
   }
 }
-
 
 watch(filters, () => {
 
@@ -213,30 +242,8 @@ const closeSearch = () => {
 
 
       <!-- search results -->
-      <div
-        v-if="products.length > 0"
-        class="vue-virtual-scroller ready direction-vertical"
-      >
-        <div
-          infinite-scroll-parent="true"
-          infinite-scroll-distance="0.5"
-          infinite-scroll-disabled="false"
-          infinite-scroll="next()"
-          class="row vue-virtual-scroller__item-wrapper search__panel-results"
-        >
-          <VRow style="margin:0px;">
-            <VCol
-              v-for="product in products"
-              cols="3"
-              class="vue-virtual-scroller__item-view col s6 m4 l3"
-              style="padding: 4px"
-            >
-              <ProductListItem :product="product" />
-            </VCol>
-          </VRow>
-        </div>
-        <div class="vue-virtual-scroller__slot" />
-      </div>
+      <SearchResults :products="products" @next-page="nextPage"/>
+
       <!-- /search results -->
     </div>
   </div>
@@ -299,41 +306,8 @@ const closeSearch = () => {
   text-align: right;
 }
 
-.filters__list li label span[data-v-35914992] {
-  font-size: 12px !important;
-  font-weight: 500;
-  line-height: 26px !important;
-  overflow: hidden;
-  padding-left: 26px !important;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-.filters__list li strong[data-v-35914992] {
-  background-color: #e8e8e8;
-  border-radius: 200px;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 2px 10px;
-  text-align: right;
-}
 
-.filters__list li .filters__extras[data-v-35914992] {
-  display: flex;
-  max-height: 18px;
-}
-
-.vue-virtual-scroller.direction-vertical:not(.page-mode) {
-  overflow-y: auto;
-  right: 0;
-  bottom: 0;
-  left: 270px;
-
-}
-
-.vue-virtual-scroller.direction-vertical:not(.page-mode) {
-  overflow-y: auto;
-}
 
 .search__dropdown {
   background: #fff;
@@ -407,17 +381,6 @@ const closeSearch = () => {
   will-change: transform;
 }
 
-.item[data-v-0d784a01] {
-  border: 1px solid #d8d8d8;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  height: 275px;
-  justify-content: space-between;
-  margin: 4px;
-  padding: 30px 15px 15px;
-}
-
 .search__dropdown:after {
   border: 12px solid hsla(0, 0%, 100%, 0);
   border-bottom-color: #fff;
@@ -431,79 +394,20 @@ const closeSearch = () => {
   width: 0;
 }
 
-.product-tags[data-v-0d784a01] {
-  left: -1px;
-  position: absolute;
-  top: -1px;
-}
 
-.product-tags {
-  display: flex;
-  flex-wrap: wrap;
-}
+
 
 .vue-virtual-scroller.ready.direction-vertical .vue-virtual-scroller__item-view {
   /*width: 100%;*/
 }
 
 
-.item h1[data-v-0d784a01] {
-  color: #000;
-  font-size: 12px;
-  justify-content: flex-end;
-  line-height: 16px;
-  margin: 15px 0 0;
-  text-transform: uppercase;
-}
-
-.item .item__sizes[data-v-0d784a01], .item h1[data-v-0d784a01] {
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.item__old-price[data-v-0d784a01] {
-  color: #000;
-  font-size: 10px;
-  font-weight: 500;
-  line-height: 16px;
-  opacity: .3;
-  position: unset;
-}
-
-.row.vue-virtual-scroller__item-wrapper.search__panel-results {
-  margin: 0;
-}
 
 .strike {
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
 }
 
-.item__price[data-v-0d784a01] {
-  color: #000;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-}
-
-.item__bottom[data-v-0d784a01] {
-  align-items: center;
-  border-top: 1px solid #d8d8d8;
-  display: block;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 6px;
-  padding-top: 6px;
-}
-
-@media only screen and (min-width: 601px) and (max-width: 992px) {
-  .item[data-v-0d784a01] {
-    height: 260px;
-    padding: 20px 2px 10px;
-  }
-}
 
 .button {
   background: none;
@@ -560,9 +464,5 @@ const closeSearch = () => {
   stroke-width: 1.2;
 }
 
-@media only screen and (min-width: 993px) {
-  .row .col.l3 {
-    width: 25%;
-  }
-}
+
 </style>

@@ -1,7 +1,7 @@
 <script setup>
 import SearchFilters from "@/views/pages/products/filter/search-filters.vue"
-import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
-import { watchDebounced, useInfiniteScroll } from "@vueuse/core"
+import { watchDebounced } from "@vueuse/core"
+import SearchResults from "@/views/search/search-results.vue"
 
 const isSearchOpen = defineModel({ type: Boolean, default: false })
 
@@ -10,7 +10,7 @@ const currentQuery = ref([])
 const loading = ref(false)
 const filters = ref({})
 const products = ref([]) // Changed from a plain array to a ref
-const scrollContainer = ref(null)
+
 
 // pagination state
 const offset = ref(0)
@@ -26,22 +26,22 @@ const resetFilters = () => {
 
 }
 
+const redirectToSearch = () => {
+
+}
+
 const toggleSearchFilter = () => {
 
   showFilters.value = !showFilters.value
   console.log("toggle search filter: " + showFilters.value)
 }
 
-useInfiniteScroll(
-  scrollContainer,
-  () => {
-    if (hasMore.value && !loading.value) {
-      offset.value += limit
-      search(true)
-    }
-  },
-  { distance: 200 }, // Load when 200px from bottom
-)
+const nextPage = () => {
+  if (hasMore.value && !loading.value) {
+    offset.value += limit
+    search(true)
+  }
+}
 
 watchDebounced(
   sword,
@@ -194,10 +194,9 @@ const search = async (isNextPage = false) => {
 <template>
   <article
     v-if="isSearchOpen"
-    ng-controller="SearchCtrl"
     class="search__panel search__panel-results--empty ng-cloak"
   >
-
+    <!-- filter container -->
     <nav
       class="search-mobile__filters"
       :class="showFilters ? 'show' : ''"
@@ -238,14 +237,14 @@ const search = async (isNextPage = false) => {
           <button
             type="button"
             class="apply-filters"
-            ng-click="toggleSearchFilter()"
+            @click="toggleSearchFilter"
           >
             Aplicar
           </button>
         </div>
       </div>
     </nav>
-    <!-- /fiter container -->
+    <!-- /filter container -->
 
     <section
       onmouseover="document.body.style.overflow='hidden';"
@@ -275,14 +274,11 @@ const search = async (isNextPage = false) => {
               id="master-search-input"
               v-model="sword"
               type="search"
-              ng-keyup="fullSearch(1, $event)"
-              ng-blur="focus = false"
-              ng-focus="focus = true"
               placeholder="Buscar en Moto"
             >
             <button
               type="submit"
-              ng-click="redirectToSearch()"
+              @click="redirectToSearch"
             >
               <svg
                 width="20"
@@ -321,46 +317,10 @@ const search = async (isNextPage = false) => {
         </a>
       </div>
 
-      <div
-        v-if="products.length == 0"
-        class="search__results-empty"
-      >
-        <svg
-          width="54"
-          height="54"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          class="icon sprite-line-icons"
-        >
-          <use
-            href="/content/svg/motomundi.svg#i-icon-search"
-            xlink:href="/content/svg/motomundi.svg#i-icon-search"
-          />
-        </svg>
-      </div>
 
-
-      <div
-        v-if="products.length > 0"
-        ref="scrollContainer"
-        style="padding-left:12px;overflow-y:auto;"
-        class="vue-virtual-scroller ready direction-vertical ng-hide"
-      >
-        <div class="row vue-virtual-scroller__item-wrapper search__panel-results">
-          <VRow style="margin:0px;">
-            <VCol
-              v-for="product in products"
-              :key="product.id"
-              cols="6"
-              class="vue-virtual-scroller__item-view col s6 m4 l3"
-              style="padding: 4px"
-            >
-              <ProductListItem :product="product"/>
-            </VCol>
-          </VRow>
-        </div>
-        <div class="vue-virtual-scroller__slot"/>
-      </div>
+      <!-- search results -->
+      <SearchResults :products="products" @next-page="nextPage"/> />
+      <!-- /search results -->
     </section>
   </article>
 </template>

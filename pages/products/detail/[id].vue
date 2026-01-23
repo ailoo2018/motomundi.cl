@@ -14,6 +14,7 @@ import DataSheet from "@/views/pages/products/detail/data-sheet.vue"
 import Packs from "@/views/pages/products/detail/packs.vue"
 import { ProductType } from "@/models/products.js"
 
+const { isMobile, isTablet, isDesktop } = useDevice()
 const store = useConfigStore()
 const productForm = ref()
 const showVideoDialog = ref(false)
@@ -92,7 +93,7 @@ definePageMeta({
         >
           <div class="s12">
             <div>
-              <Breadcrumbs />
+              <Breadcrumbs :product="product"/>
 
               <!-- product-title -->
               <div class="product-title">
@@ -101,9 +102,8 @@ definePageMeta({
                     {{ product.brand.name }}
                     <strong>{{ product.name }}</strong>
                   </h1>
-                  <a
-                    href="/hjc"
-                    data-dr="true"
+                  <a v-if="!isMobile"
+                    :href="getBrandUrl(product.brand)"
                     class="mtc-link"
                   >
                     <span>
@@ -250,9 +250,6 @@ h2 {
 }
 
 
-.product .share-on__networks.show {
-  visibility: visible;
-}
 
 .row .col.s11, .row .col.s12 {
   left: auto;

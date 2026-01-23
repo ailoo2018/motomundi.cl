@@ -1,7 +1,19 @@
 <script setup lang="ts">
 import breadCrumbsChevron from '@images/svg/breadcrumb-chevron.svg'
 
+const props = defineProps({
+  product: {
+    type: Object,
+  },
+})
 
+const category = computed( () => {
+  if(props.product && props.product.categories && props.product.categories.length > 0){
+    return props.product.categories[0].name
+  }
+  
+  return "Home"
+})
 </script>
 
 <template>
@@ -10,76 +22,82 @@ import breadCrumbsChevron from '@images/svg/breadcrumb-chevron.svg'
     <ul class="breadcrumb">
       <li>
         <a
-            href="/cascos-integrales-para-moto"
-            data-dr="true"
-            class="mtc-link"
+          href="/cascos-integrales-para-moto"
+          data-dr="true"
+          class="mtc-link"
         >
-          Cascos Integrales
+          {{ category }}
         </a>
       </li>
       <li>
         <a
-            href="/cascos-integrales-para-moto-hjc"
-            data-dr="true"
-            class="mtc-link"
+          href="/cascos-integrales-para-moto-hjc"
+          data-dr="true"
+          class="mtc-link"
         >
-          HJC
+          {{ product.brand.name }}
         </a>
       </li>
-      <li><span class="breadcrumb-current">i71 Monocolor</span></li>
+      <li><span class="breadcrumb-current">{{ product.name }}</span></li>
     </ul>
 
     <span class="desktop-reference">
-              <span>M-2419884</span>
-              <span class="product-code">2419884</span>
-            </span>
+      <span>M-2419884</span>
+      <span class="product-code">2419884</span>
+    </span>
   </div>
   <!-- /breadcrumbs -->
 </template>
 
 <style scoped lang="scss">
-.breadcrumb-container {
-  display: flex;
-  margin-top: 15px;
+.mobile .desktop-reference{
+  display: none;
 }
 
+.breadcrumb-container{
+  display: flex;
+  justify-content: space-between;
+}
+/* Update your .breadcrumb li to this */
 .breadcrumb {
   font-size: 11px;
   list-style-type: none;
   margin: 0;
   padding: 0;
   text-transform: uppercase;
+  display: flex;
+  align-items: center; /* Ensures the whole row is centered */
 }
 
 .breadcrumb li {
-  display: inline;
+  display: flex;       /* Use flex here too */
+  align-items: center; /* Aligns text and chevron vertically */
 }
 
-.breadcrumb a, .breadcrumb span.mtc-link {
-  color: #686868;
+.breadcrumb li:after {
+  content: "";
+  display: inline-block;
+  background: transparent url('@images/svg/breadcrumb-chevron.svg') center no-repeat;
+  background-size: contain;
+  height: 8px;
+  width: 10px;
+  opacity: .5;
+  /* Remove any extra margins that might be pushing it */
 }
 
 .breadcrumb li:last-child:after {
-  background: unset;
-
-}
-.breadcrumb li:after {
-  background: transparent url('@/assets/images/svg/breadcrumb-chevron.svg') 50% no-repeat;
-  content: "";
-  display: inline-block;
-  height: 8px;
-  opacity: .5;
-  width: 10px;
+  display: none; /* Cleaner than background: unset */
 }
 
-li .mtc-link, li > a {
+/* Fix the padding on the links so they don't push the text away from the chevron */
+li .mtc-link, li > a, .breadcrumb-current {
   color: #000;
-  display: inline-block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0;
-  /* line-height: 1.05em; */
-  padding: 6px 18px;
+  letter-spacing: .5px;
+  padding: 6px 8px; /* Balanced padding */
   text-transform: uppercase;
+  display: inline-block;
+  vertical-align: middle;
 }
 </style>
