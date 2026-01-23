@@ -16,13 +16,20 @@ const scrollContainer = ref(null)
 const offset = ref(0)
 const limit = 20
 const hasMore = ref(true)
+const showFilters = ref(false)
 
 const toggleSearch = () => {
   isSearchOpen.value = false
 }
 
+const resetFilters = () => {
+
+}
+
 const toggleSearchFilter = () => {
 
+  showFilters.value = !showFilters.value
+  console.log("toggle search filter: " + showFilters.value)
 }
 
 useInfiniteScroll(
@@ -57,6 +64,43 @@ watchDebounced(
   },
   { debounce: 300, maxWait: 1000 }, // Configurable delay
 )
+
+
+watch(filters, () => {
+
+  if (!sword.value || sword.value.trim().length === 0) {
+    return
+  }
+  if(!filters || !filters.value) {
+    return
+  }
+
+  const map = new Map()
+  for (const f of filters.value) {
+    for (const b of f.buckets) {
+      if (b.checked) {
+        if (!map.has(f.type))
+          map.set(f.type, { type: f.type, values: [] })
+        map.get(f.type).values.push(b.id)
+      }
+    }
+  }
+
+  const newQuery = [...map.values()]
+  if (currentQuery.value.length === 0 && newQuery.length === 0) {
+    return
+  }
+
+  if (JSON.stringify(currentQuery.value) !== JSON.stringify(newQuery)) {
+    console.log("NEW QUERY!" + JSON.stringify(newQuery))
+    console.log("OLD QUERY!" + JSON.stringify(currentQuery.value))
+    currentQuery.value = newQuery
+    search()
+
+  }
+
+
+}, { deep: true })
 
 
 const search = async (isNextPage = false) => {
@@ -153,9 +197,10 @@ const search = async (isNextPage = false) => {
     ng-controller="SearchCtrl"
     class="search__panel search__panel-results--empty ng-cloak"
   >
+
     <nav
-      class="search-mobile__filters "
-      ng-class="showFilters ? 'show' : ''"
+      class="search-mobile__filters"
+      :class="showFilters ? 'show' : ''"
     >
       <div
         class="search-mobile__filters-container"
@@ -164,13 +209,13 @@ const search = async (isNextPage = false) => {
         <div class="search-mobile__filters-header">
           <button
             class="clear-filters"
-            ng-click="resetFilters()"
+            @click="resetFilters"
           >
             Borrar filtros
           </button>
           <button
             class="close-filters"
-            ng-click="toggleSearchFilter()"
+            @click="toggleSearchFilter"
           >
             <svg
               height="10"
@@ -180,7 +225,7 @@ const search = async (isNextPage = false) => {
               class="icon sprite-icons"
             >
               <use
-                href="/content/svg/motomundi.svg?v=1.1#i-close"
+                href="/content/svg/motomundi.svg#i-close"
                 xlink:href="/content/svg/motomundi.svg#i-close"
               />
             </svg>
@@ -203,8 +248,8 @@ const search = async (isNextPage = false) => {
     <!-- /fiter container -->
 
     <section
-      xxonmouseover="document.body.style.overflow='hidden';"
-      xxonmouseout="document.body.style.overflow='auto';"
+      onmouseover="document.body.style.overflow='hidden';"
+      onmouseout="document.body.style.overflow='auto';"
       class="search__panel-results-container "
     >
       <div class="search__panel-header">
@@ -327,7 +372,8 @@ const search = async (isNextPage = false) => {
   left: 0;
   position: fixed;
   right: 0;
-  top: 58px;
+  top: 0;
+ /* top: 58px;*/
   z-index: 800;
 }
 
@@ -404,25 +450,6 @@ const search = async (isNextPage = false) => {
   position: relative;
 }
 
-.search-mobile__filters .search-mobile__filters-container {
-  background-color: #fff;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  height: calc(var(--vh) * 100);
-  justify-content: space-between;
-  opacity: 0;
-  overflow: hidden;
-  pointer-events: none;
-  position: fixed;
-  right: 0;
-  top: 0;
-  -webkit-transform: translateX(1000px);
-  transform: translateX(1000px);
-  transition: all .3s ease-in;
-  width: 100vw;
-  z-index: 2;
-}
 
 .search__panel .search__results-empty {
   left: 50%;
@@ -459,5 +486,75 @@ const search = async (isNextPage = false) => {
   .product-list .products.has-banner {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+
+/*** filters ***/
+.search-mobile__filters.show .search-mobile__filters-container {
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+.search-mobile__filters .search-mobile__filters-container {
+  background-color: #fff;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: calc(var(--vh) * 100);
+  /*justify-content: space-between;*/
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -webkit-transform: translateX(1000px);
+  transform: translateX(1000px);
+  transition: all .3s ease-in;
+  width: 100vw;
+  z-index: 2;
+}
+.search-mobile__filters.show .search-mobile__filters-container {
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.search-mobile__filters .search-mobile__filters-header {
+  align-items: center;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+}
+.search-mobile__filters .search-mobile__filters-header button {
+  color: #000;
+  display: flex;
+  font-size: 10px;
+  font-weight: 500;
+  justify-items: center;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.search-mobile__filters .search-mobile__filters-header button.clear-filters {
+  border: 1px solid #000;
+  padding: 9px 10px;
+}
+
+.search-mobile__filters .search-mobile__filters-header button {
+  color: #000;
+  display: flex;
+  font-size: 10px;
+  font-weight: 500;
+  justify-items: center;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.search-mobile__filters .search-mobile__filters-header button.close-filters {
+  padding: 9px 10px 9px 30px;
 }
 </style>
