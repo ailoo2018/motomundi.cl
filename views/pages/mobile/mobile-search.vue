@@ -1,7 +1,7 @@
 <script setup>
 import SearchFilters from "@/views/pages/products/filter/search-filters.vue"
 import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
-import { watchDebounced } from "@vueuse/core"
+import { watchDebounced, useInfiniteScroll } from "@vueuse/core"
 
 const isSearchOpen = defineModel({ type: Boolean, default: false })
 
@@ -10,6 +10,12 @@ const currentQuery = ref([])
 const loading = ref(false)
 const filters = ref({})
 const products = ref([]) // Changed from a plain array to a ref
+const scrollContainer = ref(null)
+
+// pagination state
+const offset = ref(0)
+const limit = 20
+const hasMore = ref(true)
 
 const toggleSearch = () => {
   isSearchOpen.value = false
@@ -19,17 +25,28 @@ const toggleSearchFilter = () => {
 
 }
 
+useInfiniteScroll(
+  scrollContainer,
+  () => {
+    if (hasMore.value && !loading.value) {
+      offset.value += limit
+      search(true)
+    }
+  },
+  { distance: 200 }, // Load when 200px from bottom
+)
+
 watchDebounced(
   sword,
   async (newVal, oldVal) => {
     if (newVal.length > 2) {
       try {
         // Use $fetch for manual triggers inside watchers/methods
-        if(newVal !== oldVal) {
+        if (newVal !== oldVal) {
           filters.value = null
         }
 
-        search()
+        search(false)
 
       } catch (e) {
         console.error("Search error:", e)
@@ -42,9 +59,15 @@ watchDebounced(
 )
 
 
-const search = async () => {
+const search = async (isNextPage = false) => {
   try {
     loading.value = true
+
+    // Reset if it's a fresh search
+    if (!isNextPage) {
+      offset.value = 0
+      hasMore.value = true
+    }
 
     let body = {
       brands: [],
@@ -54,8 +77,8 @@ const search = async () => {
       sizes: [],
       categories: [],
       sword: sword.value,
-      limit: 30, // used for pagination
-      offset: 0,  // used for pagination
+      limit: limit, // used for pagination
+      offset: offset.value,  // used for pagination
     }
 
     for (const facet of currentQuery.value) {
@@ -92,19 +115,29 @@ const search = async () => {
 
 
     const rs = await $fetch(`/api/product/search`, {
+      key: "product-search-" + sword.value,
       method: "POST",
       body: body,
     })
 
 
     if (rs && rs.products) {
-      products.value = rs.products
-      if (!filters.value)
-        filters.value = rs.filters
+
+      if (isNextPage) {
+        products.value.push(...rs.products)
+      } else {
+        products.value = rs.products
+        if (!filters.value)
+          filters.value = rs.filters
+      }
 
 
       total.value = rs.products.length
       showSearchWindow.value = true
+
+      if (total.value < limit) {
+        hasMore.value = false
+      }
     }
   } catch (e) {
     console.log(e.message)
@@ -154,7 +187,7 @@ const search = async () => {
           </button>
         </div>
         <div class="search-mobile__filters-content">
-          <SearchFilters v-model="filters" />
+          <SearchFilters v-model="filters"/>
         </div>
         <div class="search-mobile__buttons">
           <button
@@ -264,29 +297,24 @@ const search = async () => {
 
       <div
         v-if="products.length > 0"
+        ref="scrollContainer"
         style="padding-left:12px;overflow-y:auto;"
         class="vue-virtual-scroller ready direction-vertical ng-hide"
       >
-        <div
-          infinite-scroll-parent="true"
-          infinite-scroll-distance="0.5"
-          infinite-scroll-disabled="false"
-          infinite-scroll="next()"
-          
-          class="row vue-virtual-scroller__item-wrapper search__panel-results"
-        >
+        <div class="row vue-virtual-scroller__item-wrapper search__panel-results">
           <VRow style="margin:0px;">
             <VCol
               v-for="product in products"
+              :key="product.id"
               cols="6"
               class="vue-virtual-scroller__item-view col s6 m4 l3"
               style="padding: 4px"
             >
-              <ProductListItem :product="product" />
+              <ProductListItem :product="product"/>
             </VCol>
           </VRow>
         </div>
-        <div class="vue-virtual-scroller__slot" />
+        <div class="vue-virtual-scroller__slot"/>
       </div>
     </section>
   </article>
@@ -325,11 +353,11 @@ const search = async () => {
   margin-left: -15px;
   padding: 0 15px;
 }
+
 .search__panel .search__input {
   flex: 1 1 auto;
   position: relative;
 }
-
 
 
 .search__panel .search__input input:focus {
@@ -337,7 +365,7 @@ const search = async () => {
   box-shadow: 0 0 0 3px rgba(214, 0, 28, .75) !important;
 }
 
-.search__panel .search__input input{
+.search__panel .search__input input {
   background: #fff;
   border: 0 !important;
   border-radius: 200px;
@@ -396,7 +424,7 @@ const search = async () => {
   z-index: 2;
 }
 
-.search__panel .search__results-empty{
+.search__panel .search__results-empty {
   left: 50%;
   position: relative;
   text-align: center;
