@@ -525,7 +525,7 @@ a, span.mtc-link {
   padding: 0 10px;
   text-align: center;
   text-transform: uppercase;
-}*/
+}
 
 .desktop li img {
   display: block;
@@ -537,7 +537,7 @@ a, span.mtc-link {
 .desktop a p, .desktop span.mtc-link p {
   margin: 0;
 }
-
+*/
 li .mtc-link, li > a {
   color: #000;
   display: inline-block;

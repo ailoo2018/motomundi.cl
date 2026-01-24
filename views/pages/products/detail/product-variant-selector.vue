@@ -106,12 +106,14 @@ const isSizeAvailable = size => {
   return false
 }
 
+console.log("sizes", props.product.features)
+
 const colors = computed(() => {
   return props.product.features.filter(f => f.type === 1)
 })
 
 const sizes = computed(() => {
-  return props.product.features.filter(f => f.type === 0)
+  return props.product.features.filter(f => f.type === 0).map(f1 => { return { id: f1.id, name: f1.name.toLowerCase() === "tamaño unico" ?  'OS' : f1.name }})
 })
 </script>
 

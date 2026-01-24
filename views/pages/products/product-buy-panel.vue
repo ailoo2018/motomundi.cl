@@ -39,6 +39,7 @@ const addToCart = itemsToAdd => {
 
     if(!productItemId){
       alert("Debe seleccionar variantes")
+
       return
 
     }
@@ -52,10 +53,9 @@ const addToCart = itemsToAdd => {
     const pits = selectedProductItems.value.filter(f => f.productItemId > 0).map( s => s.productItemId)
     if(pits.length !== props.product.composite.length){
       alert(`Debe seleccionar variantes ${pits.length} vs ${props.product.composite.length}`)
+
       return
-
     }
-
 
     emit('addToCart', pits.map(pit => { return { "quantity": 1, "productItemId": pit } }))
   }
@@ -69,7 +69,6 @@ onMounted(() => {
   var colorFeature = props.product.features.find(f => f.type === 1)
   if (colorFeature) {
     selectedColor.value = colorFeature
-
   }
 })
 </script>

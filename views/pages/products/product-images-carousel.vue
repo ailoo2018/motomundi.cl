@@ -326,7 +326,7 @@ swiper-container::part(button-next) {
 
 /* 2. Position Next Button */
 swiper-container::part(button-next) {
-  right: 10px;
+  right: 0px;
   left: auto;
 }
 

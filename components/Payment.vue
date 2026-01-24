@@ -1,4 +1,5 @@
 <script setup>
+/* eslint-disable camelcase */
 import { ref } from "vue"
 import BillingForm from "~/components/Payments/BillingForm.vue"
 import { useCheckoutStore } from '~/stores/checkout'
@@ -265,6 +266,7 @@ const pay = async (mercadoPagoApiData = null) => {
 
   try {
 
+    const wuid = useGuestUser().value
     const customerInfo = checkoutStore.customerInfo
     const shippingInfo = checkoutStore.shippingInfo
     const paymentInfo = await getPaymentInfo()
@@ -282,7 +284,10 @@ const pay = async (mercadoPagoApiData = null) => {
 
     checkoutService.setLoading(true)
 
+
+
     var rq = {
+      "wuid": wuid,
       "addresses": {
         "selectedShipping": shippingInfo.address,
         "askForInvoice": paymentInfo.billingAddress && paymentInfo.billingAddress.rut && paymentInfo.billingAddress.rut.length > 0,
