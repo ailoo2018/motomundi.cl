@@ -6,6 +6,7 @@ import BlogPreviousPosts from "@/views/pages/blog/blog-previous-posts.vue"
 import BlogRightContent from "@/layouts/blog/blog-right-content.vue"
 
 definePageMeta({
+  alias: '/moto-blog',
   layout: false,
   public: true,
 

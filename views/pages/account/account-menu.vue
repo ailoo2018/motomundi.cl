@@ -17,7 +17,7 @@ const logout = async () => {
   <ul class="account__nav" :class="componentClass">
     <li>
       <a
-        href="/cuenta/perfil"
+        href="/account/profile"
         aria-current="page"
         data-dr="true"
         ng-class="activeMenu == 'profile' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
@@ -41,7 +41,7 @@ const logout = async () => {
     <li>
       <a
         ng-class="activeMenu == 'garage' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/cuenta/garaje"
+        href="/account/garage"
         data-dr="true"
         class="mtc-link"
         rel="nofollow"
@@ -62,7 +62,7 @@ const logout = async () => {
     </li>
     <li>
       <a
-        href="/cuenta/equipamiento"
+        href="/account/gear"
         data-dr="true"
         class="mtc-link"
         ng-class="activeMenu == 'gear' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
@@ -84,7 +84,7 @@ const logout = async () => {
     </li>
     <li>
       <a
-        href="/cuenta/direcciones"
+        href="/account/addresses"
         data-dr="true"
         class="mtc-link"
         ng-class="activeMenu == 'address' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
@@ -107,7 +107,7 @@ const logout = async () => {
     <li>
       <a
         ng-class="activeMenu == 'orders' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/cuenta/pedidos"
+        href="/account/orders"
         data-dr="true"
         class="mtc-link"
         rel="nofollow"
@@ -130,7 +130,7 @@ const logout = async () => {
     <li>
       <a
         ng-class="activeMenu == 'favorites' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/cuenta/favoritos"
+        href="/account/wish-list"
         data-dr="true"
         class="mtc-link"
         rel="nofollow"
@@ -152,7 +152,7 @@ const logout = async () => {
     <li>
       <a
         ng-class="activeMenu == 'club' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/cuenta/club-mi-motomundi"
+        href="/account/club"
         data-dr="true"
         class="mtc-link"
         rel="nofollow"
@@ -169,7 +169,7 @@ const logout = async () => {
     <li>
       <a
         ng-class="activeMenu == 'friends' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/cuenta/invita-tus-amigxs"
+        href="/account/invita-tus-amigxs"
         data-dr="true"
         class="mtc-link"
         rel="nofollow"
@@ -192,7 +192,7 @@ const logout = async () => {
     <li>
       <a
         ng-class="activeMenu == 'reviews' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/Review/List.rails"
+        href="/account/reviews"
         data-dr="true"
         class="mtc-link"
         rel="nofollow"
@@ -215,7 +215,7 @@ const logout = async () => {
     <li>
       <a
         ng-class="activeMenu == 'configuration' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/cuenta/configuracion"
+        href="/account/configuration"
         data-dr="true"
         class="mtc-link"
         rel="nofollow"

@@ -8,13 +8,13 @@
       <div>
         <div class="hmnuentry"><i class="fa fa-phone"></i> <a href="tel:26660690"> (2)26660690</a></div>
 
-        <div class="hmnuentry"><i class="fa fa-home"></i> <a href="https://www.motomundi.cl/tiendas">Tiendas y
+        <div class="hmnuentry"><i class="fa fa-home"></i> <a href="/tiendas">Tiendas y
           horarios</a></div>
         <div class="hmnuentry">
           <i class="fa fa-shopping-cart"></i> <a href="/cart">Carro de
           compra</a>
         </div>
-        <div class="hmnuentry"><a href="https://www.motomundi.cl/10757-contactenos">Contáctenos</a></div>
+        <div class="hmnuentry"><a href="/contactenos">Contáctenos</a></div>
         <div class="hmnuentry">
           <a href="/cuenta/perfil"> Su cuenta </a>
         </div>
