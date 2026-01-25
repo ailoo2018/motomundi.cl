@@ -28,6 +28,7 @@ injectSkinClasses()
       <MotomundiNavigation/>
 
       <main class="main-content">
+        <h1>DEFAULT</h1>
         <slot/>
         <!-- 👉 Footer -->
         <MotomundiFooter />

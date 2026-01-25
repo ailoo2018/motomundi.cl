@@ -1,0 +1,264 @@
+#blog-wrapper h1, #blog-wrapper h2, #blog-wrapper h3, #blog-wrapper h4, #blog-wrapper h5, #blog-wrapper h6, #blog-wrapper button, #blog-wrapper input, #blog-wrapper textarea, #blog-wrapper select {
+  font-family: "Open Sans", sans-serif;
+  color: inherit;
+}
+
+#blog-wrapper .slider-featured-posts-container .slider-featured-post {
+  float: left;
+  text-align: center;
+  padding: 0 15px 200px;
+}
+
+#blog-wrapper .big-post .post-excerpt {
+  max-height: 60px;
+}
+
+#blog-wrapper, #blog-wrapper * {
+  box-sizing: border-box;
+}
+#blog-wrapper header {
+  background-color: transparent;
+  position: relative;
+}
+
+#blog-wrapper .img-wrapper {
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  position: relative;
+  overflow: hidden;
+}
+
+#blog-wrapper .slider-featured-posts-container .slider-arrows {
+  border: 1px solid #FFF;
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 0;
+  text-align: center;
+  line-height: 30px;
+  vertical-align: bottom;
+  border-radius: 4px;
+}
+
+#blog-wrapper .grid-item h2 {
+  color: #000;
+  font-family: system, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 800;
+  margin-bottom: 2px;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+#blog-wrapper .grid-item .posts-date-category a {
+  color: #484848;
+}
+#blog-wrapper .grid-item .title-container {
+  padding: 25px 20px 15px;
+}
+
+#blog-wrapper .grid-item .read-more {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+#blog-wrapper .grid-item .read-more {
+  color: #acacac;
+  font-size: 12px;
+}
+
+#blog-wrapper .slider-featured-posts-container .prev {
+  width: 35px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#blog-wrapper .slider-featured-posts-container .next {
+  border-left: 1px solid #FFF;
+  width: 35px;
+  display: inline-block;
+  cursor: pointer;
+}
+#blog-wrapper .slider-featured-posts-container .next, #blog-wrapper .slider-featured-posts-container .prev {
+  height: 30px;
+}
+#blog-wrapper .slider-featured-posts-container .we-recommend {
+  font-size: 16px;
+  font-weight: bold;
+  color: #FFF;
+  margin-bottom: 19px;
+}
+#blog-wrapper .slider-featured-posts-container .we-recommend {
+  align-items: center;
+  display: flex;
+}
+
+#blog-wrapper .slider-featured-posts-container .next img, #blog-wrapper .slider-featured-posts-container .prev img {
+  vertical-align: -5px;
+}
+#blog-wrapper .slider-featured-posts-container .slider-featured-post .title-container {
+  padding: 15px 20px;
+  background-color: #FFF;
+  border-radius: 0 0 5px 5px;
+}
+#blog-wrapper .slider-featured-posts-container .slider-featured-post h2 {
+  color: #000;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+#blog-wrapper .slider-featured-posts-container .slider-arrows {
+  border: 1px solid #FFF;
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 0;
+  text-align: center;
+  line-height: 30px;
+  vertical-align: bottom;
+  border-radius: 4px;
+}
+#blog-wrapper .slider-featured-posts-container .slider-arrows {
+  border-radius: 0;
+  height: 32px;
+}
+
+#blog-wrapper .img-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#blog-wrapper .slider-featured-posts-container .slider-featured-post .title-container {
+  padding: 15px 20px;
+  background-color: #FFF;
+  border-radius: 0 0 5px 5px;
+}
+
+#blog-wrapper .slider-featured-posts-container .slider-featured-post .title-container {
+  padding: 15px 20px;
+  background-color: #FFF;
+  border-radius: 0 0 5px 5px;
+}
+#blog-wrapper .slider-featured-posts-container .slider-featured-post .title-container, #blog-wrapper .slider-featured-posts-container .slider-featured-post img {
+  border-radius: 0;
+}
+#blog-wrapper .slider-featured-posts-container .slider-featured-post img {
+  display: block;
+  border-radius: 5px 5px 0 0;
+}
+#blog-wrapper .slider-featured-posts-container .slider-featured-post .title-container {
+  padding: 15px 20px;
+  background-color: #FFF;
+  border-radius: 0 0 5px 5px;
+}
+#blog-wrapper .slider-featured-posts-container .slider-featured-post h2 {
+  color: #000;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+#blog-wrapper .slider-featured-posts-container .slider-featured-post h2 {
+  color: #000;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+#blog-wrapper .slider-featured-posts-container {
+  margin: -80px auto 40px;
+  width: 1140px;
+  position: relative;
+  max-width: 100%;
+}
+
+#blog-wrapper .slider-featured-posts-container .slider-featured-post .category {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+@media (max-width: 1200px) {
+  #blog-wrapper .slider-featured-posts-container {
+    padding: 0 18px 0 15px;
+  }
+}
+
+
+#blog-wrapper .big-post .title-container {
+  padding: 25px;
+}
+
+#blog-wrapper .grid-item .title-container .posts-date-category {
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+
+#blog-wrapper .grid-item .posts-date-category {
+  font-size: 12px;
+  color: #acacac;
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+
+#blog-wrapper .grid-item .text-container {
+  text-align: left;
+  font-size: 13px;
+  padding: 15px 18px;
+}
+
+#blog-wrapper .big-post .text-container {
+  padding: 25px;
+  font-size: 14px;
+}
+
+#blog-wrapper .big-post .post-excerpt {
+  max-height: 60px;
+}
+#blog-wrapper .grid-item .post-excerpt {
+  color: #484848;
+  max-height: 55px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+#blog-wrapper .grid-item .read-more {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+#blog-wrapper .grid-item .text-container p {
+  font-weight: 500;
+  margin-top: 0;
+}
+
+#blog-wrapper .big-post h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  line-height: 30px;
+}
+
+#blog-wrapper .grid-item h2 {
+  color: #000;
+  font-family: system, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 800;
+  margin-bottom: 2px;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+#blog-wrapper .grid-item {
+  background-color: #FFF;
+  margin-bottom: 25px;
+  border-radius: 5px;
+}
+
