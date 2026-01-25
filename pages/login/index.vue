@@ -58,8 +58,21 @@ const login = async () => {
   </VContainer>
 </template>
 
-<style scoped lang="scss">
-label.v-label { font-size: 12px }
+<style lang="scss">
+
+form  .required {
+  margin-left: 2px;
+  color: #d6001c;
+}
+
+.mobile .v-card-text{
+  padding: 34px 4px 4px;
+}
+
+.auth label.v-label {
+  font-size: 11px !important;
+  font-weight: bold;
+}
 
 
 form.recover-password a {
@@ -162,6 +175,9 @@ form.recover-password span.h2 {
   text-transform: uppercase;
 }
 
+.mobile .tabs .tab{
+  font-size: 13px;
+}
 
 form .field-group .h3 {
   flex: 0 0 100%;

@@ -198,9 +198,6 @@ const { data: featured } = await useFetch("/api/blog/featured-posts?limit=4", {
   </div>
 </template>
 <style>
-#blog-wrapper, #blog-wrapper * {
-  box-sizing: border-box;
-}
 
 
 #blog-wrapper .right-content {

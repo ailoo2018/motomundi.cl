@@ -1,5 +1,6 @@
 @use "sass:map";
 
+
 // Layout
 @use "vertical-nav";
 @use "horizontal-nav";
@@ -27,10 +28,6 @@
 
 // Dark
 // @use "dark";
-
-@use "motomundi";
-@use "mobile/mobile";
-@use "blog/blog";
 
 // libs
 @use "libs/perfect-scrollbar";

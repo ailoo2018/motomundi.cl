@@ -148,7 +148,7 @@ const filterMotorbikeProducts = () => {
   </div>
 </template>
 
-<style>
+<style >
 
 /* 1. Define the container context */
 .bike-selector-wrapper {
@@ -175,10 +175,12 @@ const filterMotorbikeProducts = () => {
   }
 }
 
-.v-input__control{
+/*
+input.v-input__control{
   border: 1px solid black;
   border-radius: 0px;
 }
+*/
 
 .bike-search .h3 {
   display: block;

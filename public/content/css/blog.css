@@ -7929,9 +7929,7 @@ img {
     word-spacing: 1px
 }
 
-#blog-wrapper, #blog-wrapper * {
-    box-sizing: border-box
-}
+
 
 #blog-wrapper h1, #blog-wrapper h2, #blog-wrapper h3, #blog-wrapper input, #blog-wrapper select {
     font-family: system, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"

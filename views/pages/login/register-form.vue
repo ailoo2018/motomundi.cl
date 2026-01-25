@@ -17,23 +17,27 @@ const registerFormValues = ref({ fname: '', lname: '' })
       >
         <div class="field-group">
           <span class="h3">¿Cómo quieres que nos dirijamos a ti?</span>
-          <VRow>
-            <VCol cols="6">
-              <AppTextField
-                id="register-name-338"
+          <VRow class="mt-2">
+            <VCol cols="6" >
+              <label class="login-label" for="register_fname">
+                Nombre <span class="required">*</span>
+              </label>
+              <VTextField
+                id="register_fname"
                 v-model="registerFormValues.fname"
-                label="Nombre"
+                placeholder="Nombre"
                 required
-
                 type="text"
               />
 
             </VCol>
             <VCol cols="6">
-              <AppTextField
+              <label class="login-label" for="register_fname">
+                Apellido <span class="required">*</span>
+              </label>
+              <VTextField
                 required
-                id="register-surnames-338"
-                label="Apellido"
+                placeholder="Apellido"
                 v-model="registerFormValues.lname"
                 type="text"
               />
@@ -41,26 +45,28 @@ const registerFormValues = ref({ fname: '', lname: '' })
           </VRow>
         </div>
 
-        <div class="field-group mt-5">
+        <div class="field-group mt-8">
           <span class="h3 pb-10">Tu email y contraseña para acceder dónde y cuando quieras</span>
 
-          <VRow>
+          <VRow class="mt-2">
             <VCol cols="6">
-              <AppTextField
-                id="register-email-338"
+              <label class="login-label" for="register-email">EMAIL <span class="required">*</span></label>
+              <VTextField
+                id="register-email"
                 v-model="registerFormValues.email"
                 placeholder="Correo electrónico"
-                label="Correo electrónico"
+
                 type="email"
               />
 
             </VCol>
             <VCol cols="6">
-              <AppTextField
+              <label  class="login-label" for="register-pass">CONTRASEÑA <span class="required">*</span></label>
+              <VTextField
                 id="register-password-338"
                 v-model="registerFormValues.password"
                 type="password"
-                label="Contraseña"
+                placeholder="Contraseña"
               />
 
             </VCol>
@@ -100,6 +106,30 @@ const registerFormValues = ref({ fname: '', lname: '' })
   </VCard>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
+form label.login-label {
+  color: #000;
+  display: block;
+  flex: 0 0 48%;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -.25px;
 
+  text-transform: uppercase;
+}
+.v-text-field  {
+  border: 1px solid black;
+  border-radius: 0px;
+}
+
+.register-container .basic-data, .register-container .extra-data {
+  box-sizing: border-box;
+  display: block;
+  padding-top: 30px;
+  transition-duration: .5s;
+  transition-property: opacity,-webkit-transform;
+  transition-property: transform,opacity;
+  transition-property: transform,opacity,-webkit-transform;
+  transition-timing-function: cubic-bezier(.175,.885,.32,1.275);
+}
 </style>

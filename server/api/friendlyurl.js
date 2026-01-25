@@ -9,6 +9,8 @@ export default defineEventHandler(async (event) => {
 
     const query = getQuery(event)
 
+    console.log("query: " + query.path)
+
     const fUrl = await $fetch(baseUrl + `/${getDomainId()}/friendly-url/lookup`, {
       method: 'POST',
       body: { url: query.path },

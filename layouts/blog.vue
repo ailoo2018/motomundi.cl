@@ -51,7 +51,7 @@ injectSkinClasses()
           >
             <div class="off-canvas-wrapper">
               <div class="off-canvas-content">
-                <div v-if="false" class="menu-mobile-container">
+                <div class="menu-mobile-container">
                   <button
                     type="button"
                     class="tcon tcon-menu--arrow tcon-menu--arrowup white home"

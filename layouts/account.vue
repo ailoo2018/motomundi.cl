@@ -16,6 +16,12 @@ const { injectSkinClasses } = useSkins()
 
 const { isMobile, isTablet, isDesktop } = useDevice()
 
+useHead({
+  bodyAttrs: {
+    class: computed(() => isMobile ? 'mobile' : 'desktop')
+  }
+})
+
 const router = useRouter()
 
 const logout = async () => {
@@ -27,32 +33,38 @@ const logout = async () => {
 
   // 2. Clear any reactive state (if you are using useState)
   const user = useState('user')
+
   user.value = null
 
   // 3. Redirect
   // Using 'replace: true' prevents the user from hitting 'back' to the logged-in page
   await navigateTo("/login", { replace: true })
 }
+
+
 // ℹ️ This will inject classes in body tag for accurate styling
 injectSkinClasses()
 </script>
 
 <template>
-
   <!-- mobile -->
   <div v-if="isMobile">
-    <main class="main-content" >
-
+    <main class="main-content">
       <MobileHeader />
-      <div class="home-container">
-        <slot />
-      </div>
+      <section class="account container ">
+        <div class="account__content">
+          <slot />
+        </div>
+      </section>
     </main>
   </div>
   <!-- /mobile -->
 
   <!-- desktop -->
-  <div v-else class="layout-wrapper layout-blank">
+  <div
+    v-else
+    class="layout-wrapper layout-blank"
+  >
     <div class="landing-page-wrapper">
       <MotomundiHeaderbar />
       <MotomundiHeaderlogo />
@@ -88,9 +100,10 @@ injectSkinClasses()
 </template>
 
 <style>
-body {
+body:not(.mobile) {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
-  linear-gradient(to top, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,url("https://www.motomundi.cl/Content/uploads/1/_data/3/c2/3c25da0755aa485e9a984f5ca30cfe7f.jpg");
+  linear-gradient(to top, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
+  url("https://www.motomundi.cl/Content/uploads/1/_data/3/c2/3c25da0755aa485e9a984f5ca30cfe7f.jpg");
 }
 
 .row .col.l3 {

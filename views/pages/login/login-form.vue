@@ -151,7 +151,9 @@ onMounted(() => {
             <div class="form-fieldset">
               <VRow class="form-item">
                 <VCol
-                  cols="6"
+                  cols="12"
+                  sm="12"
+                  lg="6"
                   class="input__group"
                 >
                   <VTextField
@@ -166,7 +168,12 @@ onMounted(() => {
                     required="required"
                   />
                 </VCol>
-                <VCol>
+                <VCol
+                  cols="12"
+                  sm="12"
+                  lg="6"
+                  class="input__group"
+                >
                   <VTextField
                     id="login-password-20"
                     v-model="loginFormValues.password"
@@ -185,7 +192,7 @@ onMounted(() => {
                 id="login-button-20"
                 type="submit"
                 style="margin: 20px auto"
-                class="button w-50 rounded-0"
+                class="button w-lg-50 w-sm-100 rounded-0"
                 color="#41a334"
                 :loading="loginLoading"
               >
@@ -210,36 +217,39 @@ onMounted(() => {
         </VCol>
       </VRow>
       <VRow
-        class="social social-buttons "
+        xxclass="social social-buttons "
         style="background-color: white;max-width:600px"
       >
         <VCol
-          cols="6"
-          class="col sm-6"
+          cols="12"
+          md="6"
+          class="col sm-6 "
         >
-          <button
+          <VBtn
             id="signinButton"
-            class="social__google"
+            color="#fff"
+            class="social__google rounded-0 w-100"
             @click="handleGoogleLogin"
           >
             <img
               src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNNC45MzQgMTJjMC0uNzYyLjEyNy0xLjQ5My4zNTMtMi4xNzhsLTMuOTctMy4wMkExMS42ODkgMTEuNjg5IDAgMDAuMTA3IDEyYzAgMS44NjguNDM2IDMuNjMgMS4yMDggNS4xOTRsMy45NjktMy4wMjVBNi45MTcgNi45MTcgMCAwMTQuOTM0IDEyIiBmaWxsPSIjZmJiYzA1Ii8+PHBhdGggZD0iTTExLjkwNSA1LjA2N2MxLjY2MiAwIDMuMTY0LjU4NiA0LjM0MyAxLjU0NkwxOS42OCAzLjJDMTcuNTkgMS4zODcgMTQuOTA4LjI2NyAxMS45MDUuMjY3Yy00LjY2MiAwLTguNjcgMi42NTUtMTAuNTg4IDYuNTM1bDMuOTcgMy4wMmE2Ljk1IDYuOTUgMCAwMTYuNjE4LTQuNzU1IiBmaWxsPSIjZWI0MzM1Ii8+PHBhdGggZD0iTTExLjkwNSAxOC45MzNhNi45NSA2Ljk1IDAgMDEtNi42MTgtNC43NTVsLTMuOTcgMy4wMmExMS43NjcgMTEuNzY3IDAgMDAxMC41ODggNi41MzVjMi44NzcgMCA1LjYyNS0xLjAxNyA3LjY4Ni0yLjkyNGwtMy43NjgtMi45MDJjLTEuMDY0LjY2Ny0yLjQwMyAxLjAyNi0zLjkxOCAxLjAyNiIgZmlsbD0iIzM0YTg1MyIvPjxwYXRoIGQ9Ik0yMy4xNjYgMTJjMC0uNjkzLS4xMDctMS40NC0uMjY4LTIuMTMzSDExLjkwNVYxNC40aDYuMzI4Yy0uMzE3IDEuNTQ2LTEuMTc4IDIuNzM0LTIuNDEgMy41MDdsMy43NjggMi45MDJjMi4xNjYtMi4wMDIgMy41NzUtNC45ODQgMy41NzUtOC44MDkiIGZpbGw9IiM0Mjg1ZjQiLz48L2c+PC9zdmc+"
               alt="Acceder con Google"
+              class="mr-2"
             >
             Acceder con Google
-          </button>
+          </VBtn>
         </VCol>
         <VCol
-          cols="6"
-          class="col sm-6"
+          cols="12"
+          md="6"
         >
-          <button
-            id="signinFbkButton"
-            class="social-login-facebook"
+          <VBtn
+            color="#3b5b9d"
+            class="w-100 rounded-0"
             href="#"
           >
-            <i class="icon-facebook"/> &nbsp;&nbsp;Acceder con Facebook
-          </button>
+            <VIcon size="25" class="tabler-brand-facebook-filled mr-2" /> Acceder con Facebook
+          </VBtn>
         </VCol>
       </VRow>
     </VCardText>
@@ -247,6 +257,16 @@ onMounted(() => {
 </template>
 <style scoped>
 
+form span.h2 {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -.25px;
+  margin: 0 auto 30px;
+  padding: 30px 0 0;
+  text-align: center;
+  text-transform: uppercase;
+}
 
 .inline-login {
   padding: 40px 0 80px;
