@@ -6,7 +6,7 @@ import BlogPreviousPosts from "@/views/pages/blog/blog-previous-posts.vue"
 import BlogRightContent from "@/layouts/blog/blog-right-content.vue"
 
 definePageMeta({
-  layout: 'blog',
+  layout: false,
   public: true,
 
 })
@@ -14,31 +14,29 @@ definePageMeta({
 const currentPage = ref(1)
 const totalPages = ref(10)
 const showBlogMenu = ref(false)
-
 </script>
 
 <template>
-  <div id="content" class="home-container">
-    <BlogMainPost v-if="currentPage === 1"/>
-    <BlogRecommendedPosts v-if="currentPage === 1"/>
+  <NuxtLayout name="blog">
+    <template #blog-top>
+      <BlogMainPost v-if="currentPage === 1" />
+      <BlogRecommendedPosts v-if="currentPage === 1" />
+    </template>
 
-    <div id="inner-content" class="inner-content row">
-      <div class="left-content">
-        <BlogFeaturedPosts v-if="currentPage === 1"/>
-
-        <div class="section-separator-title">
-          <p>Artículos anteriores </p>
-        </div>
-        <main
-          id="main previous-posts-main"
-          role="main"
-        >
-          <BlogPreviousPosts/>
-        </main>
+    <template #default>
+      <BlogFeaturedPosts v-if="currentPage === 1" />
+      <div class="section-separator-title">
+        <p>Artículos anteriores</p>
       </div>
-      <BlogRightContent/>
-    </div>
-  </div>
+      <main
+        id="main previous-posts-main"
+        role="main"
+      >
+        <BlogPreviousPosts />
+      </main>
+
+    </template>
+  </NuxtLayout>
 </template>
 
 <style>

@@ -11,6 +11,7 @@ import HomeCategories from "@/views/pages/home/home-categories.vue"
 import MobileTemplate from "@/views/pages/mobile/mobile-template.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import MobileMenu from "@/views/pages/mobile/mobile-menu.vue"
+import BlogRightContent from "@/layouts/blog/blog-right-content.vue"
 
 const { injectSkinClasses } = useSkins()
 
@@ -25,8 +26,8 @@ console.log("isDesktop", isDesktop)
 
 useHead({
   bodyAttrs: {
-    class: computed(() => isMobile ? 'mobile' : 'desktop')
-  }
+    class: computed(() => isMobile ? 'mobile' : 'desktop'),
+  },
 })
 
 // ℹ️ This will inject classes in body tag for accurate styling
@@ -35,10 +36,7 @@ injectSkinClasses()
 
 <template>
   <!-- desktop -->
-  <div
-    class="layout-wrapper layout-blank"
-    data-allow-mismatch
-  >
+  <div class="layout-wrapper layout-blank">
     <div class="landing-page-wrapper">
       <MotomundiHeaderbar/>
       <MotomundiHeaderlogo/>
@@ -53,10 +51,7 @@ injectSkinClasses()
           >
             <div class="off-canvas-wrapper">
               <div class="off-canvas-content">
-                <div
-                  v-if="false"
-                  class="menu-mobile-container"
-                >
+                <div v-if="false" class="menu-mobile-container">
                   <button
                     type="button"
                     class="tcon tcon-menu--arrow tcon-menu--arrowup white home"
@@ -74,11 +69,20 @@ injectSkinClasses()
                   </div>
                 </div>
 
-                <slot/>
-              </div>  <!-- end .main-content -->
-            </div> <!-- end .off-canvas-wrapper -->
+                <slot name="blog-top"/>
+
+
+                <div id="content" class="home-container">
+                  <div id="inner-content" class="inner-content row">
+                    <div class="left-content">
+                      <slot/>
+                    </div>
+                    <BlogRightContent/>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- end #blog-wrapper -->
         </div>
 
 
@@ -101,7 +105,6 @@ body:not(.mobile) {
 .layout-wrapper.layout-blank {
   flex-direction: column;
 }
-
 
 
 .mobile .main-content {
