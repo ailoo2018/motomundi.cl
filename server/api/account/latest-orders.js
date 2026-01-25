@@ -9,7 +9,7 @@ export default defineEventHandler(async event => {
     const token = getCookie(event, "accessToken")
     const token2 = getCookie(event, "accessToken")
 
-    return await $fetch(`${baseUrl}/${getDomainId()}/account/user`, {
+    return await $fetch(`${baseUrl}/${getDomainId()}/account/latest-orders`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

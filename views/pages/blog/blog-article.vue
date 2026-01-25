@@ -97,12 +97,12 @@ const ret = ref({ products: [] })
         <div class="entry-date-category-share">
           <p class="posts-date-category single">
             <img
-              src="/Content/images/assets/icons/planet-biker-g.svg"
+              src="/content/images/assets/icons/planet-biker-g.svg"
               class="lazyloaded"
               data-ll-status="loaded"
             >
             <noscript>
-              <img src="/Content/images/assets/icons/planet-biker-g.svg">
+              <img src="/content/images/assets/icons/planet-biker-g.svg">
             </noscript>
             <a
               class="parent-category"
@@ -119,12 +119,12 @@ const ret = ref({ products: [] })
               onclick="window.open(`https://twitter.com/intent/tweet?source=webclient&amp;text=${entry.Name}+-+https://www.motomundi.cl/$linkHelper.GetUrl($entry)`, 'Twitter','width=600, height=600'); return false;"
             >
               <img
-                src="/Content/images/assets/icons/social-twitter.svg"
+                src="/content/images/assets/icons/social-twitter.svg"
                 class="lazyloaded"
                 data-ll-status="loaded"
               >
               <noscript><img
-                src="/Content/images/assets/icons/social-twitter.svg"
+                src="/content/images/assets/icons/social-twitter.svg"
                 >
               </noscript>
             </a> <a
@@ -132,12 +132,12 @@ const ret = ref({ products: [] })
               onclick="window.open('https://www.facebook.com/sharer.php?u=https://www.motomundi.cl/$linkHelper.GetUrl($entry)&amp;t=$entry.Name', 'Facebook','width=600, height=600'); return false;"
             >
               <img
-                src="/Content/images/assets/icons/social-facebook.svg"
+                src="/content/images/assets/icons/social-facebook.svg"
                 class="lazyloaded"
                 data-ll-status="loaded"
               >
               <noscript><img
-                src="/Content/images/assets/icons/social-facebook.svg"
+                src="/content/images/assets/icons/social-facebook.svg"
                 >
               </noscript>
             </a> <a
@@ -145,12 +145,12 @@ const ret = ref({ products: [] })
               onclick="window.open('https://web.whatsapp.com/send?text=$entry.Name - https://www.motomundi.cl/$linkHelper.GetUrl($entry)', 'Whatsapp','width=600, height=600'); return false;"
             >
               <img
-                src="/Content/images/assets/icons/social-whatsapp.svg"
+                src="/content/images/assets/icons/social-whatsapp.svg"
                 class="lazyloaded"
                 data-ll-status="loaded"
               >
               <noscript><img
-                src="/Content/images/assets/icons/social-whatsapp.svg"
+                src="/content/images/assets/icons/social-whatsapp.svg"
                 >
               </noscript>
             </a>
@@ -234,11 +234,11 @@ const ret = ref({ products: [] })
       <div class="comments-title">
         <img
           class="image"
-          src="/Content/images/assets/icons/comments.svg"
-          data-lazy-src="/Content/images/assets/icons/comments.svg"
+          src="/content/images/assets/icons/comments.svg"
+          data-lazy-src="/content/images/assets/icons/comments.svg"
         >
         <noscript><img class="image"
-          src="/Content/images/assets/icons/comments.svg"
+          src="/content/images/assets/icons/comments.svg"
           >
         </noscript>
         <span>Comentarios</span>

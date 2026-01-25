@@ -12,15 +12,8 @@ definePageMeta({
 
 const userStore = useUserStore()
 
-
+await userStore.fetchUser()
 // Fetch once on mount
-onMounted(async () => {
-  try {
-    await userStore.fetchUser()
-  }finally{
-
-  }
-})
 </script>
 
 <template>
@@ -96,5 +89,36 @@ onMounted(async () => {
   </div>
 </template>
 <style >
+@media only screen and (min-width: 601px) {
+  .profile .profile__avatar-container {
+    order: 1;
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 601px) {
+  .profile .profile__club {
+    order: 2;
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .profile__club {
+    margin: 0;
+    text-align: left;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .profile .profile__orders {
+    order: 4;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .motocoins-card {
+    margin: 20px 0;
+  }
+}
 
 </style>
