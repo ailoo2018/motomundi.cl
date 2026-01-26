@@ -1,5 +1,6 @@
 <script setup>
 import StoreCalendar from "@/views/pages/stores/store-calendar.vue"
+import { getBaseCDN } from "@core/utils/formatters.js"
 
 definePageMeta({
   layout: 'motomundi',
@@ -17,15 +18,12 @@ const stores = ref([])
 if (data.value) {
   stores.value = data.value.facilities.map(item => ({
     ...item,
-    expanded: false
+    expanded: false,
   }))
 }
-
-
 </script>
 
 <template>
-
   <section class="content help pa-4">
     <div class="row full-width">
       <div class="l12 s12 col">
@@ -43,12 +41,22 @@ if (data.value) {
           :class="store.expanded ? '' : 'collapsed'"
         >
           <div class="shop-header">
-            <DIV class="row">
+            <DIV
+              class="row"
+              @click="store.expanded = !store.expanded"
+            >
               <DIV class="l6 m12 s12 col">
                 <DIV class="shop-name">
                   <h1>Motomundi {{ store.name }}</h1>
-                  <SPAN><I class="icon-phone" />{{ store.phone }}
-                    <i class="icon-location" />{{ store.postalAddress?.address }}
+                  <SPAN>
+                    <VIcon
+                      class="tabler-phone-filled mr-1"
+                      size="xs"
+                    />{{ store.phone }}
+                    <VIcon
+                      class="tabler-map-pin-filled ml-2 mr-1"
+                      size="xs"
+                    />{{ store.postalAddress?.address }}
                   </SPAN>
                 </DIV>
               </DIV>
@@ -59,23 +67,34 @@ if (data.value) {
                   @click="store.expanded = !store.expanded"
                 >
                   <VIcon
-                    :class="store.expanded ? 'tabler-chevron-down' : 'tabler-chevron-up'"
+                    :class="store.expanded ? 'tabler-chevron-up' : 'tabler-chevron-down'"
                     size="sm"
                   />
                 </A>
               </DIV>
             </DIV>
           </div>
-          <DIV class="shop-body row">
-            <DIV class="shop-info l7 m6 col">
+          <VRow class="shop-body">
+            <VCol
+              cols="6"
+              sm="12"
+              lg="7"
+              md="6"
+              class="shop-info l7 m6 col"
+            >
               <DIV class="shop-address">
-                <h2><i class="icon-home" /> Direcci&oacute;n y tel&eacute;fono</h2>
+                <h2>
+                  <VIcon
+                    class="tabler-home-filled mr-1"
+                    size="xs"
+                  /> Direcci&oacute;n y tel&eacute;fono
+                </h2>
                 <p>{{ store.postalAddress?.address }}</p>
                 <p>{{ store.postalAddress?.comuna?.name }}</p>
                 <p>{{ store.phone }}</p>
               </DIV>
 
-              <StoreCalendar />
+              <StoreCalendar v-if="store.expanded" :store="store"/>
 
 
               <DIV
@@ -85,16 +104,27 @@ if (data.value) {
                 <H2><I class="icon-split" /> Accesos</H2>
                 {{ store.postalAddress?.comment }}
               </DIV>
-            </DIV>
-            <DIV class="shop-map l5 m6 s12 col">
+            </VCol>
+            <VCol
+              cols="6"
+              sm="12"
+              md="6"
+              lg="5"
+              class="shop-map l5 m6 s12 col"
+            >
               <div class="shop-photos">
                 <img
                   v-for="si in store.images"
-                  class="photo loading"
-                  :src="si.Url"
+                  class="photo loading w-100"
+                  :src="getBaseCDN() + si.url"
                 >
               </div>
-              <h2><I class="icon-location" /> Localizaci&oacute;n</h2>
+              <h2>
+                <VIcon
+                  class="tabler-map-pin-filled mr-1"
+                  size="sm"
+                /> Localizaci&oacute;n
+              </h2>
               <DIV class="map-wrapper">
                 <iframe
                   :src="store.postalAddress?.gmapsUrl"
@@ -106,8 +136,8 @@ if (data.value) {
                 />
               </DIV>
               <ul class="shop-features lblock-grid-3 small-up-3" />
-            </DIV>
-          </DIV>
+            </VCol>
+          </VRow>
         </div>
       </div>
       <div />
@@ -315,7 +345,6 @@ if (data.value) {
 }
 
 #shop .shop-access h2, #shop .shop-address h2, #shop .shop-schedule h2 {
-  margin-left: -24px;
   text-align: left;
 }
 
@@ -364,7 +393,7 @@ if (data.value) {
 
 #shop .shop-photos .photo:first-child {
   margin-top: 40px;
-  max-width: 277px;
+  /*max-width: 277px;*/
 }
 
 .department-container {
