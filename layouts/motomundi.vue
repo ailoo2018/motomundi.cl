@@ -73,6 +73,9 @@ body:not(.mobile) {
 }
 
 
+
+
+
 .layout-wrapper.layout-blank {
   flex-direction: column;
 }

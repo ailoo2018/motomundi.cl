@@ -10,6 +10,7 @@ definePageMeta({
 
 const route = useRoute()
 const queryParams = route.query
+const config = ref()
 
 const slugArray = Array.isArray(route.params.slug)
   ? route.params.slug
@@ -41,7 +42,9 @@ if(path === "/Product/ReviewProduct.rails"){
 }else{
   console.log("path received", path)
   try {
-    const { data: config, error } = await useFetch(`/api/friendlyurl?path=${path}`)
+    const { data, error } = await useFetch(`/api/friendlyurl?path=${path}`)
+
+    config.value = data
     console.log(`Mapping ${path}:`, config)
     if (error.value || !config.value) {
       throw createError({
@@ -75,13 +78,12 @@ const { data: config, error } = await useAsyncData(
   },
 )
 */
-
-
-
-
-
 </script>
 
 <template>
-  <ProductsList v-if="config" :injected-query="config.query" />
+
+  <ProductsList
+    v-if="config"
+    :injected-query="config.query"
+  />
 </template>

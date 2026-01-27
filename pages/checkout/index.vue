@@ -234,7 +234,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="checkout-container">
+  <div class="checkout-container" style="background: #fff;">
     <div
       v-if="!isCartEmpty"
       class="checkout container"
