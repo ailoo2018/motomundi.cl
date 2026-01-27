@@ -60,6 +60,8 @@ html {
     word-spacing: 1px;
 }
 
+body { background-color: white; background: unset; }
+
 h2 {
     display: block;
     font-size: 1.5em;

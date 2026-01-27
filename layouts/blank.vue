@@ -18,6 +18,7 @@ useHead({
 
 <style lang="scss">
 body {
-  background: none;
+  background: white;
+  background-color: white;
 }
 </style>
