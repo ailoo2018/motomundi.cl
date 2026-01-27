@@ -74,7 +74,7 @@ injectSkinClasses()
         <div class="row">
           <section
             class="row col s12 account-container"
-            style="width:95%;"
+            AAstyle="width:95%;"
           >
             <section class="account container ">
               <div class="v-row">
