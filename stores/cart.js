@@ -14,6 +14,7 @@ export const useCartStore = defineStore('cart', {
 
         this.cart = data
         this.cart.wuid = wuid
+        this.cart.items.forEach(i => i.loading = false)
       } finally {
         this.loading = false
       }
@@ -21,7 +22,7 @@ export const useCartStore = defineStore('cart', {
 
     async removeItem(cartItem){
       try {
-        this.loading = true
+        cartItem.loading = true
 
         const cart = await $fetch('/api/cart/remove-item', {
           method: 'GET',
@@ -31,13 +32,10 @@ export const useCartStore = defineStore('cart', {
         console.log("returned cart", cart)
 
         this.cart = cart
-
-        // this.cart = await $fetch('/api/cart/', { query: { wuid } })
-
       }catch(e){
         console.error(e)
       }finally{
-        this.loading = false
+        cartItem.loading = true
       }
     },
 
@@ -49,6 +47,7 @@ export const useCartStore = defineStore('cart', {
       const previousQty = item.quantity
 
       item.quantity = newQty
+      item.loading = true
 
       try {
         // 2. Server Sync
@@ -59,13 +58,18 @@ export const useCartStore = defineStore('cart', {
 
 
         // 3. Optional: refresh cart to get updated totals/discounts
-        const updatedCart = await $fetch('/api/cart/', { query: { wuid } })
 
+/*
+        const updatedCart = await $fetch('/api/cart/', { query: { wuid } })
         this.cart = updatedCart
+*/
+
       } catch (error) {
         // 4. Rollback if API fails
         item.quantity = previousQty
         console.error("Failed to update cart", error)
+      }finally{
+        item.loading = false
       }
     },
   },

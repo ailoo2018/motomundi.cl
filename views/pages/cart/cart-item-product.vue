@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import emptyImage from "@images/empty-image.avif"
+import {getProductUrl} from "@core/utils/formatters";
 
 const props = defineProps({
   cartItem: { type: Object, required: true },
@@ -25,29 +26,27 @@ const removeCartItem = () => {
 
 <template>
   <div class="cart__product">
-    <div class="cart-item">
+    <div class="cart-item ">
       <!-- single product -->
       <article class="cart-product__wrapper">
-        <a
-          class="cart-product mtc-link"
-          data-dr="true"
-        >
-          <span>
+        <a :href="cartItem.product.url" class="cart-product mtc-link">
 
+          <span>
             <VImg
               width="120"
               height="120"
               :src="getImageUrl(cartItem.image, 300, getDomainId()) || emptyImage"
               :alt="cartItem.name"
               class="cdn-img"
-            >          <template #error>
-              <VImg
-                :src="emptyImage"
-                width="120"
-                height="120"
-                class="cdn-img ma-2"
-              />
-            </template>
+            >          
+              <template #error>
+                <VImg
+                  :src="emptyImage"
+                  width="120"
+                  height="120"
+                  class="cdn-img ma-2"
+                />
+              </template>
             </VImg>
           </span>
 
@@ -152,7 +151,7 @@ const removeCartItem = () => {
               <title>Cross icon</title>
               <use href="/content/svg/motomundi.svg#i-icon-cross" />
             </svg>
-            <span >Eliminar</span>
+            <span>Eliminar</span>
           </button>
         </div>
       </article>
@@ -202,6 +201,7 @@ const removeCartItem = () => {
 input[type=number].remove-arrows {
   -moz-appearance: textfield;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -276,6 +276,7 @@ input::-webkit-inner-spin-button {
   right: 1px;
   top: 1px;
 }
+
 #shop-cart .cart-product__tools .cart-product__quantity .quantity-buttons button {
   align-items: center;
   background-color: #f5f5f5;
