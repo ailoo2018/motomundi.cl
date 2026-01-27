@@ -9,6 +9,8 @@ const props = defineProps(
 
 const reviews = ref([])
 const reviewStats = ref({})
+const ratingCriteria = ref({ rating: 0, selected: "TODOS"})
+
 
 const listReviews = () => {
 
@@ -21,26 +23,56 @@ const getReviewInitial = () => {
 const getReviewerName = () => {
   return "Johnny"
 }
+
+const selectRating = stars => {
+  ratingCriteria.value.rating = stars
+}
+
+const selectTodos = () => {
+
+}
+
+
+onMounted(async () => {
+  var rs = await $fetch("/api/reviews/list?productId=" + props.product.id)
+  if(rs.reviews)
+    reviews.value = rs.reviews
+
+  reviewStats.value = await $fetch("/api/reviews/stats?productId=" + props.product.id)
+
+  reviewStats.value.stars = Math.floor(reviewStats.value.avgRating*2);
+
+  reviewStats.value["5"] = 0;
+  reviewStats.value["4"] = 0;
+  reviewStats.value["3"] = 0;
+  reviewStats.value["2"] = 0;
+  reviewStats.value["1"] = 0;
+
+  for(var r of reviewStats.value.groups){
+    reviewStats.value["" + r.ratingGroup] = r.totalReviews / reviewStats.value.totalReviews * 100;
+  }
+
+})
 </script>
 
 <template>
-  <div
+
+  <VRow
     id="reviews"
-    class="row ng-cloak"
     style="padding: 12px;"
-    ng-if="reviews && reviewStats"
+    v-if="reviews.length > 0"
   >
-    <div class="col s12">
+    <VCol cols="12">
       <aside
         id="ratings"
-        class="row"
+        class="v-row"
       >
-        <div class="col s12">
+        <VCol cols="12">
           <div class="group-title">
-            <h2>Valoraciones </h2>
+            <h2>Valoraciones</h2>
           </div>
-        </div>
-        <div class="col s12 m4 l3">
+        </VCol>
+        <VCol cols="12" md="4" lg="3">
           <div class="ratings-summary">
             <span class="rating-block">
               <span>
@@ -55,100 +87,105 @@ const getReviewerName = () => {
             </p>
             <div
               class="rating-star-summary"
-              ng-class="{'rating-selected': ratingCriteria.rating == 5 }"
-              ng-click="selectRating(5)"
+              :class="{'rating-selected': ratingCriteria.rating == 5 }"
+              @click="selectRating(5)"
             >
               <span>5 estrellas</span>
               <div class="rating-outer">
                 <div
 
                   class="rating-inner"
-                  style="width: {{ reviewStats['5'] }}%;"
+                  :style="`width: ${reviewStats['5']}%;`"
                 />
               </div>
             </div>
             <div
 
               class="rating-star-summary"
-              ng-click="selectRating(4)"
-              ng-class="{'rating-selected': ratingCriteria.rating == 4 }"
+              @click="selectRating(4)"
+              :class="{'rating-selected': ratingCriteria.rating == 4 }"
             >
               <span>4 estrellas</span>
               <div class="rating-outer">
                 <div
 
                   class="rating-inner"
-                  style="width: {{ reviewStats['4'] }}%;"
+                  :style="`width: ${reviewStats['4']}%;`"
                 />
               </div>
             </div>
             <div
 
               class="rating-star-summary"
-              ng-click="selectRating(3)"
-              ng-class="{'rating-selected': ratingCriteria.rating == 3 }"
+              @click="selectRating(3)"
+              :class="{'rating-selected': ratingCriteria.rating == 3 }"
             >
               <span>3 estrellas</span>
               <div class="rating-outer">
                 <div
-
                   class="rating-inner"
-                  style="width: {{ reviewStats['3'] }}%;"
+                  :style="`width: ${reviewStats['3']}%;`"
                 />
               </div>
             </div>
             <div
               class="rating-star-summary"
-              ng-click="selectRating(2)"
-              ng-class="{'rating-selected': ratingCriteria.rating == 2 }"
+              @click="selectRating(2)"
+              :class="{'rating-selected': ratingCriteria.rating == 2 }"
             >
               <span>2 estrellas</span>
               <div class="rating-outer">
                 <div
                   class="rating-inner"
-                  style="width: {{ reviewStats['2'] }}%;"
+                  :style="`width: ${reviewStats['2']}%;`"
                 />
               </div>
             </div>
             <div
               class="rating-star-summary"
-              ng-click="selectRating(1)"
-              ng-class="{'rating-selected': ratingCriteria.rating == 1 }"
+              @click="selectRating(1)"
+              :class="{'rating-selected': ratingCriteria.rating == 1 }"
             >
               <span>1 estrella</span>
               <div class="rating-outer">
                 <div
                   class="rating-inner"
-                  style="width: {{ reviewStats['1'] }}%;"
+                  :style="`width: ${reviewStats['1']}%;`"
                 />
               </div>
             </div>
           </div>
-        </div>
-        <div class="col s12 m7 l8 offset-l1 ratings-content">
+        </VCol>
+        <VCol cols="12" sm="12" md="7" lg="8" class="col-lg-offset-1" >
           <div class="review-filters">
             <button
-              ng-class="{'selected': ratingCriteria.selected == 'TODOS'}"
-              ng-click="selectTodos()"
+              :class="{'selected': ratingCriteria.selected == 'TODOS'}"
+              @click="ratingCriteria.selected = 'TODOS'"
             >
               Todas
             </button>
             <button
-              ng-class="{'selected': ratingCriteria.selected == 'MEJOR_VALORADO'}"
-              ng-click="selectMejorValorado();"
+              :class="{'selected': ratingCriteria.selected == 'MEJOR_VALORADO'}"
+              @click="ratingCriteria.selected = 'MEJOR_VALORADO'"
             >
               Mejor valorado
             </button>
             <button
-              ng-class="{'selected': ratingCriteria.selected == 'PEOR_VALORADO'}"
-              ng-click="selectPeorValorado()"
+              :class="{'selected': ratingCriteria.selected == 'PEOR_VALORADO'}"
+              @click="ratingCriteria.selected = 'PEOR_VALORADO'"
             >
               Peor valorado
             </button>
-            <button class="">
+            <button
+              :class="{'selected': ratingCriteria.selected == 'CON_FOTOS'}"
+              @click="ratingCriteria.selected = 'CON_FOTOS'"
+            >
               Con fotos
             </button>
-            <button class="">
+            <button
+              :class="{'selected': ratingCriteria.selected == 'CON_VIDEOS'}"
+              @click="ratingCriteria.selected = 'CON_VIDEOS'"
+            >
               Con vídeos
             </button>
           </div>
@@ -210,7 +247,8 @@ const getReviewerName = () => {
                   <div class="review-gallery">
                     <span
                       class="image-cover"
-                      ng-repeat="revImg in review.images"
+                      v-if="review.images"
+                      v-for="revImg in review.images"
                     >
                       <img
                         v-if="revImg.image"
@@ -255,10 +293,270 @@ const getReviewerName = () => {
               Ver más comentarios
             </button>
           </div>
-        </div>
+        </VCol>
       </aside>
-    </div>
-  </div>
+    </VCol>
+  </VRow>
 </template>
+<style>
+#reviews h2 {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 26.2px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
 
+#reviews .group-title {
+  overflow: hidden;
+  border-bottom: none;
+  padding-bottom: 0;
+  padding-left: 0;
+  margin-right: 10px;
+  margin-bottom: 25px;
+}
+
+.ratings-summary .rating-star-summary {
+  color: #363636;
+  cursor: pointer;
+  margin-bottom: .4rem;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.ratings-summary .rating-star-summary > span {
+  display: block;
+  float: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -.05rem;
+  width: 28%;
+}
+
+.ratings-summary .rating-star-summary {
+  color: #363636;
+  cursor: pointer;
+  margin-bottom: .4rem;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.ratings-summary .rating-star-summary > span {
+  display: block;
+  float: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -.05rem;
+  width: 28%;
+}
+
+.ratings-summary .rating-star-summary {
+  color: #363636;
+  cursor: pointer;
+  margin-bottom: .4rem;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.ratings-summary .rating-outer {
+  background-color: #f5f5f5;
+  float: left;
+  height: 16px;
+  overflow: hidden;
+  width: 70%;
+}
+
+.ratings-summary .rating-inner {
+  background-color: #363636;
+  height: 16px;
+}
+
+.ratings-summary .rating-star-summary {
+  color: #363636;
+  cursor: pointer;
+  margin-bottom: .4rem;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+/* /end left control */
+
+.review-filters button.selected {
+  background-color: #000;
+  color: #fff;
+}
+
+.review-filters button {
+  background-color: #f0f4f5;
+  border-radius: 200px;
+  font-size: 10px;
+  font-weight: 500;
+  margin: 3px;
+  padding: .4rem .8rem;
+  text-transform: uppercase;
+}
+
+.user-reviews {
+  border-top: 1px solid #ebebeb;
+  margin-top: 1.8rem;
+  padding-top: 1.8rem;
+}
+
+.user-review-block .rating-aside {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rating-block {
+  display: inline-block;
+  overflow: hidden;
+}
+
+
+.account__user-avatar {
+  border-radius: 200px;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+.user-review-block h4 {
+  align-items: center;
+  display: flex;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 15px 0 8px;
+}
+
+.account__user-avatar img {
+  border-radius: 200px;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.user-review-block h4 span {
+  margin-left: 6px;
+}
+
+.user-review-block h4 {
+  align-items: center;
+  display: flex;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 15px 0 8px;
+}
+
+.user-review-block h4 svg {
+  margin-left: 4px;
+  -webkit-transform: scale(.9);
+  transform: scale(.9);
+  -webkit-transform-origin: center right;
+  transform-origin: center right;
+}
+
+.user-review-block p {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.rating-version {
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 200px;
+  color: #000;
+  display: flex;
+  font-size: .6rem;
+  font-weight: 500;
+  padding: 2px 12px;
+  text-transform: uppercase;
+}
+
+.reviews-load-more {
+  border-top: 1px solid #ebebeb;
+  margin-top: 3rem;
+  padding-top: 3rem;
+}
+
+#reviews .button {
+  background: none;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  color: #000;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  overflow: hidden;
+  padding: 13px 25px;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all .2s ease-in-out;
+  z-index: 1;
+}
+
+#reviews button, input, optgroup, select, textarea {
+  border-radius: 0;
+  box-sizing: border-box !important;
+  color: #000;
+  font-family: system, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 500;
+  outline: none;
+}
+
+#reviews .empty-review {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 135px 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#reviews .empty-review svg {
+  display: block;
+  height: auto;
+  margin: 0 auto 1rem;
+  width: 35px;
+}
+
+.rating-version span:last-child {
+  margin-left: 3px;
+}
+
+.ratings-summary .rating-selected {
+  color: #d6001c;
+}
+
+.ratings-summary .rating-selected .rating-inner {
+  background-color: #d6001c;
+}
+
+#reviews .review-filters button.selected {
+  background-color: #000;
+  color: #fff;
+}
+
+#reviews .review-filters button {
+  background-color: #f0f4f5;
+  border-radius: 200px;
+  font-size: 10px;
+  font-weight: 500;
+  margin: 3px;
+  padding: .4rem .8rem;
+  text-transform: uppercase;
+}
+
+#reviews .user-reviews {
+  border-top: 1px solid #ebebeb;
+  margin-top: 1.8rem;
+  padding-top: 1.8rem;
+}
+
+</style>
 
