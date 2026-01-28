@@ -23,7 +23,6 @@ onMounted(() => {
           <div class="col s12 l12">
             <h2>Marcas destacadas</h2>
             <div class="swiper-container brands-block__container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
-
               <ClientOnly>
                 <swiper-container
                   :breakpoints="swiperBreakpoints"

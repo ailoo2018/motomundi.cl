@@ -63,9 +63,9 @@ console.log("data", data)
     >
       <div class="large-12 columns">
         <p class="no-orders-yet text-center" >
-          <div class="d-flex justify-center">
+          <span class="d-flex justify-center">
             <VIcon class="tabler-shopping-bag" />
-          </div>
+          </span>
         No hay productos para calificar.
         </p>
       </div>

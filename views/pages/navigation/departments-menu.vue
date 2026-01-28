@@ -3,21 +3,28 @@
 
 import { Departments } from "@/models/index.js"
 
-const userDept = useCookie('user-department')
-
-if(!userDept.value){
-  userDept.value = Departments.Road
-}
 
 const currDept = ref()
-currDept.value = userDept.value
-
-console.log("userDept", userDept.value)
 
 const goTo = ( url, departmentId) => {
-  userDept.value = departmentId
+  useCookie('user-department').value = departmentId
+  nextTick()
+  console.log("set cookie: " + useCookie('user-department').value + " : " + departmentId)
   window.location = (`${url}`)
 }
+
+onMounted(() => {
+
+
+  if(!useCookie('user-department').value){
+    useCookie('user-department').value = Departments.Road
+  }
+
+
+  currDept.value = useCookie('user-department').value
+  console.log("currDept:" + currDept.value)
+})
+
 </script>
 
 <template>
@@ -36,7 +43,7 @@ const goTo = ( url, departmentId) => {
           <span
             class="r"
             style="padding: 0 10px;"
-          >Calle </span>
+          >Calle {{currDept}} </span>
         </span>
       </a>
     </li>

@@ -34,7 +34,7 @@ const props = defineProps({
             >
               <img
                 src="/content/images/categories/rebajas-cascos.svg"
-                alt="Cascos"
+                alt="Cascos"4
               >
               <h2 style="color:#fff;">Cascos</h2>
             </a>

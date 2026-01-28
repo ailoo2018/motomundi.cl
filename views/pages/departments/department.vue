@@ -14,6 +14,10 @@ import LatestEvents from "@/views/pages/home/latest-events.vue"
 import Seo from "@/views/pages/home/seo.vue"
 import BikeSearch from "@/views/pages/home/bike-search.vue"
 import YoutubeLatest from "@/views/pages/home/youtube-latest.vue"
+import CafeRacerCategories from "@/views/pages/home/cafe-racer-categories.vue"
+import CafeRacerBrandsBlock from "@/views/pages/home/cafe-racer-brands-block.vue"
+import OffRoadCategories from "@/views/pages/home/OffRoadCategories.vue"
+import BrandsBlockMx from "@/views/pages/home/BrandsBlockMx.vue"
 
 const props = defineProps({
   wccId: {
@@ -37,7 +41,11 @@ const componentMap = {
   LatestEvents,
   Seo,
   BikeSearch,
-
+  CafeRacerCategories,
+  YoutubeLatest,
+  CafeRacerBrandsBlock,
+  OffRoadCategories,
+  BrandsBlockMx,
 }
 
 const { isMobile } = useDevice()
@@ -79,6 +87,8 @@ useIntersectionObserver([
 
 <template>
   <div style="background-color: rgb(245, 245, 245)">
+
+
     <Component
       :is="componentMap[widget.component]"
       v-for="widget in widgets"
