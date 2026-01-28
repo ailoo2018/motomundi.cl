@@ -2,15 +2,8 @@
 import MotomundiHeaderbar from "@/views/pages/motomundi-headerbar.vue"
 import MotomundiNavigation from "@/views/pages/motomundi-navigation.vue"
 import MotomundiHeaderlogo from "@/views/pages/motomundi-headerlogo.vue"
-import swiper from "@/views/pages/home/swiper.vue"
-import FeaturedProducts from "@/views/pages/home/featured-products.vue"
-import ScrollingText from "@/views/pages/home/scrolling-text.vue"
 import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
-import AddedValues from "@/views/pages/home/added-values.vue"
-import HomeCategories from "@/views/pages/home/home-categories.vue"
-import MobileTemplate from "@/views/pages/mobile/mobile-template.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
-import MobileMenu from "@/views/pages/mobile/mobile-menu.vue"
 
 const { injectSkinClasses } = useSkins()
 
@@ -33,7 +26,7 @@ injectSkinClasses()
 
 <template>
   <!-- mobile -->
-  <div v-if="isMobile">
+  <div class="mobile-only-container" >
     <main class="main-content" >
 
       <MobileHeader />
@@ -46,8 +39,7 @@ injectSkinClasses()
 
   <!-- desktop -->
   <div
-    v-else
-    class="layout-wrapper layout-blank"
+    class="layout-wrapper layout-blank desktop-only-container"
     data-allow-mismatch
   >
     <div class="landing-page-wrapper">
@@ -66,28 +58,82 @@ injectSkinClasses()
 </template>
 
 <style>
-body:not(.mobile) {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
-  linear-gradient(to top, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
-  url("https://www.motomundi.cl/Content/uploads/1/_data/3/c2/3c25da0755aa485e9a984f5ca30cfe7f.jpg");
+
+/* 1. Hiding logic using Media Queries */
+@media (max-width: 960px) {
+  .desktop-only-container { display: none !important; }
+  .mobile-only-container { display: block !important; }
 }
 
+@media (min-width: 961px) {
+  .mobile-only-container { display: none !important; }
+  .desktop-only-container { display: block !important; }
+}
 
+/* 2. Your existing styles modified to use Media Queries instead of .mobile/.desktop classes */
 
+/* Background for Desktop */
+@media (min-width: 961px) {
+  body {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
+    linear-gradient(to top, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
+    url("https://www.motomundi.cl/Content/uploads/1/_data/3/c2/3c25da0755aa485e9a984f5ca30cfe7f.jpg");
+  }
 
+  .desktop-only-container .main-content {
+    width: 90%;
+    min-width: 800px;
+    max-width: 1300px;
+    margin: auto;
+    background-color: white;
+  }
+}
+
+/* Main Content for Mobile */
+@media (max-width: 960px) {
+  .mobile-only-container .main-content {
+    width: 100%;
+    margin: auto;
+    background-color: white;
+  }
+}
 
 .layout-wrapper.layout-blank {
   flex-direction: column;
 }
 
+@media (max-width: 960px) and (min-width: 600px) {
+  .landing-page-wrapper .v-container {
+    padding-inline: 2rem !important;
+  }
+}
+
+@media (min-width: 960px) {
+  .v-container {
+    width: 90%;
+    min-width: 800px;
+    max-width: 1300px;
+  }
+}
 
 
-.mobile .main-content {
+/*
+body:not(.mobile) {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
+  linear-gradient(to top, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
+  url("https://www.motomundi.cl/Content/uploads/1/_data/3/c2/3c25da0755aa485e9a984f5ca30cfe7f.jpg");
+}
+*/
+
+.layout-wrapper.layout-blank {
+  flex-direction: column;
+}
+
+/*.mobile .main-content {
   width: 100%;
   margin: auto;
   background-color: white;
 }
-
 
 .desktop .main-content:not(.mobile) {
   width: 90%;
@@ -112,5 +158,5 @@ body:not(.mobile) {
     max-width: 1300px;
 
   }
-}
+}*/
 </style>

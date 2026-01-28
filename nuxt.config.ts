@@ -32,14 +32,14 @@ export default defineNuxtConfig({
       swr: 3600,
       cache: {
         tags: ['homepage'],
-        varies: ['Accept-Language'],
+        varies: ['Accept-Language', 'x-device-type'],
       },
     },
     '/moto-blog': {
       swr: 3600,
       cache: {
         tags: ['homepage'],
-        varies: ['Accept-Language'],
+        varies: ['Accept-Language', 'x-device-type'],
       },
     },
   },

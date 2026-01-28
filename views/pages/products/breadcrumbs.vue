@@ -42,8 +42,8 @@ const category = computed( () => {
     </ul>
 
     <span class="desktop-reference">
-      <span>M-2419884</span>
-      <span class="product-code">2419884</span>
+      <span>M-{{product.id}}</span>
+      <span v-if="product.code" class="product-code">{{product.code}}</span>
     </span>
   </div>
   <!-- /breadcrumbs -->
