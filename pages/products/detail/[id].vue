@@ -15,6 +15,13 @@ import Packs from "@/views/pages/products/detail/packs.vue"
 import { ProductType } from "@/models/products.js"
 import ProductRating from "@/views/pages/products/detail/product-rating.vue"
 
+definePageMeta({
+  layout: 'motomundi',
+  public: true,
+})
+
+
+
 const { isMobile, isTablet, isDesktop } = useDevice()
 const store = useConfigStore()
 const productForm = ref()
@@ -23,11 +30,32 @@ const blogArticle = ref()
 
 const route = useRoute()
 
-const config = useRuntimeConfig()
+console.log("router: " + route.params.id)
+
+// --- ID EXTRACTION LOGIC ---
+const productId = computed(() => {
+  // Case A: Direct hit on /products/detail/2993400
+  if (route.params.id) return route.params.id
+
+  // Case B: Friendly URL /motocicleta/2993400-some-name
+  // route.params.slug is an array due to the '+' in config
+  const slugValue = Array.isArray(route.params.slug)
+    ? route.params.slug[0]
+    : route.params.slug
+
+  if (slugValue) {
+    // Extract everything before the first hyphen
+    return slugValue.split('-')[0]
+  }
+
+  return null
+})
+
+
 
 const productCarousel = ref()
 
-const { data: product, pending } = await useFetch(`/api/product/${route.params.id}`)
+const { data: product, pending } = await useFetch(() => `/api/product/${productId.value}`)
 
 const onShowVideo = videoId => {
   console.log("showVideo: " + videoId)
@@ -76,12 +104,8 @@ const onSelectedColor = color => {
   productCarousel.value.selectSlideByProductColor(color)
 }
 
-store.skin = 'default'
-definePageMeta({
-  layout: 'motomundi',
-  public: true,
 
-})
+
 </script>
 
 <template>

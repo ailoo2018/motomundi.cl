@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { fileURLToPath } from 'node:url'
+import {fileURLToPath} from 'node:url'
 import vuetify from 'vite-plugin-vuetify'
 import svgLoader from 'vite-svg-loader'
 
@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     baseURL: '/',
     head: {
       titleTemplate: '%s - Tu Mundo Sobre Las DOS Ruedas',
-      title: 'Vuexy',
+      title: 'Motomundi',
       link: [{
         rel: 'icon',
         type: 'image/x-icon',
@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
   },
 
-  devtools: { enabled: true },
+  devtools: {enabled: true},
 
   sourcemap: {
     server: true,
@@ -27,8 +27,15 @@ export default defineNuxtConfig({
   ssr: true,
 
   routeRules: {
-    '/motocicleta/:id(\\d+)-**': { proxy: '/products/detail/:id' },
+    //   '/motocicleta/:id(\\d+)-**': { proxy: '/products/detail/:id' },
     '/': {
+      swr: 3600,
+      cache: {
+        tags: ['homepage'],
+        varies: ['Accept-Language'],
+      },
+    },
+    '/moto-blog': {
       swr: 3600,
       cache: {
         tags: ['homepage'],
@@ -46,9 +53,9 @@ export default defineNuxtConfig({
     public: {
       baseUrl: process.env.NODE_ENV === 'production' ? "https://w3.motomundi.cl" : "http://localhost:3000",
 
-      geoBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://geo.ailoo.cl'
+      geoBaseUrl: process.env.NODE_ENV === 'production' ? 'https://geo.ailoo.cl'
         : 'https://geo.ailoo.cl',
-      cmsBaseUrl: process.env.NODE_ENV === 'production'   ? 'https://betacms.ailoo.cl'
+      cmsBaseUrl: process.env.NODE_ENV === 'production' ? 'https://betacms.ailoo.cl'
         : 'http://developer.cms.ailoo.cl:3050',
       productsBaseUrl: process.env.NODE_ENV === 'production' ? 'http://beta.products.ailoo.cl'
         : 'http://localhost:3011',
@@ -82,8 +89,16 @@ export default defineNuxtConfig({
     dirs: ['./@core/utils', './@core/composable/', './plugins/*/composables/*'],
   },
 
-  hooks: {},
-
+  hooks: {
+    'pages:extend'(pages) {
+      pages.push({
+        name: 'product-friendly-route',
+        // Capture everything after the slash into a single param called 'slug'
+        path: '/motocicleta/:slug+',
+        file: '~/pages/products/detail/[id].vue'
+      })
+    }
+  },
   experimental: {
     typedPages: true,
   },
@@ -127,13 +142,13 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    define: { 'process.env': {} },
-  
+    define: {'process.env': {}},
+
     build: {
       sourcemap: true,
       chunkSizeWarningLimit: 5000,
     },
-  
+
     // REMOVE this - not a valid option
     // server: {
     //   sourcemap: true,
@@ -187,7 +202,6 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-07-15',
-
 
 
   modules: ['@vueuse/nuxt', '@nuxtjs/i18n', '@nuxtjs/device', '@pinia/nuxt'],
