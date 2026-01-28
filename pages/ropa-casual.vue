@@ -1,11 +1,8 @@
-<script setup lang="ts">
+<script setup>
+import Department from "@/views/pages/departments/department.vue"
+import { Departments } from "@/models/index.js"
 
 </script>
-
 <template>
- <h1>ropa casual</h1>
+  <Department :wcc-id="Departments.LifeStyle" />
 </template>
-
-<style scoped lang="scss">
-
-</style>

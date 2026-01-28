@@ -12,4 +12,12 @@ const CartItemType = Object.freeze({
   Pack: 3,
 })
 
-export { SaleItemType, CartItemType }
+const Departments = Object.freeze({
+  Road: 10018,
+  Mx: 116190,
+  CafeRacer: 118485,
+  LifeStyle: 116189,
+
+})
+
+export { SaleItemType, CartItemType, Departments }

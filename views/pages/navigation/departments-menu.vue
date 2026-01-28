@@ -1,30 +1,52 @@
+<script setup>
 
+
+import { Departments } from "@/models/index.js"
+
+const userDept = useCookie('user-department')
+
+if(!userDept.value){
+  userDept.value = Departments.Road
+}
+
+const currDept = ref()
+currDept.value = userDept.value
+
+console.log("userDept", userDept.value)
+
+const goTo = ( url, departmentId) => {
+  userDept.value = departmentId
+  window.location = (`${url}`)
+}
+</script>
 
 <template>
   <!-- #segments -->
   <ul id="segments">
     <li
-      class="c0  open "
+      class="c0  "
+      :class="{ open: currDept === Departments.Road}"
       style="background-color: transparent;"
     >
       <a
         title="Motomundi"
-        @click="selectDepartment(29673, '/');"
+        @click="goTo('/', Departments.Road) "
       >
         <span class="l">
           <span
             class="r"
             style="padding: 0 10px;"
-          >Calle</span>
+          >Calle </span>
         </span>
       </a>
     </li>
     <li
       class="c1 "
+      :class="{ open: currDept === Departments.CafeRacer}"
       style="background-color: transparent;"
     >
       <a
-        href="/cafe-racer"
+        @click="goTo('/cafe-racer', Departments.CafeRacer) "
         title="Ropa Café Racer en Motomundi"
       >
         <span class="l">
@@ -35,10 +57,11 @@
     </li>
     <li
       class="c2 "
+      :class="{ open: currDept === Departments.Mx}"
       style="background-color: transparent;"
     >
       <a
-        href="/motocross-enduro-trial"
+        @click="goTo('/motocross-enduro-trial', Departments.Mx) "
         title="Off-Road en Motomundi"
       >
         <span class="l">
@@ -49,10 +72,11 @@
     </li>
     <li
       class="c3 "
+      :class="{ open: currDept === Departments.LifeStyle}"
       style="background-color: transparent;"
     >
       <a
-        href="/ropa-casual"
+        @click="goTo('/ropa-casual', Departments.LifeStyle) "
         title="Ropa Casual en Motomundi"
       >
         <span class="l">

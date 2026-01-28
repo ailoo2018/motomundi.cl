@@ -1,11 +1,8 @@
-<script setup lang="ts">
+<script setup>
+import Department from "@/views/pages/departments/department.vue"
+import { Departments } from "@/models/index.js"
 
 </script>
-
 <template>
-<h1> mx enduro </h1>
+  <Department :wcc-id="Departments.Mx" />
 </template>
-
-<style scoped lang="scss">
-
-</style>
