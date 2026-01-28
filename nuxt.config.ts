@@ -28,6 +28,13 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/motocicleta/:id(\\d+)-**': { proxy: '/products/detail/:id' },
+    '/': {
+      swr: 3600,
+      cache: {
+        tags: ['homepage'],
+        varies: ['Accept-Language'],
+      },
+    },
   },
 
   runtimeConfig: {
