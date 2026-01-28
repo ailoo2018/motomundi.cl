@@ -1,7 +1,8 @@
 import type { RouterConfig } from '@nuxt/schema'
 
 export default <RouterConfig> {
-  routes: (_routes) => [
+  routes: (_routes) => {
+    return  [
     ..._routes,
 /*
     {
@@ -10,5 +11,6 @@ export default <RouterConfig> {
       component: () => import('~/pages/blog/index.vue')
     }
 */
-  ],
+  ]
+  },
 }

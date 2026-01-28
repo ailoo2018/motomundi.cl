@@ -44,8 +44,8 @@ if(path === "/Product/ReviewProduct.rails"){
   try {
     const { data, error } = await useFetch(`/api/friendlyurl?path=${path}`)
 
-    config.value = data
-    console.log(`Mapping ${path}:`, config)
+    config.value = data.value
+    console.log(`Mapping ${path}:` + JSON.stringify( config.value ))
     if (error.value || !config.value) {
       throw createError({
         statusCode: 404,

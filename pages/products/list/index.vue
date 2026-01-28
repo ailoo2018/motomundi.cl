@@ -11,7 +11,7 @@ definePageMeta({
 </script>
 
 <template>
-  <ProductsList />
+  <h1>not using slug</h1>
 </template>
 
 <style scoped lang="scss">

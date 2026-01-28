@@ -19,6 +19,7 @@ console.log("the query", query)
 
 const total = ref(0)
 const totalPages = ref(0)
+const queryDesc = ref()
 const currentPage = ref(1)
 const ignoreNextPageWatch = ref(false)
 const pageSize = ref(60)
@@ -114,9 +115,17 @@ const search = async () => {
     }
 
 
-    console.log("currencty Query:", cQuery)
-    console.log("baseQuery Query:", baseQuery)
-    console.log("product list body:", body)
+
+
+/*
+    const { data } = await useFetch(`/api/product/search`, {
+      key: `product-search-` + JSON.stringify(body),
+      method: "POST",
+      body: body,
+    })
+
+    rs = data.value
+*/
 
     rs = await $fetch(`/api/product/search`, {
       key: `product-search-` + JSON.stringify(body),
@@ -124,9 +133,13 @@ const search = async () => {
       body: body,
     })
 
+
+
+
     if (rs && rs.products) {
       total.value = rs.totalHits
       totalPages.value = rs.totalHits / pageSize.value
+      queryDesc.value = getQueryDescription(rs.query)
       products.value = rs.products
       if (!filters.value)
         filters.value = rs.filters
@@ -137,6 +150,13 @@ const search = async () => {
   } finally {
     loading.value = false
   }
+}
+
+const getQueryDescription = q => {
+  if(q.category)
+    return  `<span class="total-results">${ rs?.totalHits } </span>` + q.category.name
+
+  return "Resultado"
 }
 
 const baseQuery = []
@@ -197,10 +217,10 @@ search()
               <h1
                 class="header-title"
                 style="padding-inline-start: 15px;"
+                v-html="queryDesc"
               >
-                Por 'asmax' hemos encontrado
-                <span class="total-results ng-binding">{{ rs?.totalHits }} </span>
-                artículos
+
+
               </h1>
             </div>
           </div>
@@ -296,10 +316,6 @@ search()
   text-transform: uppercase;
 }
 
-.filters__header .filters__header-title .header-title .total-results,
-.filters__header .filters__header-title .header-title strong {
-  color: #d6001c;
-}
 
 @media only screen and (min-width: 993px) {
   .filters__header .filters__header-title .header-title {

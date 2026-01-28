@@ -1,7 +1,6 @@
 // server/middleware/route-mapper.ts
 export default defineEventHandler(async (event) => {
   const path = getRequestPath(event)
-
   // Skip if it's already a product list page or an API call
   if (path.startsWith('/products') || path.startsWith('/api') || path.startsWith('/_nuxt')) {
     return
