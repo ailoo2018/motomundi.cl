@@ -7,21 +7,42 @@ const props = defineProps(
   },
 )
 
+function formatName(str) {
+  // Remove extra spaces
+  str = str.trim();
+
+  // Capitalize the first letter of each word
+  const words = str.split(" ");
+  const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+
+  return formattedWords.join(" ");
+}
+
 const reviews = ref([])
 const reviewStats = ref({})
-const ratingCriteria = ref({ rating: 0, selected: "TODOS"})
+const ratingCriteria = ref({ rating: 0, selected: "TODOS" })
 
 
 const listReviews = () => {
 
 }
 
-const getReviewInitial = () => {
-  return "JCF"
+const getReviewInitial = review => {
+  if(review.party != null && review.party.name != null && review.party.name.length > 0){
+    return review.party.name[0].toUpperCase();
+  }
+
+  return "A"
+
 }
 
-const getReviewerName = () => {
-  return "Johnny"
+const getReviewerName = review => {
+  if(review.party != null && review.party.name != null){
+    var arr = review.party.name.split(' ')
+    return formatName( arr[0] )
+  }
+
+  return "Anónimo"
 }
 
 const selectRating = stars => {
@@ -40,27 +61,26 @@ onMounted(async () => {
 
   reviewStats.value = await $fetch("/api/reviews/stats?productId=" + props.product.id)
 
-  reviewStats.value.stars = Math.floor(reviewStats.value.avgRating*2);
+  reviewStats.value.stars = Math.floor(reviewStats.value.avgRating*2)
 
-  reviewStats.value["5"] = 0;
-  reviewStats.value["4"] = 0;
-  reviewStats.value["3"] = 0;
-  reviewStats.value["2"] = 0;
-  reviewStats.value["1"] = 0;
+  reviewStats.value["5"] = 0
+  reviewStats.value["4"] = 0
+  reviewStats.value["3"] = 0
+  reviewStats.value["2"] = 0
+  reviewStats.value["1"] = 0
 
   for(var r of reviewStats.value.groups){
-    reviewStats.value["" + r.ratingGroup] = r.totalReviews / reviewStats.value.totalReviews * 100;
+    reviewStats.value["" + r.ratingGroup] = r.totalReviews / reviewStats.value.totalReviews * 100
   }
 
 })
 </script>
 
 <template>
-
   <VRow
+    v-if="reviews.length > 0"
     id="reviews"
     style="padding: 12px;"
-    v-if="reviews.length > 0"
   >
     <VCol cols="12">
       <aside
@@ -72,13 +92,18 @@ onMounted(async () => {
             <h2>Valoraciones</h2>
           </div>
         </VCol>
-        <VCol cols="12" md="4" lg="3">
+        <VCol
+          cols="12"
+          md="4"
+          lg="3"
+        >
           <div class="ratings-summary">
             <span class="rating-block">
               <span>
                 <VRating
                   readonly
-                  :model-value="4"
+                  color="primary"
+                  :model-value="reviewStats.avgRating"
                 />
               </span>
             </span>
@@ -102,8 +127,8 @@ onMounted(async () => {
             <div
 
               class="rating-star-summary"
-              @click="selectRating(4)"
               :class="{'rating-selected': ratingCriteria.rating == 4 }"
+              @click="selectRating(4)"
             >
               <span>4 estrellas</span>
               <div class="rating-outer">
@@ -117,8 +142,8 @@ onMounted(async () => {
             <div
 
               class="rating-star-summary"
-              @click="selectRating(3)"
               :class="{'rating-selected': ratingCriteria.rating == 3 }"
+              @click="selectRating(3)"
             >
               <span>3 estrellas</span>
               <div class="rating-outer">
@@ -130,8 +155,8 @@ onMounted(async () => {
             </div>
             <div
               class="rating-star-summary"
-              @click="selectRating(2)"
               :class="{'rating-selected': ratingCriteria.rating == 2 }"
+              @click="selectRating(2)"
             >
               <span>2 estrellas</span>
               <div class="rating-outer">
@@ -143,8 +168,8 @@ onMounted(async () => {
             </div>
             <div
               class="rating-star-summary"
-              @click="selectRating(1)"
               :class="{'rating-selected': ratingCriteria.rating == 1 }"
+              @click="selectRating(1)"
             >
               <span>1 estrella</span>
               <div class="rating-outer">
@@ -156,7 +181,13 @@ onMounted(async () => {
             </div>
           </div>
         </VCol>
-        <VCol cols="12" sm="12" md="7" lg="8" class="col-lg-offset-1" >
+        <VCol
+          cols="12"
+          sm="12"
+          md="7"
+          lg="8"
+          class="col-lg-offset-1"
+        >
           <div class="review-filters">
             <button
               :class="{'selected': ratingCriteria.selected == 'TODOS'}"
@@ -201,7 +232,10 @@ onMounted(async () => {
                       <span>
                         <VRating
                           readonly
-                          :model-value="4"
+                          color="primary"
+                          density="compact"
+                          size="x-small"
+                          :model-value="review.rating / 2 "
                         />
    
                       </span>
@@ -224,13 +258,12 @@ onMounted(async () => {
                       style="background: linear-gradient(45deg, rgb(127, 167, 26) 0%, rgb(119, 138, 191) 100%);"
                     >
                       <img
-
                         alt="user-avatar"
                         style="display: none;"
                       >
                       {{ getReviewInitial(review) }}
                     </div>
-                    <span>{{ getReviewerName(review) }} • {{ review.date }}</span>
+                    <span>{{ getReviewerName(review) }} • {{ formatDate( review.date, { day: '2-digit', month: '2-digit', year: 'numeric' } ) }}</span>
                     <svg
                       width="18"
                       height="18"
@@ -244,11 +277,11 @@ onMounted(async () => {
                   <p>
                     {{ review.comment }}
                   </p>
-                  <div class="review-gallery">
+                  <div v-if="review.images" class="review-gallery">
                     <span
-                      class="image-cover"
-                      v-if="review.images"
                       v-for="revImg in review.images"
+
+                      class="image-cover"
                     >
                       <img
                         v-if="revImg.image"
@@ -298,6 +331,7 @@ onMounted(async () => {
     </VCol>
   </VRow>
 </template>
+
 <style>
 #reviews h2 {
   font-size: 24px;
@@ -558,5 +592,14 @@ onMounted(async () => {
   padding-top: 1.8rem;
 }
 
+.rating .small {
+  display: inline-block;
+  font-size: 9px;
+  font-style: normal;
+  height: 26px;
+  line-height: 27px;
+  width: 26px;
+  margin: 0;
+}
 </style>
 
