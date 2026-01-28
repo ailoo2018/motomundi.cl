@@ -215,12 +215,9 @@ search()
           <div class="container">
             <div class="filters__header-title">
               <h1
-                class="header-title"
-                style="padding-inline-start: 15px;"
+                class="header-title mb-4"
                 v-html="queryDesc"
               >
-
-
               </h1>
             </div>
           </div>

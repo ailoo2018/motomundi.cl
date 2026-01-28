@@ -126,7 +126,8 @@ const showFilters  = () => {
           </VBtn>
         </div>
       </div>
-      <div class="fast-delivery-button hide-on-small-only">
+<!--
+      <div  class="fast-delivery-button hide-on-small-only">
         <nav class="fast-delivery">
           <span
             class="mtc-link fake-checkbox"
@@ -137,6 +138,7 @@ const showFilters  = () => {
           </span>
         </nav>
       </div>
+-->
       <div
         class="most-used-filters"
         style="display: none;"
