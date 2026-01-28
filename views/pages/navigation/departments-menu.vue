@@ -5,6 +5,7 @@ import { Departments } from "@/models/index.js"
 
 
 const currDept = ref()
+currDept.value = useCookie('user-department').value
 
 const goTo = ( url, departmentId) => {
   useCookie('user-department').value = departmentId
@@ -43,7 +44,7 @@ onMounted(() => {
           <span
             class="r"
             style="padding: 0 10px;"
-          >Calle {{currDept}} </span>
+          >Calle </span>
         </span>
       </a>
     </li>

@@ -163,10 +163,10 @@ const events = computed(() => {
                       </div>
                     </div>
                     <div class="gt-text ">
-                      {{ truncateText( e.summary, 250 )}}
+                      {{ truncateText( e.summary, 220 )}}
                     </div>
                     <div class="gt-details">
-                      <div class="gt-location">
+                      <div class="gt-location" v-if="e.location">
                         <svg
                           viewBox="0 0 24 24"
                           fill="none"
@@ -446,7 +446,7 @@ h2 {
   background: #FFFFFF;
   position: relative;
   z-index: 2;
-  margin: -65px 20px 0;
+  margin: -65px 10px 0;
   padding: 20px;
   border-radius: 5px;
   overflow: hidden;
@@ -478,6 +478,7 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-not-start.fc-end {
 @media (max-width: 767px) {
   .gt-columns.gt-column-10 .gt-col, .gt-columns.gt-column-9 .gt-col, .gt-columns.gt-column-8 .gt-col, .gt-columns.gt-column-7 .gt-col, .gt-columns.gt-column-6 .gt-col, .gt-columns.gt-column-5 .gt-col, .gt-columns.gt-column-4 .gt-col, .gt-columns.gt-column-3 .gt-col, .gt-columns.gt-column-2 .gt-col {
     width: 100%;
+    padding: 0;
   }
 }
 
@@ -526,22 +527,8 @@ h2 {
   margin-top: 40px;
 }
 
-.button {
-  background: none;
-  border: 2px solid #000;
-  box-sizing: border-box;
-  color: #000;
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .5px;
-  overflow: hidden;
-  padding: 13px 25px;
-  position: relative;
-  text-align: center;
-  text-transform: uppercase;
-  transition: all .2s ease-in-out;
-  z-index: 1;
+.gt-category-111 a {
+  padding: 0
 }
 
 .button.button--skewed:hover {
