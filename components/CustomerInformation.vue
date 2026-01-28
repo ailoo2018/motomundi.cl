@@ -28,10 +28,12 @@ const contactEmail = ref('')
 const contactPhone = ref('')
 const disableEmail = ref(true)
 
+console.log("CustomerInfo.vue")
 
-const handleUserLoggedIn = async () => {
+const handleUserLoggedIn = async loginData => {
+  console.log("loginData:::", loginData)
   showLogin.value = false
-  await getCurrentUser()
+  await getCurrentUser(loginData)
   await getAddresses()
 }
 
@@ -39,27 +41,27 @@ const closedLogin = () => {
   showLogin.value = false
 }
 
-const getCurrentUser = async () => {
+const getCurrentUser = async (loginData) => {
 
 
-  const userId = useCookie('user_id').value
+  const accessToken = useCookie('accessToken').value
 
-  if (userId) {
+  if (accessToken || loginData) {
 
-    const { data } = await useFetch('/api/account/user', {
+    const  data  = await $fetch('/api/account/user', {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
 
     })
 
-    console.log("Return CurrentUser.rails", data.value)
-    if (data.value && data.value.id > 0) {
-      user.value = data.value
+    console.log("Return CurrentUser.rails", data)
+    if (data && data.id > 0) {
+      user.value = data
     }
 
-    if (data.value && data.value.person && data.value.person.id > 0) {
-      party.value = data.value.person
+    if (data && data.person && data.person.id > 0) {
+      party.value = data.person
     }
 
 
@@ -92,21 +94,15 @@ const getAddresses = async () => {
     }
     console.log("accesToken: " + accessToken)
 
-    const { data, error: fetchError } = await useFetch('/api/account/addresses', {
+    const data = await $fetch('/api/account/addresses', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
 
-    if (fetchError.value) {
-      console.log("Error returned ShippingAdresses.rails", fetchError.value)
-      error.value = fetchError.value.data.errors
-
-      return
-    }
 
 
-    if (data.value) {
-      const addresses = data.value.addresses
+    if (data) {
+      const addresses = data.addresses
       if (addresses && addresses.length > 0) {
         var defaultAddr = addresses.find(addr => addr.default)
         if (!defaultAddr) {
@@ -252,6 +248,8 @@ const handlePhoneInput = event => {
         @user-logged-in="handleUserLoggedIn"
         @closed="closedLogin"
       />
+
+
       <div class="data__contact-details">
         <h2>Información de contacto</h2>
         <p>Usaremos estos datos para avisarte sobre el estado del pedido</p>

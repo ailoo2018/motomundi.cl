@@ -10,6 +10,12 @@ import Empty from "~/components/Empty.vue"
 import { useCartStore } from "@/stores/cart.js"
 import { useGuestUser } from "@/composables/useGuestUser.js"
 
+useHead({
+  link: [
+    { rel: 'stylesheet', href: '/css/checkout.css' },
+  ],
+})
+
 
 definePageMeta({
   layout: 'blank',

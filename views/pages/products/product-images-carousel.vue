@@ -116,7 +116,6 @@ register()
 <template>
   <!-- carousel -->
 
-
   <div class="product-photo carousel-content__wrapper">
     <div
       class="product__notice"

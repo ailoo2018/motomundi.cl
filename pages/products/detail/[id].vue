@@ -54,11 +54,13 @@ const productId = computed(() => {
 
 
 const productCarousel = ref()
+const currentVideoId = ref()
 
 const { data: product, pending } = await useFetch(() => `/api/product/${productId.value}`)
 
 const onShowVideo = videoId => {
   console.log("showVideo: " + videoId)
+  currentVideoId.value = videoId
   showVideoDialog.value = true
 }
 
@@ -224,7 +226,7 @@ const onSelectedColor = color => {
       <VCardText class="pa-1">
         <div class="video-container">
           <iframe
-            src="https://www.youtube.com/embed/npaJwfAZzQE"
+            :src="`https://www.youtube.com/embed/${currentVideoId}`"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

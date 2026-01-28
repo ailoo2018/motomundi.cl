@@ -37,6 +37,7 @@ const closeDialog = async () => {
   emit("closed")
 }
 
+console.log("LoginDialog:::")
 
 const handleLogin = async () => {
   error.value = ''
@@ -58,6 +59,7 @@ const handleLogin = async () => {
     useCookie('user_id').value = data.userId
     useCookie('accessToken').value = data.accessToken
 
+    await nextTick()
     emit("user-logged-in", data)
   } catch (err) {
     const errorCode = err.data?.data?.code
@@ -109,7 +111,7 @@ const handleCallback = async response => {
       useCookie('user_id').value = data.value.userId
       useCookie('accessToken').value = data.value.accessToken
 
-
+      await nextTick()
       emit("user-logged-in", data.value)
     } else {
       console.error('Failed to get access token')

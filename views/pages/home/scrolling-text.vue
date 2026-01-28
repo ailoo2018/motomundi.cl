@@ -17,10 +17,21 @@ let scrollItems = []
 if (props.widget && props.widget.configuration && props.widget.configuration) {
   scrollItems = props.widget.configuration.items
 }
+
+if(!scrollItems || scrollItems.length === 0) {
+  scrollItems = [
+    { text: "Si lo encuentras más barato te igualamos el precio" },
+    { text: "Compra ahora con Webpay y paga en 12 cuotas sin intereses" },
+    { text: "CLICK&amp;COLLECT: Recoge tu pedido en 2h en tu tienda más cercana" },
+    { text: "Si lo encuentras más barato te igualamos el precio" },
+  ]
+}
 </script>
 
 <template>
   <ClientOnly>
+
+
     <swiper-container class="container text-center pt-2" events-prefix="swiper-">
       <swiper-slide
         v-for="item in scrollItems"
