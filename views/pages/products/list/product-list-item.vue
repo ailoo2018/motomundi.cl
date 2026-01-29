@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import emptyImage from "@images/empty-image.avif"
-
+import AddToFavsBtn from "@/components/AddToFavsBtn.vue"
 
 
 const props = defineProps(
@@ -18,10 +18,19 @@ const props = defineProps(
 )
 
 
-
-const onClickMiniture = (img) => {
+const onClickMiniture = img => {
   props.product.image = img.image
 }
+
+const imageError = ref(false)
+
+const handleImageError = () => {
+  imageError.value = true
+}
+
+watch(() => props.product.image, () => {
+  imageError.value = false
+})
 
 const miniatures = computed(() => {
   if (!props.product?.images) return []
@@ -40,7 +49,7 @@ const miniatures = computed(() => {
     })
 
   const uniqueImages = Array.from(uniqueImagesMap.values())
-  if(uniqueImages.length <= 1){
+  if (uniqueImages.length <= 1) {
     return []
   }
 
@@ -53,38 +62,33 @@ const miniatures = computed(() => {
 <template>
   <article class="item">
     <section>
-      <button
-        class="add-to-favs "
-        ng-click="addRemoveToWishList(3306268, $event);"
-      >
-        <svg
-          class="add icon sprite-line-icons"
-          height="24"
-          width="29"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>Añadir a favoritos</title>
-          <use
-            href="/content/svg/motomundi.svg#i-icon-favorite"
-            xlink:href="/content/svg/motomundi.svg#i-icon-favorite"
-          />
-        </svg>
-      </button>
+      <AddToFavsBtn :product="product" />
+
       <a
         class="mtc-link"
-        data-dr="true"
-        :href="props.product.url"
+        :href="product.url"
       >
-        <div class="product-tags" />
+        <div class="product-tags">
+          <span
+            v-if="product.discountPercent > 0"
+            class="tag product-tag product-tag--old product-tag--sales"
+          >
+            <span class="discount">Rebajas -{{ Math.round(product.discountPercent) }}%</span>
+          </span>
+          <span v-if="product.isNew" class="tag product-tag product-tag--old product-tag--new">
+            <span class="discount">Novedad</span>
+          </span>
+        </div>
         <div class="special-tag" />
         <span class="product-image">
 
           <VImg
+            v-if="!imageError"
             max-width="232"
-
             :src="getImageUrl( product.image, 300, getDomainId())"
             :alt="product.name"
             class="cdn-img mb-1"
+            @error="handleImageError"
           >
             <template #error>
               <VImg
@@ -94,8 +98,13 @@ const miniatures = computed(() => {
               />
             </template>
           </VImg>
-
-     
+              <VImg
+                v-else
+                :src="emptyImage"
+                :aspect-ratio="1"
+                class="mx-auto rounded"
+                max-width="232"
+              />
         </span>
 
 
@@ -109,9 +118,9 @@ const miniatures = computed(() => {
             <img
               :title="img.colorName"
               :src="getImageUrl(img.image, 50, getDomainId())"
+              :alt="img.colorName"
               @click="onClickMiniture(img)"
               @mouseenter="onClickMiniture(img)"
-              :alt="img.colorName"
             >
           </div>
         </div>
@@ -120,7 +129,6 @@ const miniatures = computed(() => {
       <section class="item__info">
         <a
           class="mtc-link"
-          data-dr="true"
           :href="props.product.url"
         >
           <div class="item__name">
@@ -151,7 +159,6 @@ const miniatures = computed(() => {
 
         <a
           class="item__price-info mtc-link"
-          data-dr="true"
           :href="props.product.url"
         >
           <span class="item__bottom">
@@ -335,8 +342,7 @@ const miniatures = computed(() => {
   font-weight: 700;
 }
 
-.prod-list-miniatures-item
-{
+.prod-list-miniatures-item {
   cursor: pointer;
 }
 
@@ -351,6 +357,13 @@ const miniatures = computed(() => {
   .row .col.lc5 .item .item__info {
     padding: 0 10px;
   }
+}
+
+
+/**** tags ******/
+
+.tag.product-tag.product-tag--crazydays, .tag.product-tag.product-tag--offer, .tag.product-tag.product-tag--sales {
+  background-color: #d6001c;
 }
 </style>
 
