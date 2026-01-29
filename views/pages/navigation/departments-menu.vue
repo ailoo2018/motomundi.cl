@@ -14,7 +14,7 @@ if (route.path === ( '/' ) ) {
 }else if(route.path.startsWith("/motocross-enduro-trial")){
   currDept.value =Departments.Mx
 }else if(route.path.startsWith("/ropa-casual")){
-  currDept.value =Departments.Mx
+  currDept.value =Departments.LifeStyle
 }
 
 const goTo = async ( event, url, departmentId) => {
