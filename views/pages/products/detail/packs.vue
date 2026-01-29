@@ -63,79 +63,7 @@ const showPackDialog = pack => {
         cols="12"
       >
         <PackItem :pack="pack" @open-pack="showPackDialog"/>
-        <div v-if="false" class="pack-item">
-          <div class="pack-item__description">
-            <div class="pack-item__description-content">
-              <h4 class="title">
-                {{ pack.title }}
-              </h4>
-              <p class="description" />
-            </div>
-            <div
-              class="pack-item__more-info"
-              @click="showPackDialog(pack)"
-            >
-              <p class="pack-item__savings">
-                <strong>
-                  <span>ahorro</span> {{ formatMoney( pack.savings * -1 ) }}
-                </strong>
-                <small>Total: {{ formatMoney(pack.total) }}</small>
-              </p>
-              <svg
-                class="sprite-line-icons"
-                width="14"
-                height="14"
-              >
-                <title>Right chevron</title>
-                <use
-                  style="stroke:white;"
-                  href="/content/svg/motomundi.svg#i-icon-angle-right"
-                />
-              </svg>
-            </div>
-          </div>
-          <div class="pack-item__image-container">
-            <div class="pack-item__image">
-              <a
-                class="mtc-link nuxt-link-active nuxt-link-exact-active"
-                data-dr="true"
-                :href="pack.mainProduct.url"
-              >
-                <span>
-                  <img
-                    v-if="pack.mainProduct.image"
-                    width="70"
-                    height="70"
-                    :src="getImageUrl(pack.mainProduct.image, 300, getDomainId())"
-                    :alt="pack.mainProduct.productName"
-                    class="cdn-img"
-                  >
-                </span>
-              </a>
-            </div>
-            <div
-              v-for="slot in pack.products"
-              class="pack-item__image"
-            >
-              <a
-                class="mtc-link"
-                data-dr="true"
-                :href="slot.url"
-              >
-                <span>
 
-                  <img
-                    width="70"
-                    height="70"
-                    :src="getImageUrl(slot.image, 600, getDomainId())"
-                    :alt="slot.productName"
-                    class="cdn-img"
-                  >
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
       </VCol>
     </VRow>
   </div>

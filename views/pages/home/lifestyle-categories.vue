@@ -19,7 +19,7 @@
                 href="/jockey-para-moto"
                 class="mtc-link"
               ><img
-                 src="/Content/assets/menu/categories/51-moto-casual-gorras.svg"
+                 src="/content/assets/menu/categories/51-moto-casual-gorras.svg"
                  alt="Cascos"
                >
                 <h2 style="color:#fff;">Jockeys</h2></a><a
@@ -27,28 +27,28 @@
 
                 class="mtc-link"
               ><img
-                 src="/Content/assets/menu/categories/46-moto-casual-camisetas.svg"
+                 src="/content/assets/menu/categories/46-moto-casual-camisetas.svg"
                  alt="Chaquetas"
                >
                 <h2 style="color:#fff;">Poleras</h2></a><a
                 href="/sweaters-y-polerones"
                 class="mtc-link"
               ><img
-                 src="/Content/assets/menu/categories/57-moto-casual-sudaderas.svg"
+                 src="/content/assets/menu/categories/57-moto-casual-sudaderas.svg"
                  alt="Guantes"
                >
                 <h2 style="color:#fff;">Polerones</h2></a><a
                 href="/mochilas"
                 class="mtc-link"
               ><img
-                 src="/Content/assets/menu/categories/45-moto-casual-bolsas.svg"
+                 src="/content/assets/menu/categories/45-moto-casual-bolsas.svg"
                  alt="Botas"
                >
                 <h2 style="color:#fff;">Mochilas</h2></a><a
                 href="/chaquetas-casual"
                 class="mtc-link"
               ><img
-                 src="/Content/assets/menu/categories/48-moto-casual-chaquetas.svg"
+                 src="/content/assets/menu/categories/48-moto-casual-chaquetas.svg"
                  alt="Pantalones"
                >
                 <h2 style="color:#fff;">Chaquetas</h2></a><a
@@ -56,7 +56,7 @@
 
                 class="mtc-link"
               ><img
-                 src="/Content/assets/menu/categories/52-moto-casual-gorros.svg"
+                 src="/content/assets/menu/categories/52-moto-casual-gorros.svg"
                  alt="Off-Road"
                >
                 <h2 style="color:#fff;">Gorros</h2></a>
