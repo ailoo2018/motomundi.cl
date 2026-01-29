@@ -2,7 +2,7 @@
 import ProductsList from "@/views/pages/products/list/products-list.vue"
 
 definePageMeta({
-  layout: 'motomundi',
+ // layout: 'motomundi',
   public: true,
 })
 

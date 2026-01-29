@@ -2,11 +2,6 @@
 import StoreCalendar from "@/views/pages/stores/store-calendar.vue"
 import { getBaseCDN } from "@core/utils/formatters.js"
 
-definePageMeta({
-  layout: 'motomundi',
-  public: true,
-
-})
 
 
 const { data } = await useFetch("/api/stores/list", {

@@ -81,37 +81,40 @@ const search = async () => {
       if (facet.type === "brands") {
         body.brands = facet.values
       }
-      if (facet.type === "categories") {
+      else if (facet.type === "categories") {
         body.categories = facet.values
       }
 
-      if (facet.type === "tags") {
+      else if (facet.type === "tags") {
         facet.values.forEach(t => {
           body.tags.push(t)
         })
       }
-
-      if (facet.type === "sizes") {
+      else if (facet.type === "sizes") {
         facet.values.forEach(t => {
           body.sizes.push(t)
         })
       }
-      if (facet.type === "models") {
+      else if (facet.type === "models") {
         facet.values.forEach(t => {
           body.models.push(t)
         })
       }
-      if (facet.type === "collection") {
+      else if (facet.type === "collection") {
         body.collectionId = facet.value
       }
-      if (facet.type === "colors") {
+      else if (facet.type === "colors") {
         facet.values.forEach(t => {
           body.colors.push(t)
         })
       }
-      if (facet.type === "bike") {
+      else if (facet.type === "bike") {
         body.bike = facet.value
       }
+      else {
+        body[facet.type] = facet.value
+      }
+
     }
 
 
@@ -169,6 +172,9 @@ if (query.collection) {
 }
 if(query.bikeManufacturer){
   baseQuery.push({ type: "bike", value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear } })
+}
+if(query.minDiscount){
+  baseQuery.push({ type: "minDiscount", value: query.minDiscount })
 }
 
 

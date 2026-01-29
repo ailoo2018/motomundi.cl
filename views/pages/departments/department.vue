@@ -53,11 +53,7 @@ const store = useConfigStore()
 
 store.skin = 'default'
 
-definePageMeta({
-  layout: 'motomundi',
-  public: true,
 
-})
 
 const activeSectionId = ref()
 

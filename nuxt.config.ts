@@ -28,18 +28,39 @@ export default defineNuxtConfig({
 
   routeRules: {
     //   '/motocicleta/:id(\\d+)-**': { proxy: '/products/detail/:id' },
-    '/': {
+/*    '/': {
       swr: 3600,
       cache: {
         tags: ['homepage'],
-        varies: ['Accept-Language', 'x-device-type'],
+        varies: ['Accept-Language'],
       },
     },
+    '/cafe-racer': {
+      swr: 3600,
+      cache: {
+        tags: ['homepage'],
+        varies: ['Accept-Language'],
+      },
+    },
+    '/motocross-enduro-trial': {
+      swr: 3600,
+      cache: {
+        tags: ['homepage'],
+        varies: ['Accept-Language'],
+      },
+    },
+    '/ropa-casual': {
+      swr: 3600,
+      cache: {
+        tags: ['homepage'],
+        varies: ['Accept-Language'],
+      },
+    },*/
     '/moto-blog': {
       swr: 3600,
       cache: {
         tags: ['homepage'],
-        varies: ['Accept-Language', 'x-device-type'],
+        varies: ['Accept-Language'],
       },
     },
   },

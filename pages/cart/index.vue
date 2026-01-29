@@ -6,7 +6,7 @@ import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
 import { ProductType } from "@/models/products.js"
 
 definePageMeta({
-  layout: 'motomundi',
+ // layout: 'motomundi',
   public: true,
 
 })

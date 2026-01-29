@@ -28,8 +28,8 @@ injectSkinClasses()
   <!-- mobile -->
   <div class="mobile-only-container" >
     <main class="main-content" >
+        <MobileHeader />
 
-      <MobileHeader />
       <div class="home-container">
         <slot />
       </div>
