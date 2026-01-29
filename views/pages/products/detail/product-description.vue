@@ -59,6 +59,13 @@ const toggleExpand = () => {
   transition: max-height 0.3s ease-out; // Added smooth transition
 }
 
+@media (max-width: 960px) {
+  .description {
+    padding-right: 0px;
+  }
+
+}
+
 .description.collapsed {
   max-height: 550px;
   overflow: hidden;

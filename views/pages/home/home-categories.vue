@@ -14,11 +14,10 @@ const props = defineProps({
     ng-non-bindable=""
   >
     <div
-      :block-id="widget.id"
-      block-name="Categorias MOTO"
-      section="home"
+
       class="promo-categories__container"
-      style="background-color: rgb(239, 239, 239); background-image: url(&quot;&quot;);"
+      style="background-color: rgb(239, 239, 239); background-repeat: repeat;background-size:unset;
+        background-image: url('/content/images/assets/img/road.webp');"
     >
       <div class="container">
         <div class="col s12 m12 l12">
@@ -34,7 +33,7 @@ const props = defineProps({
             >
               <img
                 src="/content/images/categories/rebajas-cascos.svg"
-                alt="Cascos"4
+                alt="Cascos"
               >
               <h2 style="color:#fff;">Cascos</h2>
             </a>

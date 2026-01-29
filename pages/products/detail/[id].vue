@@ -170,9 +170,11 @@ const onSelectedColor = color => {
           />
         </div>
 
-        <Packs :product="product" />
+
+
       </section>
 
+      <Packs :product="product" />
 
       <!-- product-description-container -->
       <VRow class="row product-description-container mt-10">

@@ -152,6 +152,14 @@ img {
   margin: 13px;
 }
 
+@media (max-width: 960px) {
+  .product-description-container {
+    margin: 0px;
+  }
+
+}
+
+
 
 /* product list */
 .filters__header .filters__header-title .header-title .total-results,

@@ -38,7 +38,7 @@ const showPackDialog = pack => {
   <div
     v-if="packs && packs.length > 0"
     :key="packs.id"
-    class="row"
+    class="row mx-2"
   >
     <!-- packs dialog -->
     <PacksModal
@@ -62,7 +62,8 @@ const showPackDialog = pack => {
         md="6"
         cols="12"
       >
-        <div class="pack-item">
+        <PackItem :pack="pack" @open-pack="showPackDialog"/>
+        <div v-if="false" class="pack-item">
           <div class="pack-item__description">
             <div class="pack-item__description-content">
               <h4 class="title">

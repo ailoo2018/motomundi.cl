@@ -24,7 +24,7 @@ const goTo = async ( event, url, departmentId) => {
   await navigateTo(url, { external: true })
 }
 
-
+console.log("LOADING PAGE NOT FROM CACHE!!!!!!!!!!!!!!!!!!!")
 
 onMounted(() => {
 

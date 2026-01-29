@@ -18,6 +18,7 @@ import CafeRacerCategories from "@/views/pages/home/cafe-racer-categories.vue"
 import CafeRacerBrandsBlock from "@/views/pages/home/cafe-racer-brands-block.vue"
 import OffRoadCategories from "@/views/pages/home/OffRoadCategories.vue"
 import BrandsBlockMx from "@/views/pages/home/BrandsBlockMx.vue"
+import LifestyleCategories from "@/views/pages/home/lifestyle-categories.vue"
 
 const props = defineProps({
   wccId: {
@@ -46,6 +47,7 @@ const componentMap = {
   CafeRacerBrandsBlock,
   OffRoadCategories,
   BrandsBlockMx,
+  LifestyleCategories,
 }
 
 const { isMobile } = useDevice()

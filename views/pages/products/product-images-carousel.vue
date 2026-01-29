@@ -232,10 +232,10 @@ register()
               navigation="true"
               :breakpoints="swiperBreakpoints"
             >
-              <swiper-slide v-for="(img, index) in images">
+              <swiper-slide v-for="(img, index) in images" >
                 <div v-if="img.type === 'image'">
                   <img
-                    style="cursor:pointer; width: 110px; height: 110px; display: inline-block; opacity: 1;"
+                    style="cursor:pointer; width: 100%; height: 100%; display: inline-block; opacity: 1;"
                     data-index="image-1"
                     :src="getImageUrl(img.image, 600, getDomainId())"
                     @click="slideTo(index)"
@@ -247,6 +247,7 @@ register()
                 >
                   <img
                     v-if="img.type === 'video'"
+                    style="cursor:pointer; width: 100%; height: 100%; display: inline-block; opacity: 1;"
                     :src="img.urlThumb"
                     @click="slideToAndShowView( index, img)"
                   >
@@ -262,6 +263,10 @@ register()
 </template>
 
 <style scoped lang="scss">
+swiper-slide {
+  margin: auto 0
+}
+
 .product .video-thumb {
   position: relative;
   overflow: hidden;
