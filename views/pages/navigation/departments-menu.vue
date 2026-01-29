@@ -1,18 +1,30 @@
 <script setup>
-
-
 import { Departments } from "@/models/index.js"
 
 
-const currDept = ref()
-currDept.value = useCookie('user-department').value
+const route = useRoute()
 
-const goTo = ( url, departmentId) => {
-  useCookie('user-department').value = departmentId
-  nextTick()
-  console.log("set cookie: " + useCookie('user-department').value + " : " + departmentId)
-  window.location = (`${url}`)
+
+const currDept = ref()
+
+if (route.path === ( '/' ) ) {
+  currDept.value =Departments.Road
+}else if (route.path.startsWith( '/cafe-racer' ) ) {
+  currDept.value =Departments.CafeRacer
+}else if(route.path.startsWith("/motocross-enduro-trial")){
+  currDept.value =Departments.Mx
+}else if(route.path.startsWith("/ropa-casual")){
+  currDept.value =Departments.Mx
 }
+
+const goTo = ( event, url, departmentId) => {
+  event.preventDefault()
+  useCookie('user-department').value = departmentId
+  console.log("set cookie: " + useCookie('user-department').value + " : " + departmentId)
+  navigateTo(`${url}`)
+}
+
+
 
 onMounted(() => {
 
@@ -25,7 +37,6 @@ onMounted(() => {
   currDept.value = useCookie('user-department').value
   console.log("currDept:" + currDept.value)
 })
-
 </script>
 
 <template>
@@ -37,8 +48,9 @@ onMounted(() => {
       style="background-color: transparent;"
     >
       <a
+        href="/"
         title="Motomundi"
-        @click="goTo('/', Departments.Road) "
+        @click="goTo($event,'/', Departments.Road) "
       >
         <span class="l">
           <span
@@ -54,8 +66,9 @@ onMounted(() => {
       style="background-color: transparent;"
     >
       <a
-        @click="goTo('/cafe-racer', Departments.CafeRacer) "
+        href="/cafe-racer"
         title="Ropa Café Racer en Motomundi"
+        @click="goTo($event,'/cafe-racer', Departments.CafeRacer) "
       >
         <span class="l">
           <span class="r">Café Racer</span>
@@ -69,8 +82,9 @@ onMounted(() => {
       style="background-color: transparent;"
     >
       <a
-        @click="goTo('/motocross-enduro-trial', Departments.Mx) "
+        href="/motocross-enduro-trial"
         title="Off-Road en Motomundi"
+        @click="goTo($event, '/motocross-enduro-trial', Departments.Mx) "
       >
         <span class="l">
           <span class="r">Off-Road </span>
@@ -84,8 +98,9 @@ onMounted(() => {
       style="background-color: transparent;"
     >
       <a
-        @click="goTo('/ropa-casual', Departments.LifeStyle) "
+        href="/ropa-casual"
         title="Ropa Casual en Motomundi"
+        @click="goTo($event, '/ropa-casual', Departments.LifeStyle) "
       >
         <span class="l">
           <span class="r">Ropa Casual</span>

@@ -28,7 +28,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     //   '/motocicleta/:id(\\d+)-**': { proxy: '/products/detail/:id' },
-/*    '/': {
+    '/': {
       swr: 3600,
       cache: {
         tags: ['homepage'],
@@ -55,7 +55,7 @@ export default defineNuxtConfig({
         tags: ['homepage'],
         varies: ['Accept-Language'],
       },
-    },*/
+    },
     '/moto-blog': {
       swr: 3600,
       cache: {
