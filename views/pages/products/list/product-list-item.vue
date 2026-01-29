@@ -25,6 +25,7 @@ const onClickMiniture = img => {
 const imageError = ref(false)
 
 const handleImageError = () => {
+  $fetch("/api/product/create-images?id=" + props.product.id)
   imageError.value = true
 }
 
@@ -75,7 +76,10 @@ const miniatures = computed(() => {
           >
             <span class="discount">Rebajas -{{ Math.round(product.discountPercent) }}%</span>
           </span>
-          <span v-if="product.isNew" class="tag product-tag product-tag--old product-tag--new">
+          <span
+            v-if="product.isNew"
+            class="tag product-tag product-tag--old product-tag--new"
+          >
             <span class="discount">Novedad</span>
           </span>
         </div>
@@ -98,13 +102,13 @@ const miniatures = computed(() => {
               />
             </template>
           </VImg>
-              <VImg
-                v-else
-                :src="emptyImage"
-                :aspect-ratio="1"
-                class="mx-auto rounded"
-                max-width="232"
-              />
+          <VImg
+            v-else
+            :src="emptyImage"
+            :aspect-ratio="1"
+            class="mx-auto rounded"
+            max-width="232"
+          />
         </span>
 
 

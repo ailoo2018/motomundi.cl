@@ -26,45 +26,46 @@ const selectedColor = ref({ id: 0 })
 
 const addToCart = itemsToAdd => {
 
-  if(props.product.type === ProductType.Simple) {
+  if (props.product.type === ProductType.Simple) {
     let productItemId = null
 
-    if(selectedProductItem.value){
+    if (selectedProductItem.value) {
       productItemId = selectedProductItem.value.id
     }
 
-    if(!productItemId && !prodUtil.requiresFeatureSelect(props.product)){
+    if (!productItemId && !prodUtil.requiresFeatureSelect(props.product)) {
       productItemId = props.product.productItems[0].id
     }
 
-    if(!productItemId){
+    if (!productItemId) {
       alert("Debe seleccionar variantes")
 
       return
 
     }
 
-    emit('addToCart',  {
+    emit('addToCart', {
       productItemId: productItemId,
       quantity: 1,
-    } ) // { productItemId: productItem.id, quantity: 1 }
-  }else{
+    }) // { productItemId: productItem.id, quantity: 1 }
+  } else {
 
-    const pits = selectedProductItems.value.filter(f => f.productItemId > 0).map( s => s.productItemId)
-    if(pits.length !== props.product.composite.length){
+    const pits = selectedProductItems.value.filter(f => f.productItemId > 0).map(s => s.productItemId)
+    if (pits.length !== props.product.composite.length) {
       alert(`Debe seleccionar variantes ${pits.length} vs ${props.product.composite.length}`)
 
       return
     }
 
-    emit('addToCart', pits.map(pit => { return { "quantity": 1, "productItemId": pit } }))
+    emit('addToCart', pits.map(pit => {
+      return { "quantity": 1, "productItemId": pit }
+    }))
   }
 }
 
 const price = computed(() => {
   return props.product.minPrice
 })
-
 </script>
 
 <template>
@@ -78,12 +79,23 @@ const price = computed(() => {
         <div class="product-buy-panel__price">
           <div class="product-buy__header">
             <div class="product-tags">
-              <span class="tag-wrapper">
-                <span class="tag product-tag product-tag--old product-tag--new ng-scope">
+              <span
+                v-if="product.isNew"
+                class="tag-wrapper"
+              >
+                <span class="tag product-tag product-tag--old product-tag--new">
                   <span class="discount">Novedad</span>
                 </span>
               </span>
-              <span class="tag-wrapper" />
+
+              <span class="tag-wrapper" >
+              <span
+                v-if="product.discountPercent > 0"
+                class="tag product-tag product-tag--old product-tag--sales"
+              >
+                <span class="discount">Rebajas -{{ Math.round(product.discountPercent) }}%</span>
+              </span>
+              </span>
             </div>
           </div>
           <!-- price -->
@@ -207,10 +219,8 @@ const price = computed(() => {
                 xmlns="http://www.w3.org/2000/svg"
                 class="add icon sprite-line-icons"
               >
-                <title >Añadir a favoritos</title>
-                <use
-                  href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-favorite"
-                />
+                <title>Añadir a favoritos</title>
+                <use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-favorite" />
               </svg>
             </button>
           </div>
@@ -222,6 +232,9 @@ const price = computed(() => {
     <!-- /addToCart -->
   </div><!-- end ngIf: product -->
 </template>
-
-<style  lang="scss">
+<style>
+.tag.product-tag.product-tag--crazydays, .tag.product-tag.product-tag--offer, .tag.product-tag.product-tag--sales {
+  background-color: #d6001c;
+}
 </style>
+

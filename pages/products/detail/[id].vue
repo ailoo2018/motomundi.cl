@@ -122,6 +122,8 @@ const onSelectedColor = color => {
             <div>
               <Breadcrumbs :product="product"/>
 
+
+
               <!-- product-title -->
               <div class="product-title">
                 <div class="product-title__container">
