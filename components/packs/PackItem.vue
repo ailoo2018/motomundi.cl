@@ -225,4 +225,57 @@ const onOpenPack = () => {
   width: 18px;
   height: 18px;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 576px) {
+  .pack-container {
+    flex-direction: column;
+  }
+
+  .pack-content {
+    padding: 20px;
+  }
+
+  .pack-header {
+    margin-bottom: 16px;
+  }
+
+  .pack-title {
+    font-size: 1rem;
+  }
+
+  .product-visuals {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .product-img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .pack-sidebar {
+    border-left: none;
+    border-top: 1px solid #e0e0e0;
+    padding: 20px;
+  }
+
+  .savings-badge {
+    align-self: center;
+  }
+
+  .price-label {
+    text-align: center;
+  }
+
+  .total-price {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+
+  .pack-buy-button {
+    width: 100%;
+  }
+}
 </style>
