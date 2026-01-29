@@ -21,7 +21,7 @@ const goTo = async ( event, url, departmentId) => {
   event.preventDefault()
   useCookie('user-department').value = departmentId
   console.log("set cookie: " + useCookie('user-department').value + " : " + departmentId)
-  await navigateTo(url, { external: true })
+  window.location = url
 }
 
 console.log("LOADING PAGE NOT FROM CACHE!!!!!!!!!!!!!!!!!!!")

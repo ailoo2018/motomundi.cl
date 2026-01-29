@@ -7,16 +7,22 @@ import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 
 const { injectSkinClasses } = useSkins()
 
-const { isMobile, isTablet, isDesktop } = useDevice()
 
-console.log("isMobile", isMobile)
-console.log("isTable", isTablet)
-console.log("isDesktop", isDesktop)
 
+// Get user-agent from request event
+const event = useRequestEvent()
+const ua = process.server && event
+  ? (getHeader(event, 'user-agent') || '')
+  : (process.client ? navigator.userAgent : '')
+
+const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
+
+
+console.log("deviceType " +  deviceType + " ua: " + ua)
 
 useHead({
   bodyAttrs: {
-    class: computed(() => isMobile ? 'mobile' : 'desktop')
+    class: deviceType
   }
 })
 
@@ -26,7 +32,7 @@ injectSkinClasses()
 
 <template>
   <!-- mobile -->
-  <div class="mobile-only-container" >
+  <div class="mobile-only-container"  v-if="deviceType === 'mobile'">
     <main class="main-content" >
       <MobileHeader />
 
@@ -38,7 +44,7 @@ injectSkinClasses()
   <!-- /mobile -->
 
   <!-- desktop -->
-  <div
+  <div v-else
     class="layout-wrapper layout-blank desktop-only-container"
     data-allow-mismatch
   >

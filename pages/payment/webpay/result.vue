@@ -4,10 +4,11 @@ import PaymentResult from "@/views/pages/payments/payment-result.vue"
 const route = useRoute()
 const loading = ref(true)
 const result = ref(null)
-const lock = ref(false)
 
 
 console.log('Script setup executed')
+
+
 
 onMounted(async () => {
   const token = route.query.token_ws
@@ -17,10 +18,6 @@ onMounted(async () => {
     return
   }
 
-  if(lock.value)
-    return
-
-  lock.value = true
 
   try {
     console.log("this should only be called once:")
@@ -49,14 +46,6 @@ onMounted(async () => {
 
 })
 
-const getPaymentType = code => {
-  const types =  {
-    'VD': 'Venta Débito', 'VN': 'Venta Normal', 'VC': 'Venta en cuotas',
-    'SI': '3 cuotas sin interés', 'VP': 'Venta Prepago',
-  }
-  
-  return types[code || ''] || 'Tarjeta'
-}
 </script>
 
 <template>

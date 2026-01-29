@@ -3,6 +3,21 @@ import {fileURLToPath} from 'node:url'
 import vuetify from 'vite-plugin-vuetify'
 import svgLoader from 'vite-svg-loader'
 
+// nuxt.config.ts
+const createCachedRoute = (tag) => ({
+  swr: 3600,
+  cache: {
+    tags: [tag],
+    varies: ['Accept-Language'],
+    getKey: (event) => {
+      const ua = getHeader(event, 'user-agent') || ''
+      const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
+      const lang = (getHeader(event, 'accept-language') || 'default').split(',')[0]
+      return `${tag}:${deviceType}:${lang}`
+    }
+  }
+})
+
 export default defineNuxtConfig({
   app: {
     baseURL: '/',
@@ -28,7 +43,12 @@ export default defineNuxtConfig({
 
   routeRules: {
     //   '/motocicleta/:id(\\d+)-**': { proxy: '/products/detail/:id' },
-    '/': {
+    '/': createCachedRoute('homepage'),
+    '/cafe-racer': createCachedRoute('cafe-racer'),
+    '/motocross-enduro-trial': createCachedRoute('motocross'),
+    '/ropa-casual': createCachedRoute('ropa-casual'),
+    '/moto-blog': createCachedRoute('blog'),
+/*    '/': {
       swr: 3600,
       cache: {
         tags: ['homepage'],
@@ -62,7 +82,7 @@ export default defineNuxtConfig({
         tags: ['homepage'],
         varies: ['Accept-Language'],
       },
-    },
+    },*/
   },
 
   runtimeConfig: {
