@@ -2,6 +2,7 @@
 import { SwiperSlide } from "swiper/vue"
 import { register } from "swiper/element"
 import { getImageUrl, getDomainId, getYouTubeThumbnail } from "@core/utils/formatters"
+import ProductThumbs from "@/pages/products/detail/product-thumbs.vue"
 
 const props = defineProps(
   {
@@ -28,6 +29,7 @@ const slideTo = index => {
   }
 }
 
+
 const slideToAndShowView = ( index, video) => {
   slideTo(index)
 
@@ -47,13 +49,7 @@ const onSlideChange = e => {
   activeIndex.value = swiper.activeIndex
 }
 
-// Configuration for breakpoints (Responsive 5 slides)
-const swiperBreakpoints = {
-  320: { slidesPerView: 3.5, spaceBetween: 10 },
-  640: { slidesPerView: 4, spaceBetween: 10 },
-  1024: { slidesPerView: 5, spaceBetween: 10 },
-  1280: { slidesPerView: 6, spaceBetween: 10 },
-}
+
 
 const images = computed( () => {
   if(!product.value)
@@ -74,6 +70,15 @@ const images = computed( () => {
 
   return imgs
 })
+
+
+const onClickThumb = (index, img) => {
+  if(img.type === "video"){
+    slideToAndShowView(index, img)
+  }else {
+    slideTo(index)
+  }
+}
 
 
 onMounted(() => {
@@ -221,48 +226,12 @@ register()
   <!-- /carousel -->
 
   <!-- product-thumbs -->
-  <section>
-    <div class="row">
-      <div class="col s12 l12">
-        <div class="product-media">
-          <div class="product-thumbs mb-5">
-            <swiper-container
-              id="miniatures"
-              events-prefix="swiper-"
-              navigation="true"
-              :breakpoints="swiperBreakpoints"
-            >
-              <swiper-slide v-for="(img, index) in images" >
-                <div v-if="img.type === 'image'">
-                  <img
-                    style="cursor:pointer; width: 100%; height: 100%; display: inline-block; opacity: 1;"
-                    data-index="image-1"
-                    :src="getImageUrl(img.image, 600, getDomainId())"
-                    @click="slideTo(index)"
-                  >
-                </div>
-                <div
-                  v-if="img.type === 'video'"
-                  class="video-thumb "
-                >
-                  <img
-                    v-if="img.type === 'video'"
-                    style="cursor:pointer; width: 100%; height: 100%; display: inline-block; opacity: 1;"
-                    :src="img.urlThumb"
-                    @click="slideToAndShowView( index, img)"
-                  >
-                </div>
-              </swiper-slide>
-            </swiper-container>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <ProductThumbs @on-click="onClickThumb" :product="product"/>
+
   <!-- /product-thumbs -->
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 swiper-slide {
   margin: auto 0
 }
