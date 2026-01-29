@@ -1,21 +1,22 @@
 /* eslint-disable camelcase */
-import {fileURLToPath} from 'node:url'
+import { fileURLToPath } from 'node:url'
 import vuetify from 'vite-plugin-vuetify'
 import svgLoader from 'vite-svg-loader'
 
 // nuxt.config.ts
-const createCachedRoute = (tag) => ({
+const createCachedRoute = tag => ({
   swr: 3600,
   cache: {
     tags: [tag],
     varies: ['Accept-Language'],
-    getKey: (event) => {
+    getKey: event => {
       const ua = getHeader(event, 'user-agent') || ''
       const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
       const lang = (getHeader(event, 'accept-language') || 'default').split(',')[0]
+      
       return `${tag}:${deviceType}:${lang}`
-    }
-  }
+    },
+  },
 })
 
 export default defineNuxtConfig({
@@ -32,7 +33,7 @@ export default defineNuxtConfig({
     },
   },
 
-  devtools: {enabled: true},
+  devtools: { enabled: true },
 
   sourcemap: {
     server: true,
@@ -42,47 +43,11 @@ export default defineNuxtConfig({
   ssr: true,
 
   routeRules: {
-    //   '/motocicleta/:id(\\d+)-**': { proxy: '/products/detail/:id' },
     '/': createCachedRoute('homepage'),
     '/cafe-racer': createCachedRoute('cafe-racer'),
     '/motocross-enduro-trial': createCachedRoute('motocross'),
     '/ropa-casual': createCachedRoute('ropa-casual'),
     '/moto-blog': createCachedRoute('blog'),
-/*    '/': {
-      swr: 3600,
-      cache: {
-        tags: ['homepage'],
-        varies: ['Accept-Language'],
-      },
-    },
-    '/cafe-racer': {
-      swr: 3600,
-      cache: {
-        tags: ['homepage'],
-        varies: ['Accept-Language'],
-      },
-    },
-    '/motocross-enduro-trial': {
-      swr: 3600,
-      cache: {
-        tags: ['homepage'],
-        varies: ['Accept-Language'],
-      },
-    },
-    '/ropa-casual': {
-      swr: 3600,
-      cache: {
-        tags: ['homepage'],
-        varies: ['Accept-Language'],
-      },
-    },
-    '/moto-blog': {
-      swr: 3600,
-      cache: {
-        tags: ['homepage'],
-        varies: ['Accept-Language'],
-      },
-    },*/
   },
 
   runtimeConfig: {
@@ -93,9 +58,7 @@ export default defineNuxtConfig({
     youtubeApiKey: process.env.YOUTUBE_API_KEY,
     public: {
       baseUrl: process.env.NODE_ENV === 'production' ? "https://w3.motomundi.cl" : "http://localhost:3000",
-
-      geoBaseUrl: process.env.NODE_ENV === 'production' ? 'https://geo.ailoo.cl'
-        : 'https://geo.ailoo.cl',
+      geoBaseUrl: 'https://geo.ailoo.cl',
       cmsBaseUrl: process.env.NODE_ENV === 'production' ? 'https://betacms.ailoo.cl'
         : 'http://developer.cms.ailoo.cl:3050',
       productsBaseUrl: process.env.NODE_ENV === 'production' ? 'http://beta.products.ailoo.cl'
@@ -134,11 +97,12 @@ export default defineNuxtConfig({
     'pages:extend'(pages) {
       pages.push({
         name: 'product-friendly-route',
+
         // Capture everything after the slash into a single param called 'slug'
         path: '/motocicleta/:slug+',
-        file: '~/pages/products/detail/[id].vue'
+        file: '~/pages/products/detail/[id].vue',
       })
-    }
+    },
   },
   experimental: {
     typedPages: true,
@@ -183,7 +147,7 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    define: {'process.env': {}},
+    define: { 'process.env': {} },
 
     build: {
       sourcemap: true,

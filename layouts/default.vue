@@ -1,4 +1,5 @@
 <script setup>
+import { getHeader } from 'h3'
 import MotomundiHeaderbar from "@/views/pages/motomundi-headerbar.vue"
 import MotomundiNavigation from "@/views/pages/motomundi-navigation.vue"
 import MotomundiHeaderlogo from "@/views/pages/motomundi-headerlogo.vue"
@@ -22,8 +23,8 @@ console.log("deviceType " +  deviceType + " ua: " + ua)
 
 useHead({
   bodyAttrs: {
-    class: deviceType
-  }
+    class: deviceType,
+  },
 })
 
 // ℹ️ This will inject classes in body tag for accurate styling

@@ -11,6 +11,12 @@ const props = defineProps({
   },
 })
 
+// Add logging here
+console.log('Error page rendered:', props.error)
+console.log('Error statusCode:', props.error?.statusCode)
+console.log('Error message:', props.error?.message)
+console.log('Error stack:', props.error?.stack)
+
 
 const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark)
 
@@ -19,7 +25,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const isDev = process.dev
+const isDev = true // process.dev
 
 const errToShow = computed(() => {
   const is404 = props.error?.statusCode === 404 || props.error.message?.includes('404')
@@ -48,8 +54,10 @@ const handleError = () => clearError({ redirect: '/' })
 </script>
 
 <template>
+
   <NuxtLayout name="blank">
     <div class="misc-wrapper">
+
       <ErrorHeader
         :status-code="props.error.statusCode"
         :title="errToShow.title"

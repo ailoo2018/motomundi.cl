@@ -435,7 +435,6 @@ defineExpose({ getPaymentInfo, validate, pay })
 
                 <div
                   v-show="icons['' + pm.id].comment && selectedPayment === pm.id"
-                  data-v-0f1fdcfa=""
                   class="payment-method__body"
                 >
                   <div>{{ icons['' + pm.id].comment }}</div>
