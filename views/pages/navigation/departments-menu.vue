@@ -17,11 +17,11 @@ if (route.path === ( '/' ) ) {
   currDept.value =Departments.Mx
 }
 
-const goTo = ( event, url, departmentId) => {
+const goTo = async ( event, url, departmentId) => {
   event.preventDefault()
   useCookie('user-department').value = departmentId
   console.log("set cookie: " + useCookie('user-department').value + " : " + departmentId)
-  navigateTo(`${url}`)
+  await navigateTo(url, { external: true })
 }
 
 

@@ -11,6 +11,8 @@ const config = useRuntimeConfig()
 const API_KEY = config.youtubeApiKey
 const CHANNEL_ID = 'UClkc3m-0-ZFIqf1gBymlcUA' // Your Channel ID
 
+console.log("my api_key:" + API_KEY)
+
 const { data: youtubeResponse, pending, error } = await useFetch('https://www.googleapis.com/youtube/v3/search', {
   query: {
     key: API_KEY,
