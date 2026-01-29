@@ -67,6 +67,7 @@ injectSkinClasses()
 <style>
 
 /* 1. Hiding logic using Media Queries */
+/*
 @media (max-width: 960px) {
   .desktop-only-container { display: none !important; }
   .mobile-only-container { display: block !important; }
@@ -76,6 +77,9 @@ injectSkinClasses()
   .mobile-only-container { display: none !important; }
   .desktop-only-container { display: block !important; }
 }
+*/
+
+
 
 /* 2. Your existing styles modified to use Media Queries instead of .mobile/.desktop classes */
 

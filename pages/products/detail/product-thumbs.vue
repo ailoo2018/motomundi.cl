@@ -64,7 +64,8 @@ register()
               <swiper-slide v-for="(img, index) in images" >
                 <div v-if="img.type === 'image'">
                   <img
-                    style="cursor:pointer; width: 100%; height: 100%; display: inline-block; opacity: 1;"
+                    class="tmb-img"
+                    style=""
                     data-index="image-1"
                     :src="getImageUrl(img.image, 600, getDomainId())"
                     @click="onClick(index, img)"
@@ -91,5 +92,18 @@ register()
 </template>
 
 <style scoped lang="scss">
+
+.tmb-img {
+  cursor:pointer;
+  width: 110px; height: 110px;
+  display: inline-block; opacity: 1;
+}
+
+@media (max-width: 960px) {
+  .tmb-img {
+    width: 100%;
+    height: 100%;
+  }
+}
 
 </style>
