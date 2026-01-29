@@ -26,6 +26,11 @@ onMounted(async () => {
 
       console.log("Result: " + result.value.success)
 
+      const cartStore = useCartStore()
+
+      await cartStore.emptyCart()
+
+
     }
   } catch (error) {
     result.value = {

@@ -1,25 +1,35 @@
 <script setup>
-
-
 import PaymentResult from "@/views/pages/payments/payment-result.vue"
 
 const route = useRoute()
 const loading = ref(true)
 const result = ref(null)
+const lock = ref(false)
+
+
+console.log('Script setup executed')
 
 onMounted(async () => {
   const token = route.query.token_ws
   if (!token) {
     loading.value = false
+    
     return
   }
 
+  if(lock.value)
+    return
+
+  lock.value = true
+
   try {
+    console.log("this should only be called once:")
     result.value = await $fetch('/api/payments/confirm-payment', {
       method: 'POST',
+      key: '' + token,
       body: {
         token,
-        gateway: 8 }
+        gateway: 8 },
     })
 
     console.log("Result: " + result.value.success)
@@ -28,19 +38,32 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+
+  try {
+    const cartStore = useCartStore()
+
+    await cartStore.emptyCart()
+  }finally{
+
+  }
+
 })
 
-const getPaymentType = (code) => {
+const getPaymentType = code => {
   const types =  {
     'VD': 'Venta Débito', 'VN': 'Venta Normal', 'VC': 'Venta en cuotas',
-    'SI': '3 cuotas sin interés', 'VP': 'Venta Prepago'
+    'SI': '3 cuotas sin interés', 'VP': 'Venta Prepago',
   }
+  
   return types[code || ''] || 'Tarjeta'
 }
 </script>
 
 <template>
-  <PaymentResult :result="result" :loading="loading" />
+  <PaymentResult
+    :result="result"
+    :loading="loading"
+  />
 </template>
 
 <style scoped>

@@ -20,7 +20,7 @@ export const useCartStore = defineStore('cart', {
       }
     },
 
-    async removeItem(cartItem){
+    async removeItem(cartItem) {
       try {
         cartItem.loading = true
 
@@ -32,11 +32,22 @@ export const useCartStore = defineStore('cart', {
         console.log("returned cart", cart)
 
         this.cart = cart
-      }catch(e){
+      } catch (e) {
         console.error(e)
-      }finally{
+      } finally {
         cartItem.loading = true
       }
+    },
+
+    async emptyCart() {
+
+      const data = await $fetch('/api/cart/empty', {
+        method: 'GET',
+        query: { wuid: this.wuid },
+      })
+
+      this.cart = data
+
     },
 
     async updateQuantity(wuid, itemId, newQty) {
@@ -59,16 +70,16 @@ export const useCartStore = defineStore('cart', {
 
         // 3. Optional: refresh cart to get updated totals/discounts
 
-/*
-        const updatedCart = await $fetch('/api/cart/', { query: { wuid } })
-        this.cart = updatedCart
-*/
+        /*
+                const updatedCart = await $fetch('/api/cart/', { query: { wuid } })
+                this.cart = updatedCart
+        */
 
       } catch (error) {
         // 4. Rollback if API fails
         item.quantity = previousQty
         console.error("Failed to update cart", error)
-      }finally{
+      } finally {
         item.loading = false
       }
     },
