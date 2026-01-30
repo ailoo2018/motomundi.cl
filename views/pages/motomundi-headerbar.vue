@@ -16,7 +16,7 @@
         </div>
         <div class="hmnuentry"><a href="/contactenos">Contáctenos</a></div>
         <div class="hmnuentry">
-          <a href="/cuenta/perfil"> Su cuenta </a>
+          <a href="/cuenta/perfil"> Su cuenta {{ new Date() }}</a>
         </div>
       </div>
       <div id="community_links" class="d-flex gap-2 pt-2">

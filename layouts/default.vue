@@ -35,8 +35,9 @@ injectSkinClasses()
   <!-- mobile -->
   <div v-if="deviceType === 'mobile'">
     <main class="main-content" >
-      <MobileHeader />
-
+      <RenderCacheable cache-key="mobile-header" :max-age="3600">
+        <MobileHeader />
+      </RenderCacheable>
       <div class="home-container">
         <slot />
       </div>
@@ -49,10 +50,12 @@ injectSkinClasses()
     class="layout-wrapper layout-blank"
     data-allow-mismatch
   >
-    <div class="landing-page-wrapper">
-      <MotomundiHeaderbar/>
-      <MotomundiHeaderlogo/>
-      <MotomundiNavigation/>
+    <div class="landing-page-wrapper desktop-only-container">
+      <RenderCacheable :cache-key="`main-nav-${deviceType}`" :max-age="3600">
+        <MotomundiHeaderbar/>
+        <MotomundiHeaderlogo/>
+        <MotomundiNavigation/>
+      </RenderCacheable>
 
       <main class="main-content">
         <slot/>
