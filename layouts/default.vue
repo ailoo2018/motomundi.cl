@@ -33,7 +33,7 @@ injectSkinClasses()
 
 <template>
   <!-- mobile -->
-  <div class="mobile-only-container"  v-if="deviceType === 'mobile'">
+  <div v-if="deviceType === 'mobile'">
     <main class="main-content" >
       <MobileHeader />
 
@@ -46,7 +46,7 @@ injectSkinClasses()
 
   <!-- desktop -->
   <div v-else
-    class="layout-wrapper layout-blank desktop-only-container"
+    class="layout-wrapper layout-blank"
     data-allow-mismatch
   >
     <div class="landing-page-wrapper">
