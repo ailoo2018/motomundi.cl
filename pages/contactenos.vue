@@ -1,705 +1,530 @@
-<template>
-  <div class="contact-container">
-    <div class="contact-wrapper">
-      <!-- Header Section -->
-      <div class="contact-header">
-        <h1 class="title">Atención al Cliente</h1>
-        <p class="subtitle">Estamos aquí para ayudarte</p>
-      </div>
-
-      <!-- Contact Methods Grid -->
-      <div class="contact-methods">
-        <!-- Phone Contact -->
-        <div class="contact-card phone-card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-          </div>
-          <h3 class="card-title">Por teléfono</h3>
-          <p class="card-description">Llámanos según departamento:</p>
-
-          <div class="phone-list">
-            <div class="phone-item">
-              <span class="phone-label">Central</span>
-              <a href="tel:+56226660690" class="phone-number">+562 2666 0690</a>
-            </div>
-            <div class="phone-item">
-              <span class="phone-label">Neumáticos</span>
-              <a href="tel:+56226660690" class="phone-number">+562 2666 0690 Anexo 47</a>
-            </div>
-          </div>
-
-          <p class="availability">De lunes a viernes de 9 a 18:30h</p>
-        </div>
-
-        <!-- WhatsApp Contact -->
-        <div class="contact-card whatsapp-card">
-          <div class="card-icon whatsapp-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-            </svg>
-          </div>
-          <h3 class="card-title">WhatsApp</h3>
-          <a href="https://wa.me/56952245020" class="whatsapp-number" target="_blank" rel="noopener noreferrer">
-            +56 9 5224 5020
-          </a>
-          <p class="card-description">Chatea con nosotros</p>
-        </div>
-
-        <!-- Stores Info -->
-        <div class="contact-card stores-card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-          </div>
-          <h3 class="card-title">En las tiendas Motomundi</h3>
-          <p class="card-description">
-            Disponemos de 6 tiendas físicas con grandes espacios destinados al mundo de la Moto.
-            Nos encontrarás en Santiago, Viña del Mar, Concepción y La Serena.
-          </p>
-          <a href="/tiendas" class="stores-link">Ver tiendas y horarios →</a>
-        </div>
-      </div>
-
-      <!-- Contact Form Section -->
-      <div class="form-section">
-        <div class="form-header">
-          <h2 class="form-title">Contáctanos por email</h2>
-          <p class="form-description">Completa el formulario y te responderemos a la brevedad</p>
-        </div>
-
-        <form @submit.prevent="handleSubmit" class="contact-form" novalidate>
-          <div class="form-row">
-            <div class="form-group" :class="{ 'has-error': errors.name, 'has-value': formData.name }">
-              <label for="name" class="form-label">
-                Nombre completo <span class="required">*</span>
-              </label>
-              <input
-                id="name"
-                v-model="formData.name"
-                type="text"
-                class="form-input"
-                :class="{ 'error': errors.name }"
-                @blur="validateField('name')"
-                @input="clearError('name')"
-                required
-                autocomplete="name"
-              />
-              <span v-if="errors.name" class="error-message">{{ errors.name }}</span>
-            </div>
-
-            <div class="form-group" :class="{ 'has-error': errors.email, 'has-value': formData.email }">
-              <label for="email" class="form-label">
-                Email <span class="required">*</span>
-              </label>
-              <input
-                id="email"
-                v-model="formData.email"
-                type="email"
-                class="form-input"
-                :class="{ 'error': errors.email }"
-                @blur="validateField('email')"
-                @input="clearError('email')"
-                required
-                autocomplete="email"
-              />
-              <span v-if="errors.email" class="error-message">{{ errors.email }}</span>
-            </div>
-          </div>
-
-          <div class="form-group" :class="{ 'has-error': errors.phone, 'has-value': formData.phone }">
-            <label for="phone" class="form-label">
-              Teléfono <span class="required">*</span>
-            </label>
-            <input
-              id="phone"
-              v-model="formData.phone"
-              type="tel"
-              class="form-input"
-              :class="{ 'error': errors.phone }"
-              placeholder="+56 9 1234 5678"
-              @blur="validateField('phone')"
-              @input="clearError('phone')"
-              required
-              autocomplete="tel"
-            />
-            <span v-if="errors.phone" class="error-message">{{ errors.phone }}</span>
-          </div>
-
-          <div class="form-group" :class="{ 'has-error': errors.message, 'has-value': formData.message }">
-            <label for="message" class="form-label">
-              Tu consulta <span class="required">*</span>
-            </label>
-            <textarea
-              id="message"
-              v-model="formData.message"
-              class="form-textarea"
-              :class="{ 'error': errors.message }"
-              rows="5"
-              @blur="validateField('message')"
-              @input="clearError('message')"
-              required
-            ></textarea>
-            <span v-if="errors.message" class="error-message">{{ errors.message }}</span>
-          </div>
-
-          <div class="form-actions">
-            <button
-              type="submit"
-              class="submit-button"
-              :disabled="isSubmitting"
-              :class="{ 'submitting': isSubmitting }"
-            >
-              <span v-if="!isSubmitting">Enviar consulta</span>
-              <span v-else class="loading-text">
-                <span class="spinner"></span>
-                Enviando...
-              </span>
-            </button>
-          </div>
-
-          <!-- Success Message -->
-          <transition name="fade">
-            <div v-if="showSuccess" class="success-message">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              ¡Mensaje enviado! Te responderemos pronto.
-            </div>
-          </transition>
-        </form>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 
-const formData = reactive({
-  name: '',
+const form = ref({
+  nombre: '',
   email: '',
-  phone: '',
-  message: ''
+  telefono: '',
+  consulta: ''
 })
 
-const errors = reactive({
-  name: '',
-  email: '',
-  phone: '',
-  message: ''
-})
+const formValid = ref(false)
+const loading = ref(false)
+const success = ref(false)
+const error = ref(false)
 
-const isSubmitting = ref(false)
-const showSuccess = ref(false)
+const nameRules = [
+  v => !!v || 'El nombre es requerido',
+  v => v.length >= 3 || 'El nombre debe tener al menos 3 caracteres'
+]
 
-const validateField = (field) => {
-  errors[field] = ''
+const emailRules = [
+  v => !!v || 'El email es requerido',
+  v => /.+@.+\..+/.test(v) || 'Debe ser un email válido'
+]
 
-  switch (field) {
-  case 'name':
-    if (!formData.name.trim()) {
-      errors.name = 'El nombre es obligatorio'
-    } else if (formData.name.trim().length < 2) {
-      errors.name = 'El nombre debe tener al menos 2 caracteres'
-    }
-    break
+const phoneRules = [
+  v => !!v || 'El teléfono es requerido'
+]
 
-  case 'email':
-    if (!formData.email.trim()) {
-      errors.email = 'El email es obligatorio'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errors.email = 'Ingresa un email válido'
-    }
-    break
+const messageRules = [
+  v => !!v || 'La consulta es requerida',
+  v => v.length >= 10 || 'La consulta debe tener al menos 10 caracteres'
+]
 
-  case 'phone':
-    if (!formData.phone.trim()) {
-      errors.phone = 'El teléfono es obligatorio'
-    } else if (!/^[\d\s\+\-\(\)]+$/.test(formData.phone)) {
-      errors.phone = 'Ingresa un teléfono válido'
-    }
-    break
+const submitForm = async () => {
+  if (!formValid.value) return
 
-  case 'message':
-    if (!formData.message.trim()) {
-      errors.message = 'La consulta es obligatoria'
-    } else if (formData.message.trim().length < 10) {
-      errors.message = 'La consulta debe tener al menos 10 caracteres'
-    }
-    break
-  }
-}
-
-const clearError = (field) => {
-  errors[field] = ''
-}
-
-const validateForm = () => {
-  validateField('name')
-  validateField('email')
-  validateField('phone')
-  validateField('message')
-
-  return !Object.values(errors).some(error => error !== '')
-}
-
-const handleSubmit = async () => {
-  if (!validateForm()) {
-    return
-  }
-
-  isSubmitting.value = true
+  loading.value = true
+  error.value = false
+  success.value = false
 
   try {
-    // Aquí iría la llamada a tu API
-    // await $fetch('/api/contact', {
-    //   method: 'POST',
-    //   body: formData
-    // })
-
-    // Simulación de envío
-    await new Promise(resolve => setTimeout(resolve, 1500))
-
-    // Mostrar mensaje de éxito
-    showSuccess.value = true
-
-    // Limpiar formulario
-    Object.keys(formData).forEach(key => {
-      formData[key] = ''
+    // Aquí va tu llamada real al API
+    const response = await $fetch('/api/contact', {
+      method: 'POST',
+      body: form.value
     })
 
-    // Ocultar mensaje después de 5 segundos
-    setTimeout(() => {
-      showSuccess.value = false
-    }, 5000)
+    success.value = true
+    resetForm()
 
-  } catch (error) {
-    console.error('Error al enviar el formulario:', error)
-    // Aquí podrías mostrar un mensaje de error
+    // Scroll to top to show success message
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  } catch (e) {
+    error.value = true
+    console.error('Error sending form:', e)
   } finally {
-    isSubmitting.value = false
+    loading.value = false
+  }
+}
+
+const resetForm = () => {
+  form.value = {
+    nombre: '',
+    email: '',
+    telefono: '',
+    consulta: ''
   }
 }
 </script>
 
+<template>
+  <div class="contact-page">
+    <VContainer class="pa-0 ma-0 w-100">
+      <!-- Header -->
+      <VRow justify="center" class="main-content" style="margin: auto" >
+        <VCol cols="12" >
+          <h1 class="page-title mb-0" style="border-left: 5px solid #d6001c; padding: 10px">
+            Atención al Cliente
+          </h1>
+
+        </VCol>
+      </VRow>
+
+      <!-- Success Alert -->
+      <VRow v-if="success" justify="center" class="mb-6">
+        <VCol cols="12" lg="10">
+          <VAlert
+            type="success"
+            variant="tonal"
+            closable
+            prominent
+            @click:close="success = false"
+          >
+            <template #prepend>
+              <VIcon icon="tabler-circle-check" size="32" />
+            </template>
+            <VAlertTitle class="text-h6 mb-2">
+              ¡Gracias por contactarnos!
+            </VAlertTitle>
+            <div>Hemos recibido tu consulta y te responderemos pronto.</div>
+          </VAlert>
+        </VCol>
+      </VRow>
+
+      <!-- Error Alert -->
+      <VRow v-if="error" justify="center" class="mb-6">
+        <VCol cols="12" lg="10">
+          <VAlert
+            type="error"
+            variant="tonal"
+            closable
+            prominent
+            @click:close="error = false"
+          >
+            <template #prepend>
+              <VIcon icon="tabler-alert-circle" size="32" />
+            </template>
+            <VAlertTitle class="text-h6 mb-2">
+              Error al enviar el mensaje
+            </VAlertTitle>
+            <div>Por favor, intenta nuevamente.</div>
+          </VAlert>
+        </VCol>
+      </VRow>
+
+      <!-- Main Grid -->
+      <VRow class="main-content">
+        <!-- Contact Information -->
+        <VCol cols="12" lg="4">
+          <div class="contact-info-section">
+            <!-- Por Teléfono -->
+            <VCard class="info-card mb-6">
+              <VCardText class="pa-7">
+                <div class="d-flex align-center mb-5">
+                  <VIcon
+                    icon="tabler-phone"
+                    size="28"
+                    class="info-icon mr-3"
+                  />
+                  <h3 class="info-title">Por Teléfono</h3>
+                </div>
+
+                <div class="contact-item mb-4">
+                  <div class="contact-label">CENTRAL</div>
+                  <div class="contact-value">
+                    <a href="tel:+56226660690">+562 2666 0690</a>
+                  </div>
+                </div>
+
+                <div class="contact-item mb-4">
+                  <div class="contact-label">WhatsApp</div>
+                  <div class="contact-value">
+                    <a
+                      href="https://wa.me/56952245020"
+                      target="_blank"
+                      class="whatsapp-link"
+                    >
+                      +56 9 5224 5020
+                    </a>
+                  </div>
+                </div>
+
+                <div class="contact-item mb-4">
+                  <div class="contact-label">Neumáticos</div>
+                  <div class="contact-value">
+                    <a href="tel:+56226660690,47">+562 2666 0690 Anexo 47</a>
+                  </div>
+                </div>
+
+                <div class="schedule">
+                  <VIcon icon="tabler-clock" size="16" class="mr-1" />
+                  De lunes a viernes de 9 a 18:30h
+                </div>
+              </VCardText>
+            </VCard>
+
+            <!-- En las Tiendas -->
+            <VCard class="info-card mb-6">
+              <VCardText class="pa-7">
+                <div class="d-flex align-center mb-5">
+                  <VIcon
+                    icon="tabler-map-pin"
+                    size="28"
+                    class="info-icon mr-3"
+                  />
+                  <h3 class="info-title">En las Tiendas</h3>
+                </div>
+
+                <p class="info-text mb-4">
+                  Disponemos de <strong class="text-accent">8 tiendas físicas</strong> con grandes espacios destinados al mundo de la Moto.
+                </p>
+
+                <p class="info-text mb-5">
+                  Nos encontrarás en <strong>Santiago, Viña del Mar, Concepción y La Serena</strong>.
+                </p>
+
+                <NuxtLink to="/tiendas" class="stores-link">
+                  Ver Ubicaciones y Horarios
+                  <VIcon icon="tabler-arrow-right" size="18" class="ml-1" />
+                </NuxtLink>
+              </VCardText>
+            </VCard>
+
+            <!-- Por Email -->
+            <VCard class="info-card">
+              <VCardText class="pa-7">
+                <div class="d-flex align-center mb-5">
+                  <VIcon
+                    icon="tabler-mail"
+                    size="28"
+                    class="info-icon mr-3"
+                  />
+                  <h3 class="info-title">Contáctanos por Email</h3>
+                </div>
+
+                <p class="info-text">
+                  Completa el formulario a la derecha y nos pondremos en contacto contigo lo antes posible.
+                </p>
+              </VCardText>
+            </VCard>
+          </div>
+        </VCol>
+
+        <!-- Contact Form -->
+        <VCol cols="12" lg="8">
+          <VCard class="form-card" elevation="8">
+            <VCardText class="pa-8 pa-md-10">
+              <h2 class="form-title mb-2">
+                Envíanos tu Consulta
+              </h2>
+              <p class="form-subtitle mb-8">
+                Responderemos en un plazo máximo de 24-48 horas
+              </p>
+
+              <VForm v-model="formValid" @submit.prevent="submitForm">
+                <!-- Nombre -->
+                <div class="form-group mb-6">
+                  <label for="nombre" class="form-label">
+                    Nombre <span class="required">*</span>
+                  </label>
+                  <VTextField
+                    id="nombre"
+                    v-model="form.nombre"
+                    :rules="nameRules"
+                    variant="outlined"
+                    placeholder="Tu nombre completo"
+                    density="comfortable"
+                    hide-details="auto"
+                    required
+                  />
+                </div>
+
+                <!-- Email -->
+                <div class="form-group mb-6">
+                  <label for="email" class="form-label">
+                    Email <span class="required">*</span>
+                  </label>
+                  <VTextField
+                    id="email"
+                    v-model="form.email"
+                    :rules="emailRules"
+                    variant="outlined"
+                    placeholder="tu@email.com"
+                    type="email"
+                    density="comfortable"
+                    hide-details="auto"
+                    required
+                  />
+                </div>
+
+                <!-- Teléfono -->
+                <div class="form-group mb-6">
+                  <label for="telefono" class="form-label">
+                    Teléfono <span class="required">*</span>
+                  </label>
+                  <VTextField
+                    id="telefono"
+                    v-model="form.telefono"
+                    :rules="phoneRules"
+                    variant="outlined"
+                    placeholder="+56 9 XXXX XXXX"
+                    type="tel"
+                    density="comfortable"
+                    hide-details="auto"
+                    required
+                  />
+                </div>
+
+                <!-- Consulta -->
+                <div class="form-group mb-8">
+                  <label for="consulta" class="form-label">
+                    Consulta <span class="required">*</span>
+                  </label>
+                  <VTextarea
+                    id="consulta"
+                    v-model="form.consulta"
+                    :rules="messageRules"
+                    variant="outlined"
+                    placeholder="Escribe aquí tu consulta o mensaje..."
+                    rows="6"
+                    hide-details="auto"
+                    required
+                  />
+                </div>
+
+                <!-- Submit Button -->
+                <VBtn
+                  type="submit"
+                  color="primary"
+                  size="x-large"
+                  block
+                  :loading="loading"
+                  :disabled="!formValid"
+                  class="submit-btn"
+                >
+                  <span class="submit-text">Enviar Consulta</span>
+                </VBtn>
+              </VForm>
+            </VCardText>
+          </VCard>
+        </VCol>
+      </VRow>
+    </VContainer>
+  </div>
+</template>
+
 <style scoped>
-/* CSS Variables */
-:root {
-  --primary-color: #dc2626;
-  --primary-dark: #b91c1c;
-  --primary-light: #fee2e2;
-  --text-primary: #0a0a0a;
-  --text-secondary: #525252;
-  --text-muted: #737373;
-  --border-color: #e5e5e5;
-  --bg-white: #ffffff;
-  --bg-gray: #fafafa;
-  --whatsapp: #25d366;
-  --whatsapp-dark: #1da851;
-  --success: #16a34a;
-  --error: #dc2626;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.contact-container {
+.contact-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
-  padding: 3rem 1.5rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  position: relative;
 }
 
-.contact-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Header */
-.contact-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  animation: fadeInDown 0.6s ease-out;
-}
-
-.title {
-  font-size: 3rem;
+/* Header Styles */
+.page-title {
   font-weight: 800;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.subtitle {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  font-weight: 400;
-}
-
-/* Contact Methods Grid */
-.contact-methods {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
-}
-
-.contact-card {
-  background: var(--bg-white);
-  border-radius: var(--radius-lg);
-  padding: 2.5rem 2rem;
-  box-shadow: var(--shadow-md);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid var(--border-color);
-  animation: fadeInUp 0.6s ease-out;
-  animation-fill-mode: both;
-}
-
-.contact-card:nth-child(1) { animation-delay: 0.1s; }
-.contact-card:nth-child(2) { animation-delay: 0.2s; }
-.contact-card:nth-child(3) { animation-delay: 0.3s; }
-
-.contact-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary-color);
-}
-
-.card-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-md);
-  background: var(--primary-light);
-  color: var(--primary-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.whatsapp-icon {
-  background: #dcfce7;
-  color: var(--whatsapp);
-}
-
-.contact-card:hover .card-icon {
-  transform: scale(1.1) rotate(5deg);
-}
-
-.card-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-}
-
-.card-description {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-/* Phone List */
-.phone-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.phone-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.phone-label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-muted);
+  line-height: 1.2em;
+  margin-bottom: 40px;
+  margin-top: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 1.5em;
 }
 
-.phone-number {
-  font-size: 1.25rem;
+.page-subtitle {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* Info Cards */
+.info-card {
+  border-left: 4px solid #d6001c;
+  transition: all 0.3s ease;
+  animation: fadeInLeft 0.6s ease-out backwards;
+}
+
+.info-card:nth-child(1) { animation-delay: 0.1s; }
+.info-card:nth-child(2) { animation-delay: 0.2s; }
+.info-card:nth-child(3) { animation-delay: 0.3s; }
+
+.info-card:hover {
+  transform: translateX(5px);
+  border-left-width: 6px;
+
+}
+
+.info-icon {
+  color: #d6001c;
+}
+
+.info-title {
+  font-size: 1.0rem;
   font-weight: 600;
-  color: var(--primary-color);
+  color: #d6001c;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.contact-item {
+  margin-bottom: 16px;
+}
+
+.contact-label {
+  font-weight: 600;
+  color: #d6001c;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  display: block;
+  opacity: 0.9;
+}
+
+.contact-value {
+  font-size: 1rem;
+  display: block;
+}
+
+.contact-value a {
+  color: rgb(var(--v-theme-on-surface));
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 }
 
-.phone-number:hover {
-  color: var(--primary-dark);
-  text-decoration: underline;
+.contact-value a:hover {
+  color: #d6001c;
 }
 
-.availability {
-  font-size: 0.875rem;
-  color: var(--text-muted);
+.whatsapp-link:hover {
+  color: #25D366 !important;
+}
+
+.schedule {
+
+  font-size: 0.95rem;
   font-style: italic;
-}
-
-/* WhatsApp */
-.whatsapp-number {
-  display: inline-flex;
+  margin-top: 12px;
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--whatsapp);
-  text-decoration: none;
-  margin-bottom: 0.5rem;
-  transition: color 0.2s ease;
 }
 
-.whatsapp-number:hover {
-  color: var(--whatsapp-dark);
+.info-text {
+
+  line-height: 1.7;
+  margin: 0;
 }
 
-/* Stores Link */
+.info-text strong {
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.text-accent {
+  color: #d6001c;
+}
+
 .stores-link {
   display: inline-flex;
   align-items: center;
-  color: var(--primary-color);
-  font-weight: 600;
+  color: #d6001c;
   text-decoration: none;
-  margin-top: 1rem;
-  transition: gap 0.2s ease;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.7rem;
+  border-bottom: 2px solid #d6001c;
+  padding-bottom: 2px;
+  transition: all 0.3s ease;
 }
 
 .stores-link:hover {
-  gap: 0.5rem;
-  text-decoration: underline;
+  transform: translateY(-2px);
+  opacity: 0.8;
 }
 
-/* Form Section */
-.form-section {
-  background: var(--bg-white);
-  border-radius: var(--radius-lg);
-  padding: 3rem 2.5rem;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-color);
-  animation: fadeInUp 0.6s ease-out 0.4s;
-  animation-fill-mode: both;
-}
-
-.form-header {
-  text-align: center;
-  margin-bottom: 2.5rem;
+/* Form Card */
+.form-card {
+  animation: fadeInRight 0.6s ease-out 0.2s backwards;
 }
 
 .form-title {
-  font-size: 2rem;
+  font-size: 1.0rem;
   font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
 }
 
-.form-description {
-  color: var(--text-secondary);
-  font-size: 1.125rem;
-}
-
-/* Form Styles */
-.contact-form {
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.form-group {
-  position: relative;
-  margin-bottom: 1.5rem;
+.form-subtitle {
+  margin: 20px 0;
+  font-size: 0.90rem;
 }
 
 .form-label {
   display: block;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  font-size: 0.9375rem;
-  transition: color 0.2s ease;
+  margin-bottom: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+
 }
 
 .required {
-  color: var(--error);
+  color: #d6001c;
 }
 
-.form-input,
-.form-textarea {
-  width: 100%;
-  padding: 0.875rem 1rem;
-  font-size: 1rem;
-  border: 2px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  transition: all 0.2s ease;
-  background: var(--bg-white);
-  color: var(--text-primary);
-  font-family: inherit;
-}
-
-.form-input:focus,
-.form-textarea:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--primary-light);
-}
-
-.form-input.error,
-.form-textarea.error {
-  border-color: var(--error);
-}
-
-.form-input.error:focus,
-.form-textarea.error:focus {
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-}
-
-.form-textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.error-message {
-  display: block;
-  color: var(--error);
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
-  animation: slideDown 0.2s ease-out;
-}
-
-/* Form Actions */
-.form-actions {
-  margin-top: 2rem;
-}
-
-.submit-button {
-  width: 100%;
-  padding: 1rem 2rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: white;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.3);
+/* Submit Button */
+.submit-btn {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  height: 56px !important;
   position: relative;
   overflow: hidden;
 }
 
-.submit-button::before {
+.submit-btn::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
-}
-
-.submit-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.4);
-}
-
-.submit-button:hover:not(:disabled)::before {
-  left: 100%;
-}
-
-.submit-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.submit-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.loading-text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-}
-
-.spinner {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
 }
 
-/* Success Message */
-.success-message {
-  margin-top: 1.5rem;
-  padding: 1rem 1.5rem;
-  background: #dcfce7;
-  color: var(--success);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-weight: 600;
-  border: 1px solid #bbf7d0;
+.submit-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.submit-text {
+  position: relative;
+  z-index: 1;
 }
 
 /* Animations */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-30px);
   }
   to {
     opacity: 1;
@@ -707,66 +532,54 @@ const handleSubmit = async () => {
   }
 }
 
-@keyframes spin {
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-/* Transitions */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .contact-container {
-    padding: 2rem 1rem;
-  }
-
-  .title {
-    font-size: 2rem;
-  }
-
-  .subtitle {
-    font-size: 1rem;
-  }
-
-  .contact-methods {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .form-section {
-    padding: 2rem 1.5rem;
-  }
-
-  .form-title {
-    font-size: 1.5rem;
-  }
-
-  .form-row {
-    grid-template-columns: 1fr;
+@media (max-width: 1280px) {
+  .page-title {
+    font-size: 3rem;
   }
 }
 
-@media (max-width: 480px) {
-  .contact-header {
-    margin-bottom: 2rem;
+@media (max-width: 960px) {
+  .main-content {
+    flex-direction: column-reverse;
   }
 
-  .contact-card {
-    padding: 2rem 1.5rem;
+  .form-card {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-title {
+    font-size: 2.5rem;
   }
 
-  .form-section {
-    padding: 1.5rem 1rem;
+  .info-card :deep(.v-card-text),
+  .form-card :deep(.v-card-text) {
+    padding: 24px !important;
   }
 }
 </style>
+

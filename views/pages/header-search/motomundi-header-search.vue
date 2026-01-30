@@ -35,6 +35,16 @@ const onChange = val => {
   console.log("Features selected changed!", val)
 }
 
+const redirectToSearch = async () => {
+  if (useRoute().path === '/products/list') {
+    await navigateTo("/products/list?sword=" + sword.value, { replace: true })
+    await nextTick()
+    window.location.reload() // Or emit an event that the search page listens to
+  } else {
+    await navigateTo("/products/list?sword=" + sword.value)
+  }
+}
+
 // Watcher to handle the search logic
 watchDebounced(
   sword,
@@ -196,9 +206,11 @@ const closeSearch = () => {
       v-model="sword"
       width="300"
       style="background-color: white;"
+      @keydown.enter="redirectToSearch"
       @focus="showSearchWindow = sword.length > 2"
     />
     <VIcon
+      @click="redirectToSearch"
       icon="tabler-search"
       class="ml-2 ma-1 mt-2  pa-2"
       color="white"
@@ -220,7 +232,7 @@ const closeSearch = () => {
         </p>
         <a
           class="button button--tiny button--light"
-          ng-click="redirectToSearch()"
+          @click="redirectToSearch"
         >Ver todo</a>
         <button
           class="close"

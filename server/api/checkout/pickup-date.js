@@ -9,8 +9,9 @@ export default defineEventHandler(async event => {
     const baseUrl = config.public.w3BaseUrl
 
     const { facilityId } = getQuery(event)
+    const wuid = getCookie(event, "guest_id");
 
-    url = `${baseUrl}/${getDomainId()}/checkout/pickup-date?facilityId=` + facilityId
+    url = `${baseUrl}/${getDomainId()}/checkout/pickup-date?facilityId=` + facilityId + "&wuid=" + wuid
 
     return await $fetch(url, {
       method: 'GET',

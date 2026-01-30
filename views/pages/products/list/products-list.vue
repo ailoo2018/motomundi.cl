@@ -53,6 +53,7 @@ const search = async () => {
       models: [],
       colors: [],
       tags: [],
+      sword: null,
       bike: null,
       collectionId: null,
       sizes: [],
@@ -175,6 +176,9 @@ if(query.bikeManufacturer){
 }
 if(query.minDiscount){
   baseQuery.push({ type: "minDiscount", value: query.minDiscount })
+}
+if(query.sword){
+  baseQuery.push({ type: "sword", value: query.sword })
 }
 
 

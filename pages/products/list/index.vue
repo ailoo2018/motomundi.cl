@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import ProductsList from "@/views/pages/products/list/products-list.vue"
 
+const route = useRoute()
+const query = route.query
+
 
 </script>
 
 <template>
-  <h1>not using slug</h1>
+  <ProductsList :injected-query="query"/>
 </template>
 
 <style scoped lang="scss">
