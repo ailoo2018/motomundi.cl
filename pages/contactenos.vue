@@ -61,10 +61,10 @@ const submitForm = async () => {
 
 const resetForm = () => {
   form.value = {
-    nombre: '',
-    email: '',
-    telefono: '',
-    consulta: ''
+    nombre: 'Juan',
+    email: 'jcfuentes@lava.cl',
+    telefono: '234234243',
+    consulta: 'Mi consulta'
   }
 }
 </script>
