@@ -1,8 +1,7 @@
 <script setup lang="ts">
 
-const timestamp = import.meta.server
-  ? new Date().toISOString()
-  : 'client-side'
+const serverTimestamp = ref(new Date().toISOString())
+
 </script>
 
 <template>
