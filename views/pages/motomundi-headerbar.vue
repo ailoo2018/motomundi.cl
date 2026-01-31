@@ -1,5 +1,8 @@
 <script setup lang="ts">
 
+const timestamp = import.meta.server
+  ? new Date().toISOString()
+  : 'client-side'
 </script>
 
 <template>
@@ -16,7 +19,7 @@
         </div>
         <div class="hmnuentry"><a href="/contactenos">Contáctenos</a></div>
         <div class="hmnuentry">
-          <a href="/cuenta/perfil"> Su cuenta {{ new Date() }}</a>
+          <a href="/cuenta/perfil"> Su cuenta {{ timestamp }}</a>
         </div>
       </div>
       <div id="community_links" class="d-flex gap-2 pt-2">
