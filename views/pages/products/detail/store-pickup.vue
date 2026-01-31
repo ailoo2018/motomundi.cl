@@ -1,8 +1,35 @@
 <script setup lang="ts">
 
+const isShow = ref(false)
+const stores = ref([
+  {
+    "name": "LAS TRANQUERAS",
+    "address": "LAS TRANQUERAS 56",
+    "stock": 1.0,
+    "pickup": "Recogelo en 2 horas"
+  },
+  {
+    "name": "CONCEPCION",
+    "address": "Juan de Dios Rivera 1298, Loc 2",
+    "stock": 1.0,
+    "pickup": "Recogelo en 2 horas"
+  },
+  {
+    "name": "VIÑA DEL MAR",
+    "address": "Quillota 384, Local 3",
+    "stock": 1.0,
+    "pickup": "Recogelo en 2 horas"
+  },
+  {
+    "name": "LA SERENA",
+    "address": "Av. Balmaceda 3039",
+    "stock": 1.0,
+    "pickup": "Recogelo en 2 horas"
+  }
+])
 const store = ref({name: ""})
 const showStockDialog = () => {
-
+  isShow.value = true
 }
 </script>
 
@@ -10,7 +37,7 @@ const showStockDialog = () => {
   <div class="shop-lookup__container mt-4">
     <div
       class="shipping-options__container not-clickable"
-      ng-click="showStockDialog()"
+      @click="showStockDialog()"
     >
       <div class="shipping-options__content">
         <p class="shipping-options__heading">
@@ -54,33 +81,18 @@ const showStockDialog = () => {
     </div>
 
     <!-- popup shop lookup -->
-    <div
+    <VDialog
+      max-width="700px"
       class="modal-wrapper shop-lookup__modal"
-      style="display: none;"
+      v-model="isShow"
     >
-      <div class="modal-backdrop"/>
-      <div
-        role="dialog"
-        class="modal"
-      >
-        <div class="modal__close-cont">
-          <button
-            class="modal__close"
-            ng-click="hideStockDialog()"
-          >
-            <svg
-              width="9"
-              height="9"
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon sprite-line-icons"
-            >
-              <use
-                href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-cross"
-                xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-cross"
-              />
-            </svg>
-          </button>
-        </div>
+
+      <VCardTitle>
+
+
+      </VCardTitle>
+      <VCard>
+
         <header class="modal-header">
           <div class="shop-lookup__header">
             <svg
@@ -114,20 +126,18 @@ const showStockDialog = () => {
             </div>
             <div
               style="height: 60px;"
-              ng-if="!stores"
+              v-if="!stores"
             >
               <div class="spinner-container">
                 <div class="spinner"/>
               </div>
             </div>
-            <div
-              data-v-7292d933=""
-              ng-if="stores"
-            >
+            <div v-if="stores">
               <ul style="padding:0px;">
                 <li
                   class="shop"
-                  ng-repeat="store in stores"
+                  v-for="store in stores"
+                  :key="store.id"
                 >
                   <div class="shop__address">
                     <div class="preferred-icon">
@@ -149,13 +159,13 @@ const showStockDialog = () => {
                   <div class="shop__stock">
                     <p
                       class="shop__no-stock"
-                      ng-if="store.stock == 0"
+                      v-if="store.stock == 0"
                     >
                       Sin stock
                     </p>
                     <p
                       class=""
-                      ng-if="store.stock > 0"
+                      v-if="store.stock > 0"
                     >
                       1 en stock
                     </p>
@@ -178,20 +188,37 @@ const showStockDialog = () => {
               </li>
               <li>
                 Recogida en 2 horas desde apertura de
-                la tienda. Consulta los horarios de las tiendas <a
-                href="/tiendas"
-                target="_blank"
-              >aquí</a>
+                la tienda. Consulta los horarios de las tiendas
+
+                <a
+                  href="/tiendas"
+                  target="_blank"
+                >aquí</a>
               </li>
             </ul>
           </div>
         </section>
-      </div>
-    </div>
+      </VCard>
+    </VDialog>
     <!-- /popup shop lookup -->
   </div>
 </template>
 <style lang="scss">
+.shop-lookup__modal .modal-header .shop-lookup__header {
+  align-items: flex-start;
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start;
+}
+
+.shop-lookup__modal .modal-header span.h1 {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.4px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+}
 
 .shipping-options__container {
   align-items: center;
@@ -265,6 +292,106 @@ const showStockDialog = () => {
   justify-content: flex-start;
   margin: 0;
   text-transform: uppercase;
+}
+
+/*** dialog ****/
+
+.shop {
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 10px 12px 12px;
+  position: relative;
+  color: black;
+}
+
+.shop .shop__address {
+  align-items: baseline;
+  display: flex;
+  flex: 0 1 65%;
+  font-size: 13px;
+  gap: 7px;
+  justify-content: flex-start;
+  line-height: 16px;
+  margin: 0;
+  max-width: 65%;
+  padding: 0;
+}
+
+.shop .shop__address strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+.shop .shop__address p, .shop .shop__address strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shop .shop__address p, .shop .shop__address strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shop:first-child {
+  border-top: 1px solid #e5e5e5;
+}
+
+.shop-lookup__modal .modal-header {
+  background-color: #fff !important;
+  padding: 25px 30px !important;
+}
+
+.shop-lookup__conditions {
+  background: #fff;
+  border-top: 1px solid #e5e5e5;
+  bottom: 0;
+  display: block;
+  font-size: 11px;
+  line-height: 15px;
+  padding: 16px;
+  position: sticky;
+}
+
+.shop .shop__stock {
+  align-items: flex-end;
+  display: flex;
+  flex: 1 0 35%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  font-size: 12px;
+  gap: 4px;
+  justify-content: center;
+  text-align: right;
+}
+
+.shop .shop__stock p:after {
+  background-color: #41a334;
+  border-radius: 50%;
+  content: "";
+  display: inline-block;
+  height: 10px;
+  margin-left: 5px;
+  position: relative;
+  top: 1px;
+  width: 10px;
+}
+
+.shop .shop__stock p:after {
+  background-color: #41a334;
+  border-radius: 50%;
+  content: "";
+  display: inline-block;
+  height: 10px;
+  margin-left: 5px;
+  position: relative;
+  top: 1px;
+  width: 10px;
 }
 </style>
 

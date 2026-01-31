@@ -33,12 +33,12 @@ const images = computed( () => {
 })
 
 // Configuration for breakpoints (Responsive 5 slides)
-const swiperBreakpoints = {
+const swiperBreakpoints = JSON.stringify({
   320: { slidesPerView: 3.5, spaceBetween: 10 },
   640: { slidesPerView: 4, spaceBetween: 10 },
   1024: { slidesPerView: 5, spaceBetween: 10 },
   1280: { slidesPerView: 6, spaceBetween: 10 },
-}
+})
 
 const onClick = (index, img) => {
   emit("on-click", index, img)
