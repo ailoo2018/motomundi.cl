@@ -64,7 +64,7 @@ register()
               id="miniatures"
               events-prefix="swiper-"
               navigation="true"
-              :breakpoints="swiperBreakpoints"
+              :breakpoints="{  320: { slidesPerView: 3.5, spaceBetween: 10 },  640: { slidesPerView: 4, spaceBetween: 10 },  1024: { slidesPerView: 5, spaceBetween: 10 },  1280: { slidesPerView: 6, spaceBetween: 10 },}"
             >
               <swiper-slide
                 v-for="(img, index) in images"
