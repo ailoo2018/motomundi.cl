@@ -33,16 +33,23 @@ const images = computed( () => {
 })
 
 // Configuration for breakpoints (Responsive 5 slides)
-const swiperBreakpoints = JSON.stringify({
+const swiperBreakpoints = {
   320: { slidesPerView: 3.5, spaceBetween: 10 },
   640: { slidesPerView: 4, spaceBetween: 10 },
   1024: { slidesPerView: 5, spaceBetween: 10 },
   1280: { slidesPerView: 6, spaceBetween: 10 },
-})
+}
 
 const onClick = (index, img) => {
   emit("on-click", index, img)
 }
+
+// Watch for product prop changes
+watch(() => props.product, newProduct => {
+  console.log("thumb product changed")
+  product.value = newProduct
+})
+
 
 register()
 </script>
@@ -59,7 +66,10 @@ register()
               navigation="true"
               :breakpoints="swiperBreakpoints"
             >
-              <swiper-slide v-for="(img, index) in images" :key="index">
+              <swiper-slide
+                v-for="(img, index) in images"
+                :key="index"
+              >
                 <div v-if="img.type === 'image'">
                   <img
                     class="tmb-img"
