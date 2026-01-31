@@ -1,31 +1,34 @@
 import { getDomainId } from "@/server/ailoo-domain.js"
 
 export default defineEventHandler(async event => {
-
   let url = ""
-
   try {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
-    const wuid  = getCookie(event, "guest_id")
+    const { wuid, comunaId } = getQuery(event)
 
-    url = `${baseUrl}/${getDomainId()}/shipping/methods`
 
-    return await $fetch(url, {
-      method: 'GET',
+
+    url = `${baseUrl}/${getDomainId()}/cart/comuna`
+
+    const res = await $fetch(url, {
       headers: {
         'Content-Type': 'application/json',
       },
-      query: { wuid },
+      method: 'GET',
+      query: { wuid, comunaId },
     })
-  }catch(error) {
-    console.error('Error in products/search lookup: ' + url, error)
+
+    console.log("res", res)
+
+    return res
+  } catch (error) {
+    console.error('Error in cart/remove-item: ' + url, error)
     console.error('Stack trace:', error.stack)
     throw createError({
       statusCode: error.statusCode || 500,
-      message: error.message || 'Failed to lookup friendly URL',
+      message: error.message || 'Failed remove cart',
     })
-
   }
 })

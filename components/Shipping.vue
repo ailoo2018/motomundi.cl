@@ -160,17 +160,19 @@ const listShippingMethods = async () => {
 
 const setShippingComuna = async comunaId => {
 
-/*
 
 
-  const { data, error: fetchError } = await useFetch( "/cart/comuna?id=" + comunaId, {
+  const wuid = useGuestUser().value
+
+  const { data, error: fetchError } = await useFetch( "/api/cart/comuna", {
     method: "GET",
     headers: { 'Content-Type': 'application/json' },
+    query: {comunaId: comunaId, wuid: wuid},
     async onResponseError({ response }) {
       alert("Error calling SetComuna", response._data)
     },
   })
-*/
+
 
 
 }
