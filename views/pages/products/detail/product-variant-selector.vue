@@ -14,7 +14,7 @@ const props = defineProps(
   },
 )
 
-const emit = defineEmits(['update:size', 'update:color', 'add-to-cart'])
+const emit = defineEmits(['update:size', 'update:color', 'add-to-cart', 'selected-variant'])
 
 const selectedProductItem = defineModel({
   type: Object,
@@ -81,12 +81,18 @@ const updateModel = () => {
       productItem = prodUtil.findProductItemByFeatures(props.product, colorId, sizeId)
     }
 
+    console.log("updateModel")
     selectedProductItem.value = productItem
   } catch (e) {
     console.error(e)
     selectedProductItem.value = null
   }
 }
+
+watch(selectedProductItem, () => {
+  console.log("selected variant: " + selectedProductItem.value)
+  emit("selected-variant", selectedProductItem.value)
+})
 
 const isSizeAvailable = size => {
 

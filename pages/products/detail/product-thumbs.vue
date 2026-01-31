@@ -57,7 +57,7 @@ register()
               id="miniatures"
               events-prefix="swiper-"
               navigation="true"
-              :breakpoints="JSON.stringify(swiperBreakpoints)"
+              :breakpoints="swiperBreakpoints"
             >
               <swiper-slide v-for="(img, index) in images" :key="index">
                 <div v-if="img.type === 'image'">

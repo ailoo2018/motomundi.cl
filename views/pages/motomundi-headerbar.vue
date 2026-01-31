@@ -23,7 +23,7 @@ const serverTimestamp = useState('cache-timestamp', () => new Date().toISOString
           <a href="/contactenos">Contáctenos</a>
         </div>
         <div class="hmnuentry">
-          <a href="/cuenta/perfil"> Su cuenta {{ serverTimestamp }}</a>
+          <a href="/cuenta/perfil"> Su cuenta </a>
         </div>
       </div>
       <div

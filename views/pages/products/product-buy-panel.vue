@@ -4,6 +4,7 @@ import { useProductsUtils } from "@/composables/useProductsUtils"
 import ProductVariantSelector from "@/views/pages/products/detail/product-variant-selector.vue"
 import CompositeVariantSelector from "@/views/pages/products/detail/composite-variant-selector.vue"
 import { ProductType } from "@/models/products"
+import StorePickup from "@/views/pages/products/detail/store-pickup.vue"
 
 const props = defineProps(
   {
@@ -20,9 +21,6 @@ const selectedProductItem = ref()
 const selectedProductItems = ref([])
 
 const prodUtil = useProductsUtils()
-
-
-const selectedColor = ref({ id: 0 })
 
 const addToCart = itemsToAdd => {
 
@@ -66,6 +64,15 @@ const addToCart = itemsToAdd => {
 const price = computed(() => {
   return props.product.minPrice
 })
+
+const selectedVariant = ref()
+
+const onSelectedVariant = (pit) =>
+{
+  selectedVariant.value = pit
+
+}
+
 </script>
 
 <template>
@@ -88,13 +95,13 @@ const price = computed(() => {
                 </span>
               </span>
 
-              <span class="tag-wrapper" >
-              <span
-                v-if="product.discountPercent > 0"
-                class="tag product-tag product-tag--old product-tag--sales"
-              >
-                <span class="discount">Rebajas -{{ Math.round(product.discountPercent) }}%</span>
-              </span>
+              <span class="tag-wrapper">
+                <span
+                  v-if="product.discountPercent > 0"
+                  class="tag product-tag product-tag--old product-tag--sales"
+                >
+                  <span class="discount">Rebajas -{{ Math.round(product.discountPercent) }}%</span>
+                </span>
               </span>
             </div>
           </div>
@@ -116,7 +123,6 @@ const price = computed(() => {
           <Financing />
         </div>
         <div
-
           class="price-bottom__checks"
           style="margin-bottom: 20px;"
         >
@@ -162,6 +168,7 @@ const price = computed(() => {
       v-if="product.type === 0"
       v-model="selectedProductItem"
       :product="product"
+      @selected-variant="onSelectedVariant"
     />
     <!-- normal product -->
 
@@ -174,6 +181,76 @@ const price = computed(() => {
     />
 
     <!-- /composite product -->
+
+    <!-- shipping-options -->
+    <div  class="row" ng-if="page.showShippingOptions">
+      <div  class="col s12">
+        <div  class="product-buy-panel__shipping-options">
+          <div  style="display:none;" class="stock-check">
+            <div class="shipping-options__container" ng-click="showShippingDialog()">
+              <div class="shipping-options__content">
+                <p class="shipping-options__heading">
+                  <svg width="16" height="14" xmlns="http://www.w3.org/2000/svg"
+                       class="icon sprite-line-icons">
+                    <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-av-free-shipping"
+                         xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-av-free-shipping"></use>
+                  </svg>
+                  <span>Entrega a domicilio</span>
+                </p>
+                <div class="shipping-options__body">
+                  <div class="shipping-options__option"><p>
+                    <span>En Proveedor: Envío dentro de <strong>3 días hábiles</strong>.</span>
+                  </p></div>
+                </div>
+              </div>
+              <div class="shipping-options__actions">
+                <button>
+                  Comprobar
+                  <svg width="12" height="14" xmlns="http://www.w3.org/2000/svg"
+                       class="icon sprite-line-icons">
+                    <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-angle-right"
+                         xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-angle-right"></use>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <!-- modal popup -->
+            <div class="modal-wrapper shipping-options__modal" style="display: none;">
+              <div class="modal-backdrop"></div>
+              <div role="dialog" class="modal">
+                <div class="modal__close-cont">
+                  <button class="modal__close" ng-click="hideShippingDialog()">
+                    <svg width="9" height="9" xmlns="http://www.w3.org/2000/svg"
+                         class="icon sprite-line-icons">
+                      <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-cross"
+                           xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-cross"></use>
+                    </svg>
+                  </button>
+                </div>
+                <header class="modal-header">
+                  <div><h1>Comprueba tu código postal</h1></div>
+                </header>
+                <section class="modal-body">
+                  <div><p>Introduce tu código postal para ver la fecha de entrega
+                    aproximada</p>
+                    <div class="form-group"><input type="text"
+                                                   placeholder="Tu código postal"
+                                                   class="text">
+                      <button  type="button" class="button">
+                        <span >Comprobar</span>
+                      </button>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+            <!-- /modal popup -->
+          </div>
+          <StorePickup :product-item="selectedProductItems" />
+        </div>
+      </div>
+    </div>
+    <!-- /shipping-options -->
 
 
     <!-- addToCart -->
@@ -232,6 +309,7 @@ const price = computed(() => {
     <!-- /addToCart -->
   </div><!-- end ngIf: product -->
 </template>
+
 <style>
 .tag.product-tag.product-tag--crazydays, .tag.product-tag.product-tag--offer, .tag.product-tag.product-tag--sales {
   background-color: #d6001c;
