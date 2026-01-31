@@ -8,39 +8,73 @@ const serverTimestamp = useState('cache-timestamp', () => new Date().toISOString
   <div id="headermenu">
     <div class="headermenucontent d-flex justify-space-between">
       <div>
-        <div class="hmnuentry"><i class="fa fa-phone"></i> <a href="tel:26660690"> (2)26660690</a></div>
-
-        <div class="hmnuentry"><i class="fa fa-home"></i> <a href="/tiendas">Tiendas y
-          horarios</a></div>
         <div class="hmnuentry">
-          <i class="fa fa-shopping-cart"></i> <a href="/cart">Carro de
-          compra</a>
+          <i class="fa fa-phone" /> <a href="tel:26660690"> (2)26660690</a>
         </div>
-        <div class="hmnuentry"><a href="/contactenos">Contáctenos</a></div>
+
+        <div class="hmnuentry">
+          <i class="fa fa-home" /> <a href="/tiendas">Tiendas y
+            horarios</a>
+        </div>
+        <div class="hmnuentry">
+          <i class="fa fa-shopping-cart" /> <a href="/cart">Carro de compra</a>
+        </div>
+        <div class="hmnuentry">
+          <a href="/contactenos">Contáctenos</a>
+        </div>
         <div class="hmnuentry">
           <a href="/cuenta/perfil"> Su cuenta {{ serverTimestamp }}</a>
         </div>
       </div>
-      <div id="community_links" class="d-flex gap-2 pt-2">
-        <a href="https://www.youtube.com/MotoMundiTV" target="_blank" rel="noopener noreferrer"
-           title="MotoMundi en YouTube">
-          <VIcon icon="tabler-brand-youtube" size="24"  />
+      <div
+        id="community_links"
+        class="d-flex gap-2 pt-2"
+      >
+        <a
+          href="https://www.youtube.com/MotoMundiTV"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="MotoMundi en YouTube"
+        >
+          <VIcon
+            icon="tabler-brand-youtube"
+            size="24"
+          />
         </a>
-        <a href="https://www.instagram.com/motomundi/" target="_blank" rel="noopener noreferrer"
-           title="MotoMundi en Instagram">
-          <VIcon icon="tabler-brand-instagram" size="24" />
+        <a
+          href="https://www.instagram.com/motomundi/"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="MotoMundi en Instagram"
+        >
+          <VIcon
+            icon="tabler-brand-instagram"
+            size="24"
+          />
         </a>
-        <a href="https://www.facebook.com/motomundi.la" target="_blank" rel="noopener noreferrer"
-           title="Facebook">
-          <VIcon icon="tabler-brand-facebook" size="24" />
+        <a
+          href="https://www.facebook.com/motomundi.la"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Facebook"
+        >
+          <VIcon
+            icon="tabler-brand-facebook"
+            size="24"
+          />
         </a>
-        <a href="https://www.tiktok.com/@motomundicl" target="_blank" rel="noopener noreferrer"
-           title="@motomundi en Twitter">
-          <VIcon icon="tabler-brand-tiktok" size="24" />
+        <a
+          href="https://www.tiktok.com/@motomundicl"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="@motomundi en Twitter"
+        >
+          <VIcon
+            icon="tabler-brand-tiktok"
+            size="24"
+          />
         </a>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -89,5 +123,4 @@ const serverTimestamp = useState('cache-timestamp', () => new Date().toISOString
 #community_links {
   color: white;
 }
-
 </style>

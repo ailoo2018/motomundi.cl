@@ -1,14 +1,14 @@
 <script setup lang="ts">
-
 import { register } from "swiper/element"
-import {getDomainId, getImageUrl, getYouTubeThumbnail} from "@core/utils/formatters";
-import {SwiperSlide} from "swiper/vue";
+import { getDomainId, getImageUrl, getYouTubeThumbnail } from "@core/utils/formatters"
 
 const props = defineProps({
   product: {
-    type: Object
-  }
+    type: Object,
+  },
 })
+
+const emit = defineEmits(['on-click'])
 
 const product = ref(props.product)
 
@@ -31,8 +31,6 @@ const images = computed( () => {
 
   return imgs
 })
-
-const emit = defineEmits(['on-click'])
 
 // Configuration for breakpoints (Responsive 5 slides)
 const swiperBreakpoints = {
@@ -59,9 +57,9 @@ register()
               id="miniatures"
               events-prefix="swiper-"
               navigation="true"
-              :breakpoints="swiperBreakpoints"
+              :breakpoints="JSON.stringify(swiperBreakpoints)"
             >
-              <swiper-slide v-for="(img, index) in images" >
+              <swiper-slide v-for="(img, index) in images" :key="index">
                 <div v-if="img.type === 'image'">
                   <img
                     class="tmb-img"
@@ -92,7 +90,6 @@ register()
 </template>
 
 <style scoped lang="scss">
-
 .tmb-img {
   cursor:pointer;
   width: 110px; height: 110px;
@@ -105,5 +102,7 @@ register()
     height: 100%;
   }
 }
-
+.product-media{
+  max-height: 110px;
+}
 </style>
