@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ProductHelper } from "@/models/products"
-import { useProductsUtils } from "@/composables/useProductsUtils.js"
+import {ProductHelper} from "@/models/products"
+import {useProductsUtils} from "@/composables/useProductsUtils.js"
 
 
 const prodUtil = useProductsUtils()
@@ -20,8 +20,8 @@ const selectedProductItem = defineModel({
   type: Object,
 })
 
-const selectedSize = ref({ id: 0 })
-const selectedColor = ref({ id: 0 })
+const selectedSize = ref({id: 0})
+const selectedColor = ref({id: 0})
 const isShowCbo = ref(false)
 const showSizeChart = ref(false)
 
@@ -49,7 +49,7 @@ const isColorAvailable = color => {
     }
 
     return false
-  }catch(e){
+  } catch (e) {
     console.error(e)
     return false
   }
@@ -82,7 +82,7 @@ const updateModel = () => {
     }
 
     selectedProductItem.value = productItem
-  }catch(e){
+  } catch (e) {
     console.error(e)
     selectedProductItem.value = null
   }
@@ -113,10 +113,12 @@ const colors = computed(() => {
 })
 
 const sizes = computed(() => {
-  return props.product.features.filter(f => f.type === 0).map(f1 => { return { id: f1.id, name: f1.name.toLowerCase() === "tamaño unico" ?  'OS' : f1.name }})
+  return props.product.features.filter(f => f.type === 0).map(f1 => {
+    return {id: f1.id, name: f1.name.toLowerCase() === "tamaño unico" ? 'OS' : f1.name}
+  })
 })
 
-onMounted( () => {
+onMounted(() => {
   var colorFeature = props.product.features.find(f => f.type === 1)
   if (colorFeature) {
     selectedColor.value = colorFeature
@@ -257,7 +259,7 @@ onMounted( () => {
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon sprite-line-icons"
               >
-                <use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-cross" />
+                <use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-cross"/>
               </svg>
             </button>
             <div
@@ -282,7 +284,9 @@ onMounted( () => {
                     height="24"
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon sprite-line-icons"
-                  ><title>Alert icon</title><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-alert" /></svg> Vaya, la  <span>talla </span>  se ha agotado. <br> ¿Te avisamos cuando esté disponible?</span>
+                  ><title>Alert icon</title><use
+                    href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-alert"
+                  /></svg> Vaya, la  <span>talla </span>  se ha agotado. <br> ¿Te avisamos cuando esté disponible?</span>
                 <div class="size-oosk__email-form-fields">
                   <div class="input-field"><input
                     id="email"
@@ -322,13 +326,13 @@ onMounted( () => {
                 >
                   <span class="h3">Disponible en la talla </span>
                   <div class="similar-products">
-                    <div class="skeleton"><a />
+                    <div class="skeleton"><a/>
                     </div>
-                    <div class="skeleton"><a />
+                    <div class="skeleton"><a/>
                     </div>
-                    <div class="skeleton"><a />
+                    <div class="skeleton"><a/>
                     </div>
-                    <div class="skeleton"><a />
+                    <div class="skeleton"><a/>
                     </div>
                   </div>
                   <div
@@ -344,8 +348,159 @@ onMounted( () => {
         </div>
       </div>
     </div>
-  <!-- /sizes -->
+    <!-- /sizes -->
   </span>
 </template>
 
+<style lang="scss">
+.sizes-form {
 
+
+  .radio input[type=radio]:checked + label, .radio input[type=radio]:not(:checked) + label {
+    color: #000;
+    cursor: pointer;
+    display: block;
+    font-weight: 500;
+    line-height: 40px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .radio input[type=radio].oosk + label:before {
+    background-color: hsla(0, 0%, 72%, .1);
+    border-color: #ccc;
+    box-shadow: inset 0 0 0 1px #eee;
+  }
+
+  .radio input[type=radio]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  .radio input[type=radio].oosk + label .oosk__badge {
+    background: #ccc url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxMiI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjIiPjxwYXRoIGQ9Ik0yLjIgMWg5LjZjLjY2IDAgMS4yLjU2MyAxLjIgMS4yNXY3LjVjMCAuNjg4LS41NCAxLjI1LTEuMiAxLjI1SDIuMkMxLjU0IDExIDEgMTAuNDM3IDEgOS43NXYtNy41QzEgMS41NjIgMS41NCAxIDIuMiAxWiIvPjxwYXRoIGQ9Ik0xMyAyLjI1IDcgNi42MjUgMSAyLjI1Ii8+PC9nPjwvc3ZnPg==") 50% no-repeat;
+    display: block;
+    height: 20px;
+    position: absolute;
+    right: -2px;
+    top: 0;
+    transition: all .2s ease;
+    width: 25px;
+  }
+
+  .radio input[type=radio]:checked + label:after, .radio input[type=radio]:not(:checked) + label:after {
+    background: #41a334;
+    border: 1px solid #41a334;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: all .2s ease;
+    width: 100%;
+    z-index: -1;
+  }
+
+  .radio input[type=radio]:checked + label, .radio input[type=radio]:not(:checked) + label {
+    color: #000;
+    cursor: pointer;
+    display: block;
+    font-weight: 500;
+    line-height: 40px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .radio input[type=radio]:checked, .radio input[type=radio]:not(:checked) {
+    left: -9999px;
+    position: absolute;
+  }
+
+  [type=checkbox]:checked, [type=checkbox]:not(:checked), [type=radio]:checked, [type=radio]:not(:checked) {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+
+  .default-selector-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+  }
+
+
+  .radio {
+    flex: 0 1 19%;
+    height: 40px;
+    margin: .5% 1% .5% 0;
+    position: relative;
+  }
+
+
+  .radio .paack-2h-label {
+    background-color: #00a8d6;
+    color: #fff;
+    font-size: 7px;
+    font-weight: 800;
+    padding: 2px 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+  }
+
+
+  .radio input[type=radio]:checked + label, .radio input[type=radio]:not(:checked) + label {
+    color: #000;
+    cursor: pointer;
+    display: block;
+    font-weight: 500;
+    line-height: 40px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .radio input[type=radio]:checked + label:before, .radio input[type=radio]:not(:checked) + label:before {
+    background: transparent;
+    border: 1px solid #000;
+    border-radius: 0;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+
+  .radio input[type=radio].oosk + label:before {
+    background-color: hsla(0, 0%, 72%, .1);
+    border-color: #ccc;
+    box-shadow: inset 0 0 0 1px #eee;
+  }
+
+  .product-wrapper.product-detail .swatch.color-value.unavailable {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .radio input[type=radio]:checked + label {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .radio input[type=radio]:checked + label:before {
+    opacity: 0;
+  }
+
+}
+</style>

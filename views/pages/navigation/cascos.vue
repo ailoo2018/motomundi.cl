@@ -1,4 +1,6 @@
 <script setup>
+import RidingStylesMenu from "@/views/pages/navigation/riding-styles-menu.vue"
+
 const props = defineProps({
   href: {
     type: String,
@@ -54,34 +56,25 @@ const href = props.href
                   </div>
 
                   <div class="submenu__content submenu__icon-buttons">
-                    <a
-                      href="/cascos/novedades"
+                    <!--
+                      <a href="/cascos/novedades"
                       class="mtc-link"
+                      title="Novedades">
+                      <img src="/Templates/MotoMundiDesktop/content/assets/categories/140-motos-novedades-cascos.svg"
                       title="Novedades"
-                    >
-                      <img
-                        src="/content/assets/categories/140-motos-novedades-cascos.svg"
-                        title="Novedades"
-                        width="40"
-                        height="40"
-                        alt="Novedades"
-                      >
+                      width="40" height="40"
+                      alt="Novedades">
                       <p>Novedades</p>
-                    </a>
-
+                      </a>
+                    -->
 
                     <a
                       href="/cascos-integrales-para-moto"
                       class="mtc-link"
                       title="Integrales"
                     >
-                      <img
-                        src="/content/assets/menu/categories/01-moto-equipacion-carretera-cascos-racing.svg"
-                        title="Integrales"
-                        width="40"
-                        height="40"
-                        alt="Cascos Integrales"
-                      >
+                      <img src="/content/assets/menu/categories/full-face.jpg" />
+
                       <p>Integrales</p>
                     </a>
 
@@ -90,13 +83,7 @@ const href = props.href
                       class="mtc-link"
                       title="Modulares"
                     >
-                      <img
-                        src="/content/assets/menu/categories/02-moto-equipacion-carretera-cascos-modulares.svg"
-                        title="Modulares"
-                        width="40"
-                        height="40"
-                        alt="Cascos modulares"
-                      >
+                      <img src="/content/assets/menu/categories/flip-up.jpg" />
                       <p>Modulares</p>
                     </a>
 
@@ -105,58 +92,45 @@ const href = props.href
                       href="/cascos-abiertos-para-moto"
                       class="mtc-link"
                       title="Jet"
-                    ><img
-                       src="/content/assets/menu/categories/03-moto-equipacion-carretera-cascos-jet.svg"
-                       title="Jet"
-                       width="40"
-                       height="40"
-                       alt="Cascos jet"
-                     >
-                      <p>Jet</p>
+                    >
+
+                      <img src="/content/assets/menu/categories/open-face.jpg" />
+                      <p>Abierto</p>
                     </a>
 
+                    <a
+                      href="/cascos-doble-proposito"
+                      class="mtc-link"
+                      title="Motocross / Enduro"
+                    >
+                      <img src="/content/assets/menu/categories/dual-sport.jpg" />
+                      <p>Adventure</p>
+                    </a>
                     <a
                       href="/cascos-motocross"
                       class="mtc-link"
                       title="Motocross / Enduro"
-                    ><img
-                       src="/content/assets/menu/categories/21-moto-equipacion-motocross-cascos.svg"
-                       title="Motocross / Enduro"
-                       width="40"
-                       height="40"
-                       alt="Cascos motocross"
-                     >
-                      <p>Motocross / Enduro</p>
+                    >
+
+                      <img src="/content/assets/menu/categories/mx.jpg" />
+                      <p>MX / Enduro</p>
                     </a>
 
-                    <a
-                      href="/cascos-motocross"
-                      class="mtc-link"
-                      title="Trial"
-                    >
-                      <img
-                        src="/content/assets/menu/categories/36-moto-equipacion-trial-cascos.svg"
-                        title="Trial"
-                        width="40"
-                        height="40"
-                        alt="Cascos trial"
-                      >
-                      <p>Trial</p>
-                    </a>
 
                     <a
                       href="/intercomunicadores"
                       class="mtc-link"
                       title="Casco + intercomunicador"
                     >
-                      <img
-                        src="/content/assets/menu/categories/packs-casco-intercom.svg"
-                        title="Casco + intercomunicador"
-                        width="40"
-                        height="40"
-                        alt="Casco + intercomunicador"
+
+                      <svg
+                        class="svg-icon"
+                        viewBox="0 0 300 200"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                      <p>Intercomunicador</p>
+                        <use xlink:href="/content/assets/menu/categories/blouz.svg#img-intercom-et-kit-main-libre" />
+                      </svg>
+                      <p>Comunicación</p>
                     </a>
 
 
@@ -165,13 +139,8 @@ const href = props.href
                       class="mtc-link"
                       title="Accesorios"
                     >
-                      <img
-                        src="/content/assets/menu/categories/16-moto-equipacion-carretera-complementos.svg"
-                        title="Accesorios"
-                        width="40"
-                        height="40"
-                        alt="Accesorios de cascos"
-                      >
+
+                      <img src="/content/assets/menu/categories/visor.jpg" />
                       <p>Accesorios</p>
                     </a>
                   </div>
@@ -246,7 +215,17 @@ const href = props.href
                             height="30"
                           > </span></a>
                         </li>
-
+                        <!--
+                          <li><a
+                          href="/shark"
+                          class="mtc-link"><span
+                          lazy="true"><img
+                          src="/content/assets/brands/brand-106.png"
+                          class="cdn-img v-lazy-image v-lazy-image-loaded"
+                          alt="Cascos SHARK" width="59" height="30"
+                          > </span></a>
+                          </li>
+                        -->
                         <li>
                           <a
                             href="/cascos-arai"
@@ -275,72 +254,7 @@ const href = props.href
                     </div>
                   </div>
                   <!-- /marcas destacadas -->
-
-                  <!-- esilo de piloto -->
-                  <div class="submenu__riding-styles">
-                    <div class="container">
-                      <span class="h3">por riding style</span>
-                      <ul class="desktop">
-                        <li>
-                          <a href="/cascos/sport-racing">
-                            <span class="mtc-link">
-
-                              <img
-                                width="60"
-                                height="40"
-                                src="/content/assets/menu/categories/mobile-menu__seg-racing.svg"
-                                alt="Sport / Racing"
-                              > <p>Sport / Racing</p>
-                            </span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/cascos/touring">
-                            <span class="mtc-link">
-                              <img
-                                width="60"
-                                height="40"
-                                src="/content/assets/menu/categories/mobile-menu__seg-touring.svg"
-                                alt="Touring"
-                              > <p>Touring</p></span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/cascos/trail-adventure">
-                            <span class="mtc-link">
-                              <img
-                                width="60"
-                                height="40"
-                                src="/content/assets/menu/categories/mobile-menu__seg-trail.svg"
-                                alt="Trail / Adventure"
-                              > <p>Trail / Adventure</p></span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/cascos/scooter-urban">
-                            <span class="mtc-link">
-                              <img
-                                width="60"
-                                height="40"
-                                src="/content/assets/menu/categories/mobile-menu__seg-urban.svg"
-                                alt="Scooter / Urban"
-                              > <p>Scooter / Urban</p></span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/cascos/cafe-racer-vintage">
-                            <span class="mtc-link">
-                              <img
-                                width="60"
-                                height="40"
-                                src="/content/assets/menu/categories/mobile-menu__seg-caferacer.svg"
-                                alt="Cafe Racer / Vintage"
-                              > <p>Cafe Racer / Vintage</p></span>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                  <RidingStylesMenu />
                 </div>
               </div>
             </div>
@@ -352,7 +266,4 @@ const href = props.href
 
   <!-- /cascos -->
 </template>
-
-
-
 

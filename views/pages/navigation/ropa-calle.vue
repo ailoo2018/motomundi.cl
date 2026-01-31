@@ -1,10 +1,12 @@
 <script setup>
 
+import RidingStylesMenu from "@/views/pages/navigation/riding-styles-menu.vue"
+
 const props = defineProps({
   href: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 })
 const href = props.href
 
@@ -24,7 +26,6 @@ const href = props.href
   >
     <template #activator="{ props }">
       <li
-        id="ni_1571"
         class="l0 c1 main-nav"
         v-bind="props"
       >
@@ -38,10 +39,7 @@ const href = props.href
       </li>
     </template>
     <ul class="u1">
-      <li
-        id="ni_3854"
-        class="l1 c0 primary subCategories"
-      >
+      <li class="l1 c0 primary subCategories">
         <div class="submenu">
           <div class="container">
             <div class="row">
@@ -854,53 +852,7 @@ const href = props.href
               </div>
               <div class="col s12 submenu__extra-nav">
                 <div class="extra__container">
-                  <div class="submenu__riding-styles">
-                    <div class="container">
-                      <span class="h3">por riding style</span>
-                      <ul class="desktop">
-                        <li>
-                          <span class="mtc-link"><img
-                            width="60"
-                            height="40"
-                            src="/content/assets/menu/categories/mobile-menu__seg-racing.svg"
-                            alt="Sport / Racing"
-                          > <p>Sport / Racing</p></span>
-                        </li>
-                        <li>
-                          <span class="mtc-link"><img
-                            width="60"
-                            height="40"
-                            src="/content/assets/menu/categories/mobile-menu__seg-touring.svg"
-                            alt="Touring"
-                          > <p>Touring</p></span>
-                        </li>
-                        <li>
-                          <span class="mtc-link"><img
-                            width="60"
-                            height="40"
-                            src="/content/assets/menu/categories/mobile-menu__seg-trail.svg"
-                            alt="Trail / Adventure"
-                          > <p>Trail / Adventure</p></span>
-                        </li>
-                        <li>
-                          <span class="mtc-link"><img
-                            width="60"
-                            height="40"
-                            src="/content/assets/menu/categories/mobile-menu__seg-urban.svg"
-                            alt="Scooter / Urban"
-                          > <p>Scooter / Urban</p></span>
-                        </li>
-                        <li>
-                          <span class="mtc-link"><img
-                            width="60"
-                            height="40"
-                            src="/content/assets/menu/categories/mobile-menu__seg-caferacer.svg"
-                            alt="Cafe Racer / Vintage"
-                          > <p>Cafe Racer / Vintage</p></span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                  <RidingStylesMenu />
                 </div>
               </div>
             </div>

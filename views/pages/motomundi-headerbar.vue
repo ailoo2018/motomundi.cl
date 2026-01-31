@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-const serverTimestamp = ref(new Date().toISOString())
+const serverTimestamp = useState('cache-timestamp', () => new Date().toISOString())
 
 </script>
 

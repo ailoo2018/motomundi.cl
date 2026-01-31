@@ -243,5 +243,5 @@ const onSelectedColor = color => {
   </VDialog>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 </style>

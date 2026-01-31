@@ -96,14 +96,24 @@ const selectDepartment = () => {
 }
 
 
+.svg-icon {
+  width: 70px; /* Adjust size as needed */
+  height: 70px;
+  /* Crucial: this icon is made of lines, so it needs a stroke color */
+  stroke: #333;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
 #nav ul.u1 {
+  margin: 0 auto;
+  max-width: 1300px;
+  width: 90%;
+  min-width: 800px;
+  background-color: #fff;
   position: absolute;
-  left: 0px;
-  z-index: 2000;
-  box-sizing: border-box;
-  width: 100%;
-  background: #fff;
-  border-bottom: solid 2px #b21a15;
+  left: 5%;
   -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
   -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
@@ -442,9 +452,11 @@ a, span.mtc-link {
 .submenu__riding-styles {
   background-color: #f5f5f5;
   border-top: 1px solid #fff;
-  padding: 12px 0;
+  padding: 0px 0;
 }
-
+.submenu__riding-styles li{
+  padding-top: 4px;
+}
 #nav .extra__container .container {
   padding-left: 20px;
   padding-right: 20px;
@@ -539,6 +551,28 @@ li .mtc-link, li > a {
   font-weight: 500;
   letter-spacing: 0;
   text-transform: uppercase;
+}
+
+
+
+#nav .desktop span.mtc-link {
+  align-items: center;
+  color: #000;
+  display: block;
+  display: flex;
+  font-size: 9px;
+  font-weight: 500;
+  padding: 0 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.submenu__riding-styles .mtc-link{
+  padding: 0
+}
+.submenu__riding-styles span.mtc-link svg {
+  width: 40px;
+   height: 40px;
 }
 </style>
 
