@@ -46,7 +46,7 @@ const selectDepartment = () => {
   </div>
 </template>
 
-<style>
+<style lang="scss">
 
 
 .centered-mega-menu {
@@ -105,19 +105,59 @@ const selectDepartment = () => {
   stroke-linejoin: round;
 }
 
-
-#nav ul.u1 {
+.mega-menu-wrapper > div{
   margin: 0 auto;
   max-width: 1300px;
   width: 90%;
-  min-width: 800px;
-  background-color: #fff;
-  position: absolute;
   left: 5%;
+
+}
+
+#nav ul.u1 {
+/*  margin: 0 auto;*/
+  max-width: 1300px;
+/*  width: 90%;*/
+  /*min-width: 800px;*/
+  background-color: #fff;
+  /*position: absolute;*/
+  /*left: 5%;*/
   -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
   -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
 }
+
+
+span.h2 {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  line-height: 18px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+ #nav .submenu__header {
+  display: flex;
+  justify-content: space-between;
+   margin-bottom: 30px;
+}
+
+#nav .main-nav li .submenu .submenu__header {
+  margin-bottom: 30px;
+}
+
+#nav .submenu__header span.h2 a.mtc-link {
+  background: transparent url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjciIHdpZHRoPSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0uOCA1LjhsMi40LTIuNEwuOCAxIiBmaWxsPSJub25lIiBzdHJva2U9IiNlYjAwMTIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjIiLz48L3N2Zz4=) 100% no-repeat;
+  color: #d6001c;
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 18px;
+  padding-right: 8px;
+  vertical-align: middle;
+}
+
 
 #nav ul.u0 li.l0:first-child > a {
   padding-left: 15px;
@@ -174,11 +214,13 @@ const selectDepartment = () => {
   letter-spacing: -.5px;
 }
 
+/*
 #nav ul li a {
   display: block;
   color: inherit;
   font-size: 14px;
 }
+*/
 
 #nav .menu-tires .submenu__content.submenu__icon-buttons a img, #nav .submenu__content.submenu__icon-buttons span.mtc-link img {
   height: auto;

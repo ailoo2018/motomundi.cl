@@ -141,17 +141,12 @@ const miniatures = computed(() => {
             </span>
             <span class="item__rating">
               <span class="rating-block">
-                <span>
-                  <img
-                    alt="10"
-                    class="cdn-img v-lazy-image v-lazy-image-loaded"
-                    height="12"
-                    src="/content/images/stars/10.webp"
-                    srcset="/content/images/stars/10.webp 1x, /content/images/stars/10.webp 2x"
-                    width="68"
-                  >
-                  <noscript />
-                </span>
+                  <VRating
+                    v-if="product.rating > 0"
+                    readonly
+                    color="primary"
+                    :model-value="product.rating / 2"
+                  />
               </span>
             </span>
             <h3 class="heading-tag">
@@ -182,7 +177,31 @@ const miniatures = computed(() => {
   </article>
 </template>
 
-<style scoped scss>
+<style >
+
+article.item {
+  position: relative;
+  border: 1px solid #d8d8d8;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 40px 5px 20px;
+}
+
+.item .heading-tag {
+
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  font-weight: 500;
+  justify-content: flex-end;
+  line-height: 13px;
+  margin: 0;
+  padding-bottom: 12px;
+  text-transform: uppercase;
+}
+
+
 .item > div, .item > section {
   display: flex;
   flex-direction: column;
@@ -232,13 +251,6 @@ const miniatures = computed(() => {
 }
 
 
-.item {
-  position: relative;
-  border: 1px solid #d8d8d8;
-  box-sizing: border-box;
-  height: 100%;
-  padding: 40px 5px 20px;
-}
 
 .product-list .products .item {
   background-color: #fff;

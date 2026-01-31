@@ -1,5 +1,4 @@
 <script setup>
-
 import RidingStylesMenu from "@/views/pages/navigation/riding-styles-menu.vue"
 
 const props = defineProps({
@@ -8,20 +7,18 @@ const props = defineProps({
     required: true,
   },
 })
-const href = props.href
 
+const href = props.href
 </script>
 
 
 <template>
-
   <VMenu
     open-on-hover
     :close-on-content-click="false"
     attach="#menu-anchor"
     location="bottom"
-    class="mega-menu-wrapper "
-    width="100%"
+    class="mega-menu-wrapper"
     content-class="centered-mega-menu"
   >
     <template #activator="{ props }">
@@ -35,11 +32,11 @@ const href = props.href
         >
           <span>Ropa Calle</span>
         </a>
-
       </li>
     </template>
     <ul class="u1">
-      <li class="l1 c0 primary subCategories">
+      <li class="l1 c0 primary subCategories"
+      >
         <div class="submenu">
           <div class="container">
             <div class="row">
@@ -54,10 +51,7 @@ const href = props.href
                       >Ver todos</a>
                     </span>
                   </div>
-                  <div
-                    class="submenu__content submenu__lists"
-                    icon="/assets/menu/categories/130-moto-equipacion-carretera.svg"
-                  >
+                  <div class="submenu__content submenu__lists">
                     <ul>
                       <li>
                         <a
@@ -65,11 +59,15 @@ const href = props.href
                           class="mtc-link"
                           href="/chaquetas-para-moto"
                         >
-                          <img
-                            src="/content/assets/categories/05-moto-equipacion-carretera-chaquetas.svg"
-                            title="Chaquetas"
-                            alt="Chaquetas de moto"
-                          > Chaquetas</a>
+                          <svg
+                            class="svg-icon"
+                            viewBox="-10 0 120 100"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-blouson-et-veste" />
+                          </svg>
+
+                          Chaquetas</a>
                       </li>
                       <li>
                         <ul>
@@ -133,11 +131,15 @@ const href = props.href
                           class="mtc-link"
                           href="/pantalones-para-moto"
                         >
-                          <img
-                            src="/content/assets/categories/06-moto-equipacion-carretera-pantalones.svg"
-                            title="Pantalones"
-                            alt="Pantalones de moto"
-                          > Pantalones</a>
+                          <svg
+                            class="svg-icon"
+                            viewBox="-10 0 120 110"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-pantalon-moto" />
+                          </svg>
+
+                          Pantalones</a>
                       </li>
                       <li>
                         <ul>
@@ -201,11 +203,17 @@ const href = props.href
                           title="Guantes"
                           class="mtc-link"
                           href="/guantes-para-moto"
-                        ><img
-                          src="/content/assets/categories/08-moto-equipacion-carretera-guantes.svg"
-                          title="Guantes"
-                          alt="Guantes de moto"
-                        > Guantes</a>
+                        >
+
+
+                          <svg
+                            class="svg-icon"
+                            viewBox="-10 0 120 110"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-gants-moto" />
+                          </svg>
+                          Guantes</a>
                       </li>
                       <li>
                         <ul>
@@ -297,11 +305,17 @@ const href = props.href
                           title="Botas"
                           class="mtc-link"
                           href="/botas-para-moto"
-                        ><img
-                          src="/content/assets/categories/09-moto-equipacion-carretera-botas.svg"
-                          title="Botas"
-                          alt="Botas de moto"
-                        > Botas</a>
+                        >
+
+
+                          <svg
+                            class="svg-icon"
+                            viewBox="-10 0 120 110"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-bottes-et-chaussures" />
+                          </svg>
+                          Botas</a>
                       </li>
                       <li>
                         <ul>
@@ -359,11 +373,18 @@ const href = props.href
                           title="Trajes / Monos"
                           class="mtc-link"
                           href="/trajes-para-moto"
-                        ><img
-                          src="/content/assets/categories/07-moto-equipacion-carretera-monos.svg"
-                          title="Trajes / Monos"
-                          alt="Trajes de moto"
-                        > Trajes / Monos</a>
+                        >
+
+
+                          <svg
+                            class="svg-icon"
+                            viewBox="-10 0 120 110"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-combinaison-de-piste" />
+                          </svg>
+
+                          Trajes / Monos</a>
                       </li>
                       <li>
                         <ul>
@@ -379,6 +400,7 @@ const href = props.href
                             <a
                               title="2 Piezas"
                               class="mtc-link"
+
                               href="/equipacion-moto-carretera/trajes-y-monos/2-piezas"
                             >2
                               Piezas</a>
@@ -414,11 +436,21 @@ const href = props.href
                           title="Electrónica"
                           class="mtc-link"
                           href="/equipacion-moto-carretera/electronica"
-                        ><img
-                          src="/content/assets/categories/13-moto-equipacion-carretera-electronica.svg"
-                          title="Electrónica"
-                          alt="Electrónica"
-                        > Electrónica</a>
+                        >
+
+
+                          <svg
+                            class="svg-icon"
+                            viewBox="0 0 410 410"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-gps-et-traceur-gps " />
+                          </svg>
+
+                          Electrónica
+
+
+                        </a>
                       </li>
                       <li>
                         <ul>
@@ -478,11 +510,16 @@ const href = props.href
                           title="Protecciones"
                           class="mtc-link"
                           href="/protecciones-para-motociclistas"
-                        ><img
-                          src="/content/assets/categories/10-moto-equipacion-carretera-protecciones.svg"
-                          title="Protecciones"
-                          alt="Protecciones de moto"
                         >
+
+                          <svg
+                            class="svg-icon"
+                            viewBox="-10 0 120 110"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-protections-cross" />
+                          </svg>
+
                           Protecciones</a>
                       </li>
                       <li>
@@ -525,11 +562,16 @@ const href = props.href
                           title="Impermeables"
                           class="mtc-link"
                           href="/ropa-lluvia"
-                        ><img
-                          src="/content/assets/categories/12-moto-equipacion-carretera-impermeables.svg"
-                          title="Impermeables"
-                          alt="Impermeables de moto"
                         >
+
+                          <svg
+                            class="svg-icon"
+                            viewBox="0 0 210 210"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
+                          </svg>
+
                           Impermeables</a>
                       </li>
                       <li>
@@ -538,6 +580,7 @@ const href = props.href
                             <a
                               title="Chaquetas"
                               class="mtc-link"
+
                               href="/equipacion-moto-carretera/impermeables/chaquetas"
                             >Chaquetas</a>
                           </li>
@@ -590,11 +633,14 @@ const href = props.href
                           href="/airbags"
                         >
 
-                          <img
-                            src="/content/assets/categories/138-moto-equipacion-airbags.svg"
-                            title="Airbags"
-                            alt="Airbags"
-                          > Airbags
+                          <svg
+                            class="svg-icon"
+                            viewBox="0 0 420 420"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-airbag" />
+                          </svg>
+                          Airbags
                         </a>
                       </li>
 
@@ -640,11 +686,13 @@ const href = props.href
                           class="mtc-link"
                           href="/equipacion-moto-carretera/primeras-capas"
                         >
-                          <img
-                            src="/content/assets/categories/11-moto-equipacion-carretera-termicos.svg"
-                            title="Térmicos"
-                            alt="Equipación térmica de moto"
+                          <svg
+                            class="svg-icon"
+                            viewBox="-0 0 210 210"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
+                          </svg>
                           Primeras Capas</a>
                       </li>
                       <li>
@@ -660,6 +708,7 @@ const href = props.href
                             <a
                               title="Sotomonos"
                               class="mtc-link"
+
                               href="/equipacion-moto-carretera/primeras-capas/sotomono"
                             >Sotomonos</a>
                           </li>
@@ -674,6 +723,7 @@ const href = props.href
                             <a
                               title="Camisetas"
                               class="mtc-link"
+
                               href="/equipacion-moto-carretera/primeras-capas/camisetas"
                             >Camisetas</a>
                           </li>
@@ -681,6 +731,7 @@ const href = props.href
                             <a
                               title="Térmicos"
                               class="mtc-link"
+
                               href="/equipacion-moto-carretera/primeras-capas"
                             >Ver
                               todos</a>
@@ -694,11 +745,16 @@ const href = props.href
                           title="Bolsas"
                           class="mtc-link"
                           href="/equipacion-moto-carretera/bolsas"
-                        ><img
-                          src="/content/assets/categories/14-moto-equipacion-carretera-bolsas.svg"
-                          title="Bolsas"
-                          alt="Bolsas de moto"
-                        > Bolsas</a>
+                        >
+
+                          <svg
+                            class="svg-icon"
+                            viewBox="0 0 120 120"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-sac-moto" />
+                          </svg>
+                          Bolsas</a>
                       </li>
                       <li>
                         <ul>
@@ -706,6 +762,7 @@ const href = props.href
                             <a
                               title="Mochilas"
                               class="mtc-link"
+
                               href="/equipacion-moto-carretera/bolsas/mochilas"
                             >Mochilas</a>
                           </li>
@@ -772,11 +829,14 @@ const href = props.href
                           title="Deslizaderas"
                           class="mtc-link"
                           href="/equipacion-moto-carretera/deslizaderas"
-                        ><img
-                          src="/content/assets/categories/15-moto-equipacion-carretera-deslizaderas.svg"
-                          title="Deslizaderas"
-                          alt="Deslizaderas de moto"
                         >
+                          <img
+                            src="/content/assets/categories/sliders.jpg"
+                            title="Deslizadores"
+                            alt="Deslizadores"
+                          >
+
+
                           Deslizaderas</a>
                       </li>
                       <li>
@@ -812,11 +872,14 @@ const href = props.href
                           title="Limpieza"
                           class="mtc-link"
                           href="/equipacion-moto-carretera/limpieza"
-                        ><img
-                          src="/content/assets/categories/18-moto-equipacion-carretera-limpieza.svg"
-                          title="Limpieza"
-                          alt="Limpieza"
-                        > Limpieza</a>
+                        >
+                          <img
+                            src="/content/assets/categories/limpieza.jpg"
+                            title="Limpieza"
+                            alt="Limpieza"
+                          >
+
+                          Limpieza</a>
                       </li>
                       <li>
                         <ul>
@@ -832,6 +895,7 @@ const href = props.href
                             <a
                               title="Para ropa"
                               class="mtc-link"
+
                               href="/equipacion-moto-carretera/limpieza/para-ropa"
                             >Para
                               ropa</a>
@@ -840,6 +904,7 @@ const href = props.href
                             <a
                               title="Limpieza"
                               class="mtc-link"
+
                               href="/equipacion-moto-carretera/limpieza"
                             >Ver
                               todos</a>
@@ -852,7 +917,72 @@ const href = props.href
               </div>
               <div class="col s12 submenu__extra-nav">
                 <div class="extra__container">
-                  <RidingStylesMenu />
+                  <div class="submenu__riding-styles">
+                    <div class="container">
+                      <span class="h3">por estilo moto</span>
+                      <ul class="desktop">
+                        <li>
+                          <span class="mtc-link">
+                            <svg
+                              class="svg-icon"
+                              viewBox="0 0 190 110"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-roadster-sportif" />
+                            </svg>
+                            <p>Sport / Racing</p>
+                          </span>
+                        </li>
+                        <li>
+                          <span class="mtc-link">
+                            <svg
+                              class="svg-icon"
+                              viewBox="0 0 190 110"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-vintage-classic" />
+                            </svg>
+                            <p>Touring</p></span>
+                        </li>
+                        <li>
+                          <span class="mtc-link">
+                            <svg
+                              class="svg-icon"
+                              viewBox="0 0 190 110"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-touring-adventure" />
+                            </svg>
+                            <p>Trail / Adventure</p>
+                          </span>
+                        </li>
+                        <li>
+                          <span class="mtc-link">
+                            <svg
+                              class="svg-icon"
+                              viewBox="0 0 190 110"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-urbain-scooter" />
+                            </svg>
+                            <p>Scooter / Urban</p>
+                          </span>
+                        </li>
+                        <li>
+                          <span class="mtc-link">
+                            <svg
+                              class="svg-icon"
+                              viewBox="0 0 190 110"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-vintage-classic" />
+                            </svg>
+                            <p>Cafe Racer / Vintage</p>
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -866,7 +996,16 @@ const href = props.href
   <!-- /ropa calle -->
 </template>
 
-<style lang="scss">
+<style  lang="scss">
+#nav .submenu__content.submenu__lists > ul > li:first-child > .mtc-link > .svg-icon, #nav .submenu__content.submenu__lists > ul > li:first-child > a > .svg-icon {
+  width: 45px;
+  height: 45px;
+  height: auto;
+  left: -55px;
+  position: absolute;
+  top: 0;
+  width: 45px;
+}
 
 #nav .submenu__content.submenu__lists > ul {
   flex: 0 0 25%;

@@ -57,9 +57,6 @@ watch(() => props.product, newProduct => {
 
 register()
 
-onMounted(() => {
-  console.log("ProductThumbs Mounted!")
-})
 
 </script>
 

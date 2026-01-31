@@ -18,8 +18,7 @@ const href = props.href
     :close-on-content-click="false"
     attach="#menu-anchor"
     location="bottom"
-    class="mega-menu-wrapper "
-    width="100%"
+    class="mega-menu-wrapper"
     content-class="centered-mega-menu"
   >
     <template #activator="{ props }">

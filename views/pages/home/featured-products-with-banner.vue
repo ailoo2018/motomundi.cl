@@ -144,6 +144,11 @@ const products = computed(() => {
   width: 95%;
   margin: 0px auto;
 }
+
+/******** product list ***/
+
+
+
 .product-list__title {
   align-items: center;
   display: flex;
@@ -213,6 +218,13 @@ const products = computed(() => {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
 }
+
+.product-list .products.has-banner > .col {
+  justify-self: stretch;
+  width: 100% !important;
+}
+
+
 
 
 .product-list .products.has-banner .col.banner.banner--2x1 {

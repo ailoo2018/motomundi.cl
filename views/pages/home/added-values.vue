@@ -23,6 +23,7 @@ onMounted(() => {
 
 <template>
   <div
+    v-if="false"
     :id="`home-block-${widget.id}`"
     class="block-container d-none d-md-flex"
   >

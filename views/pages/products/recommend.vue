@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ProductItem from "@/views/pages/products/product-item.vue"
 import { fetchRecommendProducts } from "@/api/ailoo"
+import ProductListItem from "@/views/pages/products/list/product-list-item.vue";
 
 const props = defineProps(
   {
@@ -40,9 +41,9 @@ products.value = rs
               Te recomendamos
             </h2>
           </hgroup>
-          <div class="products">
+          <div class="products px-3">
 
-            <ProductItem
+            <ProductListItem
               v-for="prod in products"
               :key="prod.id"
               :product="prod"

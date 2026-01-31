@@ -66,7 +66,7 @@ const showStockDialog = () => {
               xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-click-and-collect"
             />
           </svg>
-          <span>Retiro en Tienda {{isAvailable}}</span>
+          <span>Retiro en Tienda</span>
         </p>
         <div class="shipping-options__body">
           <div class="shipping-options__option">

@@ -61,16 +61,13 @@ const props = defineProps(
           <div class="item__name">
             <span class="item__rating">
               <span class="rating-block">
-                <span>
-                  <img
-                    src="/content/images/stars/10.webp"
-                    class="cdn-img v-lazy-image v-lazy-image-loaded"
-                    alt="8"
-                    width="68"
-                    height="12"
-                    srcset=""
-                  > <noscript />
-                </span>
+                                  <VRating
+                                    v-if="product.rating > 0"
+                                    readonly
+                                    color="primary"
+                                    :model-value="product.rating / 2"
+                                  />
+
               </span>
             </span>
             <h3 class="heading-tag">

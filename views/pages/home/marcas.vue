@@ -7,7 +7,6 @@
     attach="#menu-anchor"
     location="bottom"
     class="mega-menu-wrapper "
-    width="100%"
     content-class="centered-mega-menu"
   >
     <template #activator="{ props }">
@@ -1014,7 +1013,7 @@
 
 #nav .submenu__outstanding-list ul li {
   margin-bottom: 3px;
-  max-width: 90%;
+  /*max-width: 90%;*/
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1096,7 +1095,7 @@ ul.u0 #ni_2529_marcas ul.u1 a {
 }
 .submenu__outstanding-list ul li {
   margin-bottom: 3px;
-  max-width: 90%;
+  /*max-width: 90%;*/
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

@@ -18,7 +18,7 @@ const href = props.href
     attach="#menu-anchor"
     location="bottom"
     class="mega-menu-wrapper "
-    width="100%"
+
     content-class="centered-mega-menu"
   >
     <template #activator="{ props }">
