@@ -55,22 +55,8 @@ onMounted(async () => {
       >
         <main class="cart__body">
           <header class="cart__title"><h1>Mi cesta </h1></header>
-          <div class="cart__content">
-            <ul>
-              <li v-for="(cartItem, index) in cartStore.cart.items" :key="cartItem.id">
-                <CartItemProduct v-if="cartItem.type === 0 && getProductType(cartItem.product) === ProductType.Simple" :cartItem="cartItem"  />
-                <CartItemPack v-if="cartItem.type === 3 || getProductType(cartItem.product) === ProductType.Composite" :cartItem="cartItem" />
 
-
-                <div class="spinner-container" v-if="cartItem.loading">
-                  <div class="spinner"></div>
-                </div>
-              </li>
-
-            </ul>
-            <ul />
-            <ul class="insurances-list" />
-          </div>
+          <CartContent />
         </main>
 
 

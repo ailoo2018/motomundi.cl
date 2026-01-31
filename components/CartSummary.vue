@@ -1,11 +1,7 @@
 <script setup>
-import { formatMoney } from "~/@core/utils/formatters"
 import Coupon from "~/components/Cart/Coupon.vue"
-import { sleep } from "~/@core/utils/helpers"
 import { useGuestUser } from "@/composables/useGuestUser.js"
-import CartItemProduct from "@/views/pages/cart/cart-item-product.vue"
-import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
-import { ProductType } from "@/models/products.js"
+import CartContent from "@/components/Cart/CartContent.vue"
 
 const props = defineProps({
   isCollapsed: {
@@ -14,13 +10,6 @@ const props = defineProps({
   },
 })
 
-const getProductType = product => {
-  if(!product)
-    return -1
-  if(!product.type)
-    return ProductType.Simple
-  return product.type
-}
 
 const emit = defineEmits(['cartEmpty', 'nextStep', 'collapse'])
 const { isLoading, updateLoading } = inject('loading')
@@ -136,6 +125,7 @@ defineExpose({ getCart })
 </script>
 
 <template>
+
   <div
     class="cart-summary "
     :class="{ 'collapsed' : isCollapsed}"
@@ -165,269 +155,77 @@ defineExpose({ getCart })
         </span>
       </div>
       <div class="cart-summary__content-body">
-        <h2>Resumen de pedido</h2>
-        <div class="cart-summary__totals">
-          <div class="totals__item">
-            <span class="item__label">Subtotal</span>
-            <span class="item__price">{{ formatMoney(cart.netTotal) }}</span>
-          </div>
-          <div class="totals__item">
-            <span class="item__label">Impuestos (I.V.A.)</span>
-            <span class="item__price">{{ formatMoney(cart.iva) }}</span>
-          </div>
-          <div class="totals__item">
-            <span class="item__label">Envío</span>
-            <span class="item__price">{{
-              cart.shipping && cart.shipping.cost > 0 ? formatMoney(cart.shipping.cost) : 'Gratis'
-            }} </span>
-          </div>
-          <div class="totals__item totals__item--total">
-            <span class="item__label">Total</span>
-            <span class="item__price">
-              <span id="cart-total">{{ formatMoney(cart.total) }}</span>
-            </span>
-          </div>
-        </div>
-        <div class="motocoins-claim cart-summary__motocoins">
-          <svg
-            width="18"
-            height="18"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            class="icon sprite-icons"
-          >
-            <use
-              href="/svg/ailoo.svg#i-icon-motocoin"
-              xlink:href="/svg/ailoo.svg#i-icon-motocoin"
-            />
-          </svg>
-          <div class="motocoins-claim__info">
-            <span class="motocoins-claim__amount">Acumula <strong>{{ cart.points }} MundiMonedas</strong> con esta compra.</span>
-          </div>
-        </div>
 
+        <VCard >
+          <VCardTitle>
+            <h2 style="margin:4px">Resumen de pedido</h2>
+          </VCardTitle>
+          <VCardText>
+            <div class="cart-summary__totals">
+              <div class="totals__item">
+                <span class="item__label">Subtotal</span>
+                <span class="item__price">{{ formatMoney(cart.netTotal) }}</span>
+              </div>
+              <div class="totals__item">
+                <span class="item__label">Impuestos (I.V.A.)</span>
+                <span class="item__price">{{ formatMoney(cart.iva) }}</span>
+              </div>
+              <div class="totals__item">
+                <span class="item__label">Envío</span>
+                <span class="item__price">{{
+                  cart.shipping && cart.shipping.cost > 0 ? formatMoney(cart.shipping.cost) : 'Gratis'
+                }} </span>
+              </div>
+              <div class="totals__item totals__item--total">
+                <span class="item__label">Total</span>
+                <span class="item__price">
+                  <span id="cart-total">{{ formatMoney(cart.total) }}</span>
+                </span>
+              </div>
+            </div>
+            <div class="motocoins-claim cart-summary__motocoins">
+              <svg
+                width="18"
+                height="18"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                class="icon sprite-icons"
+              >
+                <use
+                  href="/svg/ailoo.svg#i-icon-motocoin"
+                  xlink:href="/svg/ailoo.svg#i-icon-motocoin"
+                />
+              </svg>
+              <div class="motocoins-claim__info">
+                <span class="motocoins-claim__amount">Acumula <strong>{{ cart.points }} MundiMonedas</strong> con esta compra.</span>
+              </div>
+            </div>
+          </VCardText>
+        </VCard>
 
-        <Coupon
+        <VCard class="mt-4">
+          <VCardText>
+            <Coupon
           v-model="coupon"
+
           :coupon-discount="couponDiscount"
         />
+          </VCardText>
+        </VCard>
 
-        <div class="summary">
-          <h2>Mi cesta</h2>
+        <VCard class="mt-4">
+          <VCardText>
+            <div id="shop-cart" class="summary">
+              <h2>Mi cesta</h2>
+              <CartContent />
+            </div>
+          </VCardText>
+        </VCard>
 
-          <ul>
-            <li
-              v-for="item in cart.items"
-              :key="item.id"
-              class="user-menu__cart-product"
-            >
-              <div class="cart-item">
-                <CartItemProduct v-if="item.type === 0 && getProductType(item.product) === ProductType.Simple" :cartItem="item"  />
-                <CartItemPack v-if="item.type === 3 || getProductType(item.product) === ProductType.Composite" :cartItem="item" />
-
-
-              </div>
-
-              <header
-                v-if="item.packContent && item.packContent.length > 0"
-                tools-enabled="true"
-              >
-                <div class="cart-product__wrapper header">
-                  <a
-                    class="cart-product mtc-link"
-                    data-dr="true"
-                    href="{{item.link}}"
-                  >
-                    <span
-                      v-if="item.type == 3"
-                      class="promo-image"
-                      style="flex: 0 0 45px;"
-                    >
-                      <img
-                        src="/assets/images/checkout-discount.svg"
-                        alt="Cambio de talla gratuito"
-                        width="40"
-                        height="40"
-                        class="cdn-img"
-                      >
-                    </span>
-                    <div class="cart-product__info">
-                      <h1 class="cart-product__name">{{ item.name }}</h1>
-                      <p class="cart-product__price">
-                        <span
-                          v-if="item.discount > 0"
-                          class="tag-wrapper"
-                        >
-                          <span class="tag product-tag product-tag--old product-tag--sales">
-                            <span class="discount">
-                              Rebajas -{{ Math.floor(item.discountPercent) }}% pack
-                            </span>
-                          </span>
-                        </span>
-                        <span class="price">{{ formatMoney(item.subtotal) }}</span>
-                        <span
-                          v-if="item.discount > 0"
-                          class="product-old-price strike"
-                        >{{ formatMoney(item.oldPrice) }}</span>
-                      </p>
-                    </div>
-                  </a>
-                  <div class="cart-product__tools">
-                    <div class="cart-product__quantity">
-                      <div class="quantity-buttons">
-                        <button
-                          class="increase"
-                          ng-click="increment(cartItem)"
-                        >
-                          <svg
-                            class="sprite-line-icons"
-                            width="14"
-                            height="14"
-                          >
-                            <use href="/svg/ailoo.svg#i-icon-angle-up" />
-                          </svg>
-                        </button>
-                        <button
-                          class="decrease"
-                          ng-click="decrement(cartItem)"
-                        >
-                          <svg
-                            class="sprite-line-icons"
-                            width="14"
-                            height="14"
-                          >
-                            <use href="/svg/ailoo.svg#i-icon-angle-down" />
-                          </svg>
-                        </button>
-                      </div>
-                      <input
-                        class="remove-arrows"
-                        type="number"
-                        min="1"
-                        step="1"
-                        value="1"
-                        :value="item.quantity"
-                      >
-                    </div>
-                    <button
-                      class="cart-product__remove"
-                      tabindex="-1"
-                      @click="removeItem(item)"
-                    >
-                      <svg
-                        class="sprite-line-icons"
-                        width="9"
-                        height="9"
-                      >
-                        <title>Cross icon</title>
-                        <use href="/svg/ailoo.svg#i-icon-cross" />
-                      </svg>
-                      <span>Eliminar</span>
-                    </button>
-                  </div>
-                </div>
-                <p class="cart-product__content">
-                  Contenido del pack:
-                </p>
-              </header>
-              <article
-                v-for="packItem in item.packContent"
-                style="margin-top: 15px;"
-                class="cart-product__wrapper"
-              >
-                <a
-                  class="cart-product mtc-link"
-                  data-dr="true"
-                  :href="packItem.url"
-                >
-
-                  <span>bbb
-                    <img
-                      width="80"
-                      height="80"
-                      :src="config.public.LEGACY_URL + packItem.image"
-                      :alt="packItem.productName"
-                      class="cdn-img"
-                    >
-                  </span>
-                  <div class="cart-product__info">
-                    <h1 class="cart-product__name">
-                      {{ packItem.productName }}</h1>
-                    <p
-                      v-if="packItem.color"
-                      class="cart-product__details"
-                    >
-                      <span class="cart-product__size">
-                        Color: {{ packItem.color.name }}
-                      </span>
-                    </p>
-                    <p
-                      v-if="packItem.size"
-                      class="cart-product__details"
-                    >
-                      <span class="cart-product__size">
-                        Talla: {{ packItem.size.name }}
-                      </span>
-                    </p>
-                    <p class="cart-product__price">
-                      <span class="price">{{ formatMoney(packItem.price) }}</span>
-                      <span
-                        v-if="packItem.discount > 0"
-                        class="product-old-price strike"
-                      >{{ formatMoney(packItem.oldPrice) }}</span>
-                    </p></div>
-                </a>
-              </article>
-
-
-              <span
-                class="cart-product__error"
-                style="display: none;"
-              />
-            </li>
-
-            <li
-              v-if="false"
-              class="user-menu__cart-product"
-            >
-              <div class="cart-item">
-                <article class="cart-product">
-                  <span
-                    class="promo-image"
-                    style="flex: 0 0 50px;"
-                  >
-                    <img
-                      src="/assets/images/checkout-discount.svg"
-                      alt="Cambio de talla gratuito"
-                      width="50"
-                      height="50"
-                      class="cdn-img"
-                    >
-                  </span>
-                  <div class="cart-product__info">
-                    <span class="cart-product__antetitle">Promoción</span>
-                    <h1 class="cart-product__name">
-                      Cambio de talla gratuito
-                    </h1>
-                    <p class="cart-product__description">
-                      Un cambio incluido en tu pedido.
-                    </p>
-                    <p class="cart-product__price">
-                      Gratis
-                    </p>
-                  </div>
-                </article>
-              </div>
-              <span
-                class="cart-product__error"
-                style="display:none;"
-              />
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <style scoped>

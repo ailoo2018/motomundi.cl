@@ -2,9 +2,10 @@
 const props = defineProps({
   href: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 })
+
 const href = props.href
 </script>
 
@@ -30,7 +31,6 @@ const href = props.href
         >
           <span>Ropa Casual</span>
         </a>
-
       </li>
     </template>
     <ul class="u1 main-nav">
@@ -45,15 +45,16 @@ const href = props.href
               <div class="col s12 submenu__container">
                 <div class="submenu__main-content submenu__no-border">
                   <div class="submenu__header">
-                          <span class="h2">
-                            <span>Ropa casual</span>
-                            <a
-                              href="/ropa-casual"
-                              class="mtc-link"
-                            >
-                              Ver todos
-                            </a>
-                          </span>
+                    <span class="h2">
+                      <span>Ropa casual</span>
+                      <a
+                        href="/ropa-casual"
+
+                        class="mtc-link"
+                      >
+                        Ver todos
+                      </a>
+                    </span>
                   </div>
                   <div
                     id="5"
@@ -69,13 +70,14 @@ const href = props.href
                       href="/adhesivos"
                       class="mtc-link"
                       title="Adhesivos"
-                    ><img
-                      src="/content/assets/menu/categories/43-moto-casual-adhesivos.svg"
-                      title="Adhesivos"
-                      width="40"
-                      height="40"
-                      alt="Adhesivos"
                     >
+                      <img
+                        src="/content/assets/categories/stickers.jpg"
+                        title="Adhesivos"
+                        width="40"
+                        height="40"
+                        alt="Adhesivos"
+                      >
                       <p>Adhesivos</p>
                     </a>
                     <a
@@ -83,89 +85,102 @@ const href = props.href
                       class="mtc-link"
                       title="Bolsas"
                     ><img
-                      src="/content/assets/menu/categories/45-moto-casual-bolsas.svg"
-                      title="Bolsas"
-                      width="40"
-                      height="40"
-                      alt="Bolsas"
-                    >
+                       src="/content/assets/categories/backpack.jpg"
+                       title="Bolsas"
+                       width="40"
+                       height="40"
+                       alt="Bolsas"
+                     >
                       <p>Bolsas</p>
                     </a>
                     <a
                       href="/poleras-para-moto"
+
                       class="mtc-link"
                       title="Camisetas"
-                    ><img
-                      src="/content/assets/menu/categories/46-moto-casual-camisetas.svg"
-                      title="Camisetas"
-                      width="40"
-                      height="40"
-                      alt="Camisetas"
                     >
+                      <img
+                        src="/content/assets/categories/tshirt.jpg"
+                        title="Camiseta"
+                        width="40"
+                        height="40"
+                        alt="Camiseta"
+                      >
                       <p>Camisetas</p></a>
                     <a
                       href="/chaquetas-casual"
+
                       class="mtc-link"
                       title="Chalecos"
-                    ><img
-                      src="/content/assets/menu/categories/47-moto-casual-chalecos.svg"
-                      title="Chalecos"
-                      width="40"
-                      height="40"
-                      alt="Chalecos"
                     >
-                      <p>Chalecos</p>
+
+                      <img
+                        src="/content/assets/categories/vest.jpg"
+                        title="Gilet"
+                        width="40"
+                        height="40"
+                        alt="Gilet"
+                      >
+                      <p>Gilet</p>
                     </a>
                     <a
                       href="/chaquetas-casual"
+
                       class="mtc-link"
                       title="Chaquetas"
                     ><img
-                      src="/content/assets/menu/categories/48-moto-casual-chaquetas.svg"
-                      title="Chaquetas"
-                      width="40"
-                      height="40"
-                      alt="Chaquetas"
-                    >
+
+                       src="/content/assets/menu/categories/48-moto-casual-chaquetas.svg"
+                       title="Chaquetas"
+                       width="40"
+                       height="40"
+                       alt="Chaquetas"
+                     >
                       <p>Chaquetas</p>
                     </a>
                     <a
                       href="/complementos-casual"
+
                       class="mtc-link"
                       title="Complementos"
-                    ><img
-                      src="/content/assets/menu/categories/49-moto-casual-complementos.svg"
-                      title="Complementos"
-                      width="40"
-                      height="40"
-                      alt="Complementos"
                     >
+                      <img
+                        src="/content/assets/categories/scarf.jpg"
+                        title="Complementos"
+                        width="40"
+                        height="40"
+                        alt="Complementos"
+                      >
                       <p>Complementos</p>
                     </a>
                     <a
                       href="/lentes-casual"
+
                       class="mtc-link"
                       title="Gafas de sol"
-                    ><img
-                      src="/content/assets/menu/categories/50-moto-casual-gafas-sol.svg"
-                      title="Gafas de sol"
-                      width="40"
-                      height="40"
-                      alt="Gafas de sol"
                     >
+                      <img
+                        src="/content/assets/categories/lentes.jpg"
+                        title="Lentes de sol"
+                        width="40"
+                        height="40"
+                        alt="Lentes de sol"
+                      >
                       <p>Gafas de sol</p>
                     </a>
                     <a
                       href="/jockey-para-moto"
+
                       class="mtc-link"
                       title="Jockeys"
-                    ><img
-                      src="/content/assets/menu/categories/51-moto-casual-gorras.svg"
-                      title="Jockeys"
-                      width="40"
-                      height="40"
-                      alt="Gorras"
                     >
+                      <img
+                        src="/content/assets/categories/jockey.jpg"
+                        title="Jockey"
+                        width="40"
+                        height="40"
+                        alt="Jockey"
+                      >
                       <p>Jockeys</p>
                     </a>
                     <a
@@ -173,60 +188,68 @@ const href = props.href
                       class="mtc-link"
                       title="Gorros"
                     ><img
-                      src="/content/assets/menu/categories/52-moto-casual-gorros.svg"
-                      title="Gorros"
-                      width="40"
-                      height="40"
-                      alt="Gorros"
-                    >
+
+                       src="/content/assets/categories/gorros.jpg"
+                       title="Gorros"
+                       width="40"
+                       height="40"
+                       alt="Gorros"
+                     >
                       <p>Gorros</p></a>
                     <a
                       href="/llaveros"
+
                       class="mtc-link"
                       title="Llaveros"
                     ><img
-                      src="/content/assets/menu/categories/53-moto-casual-llaveros.svg"
-                      title="Llaveros"
-                      width="40"
-                      height="40"
-                      alt="Llaveros"
-                    >
+
+                       src="/content/assets/categories/llavero.jpg"
+                       title="Llaveros"
+                       width="40"
+                       height="40"
+                       alt="Llaveros"
+                     >
                       <p>Llaveros</p></a>
                     <a
                       href="/pantalones-lifestyle"
+
                       class="mtc-link"
                       title="Pantalones"
-                    ><img
-                      src="/content/assets/menu/categories/55-moto-casual-bermudas.svg"
-                      title="Pantalones"
-                      width="40"
-                      height="40"
-                      alt="Pantalones"
                     >
+                      <img
+                        src="/content/assets/categories/shorts.jpg"
+                        title="Pantalones"
+                        width="40"
+                        height="40"
+                        alt="Pantalones"
+                      >
                       <p>Pantalones</p></a>
                     <a
                       href="/sweaters-y-polerones"
+
                       class="mtc-link"
                       title="Sudaderas"
                     ><img
-                      src="/content/assets/menu/categories/57-moto-casual-sudaderas.svg"
-                      title="Sudaderas"
-                      width="40"
-                      height="40"
-                      alt="Sudaderas"
-                    >
+                       src="/content/assets/categories/poleron.jpg"
+                       title="Sudaderas"
+                       width="40"
+                       height="40"
+                       alt="Sudaderas"
+                     >
                       <p>Sudaderas</p></a>
                     <a
                       href="/zapatillas-para-moto"
+
                       class="mtc-link"
                       title="Zapatillas"
                     ><img
-                      src="/content/assets/menu/categories/60-moto-casual-zapatillas.svg"
-                      title="Zapatillas"
-                      width="40"
-                      height="40"
-                      alt="Zapatillas"
-                    >
+
+                       src="/content/assets/categories/sneakers.jpg"
+                       title="Zapatillas"
+                       width="40"
+                       height="40"
+                       alt="Zapatillas"
+                     >
                       <p>Zapatillas</p>
                     </a>
                   </div>
@@ -253,7 +276,7 @@ const href = props.href
                             width="59"
                             height="30"
                           >
-                                </span></a>
+                          </span></a>
                         </li>
                         <li>
                           <a
@@ -317,11 +340,6 @@ const href = props.href
     </ul>
   </VMenu>
   <!-- ropa casual -->
-
-
-
 </template>
 
-<style scoped lang="scss">
 
-</style>

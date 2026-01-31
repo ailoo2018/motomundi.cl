@@ -18,7 +18,7 @@ useHead({
 
 
 definePageMeta({
-  layout: 'blank',
+  layout: 'default',
   public: true,
 
 })
@@ -240,93 +240,108 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="checkout-container" style="background: #fff;">
-    <div
-      v-if="!isCartEmpty"
-      class="checkout container"
-    >
-      <main
-        id="checkout__body"
-        class="checkout__body"
-      >
-        <Logo/>
-
-        <CheckoutStepper :current-step="currentStep"/>
-
-
-        <div class="steps__content">
-          <CustomerInformation
-            v-if="currentStep === 1"
-            ref="customerInformation"
-            @next="nextStep"
-          />
-          <Shipping
-            v-if="currentStep === 2"
-            ref="shipping"
-            @next="nextStep"
-            @prev="prevStep"
-          />
-          <Payment
-            v-if="currentStep === 3"
-            ref="paymentPanel"
-            @paid-with-mp-api="handlePayMercadoPagoApi"
-            @accept-policy="handleAcceptPolicyChange"
-            @prev="prevStep"
-            @submit="submitOrder"
-          />
-        </div>
-
-        <StepActions
-          class="hide-when-med"
-          :is-desktop="true"
+  <div
+    class="checkout-container pa-8"
+    style="background: #fff;"
+  >
+    <VRow>
+      <VCol cols="12">
+        <CheckoutStepper
+          class="mt-10 mb-6"
           :current-step="currentStep"
-          :error="error"
-          @next="nextStep"
-          @prev="prevStep"
         />
+      </VCol>
+    </VRow>
 
-
-        <div class="checkout__terms-and-conditions">
-          <a
-            href="https://www.motomundi.cl/terminos-y-condiciones?open=purchase-terms"
-            data-dr="false"
-            target="_blank"
-            class="mtc-link"
+    <div v-if="!isCartEmpty">
+      <VRow>
+        <VCol cols="7" sm="12" md="7" >
+          <main
+            id="checkout__body"
+            class="checkout__body"
           >
-            Condiciones de la compra
-          </a>
-          <a
-            href="https://www.motomundi.cl/terminos-y-condiciones?open=privacy-policy"
-            data-dr="false"
-            target="_blank"
-            class="mtc-link"
-          >
-            Política de privacidad
-          </a>
-        </div>
-      </main>
-      <aside class="checkout__cart-summary">
-        <!-- cart footer -->
+            <div class="steps__content">
+              <VCard>
+                <VCardText>
+                  <CustomerInformation
+                    v-if="currentStep === 1"
+                    ref="customerInformation"
+                    @next="nextStep"
+                  />
+                  <Shipping
+                    v-if="currentStep === 2"
+                    ref="shipping"
+                    @next="nextStep"
+                    @prev="prevStep"
+                  />
+                  <Payment
+                    v-if="currentStep === 3"
+                    ref="paymentPanel"
+                    @paid-with-mp-api="handlePayMercadoPagoApi"
+                    @accept-policy="handleAcceptPolicyChange"
+                    @prev="prevStep"
+                    @submit="submitOrder"
+                  />
+                </VCardText>
+              </VCard>
+            </div>
 
-        <CartSummaryFooter v-model="isCollapsed"/>
+
+            <StepActions
+              class="hide-when-med mt-8"
+              :is-desktop="true"
+              :current-step="currentStep"
+              :error="error"
+              @next="nextStep"
+              @prev="prevStep"
+            />
 
 
-        <CartSummary
-          ref="cartSummary"
-          :is-desktop="false"
-          :is-collapsed="isCollapsed"
-          @collapse="handleCartSummaryCollapse"
-          @next-step="nextStep"
-          @cart-empty="handleCartEmpty"
-        />
-      </aside>
+            <div class="checkout__terms-and-conditions">
+              <a
+                href="https://www.motomundi.cl/terminos-y-condiciones?open=purchase-terms"
+                data-dr="false"
+                target="_blank"
+                class="mtc-link"
+              >
+                Condiciones de la compra
+              </a>
+              <a
+                href="https://www.motomundi.cl/terminos-y-condiciones?open=privacy-policy"
+                data-dr="false"
+                target="_blank"
+                class="mtc-link"
+              >
+                Política de privacidad
+              </a>
+            </div>
+          </main>
+        </VCol>
+        <VCol cols="5" sm="12" md="5">
+          <div class="checkout__cart-summary">
+            <!-- cart footer -->
+
+            <CartSummaryFooter v-model="isCollapsed" />
+
+
+            <CartSummary
+              ref="cartSummary"
+              :is-desktop="false"
+              :is-collapsed="isCollapsed"
+              @collapse="handleCartSummaryCollapse"
+              @next-step="nextStep"
+              @cart-empty="handleCartEmpty"
+            />
+          </div>
+        </VCol>
+      </VRow>
     </div>
 
     <div
       v-if="isCartEmpty"
       class="checkout container empty"
     >
-      <Empty/>
+      <Empty />
     </div>
   </div>
 
@@ -335,7 +350,7 @@ onMounted(async () => {
     v-if="isLoading"
     class="spinner-overlay"
   >
-    <div class="spinner"/>
+    <div class="spinner" />
   </div>
 </template>
 
@@ -348,6 +363,29 @@ onMounted(async () => {
   padding: 5px 15px var(150px) 15px;
 }
 */
+
+.checkout__terms-and-conditions{
+  align-self: flex-start;
+  font-size: 12px;
+  padding: 5px 15px 160px;
+}
+
+@media only screen and (min-width: 601px) {
+  .checkout__terms-and-conditions {
+    padding: 15px 30px;
+  }
+}
+
+ .checkout__terms-and-conditions .mtc-link {
+  color: #747474;
+  display: inline-block;
+  margin-right: 5px;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+
+
 .spinner-overlay {
   position: fixed;
   top: 0;
@@ -411,18 +449,18 @@ onMounted(async () => {
   }
 }
 
-@media only screen and (min-width: 601px) {
+/*@media only screen and (min-width: 601px) {
   .checkout:not(.empty) {
     display: grid;
     grid-template-columns: 66% 34%;
     grid-template-rows: auto;
   }
-}
+}*/
 
 .steps__content {
   width: 100%;
   max-width: 800px;
-  padding: 15px 0;
+  padding: 0px 0;
 
 
 }

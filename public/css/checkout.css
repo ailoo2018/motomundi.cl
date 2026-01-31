@@ -1,48 +1,6 @@
 
-:root {
-    --vs-colors--lightest: rgba(60,60,60,.26);
-    --vs-colors--light: rgba(60,60,60,.5);
-    --vs-colors--dark: #333;
-    --vs-colors--darkest: rgba(0,0,0,.15);
-    --vs-search-input-color: inherit;
-    --vs-search-input-bg: #fff;
-    --vs-search-input-placeholder-color: inherit;
-    --vs-font-size: 1rem;
-    --vs-line-height: 1.4;
-    --vs-state-disabled-bg: #f8f8f8;
-    --vs-state-disabled-color: var(--vs-colors--light);
-    --vs-state-disabled-controls-color: var(--vs-colors--light);
-    --vs-state-disabled-cursor: not-allowed;
-    --vs-border-color: var(--vs-colors--lightest);
-    --vs-border-width: 1px;
-    --vs-border-style: solid;
-    --vs-border-radius: 4px;
-    --vs-actions-padding: 4px 6px 0 3px;
-    --vs-controls-color: var(--vs-colors--light);
-    --vs-controls-size: 1;
-    --vs-controls--deselect-text-shadow: 0 1px 0 #fff;
-    --vs-selected-bg: #f0f0f0;
-    --vs-selected-color: var(--vs-colors--dark);
-    --vs-selected-border-color: var(--vs-border-color);
-    --vs-selected-border-style: var(--vs-border-style);
-    --vs-selected-border-width: var(--vs-border-width);
-    --vs-dropdown-bg: #fff;
-    --vs-dropdown-color: inherit;
-    --vs-dropdown-z-index: 1000;
-    --vs-dropdown-min-width: 160px;
-    --vs-dropdown-max-height: 350px;
-    --vs-dropdown-box-shadow: 0px 3px 6px 0px var(--vs-colors--darkest);
-    --vs-dropdown-option-bg: #000;
-    --vs-dropdown-option-color: var(--vs-dropdown-color);
-    --vs-dropdown-option-padding: 3px 20px;
-    --vs-dropdown-option--active-bg: #5897fb;
-    --vs-dropdown-option--active-color: #fff;
-    --vs-dropdown-option--deselect-bg: #fb5858;
-    --vs-dropdown-option--deselect-color: #fff;
-    --vs-transition-timing-function: cubic-bezier(1,-0.115,0.975,0.855);
-    --vs-transition-duration: 150ms;
-}
 
+/*
 .input__group label.error {
     color: #f44a4a!important;
 }
@@ -99,6 +57,26 @@ button, input, optgroup, select, textarea {
     outline: none;
 }
 
+
+.form-actions .button:only-child {
+    margin: 0 auto !important;
+    max-width: 410px;
+    width: 100%;
+}
+
+
+[type=checkbox], [type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+
+.input__group.checkbox input[type=checkbox], .input__group.checkbox input[type=radio], .input__group.radio input[type=checkbox], .input__group.radio input[type=radio] {
+    top: 2px;
+    position: relative;
+}
+
+*/
 .button {
     background: none;
     border: 2px solid #000;
@@ -116,11 +94,6 @@ button, input, optgroup, select, textarea {
     transition: all .2s ease-in-out;
     z-index: 1;
 }
-.form-actions .button:only-child {
-    margin: 0 auto !important;
-    max-width: 410px;
-    width: 100%;
-}
 .actions-button .step__actions .button{
     align-items: center;
     display: flex;
@@ -128,20 +101,6 @@ button, input, optgroup, select, textarea {
     min-height: 40px;
     padding: 0 15px!important;
 }
-
-[type=checkbox], [type=radio] {
-    box-sizing: border-box;
-    padding: 0;
-}
-
-
-.input__group.checkbox input[type=checkbox], .input__group.checkbox input[type=radio], .input__group.radio input[type=checkbox], .input__group.radio input[type=radio] {
-    top: 2px;
-    position: relative;
-}
-
-
-
 /*
 
 interferes with click from VRadio
@@ -882,7 +841,7 @@ form span.h2{
 
 
 .cart-summary .cart-summary__content .cart-summary__content-body{
-    padding: 15px;
+/*    padding: 15px;*/
 }
 
 .cart-summary .cart-summary__content .cart-summary__totals {
@@ -1121,6 +1080,7 @@ form span.h2{
 
 /****** CART CONTENT *************/
 
+/*
 .summary ul {
     list-style: none;
 }
@@ -1184,7 +1144,9 @@ form span.h2{
         margin: 0;
     }
 }
+*/
 
+/*
 
 
 .cart-product {
@@ -1234,7 +1196,9 @@ form span.h2{
     text-transform: uppercase;
 }
 
+*/
 
+/*
 
 .cart-product__tools input[type=number] {
     color: #000;
@@ -1253,6 +1217,7 @@ form span.h2{
     font-size: 13px;
     margin: 0;
 }
+*/
 
 
 .cart-product__warning {
@@ -1270,6 +1235,7 @@ form span.h2{
 
 /******* cart product tools ************************/
 
+/*
 .cart-product__tools {
     display: flex;
     gap: 30px;
@@ -1288,12 +1254,16 @@ form span.h2{
     padding: 10px 30px 10px 10px;
     text-align: center;
 }
+*/
 
+/*
 .cart-product__tools .cart-product__quantity {
     display: inline-block;
     position: relative;
 }
+*/
 
+/*
 .cart-product__tools .cart-product__quantity .quantity-buttons {
     align-content: stretch;
     bottom: 1px;
@@ -1369,6 +1339,7 @@ form span.h2{
     }
 }
 
+*/
 
 /***************** steps ****************/
 

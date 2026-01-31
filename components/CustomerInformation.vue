@@ -218,6 +218,7 @@ const handlePhoneInput = event => {
 </script>
 
 <template>
+
   <div class="active">
     <div class="data">
       <div
@@ -300,6 +301,7 @@ const handlePhoneInput = event => {
       </div>
     </div>
   </div>
+
 </template>
 
 

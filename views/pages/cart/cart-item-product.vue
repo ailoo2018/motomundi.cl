@@ -31,19 +31,17 @@ const removeCartItem = () => {
       <article class="cart-product__wrapper">
         <a :href="cartItem.product.url" class="cart-product mtc-link">
 
-          <span>
+          <span class="product-image-wrapper">
             <VImg
-              width="120"
-              height="120"
-              :src="getImageUrl(cartItem.image, 300, getDomainId()) || emptyImage"
+              style="min-width: 70px"
+              :src="getImageUrl(cartItem.image, 150, getDomainId()) || emptyImage"
               :alt="cartItem.name"
               class="cdn-img"
             >          
               <template #error>
                 <VImg
                   :src="emptyImage"
-                  width="120"
-                  height="120"
+
                   class="cdn-img ma-2"
                 />
               </template>
@@ -174,11 +172,34 @@ const removeCartItem = () => {
 <style lang="scss">
 @media only screen and (min-width: 601px) {
   #shop-cart .cart__product .cart-product img {
+    /*
     height: 120px;
     width: 120px;
+    */
   }
 }
 
+.bike-selector-wrapper {
+  container-type: inline-size;
+  container-name: imageContainer;
+  width: 100%;
+}
+
+@container imageContainer (max-width: 700px) {
+  .responsive-grid {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .grid-item {
+    flex: 1; /* Distributes 25% width to each of the 4 items */
+    min-width: 0;
+  }
+}
+
+#shop-cart h1 {
+  font-size: 1.2em;
+}
 
 #shop-cart .cart-product {
   align-items: center;

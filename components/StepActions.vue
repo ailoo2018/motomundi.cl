@@ -43,17 +43,21 @@ const prev = () => {
     </div>
 
 
-    <div class="step__actions form-actions">
-      <button
+    <div class="step__actions form-actions d-flex justify-space-between">
+      <VBtn
         v-if="currentStep > 1"
+        rounded="0"
+        color="white"
         class="button button--outline actions__back"
         @click="prev"
       >
         <span>Atrás</span>
-      </button>
-      <button
+      </VBtn>
+      <VBtn
         type="submit"
         class="button actions__continue"
+        rounded="0"
+        color="#000"
         :disabled="loading"
         @click="next"
       >
@@ -86,7 +90,7 @@ const prev = () => {
               xlink:href="/svg/ailoo.svg#i-icon-arrow-right"
             /></svg>
         </span>
-      </button>
+      </VBtn>
     </div>
   </div>
 </template>

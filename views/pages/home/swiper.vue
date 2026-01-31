@@ -35,7 +35,8 @@ const getBgImg = img =>{
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
   console.log("Swiper mounted: " + swiperEl.value)
   if (swiperEl.value) {
     // Listen to slide change events
