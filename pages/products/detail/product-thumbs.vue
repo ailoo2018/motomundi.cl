@@ -56,6 +56,11 @@ watch(() => props.product, newProduct => {
 
 
 register()
+
+onMounted(() => {
+  console.log("ProductThumbs Mounted!")
+})
+
 </script>
 
 <template>
@@ -66,6 +71,7 @@ register()
           <div class="product-thumbs mb-5">
             <ClientOnly>
               <swiper-container
+                v-if="images.length > 0"
                 id="miniatures"
                 events-prefix="swiper-"
                 navigation="true"
