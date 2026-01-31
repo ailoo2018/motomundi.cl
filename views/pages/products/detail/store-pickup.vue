@@ -1,33 +1,47 @@
 <script setup lang="ts">
+const props = defineProps({
+  productItemId: {
+    type: Number,
+  },
+})
+
+
 
 const isShow = ref(false)
-const stores = ref([
-  {
-    "name": "LAS TRANQUERAS",
-    "address": "LAS TRANQUERAS 56",
-    "stock": 1.0,
-    "pickup": "Recogelo en 2 horas"
-  },
-  {
-    "name": "CONCEPCION",
-    "address": "Juan de Dios Rivera 1298, Loc 2",
-    "stock": 1.0,
-    "pickup": "Recogelo en 2 horas"
-  },
-  {
-    "name": "VIÑA DEL MAR",
-    "address": "Quillota 384, Local 3",
-    "stock": 1.0,
-    "pickup": "Recogelo en 2 horas"
-  },
-  {
-    "name": "LA SERENA",
-    "address": "Av. Balmaceda 3039",
-    "stock": 1.0,
-    "pickup": "Recogelo en 2 horas"
+const stores = ref([])
+const store = ref({ name: "" })
+const isAvailable = ref(false)
+
+
+const loadStock = async  () => {
+
+  const data  = await $fetch("/api/product/stock", {
+    key: "product-item-stock-" + props.productItemId,
+    method: "GET",
+    query: {
+      productItemId: props.productItemId,
+    },
+  })
+
+
+  stores.value = data.stores
+  if(stores.value && stores.value.length > 0){
+    isAvailable.value = stores.value.some(s => s.stock > 0)
+  }else{
+    isAvailable.value = false
   }
-])
-const store = ref({name: ""})
+
+}
+
+watch(() => props.productItemId, async newValue => {
+  console.log("storepickup pit changed: " + props.productItemId)
+  if(props.productItemId > 0 ) {
+    await loadStock()
+  }
+}, { immediate: true })
+
+
+
 const showStockDialog = () => {
   isShow.value = true
 }
@@ -37,7 +51,7 @@ const showStockDialog = () => {
   <div class="shop-lookup__container mt-4">
     <div
       class="shipping-options__container not-clickable"
-      @click="showStockDialog()"
+      @click="showStockDialog"
     >
       <div class="shipping-options__content">
         <p class="shipping-options__heading">
@@ -52,11 +66,11 @@ const showStockDialog = () => {
               xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-click-and-collect"
             />
           </svg>
-          <span>Retiro en Tienda</span>
+          <span>Retiro en Tienda {{isAvailable}}</span>
         </p>
         <div class="shipping-options__body">
           <div class="shipping-options__option">
-            <p class="option__not-checked">
+            <p :class="isAvailable ? '' :  'option__not-checked'">
               Comprobar disponibilidad
             </p>
           </div>
@@ -82,18 +96,24 @@ const showStockDialog = () => {
 
     <!-- popup shop lookup -->
     <VDialog
+      v-model="isShow"
       max-width="700px"
       class="modal-wrapper shop-lookup__modal"
-      v-model="isShow"
     >
-
-      <VCardTitle>
-
-
-      </VCardTitle>
+      <VCardTitle />
       <VCard>
-
         <header class="modal-header">
+          <VBtn
+            icon
+            variant="text"
+            style="position: absolute; top: 8px; right: 8px; z-index: 1;"
+            @click="isShow = false"
+          >
+            <VIcon
+              class="tabler-x"
+              color="#000"
+            />
+          </VBtn>
           <div class="shop-lookup__header">
             <svg
               width="24"
@@ -118,26 +138,26 @@ const showStockDialog = () => {
         >
           <div>
             <div style="display: none;">
-              <ul/>
+              <ul />
               <div class="shop-lookup__no-stock">
                 No hay stock de esta talla en ninguna de nuestras
                 tiendas.
               </div>
             </div>
             <div
-              style="height: 60px;"
               v-if="!stores"
+              style="height: 60px;"
             >
               <div class="spinner-container">
-                <div class="spinner"/>
+                <div class="spinner" />
               </div>
             </div>
             <div v-if="stores">
               <ul style="padding:0px;">
                 <li
-                  class="shop"
                   v-for="store in stores"
                   :key="store.id"
+                  class="shop"
                 >
                   <div class="shop__address">
                     <div class="preferred-icon">
@@ -148,7 +168,7 @@ const showStockDialog = () => {
                         viewBox="0 0 14 14"
                         class="icon sprite-line-icons"
                       >
-                        <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-star"/>
+                        <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-star" />
                       </svg>
                     </div>
                     <p class="shop__address-info">
@@ -158,18 +178,18 @@ const showStockDialog = () => {
                   </div>
                   <div class="shop__stock">
                     <p
-                      class="shop__no-stock"
                       v-if="store.stock == 0"
+                      class="shop__no-stock"
                     >
                       Sin stock
                     </p>
                     <p
-                      class=""
                       v-if="store.stock > 0"
+                      class=""
                     >
                       1 en stock
                     </p>
-                    <p class="shop__available-2h">
+                    <p v-if="store.stock > 0" class="shop__available-2h">
                       Recógelo en 2 horas
                     </p>
                   </div>
@@ -203,6 +223,7 @@ const showStockDialog = () => {
     <!-- /popup shop lookup -->
   </div>
 </template>
+
 <style lang="scss">
 .shop-lookup__modal .modal-header .shop-lookup__header {
   align-items: flex-start;
@@ -392,6 +413,10 @@ const showStockDialog = () => {
   position: relative;
   top: 1px;
   width: 10px;
+}
+
+.shop .shop__stock p.shop__no-stock:after {
+  background-color: #f44a4a;
 }
 </style>
 

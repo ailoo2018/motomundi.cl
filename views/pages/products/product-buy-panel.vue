@@ -246,7 +246,7 @@ const onSelectedVariant = (pit) =>
             </div>
             <!-- /modal popup -->
           </div>
-          <StorePickup :product-item="selectedProductItems" />
+          <StorePickup v-if="selectedVariant" :product-item-id="selectedVariant.id" />
         </div>
       </div>
     </div>
