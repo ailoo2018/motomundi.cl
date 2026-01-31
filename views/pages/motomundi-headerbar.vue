@@ -18,7 +18,7 @@ const serverTimestamp = ref(new Date().toISOString())
         </div>
         <div class="hmnuentry"><a href="/contactenos">Contáctenos</a></div>
         <div class="hmnuentry">
-          <a href="/cuenta/perfil"> Su cuenta {{ timestamp }}</a>
+          <a href="/cuenta/perfil"> Su cuenta {{ serverTimestamp }}</a>
         </div>
       </div>
       <div id="community_links" class="d-flex gap-2 pt-2">
