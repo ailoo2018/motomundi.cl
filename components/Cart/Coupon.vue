@@ -223,4 +223,17 @@ input:not([type]):focus:not([readonly]), input[type=date]:not(.browser-default):
   box-shadow: 0 1px 0 0 #41a334;
 }
 
+.promo-code .promo-code__form .promo-code__group button{
+  background-color: #41a334;
+  border-color: #41a334;
+  color: #fff;
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -.25px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  text-transform: uppercase;
+  width: 100%;
+}
 </style>

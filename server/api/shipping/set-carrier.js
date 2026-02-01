@@ -8,7 +8,10 @@ export default defineEventHandler(async event => {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
-    const { carrierId } = getQuery(event)
+
+
+    const { id } = getQuery(event)
+    const wuid  = getCookie(event, "guest_id")
 
     url = `${baseUrl}/${getDomainId()}/shipping/set-carrier`
 
@@ -18,8 +21,9 @@ export default defineEventHandler(async event => {
         'Content-Type': 'application/json',
       },
       query: {
-        carrierId
-      }
+        carrierId: id,
+        wuid,
+      },
     })
   }catch(error) {
     console.error('Error in set-carrier: ' + url, error)

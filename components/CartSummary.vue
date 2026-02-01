@@ -10,8 +10,10 @@ const props = defineProps({
   },
 })
 
-
 const emit = defineEmits(['cartEmpty', 'nextStep', 'collapse'])
+
+const { isMobile } = useDevice()
+
 const { isLoading, updateLoading } = inject('loading')
 const checkoutService = inject('checkoutService')
 const { cart, coupon } = inject('checkoutService')
@@ -125,7 +127,6 @@ defineExpose({ getCart })
 </script>
 
 <template>
-
   <div
     class="cart-summary "
     :class="{ 'collapsed' : isCollapsed}"
@@ -155,10 +156,11 @@ defineExpose({ getCart })
         </span>
       </div>
       <div class="cart-summary__content-body">
-
-        <VCard >
+        <VCard  class="mobile-plain-card">
           <VCardTitle>
-            <h2 style="margin:4px">Resumen de pedido</h2>
+            <h2 style="margin:4px">
+              Resumen de pedido
+            </h2>
           </VCardTitle>
           <VCardText>
             <div class="cart-summary__totals">
@@ -203,29 +205,30 @@ defineExpose({ getCart })
           </VCardText>
         </VCard>
 
-        <VCard class="mt-4">
+        <VCard class="mt-4 mobile-plain-card">
           <VCardText>
             <Coupon
-          v-model="coupon"
+              v-model="coupon"
 
-          :coupon-discount="couponDiscount"
-        />
+              :coupon-discount="couponDiscount"
+            />
           </VCardText>
         </VCard>
 
-        <VCard class="mt-4">
+        <VCard class="mt-4 mobile-plain-card">
           <VCardText>
-            <div id="shop-cart" class="summary">
+            <div
+              id="shop-cart"
+              class="summary"
+            >
               <h2>Mi cesta</h2>
               <CartContent />
             </div>
           </VCardText>
         </VCard>
-
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
@@ -531,4 +534,13 @@ li .mtc-link, #shop-cart li > a {
   display: flex;
   flex-grow: 1;
 }
+
+@media (max-width: 600px) {
+  .mobile-plain-card {
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border: none !important;
+  }
+}
+
 </style>

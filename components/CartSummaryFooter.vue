@@ -1,89 +1,130 @@
 <script setup>
-import {ref, watch} from "vue";
-import {formatDeliveryDateRange, formatMoney} from "../@core/utils/formatters.js";
-import {defineComponent} from "vue";
+import { ref, watch, defineComponent } from "vue"
+import { formatDeliveryDateRange, formatMoney } from "../@core/utils/formatters.js"
+import { useCartStore } from "@/stores/cart.js"
+
 
 const props = defineProps({
   modelValue: {
     type: Boolean,
-    default: null
+    default: null,
   },
 })
 
-watch(props, (newValue) => {
-  isCollapsed.value = newValue.modelValue;
+const emit = defineEmits(['update:modelValue'])
+
+watch(props, newValue => {
+  isCollapsed.value = newValue.modelValue
 })
 
-const isCollapsed = ref(true);
+const isCollapsed = ref(true)
 
-const { checkoutInfo } = inject("checkoutService");
-
-const emit = defineEmits(['update:modelValue'])
+const { checkoutInfo } = inject("checkoutService")
 
 const toggleCollapse= () => {
   isCollapsed.value = !isCollapsed.value
   emit('update:modelValue', isCollapsed.value)
 }
 
-const isEntre = (eta) => {
+const isEntre = eta => {
   if(eta.from != eta.to)
     return " entre el "
+  
   return el
 }
+
+const { cart } = inject('checkoutService')
 
 </script>
 
 <template>
-
-
-  <div class="cart-summary  " :class="{ 'collapsed' : isCollapsed}">
-    <div id="cart-summary__footer" class="cart-summary__footer" style="">
-
-      <div  class="cart-summary__shipping-time" v-if="checkoutInfo.shippingMethod && checkoutInfo.shippingMethod.type === 2">
-        <svg  width="22" height="23" alt="Envío Express" xmlns="http://www.w3.org/2000/svg"
-              class="icon sprite-line-icons">
+  <div
+    class="cart-summary  "
+    :class="{ 'collapsed' : isCollapsed}"
+  >
+    <div
+      id="cart-summary__footer"
+      class="cart-summary__footer"
+      style=""
+    >
+      <div
+        v-if="checkoutInfo.shippingMethod && checkoutInfo.shippingMethod.type === 2"
+        class="cart-summary__shipping-time"
+      >
+        <svg
+          width="22"
+          height="23"
+          alt="Envío Express"
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon sprite-line-icons"
+        >
           <use
-              href="/svg/ailoo.svg#i-icon-checkout-express-shipping"
-              xlink:href="/svg/ailoo.svg#i-icon-checkout-express-shipping"></use>
+            href="/svg/ailoo.svg#i-icon-checkout-express-shipping"
+            xlink:href="/svg/ailoo.svg#i-icon-checkout-express-shipping"
+          />
         </svg>
-        <span >Recíbelo {{isEntre(checkoutInfo.shippingMethod.eta)}} <strong>{{ formatDeliveryDateRange(checkoutInfo.shippingMethod.eta) }}</strong>.</span>
+        <span>Recíbelo {{ isEntre(checkoutInfo.shippingMethod.eta) }} <strong>{{ formatDeliveryDateRange(checkoutInfo.shippingMethod.eta) }}</strong>.</span>
       </div>
-      <div  class="cart-summary__shipping-time" v-if="checkoutInfo.shippingMethod && checkoutInfo.shippingMethod.type === 1">
-        <svg  width="22" height="23" alt="Click &amp; Collect"
-              xmlns="http://www.w3.org/2000/svg" class="icon sprite-line-icons">
+      <div
+        v-if="checkoutInfo.shippingMethod && checkoutInfo.shippingMethod.type === 1"
+        class="cart-summary__shipping-time"
+      >
+        <svg
+          width="22"
+          height="23"
+          alt="Click &amp; Collect"
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon sprite-line-icons"
+        >
           <use
-              href="/svg/ailoo.svg#i-icon-checkout-click-and-collect"
-              xlink:href="/svg/ailoo.svg#i-icon-checkout-click-and-collect"></use>
+            href="/svg/ailoo.svg#i-icon-checkout-click-and-collect"
+            xlink:href="/svg/ailoo.svg#i-icon-checkout-click-and-collect"
+          />
         </svg>
-        <span >Mañana</span>
+        <span>Mañana</span>
       </div>
 
 
       <div class="cart-summary__info">
         <div class="cart-summary__amount">
           <span class="cart-summary__total">Total: </span>
-          <strong>{{ formatMoney(checkoutInfo.total) }} </strong>
-          <span class="cart-summary__old-amount" v-if="checkoutInfo.discount > 0">{{formatMoney(checkoutInfo.oldPrice)}}</span>
+          <strong>{{formatMoney(cart.total)}}  </strong>
+          <span
+            v-if="checkoutInfo.discount > 0"
+            class="cart-summary__old-amount"
+          >{{ formatMoney(checkoutInfo.oldPrice) }}</span>
         </div>
-        <span class="show-details" style="cursor: pointer;" @click="toggleCollapse">
-                Ver detalles
-                <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" class="icon sprite-line-icons">
+        <span
+          class="show-details"
+          style="cursor: pointer;"
+          @click="toggleCollapse"
+        >
+          Ver detalles
+          <svg
+            width="14"
+            height="14"
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon sprite-line-icons"
+          >
             <title>Ver detalles</title>
             <use
-                href="/svg/ailoo.svg#i-icon-angle-up"
-                xlink:href="/svg/ailoo.svg#i-icon-angle-up"
-            ></use>
+              href="/svg/ailoo.svg#i-icon-angle-up"
+              xlink:href="/svg/ailoo.svg#i-icon-angle-up"
+            />
           </svg>
-              </span>
+        </span>
       </div>
-      <StepActions :current-step="currentStep" @next="nextStep" @prev="prevStep" :error="error"></StepActions>
+      <StepActions
+        :current-step="currentStep"
+        :error="error"
+        @next="nextStep"
+        @prev="prevStep"
+      />
     </div>
-
   </div>
 </template>
 
 <style scoped>
-
 .cart-summary__old-amount {
   margin-left: 4px
 }
@@ -124,5 +165,4 @@ const isEntre = (eta) => {
   gap: 5px;
   padding: 0 0 5px;
 }
-
 </style>

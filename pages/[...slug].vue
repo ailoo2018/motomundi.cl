@@ -18,7 +18,29 @@ const slugArray = Array.isArray(route.params.slug)
 
 const path = `/${slugArray.join('/')}`
 
-if(path === "/Product/ReviewProduct.rails"){
+if(path === "/Account/OrderDetail.rails"){
+  // ?orderId=190920&hash=FF4970D2B241BAFFAACE2F654EAE60A8
+
+  const wuid = useGuestUser().value
+  const config = useRuntimeConfig()
+  const baseUrl = config.public.w3BaseUrl
+
+  const { data } = await useFetch(`${baseUrl}/${getDomainId()}/auth/hash-login`, {
+    method: 'POST',
+    body: {
+      hash: queryParams.hash,
+      pid: queryParams.orderId,
+      wuid: wuid,
+    },
+  })
+
+  useCookie('user_id').value = data.userId
+  useCookie('accessToken').value = data.accessToken
+
+
+  navigateTo("/account/orders/" + queryParams.orderId)
+
+}else if(path === "/Product/ReviewProduct.rails"){
 
   const wuid = useGuestUser().value
   const config = useRuntimeConfig()

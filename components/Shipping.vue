@@ -46,7 +46,7 @@ if (!shippingAddress.value || !shippingAddress.value.address) {
 const checkoutService = inject('checkoutService')
 
 const setCarrier = async carrierId => {
-  const { data, error: fetchError } = await useFetch("/api/shipping/set-carrier?id=" + carrierId, {
+  const data = await $fetch("/api/shipping/set-carrier?id=" + carrierId, {
     method: "GET",
     headers: { 'Content-Type': 'application/json' },
     async onResponseError({ response }) {
@@ -83,6 +83,7 @@ const handleClickAndCollect = (store, selPickupOption) => {
 }
 
 const setShippingMethod = methodId => {
+  console.log("setShippingMethod:" + methodId)
   selectedShippingMethod.value = methodId
   if (ShippingMethods.HomeDelivery === methodId) {
 
@@ -314,7 +315,7 @@ onMounted(async () => {
               </div>
               <div class="shipping-method__price">
                 Gratis
-                <span class="old-price">4,99&nbsp;€</span>
+                <span class="old-price">$4.900</span>
               </div>
             </div>
             <div class="shipping-method__body">

@@ -43,6 +43,69 @@ watch(currentPage, async () => {
   await search()
 })
 
+
+const getQueryDescription = q => {
+  if(q.category)
+    return  `<span class="total-results">${ rs?.totalHits } </span>` + q.category.name
+
+  return "Resultado"
+}
+
+const baseQuery = []
+
+if (query.categoryId) {
+  baseQuery.push({ type: "categories", values: [query.categoryId] })
+}
+if (query.brandId) {
+  baseQuery.push({ type: "brands", values: [query.brandId] })
+}
+if (query.collection) {
+  baseQuery.push({ type: "collection", value: query.collection })
+}
+if(query.bikeManufacturer){
+  baseQuery.push({ type: "bike", value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear } })
+}
+if(query.minDiscount){
+  baseQuery.push({ type: "minDiscount", value: query.minDiscount })
+}
+if(query.sword){
+  baseQuery.push({ type: "sword", value: query.sword })
+}
+
+
+watch(filters, () => {
+
+  const map = new Map()
+  for (const f of filters.value) {
+    for (const b of f.buckets) {
+      if (b.checked) {
+        if (!map.has(f.type))
+          map.set(f.type, { type: f.type, values: [] })
+        map.get(f.type).values.push(b.id)
+      }
+    }
+  }
+
+  const newQuery = [...map.values()]
+  if (currentQuery.value.length === 0 && newQuery.length === 0) {
+    return
+  }
+
+  if (JSON.stringify(currentQuery.value) !== JSON.stringify(newQuery)) {
+
+    if (currentPage.value !== 1) {
+      ignoreNextPageWatch.value = true // Prevent the watcher from calling search()
+      currentPage.value = 1
+    }
+    console.log("NEW QUERY!" + JSON.stringify(newQuery))
+    console.log("OLD QUERY!" + JSON.stringify(currentQuery.value))
+    currentQuery.value = newQuery
+
+    search()
+  }
+}, { deep: true })
+
+
 const search = async () => {
   try {
     products.value = []
@@ -121,15 +184,15 @@ const search = async () => {
 
 
 
-/*
-    const { data } = await useFetch(`/api/product/search`, {
-      key: `product-search-` + JSON.stringify(body),
-      method: "POST",
-      body: body,
-    })
+    /*
+        const { data } = await useFetch(`/api/product/search`, {
+          key: `product-search-` + JSON.stringify(body),
+          method: "POST",
+          body: body,
+        })
 
-    rs = data.value
-*/
+        rs = data.value
+    */
 
     rs = await $fetch(`/api/product/search`, {
       key: `product-search-` + JSON.stringify(body),
@@ -156,63 +219,6 @@ const search = async () => {
   }
 }
 
-const getQueryDescription = q => {
-  if(q.category)
-    return  `<span class="total-results">${ rs?.totalHits } </span>` + q.category.name
-
-  return "Resultado"
-}
-
-const baseQuery = []
-
-if (query.categoryId) {
-  baseQuery.push({ type: "categories", values: [query.categoryId] })
-}
-if (query.collection) {
-  baseQuery.push({ type: "collection", value: query.collection })
-}
-if(query.bikeManufacturer){
-  baseQuery.push({ type: "bike", value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear } })
-}
-if(query.minDiscount){
-  baseQuery.push({ type: "minDiscount", value: query.minDiscount })
-}
-if(query.sword){
-  baseQuery.push({ type: "sword", value: query.sword })
-}
-
-
-watch(filters, () => {
-
-  const map = new Map()
-  for (const f of filters.value) {
-    for (const b of f.buckets) {
-      if (b.checked) {
-        if (!map.has(f.type))
-          map.set(f.type, { type: f.type, values: [] })
-        map.get(f.type).values.push(b.id)
-      }
-    }
-  }
-
-  const newQuery = [...map.values()]
-  if (currentQuery.value.length === 0 && newQuery.length === 0) {
-    return
-  }
-
-  if (JSON.stringify(currentQuery.value) !== JSON.stringify(newQuery)) {
-
-    if (currentPage.value !== 1) {
-      ignoreNextPageWatch.value = true // Prevent the watcher from calling search()
-      currentPage.value = 1
-    }
-    console.log("NEW QUERY!" + JSON.stringify(newQuery))
-    console.log("OLD QUERY!" + JSON.stringify(currentQuery.value))
-    currentQuery.value = newQuery
-
-    search()
-  }
-}, { deep: true })
 
 search()
 </script>

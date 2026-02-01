@@ -9,6 +9,7 @@ import CartSummary from "~/components/CartSummary.vue"
 import Empty from "~/components/Empty.vue"
 import { useCartStore } from "@/stores/cart.js"
 import { useGuestUser } from "@/composables/useGuestUser.js"
+import { getHeader } from "h3"
 
 useHead({
   link: [
@@ -22,6 +23,16 @@ definePageMeta({
   public: true,
 
 })
+
+const { isMobile } = useDevice()
+
+// This will switch the layout reactively on the client/server
+if (isMobile) {
+  setPageLayout('blank')
+} else {
+  setPageLayout('default')
+}
+
 
 const isLoading = ref(false)
 
@@ -240,17 +251,15 @@ onMounted(async () => {
 </script>
 
 <template>
-
-
-
   <div
-    class="checkout-container pa-8"
+    class="checkout-container pa-lg-8 pa-0"
     style="background: #fff;"
   >
     <VRow>
       <VCol cols="12">
+        <Logo v-if="isMobile" />
         <CheckoutStepper
-          class="mt-10 mb-6"
+          class="mt-lg-10 mb-lg-6 mb-4"
           :current-step="currentStep"
         />
       </VCol>
@@ -258,14 +267,18 @@ onMounted(async () => {
 
     <div v-if="!isCartEmpty">
       <VRow>
-        <VCol cols="7" sm="12" md="7" >
+        <VCol
+          cols="12"
+          sm="12"
+          md="7"
+        >
           <main
             id="checkout__body"
             class="checkout__body"
           >
             <div class="steps__content">
-              <VCard>
-                <VCardText>
+              <VCard  color="surface" class="mobile-plain-card">
+                <VCardText class="ma-0 pa-0">
                   <CustomerInformation
                     v-if="currentStep === 1"
                     ref="customerInformation"
@@ -288,6 +301,7 @@ onMounted(async () => {
                 </VCardText>
               </VCard>
             </div>
+
 
 
             <StepActions
@@ -320,7 +334,11 @@ onMounted(async () => {
             </div>
           </main>
         </VCol>
-        <VCol cols="5" sm="12" md="5">
+        <VCol
+          cols="12"
+          sm="12"
+          md="5"
+        >
           <div class="checkout__cart-summary">
             <!-- cart footer -->
 
@@ -330,7 +348,7 @@ onMounted(async () => {
 
             <CartSummary
               ref="cartSummary"
-              :is-desktop="false"
+              :is-desktop="!isMobile"
               :is-collapsed="isCollapsed"
               @collapse="handleCartSummaryCollapse"
               @next-step="nextStep"
@@ -360,6 +378,10 @@ onMounted(async () => {
 
 
 <style scoped>
+.v-card--variant-plain {
+  opacity: 1;
+}
+
 /*
 .checkout .checkout__terms-and-conditions {
   align-self: flex-start;
@@ -491,5 +513,13 @@ onMounted(async () => {
 
 .actions-button .steps__errors {
   padding: 0 15px;
+}
+
+@media (max-width: 600px) {
+  .mobile-plain-card {
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border: none !important;
+  }
 }
 </style>
