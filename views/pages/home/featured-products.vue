@@ -3,6 +3,7 @@
 import { ref, onMounted } from 'vue'
 import { SwiperSlide } from "swiper/vue"
 import { register } from 'swiper/element/bundle'
+import ProductListItem from "@/views/pages/products/list/product-list-item.vue";
 
 const props = defineProps({
   widget: {
@@ -142,100 +143,7 @@ register()
                         v-for="product in products"
                         :key="product.id"
                       >
-                        <article class="item with-countdown">
-                          <section :data-id="product.id">
-                            <button class="add-to-favs ">
-                              <svg
-                                data-v-45b081c0=""
-                                width="29"
-                                height="24"
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="add icon sprite-line-icons"
-                              >
-                                <title data-v-45b081c0="">Añadir a favoritos</title>
-                                <use
-                                  data-v-45b081c0=""
-                                  href="/content/svg/motomundi.svg#i-icon-favorite"
-                                  xlink:href="/content/svg/motomundi.svg#i-icon-favorite"
-                                />
-                              </svg>
-                            </button>
-                            <a
-                              :href="product.url"
-                              data-dr="true"
-                              class="mtc-link"
-                            >
-                              <div class="product-tags">
-                                <span
-                                  v-if="product.price?.discount > 0"
-                                  class="tag-wrapper"
-                                >
-                                  <span class="tag product-tag product-tag--old product-tag--offer">
-                                    <span class="discount">-{{ formatPercent((1 - product.price.price / product.price.base_price))
-                                    }}</span>
-                                  </span>
-                                </span>
-                              </div>
-                              <span class="product-image">
-                                <img
-                                  :src="getImageUrl(product.image, 300, getDomainId())"
-                                  class="cdn-img v-lazy-image v-lazy-image-loaded"
-                                  :alt="product.name"
-                                  style="max-width: 100%"
-                                >
-                                <noscript />
-                              </span>
-                            </a>
-                            <section class="item__info">
-                              <a
-                                :href="product.url"
-                                data-dr="true"
-                                class="mtc-link"
-                              >
-                                <div class="item__name">
-                                  <!-- <span class="item__sizes">Tallas: Talla única</span> -->
-                                  <span class="item__rating">
-                                    <span class="rating-block">
-                                      <span>
-                                        <img
-                                          src="/content/images/stars/8.webp"
-                                          class="cdn-img v-lazy-image v-lazy-image-loaded"
-                                          alt="8"
-                                          width="68"
-                                          height="12"
-                                          srcset=""
-                                        > <noscript />
-                                      </span>
-                                    </span>
-                                  </span>
-                                  <h3 class="heading-tag">
-                                    <span>{{ product.brand.name }}</span>
-                                    <strong>{{ product.name }} </strong>
-                                  </h3>
-                                </div>
-                              </a>
-                              <a
-                                :href="product.url"
-                                data-dr="true"
-                                class="item__price-info mtc-link"
-                              >
-                                <span class="item__bottom">
-                                  <span class="item__price">{{ formatMoney(product.price.price) }}</span>
-                                  <span
-                                    v-if="product.price.discount > 0"
-                                    class="item__old-price strike"
-                                  >{{ formatMoney(product.price.base_price) }}</span>
-
-
-                                  <span v-if="product.videos && product.videos.length > 0">
-                                    <img src="/content/images/youtube_icon.svg">
-                                  </span>
-
-                                </span>
-                              </a>
-                            </section>
-                          </section>
-                        </article>
+                        <ProductListItem :product="product" :show-miniatures="false" />
                       </swiper-slide>
                     </swiper-container>
                   </ClientOnly>

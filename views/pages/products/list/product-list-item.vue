@@ -14,6 +14,10 @@ const props = defineProps(
       required: false,
       default: () => false,
     },
+    showMiniatures: {
+      type: Boolean,
+      default: () => true,
+    },
   },
 )
 
@@ -113,7 +117,7 @@ const miniatures = computed(() => {
 
 
       </a>
-      <section>
+      <section v-if="showMiniatures">
         <div class="prod-list-miniatures">
           <div
             v-for="img in miniatures"
@@ -141,12 +145,12 @@ const miniatures = computed(() => {
             </span>
             <span class="item__rating">
               <span class="rating-block">
-                  <VRating
-                    v-if="product.rating > 0"
-                    readonly
-                    color="primary"
-                    :model-value="product.rating / 2"
-                  />
+                <VRating
+                  v-if="product.rating > 0"
+                  readonly
+                  color="primary"
+                  :model-value="product.rating / 2"
+                />
               </span>
             </span>
             <h3 class="heading-tag">
@@ -177,8 +181,7 @@ const miniatures = computed(() => {
   </article>
 </template>
 
-<style >
-
+<style>
 article.item {
   position: relative;
   border: 1px solid #d8d8d8;
@@ -228,6 +231,10 @@ article.item {
 .product-tags {
   display: flex;
   flex-wrap: wrap;
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: -2px;
 }
 
 .special-tag {
@@ -276,12 +283,16 @@ article.item {
   display: inline-block;
   overflow: hidden;
 }
+.item .item__rating{
+  height: 20px;
+}
 
 .item .item__rating .rating-block {
-  -webkit-transform: scale(.8);
-  transform: scale(.8);
+  -webkit-transform: scale(.7);
+  transform: scale(.7);
   -webkit-transform-origin: left;
   transform-origin: left;
+
 }
 
 .item .item__sizes {
