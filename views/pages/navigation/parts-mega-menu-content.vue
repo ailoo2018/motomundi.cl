@@ -13,7 +13,7 @@ import BikeSelector from "@/views/pages/bike-selector.vue";
         class="container"
         style="padding: 0 10px; "
       >
-        <div class="row">
+        <div >
           <VRow class="col s12 submenu__container">
             <VCol
               cols="9"

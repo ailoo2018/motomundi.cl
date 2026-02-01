@@ -1,39 +1,26 @@
 <script setup lang="ts">
-
 const props = defineProps({
   href: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 })
-const href = props.href
 
+const href = props.href
 </script>
 
 <template>
-  <VMenu
-    open-on-hover
-    :close-on-content-click="false"
-    attach="#menu-anchor"
-    location="bottom"
-    class="mega-menu-wrapper "
-
-    content-class="centered-mega-menu"
+  <li
+    id="ni_1702"
+    class="l0 c6 "
+    v-bind="props"
   >
-    <template #activator="{ props }">
-      <li
-        id="ni_1702"
-        class="l0 c6 "
-        v-bind="props"
-      >
-        <a :href="href"
-          title="Ropa Casual"
-        >
-          <span>Neumáticos</span>
-        </a>
-
-      </li>
-    </template>
+    <a
+      :href="href"
+      title="Ropa Casual"
+    >
+      <span>Neumáticos</span>
+    </a>
     <ul class="u1 main-nav">
       <li
         id="ni_3857"
@@ -41,19 +28,19 @@ const href = props.href
       >
         <div class="submenu">
           <div class="container">
-            <div class="row">
+            <div >
               <div class="col s12 submenu__container">
                 <div class="submenu__main-content submenu__no-border">
                   <div class="submenu__header">
-                          <span class="h2">
-                            <span>Neumáticos</span>
-                            <a
-                              href="/ropa-casual"
-                              class="mtc-link"
-                            >
-                              Ver todos
-                            </a>
-                          </span>
+                    <span class="h2">
+                      <span>Neumáticos</span>
+                      <a
+                        href="/ropa-casual"
+                        class="mtc-link"
+                      >
+                        Ver todos
+                      </a>
+                    </span>
                   </div>
                   <div class="submenu__content submenu__icon-buttons">
                     <a
@@ -177,7 +164,7 @@ const href = props.href
                             width="59"
                             height="30"
                           >
-                                </span></a>
+                          </span></a>
                         </li>
                         <li>
                           <a
@@ -288,11 +275,7 @@ const href = props.href
         </div>
       </li>
     </ul>
-  </VMenu>
-
-
+  </li>
 </template>
 
-<style scoped lang="scss">
 
-</style>

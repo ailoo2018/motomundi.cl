@@ -13,29 +13,18 @@ const href = props.href
 </script>
 
 <template>
-
-  <VMenu
-    open-on-hover
-    :close-on-content-click="false"
-    attach="#menu-anchor"
-    location="bottom"
-    class="mega-menu-wrapper "
-
-    content-class="centered-mega-menu"
+  <li
+    id="ni_1985_accesorios"
+    class="l0 c3 main-nav"
+    v-bind="props"
   >
-    <template #activator="{ props }">
-      <li
-        id="ni_1985_accesorios"
-        class="l0 c3 main-nav"
-        v-bind="props"
-      >
-        <a :href="href">
-          <span>Accesorios</span>
-        </a>
-      </li>
-    </template>
-    <PartsMegaMenuContent />
-  </VMenu>
+    <a :href="href">
+      <span>Accesorios</span>
+    </a>
+    <PartsMegaMenuContent/>
+  </li>
+
+
 </template>
 
 <style lang="scss">

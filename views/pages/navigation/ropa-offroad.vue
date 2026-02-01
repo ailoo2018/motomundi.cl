@@ -10,29 +10,17 @@ const href = props.href
 </script>
 
 <template>
-  <VMenu
-    open-on-hover
-    :close-on-content-click="false"
-    attach="#menu-anchor"
-    location="bottom"
-    class="mega-menu-wrapper "
-
-    content-class="centered-mega-menu"
+  <li
+    id="ni_1562"
+    class="l0 c2 main-nav"
+    v-bind="props"
   >
-    <template #activator="{ props }">
-      <li
-        id="ni_1562"
-        class="l0 c2 main-nav"
-        v-bind="props"
-      >
-        <a
-          :href="href"
-          title="Ropa Motocross"
-        >
-          <span>Ropa Motocross</span>
-        </a>
-      </li>
-    </template>
+    <a
+      :href="href"
+      title="Ropa Motocross"
+    >
+      <span>Ropa Motocross</span>
+    </a>
     <ul class="u1">
       <li
         id="ni_3855"
@@ -40,7 +28,7 @@ const href = props.href
       >
         <div class="submenu">
           <div class="container">
-            <div class="row">
+            <div >
               <div class="col s12 submenu__container">
                 <div class="submenu__main-content">
                   <div class="submenu__header">
@@ -845,7 +833,7 @@ const href = props.href
         </div>
       </li>
     </ul>
-  </VMenu>
+  </li>
   <!-- ropa offroad -->
 
   <!-- /ropa offraod -->

@@ -1,24 +1,13 @@
 
 <template>
   <!-- marcas -->
-  <VMenu
-    open-on-hover
-    :close-on-content-click="false"
-    attach="#menu-anchor"
-    location="bottom"
-    class="mega-menu-wrapper "
-    content-class="centered-mega-menu"
+  <li
+    class="l0 c3 main-nav"
+    v-bind="props"
   >
-    <template #activator="{ props }">
-      <li
-        class="l0 c3 main-nav"
-        v-bind="props"
-      >
-        <a>
-          <span>Marcas</span>
-        </a>
-      </li>
-    </template>
+    <a>
+      <span>Marcas</span>
+    </a>
     <ul class="u1 main-nav">
       <li class="l1 c0 primary subCategories">
         <div
@@ -996,11 +985,12 @@
         </div>
       </li>
     </ul>
-  </VMenu>
+  </li>
 
 
   <!-- /marcas -->
 </template>
+
 
 <style lang="scss">
 #nav ul li {

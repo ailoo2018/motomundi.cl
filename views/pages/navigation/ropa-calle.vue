@@ -13,33 +13,21 @@ const href = props.href
 
 
 <template>
-  <VMenu
-    open-on-hover
-    :close-on-content-click="false"
-    attach="#menu-anchor"
-    location="bottom"
-    class="mega-menu-wrapper"
-    content-class="centered-mega-menu"
+  <li
+    class="l0 c1 main-nav"
+    v-bind="props"
   >
-    <template #activator="{ props }">
-      <li
-        class="l0 c1 main-nav"
-        v-bind="props"
-      >
-        <a
-          :href="href"
-          title="Motorcycle Jackets"
-        >
-          <span>Ropa Calle</span>
-        </a>
-      </li>
-    </template>
+    <a
+      :href="href"
+      title="Motorcycle Jackets"
+    >
+      <span>Ropa Calle</span>
+    </a>
     <ul class="u1">
-      <li class="l1 c0 primary subCategories"
-      >
+      <li class="l1 c0 primary subCategories">
         <div class="submenu">
           <div class="container">
-            <div class="row">
+            <div class="rowaa">
               <div class="col s12 submenu__container">
                 <div class="submenu__main-content">
                   <div class="submenu__header">
@@ -990,7 +978,8 @@ const href = props.href
         </div>
       </li>
     </ul>
-  </VMenu>
+  </li>
+
   <!-- ropa calle -->
 
   <!-- /ropa calle -->

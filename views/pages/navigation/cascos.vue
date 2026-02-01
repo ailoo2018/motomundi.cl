@@ -13,25 +13,14 @@ const href = props.href
 
 <template>
   <!-- cascos  -->
-  <VMenu
-    open-on-hover
-    :close-on-content-click="false"
-    attach="#menu-anchor"
-    location="bottom"
-    class="mega-menu-wrapper"
-    content-class="centered-mega-menu"
-  >
-    <template #activator="{ props }">
-      <li
-        v-bind="props"
-        class="l0 c0 main-nav"
-      >
-        <a :href="href">
-          <span>Cascos</span>
-        </a>
-      </li>
-    </template>
 
+  <li
+    v-bind="props"
+    class="l0 c0 main-nav"
+  >
+    <a :href="href">
+      <span>Cascos</span>
+    </a>
     <ul class="u1">
       <li
         id="ni_3853"
@@ -39,7 +28,7 @@ const href = props.href
       >
         <div class="submenu">
           <div class="container">
-            <div class="row">
+            <div class="rowaa">
               <div class="col s12 submenu__container">
                 <div class="submenu__main-content">
                   <div class="submenu__header">
@@ -72,7 +61,7 @@ const href = props.href
                       class="mtc-link"
                       title="Integrales"
                     >
-                      <img src="/content/assets/menu/categories/full-face.jpg" />
+                      <img src="/content/assets/menu/categories/full-face.jpg">
 
                       <p>Integrales</p>
                     </a>
@@ -82,7 +71,7 @@ const href = props.href
                       class="mtc-link"
                       title="Modulares"
                     >
-                      <img src="/content/assets/menu/categories/flip-up.jpg" />
+                      <img src="/content/assets/menu/categories/flip-up.jpg">
                       <p>Modulares</p>
                     </a>
 
@@ -93,7 +82,7 @@ const href = props.href
                       title="Jet"
                     >
 
-                      <img src="/content/assets/menu/categories/open-face.jpg" />
+                      <img src="/content/assets/menu/categories/open-face.jpg">
                       <p>Abierto</p>
                     </a>
 
@@ -102,7 +91,7 @@ const href = props.href
                       class="mtc-link"
                       title="Motocross / Enduro"
                     >
-                      <img src="/content/assets/menu/categories/dual-sport.jpg" />
+                      <img src="/content/assets/menu/categories/dual-sport.jpg">
                       <p>Adventure</p>
                     </a>
                     <a
@@ -111,7 +100,7 @@ const href = props.href
                       title="Motocross / Enduro"
                     >
 
-                      <img src="/content/assets/menu/categories/mx.jpg" />
+                      <img src="/content/assets/menu/categories/mx.jpg">
                       <p>MX / Enduro</p>
                     </a>
 
@@ -139,7 +128,7 @@ const href = props.href
                       title="Accesorios"
                     >
 
-                      <img src="/content/assets/menu/categories/visor.jpg" />
+                      <img src="/content/assets/menu/categories/visor.jpg">
                       <p>Accesorios</p>
                     </a>
                   </div>
@@ -261,7 +250,11 @@ const href = props.href
         </div>
       </li>
     </ul>
-  </VMenu>
+  </li>
+
+
+    
+  
 
   <!-- /cascos -->
 </template>

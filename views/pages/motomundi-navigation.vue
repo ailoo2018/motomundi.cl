@@ -63,6 +63,10 @@ const selectDepartment = () => {
   background-color: #fff;
 
 }
+#nav {
+  position: relative;
+  font-weight: normal;
+}
 
 #nav ul {
   padding: 0;
@@ -113,19 +117,39 @@ const selectDepartment = () => {
 
 }
 
+#nav ul.u0 li.l0 + li.l0:before {
+  content: "";
+  display: block;
+  height: 12px;
+  border-left: solid 1px #cb3d01;
+  position: absolute;
+  bottom: 12px;
+}
+
 #nav ul.u1 {
-/*  margin: 0 auto;*/
+  position: absolute;
+  margin: 0 auto;
   max-width: 1300px;
-/*  width: 90%;*/
-  /*min-width: 800px;*/
-  background-color: #fff;
-  /*position: absolute;*/
-  /*left: 5%;*/
+  width: 100%;
+  left: 0px;
+  z-index: 2000;
+  box-sizing: border-box;
+  /*width: 100%;*/
+  background: #fff;
+  border-bottom: solid 2px #b21a15;
   -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
   -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
 }
+#nav ul.u0 li:hover ul.u1 {
+  visibility: visible;
+  transition-delay: 300ms;
+}
 
+#nav ul.u0 ul.u1 {
+  visibility: hidden;
+  transition-delay: 300ms;
+}
 
 span.h2 {
   font-size: 18px;
@@ -171,7 +195,7 @@ span.h2 {
 #nav ul.u0 li:hover ul.u1 {
   visibility: visible;
   transition-delay: 300ms;
-  padding-bottom: 20px;
+
 }
 
 #nav ul.u0 li:hover ul.u1::after {
