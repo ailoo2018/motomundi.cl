@@ -142,35 +142,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    v-if="isDialogVisible"
-    class="modal-wrapper"
+  <VDialog
+    v-model="isDialogVisible"
+    max-width="500px"
   >
-    <div class="modal-backdrop" />
-    <div
-      role="dialog"
-      class="modal"
-    >
-      <div class="modal__close-cont">
-        <button
-          class="modal__close"
-          @click="closeDialog"
-        >
-          <svg
-            width="9"
-            height="9"
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon sprite-line-icons"
-          >
-            <use
-              href="/svg/ailoo.svg#i-icon-cross"
-              xlink:href="/svg/ailoo.svg#i-icon-cross"
-            />
-          </svg>
-        </button>
-      </div>
-      <header class="modal-header" />
-      <section class="modal-body">
+    <VCard>
+      <VCardTitle>
+        <span class="h2">Entra en tu cuenta </span>
+      </VCardTitle>
+      <VCardText>
         <div>
           <div>
             <form
@@ -178,7 +158,6 @@ onMounted(() => {
               data-gtm-form-interact-id="0"
               @submit.prevent="handleLogin"
             >
-              <span class="h2">Entra en tu cuenta </span>
               <div class="form-fieldset">
                 <div class="form-item">
                   <div class="input__group">
@@ -249,7 +228,7 @@ onMounted(() => {
               </div>
             </form>
           </div>
-          <span class="divider">o</span>
+          <div class="divider w-100 text-center">o</div>
           <div class="social">
             <button
               class="social__google"
@@ -263,9 +242,9 @@ onMounted(() => {
             </button>
           </div>
         </div>
-      </section>
-    </div>
-  </div>
+      </VCardText>
+    </VCard>
+  </VDialog>
 </template>
 
 <style scoped>

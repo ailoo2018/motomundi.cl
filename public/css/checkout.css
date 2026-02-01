@@ -859,7 +859,7 @@ form span.h2{
     position: sticky;
     top: 0;
     transition: all .4s ease;
-    z-index: 3;
+/*    z-index: 3;*/
 }
 
 
@@ -911,7 +911,7 @@ form span.h2{
     padding: 0;
     pointer-events: auto;
     width: 100%;
-    z-index: 1;
+
 }
 
 

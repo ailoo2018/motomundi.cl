@@ -206,6 +206,8 @@ const closeSearch = () => {
       v-model="sword"
       width="300"
       style="background-color: white;"
+      placeholder="Buscar"
+
       @keydown.enter="redirectToSearch"
       @focus="showSearchWindow = sword.length > 2"
     />

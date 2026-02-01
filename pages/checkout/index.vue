@@ -240,6 +240,9 @@ onMounted(async () => {
 </script>
 
 <template>
+
+
+
   <div
     class="checkout-container pa-8"
     style="background: #fff;"
@@ -322,6 +325,7 @@ onMounted(async () => {
             <!-- cart footer -->
 
             <CartSummaryFooter v-model="isCollapsed" />
+
 
 
             <CartSummary

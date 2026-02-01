@@ -219,6 +219,14 @@ const handlePhoneInput = event => {
 
 <template>
 
+
+
+  <LoginDialog
+    v-model:is-dialog-visible="showLogin"
+    @user-logged-in="handleUserLoggedIn"
+    @closed="closedLogin"
+  />
+
   <div class="active">
     <div class="data">
       <div
@@ -244,11 +252,6 @@ const handlePhoneInput = event => {
         </a>
       </div>
 
-      <LoginDialog
-        v-model:is-dialog-visible="showLogin"
-        @user-logged-in="handleUserLoggedIn"
-        @closed="closedLogin"
-      />
 
 
       <div class="data__contact-details">
