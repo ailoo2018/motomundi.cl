@@ -40,7 +40,7 @@ const componentMap = {
   Community,
   FeaturedProductsWithBanner,
   LatestEvents,
-  Seo2,
+//  Seo2,
   BikeSearch,
   CafeRacerCategories,
   YoutubeLatest,
@@ -52,6 +52,9 @@ const componentMap = {
 
 const { isMobile } = useDevice()
 const store = useConfigStore()
+
+if(isMobile)
+  componentMap.Seo2 = Seo2
 
 store.skin = 'default'
 
