@@ -161,21 +161,22 @@ onMounted(() => {
               <div class="form-fieldset">
                 <div class="form-item">
                   <div class="input__group">
-                    <input
-                      id="login-email-29"
-                      v-model="loginFormValues.email"
-                      autocomplete="on"
-                      type="email"
-                      placeholder=" "
-                      required="required"
-                      data-gtm-form-interact-field-id="0"
-                    >
                     <label
                       for="login-email-29"
                       class="login-form__field"
                     >
                       Correo electrónico
                     </label>
+                    <VTextField
+                      id="login-email-29"
+                      v-model="loginFormValues.email"
+                      autocomplete="on"
+                      type="email"
+                      placeholder="Email"
+                      required="required"
+                      data-gtm-form-interact-field-id="0"
+                    />
+
                   </div>
 
                   <span
@@ -185,20 +186,21 @@ onMounted(() => {
                 </div>
                 <div class="form-item">
                   <div class="input__group">
-                    <input
+                    <label
+                      for="login-password-29"
+                      class="login-form__field"
+                    >
+                      Correo electrónico
+                    </label>
+                    <VTextField
                       id="login-password-29"
                       v-model="loginFormValues.password"
                       autocomplete="on"
                       type="password"
-                      placeholder=" "
+                      placeholder="Contraseña"
                       required="required"
                       data-gtm-form-interact-field-id="1"
-                    > <label
-                      for="login-password-29"
-                      class="login-form__field"
-                    >
-                      Contraseña
-                    </label>
+                    />
                   </div>
                   <span
                     v-if="serverErrors?.password"
