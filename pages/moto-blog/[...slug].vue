@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import BlogArticle from "@/views/pages/blog/blog-article.vue";
+import BlogPosts from "@/views/pages/blog/blog-posts.vue";
 
 definePageMeta({
   layout: "blog",
@@ -28,6 +29,8 @@ console.log(`Mapping ${path}:`, config.value)
 </script>
 
 <template>
+
+  <BlogPosts v-if="config.query?.categoryId" :category-id="config.query?.categoryId" />
   <BlogArticle v-if="config.query?.id > 0" :id="config.query?.id" />
 </template>
 

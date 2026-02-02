@@ -106,7 +106,7 @@ injectSkinClasses()
       <MotomundiHeaderlogo />
       <MotomundiNavigation />
 
-      <main class="main-content">
+      <main class="main-content main-container">
         <div id="blogContent">
           <div
             id="blog-wrapper"
