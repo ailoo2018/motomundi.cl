@@ -235,6 +235,30 @@ const events = computed(() => {
 </template>
 <style scoped>
 
+.button {
+  background: none;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  color: #000;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  overflow: hidden;
+  padding: 13px 25px;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all .2s ease-in-out;
+  z-index: 1;
+}
+.button:active, .button:focus {
+  background-color: #bd0019;
+  border-color: #bd0019;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, .3);
+  color: #fff;
+}
+
 .blog-block {
   background-color: #f5f5f5;
   margin-top: 70px;
