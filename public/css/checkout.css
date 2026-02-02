@@ -93,10 +93,12 @@ input:not([type]), input[type=date]:not(.browser-default), input[type=datetime-l
 }
 */
 
+/*
 .input__group input:not([type]), .input__group input[type=date]:not(.browser-default), .input__group input[type=datetime-local]:not(.browser-default), .input__group input[type=datetime]:not(.browser-default), .input__group input[type=email]:not(.browser-default), .input__group input[type=number]:not(.browser-default), .input__group input[type=password]:not(.browser-default), .input__group input[type=search]:not(.browser-default), .input__group input[type=tel]:not(.browser-default), .input__group input[type=text]:not(.browser-default), .input__group input[type=time]:not(.browser-default), .input__group input[type=url]:not(.browser-default), .input__group textarea {
     background-color: #fff;
     border-color: #d8d8d8;
 }
+*/
 
 
 

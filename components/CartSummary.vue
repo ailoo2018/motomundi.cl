@@ -188,7 +188,7 @@ defineExpose({ getCart })
             <div class="motocoins-claim cart-summary__motocoins">
               <VIcon class="tabler-coin-monero-filled" color="primary"></VIcon>
               <div class="motocoins-claim__info">
-                <span class="motocoins-claim__amount">Acumula <strong>{{ cart.points }} MundiMonedas</strong> con esta compra.</span>
+                <span class="motocoins-claim__amount">Acumula <strong>{{ cart.points }} Mundipesos </strong> con esta compra.</span>
               </div>
             </div>
           </VCardText>

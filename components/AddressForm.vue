@@ -146,7 +146,7 @@ defineExpose({ getAddress, validate })
             v-model="address.name"
             label="Nombre *"
             :rules="reqRules"
-            variant="filled"
+            variant="solo"
             required
             @input="updateModelValue"
           />
@@ -161,7 +161,7 @@ defineExpose({ getAddress, validate })
             v-model="address.surnames"
             label="Apellido *"
             :rules="reqRules"
-            variant="filled"
+            variant="solo"
             required
             @input="updateModelValue"
           />
@@ -176,7 +176,7 @@ defineExpose({ getAddress, validate })
             v-model="address.legalName"
             label="Razón Social *"
             :rules="reqRules"
-            variant="filled"
+            variant="solo"
             required
             @input="updateModelValue"
           />
@@ -189,7 +189,7 @@ defineExpose({ getAddress, validate })
             v-model="address.rut"
             label="RUT *"
             :rules="rutRules"
-            variant="filled"
+            variant="solo"
             required
             @input="handleRutInput"
           />
@@ -201,7 +201,7 @@ defineExpose({ getAddress, validate })
             v-model="address.address"
             label="Calle y Numero*"
             :rules="reqRules"
-            variant="filled"
+            variant="solo"
             required
             @input="updateModelValue"
           />
@@ -213,7 +213,7 @@ defineExpose({ getAddress, validate })
             v-model="address.address2"
             label="Piso, puerta, otros (Opcional)"
             required
-            variant="filled"
+            variant="solo"
             style="background-color: white"
             @input="updateModelValue"
           />
@@ -224,7 +224,7 @@ defineExpose({ getAddress, validate })
         <div class="input__group">
           <ComunaAutocomplete
             v-model="selectedComuna"
-            variant="filled"
+            variant="solo"
             :rules="reqRules"
             style="background-color: white"
             @update:model-value="handleComunaSelection"
@@ -237,7 +237,7 @@ defineExpose({ getAddress, validate })
           <VTextField
             v-model="address.postal_code"
             label="Código Postal (Opcional)"
-            variant="filled"
+            variant="solo"
 
             @input="updateModelValue"
           />

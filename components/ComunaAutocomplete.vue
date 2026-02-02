@@ -24,9 +24,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  variant: {
+    type: String,
+  }
 })
 
 const emit = defineEmits(['update:modelValue'])
+const isMenuOpen = ref(false)
 
 console.log("Props ComunaAutocomplete: ", props)
 
@@ -74,6 +78,15 @@ const performSearch = useDebounceFn(async term => {
     const results = await searchAPI(term)
 
     items.value = results
+    if (results.length > 0 ) {
+      if(selectedValue.value && results.length === 1 ) {
+        if(searchInput.value !== results[0].name) {
+          isMenuOpen.value = true
+        }
+      }else {
+        isMenuOpen.value = true
+      }
+    }
   } catch (error) {
     console.error('Search failed:', error)
     items.value = []
@@ -84,26 +97,33 @@ const performSearch = useDebounceFn(async term => {
 
 // Watch search input
 watch(searchInput, newValue => {
+
+  if (newValue && newValue.length > 0 && selectedValue.value && newValue !== selectedValue.value.name) {
+    selectedValue.value = null
+  }
   performSearch(newValue)
 })
 </script>
 <template>
   <div>
+
     <VAutocomplete
       v-model="selectedValue"
+      v-model:menu="isMenuOpen"
       v-model:search="searchInput"
       :items="items"
-
       :loading="isLoading"
       item-title="name"
       item-value="id"
       :rules="rules"
+      :variant="variant"
       label="Comuna"
-      variant="filled"
       placeholder="Buscar comuna..."
+
       hide-no-data
       hide-selected
       return-object
+      no-filter
     >
       <template #prepend-item>
         <VListItem v-if="isLoading">
