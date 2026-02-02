@@ -10,8 +10,8 @@ const props = defineProps({
 
 <template>
 
-  <div id="home-seo-block" class="block-container">
-    <aside class="text-block" >
+  <div id="home-seo-block" class="d-none d-lg-block block-container">
+    <aside class="text-block" block-id="9" block-name="seoText" section="home">
       <div class="container">
         <div class="row">
           <div class="col s12 m10 offset-m1 l8 offset-l2">

@@ -11,7 +11,7 @@ import BrandsBlock from "@/views/pages/home/brands-block.vue"
 import FeaturedProductsWithBanner from "@/views/pages/home/featured-products-with-banner.vue"
 import Community from "@/views/pages/home/community.vue"
 import LatestEvents from "@/views/pages/home/latest-events.vue"
-import Seo from "@/views/pages/home/seo.vue"
+import Seo2 from "@/views/pages/home/seo2.vue"
 import BikeSearch from "@/views/pages/home/bike-search.vue"
 import YoutubeLatest from "@/views/pages/home/youtube-latest.vue"
 import CafeRacerCategories from "@/views/pages/home/cafe-racer-categories.vue"
@@ -40,7 +40,7 @@ const componentMap = {
   Community,
   FeaturedProductsWithBanner,
   LatestEvents,
-  Seo,
+  Seo2,
   BikeSearch,
   CafeRacerCategories,
   YoutubeLatest,
@@ -64,7 +64,7 @@ const config = useRuntimeConfig()
 
 
 const { data: homeRs, pending } = await useFetch(`/api/home/home?id=` + props.wccId, {
-  key: `home-data-unique-key`,
+  key: `home-data-unique-key-` + props.wccId,
   onResponseError({ response }) {
     console.error('[SSR Fetch Error]:', response.status, response._data)
   },
@@ -84,6 +84,14 @@ useIntersectionObserver([
 </script>
 
 <template>
+
+<!--
+  <VAlert>
+    <ul>
+      <li v-for="widget in widgets">{{widget.component}}</li>
+    </ul>
+  </VAlert>
+-->
   <div style="background-color: rgb(245, 245, 245)">
 
 
@@ -93,6 +101,7 @@ useIntersectionObserver([
       :key="widget.id"
       :widget="widget"
     />
+
   </div>
 </template>
 

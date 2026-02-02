@@ -7,52 +7,14 @@ const props = defineProps({
   }
 })
 
-const config = useRuntimeConfig()
-const API_KEY = config.youtubeApiKey
-const CHANNEL_ID = 'UClkc3m-0-ZFIqf1gBymlcUA' // Your Channel ID
 
-console.log("my api_key:" + API_KEY)
+const youtubeResponse = await $fetch('/api/youtube/latest')
 
-const { data: youtubeResponse, pending, error } = await useFetch('https://www.googleapis.com/youtube/v3/search', {
-  query: {
-    key: API_KEY,
-    channelId: CHANNEL_ID,
-    part: 'snippet,id',
-    order: 'date',
-    maxResults: 3,
-    type: 'video'
-  },
-  // Transform the data so your template stays clean
-  transform: (data: any) => data.items
+const videos = computed( () => {
+  return youtubeResponse.value?.items?.slice(0, 3) || []
 })
 
-// In a real Nuxt app, you might fetch this via useFetch()
-const videos = ref([
-  {
-    id: { videoId: 'abc12345' },
-    snippet: {
-      title: 'Review: Nueva Chaqueta Alpinestars',
-      description: 'Analizamos a fondo la nueva protección para motociclistas...',
-      publishedAt: '2023-10-25T12:00:00Z',
-      thumbnails: {
-        high: { url: 'https://picsum.photos/seed/moto1/480/360' }
-      }
-    }
-  },
-  {
-    id: { videoId: 'def67890' },
-    snippet: {
-      title: 'Mantenimiento de Cadena: Tips Pro',
-      description: 'Aprende a limpiar y lubricar tu cadena como un profesional.',
-      publishedAt: '2023-10-20T12:00:00Z',
-      thumbnails: {
-        high: { url: 'https://picsum.photos/seed/moto2/480/360' }
-      }
-    }
-  }
-])
 
-// Helper to format dates since Nuxt doesn't have Velocity's .ToString()
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr)
   return date.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: '2-digit' })
@@ -60,14 +22,17 @@ const formatDate = (dateStr: string) => {
 </script>
 
 <template>
+
   <div  section="home" class="youtube-block">
     <div class="containeraa">
       <div class="row" style="margin-bottom: 0px;">
         <div class="col s12 l12">
-          <h2>Motomundi en YouTube</h2>
+          <h2>
+            Motomundi en YouTube </h2>
 
           <ul class="youtube-block__content">
-            <li v-for="vitem in youtubeResponse" :key="vitem.id.videoId" class="video">
+
+            <li v-for="vitem in videos" :key="vitem.id" class="video">
 
               <a
                 target="_blank"
@@ -95,6 +60,7 @@ const formatDate = (dateStr: string) => {
                 </a>
               </div>
             </li>
+
           </ul>
 
           <div class="youtube-link">
