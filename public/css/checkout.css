@@ -236,6 +236,7 @@ label {
 
 
 .motomundi-logo {
+
     align-items: center;
     display: flex;
 }
@@ -857,7 +858,7 @@ form span.h2{
     z-index: 2;
 }
 .cart-summary.collapsed .cart-summary__footer {
-    bottom: 25px;
+    bottom: 0px;
 }
 
 .cart-summary .cart-summary__footer .cart-summary__amount{

@@ -257,7 +257,7 @@ onMounted(async () => {
   >
     <VRow>
       <VCol cols="12">
-        <Logo v-if="isMobile" />
+        <Logo v-if="isMobile" class="mt-1" />
         <CheckoutStepper
           class="mt-lg-10 mb-lg-6 mb-4"
           :current-step="currentStep"

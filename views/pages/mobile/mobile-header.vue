@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import MobileSearch from "@/views/pages/mobile/mobile-search.vue"
-import MobileMenu from "@/views/pages/mobile/mobile-menu.vue";
+import MobileMenu from "@/views/pages/mobile/mobile-menu.vue"
+import CartDrawer from "@/views/pages/mobile/cart-drawer.vue"
 
 
 const cart = ref({ items_quantity: 0 })
 const isMenuOpen = ref(false)
 const isSearchOpen = ref(false)
+const isCartOpen = ref(false)
 
 const currentUser = ref({
   avatar: "https://www.motomundi.cl/Content/uploads/1/_data/9/47/9476a7923b1c47219b0b9d9b2379cbf6_600_original.jpg",
 
 })
+
 
 const openLogin = () => {
   console.log("openLogin")
@@ -20,12 +23,13 @@ const isUserLoggedIn = () => {
   return false
 }
 
-const toggleSearch = () =>{
+const toggleSearch = () => {
   console.log("toggleSearch")
   isSearchOpen.value = !isSearchOpen.value
 }
 
 const toggleCart = () => {
+  isCartOpen.value = !isCartOpen.value
   console.log("toggle cart")
 }
 
@@ -48,7 +52,8 @@ const getCartTotalItems = () => {
 </script>
 
 <template>
-  <MobileMenu v-model="isMenuOpen"/>
+  <CartDrawer v-model="isCartOpen" />
+  <MobileMenu v-model="isMenuOpen" />
   <header class="header-container">
     <div class="header">
       <div class="container">
@@ -216,7 +221,6 @@ const getCartTotalItems = () => {
 </template>
 
 <style scoped>
-
 .container {
   margin: 0 auto;
   max-width: unset;
@@ -231,13 +235,14 @@ const getCartTotalItems = () => {
   width: unset;
   min-width: unset;
   max-width: unset;
-  margin:unset;
+  margin: unset;
 }
+
 img {
   max-width: 100%;
 }
 
-.mobile-menu__toggle span{
+.mobile-menu__toggle span {
   color: #fff;
   display: block;
   font-size: 7px;
@@ -257,14 +262,7 @@ img {
 }
 
 
-
-
-
-
-
-
-
-.user-menu{
+.user-menu {
   align-content: center;
   align-items: center;
   display: flex;
@@ -275,7 +273,7 @@ img {
   padding: 0;
 }
 
-.user-menu .user-menu__item a span{
+.user-menu .user-menu__item a span {
   color: #000;
   display: block;
   font-size: 8px;
@@ -285,11 +283,11 @@ img {
   text-transform: uppercase;
 }
 
-.header__top .user-menu{
+.header__top .user-menu {
   margin-left: auto;
 }
 
-.mobile-search-toggle > svg{
+.mobile-search-toggle > svg {
   display: block;
   margin: 0 auto 2px;
 }
@@ -297,6 +295,7 @@ img {
 .container use {
   stroke: white;
 }
+
 .mobile-menu__toggle svg use {
   stroke-width: 1;
 }
@@ -330,6 +329,7 @@ img {
 .user-menu .user-menu__item a {
   text-align: center;
 }
+
 .container li .mtc-link, li > a {
   stroke: white;
 }
@@ -350,7 +350,7 @@ img {
   padding: 18px 0 0;
 }
 
-.account__user-avatar img{
+.account__user-avatar img {
   border-radius: 200px;
   height: 100%;
   left: 0;
@@ -358,7 +358,7 @@ img {
   width: 100%;
 }
 
-.mobile-menu__toggle{
+.mobile-menu__toggle {
   background-color: transparent;
   margin: 0 5px 0 -5px;
   padding: 5px 2px 5px 0;
@@ -378,7 +378,7 @@ img {
   transition: all .2s ease-out;
 }
 
-.user-menu .user-menu__item a > svg use{
+.user-menu .user-menu__item a > svg use {
   stroke: white;
 }
 
@@ -391,7 +391,7 @@ img {
   display: flex;
 }
 
-.user-menu a{
+.user-menu a {
   display: block;
   padding: 10px;
 }
@@ -420,7 +420,7 @@ img {
 }
 
 @media only screen and (max-width: 600px) {
-  .header__top{
+  .header__top {
     padding: 0;
   }
 }
@@ -450,7 +450,7 @@ img {
 }
 
 @media only screen and (max-width: 600px) {
-  .user-menu .user-menu__item a  .account__user-avatar img {
+  .user-menu .user-menu__item a .account__user-avatar img {
     height: 22px;
     width: 22px;
   }
@@ -471,15 +471,17 @@ img {
 }
 
 @media only screen and (max-width: 600px) {
-  .motomundi-logo{
+  .motomundi-logo {
     flex-direction: row-reverse;
   }
 }
+
 @media only screen and (max-width: 600px) {
   .header__top .motomundi-logo .motomundi-logo-link {
     margin-top: 8px;
   }
 }
+
 @media only screen and (max-width: 600px) {
   .header__top .motomundi-logo img {
     max-width: 165px;
@@ -502,7 +504,7 @@ img {
 }
 
 @media only screen and (max-width: 600px) {
-  .header__top .motomundi-logo{
+  .header__top .motomundi-logo {
     height: auto;
     margin-top: 0 !important;
     /* max-width: 124px; */
@@ -516,7 +518,7 @@ img {
 }
 
 @media only screen and (min-width: 601px) and (max-width: 992px) {
-  .header__top{
+  .header__top {
     padding: 5px 0;
   }
 }
@@ -539,7 +541,6 @@ img {
     padding: 10px;
   }
 }
-
 </style>
 
 

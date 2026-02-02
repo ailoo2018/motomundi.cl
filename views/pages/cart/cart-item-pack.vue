@@ -137,7 +137,7 @@ const removeCartItem = () => {
              icon</title>
             <use href="/content/svg/motomundi.svg#i-icon-cross" />
           </svg>
-          <span>Eliminar</span>
+          <span class="d-none d-md-flex">Eliminar</span>
         </button>
       </div>
     </div>
@@ -156,10 +156,9 @@ const removeCartItem = () => {
       <span>
 
         <VImg
-          width="120"
-          height="120"
           :src="getImageUrl(packItem.image, 300, getDomainId()) || emptyImage"
           alt="packItem.productName"
+          style="min-width: 70px"
           class="cdn-img "
         >
           <template #error>
@@ -204,110 +203,6 @@ const removeCartItem = () => {
 </template>
 
 <style scoped>
-#shop-cart .cart-product .cart-product__info .cart-product__name {
-  display: block;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.1em;
-  margin: 0;
-  text-transform: uppercase;
-}
 
-#shop-cart .cart-product .cart-product__info .cart-product__price .product-old-price.strike {
-  font-size: 11px;
-  opacity: .4;
-  text-decoration: line-through;
-}
-
-#shop-cart .cart-product .cart-product__info .cart-product__price .tag-wrapper {
-  position: relative;
-  top: -1px;
-}
-
-#shop-cart .cart-product .cart-product__info .cart-product__price .tag-wrapper .tag.product-tag {
-  display: inline-block;
-  line-height: 1.2em;
-  margin-bottom: 0;
-  padding: 1px 5px;
-  white-space: nowrap;
-}
-
-
-.tag.product-tag.product-tag--old {
-  color: #fff;
-}
-
-.tag.product-tag.product-tag--crazydays, .tag.product-tag.product-tag--offer, .tag.product-tag.product-tag--sales {
-  background-color: #d6001c;
-}
-
-#shop-cart .cart__content, #shop-cart .cart__content * {
-  box-sizing: border-box;
-  margin-bottom: 0;
-}
-
-.cart-product{
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-}
-
-.cart-product li .mtc-link, li > a {
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-
-}
-
-.cart-product>span {
-  flex: 0 0 80px;
-  font-size: 12px;
-  height: auto;
-  margin-right: 10px;
-  text-transform: uppercase;
-  width: 80px;
-}
-
-#shop-cart li>a, li .mtc-link {
-  font-weight: 400;
-  padding: 0;
-  text-transform: none;
-}
-#shop-cart .cart-product .cart-product__info .cart-product__details {
-  display: block;
-  line-height: 1.2em;
-  margin-top: 4px;
-}
-
-#shop-cart .cart-product .cart-product__info {
-  flex-grow: 1;
-  font-size: 13px;
-  margin: 0;
-  max-width: 425px;
-}
-#shop-cart .cart-product .cart-product__info .cart-product__details .cart-product__size {
-  align-items: center;
-  display: inline-flex;
-  gap: 8px;
-}
-
-#shop-cart .cart__content, #shop-cart .cart__content * {
-  box-sizing: border-box;
-  margin-bottom: 0;
-}
-#shop-cart .cart-product .cart-product__info {
-  flex-grow: 1;
-  font-size: 13px;
-  margin: 0;
-  max-width: 425px;
-}
-
-#shop-cart .cart-product .cart-product__info .cart-product__price {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  margin: 3px 0 0;
-  text-transform: uppercase;
-}
 </style>
 
