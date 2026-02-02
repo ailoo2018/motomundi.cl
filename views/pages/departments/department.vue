@@ -43,7 +43,7 @@ const componentMap = {
   Seo,
   BikeSearch,
   CafeRacerCategories,
-//  YoutubeLatest,
+  YoutubeLatest,
   CafeRacerBrandsBlock,
   OffRoadCategories,
   BrandsBlockMx,

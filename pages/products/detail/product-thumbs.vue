@@ -125,6 +125,6 @@ register()
 }
 
 .product-media {
-  max-height: 110px;
+  /*max-height: 130px;*/
 }
 </style>

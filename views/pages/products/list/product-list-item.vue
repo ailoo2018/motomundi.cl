@@ -146,10 +146,9 @@ const miniatures = computed(() => {
             <span class="item__rating">
               <span class="rating-block">
                 <VRating
-                  v-if="product.rating > 0"
                   readonly
-                  color="primary"
-                  :model-value="product.rating / 2"
+                  :color="product.rating > 0 ? 'primary' : '#ccc'"
+                  :model-value="product.rating === 0 ? 5 : product.rating / 2"
                 />
               </span>
             </span>
@@ -171,7 +170,7 @@ const miniatures = computed(() => {
             >
               {{ formatMoney(product.minPrice) }}
             </span>
-            <span class="pr-2">
+            <span class="pr-2" v-if="product.videos && product.videos.length > 0">
               <img src="/content/images/youtube_icon.svg">
             </span>
           </span>
@@ -187,8 +186,10 @@ article.item {
   border: 1px solid #d8d8d8;
   box-sizing: border-box;
   height: 100%;
-  padding: 40px 5px 20px;
+  padding: 15px 5px 10px;
 }
+
+
 
 .item .heading-tag {
 
@@ -204,6 +205,11 @@ article.item {
   text-transform: uppercase;
 }
 
+
+.item__info {
+  display: flex;
+  flex-direction: column;
+}
 
 .item > div, .item > section {
   display: flex;
@@ -373,6 +379,13 @@ article.item {
   cursor: pointer;
 }
 
+
+/**** tags ******/
+
+.tag.product-tag.product-tag--crazydays, .tag.product-tag.product-tag--offer, .tag.product-tag.product-tag--sales {
+  background-color: #d6001c;
+}
+
 @media only screen and (min-width: 993px) {
   .row .col.lc5 .item .item__info .item__name {
     margin: 0 0 15px;
@@ -386,11 +399,30 @@ article.item {
   }
 }
 
-
-/**** tags ******/
-
-.tag.product-tag.product-tag--crazydays, .tag.product-tag.product-tag--offer, .tag.product-tag.product-tag--sales {
-  background-color: #d6001c;
+@media (max-width: 993px) {
+  article.item {
+    position: relative;
+    border: 1px solid #d8d8d8;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 6px;
+  }
+  .item .item__name{
+    margin: 5px 0 0 0;
+  }
+  li .mtc-link, li > a {
+    color: #000;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+    /* line-height: 1.05em; */
+    padding: 6px;
+    /*padding: 6px 18px;*/
+    text-transform: uppercase;
+  }
 }
+
+
 </style>
 

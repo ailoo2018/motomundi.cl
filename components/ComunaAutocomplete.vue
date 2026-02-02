@@ -93,7 +93,7 @@ watch(searchInput, newValue => {
       v-model="selectedValue"
       v-model:search="searchInput"
       :items="items"
-      style="height: 45px; border: 1px solid #ccc; border-radius: 0px;"
+
       :loading="isLoading"
       item-title="name"
       item-value="id"

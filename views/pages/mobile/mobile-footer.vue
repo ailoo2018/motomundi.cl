@@ -1118,7 +1118,7 @@
   </footer>
 </template>
 
-<style>
+<style scoped>
 
 footer {
   background-color: #f5f5f5;

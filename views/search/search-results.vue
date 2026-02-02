@@ -1,29 +1,28 @@
 <script setup lang="ts">
-
-import ProductListItem from "@/views/pages/products/list/product-list-item.vue";
-
-const scrollContainer = ref(null)
-
-const emits = defineEmits(["next-page"])
+import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
 
 const props = defineProps({
   products: Array,
 })
 
+const emits = defineEmits(["next-page"])
+
+const scrollContainer = ref(null)
+
 useInfiniteScroll(
   scrollContainer,
   () => {
     emits("next-page")
-/*
+
+    /*
     if (hasMore.value && !loading.value) {
       offset.value += limit
       search(true)
     }
 */
   },
-  { distance: 200 } // Load when 200px from bottom
+  { distance: 200 }, // Load when 200px from bottom
 )
-
 </script>
 
 <template>
@@ -64,13 +63,12 @@ useInfiniteScroll(
           class="vue-virtual-scroller__item-view col s6 m4 l3"
           style="padding: 4px"
         >
-          <ProductListItem :product="product"/>
+          <ProductListItem :product="product" />
         </VCol>
       </VRow>
     </div>
-    <div class="vue-virtual-scroller__slot"/>
+    <div class="vue-virtual-scroller__slot" />
   </div>
-
 </template>
 
 <style scoped lang="scss">

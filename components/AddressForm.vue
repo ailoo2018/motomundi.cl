@@ -214,6 +214,7 @@ defineExpose({ getAddress, validate })
             label="Piso, puerta, otros (Opcional)"
             required
             variant="filled"
+            style="background-color: white"
             @input="updateModelValue"
           />
         </div>
@@ -225,6 +226,7 @@ defineExpose({ getAddress, validate })
             v-model="selectedComuna"
             variant="filled"
             :rules="reqRules"
+            style="background-color: white"
             @update:model-value="handleComunaSelection"
           />
         </div>
@@ -236,7 +238,7 @@ defineExpose({ getAddress, validate })
             v-model="address.postal_code"
             label="Código Postal (Opcional)"
             variant="filled"
-            class="custom-text-field"
+
             @input="updateModelValue"
           />
         </div>

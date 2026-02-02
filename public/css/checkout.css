@@ -77,6 +77,7 @@ button, input, optgroup, select, textarea {
     width: 100%;
 }
 
+/*
 input:not([type]), input[type=date]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=email]:not(.browser-default), input[type=number]:not(.browser-default), input[type=password]:not(.browser-default), input[type=search]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=text]:not(.browser-default), input[type=time]:not(.browser-default), input[type=url]:not(.browser-default), textarea.materialize-textarea {
     background-color: transparent;
     border: 1px solid #000;
@@ -90,15 +91,11 @@ input:not([type]), input[type=date]:not(.browser-default), input[type=datetime-l
     padding: 15px;
     width: 100%;
 }
+*/
 
 .input__group input:not([type]), .input__group input[type=date]:not(.browser-default), .input__group input[type=datetime-local]:not(.browser-default), .input__group input[type=datetime]:not(.browser-default), .input__group input[type=email]:not(.browser-default), .input__group input[type=number]:not(.browser-default), .input__group input[type=password]:not(.browser-default), .input__group input[type=search]:not(.browser-default), .input__group input[type=tel]:not(.browser-default), .input__group input[type=text]:not(.browser-default), .input__group input[type=time]:not(.browser-default), .input__group input[type=url]:not(.browser-default), .input__group textarea {
-    background-color: transparent;
-/*    background-color: #fff;*/
+    background-color: #fff;
     border-color: #d8d8d8;
-    font-weight: 300;
-    height: 45px;
-    margin: 0;
-    padding: 17px 10px 3px;
 }
 
 
