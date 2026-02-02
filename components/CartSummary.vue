@@ -186,18 +186,7 @@ defineExpose({ getCart })
               </div>
             </div>
             <div class="motocoins-claim cart-summary__motocoins">
-              <svg
-                width="18"
-                height="18"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                class="icon sprite-icons"
-              >
-                <use
-                  href="/svg/ailoo.svg#i-icon-motocoin"
-                  xlink:href="/svg/ailoo.svg#i-icon-motocoin"
-                />
-              </svg>
+              <VIcon class="tabler-coin-monero-filled" color="primary"></VIcon>
               <div class="motocoins-claim__info">
                 <span class="motocoins-claim__amount">Acumula <strong>{{ cart.points }} MundiMonedas</strong> con esta compra.</span>
               </div>

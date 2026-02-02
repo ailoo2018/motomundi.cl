@@ -10,7 +10,7 @@ import BrandsBlock from "@/views/pages/home/brands-block.vue"
 import Community from "@/views/pages/home/community.vue"
 import FeaturedProductsWithBanner from "@/views/pages/home/featured-products-with-banner.vue"
 import LatestEvents from "@/views/pages/home/latest-events.vue"
-import Seo from "@/views/pages/home/seo.vue"
+import Seo2 from "@/views/pages/home/seo2.vue"
 import BikeSearch from "@/views/pages/home/bike-search.vue"
 import HtmlWidget from "@/views/pages/home/html-widget.vue"
 
@@ -32,7 +32,7 @@ const componentMap = {
   Community,
   FeaturedProductsWithBanner,
   LatestEvents,
-  Seo,
+  Seo2,
   BikeSearch,
   HtmlWidget,
 }

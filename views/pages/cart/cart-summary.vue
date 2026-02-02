@@ -112,14 +112,7 @@ const getTotalPoints = () => {
             </div>
           </div>
           <div class="motocoins-claim cart-summary__motocoins">
-            <svg
-              viewBox="0 0 20 20"
-              class="sprite-icons"
-              width="18"
-              height="18"
-            >
-              <use href="/content/svg/motomundi.svg?v=1.2#i-icon-motocoin" />
-            </svg>
+            <VIcon class="tabler-coin-monero-filled" color="primary"></VIcon>
             <div class="motocoins-claim__info">
               <span class="motocoins-claim__amount">
                 Acumula <strong>{{ getTotalPoints(cart) }} mundipesos</strong> con esta compra.
