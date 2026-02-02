@@ -7,13 +7,22 @@ const { data: featured } = useFetch("/api/blog/featured-posts", {
   key: "blog-featured-posts",
 })
 
+const swiperEl = ref(null)
+
 const swiperBreakpoints = {
-  320: { slidesPerView: 2, spaceBetween: 10 },
-  640: { slidesPerView: 3, spaceBetween: 10 },
+  320: { slidesPerView: 1, spaceBetween: 10 },
+  640: { slidesPerView: 1, spaceBetween: 10 },
   1024: { slidesPerView: 3, spaceBetween: 10 },
-  1280: { slidesPerView: 3, spaceBetween: 10 },
+
 }
 
+const slidePrev = () => {
+  swiperEl.value?.swiper.slidePrev()
+}
+
+const slideNext = () => {
+  swiperEl.value?.swiper.slideNext()
+}
 
 onMounted(() => {
   register()
@@ -21,33 +30,30 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="slider-featured-posts-container"
-    ng-non-bindable
-  >
+  <div class="slider-featured-posts-container">
     <div class="we-recommend">
       <div class="slider-arrows">
         <span
           class="prev slick-arrow"
-          style="display: inline-block;"
+          style="display: inline-block; cursor: pointer;"
+          @click="slidePrev"
         >
           <img
             src="https://cf-cdn-blog.motocard.com/assets/icons/previous-w.svg"
             class="lazyloaded"
             
-          ><noscript>
-            <img src="https://cf-cdn-blog.motocard.com/assets/icons/previous-w.svg"></noscript>
+          >
         </span>
         <span
           class="next slick-arrow"
-          style="display: inline-block;"
+          style="display: inline-block; cursor: pointer;"
+          @click="slideNext"
         >
           <img
             src="https://cf-cdn-blog.motocard.com/assets/icons/next-w.svg"
             class="lazyloaded"
             
-          ><noscript>
-            <img src="https://cf-cdn-blog.motocard.com/assets/icons/next-w.svg"></noscript>
+          >
         </span>
       </div>
       Te  recomendamos...
@@ -60,6 +66,7 @@ onMounted(() => {
           class="slick-list draggable"
         >
           <swiper-container
+            ref="swiperEl"
             class="slick-track owl-carousel swiper-container"
             role="listbox"
             :breakpoints="swiperBreakpoints"

@@ -53,7 +53,6 @@ register()
   <div
     id="home-block-0"
     class="block-container"
-    ng-non-bindable
   >
     <section class="carousel-block">
       <ClientOnly>

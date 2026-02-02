@@ -19,6 +19,7 @@ const totalPages = ref(10)
         :key="entry.id"
         cols="6"
         sm="6"
+        xs="12"
 
       >
         <BlogGridItem

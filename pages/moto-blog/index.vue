@@ -126,6 +126,20 @@ const showBlogMenu = ref(false)
   text-align: center;
   padding: 2em 2em 0;
 }
+
+@media (max-width: 767px) {
+  #blog-wrapper .left-content {
+    padding: 0 0 30px 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  #blog-wrapper .left-content {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
 </style>
 
 

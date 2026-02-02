@@ -2,22 +2,28 @@
 import MotomundiHeaderbar from "@/views/pages/motomundi-headerbar.vue"
 import MotomundiNavigation from "@/views/pages/motomundi-navigation.vue"
 import MotomundiHeaderlogo from "@/views/pages/motomundi-headerlogo.vue"
-import swiper from "@/views/pages/home/swiper.vue"
-import FeaturedProducts from "@/views/pages/home/featured-products.vue"
-import ScrollingText from "@/views/pages/home/scrolling-text.vue"
 import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
-import AddedValues from "@/views/pages/home/added-values.vue"
-import HomeCategories from "@/views/pages/home/home-categories.vue"
-import MobileTemplate from "@/views/pages/mobile/mobile-template.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
-import MobileMenu from "@/views/pages/mobile/mobile-menu.vue"
 import BlogRightContent from "@/layouts/blog/blog-right-content.vue"
+import { getHeader } from "h3"
+import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
+import BlogMenu from "@/views/pages/blog/blog-menu.vue"
 
 const { injectSkinClasses } = useSkins()
 
 const { isMobile, isTablet, isDesktop } = useDevice()
 
+const event = useRequestEvent()
 const showBlogMenu = ref(false)
+
+const ua = process.server && event
+  ? (getHeader(event, 'user-agent') || '')
+  : (process.client ? navigator.userAgent : '')
+
+const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
+
+
+
 
 console.log("isMobile", isMobile)
 console.log("isTable", isTablet)
@@ -26,21 +32,79 @@ console.log("isDesktop", isDesktop)
 
 useHead({
   bodyAttrs: {
-    class: computed(() => isMobile ? 'mobile' : 'desktop'),
+    class: computed(() => isMobile ? 'mobile' : 'desktoaaap'),
   },
 })
+
+const onShowBlogMenu = () => {
+  console.log("showBlogMenu")
+  showBlogMenu.value = !showBlogMenu.value
+}
 
 // ℹ️ This will inject classes in body tag for accurate styling
 injectSkinClasses()
 </script>
 
 <template>
+  <!-- mobile -->
+  <div v-if="deviceType === 'mobile'">
+    <main class="main-content">
+      <MobileHeader />
+      <div class="home-container">
+        <main class="main-content">
+          <div id="blogContent">
+            <div
+              id="blog-wrapper"
+              class="home blog"
+              style="background-color: #f5f5f5;"
+            >
+              <div class="menu-mobile-container">
+                <button
+                  type="button"
+                  class="tcon tcon-menu--arrow tcon-menu--arrowup white home"
+                  @click="onShowBlogMenu"
+                >
+                  <span class="tcon-menu__lines" />
+                  <span class="tcon-visuallyhidden">toggle menu</span>
+
+                </button>
+                <div v-if="showBlogMenu">
+                  <BlogMenu />
+                </div>
+              </div>
+              <slot name="blog-top" />
+              <div
+                id="content"
+                class="home-container"
+              >
+                <div
+                  id="inner-content"
+                  class="inner-content row"
+                >
+                  <div class="left-content">
+                    <slot />
+                  </div>
+                  <BlogRightContent />
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      <MobileFooter />
+    </main>
+  </div>
+  <!-- /mobile -->
+
   <!-- desktop -->
-  <div class="layout-wrapper layout-blank">
+  <div
+    v-else
+    class="layout-wrapper layout-blank"
+  >
     <div class="landing-page-wrapper">
-      <MotomundiHeaderbar/>
-      <MotomundiHeaderlogo/>
-      <MotomundiNavigation/>
+      <MotomundiHeaderbar />
+      <MotomundiHeaderlogo />
+      <MotomundiNavigation />
 
       <main class="main-content">
         <div id="blogContent">
@@ -55,29 +119,35 @@ injectSkinClasses()
                   <button
                     type="button"
                     class="tcon tcon-menu--arrow tcon-menu--arrowup white home"
-                    @click="showBlogMenu = !showBlogMenu;"
                     aria-label="toggle menu"
+                    @click="showBlogMenu = !showBlogMenu;"
                   >
-                    <span class="tcon-menu__lines"/>
+                    <span class="tcon-menu__lines" />
                     <span class="tcon-visuallyhidden">toggle menu</span>
                   </button>
                   <div
                     class="menu-mobile"
                     ng-show="showBlogMenu"
                   >
-                    #parse("/Blog/MenuNewsletter.vm")
+
                   </div>
                 </div>
 
-                <slot name="blog-top"/>
+                <slot name="blog-top" />
 
 
-                <div id="content" class="home-container">
-                  <div id="inner-content" class="inner-content row">
+                <div
+                  id="content"
+                  class="home-container"
+                >
+                  <div
+                    id="inner-content"
+                    class="inner-content row"
+                  >
                     <div class="left-content">
-                      <slot/>
+                      <slot />
                     </div>
-                    <BlogRightContent/>
+                    <BlogRightContent />
                   </div>
                 </div>
               </div>
@@ -87,7 +157,7 @@ injectSkinClasses()
 
 
         <!-- 👉 Footer -->
-        <MotomundiFooter/>
+        <MotomundiFooter />
       </main>
     </div>
   </div>

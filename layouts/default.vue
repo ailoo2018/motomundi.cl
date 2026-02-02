@@ -5,7 +5,6 @@ import MotomundiNavigation from "@/views/pages/motomundi-navigation.vue"
 import MotomundiHeaderlogo from "@/views/pages/motomundi-headerlogo.vue"
 import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
-import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
 
 const { injectSkinClasses } = useSkins()
 
@@ -42,9 +41,6 @@ injectSkinClasses()
       <div class="home-container">
         <slot />
       </div>
-      <RenderCacheable cache-key="mobile-header" :max-age="3600">
-      <MobileFooter />
-      </RenderCacheable>
     </main>
   </div>
   <!-- /mobile -->

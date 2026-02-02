@@ -249,7 +249,7 @@ const toggleMenu = () => {
 </template>
 
 
-<style scoped>
+<style >
 .menu-mobile > * {
   opacity: 0;
   pointer-events: none
