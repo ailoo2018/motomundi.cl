@@ -184,21 +184,23 @@ const search = async () => {
 
 
 
+
+    const { data } = await useFetch(`/api/product/search`, {
+      key: `product-search-` + JSON.stringify(body),
+      method: "POST",
+      body: body,
+    })
+
+    rs = data.value
+
+
     /*
-        const { data } = await useFetch(`/api/product/search`, {
-          key: `product-search-` + JSON.stringify(body),
-          method: "POST",
-          body: body,
-        })
-
-        rs = data.value
-    */
-
     rs = await $fetch(`/api/product/search`, {
       key: `product-search-` + JSON.stringify(body),
       method: "POST",
       body: body,
     })
+*/
 
 
 
@@ -233,8 +235,7 @@ search()
               <h1
                 class="header-title mb-4"
                 v-html="queryDesc"
-              >
-              </h1>
+              />
             </div>
           </div>
         </div>

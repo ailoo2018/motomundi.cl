@@ -186,12 +186,12 @@ const removeCartItem = () => {
 }
 
 @container imageContainer (max-width: 700px) {
-  .responsive-grid {
+  #shop-cart .responsive-grid {
     flex-direction: row;
     align-items: flex-start;
   }
 
-  .grid-item {
+  #shop-cart .grid-item {
     flex: 1; /* Distributes 25% width to each of the 4 items */
     min-width: 0;
   }

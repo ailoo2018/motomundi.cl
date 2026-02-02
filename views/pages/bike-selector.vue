@@ -11,6 +11,13 @@ const router = useRouter()
 const models = ref([])
 const years = ref([])
 
+const props = defineProps({
+  asRow: {
+    type: Boolean,
+    default: false,
+  }
+})
+
 watch(selectedBrand, async () => {
   if(selectedBrand.value) {
 
@@ -71,7 +78,8 @@ const filterMotorbikeProducts = () => {
   >
 
     <VForm>
-      <div class="responsive-grid">
+
+      <div :class="asRow ? 'responsive-grid-row' : 'responsive-grid'">
         <div class="grid-item">
           <VSelect
             v-model="selectedBrand"
@@ -163,7 +171,20 @@ const filterMotorbikeProducts = () => {
   flex-direction: column;
   gap: 12px;
 }
-@container bikeSelector (min-width: 700px) {
+
+.responsive-grid-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.responsive-grid-row  .grid-item {
+  flex: 1; /* Distributes 25% width to each of the 4 items */
+  min-width: 0;
+}
+
+@container bikeSelector (min-width: 600px) {
   .responsive-grid {
     flex-direction: row;
     align-items: flex-start;

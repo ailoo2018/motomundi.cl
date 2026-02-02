@@ -8,12 +8,24 @@ const props = defineProps({
 })
 
 
-const youtubeResponse = await $fetch('/api/youtube/latest')
+let youtubeResponse;
 
 const videos = computed( () => {
+  if(!youtubeResponse) {
+    return []
+  }
   return youtubeResponse.value?.items?.slice(0, 3) || []
 })
 
+const getLatestVideos = async () => {
+  try {
+     youtubeResponse = await $fetch('/api/youtube/latest')
+  }catch(e){
+    console.error(e)
+  }
+}
+
+await getLatestVideos()
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr)

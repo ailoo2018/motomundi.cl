@@ -97,6 +97,7 @@ useIntersectionObserver([
 
     <Component
       :is="componentMap[widget.component]"
+
       v-for="widget in widgets"
       :key="widget.id"
       :widget="widget"

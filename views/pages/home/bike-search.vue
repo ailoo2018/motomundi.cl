@@ -11,7 +11,7 @@ import BikeSelector from "@/views/pages/bike-selector.vue"
           Elige tu modelo de moto para ver accesorios específicos
         </h2> 
         <div class="bike-search-filter">
-          <BikeSelector />
+          <BikeSelector :as-row="true" />
         </div>
         <div
           class="add-bike"
