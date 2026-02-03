@@ -6,4 +6,5 @@ export default defineEventHandler((event) => {
     const cdnBase = 'https://cdn.motomundi.cl'
     return sendRedirect(event, cdnBase + url.pathname, 301)
   }
+
 })
