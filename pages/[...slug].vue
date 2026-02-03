@@ -1,6 +1,7 @@
 <script setup>
 import ProductsList from "@/views/pages/products/list/products-list.vue"
 import { getDomainId } from "@/server/ailoo-domain.js"
+import CmsContent from "@/views/pages/cms/CmsContent.vue"
 
 definePageMeta({
   /*layout: 'motomundi',*/
@@ -11,6 +12,7 @@ definePageMeta({
 const route = useRoute()
 const queryParams = route.query
 const config = ref()
+const type = ref("products")
 
 const slugArray = Array.isArray(route.params.slug)
   ? route.params.slug
@@ -76,6 +78,11 @@ if(path === "/Account/OrderDetail.rails"){
       })
     }
 
+    if(config.value.source.rawUrl.toLowerCase().includes("cms/page")){
+      type.value = "cms"
+    }
+
+
   }catch(e){
     console.error(e)
   }
@@ -104,8 +111,9 @@ const { data: config, error } = await useAsyncData(
 
 <template>
 
+  <CmsContent v-if="type==='cms'" :id="config.query.id" />
   <ProductsList
-    v-if="config"
+    v-if="config && type==='products'"
     :injected-query="config.query"
   />
 </template>
