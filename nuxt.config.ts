@@ -57,7 +57,7 @@ export default defineNuxtConfig({
     webPayApiKey: process.env.WEBPAY_API_KEY,
     youtubeApiKey: process.env.YOUTUBE_API_KEY,
     public: {
-      baseUrl: process.env.NODE_ENV === 'production' ? "https://w3.motomundi.cl" : "http://localhost:3000",
+      baseUrl: process.env.NODE_ENV === 'production' ? "https://www.motomundi.cl" : "http://localhost:3000",
       geoBaseUrl: 'https://geo.ailoo.cl',
       cmsBaseUrl: process.env.NODE_ENV === 'production' ? 'https://betacms.ailoo.cl'
         : 'http://developer.cms.ailoo.cl:3050',
