@@ -260,7 +260,7 @@ onMounted(async () => {
         <Logo v-if="isMobile" class="mt-1"/>
         <div class="d-flex align-center ga-0 checkout-stepper">
 
-          <h1 v-if="!isMobile" class="text-h2 text-uppercase  d-flex align-center mb-0 text-no-wrap ">
+          <h1 v-if="!isMobile" class="text-h3  text-uppercase  d-flex align-center mb-0 text-no-wrap ">
             <VIcon icon="tabler-lock-filled" color="#000" size="30" class="me-2" />
             Checkout
           </h1>
@@ -386,7 +386,7 @@ onMounted(async () => {
 <style scoped>
 
 .checkout-stepper h1{
-  font-size: 2rem;
+  font-size: 1.4rem;
   text-transform: uppercase;
   display:inline;
   padding-left: 10px;

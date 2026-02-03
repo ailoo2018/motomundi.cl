@@ -1,6 +1,6 @@
 <script setup>
-import {formatMoney} from "~/@core/utils/formatters";
-import {sleep} from "~/@core/utils/helpers.js";
+import { formatMoney } from "~/@core/utils/formatters"
+import { sleep } from "~/@core/utils/helpers.js"
 
 const props = defineProps({
   couponDiscount: {
@@ -10,7 +10,7 @@ const props = defineProps({
   modelValue: {
     type: Object,
     required: true,
-  }
+  },
 })
 
 //const couponDiscount = ref(0)
@@ -19,6 +19,7 @@ const code = ref('')
 const error = ref('')
 const loading = ref(false)
 const coupon = ref(null)
+
 // const emit = defineEmits(['addCoupon'])
 
 
@@ -32,38 +33,39 @@ if(props.modelValue){
 
 watch(props,  props => {
 //  couponDiscount.value = props.couponDiscount;
-  coupon.value = props.modelValue;
+  coupon.value = props.modelValue
 }, { deep: true })
 
 const handleSendCode = async () => {
   error.value = ""
-  loading.value = true;
+  loading.value = true
   try {
-    const {data} = await useFetch(config.public.LEGACY_URL + '/Cart/AddPromoCode.rails', {
+    const { data } = await useFetch(config.public.LEGACY_URL + '/Cart/AddPromoCode.rails', {
       credentials: 'include',
       method: 'POST',
       body: {
         code: code.value,
-      }
+      },
     })
 
 
-    console.log("Result AddCoupon", data.value);
+    console.log("Result AddCoupon", data.value)
 
     if (data.value.error) {
-      error.value = data.value.error;
+      error.value = data.value.error
+      
       return
     }
 
     coupon.value = {
       code: data.value.couponName,
-      discountAmount: data.value.discount
+      discountAmount: data.value.discount,
     }
 
     code.value = ''
     await checkoutService.couponAdded(coupon.value)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 
 }
@@ -71,10 +73,10 @@ const handleSendCode = async () => {
 const handleRemoveCoupon = async () => {
 
   if(!coupon.value){
-    return;
+    return
   }
 
-  const {data} = await useFetch(config.public.LEGACY_URL + '/Ajax/RemoveCoupon.rails?id=' + coupon.value.id, {
+  const { data } = await useFetch(config.public.LEGACY_URL + '/AJAX/RemoveCoupon.rails?id=' + coupon.value.id, {
     credentials: 'include',
     method: 'GET',
   })
@@ -82,51 +84,75 @@ const handleRemoveCoupon = async () => {
   coupon.value = null
   await checkoutService.couponAdded(null)
 }
-
 </script>
 
 <template>
-
   <div class="promo-code">
-    <div class="promo-code__content" style="display: block ;">
-      <form class="promo-code__form" @submit.prevent="handleSendCode">
-        <div class="input__group promo-code__group">
-          <input id="promo-code__cart-summary" type="text" placeholder="" v-model="code">
-          <label for="promo-code__cart-summary" >Código promocional o tarjeta regalo</label>
+    <div
+      class="promo-code__content"
+      style="display: block ;"
+    >
+      <form
+        class="aapromo-code__form"
+        @submit.prevent="handleSendCode"
+      >
+        <div class="d-flex w-100">
+          <VTextField
+            v-model="code"
+            placeholder="código promocional"
+            density="comfortable"
+            rounded="0"
+            class="flex-grow-1"
+          />
+          <VBtn
+            :loading="loading"
+            rounded="0"
+            color="primary"
+            @click="handleSendCode"
+          >
+            Aplicar
+          </VBtn>
+
         </div>
-        <div class="input__group promo-code__group">
-          <button type="button" class="button button--filled" @click="handleSendCode" :disabled="loading">
-            <span v-if="!loading">Aplicar</span>
-            <div v-if="loading" class="spinner-container mc-spinner button-mode" style="">
-              <span class="message" style="display: none;"></span>
-            </div>
-          </button>
+        <div>
+          <label for="promo-code__cart-summary">Código promocional o tarjeta regalo</label>
         </div>
+
+        
       </form>
-      <span v-if="error" class="input-hint error">{{ error }}</span>
+      <span
+        v-if="error"
+        class="input-hint error"
+      >{{ error }}</span>
     </div>
 
-    <article class="applied-promo-code" v-if="coupon">
+    <article
+      v-if="coupon"
+      class="applied-promo-code"
+    >
       <div class="applied-promo-code__section">
         <div class="applied-promo-code__section--left">
-          <div class="applied-promo-code__title"><span>PROMO CODE</span>
+          <div class="applied-promo-code__title">
+            <span>PROMO CODE</span>
           </div>
           <div class="applied-promo-code__code">
-            {{coupon?.code}}
+            {{ coupon?.code }}
           </div>
         </div>
         <div class="applied-promo-code__section--right">
           <div>
             {{ formatMoney( couponDiscount ) }}
           </div>
-          <button type="button" class="applied-promo-code__delete-button">
+          <button
+            type="button"
+            class="applied-promo-code__delete-button"
+          >
             <span @click="handleRemoveCoupon">x</span>
           </button>
         </div>
       </div>
     </article>
   </div>
-
 </template>
 
 <style scoped>
