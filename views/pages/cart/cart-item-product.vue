@@ -92,7 +92,7 @@ const removeCartItem = () => {
               <span class="price"> {{ formatMoney(cartItem.price) }}</span>
               <span
                 v-if="cartItem.discount > 0"
-                class="product-old-price strike"
+                class="product-old-price strike ml-2"
               >
 
                 {{ formatMoney(cartItem.oldPrice) }}
@@ -170,6 +170,25 @@ const removeCartItem = () => {
 
 
 <style lang="scss">
+
+#shop-cart h1 {
+  margin:0;
+}
+
+#shop-cart li .mtc-link, li > a{
+  padding: 0
+}
+
+#shop-cart .cart-item {
+  border-bottom: 1px solid #dbdbdb;
+  padding: 8px;
+}
+
+#shop-cart .price {
+  font-weight: 700;
+  font-size: 1.1em
+}
+
 @media only screen and (min-width: 601px) {
   #shop-cart .cart__product .cart-product img {
     /*
