@@ -433,7 +433,7 @@
                 data-dr="true"
                 class="motomundi-logo-link mtc-link"
               ><span><img
-                src="https://www.motomundi.cl/Templates/MotoMundiDesktop/content/images/logo-motomundi.png"
+                src="/logo-motomundi.png"
                 alt="Motomundi"
                 width="190"
                 class="cdn-img"

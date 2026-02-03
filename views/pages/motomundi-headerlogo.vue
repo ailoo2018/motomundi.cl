@@ -9,7 +9,7 @@ import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-
       <div>
         <a href="/">
           <VImg
-            src="https://www.motomundi.cl/Templates/MotoMundiDesktop/content/images/logo-motomundi.png"
+            src="/logo-motomundi.png"
             width="400"
           />
         </a>
