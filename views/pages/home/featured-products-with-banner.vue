@@ -53,7 +53,7 @@ const products = computed(() => {
             <section class="product-list__title">
               <h2>{{ widget.configuration.title }}</h2>
               <a
-                href="{{widget.configuration.collection.url}}"
+                :href="`/${widget.configuration.collection.url}`"
                 class="button button--primary hide-on-small-and-down mtc-link"
               >
                 <span>Ver todo</span>

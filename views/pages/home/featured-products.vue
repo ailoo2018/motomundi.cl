@@ -27,7 +27,7 @@ const { data: rs, pending } = await useFetch(`/api/product/collection`, {
 
 
 
-const url = computed(() => { return rs.value?.url })
+const url = computed(() => { return '/' + props.widget.configuration.collection.url})
 
 const products = computed(() => {
   const rawProducts = rs.value?.products || []
@@ -83,15 +83,15 @@ register()
         <div class="row">
           <div class="col s12 l12">
             <section class="product-list__title d-flex align-center justify-space-between">
+
               <h2>
                 {{ widget.configuration.collection.name }}
               </h2>
               <a
-                :href="url"
-                data-dr="true"
+                :href="`/${widget.configuration.collection.url}`"
                 class="button button--primary hide-on-small-and-down mtc-link"
               >
-                <span>Ver todo</span>
+                <span>Ver todo </span>
                 <svg
                   width="12"
                   height="12"
@@ -114,8 +114,9 @@ register()
                     <swiper-container
                       events-prefix="swiper-"
                       navigation="true"
+
                       :breakpoints="swiperBreakpoints"
-                      class="pb-10"
+                      class="product-swiper-container pb-10"
                       :inject-styles="[
                         `
         .swiper-button-next, .swiper-button-prev{
@@ -134,7 +135,7 @@ register()
 
         }
         .swiper-button-next svg, .swiper-button-prev svg{
-        height: 10px; width: 10px;
+        height: 10px; width: 10px; color: white; background-color: black;
         }
         `,
                       ]"
@@ -158,6 +159,28 @@ register()
 </template>
 
 <style lang="scss" scoped>
+
+swiper-container {
+  --swiper-navigation-color: #ff0000; /* Changes arrow color */
+  --swiper-navigation-size: 10px;    /* Changes arrow size */
+  --swiper-navigation-color: rgba(0, 0, 0, .6);
+}
+
+swiper-container::part(button-prev){
+  background-color: rgb(0, 0, 0, .6);
+  color: white;
+  padding: 12px;
+  left: 5px;
+}
+swiper-container::part(button-next) {
+  background-color: rgb(0, 0, 0, .55);
+  color: white;
+  padding: 12px;
+  right: 5px;
+  /*border: 2px solid red;*/
+}
+
+
 .product-list__title {
   align-items: center;
   display: flex;
