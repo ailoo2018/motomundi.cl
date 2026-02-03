@@ -2,7 +2,6 @@
 
 const nodeEnv = process.env.NODE_ENV
 const commerceCode = process.env.WEBPAY_COMMERCE_CODE
-
 </script>
 
 <template>
