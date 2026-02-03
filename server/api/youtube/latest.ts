@@ -1,4 +1,4 @@
-export default defineEventHandler(async event => {
+export default cachedEventHandler(async event => {
 
   try {
     const config = useRuntimeConfig()
@@ -23,7 +23,7 @@ export default defineEventHandler(async event => {
 
     return data;
   }catch(error){
-    console.error('Error', error)
+    console.error('Error calling youtube latest', error)
     console.error('Stack trace:', error.stack)
     throw createError({
       statusCode: error.statusCode || 500,
@@ -31,4 +31,8 @@ export default defineEventHandler(async event => {
     })
   }
 
+}, {
+  maxAge: 60 * 30, // Cache for 10 minutes (in seconds)
+  name: 'youtube-latest', // Optional: named cache key
+  getKey: () => 'youtube-latest-videos' // Optional: custom cache key
 })

@@ -37,11 +37,12 @@ const handleCart = async () => {
 
 <template>
   <VNavigationDrawer
+    id="cart-drawer"
     v-model="isCartOpen"
     temporary
     :width="400"
     location="end"
-    class="d-flex flex-column"
+    class="d-flex flex-column overflow-y-auto"
   >
     <AppDrawerHeaderSection
       title="MI CESTA"
@@ -50,7 +51,7 @@ const handleCart = async () => {
     />
 
     <VDivider/>
-    <VCardText class="flex-grow-1 overflow-y-auto pa-0">
+    <VCardText class="flex-grow-1 pa-0" >
       <div
         id="shop-cart"
         class="px-2"
@@ -64,13 +65,13 @@ const handleCart = async () => {
         <VRow>
           <div class="user-menu__cart-total">
             <p>
-              Total: <strong>$0</strong>
+              Total: <strong>{{formatMoney(cartStore.cart.total)}}</strong>
             </p>
             <div class="motocoins-claim">
               <VIcon class="tabler-coin-monero-filled" color="primary"></VIcon>
               <div class="motocoins-claim__info">
                 <span class="motocoins-claim__amount">
-                  Acumula <strong>0 mundipesos</strong> con esta compra.
+                  Acumula <strong>{{formatMoney(cartStore.cart.points)}} mundipesos</strong> con esta compra.
                 </span>
               </div>
             </div>
@@ -123,6 +124,15 @@ const handleCart = async () => {
 </template>
 
 <style>
+#cart-drawer .v-navigation-drawer__content {
+  flex: 0 1 auto;
+  height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+}
+
 .user-menu__buy-buttons {
   background-color: #fff;
   display: flex;

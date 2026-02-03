@@ -60,6 +60,7 @@ onMounted(async () => {
         </main>
 
 
+
         <CartSummary v-if="!cartStore.loading && cartStore.cart" :cart="cartStore.cart" />
 
 

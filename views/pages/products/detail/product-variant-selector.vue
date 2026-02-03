@@ -18,6 +18,19 @@ const emit = defineEmits(['update:size', 'update:color', 'add-to-cart', 'selecte
 
 const useComboForSize = props.product.features.some(f => f.type === 0 && f.name.length > 6)
 
+const hasSinglePrice = ref(true)
+let prc = 0;
+for(var pit of props.product.productItems) {
+  if(prc === 0){
+    prc = pit.price.price
+  }
+  if(prc !== pit.price.price) {
+    hasSinglePrice.value = false
+    break
+  }
+}
+
+
 const selectedProductItem = defineModel({
   type: Object,
 })
@@ -67,9 +80,11 @@ const selectColor = color => {
 
 const onSelectSize = size => {
   selectedSize.value = size
-/*  selectedSize.value = size
-  updateModel()
-  emit('update:size', size)*/
+  /**
+   * selectedSize.value = size
+   * updateModel()
+   * emit('update:size', size)
+   */
 }
 
 watch(selectedSize, size => {
@@ -123,17 +138,52 @@ const isSizeAvailable = size => {
   return false
 }
 
-console.log("sizes", props.product.features)
+
 
 const colors = computed(() => {
   return props.product.features.filter(f => f.type === 1)
 })
 
-const sizes = computed(() => {
+const sizes = ref([])
+
+
+const hasColors = props.product.features.filter(f => f.type === 1).length > 1
+console.log("hasColrs" +hasColors)
+
+
+for(var f of props.product.features) {
+  if(f.type !== 0)
+    continue;
+
+  f.name = f.name.toLowerCase() === "tamaño unico" ? 'OS' : f.name
+
+  if(useComboForSize && !hasSinglePrice.value && !hasColors ){
+    f.name += " - " + formatMoney(props.product.productItems.find(pit =>pit.sizeId === f.id).price.price)
+  }
+
+
+  sizes.value.push(f)
+
+
+
+}
+/*props.product.features.filter(f => f.type === 0).map(f1 => {
+  let name = f1.name.toLowerCase() === "tamaño unico" ? 'OS' : f1.name
+  if(!hasSinglePrice.value)
+    name += " - " + formatMoney(1000)
+
+  return {id: f1.id, name: name }
+}*/
+
+/*const sizesa = computed(() => {
   return props.product.features.filter(f => f.type === 0).map(f1 => {
-    return {id: f1.id, name: f1.name.toLowerCase() === "tamaño unico" ? 'OS' : f1.name}
+    let name = f1.name.toLowerCase() === "tamaño unico" ? 'OS' : f1.name
+    if(!hasSinglePrice.value)
+      name += " - " + formatMoney(1000)
+
+    return {id: f1.id, name: name }
   })
-})
+})*/
 
 onMounted(() => {
   var colorFeature = props.product.features.find(f => f.type === 1)

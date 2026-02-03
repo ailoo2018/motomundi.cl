@@ -18,6 +18,19 @@ const props = defineProps(
 const emit = defineEmits(['update:size', 'update:color', 'add-to-cart'])
 
 
+const hasSinglePrice = ref(true)
+let prc = 0;
+for(var pit of props.product.productItems) {
+  if(prc === 0){
+    prc = pit.price.price
+  }
+  if(prc !== pit.price.price) {
+    hasSinglePrice.value = false
+    break
+  }
+}
+
+
 const showSeenCheaperForm = () => {
 
 }
@@ -69,6 +82,11 @@ const addToCart = itemsToAdd => {
 }
 
 const price = computed(() => {
+
+  if(selectedProductItem.value) {
+    return selectedProductItem.value.price.price
+  }
+
 
   if(props.product.productItems && props.product.productItems.length > 0){
     return props.product.productItems[0].price.price

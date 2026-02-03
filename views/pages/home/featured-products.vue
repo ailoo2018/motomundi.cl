@@ -25,7 +25,7 @@ const { data: rs, pending } = await useFetch(`/api/product/collection`, {
 
 })
 
-console.log("key:" + `products-fetch-${widgetId}-${collectionId.value}`)
+
 
 const url = computed(() => { return rs.value?.url })
 

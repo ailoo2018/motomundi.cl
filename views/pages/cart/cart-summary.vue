@@ -5,7 +5,9 @@ const props = defineProps({
   },
 })
 
+
 const cartStore = useCartStore()
+
 
 const checkout = async cart => {
   await navigateTo('/checkout')
@@ -115,7 +117,7 @@ const getTotalPoints = () => {
             <VIcon class="tabler-coin-monero-filled" color="primary"></VIcon>
             <div class="motocoins-claim__info">
               <span class="motocoins-claim__amount">
-                Acumula <strong>{{ getTotalPoints(cart) }} mundipesos</strong> con esta compra.
+                Acumula <strong style="font-weight: 500">{{ formatMoney( cart.points ) }} mundipesos</strong> con esta compra.
               </span>
             </div>
           </div>

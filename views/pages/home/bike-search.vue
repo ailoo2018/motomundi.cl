@@ -1,6 +1,15 @@
 <script setup lang="ts">
 
 import BikeSelector from "@/views/pages/bike-selector.vue"
+import {getHeader} from "h3";
+
+const event = useRequestEvent()
+const ua = process.server && event
+  ? (getHeader(event, 'user-agent') || '')
+  : (process.client ? navigator.userAgent : '')
+
+const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
+
 </script>
 
 <template>
@@ -11,7 +20,7 @@ import BikeSelector from "@/views/pages/bike-selector.vue"
           Elige tu modelo de moto para ver accesorios específicos
         </h2> 
         <div class="bike-search-filter">
-          <BikeSelector :as-row="true" />
+          <BikeSelector :as-row="deviceType === 'desktop'" />
         </div>
         <div
           class="add-bike"

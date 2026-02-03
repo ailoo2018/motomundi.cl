@@ -33,7 +33,7 @@ onMounted(async () => {
 <!--    <div class="spinner-container" v-if="loading">
       <div class="spinner"></div>
     </div>-->
-    <ul>
+    <ul class="cart-items">
       <li v-for="(cartItem, index) in cartStore.cart.items" :key="cartItem.id">
         <CartItemProduct v-if="cartItem.type === 0 && getProductType(cartItem.product) === ProductType.Simple" :cartItem="cartItem"  />
         <CartItemPack v-if="cartItem.type === 3 || getProductType(cartItem.product) === ProductType.Composite" :cartItem="cartItem" />
@@ -160,6 +160,11 @@ onMounted(async () => {
   text-align: left;
 }
 
+#shop-cart ul.cart-items li {
+  border-bottom: 1px solid #ccc;
+}
+
+
 @media (max-width: 992px) {
   #shop-cart .cart-product .cart-product__info .cart-product__price .tag-wrapper .tag.product-tag {
     font-size: 10px;
@@ -168,17 +173,25 @@ onMounted(async () => {
     margin: 10px 0;
   }
 
-  #shop-cart ul li {
-    border-top: 1px solid #ccc;
+  #shop-cart ul.cart-items li {
+    border-bottom: 1px solid #ccc;
     padding: 15px 20px;
   }
 }
 
 
+/*
 .user-menu__cart-content ul li{
   border-bottom: 1px solid #e4eaee;
   padding: 20px 0 20px 30px;
   position: relative;
+}
+*/
+
+@media (max-width: 900) {
+  #shop-cart .tag-wrapper {
+    display: block;
+  }
 }
 
 @media only screen and (max-width: 992px) {
