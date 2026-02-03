@@ -17,8 +17,15 @@ const props = defineProps(
 
 const emit = defineEmits(['update:size', 'update:color', 'add-to-cart'])
 
+
+const showSeenCheaperForm = () => {
+
+}
+
 const selectedProductItem = ref()
 const selectedProductItems = ref([])
+
+
 
 const prodUtil = useProductsUtils()
 
@@ -122,12 +129,12 @@ const onSelectedVariant = pit =>
             <span
               class="product-price product-price__offer ng-binding"
               style="font-size: 55px;"
-            >{{ formatMoney(price) }}</span>
+            >{{ formatMoney(price) }} {{useComboForSize}}</span>
           </div>
           <!-- /price -->
           <button
             class="seen-cheaper-button"
-            ng-click="page.showSeenCheaperForm = !page.showSeenCheaperForm"
+            @click="showSeenCheaperForm"
           >
             ¿Lo has visto más barato?
           </button>

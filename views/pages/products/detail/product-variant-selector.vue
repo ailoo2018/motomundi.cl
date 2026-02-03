@@ -16,15 +16,19 @@ const props = defineProps(
 
 const emit = defineEmits(['update:size', 'update:color', 'add-to-cart', 'selected-variant'])
 
+const useComboForSize = props.product.features.some(f => f.type === 0 && f.name.length > 6)
+
 const selectedProductItem = defineModel({
   type: Object,
 })
 
 const selectedSize = ref({id: 0})
 const selectedColor = ref({id: 0})
-const isShowCbo = ref(false)
+
 const showSizeChart = ref(false)
 
+if(useComboForSize)
+  selectedSize.value = null
 
 const getColorImageUrl = colorId => {
   var image = props.product.images.find(img => img.colorId === colorId)
@@ -63,9 +67,16 @@ const selectColor = color => {
 
 const onSelectSize = size => {
   selectedSize.value = size
+/*  selectedSize.value = size
+  updateModel()
+  emit('update:size', size)*/
+}
+
+watch(selectedSize, size => {
   updateModel()
   emit('update:size', size)
-}
+})
+
 
 const updateModel = () => {
   try {
@@ -214,7 +225,7 @@ onMounted(() => {
           <!-- sizes-form -->
           <div class="sizes-form">
             <div
-              v-if="!isShowCbo"
+              v-if="!useComboForSize"
               class="default-selector-container ng-scope"
             >
               <div
@@ -243,6 +254,18 @@ onMounted(() => {
                   />
                 </label>
               </div>
+            </div>
+            <div v-else>
+
+              <VSelect
+                v-model="selectedSize"
+                :items="sizes"
+                placeholder="Seleccione talla"
+                item-title="name"
+                item-value="id"
+
+                return-object
+              />
             </div>
           </div>
 
