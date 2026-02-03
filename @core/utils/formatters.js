@@ -115,7 +115,7 @@ export const getImageUrl = (guidString, width, domainId) => {
   const thirdChar = guid.charAt(2)
 
   // Construct the new path
-  return "https://www.motomundi.cl/content/products/" + domainId + `/${firstChar}/${secondChar}${thirdChar}/${guid}_${width}.${extension}`
+  return "https://cdn.motomundi.cl/content/products/" + domainId + `/${firstChar}/${secondChar}${thirdChar}/${guid}_${width}.${extension}`
 }
 
 
