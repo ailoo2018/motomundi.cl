@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {getBaseCDN} from "#imports";
+
 const props = defineProps({
   widget: {
     type: Object,
@@ -7,7 +9,7 @@ const props = defineProps({
 })
 
 
-const bgImg = computed(() => { return `url('https://www.motomundi.cl${props.widget.configuration.backgroundImage}')`})
+const bgImg = computed(() => { return `url('${getBaseCDN()}${props.widget.configuration.backgroundImage}')`})
 </script>
 
 <template>

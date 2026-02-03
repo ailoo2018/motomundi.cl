@@ -85,7 +85,7 @@ export const getDomainId = () => {
 }
 
 export const getBaseCDN = () => {
-  return "https://www.motomundi.cl"
+  return "https://cdn.motomundi.cl"
 }
 
 
