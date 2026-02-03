@@ -185,6 +185,7 @@ const search = async () => {
 
 
 
+/*
     const { data } = await useFetch(`/api/product/search`, {
       key: `product-search-` + JSON.stringify(body),
       method: "POST",
@@ -192,15 +193,14 @@ const search = async () => {
     })
 
     rs = data.value
+*/
 
 
-    /*
     rs = await $fetch(`/api/product/search`, {
       key: `product-search-` + JSON.stringify(body),
       method: "POST",
       body: body,
     })
-*/
 
 
 

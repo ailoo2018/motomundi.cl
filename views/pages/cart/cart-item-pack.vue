@@ -137,7 +137,7 @@ const removeCartItem = () => {
              icon</title>
             <use href="/content/svg/motomundi.svg#i-icon-cross" />
           </svg>
-          <span class="d-none d-md-flex">Eliminar</span>
+          <span class="d-none d-md-inline">Eliminar</span>
         </button>
       </div>
     </div>

@@ -78,7 +78,7 @@ const miniatures = computed(() => {
             v-if="product.discountPercent > 0"
             class="tag product-tag product-tag--old product-tag--sales"
           >
-            <span class="discount">Rebajas -{{ Math.round(product.discountPercent) }}%</span>
+            <span class="discount">Oferta -{{ Math.round(product.discountPercent) }}%</span>
           </span>
           <span
             v-if="product.isNew"
@@ -168,9 +168,19 @@ const miniatures = computed(() => {
               class="item__price"
               style="font-size: 14px;"
             >
-              {{ formatMoney(product.minPrice) }}
+              {{ formatMoney(product.minPrice -product.discountAmount) }}
+              <span
+                v-if="product.discountAmount > 0"
+                class="item__old-price strike"
+                style="font-size: 10px;"
+              >
+                {{ formatMoney(product.minPrice) }}
+              </span>
             </span>
-            <span class="pr-2" v-if="product.videos && product.videos.length > 0">
+            <span
+              v-if="product.videos && product.videos.length > 0"
+              class="pr-2"
+            >
               <img src="/content/images/youtube_icon.svg">
             </span>
           </span>
@@ -181,6 +191,22 @@ const miniatures = computed(() => {
 </template>
 
 <style>
+.strike {
+  -webkit-text-decoration: line-through;
+  text-decoration: line-through;
+}
+
+.item__old-price {
+  color: #000;
+  font-size: 10px;
+  font-weight: 500;
+  left: 0;
+  line-height: 16px;
+  opacity: .4;
+  position: absolute;
+  top: -1px;
+}
+
 article.item {
   position: relative;
   border: 1px solid #d8d8d8;
@@ -188,7 +214,6 @@ article.item {
   height: 100%;
   padding: 15px 5px 10px;
 }
-
 
 
 .item .heading-tag {
@@ -264,7 +289,6 @@ article.item {
 }
 
 
-
 .product-list .products .item {
   background-color: #fff;
   margin-bottom: 5px;
@@ -289,7 +313,8 @@ article.item {
   display: inline-block;
   overflow: hidden;
 }
-.item .item__rating{
+
+.item .item__rating {
   height: 20px;
 }
 
@@ -354,18 +379,16 @@ article.item {
   line-height: 20px;
 }
 
-.item__bottom {
-  position: relative;
-}
 
 .item__bottom {
+  position: relative;
   align-items: center;
   border-top: 1px solid #d8d8d8;
   display: block;
   display: flex;
   justify-content: space-between;
   margin-top: 6px;
-  padding-top: 6px;
+  padding-top: 10px;
 
 }
 
@@ -407,9 +430,11 @@ article.item {
     height: 100%;
     padding: 6px;
   }
-  .item .item__name{
+
+  .item .item__name {
     margin: 5px 0 0 0;
   }
+
   li .mtc-link, li > a {
     color: #000;
     display: inline-block;
@@ -422,7 +447,5 @@ article.item {
     text-transform: uppercase;
   }
 }
-
-
 </style>
 

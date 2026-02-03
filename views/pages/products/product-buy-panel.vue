@@ -62,17 +62,21 @@ const addToCart = itemsToAdd => {
 }
 
 const price = computed(() => {
+
+  if(props.product.productItems && props.product.productItems.length > 0){
+    return props.product.productItems[0].price.price
+  }
+
   return props.product.minPrice
 })
 
 const selectedVariant = ref()
 
-const onSelectedVariant = (pit) =>
+const onSelectedVariant = pit =>
 {
   selectedVariant.value = pit
 
 }
-
 </script>
 
 <template>
@@ -104,6 +108,14 @@ const onSelectedVariant = (pit) =>
                 </span>
               </span>
             </div>
+          </div>
+          <!-- discount -->
+          <div
+            v-if="product.hasDiscount"
+            class="product-discount"
+          >
+            <span class="product-old-price strike">{{ formatMoney(product.minPrice) }}</span>
+            <span class="product-savings"> {{ formatMoney(product.discountAmount) }} de ahorro. </span>
           </div>
           <!-- price -->
           <div class="product-buy__price">
@@ -183,47 +195,85 @@ const onSelectedVariant = (pit) =>
     <!-- /composite product -->
 
     <!-- shipping-options -->
-    <div  class="row" ng-if="page.showShippingOptions">
-      <div  class="col s12">
-        <div  class="product-buy-panel__shipping-options">
-          <div  style="display:none;" class="stock-check">
-            <div class="shipping-options__container" ng-click="showShippingDialog()">
+    <div
+      class="row"
+      ng-if="page.showShippingOptions"
+    >
+      <div class="col s12">
+        <div class="product-buy-panel__shipping-options">
+          <div
+            style="display:none;"
+            class="stock-check"
+          >
+            <div
+              class="shipping-options__container"
+              ng-click="showShippingDialog()"
+            >
               <div class="shipping-options__content">
                 <p class="shipping-options__heading">
-                  <svg width="16" height="14" xmlns="http://www.w3.org/2000/svg"
-                       class="icon sprite-line-icons">
-                    <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-av-free-shipping"
-                         xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-av-free-shipping"></use>
+                  <svg
+                    width="16"
+                    height="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon sprite-line-icons"
+                  >
+                    <use
+                      href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-av-free-shipping"
+                      xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-av-free-shipping"
+                    />
                   </svg>
                   <span>Entrega a domicilio</span>
                 </p>
                 <div class="shipping-options__body">
-                  <div class="shipping-options__option"><p>
-                    <span>En Proveedor: Envío dentro de <strong>3 días hábiles</strong>.</span>
-                  </p></div>
+                  <div class="shipping-options__option">
+                    <p>
+                      <span>En Proveedor: Envío dentro de <strong>3 días hábiles</strong>.</span>
+                    </p>
+                  </div>
                 </div>
               </div>
               <div class="shipping-options__actions">
                 <button>
                   Comprobar
-                  <svg width="12" height="14" xmlns="http://www.w3.org/2000/svg"
-                       class="icon sprite-line-icons">
-                    <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-angle-right"
-                         xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-angle-right"></use>
+                  <svg
+                    width="12"
+                    height="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon sprite-line-icons"
+                  >
+                    <use
+                      href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-angle-right"
+                      xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-angle-right"
+                    />
                   </svg>
                 </button>
               </div>
             </div>
             <!-- modal popup -->
-            <div class="modal-wrapper shipping-options__modal" style="display: none;">
-              <div class="modal-backdrop"></div>
-              <div role="dialog" class="modal">
+            <div
+              class="modal-wrapper shipping-options__modal"
+              style="display: none;"
+            >
+              <div class="modal-backdrop" />
+              <div
+                role="dialog"
+                class="modal"
+              >
                 <div class="modal__close-cont">
-                  <button class="modal__close" ng-click="hideShippingDialog()">
-                    <svg width="9" height="9" xmlns="http://www.w3.org/2000/svg"
-                         class="icon sprite-line-icons">
-                      <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-cross"
-                           xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-cross"></use>
+                  <button
+                    class="modal__close"
+                    ng-click="hideShippingDialog()"
+                  >
+                    <svg
+                      width="9"
+                      height="9"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="icon sprite-line-icons"
+                    >
+                      <use
+                        href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-cross"
+                        xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-cross"
+                      />
                     </svg>
                   </button>
                 </div>
@@ -231,13 +281,22 @@ const onSelectedVariant = (pit) =>
                   <div><h1>Comprueba tu código postal</h1></div>
                 </header>
                 <section class="modal-body">
-                  <div><p>Introduce tu código postal para ver la fecha de entrega
-                    aproximada</p>
-                    <div class="form-group"><input type="text"
-                                                   placeholder="Tu código postal"
-                                                   class="text">
-                      <button  type="button" class="button">
-                        <span >Comprobar</span>
+                  <div>
+                    <p>
+                      Introduce tu código postal para ver la fecha de entrega
+                      aproximada
+                    </p>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        placeholder="Tu código postal"
+                        class="text"
+                      >
+                      <button
+                        type="button"
+                        class="button"
+                      >
+                        <span>Comprobar</span>
                       </button>
                     </div>
                   </div>
@@ -246,7 +305,10 @@ const onSelectedVariant = (pit) =>
             </div>
             <!-- /modal popup -->
           </div>
-          <StorePickup v-if="selectedVariant" :product-item-id="selectedVariant.id" />
+          <StorePickup
+            v-if="selectedVariant"
+            :product-item-id="selectedVariant.id"
+          />
         </div>
       </div>
     </div>
@@ -311,6 +373,17 @@ const onSelectedVariant = (pit) =>
 </template>
 
 <style>
+.product-old-price {
+  font-size: 14px;
+  opacity: .4;
+}
+
+.product-savings {
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
 .tag.product-tag.product-tag--crazydays, .tag.product-tag.product-tag--offer, .tag.product-tag.product-tag--sales {
   background-color: #d6001c;
 }

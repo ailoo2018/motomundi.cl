@@ -25,7 +25,7 @@ onMounted(() => {
   <div
     v-if="false"
     :id="`home-block-${widget.id}`"
-    class="block-container d-none d-md-flex"
+    class="block-container d-none d-md-block"
   >
     <section class="added-values-block w-100 px-3">
       <div class="container">
