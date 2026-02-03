@@ -257,11 +257,19 @@ onMounted(async () => {
   >
     <VRow>
       <VCol cols="12">
-        <Logo v-if="isMobile" class="mt-1" />
-        <CheckoutStepper
-          class="mt-lg-10 mb-lg-6 mb-4"
-          :current-step="currentStep"
-        />
+        <Logo v-if="isMobile" class="mt-1"/>
+        <div class="d-flex align-center ga-0 checkout-stepper">
+
+          <h1 v-if="!isMobile" class="text-h2 text-uppercase  d-flex align-center mb-0 text-no-wrap ">
+            <VIcon icon="tabler-lock-filled" color="#000" size="30" class="me-2" />
+            Checkout
+          </h1>
+
+          <CheckoutStepper
+            class="flex-grow-1"
+            :current-step="currentStep"
+          />
+        </div>
       </VCol>
     </VRow>
 
@@ -277,7 +285,7 @@ onMounted(async () => {
             class="checkout__body"
           >
             <div class="steps__content">
-              <VCard  color="surface" class="mobile-plain-card">
+              <VCard color="surface" class="mobile-plain-card">
                 <VCardText class="ma-0 pa-0">
                   <CustomerInformation
                     v-if="currentStep === 1"
@@ -301,7 +309,6 @@ onMounted(async () => {
                 </VCardText>
               </VCard>
             </div>
-
 
 
             <StepActions
@@ -342,8 +349,7 @@ onMounted(async () => {
           <div class="checkout__cart-summary">
             <!-- cart footer -->
 
-            <CartSummaryFooter v-model="isCollapsed" />
-
+            <CartSummaryFooter v-model="isCollapsed"/>
 
 
             <CartSummary
@@ -363,7 +369,7 @@ onMounted(async () => {
       v-if="isCartEmpty"
       class="checkout container empty"
     >
-      <Empty />
+      <Empty/>
     </div>
   </div>
 
@@ -372,12 +378,20 @@ onMounted(async () => {
     v-if="isLoading"
     class="spinner-overlay"
   >
-    <div class="spinner" />
+    <div class="spinner"/>
   </div>
 </template>
 
 
 <style scoped>
+
+.checkout-stepper h1{
+  font-size: 2rem;
+  text-transform: uppercase;
+  display:inline;
+  padding-left: 10px;
+  border-left: 5px solid #c74044;
+}
 .v-card--variant-plain {
   opacity: 1;
 }
@@ -390,7 +404,7 @@ onMounted(async () => {
 }
 */
 
-.checkout__terms-and-conditions{
+.checkout__terms-and-conditions {
   align-self: flex-start;
   font-size: 12px;
   padding: 5px 15px 160px;
@@ -402,14 +416,13 @@ onMounted(async () => {
   }
 }
 
- .checkout__terms-and-conditions .mtc-link {
+.checkout__terms-and-conditions .mtc-link {
   color: #747474;
   display: inline-block;
   margin-right: 5px;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
-
 
 
 .spinner-overlay {
