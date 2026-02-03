@@ -20,7 +20,7 @@ const { cart, coupon } = inject('checkoutService')
 const config = useRuntimeConfig()
 const isCollapsed = ref(false)
 
-const cartStore = useCartStore()
+
 
 const baseUrl = config.public.LEGACY_URL
 
