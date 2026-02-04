@@ -59,9 +59,7 @@ if(wuid && (!cartStore.cart || !cartStore.cart.wuid) ){
       />
     </div>
     <span
-      v-else-if="hasFetched && cartStore.cart.items.length > 0"
-      "
-    >
+      v-else-if="hasFetched && cartStore.cart.items.length > 0" >
       <div
         class="cart container"
         style="margin-top:0px;padding-top:20px;"
