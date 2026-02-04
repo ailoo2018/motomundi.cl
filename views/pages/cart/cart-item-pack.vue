@@ -47,7 +47,7 @@ const removeCartItem = () => {
           </span>
           <span
             v-if="!(cartItem.packId > 0) && cartItem.product"
-            class="promo-image"
+            class="promo-image product-image-wrapper"
             style="flex: 0 0 45px;"
           >
             <VImg
@@ -154,12 +154,12 @@ const removeCartItem = () => {
         class="cart-product mtc-link"
         :href="packItem.url"
       >
-        <span>
+        <span class="product-image-wrapper">
 
           <VImg
             :src="getImageUrl(packItem.image, 300, getDomainId()) || emptyImage"
             alt="packItem.productName"
-            style="min-width: 70px"
+
             class="cdn-img "
           >
             <template #error>
@@ -203,9 +203,3 @@ const removeCartItem = () => {
     </article>
   </div>
 </template>
-
-<style>
-
-
-</style>
-
