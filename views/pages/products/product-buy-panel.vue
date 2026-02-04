@@ -42,6 +42,8 @@ const selectedProductItems = ref([])
 
 const prodUtil = useProductsUtils()
 
+const error = ref('')
+
 const addToCart = itemsToAdd => {
 
   if (props.product.type === ProductType.Simple) {
@@ -56,7 +58,7 @@ const addToCart = itemsToAdd => {
     }
 
     if (!productItemId) {
-      alert("Debe seleccionar variantes")
+      error.value = ("Debe seleccionar variantes")
 
       return
 
@@ -100,6 +102,7 @@ const selectedVariant = ref()
 const onSelectedVariant = pit =>
 {
   selectedVariant.value = pit
+  error.value = null
 
 }
 </script>
@@ -351,7 +354,12 @@ const onSelectedVariant = pit =>
     </div>
     <div class="row">
       <div class="col s12">
+        <VAlert v-if="error" color="#fff3cd" class="mb-2 pa-1">
+          <VIcon class="tabler-alert-circle" />
+          {{error}}
+        </VAlert>
         <div class="product-buy-panel__buttons">
+
           <button
             class="buy-button"
             @click="addToCart"

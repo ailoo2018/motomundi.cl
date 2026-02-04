@@ -167,23 +167,6 @@ for(var f of props.product.features) {
 
 
 }
-/*props.product.features.filter(f => f.type === 0).map(f1 => {
-  let name = f1.name.toLowerCase() === "tamaño unico" ? 'OS' : f1.name
-  if(!hasSinglePrice.value)
-    name += " - " + formatMoney(1000)
-
-  return {id: f1.id, name: name }
-}*/
-
-/*const sizesa = computed(() => {
-  return props.product.features.filter(f => f.type === 0).map(f1 => {
-    let name = f1.name.toLowerCase() === "tamaño unico" ? 'OS' : f1.name
-    if(!hasSinglePrice.value)
-      name += " - " + formatMoney(1000)
-
-    return {id: f1.id, name: name }
-  })
-})*/
 
 onMounted(() => {
   var colorFeature = props.product.features.find(f => f.type === 1)
@@ -282,12 +265,7 @@ onMounted(() => {
                 v-for="size in sizes"
                 class="radio ng-scope"
               >
-                <div
-                  class="paack-2h-label"
-                  style="display: none;"
-                >
-                  2H
-                </div>
+                <div class="paack-2h-label" style="display: none;">2H</div>
                 <input
                   :id="'size-' + size.id"
                   v-model="selectedSize"
@@ -296,7 +274,7 @@ onMounted(() => {
                   :checked="selectedSize.id === size.id"
                   type="radio"
                 >
-                <label @click="onSelectSize(size)">
+                <label @click="isSizeAvailable(size) && onSelectSize(size)">
                   {{ size.name }}
                   <span
                     v-if="!isSizeAvailable(size)"
