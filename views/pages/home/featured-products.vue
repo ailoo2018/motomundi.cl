@@ -189,6 +189,7 @@ swiper-container::part(button-next) {
   width: 40px;
 }
 
+/*
 .product-tags .tag.product-tag {
   color: #fff;
   font-size: 11px;
@@ -197,6 +198,7 @@ swiper-container::part(button-next) {
   padding: 5px 15px;
   text-transform: uppercase;
 }
+*/
 
 .tag.product-tag.product-tag--crazydays, .tag.product-tag.product-tag--offer, .tag.product-tag.product-tag--sales {
   background-color: #d6001c;
