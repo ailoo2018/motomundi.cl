@@ -157,4 +157,6 @@ swiper-container.hide-navigation::part(button-prev),
 swiper-container.hide-navigation::part(button-next) {
   display: none !important;
 }
+
+
 </style>

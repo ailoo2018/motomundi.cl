@@ -16,7 +16,7 @@ export default cachedEventHandler(async event => {
         channelId: CHANNEL_ID,
         part: 'snippet,id',
         order: 'date',
-        maxResults: 3,
+        maxResults: 10,
         type: 'video',
       },
     })

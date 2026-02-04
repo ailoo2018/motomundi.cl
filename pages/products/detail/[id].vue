@@ -92,10 +92,15 @@ const addToCart = async item => {
 
     await cartStore.add(cartItem)
 
+
+    window.location = "/cart"
+/*
     return navigateTo('/cart', {
       replace: true, // Sometimes helps Safari recognize the stack change
       external: false
     })
+
+*/
 
  //   await navigateTo('/cart')
   }catch(e){
