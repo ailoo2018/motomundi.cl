@@ -20,7 +20,11 @@ const slugArray = Array.isArray(route.params.slug)
 
 const path = `/${slugArray.join('/')}`
 
-if(path === "/Account/OrderDetail.rails"){
+if(path.toLowerCase().startsWith("/product/view.rails")) {
+
+  navigateTo("/products/detail/" + queryParams.productId)
+
+}else if(path === "/Account/OrderDetail.rails"){
   // ?orderId=190920&hash=FF4970D2B241BAFFAACE2F654EAE60A8
 
   const wuid = useGuestUser().value
