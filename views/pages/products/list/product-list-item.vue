@@ -70,7 +70,7 @@ const miniatures = computed(() => {
       <AddToFavsBtn :product="product" />
 
       <a
-        class="mtc-link"
+        class="mtc-link product-link"
         :href="product.url"
       >
         <div class="product-tags">
@@ -191,6 +191,10 @@ const miniatures = computed(() => {
 </template>
 
 <style>
+a, .product-link {
+  cursor: pointer;
+}
+
 .strike {
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
