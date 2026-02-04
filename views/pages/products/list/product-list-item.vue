@@ -215,7 +215,6 @@ article.item {
   text-transform: uppercase;
 }
 
-
 .item__info {
   display: flex;
   flex-direction: column;
