@@ -48,6 +48,14 @@ const products = computed(() => {
   return shuffled.slice(0, 10)
 })
 
+// Add these Swiper parameters
+const swiperParams = {
+  touchStartPreventDefault: false,
+  touchMoveStopPropagation: false,
+  allowTouchMove: true,
+  preventClicks: false,
+  preventClicksPropagation: false,
+}
 
 const swiperBreakpoints = {
   320: { slidesPerView: 2, spaceBetween: 10 },
@@ -114,31 +122,12 @@ register()
                     <swiper-container
                       events-prefix="swiper-"
                       navigation="true"
-
+                      :prevent-clicks="false"
+                      :prevent-clicks-propagation="false"
+                      :touch-start-prevent-default="false"
                       :breakpoints="swiperBreakpoints"
                       class="product-swiper-container pb-10"
-                      :inject-styles="[
-                        `
-        .swiper-button-next, .swiper-button-prev{
-          border: none;
-  height: 25px;
-  width: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s;
-          background-color: rgba(0, 0, 0, .6) !important;
-          color: #fff !important;
-          padding-inline: 0.45rem !important;
-          padding-block: 0.45rem !important;
 
-
-        }
-        .swiper-button-next svg, .swiper-button-prev svg{
-        height: 10px; width: 10px; color: white; background-color: black;
-        }
-        `,
-                      ]"
                     >
                       <swiper-slide
                         v-for="product in products"
@@ -493,4 +482,11 @@ swiper-container:not(.swiper-initialized) swiper-slide {
   }
 }
 
+:deep(.product-list-item) {
+  cursor: pointer;
+}
+
+:deep(.product-list-item a) {
+  cursor: pointer;
+}
 </style>

@@ -27,6 +27,7 @@ const store = useConfigStore()
 const productForm = ref()
 const showVideoDialog = ref(false)
 const blogArticle = ref()
+const loading = ref(false)
 
 const route = useRoute()
 
@@ -67,7 +68,8 @@ const onShowVideo = videoId => {
 }
 
 const addToCart = async item => {
-  
+
+  loading.value = true
   try {
     const wuid = useGuestUser().value
 
@@ -94,17 +96,11 @@ const addToCart = async item => {
 
 
     window.location = "/cart"
-/*
-    return navigateTo('/cart', {
-      replace: true, // Sometimes helps Safari recognize the stack change
-      external: false
-    })
 
-*/
-
- //   await navigateTo('/cart')
   }catch(e){
     alert("error: " + e.message)
+  }finally{
+    loading.value = false
   }
 }
 
@@ -175,6 +171,7 @@ const onSelectedColor = color => {
           <PreProductBanner />
           <ProductBuyPanel
             :product="product"
+            :loading="loading"
             @update:color="onSelectedColor"
             @add-to-cart="addToCart"
           />

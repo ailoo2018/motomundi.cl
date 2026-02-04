@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import emptyImage from "@images/empty-image.avif"
-import {getProductUrl} from "@core/utils/formatters";
+
 
 const props = defineProps({
   cartItem: { type: Object, required: true },

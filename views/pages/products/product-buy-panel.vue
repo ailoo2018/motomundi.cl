@@ -6,20 +6,22 @@ import CompositeVariantSelector from "@/views/pages/products/detail/composite-va
 import { ProductType } from "@/models/products"
 import StorePickup from "@/views/pages/products/detail/store-pickup.vue"
 
-const props = defineProps(
-  {
-    product: {
-      type: Object,
-      required: true,
-    },
+const props = defineProps({
+  product: {
+    type: Object,
+    required: true,
   },
-)
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+})
 
 const emit = defineEmits(['update:size', 'update:color', 'add-to-cart'])
-
+const loading = toRef(props, 'loading')
 
 const hasSinglePrice = ref(true)
-let prc = 0;
+let prc = 0
 for(var pit of props.product.productItems) {
   if(prc === 0){
     prc = pit.price.price
@@ -45,6 +47,7 @@ const prodUtil = useProductsUtils()
 const error = ref('')
 
 const addToCart = itemsToAdd => {
+
 
   if (props.product.type === ProductType.Simple) {
     let productItemId = null
@@ -150,7 +153,7 @@ const onSelectedVariant = pit =>
             <span
               class="product-price product-price__offer ng-binding"
               style="font-size: 55px;"
-            >{{ formatMoney(price) }} {{useComboForSize}}</span>
+            >{{ formatMoney(price) }} {{ useComboForSize }}</span>
           </div>
           <!-- /price -->
           <button
@@ -354,14 +357,21 @@ const onSelectedVariant = pit =>
     </div>
     <div class="row">
       <div class="col s12">
-        <VAlert v-if="error" color="#fff3cd" class="mb-2 pa-1">
+        <VAlert
+          v-if="error"
+          color="warning"
+          class="mb-2 pa-1"
+        >
           <VIcon class="tabler-alert-circle" />
-          {{error}}
+          {{ error }}
         </VAlert>
         <div class="product-buy-panel__buttons">
 
-          <button
-            class="buy-button"
+          <VBtn
+            :loading="loading"
+            rounded="0"
+            color="#41a334"
+            class="buy-button h-100"
             @click="addToCart"
           >
             <div class="blocked-by-country">
@@ -377,7 +387,7 @@ const onSelectedVariant = pit =>
               ><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-shopping-bag" /></svg>
               Añadir a la cesta
             </span>
-          </button>
+          </VBtn>
 
           <div class="add-to-favs__product-page">
             <button
