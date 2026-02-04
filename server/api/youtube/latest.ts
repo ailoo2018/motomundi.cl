@@ -12,6 +12,7 @@ export default cachedEventHandler(async event => {
       timeout: 5000,
       query: {
         key: apiKey,
+        yt: config.youtubeApiKey,
         channelId: CHANNEL_ID,
         part: 'snippet,id',
         order: 'date',

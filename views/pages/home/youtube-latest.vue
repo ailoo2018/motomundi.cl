@@ -8,7 +8,7 @@ const props = defineProps({
 })
 
 
-let youtubeResponse;
+const youtubeResponse = ref();
 
 const videos = computed( () => {
   if(!youtubeResponse) {
@@ -19,7 +19,7 @@ const videos = computed( () => {
 
 const getLatestVideos = async () => {
   try {
-     youtubeResponse = await $fetch('/api/youtube/latest')
+     youtubeResponse.value = await $fetch('/api/youtube/latest', { key: "yt-latest"})
   }catch(e){
     console.error(e)
   }
