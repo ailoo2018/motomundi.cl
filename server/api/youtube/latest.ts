@@ -1,18 +1,30 @@
-export default cachedEventHandler(async event => {
-
+export default defineEventHandler(async event => {
   try {
     const config = useRuntimeConfig()
-    const { videoId } = getQuery(event)
+    const CHANNEL_ID = 'UClkc3m-0-ZFIqf1gBymlcUA'
+    const CACHE_KEY = 'youtube:latest:videos'
+    const CACHE_TTL = 60 * 60 * 24 // 24 hours in seconds
 
-    // The API key is fetched here on the server
+    // Try to get from cache first
+    const cached = await useStorage().getItem(CACHE_KEY)
+
+    if (cached) {
+      const { data, timestamp } = cached
+      const age = Date.now() - timestamp
+
+      // Return cached if less than 24 hours old
+      if (age < CACHE_TTL * 1000) {
+        console.log('Serving from cache, age:', Math.floor(age / 1000 / 60), 'minutes')
+        return data
+      }
+    }
+
+    // Fetch fresh data
     const apiKey = config.youtubeApiKey || "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM"
-    const CHANNEL_ID = 'UClkc3m-0-ZFIqf1gBymlcUA' // Your Channel ID
-
-    var data =  await $fetch('https://www.googleapis.com/youtube/v3/search', {
+    const data = await $fetch('https://www.googleapis.com/youtube/v3/search', {
       timeout: 5000,
       query: {
         key: apiKey,
-        yt: config.youtubeApiKey,
         channelId: CHANNEL_ID,
         part: 'snippet,id',
         order: 'date',
@@ -21,19 +33,21 @@ export default cachedEventHandler(async event => {
       },
     })
 
+    // Store in cache
+    await useStorage().setItem(CACHE_KEY, {
+      data,
+      timestamp: Date.now()
+    })
 
-    return data;
-  }catch(error){
+    data.timestamp = new Date()
+    console.log('Fetched fresh data from YouTube API')
+    return data
+
+  } catch(error) {
     console.error('Error calling youtube latest', error)
-    console.error('Stack trace:', error.stack)
     throw createError({
       statusCode: error.statusCode || 500,
-      message: error.message || 'Failed to list addreses',
+      message: error.message || 'Failed to fetch YouTube videos',
     })
   }
-
-}, {
-  maxAge: 60 * 30, // Cache for 10 minutes (in seconds)
-  name: 'youtube-latest', // Optional: named cache key
-  getKey: () => 'youtube-latest-videos' // Optional: custom cache key
 })

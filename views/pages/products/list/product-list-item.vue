@@ -69,54 +69,40 @@ const miniatures = computed(() => {
     <section>
       <AddToFavsBtn :product="product" />
 
-      <a
-        class="mtc-link product-link"
-        :href="product.url"
-      >
-        <div class="product-tags">
-          <span
-            v-if="product.discountPercent > 0"
-            class="tag product-tag product-tag--old product-tag--sales"
-          >
-            <span class="discount">Oferta -{{ Math.round(product.discountPercent) }}%</span>
-          </span>
-          <span
-            v-if="product.isNew"
-            class="tag product-tag product-tag--old product-tag--new"
-          >
-            <span class="discount">Novedad</span>
-          </span>
-        </div>
-        <div class="special-tag" />
-        <span class="product-image">
 
+      <div class="product-tags">
+        <span
+          v-if="product.discountPercent > 0"
+          class="tag product-tag product-tag--old product-tag--sales"
+        >
+          <span class="discount">Oferta -{{ Math.round(product.discountPercent) }}%</span>
+        </span>
+        <span
+          v-if="product.isNew"
+          class="tag product-tag product-tag--old product-tag--new"
+        >
+          <span class="discount">Novedad</span>
+        </span>
+      </div>
+      <div class="special-tag" />
+      <span class="product-image">
+        <a
+          class="mtc-link product-link"
+          :href="product.url"
+        >
           <VImg
-            v-if="!imageError"
+           
             max-width="232"
             :src="getImageUrl( product.image, 300, getDomainId())"
             :alt="product.name"
             class="cdn-img mb-1"
             @error="handleImageError"
-          >
-            <template #error>
-              <VImg
-                :src="emptyImage"
-                :aspect-ratio="1"
-                class="mx-auto rounded"
-              />
-            </template>
-          </VImg>
-          <VImg
-            v-else
-            :src="emptyImage"
-            :aspect-ratio="1"
-            class="mx-auto rounded"
-            max-width="232"
           />
-        </span>
+   
+        </a>
+      </span>
 
 
-      </a>
       <section v-if="showMiniatures">
         <div class="prod-list-miniatures">
           <div
@@ -168,7 +154,7 @@ const miniatures = computed(() => {
               class="item__price"
               style="font-size: 14px;"
             >
-              {{ formatMoney(product.minPrice -product.discountAmount) }}
+              {{ formatMoney(product.minPrice - product.discountAmount) }}
               <span
                 v-if="product.discountAmount > 0"
                 class="item__old-price strike"
@@ -191,10 +177,6 @@ const miniatures = computed(() => {
 </template>
 
 <style>
-a, .product-link {
-  cursor: pointer;
-}
-
 .strike {
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
@@ -451,7 +433,5 @@ article.item {
     text-transform: uppercase;
   }
 }
-
-
 </style>
 
