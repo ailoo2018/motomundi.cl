@@ -87,11 +87,10 @@ const miniatures = computed(() => {
       <div class="special-tag" />
       <span class="product-image">
         <a
-          class="mtc-link product-link"
+          class="mtc-linkaa product-link"
           :href="product.url"
         >
-          <VImg
-           
+          <img
             max-width="232"
             :src="getImageUrl( product.image, 300, getDomainId())"
             :alt="product.name"
@@ -114,7 +113,6 @@ const miniatures = computed(() => {
               :src="getImageUrl(img.image, 50, getDomainId())"
               :alt="img.colorName"
               @click="onClickMiniture(img)"
-              @mouseenter="onClickMiniture(img)"
             >
           </div>
         </div>
@@ -122,7 +120,7 @@ const miniatures = computed(() => {
 
       <section class="item__info">
         <a
-          class="mtc-link"
+          class="mtc-linkaa"
           :href="props.product.url"
         >
           <div class="item__name">
@@ -146,7 +144,7 @@ const miniatures = computed(() => {
         </a>
 
         <a
-          class="item__price-info mtc-link"
+          class="item__price-info mtc-linkaa"
           :href="props.product.url"
         >
           <span class="item__bottom">

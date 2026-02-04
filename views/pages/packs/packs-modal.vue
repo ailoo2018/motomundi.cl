@@ -161,11 +161,8 @@ const products = computed(() => {
               v-if="selectedPack"
             >
               <div>
-
-
                 <PackModalItem v-for="(packProd, index) in products" v-model="products[index]" :key="packProd.id"
-                               :error="packProd.error"
-                />
+                               :error="packProd.error"/>
               </div>
             </div>
             <div
