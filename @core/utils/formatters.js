@@ -92,18 +92,18 @@ export const getBaseCDN = () => {
 export const getImageUrl = (guidString, width, domainId) => {
   // Validate input types
   if (typeof guidString !== 'string' || typeof width !== 'number') {
-    return "/images/empty-image.avif"
+    return "/images/empty-image.avif?v=1"
   }
 
   // Validate guidString format
   const guidRegex = /^[0-9a-f]{32}\.[a-z]+$/i
   if (!guidRegex.test(guidString)) {
-    return "/images/empty-image.avif"
+    return "/images/empty-image.avif?v=1"
   }
 
   // Validate width
   if (width <= 0 || !Number.isInteger(width)) {
-    return "/images/empty-image.avif"
+    return "/images/empty-image.avif?v=1"
   }
 
   // Split the string into guid and extension

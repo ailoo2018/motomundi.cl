@@ -28,7 +28,7 @@ const handleCheckout = async () => {
 const handleCart = async () => {
   loadingCart.value = true
   try {
-    await navigateTo('/cart')
+    window.location = "/cart"; // navigateTo('/cart')
   } finally {
     loadingCart.value = false
   }
