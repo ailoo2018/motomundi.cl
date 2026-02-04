@@ -207,10 +207,11 @@ article.item {
   flex-direction: column;
   font-size: 10px;
   font-weight: 500;
-  justify-content: flex-end;
+  /*justify-content: flex-end;*/
   line-height: 13px;
-  margin: 0;
+  margin: 5px 0 0;
   padding-bottom: 12px;
+  height: 50px;
   text-transform: uppercase;
 }
 
@@ -265,13 +266,6 @@ article.item {
   writing-mode: vertical-lr;
 }
 
-.item img {
-  display: block;
-  margin-bottom: 4px;
-  max-width: 300px;
-  width: 100%;
-}
-
 
 .product-list .products .item {
   background-color: #fff;
@@ -289,7 +283,7 @@ article.item {
 
 .item .item__name {
   justify-content: flex-end;
-  margin: 35px 0 15px;
+  margin: 15px 0 15px;
   position: relative;
 }
 
@@ -299,7 +293,8 @@ article.item {
 }
 
 .item .item__rating {
-  height: 20px;
+  height: 25px;
+  display: block;
 }
 
 .item .item__rating .rating-block {
@@ -332,7 +327,7 @@ article.item {
 
 .item img {
   display: block;
-  margin-bottom: 4px;
+  /*margin-bottom: 4px;*/
   max-width: 300px;
   width: 100%;
 }
