@@ -70,7 +70,7 @@ const addPackToCart = async () => {
 */
 
     await navigateTo('/cart')
-    console.log("result cart add: ", res)
+
   } catch (e) {
     loading.value = false
     alert(e.message)
