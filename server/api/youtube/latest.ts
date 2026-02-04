@@ -5,7 +5,7 @@ export default cachedEventHandler(async event => {
     const { videoId } = getQuery(event)
 
     // The API key is fetched here on the server
-    const apiKey = config.youtubeApiKey
+    const apiKey = config.youtubeApiKey || "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM"
     const CHANNEL_ID = 'UClkc3m-0-ZFIqf1gBymlcUA' // Your Channel ID
 
     var data =  await $fetch('https://www.googleapis.com/youtube/v3/search', {
