@@ -5,20 +5,22 @@ const props = defineProps({
   },
 })
 
-
 const cartStore = useCartStore()
-
 
 const checkout = async cart => {
   await navigateTo('/checkout')
 }
 
-const totalItems =  computed( () => {
+const continueShopping = () => {
+  navigateTo('/') // Adjust the route as needed
+}
+
+const totalItems = computed(() => {
   if(cartStore.cart && cartStore.cart.totalItems > 0) {
     return cartStore.cart.totalItems
   }
 
-  let total = 0;
+  let total = 0
   for(var item of cartStore.cart.items){
     total = total + item.quantity
   }
@@ -27,13 +29,12 @@ const totalItems =  computed( () => {
 })
 
 const itemsTotal = computed(() => {
-  let total = 0;
+  let total = 0
   for(var item of cartStore.cart.items){
     total = total + (item.quantity*item.price)
   }
 
   return total
-
 })
 
 const getTotalPoints = () => {
@@ -103,18 +104,21 @@ const getTotalPoints = () => {
                 class="item__price"
               >{{ formatMoney(cart.shipping?.cost) }}</span>
             </div>
-            <div class="totals__item totals__item&#45;&#45;total">
+            <div class="totals__item totals__item--total">
               <span class="item__label">Total</span>
               <span class="item__price"><span id="cart-total">{{ formatMoney( cart.total ) }}</span>
                 <span
                   v-if="cart.oldPrice > cart.total"
-                  class="totals__item&#45;&#45;old-total"
+                  class="totals__item--old-total"
                 >{{ cart.oldPrice }}</span>
               </span>
             </div>
           </div>
           <div class="motocoins-claim cart-summary__motocoins">
-            <VIcon class="tabler-coin-monero-filled" color="primary"></VIcon>
+            <VIcon
+              class="tabler-coin-monero-filled"
+              color="primary"
+            />
             <div class="motocoins-claim__info">
               <span class="motocoins-claim__amount">
                 Acumula <strong style="font-weight: 500">{{ formatMoney( cart.points ) }} mundipesos</strong> con esta compra.
@@ -124,7 +128,7 @@ const getTotalPoints = () => {
           <div class="cart-summary__actions">
             <button
               type="button"
-              class="cart-buy-button button&#45;&#45;skewed"
+              class="cart-buy-button button--skewed"
               @click="checkout(cart)"
             >
               <span>
@@ -137,6 +141,29 @@ const getTotalPoints = () => {
                 Finalizar compra
               </span>
             </button>
+
+            <!-- New "Continuar comprando" button -->
+            <button
+              type="button"
+              class="cart-continue-button"
+              @click="continueShopping"
+            >
+              <span>
+                <svg
+                  class="sprite-line-icons"
+                  width="17"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+                Continuar comprando
+              </span>
+            </button>
+
             <button
               class="cart-paypal-button"
               style="margin-top: 4px;display:none;"
@@ -155,7 +182,10 @@ const getTotalPoints = () => {
               <span> Pagar con MercadoPago</span>
             </button>
           </div>
-          <div class="d-flex gap-2 financing" v-if="cart.financing">
+          <div
+            v-if="cart.financing"
+            class="d-flex gap-2 financing"
+          >
             <span class="financing__description">
               <span>Desde <strong>{{ formatMoney(cart.financing.cuota ) }}</strong> sin intereses (0% TAE)</span>
             </span>
@@ -164,21 +194,20 @@ const getTotalPoints = () => {
                 <img
                   alt="webpay"
                   class="v-lazy-image v-lazy-image-loaded cdn-img"
-                  :src="'/content/assets/logos/webpay.png'"
+                  src="/content/assets/logos/webpay.png"
                 >
               </span>
               <span>
                 <img
                   alt="paypal"
                   class="v-lazy-image v-lazy-image-loaded cdn-img"
-                  :src="'/content/assets/images/financing/financing-mercadopago.svg'"
+                  src="/content/assets/images/financing/financing-mercadopago.svg"
                 >
               </span>
             </span>
           </div>
           <a
             class="cart-summary__conditions-link mtc-link"
-            data-dr="true"
             href="/terminos-y-condiciones"
           >Condiciones de la compra</a>
         </div>
@@ -188,7 +217,6 @@ const getTotalPoints = () => {
 </template>
 
 <style scoped lang="scss">
-
 #shop-cart .cart-summary h2 {
   font-size: 18px;
   font-weight: 700;
@@ -299,7 +327,7 @@ const getTotalPoints = () => {
   font-weight: 700;
 }
 
-#shop-cart .cart-buy-button, .cart-paypal-button {
+#shop-cart .cart-buy-button, .cart-paypal-button, .cart-continue-button {
   color: #fff;
   display: block;
   font-size: 12px;
@@ -308,6 +336,9 @@ const getTotalPoints = () => {
   text-align: center;
   text-transform: uppercase;
   width: 100%;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
 }
 
 #shop-cart .cart-summary .financing {
@@ -326,4 +357,24 @@ const getTotalPoints = () => {
   background-color: #000;
 }
 
+#shop-cart .cart-buy-button:hover {
+  background-color: #333;
+}
+
+/* New "Continuar comprando" button styles */
+#shop-cart .cart-continue-button {
+  background-color: transparent;
+  color: #000;
+  border: 2px solid #000;
+  margin-top: 12px;
+}
+
+#shop-cart .cart-continue-button:hover {
+  background-color: #f5f5f5;
+}
+
+#shop-cart .cart-continue-button svg {
+  vertical-align: -3px;
+  margin-right: 4px;
+}
 </style>
