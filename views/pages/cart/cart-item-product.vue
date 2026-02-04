@@ -179,10 +179,12 @@ const removeCartItem = () => {
   padding: 0
 }
 
-/*#shop-cart .cart-item {
-  border-bottom: 1px solid #dbdbdb;
-  padding: 8px;
-}*/
+@media (min-width: 900px) {
+  #shop-cart .cart-item {
+    border-bottom: 1px solid #dbdbdb;
+    padding: 8px;
+  }
+}
 
 #shop-cart .price {
   font-weight: 700;
