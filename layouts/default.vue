@@ -40,7 +40,6 @@ injectSkinClasses()
       </RenderCacheable>
       <div class="home-container">
         <slot />
-        DeviceType: {{deviceType}}
       </div>
     </main>
   </div>
@@ -60,7 +59,6 @@ injectSkinClasses()
 
       <main class="main-content">
         <slot/>
-        DeviceType: {{deviceType}}
         <!-- 👉 Footer -->
         <MotomundiFooter/>
       </main>

@@ -6,7 +6,6 @@ import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
 import { ProductType } from "@/models/products.js"
 
 definePageMeta({
- // layout: 'motomundi',
   public: true,
 
 })
@@ -22,17 +21,28 @@ const getProductType = product => {
     return -1
   if(!product.type)
     return ProductType.Simple
+  
   return product.type
 }
+
+
+if(wuid && (!cartStore.cart || !cartStore.cart.wuid) ){
+  await cartStore.fetchCart(wuid)
+  hasFetched.value = true
+}else
+{
+  hasFetched.value = true
+}
+
 // Fetch once on mount
-onMounted(async () => {
+/*onMounted(async () => {
   try {
 
     await cartStore.fetchCart(wuid)
   }finally{
     hasFetched.value = true
   }
-})
+})*/
 </script>
 
 <template>
@@ -48,7 +58,10 @@ onMounted(async () => {
         size="64"
       />
     </div>
-    <span v-else-if="hasFetched && cartStore.cart.items.length > 0"">
+    <span
+      v-else-if="hasFetched && cartStore.cart.items.length > 0"
+      "
+    >
       <div
         class="cart container"
         style="margin-top:0px;padding-top:20px;"
@@ -59,7 +72,10 @@ onMounted(async () => {
           <CartContent />
         </main>
 
-        <CartSummary v-if="!cartStore.loading && cartStore.cart" :cart="cartStore.cart" />
+        <CartSummary
+          v-if="!cartStore.loading && cartStore.cart"
+          :cart="cartStore.cart"
+        />
 
       </div>
     </span>
@@ -69,7 +85,7 @@ onMounted(async () => {
       v-else-if="hasFetched && cartStore.cart.items.length === 0"
       class="text-center pa-10 "
     >
-      <div class="checkout__empty-content" >
+      <div class="checkout__empty-content">
         <h2>Carro de Compra  </h2>
         <p>
           Vaya, parece que no hay nada por aquí... <br>
@@ -84,13 +100,10 @@ onMounted(async () => {
       </div>
     </section>
     <!-- /cart empty -->
-
   </main>
 </template>
 
 <style scoped lang="scss">
-
-
 .spinner-container {
   /* Position the spinner container */
   position: absolute;
