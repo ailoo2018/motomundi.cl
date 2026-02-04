@@ -188,6 +188,7 @@ const getTotalPoints = () => {
 </template>
 
 <style scoped lang="scss">
+
 #shop-cart .cart-summary h2 {
   font-size: 18px;
   font-weight: 700;

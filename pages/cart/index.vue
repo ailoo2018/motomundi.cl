@@ -59,12 +59,7 @@ onMounted(async () => {
           <CartContent />
         </main>
 
-
-
         <CartSummary v-if="!cartStore.loading && cartStore.cart" :cart="cartStore.cart" />
-
-
-
 
       </div>
     </span>
@@ -94,6 +89,8 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
+
+
 .spinner-container {
   /* Position the spinner container */
   position: absolute;
@@ -156,12 +153,6 @@ onMounted(async () => {
   color: #fff;
 }
 
-.button:active, .button:focus {
-  background-color: #bd0019;
-  border-color: #bd0019;
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, .3);
-  color: #fff;
-}
 
 #shop-cart * {
   box-sizing: border-box;
@@ -180,10 +171,6 @@ onMounted(async () => {
   width: 100%;
 }
 
-#shop-cart .cart__content, #shop-cart .cart__content * {
-  box-sizing: border-box;
-  margin-bottom: 0;
-}
 
 #shop-cart .cart__content ul li {
   border-bottom: 1px solid #e4eaee;
@@ -191,15 +178,7 @@ onMounted(async () => {
   position: relative;
 }
 
-#shop-cart .cart__content, #shop-cart .cart__content * {
-  box-sizing: border-box;
-  margin-bottom: 0;
-}
 
-#shop-cart .cart__content, #shop-cart .cart__content * {
-  box-sizing: border-box;
-  margin-bottom: 0;
-}
 
 #shop-cart li .mtc-link, #shop-cart li > a {
   font-weight: normal;
@@ -217,7 +196,7 @@ onMounted(async () => {
   border-bottom: 1px solid #000;
   font-size: 18px;
   font-weight: 700;
-  margin: 5px 0 20px;
+  margin: 5px 0 10px;
   padding: 0 0 10px;
   text-transform: uppercase;
 }

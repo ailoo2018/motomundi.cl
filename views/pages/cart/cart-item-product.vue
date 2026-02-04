@@ -33,7 +33,7 @@ const removeCartItem = () => {
 
           <span class="product-image-wrapper">
             <VImg
-              style="min-width: 70px"
+
               :src="getImageUrl(cartItem.image, 150, getDomainId()) || emptyImage"
               :alt="cartItem.name"
               class="cdn-img"
@@ -169,7 +169,7 @@ const removeCartItem = () => {
 </template>
 
 
-<style lang="scss">
+<style scoped lang="scss">
 
 #shop-cart h1 {
   margin:0;
@@ -179,12 +179,6 @@ const removeCartItem = () => {
   padding: 0
 }
 
-@media (min-width: 900px) {
-  #shop-cart .cart-item {
-    border-bottom: 1px solid #dbdbdb;
-    padding: 8px;
-  }
-}
 
 #shop-cart .price {
   font-weight: 700;

@@ -50,7 +50,7 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 
 #shop-cart .cart-product .cart-product__info .cart-product__name {
   display: block;
@@ -94,6 +94,11 @@ onMounted(async () => {
   box-sizing: border-box;
   margin-bottom: 0;
 }
+
+#shop-cart .product-image-wrapper  {
+  min-width: 100px;
+}
+
 
 .cart-product{
   align-items: center;
@@ -140,10 +145,6 @@ onMounted(async () => {
   gap: 8px;
 }
 
-#shop-cart .cart__content, #shop-cart .cart__content * {
-  box-sizing: border-box;
-  margin-bottom: 0;
-}
 #shop-cart .cart-product .cart-product__info {
   flex-grow: 1;
   font-size: 13px;
@@ -162,6 +163,7 @@ onMounted(async () => {
 
 #shop-cart ul.cart-items li {
   border-bottom: 1px solid #ccc;
+  padding: 15px 4px;
 }
 
 
@@ -173,28 +175,18 @@ onMounted(async () => {
     margin: 10px 0;
   }
 
+  #shop-cart .product-image-wrapper  {
+    min-width: 70px;
+  }
+
+
   #shop-cart ul.cart-items li {
     border-bottom: 1px solid #ccc;
     padding: 15px 20px;
   }
-}
-
-
-/*
-.user-menu__cart-content ul li{
-  border-bottom: 1px solid #e4eaee;
-  padding: 20px 0 20px 30px;
-  position: relative;
-}
-*/
-
-@media (max-width: 900) {
   #shop-cart .tag-wrapper {
     display: block;
   }
-}
-
-@media only screen and (max-width: 992px) {
   .user-menu__cart-content ul li {
     padding: 15px 20px;
   }
