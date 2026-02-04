@@ -40,6 +40,7 @@ injectSkinClasses()
       </RenderCacheable>
       <div class="home-container">
         <slot />
+        DeviceType: {{deviceType}}
       </div>
     </main>
   </div>
@@ -59,6 +60,7 @@ injectSkinClasses()
 
       <main class="main-content">
         <slot/>
+        DeviceType: {{deviceType}}
         <!-- 👉 Footer -->
         <MotomundiFooter/>
       </main>
@@ -68,23 +70,6 @@ injectSkinClasses()
 </template>
 
 <style>
-
-/* 1. Hiding logic using Media Queries */
-/*
-@media (max-width: 960px) {
-  .desktop-only-container { display: none !important; }
-  .mobile-only-container { display: block !important; }
-}
-
-@media (min-width: 961px) {
-  .mobile-only-container { display: none !important; }
-  .desktop-only-container { display: block !important; }
-}
-*/
-
-
-
-/* 2. Your existing styles modified to use Media Queries instead of .mobile/.desktop classes */
 
 /* Background for Desktop */
 @media (min-width: 961px) {
