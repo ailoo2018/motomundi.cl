@@ -2,6 +2,7 @@
 
 import PackModalItem from "@/views/pages/packs/pack-modal-item.vue";
 import {CartItemType, SaleItemType} from "@/models";
+import {useGuestUser} from "@/composables/useGuestUser";
 
 const isShowPackDialog = defineModel<boolean>({default: false});
 
@@ -20,6 +21,7 @@ const getSavings = (pack: any) => {
   return "$0";
 };
 
+const cartStore = useCartStore()
 const addPackToCart = async () => {
   const config = useRuntimeConfig()
   const baseUrl = config.public.w3BaseUrl
@@ -49,8 +51,15 @@ const addPackToCart = async () => {
     return
   }
 
+
+
   try {
     loading.value = true
+
+    const wuid = useGuestUser().value
+    await cartStore.add(rq, wuid)
+
+/*
     const res = await $fetch(`${baseUrl}/${getDomainId()}/cart/add`, {
       method: "POST",
       headers: {
@@ -58,6 +67,7 @@ const addPackToCart = async () => {
       },
       body: rq
     })
+*/
 
     await navigateTo('/cart')
     console.log("result cart add: ", res)

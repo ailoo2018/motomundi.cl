@@ -92,7 +92,7 @@ const addToCart = async item => {
     }
 
 
-    await cartStore.add(cartItem)
+    await cartStore.add(cartItem, wuid)
 
 
     window.location = "/cart"
