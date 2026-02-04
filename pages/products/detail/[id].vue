@@ -56,6 +56,8 @@ const productId = computed(() => {
 const productCarousel = ref()
 const currentVideoId = ref()
 
+const cartStore = useCartStore();
+
 const { data: product, pending } = await useFetch(() => `/api/product/${productId.value}`)
 
 const onShowVideo = videoId => {
@@ -69,30 +71,27 @@ const addToCart = async item => {
   try {
     const wuid = useGuestUser().value
 
-    let body = null
+    let cartItem = null
     if(product.value.type === ProductType.Simple){
-      body = JSON.stringify({
+      cartItem = {
         wuid: wuid,
         type: 0, // cart item product
         quantity: item.quantity,
         productItemId: item.productItemId,
-      })
+      }
     }else{
-      body = JSON.stringify( {
+      cartItem =  {
         wuid: wuid,
         type: 0, // cart item product
         quantity: 1,
         productItemId: product.value.productItems[0].id,
         packContents: item,
-      })
-
+      }
     }
 
-    const resAdd = await $fetch(`/api/cart/add`, {
-      method: "POST",
-      body: body,
-    },
-    )
+
+    await cartStore.add(cartItem)
+
 
     await navigateTo('/cart')
   }catch(e){

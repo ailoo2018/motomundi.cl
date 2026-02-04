@@ -20,6 +20,17 @@ export const useCartStore = defineStore('cart', {
       }
     },
 
+    async add(item){
+      const resAdd = await $fetch(`/api/cart/add`, {
+        method: "POST",
+        body: JSON.stringify(item),
+      },
+      )
+
+      await this.fetchCart(resAdd.wuid)
+
+    },
+
     async removeItem(cartItem) {
       try {
         cartItem.loading = true
