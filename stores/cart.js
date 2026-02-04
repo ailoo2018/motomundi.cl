@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { v4 as uuidv4 } from 'uuid';
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
@@ -16,9 +15,6 @@ export const useCartStore = defineStore('cart', {
         this.cart = data
         this.cart.wuid = wuid
         this.cart.items.forEach(i => i.loading = false)
-      } catch(e){
-        useCookie('guest_id').value = uuidv4()
-
       } finally {
         this.loading = false
       }
