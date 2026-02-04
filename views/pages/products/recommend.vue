@@ -93,8 +93,8 @@ products.value = rs
 
 @media only screen and (min-width: 993px) {
   .product-list .products {
-    -moz-column-gap: 32px;
-    column-gap: 32px;
+    -moz-column-gap: 20px;
+    column-gap: 20px;
     grid-template-columns: repeat(var(--15fff006), calc(100% / var(--15fff006) - 24px));
     row-gap: 32px;
   }
