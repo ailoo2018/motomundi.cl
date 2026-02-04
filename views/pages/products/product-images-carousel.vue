@@ -151,7 +151,7 @@ register()
           <swiper-container
             ref="mainSwiperRef"
             events-prefix="swiper-"
-            navigation="true"
+            :navigation="images.length > 1"
             class="pb-10"
             @swiper-slidechange="onSlideChange"
           >
@@ -372,4 +372,7 @@ swiper-container::part(button-next)::after {
 .product .product-media-dot.current, .product .product-media-dot:active, .product .product-media-dot:hover {
   background-color: #c74044;
 }
+
+
+
 </style>
