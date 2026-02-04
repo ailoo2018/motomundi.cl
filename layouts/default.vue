@@ -65,6 +65,8 @@ injectSkinClasses()
     </div>
   </div>
   <!-- /desktop -->
+
+  <WhatsAppFab />
 </template>
 
 <style>
