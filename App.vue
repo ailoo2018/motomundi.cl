@@ -18,6 +18,23 @@ const configStore = useConfigStore()
 const { isMobile } = useDevice()
 if (isMobile)
   configStore.appContentLayoutNav = 'vertical'
+
+
+if (process.client) {
+  const originalSetAttribute = Element.prototype.setAttribute
+  Element.prototype.setAttribute = function(name, value) {
+    try {
+      if (value === undefined || value === null) {
+        console.warn(`Attempted to set ${name} to ${value}`)
+        return
+      }
+      originalSetAttribute.call(this, name, value)
+    } catch (e) {
+      console.error('setAttribute error:', { name, value, element: this })
+      throw e
+    }
+  }
+}
 </script>
 
 <template>
