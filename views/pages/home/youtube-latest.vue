@@ -89,16 +89,16 @@ register()
                     <small>{{ formatDate(vitem.snippet.publishedAt) }}</small>
                     <p>{{ vitem.snippet.description }}</p>
 
-                  <a
-                    target="_blank"
-                    :href="`https://www.youtube.com/watch?v=${vitem.id.videoId}`"
-                    class="view-video-link"
+                    <a
+                      target="_blank"
+                      :href="`https://www.youtube.com/watch?v=${vitem.id.videoId}`"
+                      class="view-video-link"
                     >
-                    Ver vídeo
-                    <img
-                      src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjExIiB2aWV3Qm94PSIwIDAgNiAxMSIgd2lkdGg9IjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTk4IDggNSA1IDUtNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWIwMDEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHRyYW5zZm9ybT0ibWF0cml4KDAgLTEgMSAwIC03LjUgMTA4LjUpIi8+PC9zdmc+"
-                      alt="Angle icon"
-                    >
+                      Ver vídeo
+                      <img
+                        src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjExIiB2aWV3Qm94PSIwIDAgNiAxMSIgd2lkdGg9IjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTk4IDggNSA1IDUtNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWIwMDEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHRyYW5zZm9ybT0ibWF0cml4KDAgLTEgMSAwIC03LjUgMTA4LjUpIi8+PC9zdmc+"
+                        alt="Angle icon"
+                      >
                     </a>
                   </div>
                 </div>
@@ -107,22 +107,22 @@ register()
           </ClientOnly>
           <div class="youtube-link">
             <a
-            href="https://www.youtube.com/MotoMundiTV"
-            target="_blank"
-            class="button button--skewed"
+              href="https://www.youtube.com/MotoMundiTV"
+              target="_blank"
+              class="button button--skewed"
             >
-            Visita nuestro canal de YouTube
-            <svg
-              width="12"
-              height="12"
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon sprite-line-icons"
-            >
-              <use
-                href="/content/svg/motomundi.svg#i-icon-arrow-right-tail"
-                style="stroke: white;"
-              />
-            </svg>
+              Visita nuestro canal de YouTube
+              <svg
+                width="12"
+                height="12"
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon sprite-line-icons"
+              >
+                <use
+                  href="/content/svg/motomundi.svg#i-icon-arrow-right-tail"
+                  style="stroke: white;"
+                />
+              </svg>
             </a>
           </div>
         </div>
@@ -130,6 +130,8 @@ register()
     </div>
   </div>
 </template>
+
+
 
 <style scoped>
 .youtube-block {
@@ -148,19 +150,28 @@ register()
   padding: 0 0 40px 0;
 }
 
+/* Make swiper-slide stretch to full height */
+swiper-slide {
+  height: auto;
+  display: flex;
+}
+
 .video {
   position: relative;
   background-color: #f5f5f5;
   border-radius: 3px;
-  height: 100%;
-}
-
-.video-thumb, .video-thumb img {
-  display: block;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .video-thumb {
   position: relative;
+  flex-shrink: 0;
+}
+
+.video-thumb, .video-thumb img {
+  display: block;
 }
 
 .video-thumb img {
@@ -170,6 +181,9 @@ register()
 
 .home-youtube-post__content {
   padding: 20px 20px 60px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .youtube-block h2 {
@@ -203,6 +217,7 @@ register()
 
 .youtube-block p {
   font-size: 12px;
+  flex-grow: 1;
 }
 
 .youtube-link {
@@ -277,22 +292,22 @@ register()
 }
 
 swiper-container {
-  --swiper-navigation-color: #ff0000; /* Changes arrow color */
-  --swiper-navigation-size: 10px;    /* Changes arrow size */
+  --swiper-navigation-color: #ff0000;
+  --swiper-navigation-size: 10px;
   --swiper-navigation-color: rgba(0, 0, 0, .6);
 }
 
-swiper-container::part(button-prev){
+swiper-container::part(button-prev) {
   background-color: rgb(0, 0, 0, .6);
   color: white;
   padding: 12px;
   left: 5px;
 }
+
 swiper-container::part(button-next) {
   background-color: rgb(0, 0, 0, .55);
   color: white;
   padding: 12px;
   right: 5px;
-  /*border: 2px solid red;*/
 }
 </style>
