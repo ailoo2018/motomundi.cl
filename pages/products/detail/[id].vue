@@ -92,8 +92,12 @@ const addToCart = async item => {
 
     await cartStore.add(cartItem)
 
+    return navigateTo('/cart', {
+      replace: true, // Sometimes helps Safari recognize the stack change
+      external: false
+    })
 
-    await navigateTo('/cart')
+ //   await navigateTo('/cart')
   }catch(e){
     alert("error: " + e.message)
   }
