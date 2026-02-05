@@ -20,7 +20,7 @@ export default defineEventHandler(async event => {
     }
 
     // Fetch fresh data
-    const apiKey = config.youtubeApiKey || "AIzaSyDywo6xGQrUU7LZfGSVwW93qt0n6yMKBDM"
+    const apiKey = config.youtubeApiKey
     const data = await $fetch('https://www.googleapis.com/youtube/v3/search', {
       timeout: 5000,
       query: {
@@ -33,13 +33,14 @@ export default defineEventHandler(async event => {
       },
     })
 
+    data.timestamp = new Date()
     // Store in cache
     await useStorage().setItem(CACHE_KEY, {
       data,
       timestamp: Date.now()
     })
 
-    data.timestamp = new Date()
+
     console.log('Fetched fresh data from YouTube API')
     return data
 
