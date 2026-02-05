@@ -5,6 +5,15 @@ export default defineEventHandler(async event => {
     const CACHE_KEY = 'youtube:latest:videos'
     const CACHE_TTL = 60 * 60 * 12 // 24 hours in seconds
 
+
+    const apiKey = config.youtubeApiKey
+
+    console.log('API Key source:', {
+      fromConfig: !!config.youtubeApiKey,
+      fromEnv: !!process.env.YOUTUBE_API_KEY,
+      fromNuxtEnv: !!process.env.NUXT_YOUTUBE_API_KEY,
+    })
+
     // Try to get from cache first
     const cached = await useStorage().getItem(CACHE_KEY)
 
@@ -20,7 +29,7 @@ export default defineEventHandler(async event => {
     }
 
     // Fetch fresh data
-    const apiKey = config.youtubeApiKey
+
     const data = await $fetch('https://www.googleapis.com/youtube/v3/search', {
       timeout: 5000,
       query: {

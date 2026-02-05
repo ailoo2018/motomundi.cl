@@ -21,7 +21,7 @@ const props = defineProps({
       >
         <VCard
           v-if="loading"
-          class="text-center pa-10 rounded-xl"
+          class="text-center pa-10"
           elevation="2"
         >
           <VProgressCircular
@@ -41,7 +41,7 @@ const props = defineProps({
 
         <VCard
           v-else-if="result?.success"
-          class="rounded-xl overflow-hidden"
+          class=" overflow-hidden"
           elevation="4"
         >
           <div class="bg-success pa-8 text-center text-white">
