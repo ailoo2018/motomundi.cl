@@ -1,6 +1,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { PaymentMethods } from "@/models/index.js"
 
 // Props - allow parent component to pass data
 const props = defineProps({
@@ -38,6 +39,11 @@ const props = defineProps({
 
 const route = useRoute()
 
+const webpayToken = ref("")
+const webpayUrl = ref("")
+const webpayForm = ref(null)
+const error = ref()
+
 const invoiceId = parseInt(route.params.id)
 console.log("checkout quick: " + invoiceId)
 
@@ -61,13 +67,13 @@ const shipping = ref(props.shippingCost)
 // Payment methods
 const paymentMethods = ref([
   {
-    id: 'mercadopago',
+    id: 15,
     name: 'MercadoPago',
     description: 'Tarjetas de crédito y débito',
     color: '#009EE3',
   },
   {
-    id: 'webpay',
+    id: 8,
     name: 'WebPay',
     description: 'Transbank - Tarjetas chilenas',
     color: '#00A84F',
@@ -100,7 +106,7 @@ const selectPayment = methodId => {
   emit('payment-selected', methodId)
 }
 
-const processPayment = () => {
+const processPayment = async () => {
   if (!selectedPayment.value) {
     alert('Por favor selecciona un método de pago')
     
@@ -109,22 +115,55 @@ const processPayment = () => {
 
   const method = paymentMethods.value.find(m => m.id === selectedPayment.value)
 
-  // Emit event to parent component
-  emit('payment-processed', {
-    method: selectedPayment.value,
-    total: total.value,
-    items: props.items,
+  const rq = {
+    paymentMethodId: method.id,
+    invoiceId: invoiceId,
+  }
+
+  const { data, error: fetchError } = await useFetch( '/api/invoices/pay', {
+    credentials: 'include',
+    method: 'POST',
+    headers: {},
+    body: JSON.stringify(rq),
+    async onResponseError({ response }) {
+      const errorData = response._data  // or response.body
+
+      console.log('Error data:', errorData)
+      if(errorData)
+        alert("Error " + errorData.message )
+    },
   })
 
-  // Default behavior - can be overridden by parent
-  // Uncomment and customize for your payment gateway
-  /*
-  if (selectedPayment.value === 'mercadopago') {
-    window.location.href = 'https://www.mercadopago.cl/checkout/...'
-  } else if (selectedPayment.value === 'webpay') {
-    window.location.href = 'https://webpay.transbank.cl/...'
+  if (fetchError.value) {
+    error.value = (fetchError.value)
+
+    return
   }
-  */
+
+  if (data.value.error != null) {
+    error.value = (data.value.error)
+
+    return
+  }
+
+  if (rq.paymentMethodId === PaymentMethods.Webpay) {
+    webpayToken.value = data.value.token
+    webpayUrl.value = data.value.paymentUrl
+
+    // Wait for the next DOM update
+    await nextTick()
+
+    webpayForm.value.submit()
+  } else if (rq.paymentMethodId === PaymentMethods.PayPal) {
+    window.location = data.value.paymentUrl
+  } else if (rq.paymentMethodId === PaymentMethods.MercadoPago) {
+    window.location = data.value.paymentUrl
+  } else if (rq.paymentMethodId === PaymentMethods.TarjetaCredito) {
+    window.location = data.value.paymentUrl
+  }
+
+
+
 }
 </script>
 
@@ -274,6 +313,10 @@ const processPayment = () => {
               </VCard>
             </div>
 
+
+            <VAlert v-if="error" color="warning">
+              {{error}}
+            </VAlert>
             <!-- CTA Button -->
             <VBtn
               block
@@ -319,6 +362,18 @@ const processPayment = () => {
         </VCard>
       </VContainer>
     </VMain>
+
+    <form
+      ref="webpayForm"
+      :action="webpayUrl"
+      method="post"
+    >
+      <input
+        type="hidden"
+        name="token_ws"
+        :value="webpayToken"
+      >
+    </form>
   </VApp>
 </template>
 

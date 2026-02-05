@@ -59,7 +59,7 @@ const swiperParams = {
 
 const swiperBreakpoints = {
   320: { slidesPerView: 2, spaceBetween: 10 },
-  640: { slidesPerView: 2, spaceBetween: 10 },
+  640: { slidesPerView: 3, spaceBetween: 10 },
   1024: { slidesPerView: 4, spaceBetween: 10 },
   1280: { slidesPerView: 5, spaceBetween: 10 },
 }

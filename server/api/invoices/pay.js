@@ -1,0 +1,135 @@
+/* eslint-disable camelcase */
+import { getDomainId } from "@/server/ailoo-domain"
+import transbankSdk from 'transbank-sdk'
+import { MercadoPagoConfig, Preference } from 'mercadopago'
+
+const { WebpayPlus } = transbankSdk
+
+const TEST_COMMERCE_CODE='597055555532'
+const WEBPAY = 8
+const MERCADO_PAGO = 15
+
+export default defineEventHandler(async event => {
+  let url = ""
+
+  try {
+    const config = useRuntimeConfig()
+    const baseUrl = config.public.w3BaseUrl
+    const body = await readBody(event)
+
+
+
+    // 1. Your internal order creation
+    url = `${baseUrl}/${getDomainId()}/invoices/${body.invoiceId}`
+
+    const invoice = await $fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+
+    })
+
+
+    if(body.paymentMethodId === WEBPAY){
+      const commerceCode = process.env.WEBPAY_COMMERCE_CODE
+      const apiKey = process.env.WEBPAY_API_KEY
+
+
+      let tx
+
+      if(process.env.NODE_ENV === 'production' && commerceCode !== TEST_COMMERCE_CODE) {
+        tx = WebpayPlus.Transaction.buildForProduction(commerceCode, apiKey)
+      }else{
+        tx = WebpayPlus.Transaction.buildForIntegration(commerceCode, apiKey)
+      }
+
+      const sessionId = `session-${Date.now()}`
+      const orderId = invoice.id
+      const amount = invoice.total
+
+
+      // Use the configured base URL from runtime config
+      const returnUrl = `${config.public.baseUrl}/payment/webpay/inv-result`
+
+
+
+      const response = await tx.create(
+        `${orderId}`,
+        sessionId,
+        amount,
+        returnUrl,
+      )
+
+      return {
+        orderId: orderId,
+        token: response.token,
+        paymentUrl: response.url,
+      }
+
+
+    }else if(body.paymentMethodId === MERCADO_PAGO)
+    {
+
+      const client = new MercadoPagoConfig({
+        accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN, // Add this to your runtimeConfig
+        options: { timeout: 5000 },
+      })
+
+      const preference = new Preference(client)
+
+      // 2. Prepare the order data
+      const orderId = invoice.id
+      const amount = invoice.total
+
+      let baseUrl = config.public.baseUrl
+      if(!baseUrl.startsWith("https")){
+        baseUrl = "https://subsequent-submissions-sys-writer.trycloudflare.com"
+      }
+
+      // 3. Create the preference
+      const pref = {
+        body: {
+          items: [
+            {
+              id: `${orderId}`,
+              title: `Orden #${orderId}`,
+              quantity: 1,
+              unit_price: Number(amount),
+              currency_id: 'CLP', // Required for Chile
+            },
+          ],
+          back_urls: {
+            success: `${baseUrl}/payment/mercadopago/inv-result`,
+            failure: `${baseUrl}/payment/mercadopago/inv-result`,
+            pending: `${baseUrl}/payment/mercadopago/inv-result`,
+          },
+          auto_return: 'approved',
+          external_reference: `${orderId}`, // Useful for reconciling with your DB later
+          notification_url: `${baseUrl}/api/webhooks/mercadopago`, // Optional: for IPN
+        },
+      }
+
+      console.log("pref: " + JSON.stringify(pref))
+
+      const response = await preference.create(pref)
+
+      return {
+        orderId: orderId,
+        paymentUrl: response.init_point,
+        preferenceId: response.id,
+      }
+    }
+
+
+
+
+  } catch (error) {
+    // If TBK returns an error, it's often in error.data
+    console.error('Payment Error:', error)
+    console.error('Payment Error Payload:', error.data)
+
+    throw createError({
+      statusCode: error.statusCode || 500,
+      message: error.data?.error || error.data?.message || error.message || 'Transbank Connection Failed',
+    })
+  }
+})

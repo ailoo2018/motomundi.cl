@@ -4,6 +4,12 @@ const SaleItemType = Object.freeze({
   DISCOUNT_RULE: 2,
 })
 
+const PaymentMethods = Object.freeze({
+  Webpay: 8,
+  PayPal: 10,
+  MercadoPago: 15,
+  TarjetaCredito: 18,
+})
 
 const CartItemType = Object.freeze({
   Product: 0,
@@ -20,4 +26,4 @@ const Departments = Object.freeze({
 
 })
 
-export { SaleItemType, CartItemType, Departments }
+export { SaleItemType, CartItemType, Departments, PaymentMethods }

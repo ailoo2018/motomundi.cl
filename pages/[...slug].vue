@@ -20,7 +20,11 @@ const slugArray = Array.isArray(route.params.slug)
 
 const path = `/${slugArray.join('/')}`
 
-if(path.toLowerCase().startsWith("/product/view.rails")) {
+
+if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
+  // /Payment/QuickCheckout.rails?documentId=27759764&amount=249900&documentType=INVOICE
+  navigateTo("/checkout/" + queryParams.documentId, {external:true})
+}else if(path.toLowerCase().startsWith("/product/view.rails")) {
 
   navigateTo("/products/detail/" + queryParams.productId)
 
