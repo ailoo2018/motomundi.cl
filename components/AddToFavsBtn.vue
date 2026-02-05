@@ -6,7 +6,9 @@ const props = {
   }
 }
 
-const addRemoveToWishList = () => {
+const addRemoveToWishList = (event) => {
+  event.preventDefault() // Prevent the parent link from being triggered
+  event.stopPropagation() // Stop event bubbling
   console.log("addRemoveToWishList")
 }
 
@@ -14,8 +16,9 @@ const addRemoveToWishList = () => {
 
 <template>
   <button
-    class="add-to-favs "
+    class="add-to-favs"
     @click="addRemoveToWishList"
+    @touchstart.passive
   >
     <svg
       class="add icon sprite-line-icons"
@@ -43,23 +46,28 @@ const addRemoveToWishList = () => {
   stroke-linejoin: round;
 }
 
-.add-to-favs:hover svg use {
-  stroke: #d6001c;
-}
-
-.item:hover .add-to-favs {
-  display: block;
-  opacity: 1;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-
-.add-to-favs:hover svg use {
-  stroke: #d6001c;
-}
-
-button:hover {
+.add-to-favs {
+  background-color: transparent;
+  height: 24px;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  transform: scale(0);
+  transform-origin: center center;
+  transition: all .2s ease;
+  width: 29px;
   cursor: pointer;
+  -webkit-tap-highlight-color: rgba(214, 0, 28, 0.1);
+  border: none; /* Remove default button border */
+  z-index: 10; /* Ensure it's above the product link */
+}
+
+.add-to-favs svg {
+  height: 24px;
+  transition: all .2s ease;
+  width: 29px;
 }
 
 .add-to-favs.wished svg use {
@@ -69,30 +77,32 @@ button:hover {
 
 .add-to-favs.wished {
   opacity: 1;
-  -webkit-transform: scale(1);
   transform: scale(1);
 }
 
-.add-to-favs {
-  background-color: transparent;
-  height: 24px;
-  opacity: 0;
-  padding: 0;
-  position: absolute;
-  right: 10px;
-  top: 15px;
-  -webkit-transform: scale(0);
-  transform: scale(0);
-  -webkit-transform-origin: center center;
-  transform-origin: center center;
-  transition: all .2s ease;
-  width: 29px;
+/* Only apply hover effects on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .add-to-favs:hover svg use {
+    stroke: #d6001c;
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
+
+  .item:hover .add-to-favs {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.add-to-favs svg {
-  height: 24px;
-  transition: all .2s ease;
-  width: 29px;
+/* On touch devices, show the button when the item is tapped/active */
+@media (hover: none) {
+  .item .add-to-favs {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 </style>
