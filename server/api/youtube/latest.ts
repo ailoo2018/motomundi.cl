@@ -3,7 +3,7 @@ export default defineEventHandler(async event => {
     const config = useRuntimeConfig()
     const CHANNEL_ID = 'UClkc3m-0-ZFIqf1gBymlcUA'
     const CACHE_KEY = 'youtube:latest:videos'
-    const CACHE_TTL = 60 * 60 * 24 // 24 hours in seconds
+    const CACHE_TTL = 60 * 60 * 12 // 24 hours in seconds
 
     // Try to get from cache first
     const cached = await useStorage().getItem(CACHE_KEY)
