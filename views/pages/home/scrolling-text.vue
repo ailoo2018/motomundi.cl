@@ -21,8 +21,8 @@ if (props.widget && props.widget.configuration && props.widget.configuration) {
 if(!scrollItems || scrollItems.length === 0) {
   scrollItems = [
     { text: "Si lo encuentras más barato te igualamos el precio" },
-    { text: "Compra ahora con Webpay y paga en 12 cuotas sin intereses" },
-    { text: "CLICK&amp;COLLECT: Recoge tu pedido en 2h en tu tienda más cercana" },
+    { text: "Compra en 12 cuotas sin intereses" },
+    { text: "Recoge tu pedido en 2h en tu tienda más cercana" },
     { text: "Si lo encuentras más barato te igualamos el precio" },
   ]
 }
@@ -79,5 +79,12 @@ if(!scrollItems || scrollItems.length === 0) {
 .text-swiper:hover :deep(.swiper-wrapper) {
   /* Swiper's autoplay naturally handles this if pauseOnMouseEnter is true,
      but for a pure linear ticker, CSS manual control is sometimes smoother */
+}
+
+@media (max-width: 961px){
+  .container a {
+    font-weight: 500;
+    font-size: 12px;
+  }
 }
 </style>

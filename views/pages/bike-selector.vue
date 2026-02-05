@@ -197,12 +197,6 @@ const filterMotorbikeProducts = () => {
   }
 }
 
-/*
-input.v-input__control{
-  border: 1px solid black;
-  border-radius: 0px;
-}
-*/
 
 .bike-search .h3 {
   display: block;

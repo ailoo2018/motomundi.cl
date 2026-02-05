@@ -36,6 +36,13 @@ const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
   padding: 50px 40px 40px;
 }
 
+@media (max-width: 961px) {
+  .bike-search-block {
+    padding: 30px 10px 20px;
+  }
+
+}
+
 .bike-search .h3 {
   display: block;
   font-size: 14px;
