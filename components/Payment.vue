@@ -340,13 +340,7 @@ const pay = async (mercadoPagoApiData = null) => {
     if (data.value) {
 
       if (rq.paymentMethod.gateway === PaymentMethods.Webpay) {
-        webpayToken.value = data.value.token
-        webpayUrl.value = data.value.paymentUrl
-
-        // Wait for the next DOM update
-        await nextTick()
-
-        webpayForm.value.submit()
+        window.location = `${data.value.paymentUrl}?token_ws=${data.value.token}`
       } else if (rq.paymentMethod.gateway === PaymentMethods.PayPal) {
         window.location = data.value.paymentUrl
       } else if (rq.paymentMethod.gateway === PaymentMethods.MercadoPago) {
