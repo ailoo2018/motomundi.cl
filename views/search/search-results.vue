@@ -29,7 +29,7 @@ useInfiniteScroll(
   <!-- search empty -->
   <div
     v-if="products.length == 0"
-    class="search__results-empty"
+    class="search__results-empty d-flex justify-center align-center h-100"
   >
     <svg
       width="54"
@@ -94,6 +94,10 @@ useInfiniteScroll(
 .row.vue-virtual-scroller__item-wrapper.search__panel-results {
   margin: 0;
 }
+.search__results-empty svg use {
+  stroke: rgb(var(--v-theme-primary));
+}
+
 
 @media only screen and (min-width: 993px) {
   .row .col.l3 {

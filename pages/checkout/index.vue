@@ -252,26 +252,34 @@ onMounted(async () => {
 
 <template>
   <div
-    class="checkout-container pa-lg-8 pa-0"
+    class="checkout-container pa-md-8 pa-0"
     style="background: #fff;"
   >
-    <VRow>
-      <VCol cols="12">
-        <Logo v-if="isMobile" class="mt-1"/>
-        <div class="d-flex align-center ga-0 checkout-stepper">
-
-          <h1 v-if="!isMobile" class="text-h3  text-uppercase  d-flex align-center mb-0 text-no-wrap ">
-            <VIcon icon="tabler-lock-filled" color="#000" size="30" class="me-2" />
-            Checkout
-          </h1>
-
-          <CheckoutStepper
-            class="flex-grow-1"
-            :current-step="currentStep"
+    <VContainer class="pt-md-1">
+      <Logo
+        v-if="isMobile"
+        class="mt-1"
+      />
+      <div class="d-flex align-center ga-0 checkout-stepper ">
+        <h1
+          v-if="!isMobile"
+          class="text-h3  text-uppercase  d-flex align-center mb-0 text-no-wrap "
+        >
+          <VIcon
+            icon="tabler-lock-filled"
+            color="#000"
+            size="30"
+            class="me-2"
           />
-        </div>
-      </VCol>
-    </VRow>
+          Checkout
+        </h1>
+
+        <CheckoutStepper
+          class="flex-grow-1"
+          :current-step="currentStep"
+        />
+      </div>
+    </VContainer>
 
     <div v-if="!isCartEmpty">
       <VRow>
@@ -285,7 +293,10 @@ onMounted(async () => {
             class="checkout__body"
           >
             <div class="steps__content">
-              <VCard color="surface" class="mobile-plain-card">
+              <VCard
+                color="surface"
+                class="mobile-plain-card"
+              >
                 <VCardText class="ma-0 pa-0">
                   <CustomerInformation
                     v-if="currentStep === 1"
@@ -349,7 +360,7 @@ onMounted(async () => {
           <div class="checkout__cart-summary">
             <!-- cart footer -->
 
-            <CartSummaryFooter v-model="isCollapsed"/>
+            <CartSummaryFooter v-model="isCollapsed" />
 
 
             <CartSummary
@@ -369,7 +380,7 @@ onMounted(async () => {
       v-if="isCartEmpty"
       class="checkout container empty"
     >
-      <Empty/>
+      <Empty />
     </div>
   </div>
 
@@ -378,13 +389,12 @@ onMounted(async () => {
     v-if="isLoading"
     class="spinner-overlay"
   >
-    <div class="spinner"/>
+    <div class="spinner" />
   </div>
 </template>
 
 
 <style scoped>
-
 .checkout-stepper h1{
   font-size: 1.4rem;
   text-transform: uppercase;
