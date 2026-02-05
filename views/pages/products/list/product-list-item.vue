@@ -67,7 +67,9 @@ const miniatures = computed(() => {
 <template>
   <article class="item">
     <section>
+<!--
       <AddToFavsBtn :product="product" />
+-->
 
 
       <div class="product-tags">
