@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import {ProductHelper} from "@/models/products"
-import {useProductsUtils} from "@/composables/useProductsUtils.js"
+import { ProductHelper } from "@/models/products"
+import { useProductsUtils } from "@/composables/useProductsUtils.js"
 
-
-const prodUtil = useProductsUtils()
 
 const props = defineProps(
   {
@@ -16,15 +14,17 @@ const props = defineProps(
 
 const emit = defineEmits(['update:size', 'update:color', 'add-to-cart', 'selected-variant'])
 
+const prodUtil = useProductsUtils()
+
 const useComboForSize = props.product.features.some(f => f.type === 0 && f.name.length > 6)
 
 const hasSinglePrice = ref(true)
-let prc = 0;
-for(var pit of props.product.productItems) {
-  if(prc === 0){
+let prc = 0
+for (var pit of props.product.productItems) {
+  if (prc === 0) {
     prc = pit.price.price
   }
-  if(prc !== pit.price.price) {
+  if (prc !== pit.price.price) {
     hasSinglePrice.value = false
     break
   }
@@ -35,12 +35,12 @@ const selectedProductItem = defineModel({
   type: Object,
 })
 
-const selectedSize = ref({id: 0})
-const selectedColor = ref({id: 0})
+const selectedSize = ref({ id: 0 })
+const selectedColor = ref({ id: 0 })
 
 const showSizeChart = ref(false)
 
-if(useComboForSize)
+if (useComboForSize)
   selectedSize.value = null
 
 const getColorImageUrl = colorId => {
@@ -68,6 +68,7 @@ const isColorAvailable = color => {
     return false
   } catch (e) {
     console.error(e)
+    
     return false
   }
 }
@@ -80,12 +81,24 @@ const selectColor = color => {
 
 const onSelectSize = size => {
   selectedSize.value = size
+
   /**
    * selectedSize.value = size
    * updateModel()
    * emit('update:size', size)
    */
 }
+
+const setSizeProps = (item) => {
+  const available = isSizeAvailable(item);
+
+  return {
+    disabled: !available,
+    subtitle: !available ? 'Agotado' : '',
+    // You can even add custom classes here
+    class: !available ? 'opacity-50' : ''
+  };
+};
 
 watch(selectedSize, size => {
   updateModel()
@@ -116,7 +129,7 @@ const updateModel = () => {
 }
 
 watch(selectedProductItem, () => {
-  console.log("selected variant: " + selectedProductItem.value)
+
   emit("selected-variant", selectedProductItem.value)
 })
 
@@ -139,7 +152,6 @@ const isSizeAvailable = size => {
 }
 
 
-
 const colors = computed(() => {
   return props.product.features.filter(f => f.type === 1)
 })
@@ -148,22 +160,23 @@ const sizes = ref([])
 
 
 const hasColors = props.product.features.filter(f => f.type === 1).length > 1
-console.log("hasColrs" +hasColors)
+
+console.log("hasColrs" + hasColors)
 
 
-for(var f of props.product.features) {
-  if(f.type !== 0)
-    continue;
+for (var f of props.product.features) {
+  if (f.type !== 0)
+    continue
 
-  f.name = f.name.toLowerCase() === "tamaño unico" ? 'OS' : f.name
+  let name = f.name.toLowerCase() === "tamaño unico" ? 'OS' : f.name
 
-  if(useComboForSize && !hasSinglePrice.value && !hasColors ){
-    f.name += " - " + formatMoney(props.product.productItems.find(pit =>pit.sizeId === f.id).price.price)
+  if (useComboForSize && !hasSinglePrice.value && !hasColors) {
+    name += " - " + formatMoney(props.product.productItems.find(pit => pit.sizeId === f.id).price.price)
   }
 
+  f.description = name
 
   sizes.value.push(f)
-
 
 
 }
@@ -174,7 +187,6 @@ onMounted(() => {
     selectedColor.value = colorFeature
   }
 })
-
 </script>
 
 <template>
@@ -265,7 +277,10 @@ onMounted(() => {
                 v-for="size in sizes"
                 class="radio ng-scope"
               >
-                <div class="paack-2h-label" style="display: none;">2H</div>
+                <div
+                  class="paack-2h-label"
+                  style="display: none;"
+                >2H</div>
                 <input
                   :id="'size-' + size.id"
                   v-model="selectedSize"
@@ -284,16 +299,15 @@ onMounted(() => {
               </div>
             </div>
             <div v-else>
-
-              <VSelect
-                v-model="selectedSize"
-                :items="sizes"
-                placeholder="Seleccione talla"
-                item-title="name"
-                item-value="id"
-
-                return-object
-              />
+<VSelect
+  v-model="selectedSize"
+  :items="sizes"
+  :item-props="setSizeProps"
+  placeholder="Seleccione talla"
+  item-title="description"
+  item-value="id"
+  return-object
+/>
             </div>
           </div>
 
@@ -316,7 +330,7 @@ onMounted(() => {
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon sprite-line-icons"
               >
-                <use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-cross"/>
+                <use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-cross" />
               </svg>
             </button>
             <div
@@ -341,9 +355,7 @@ onMounted(() => {
                     height="24"
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon sprite-line-icons"
-                  ><title>Alert icon</title><use
-                    href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-alert"
-                  /></svg> Vaya, la  <span>talla </span>  se ha agotado. <br> ¿Te avisamos cuando esté disponible?</span>
+                  ><title>Alert icon</title><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-alert" /></svg> Vaya, la  <span>talla </span>  se ha agotado. <br> ¿Te avisamos cuando esté disponible?</span>
                 <div class="size-oosk__email-form-fields">
                   <div class="input-field"><input
                     id="email"
@@ -383,13 +395,13 @@ onMounted(() => {
                 >
                   <span class="h3">Disponible en la talla </span>
                   <div class="similar-products">
-                    <div class="skeleton"><a/>
+                    <div class="skeleton"><a />
                     </div>
-                    <div class="skeleton"><a/>
+                    <div class="skeleton"><a />
                     </div>
-                    <div class="skeleton"><a/>
+                    <div class="skeleton"><a />
                     </div>
-                    <div class="skeleton"><a/>
+                    <div class="skeleton"><a />
                     </div>
                   </div>
                   <div
