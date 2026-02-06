@@ -8,7 +8,9 @@ export default defineEventHandler(async (event) => {
     const baseUrl = config.public.w3BaseUrl
     const id = getRouterParam(event, 'id')
 
-    url = `${baseUrl}/${getDomainId()}/products/${id}`;
+
+
+    url = `${baseUrl}/${getDomainId()}/products/${parseInt(id)}`;
 
     const res = await $fetch(url, {
       method: 'GET',
