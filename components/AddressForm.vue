@@ -24,6 +24,7 @@ const isCompanyInfo = ref(props.isCompany)
 const address = ref({
   name: props.modelValue.name || '',
   surnames: props.modelValue.surnames || '',
+  phone: props.modelValue.phone || '',
   rut: props.modelValue.rut || '',
   address: props.modelValue.address || '',
   address2: props.modelValue.address2 || '',
