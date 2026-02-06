@@ -8,6 +8,14 @@ const props = defineProps({
     type: Boolean,
   },
 })
+
+const cardData = computed( () => {
+  if(props.result && props.result.responseData && props.result.responseData.card_detail){
+    return props.result.responseData.card_detail.card_number
+  }
+  return ""
+})
+
 </script>
 
 <template>
@@ -22,6 +30,7 @@ const props = defineProps({
         <VCard
           v-if="loading"
           class="text-center pa-10"
+          rounded="0"
           elevation="2"
         >
           <VProgressCircular
@@ -42,6 +51,7 @@ const props = defineProps({
         <VCard
           v-else-if="result?.success"
           class=" overflow-hidden"
+          rounded="0"
           elevation="4"
         >
           <div class="bg-success pa-8 text-center text-white">
@@ -50,9 +60,9 @@ const props = defineProps({
               size="70"
               class="mb-4 shadow-sm"
             >
-              <i
-                class="ti ti-circle-check text-success"
-                style="font-size: 48px;"
+              <VIcon
+                class="tabler-circle-check text-white "
+                size="48"
               />
             </VAvatar>
             <h1
@@ -82,7 +92,7 @@ const props = defineProps({
                   Orden de Compra
                 </VListItemTitle>
                 <template #append>
-                  <span class="font-weight-bold text-uppercase">{{ result.orderId }}</span>
+                  <span class="font-weight-bold text-uppercase">{{ result.referenceId }}</span>
                 </template>
               </VListItem>
 
@@ -96,7 +106,7 @@ const props = defineProps({
                   Monto Total
                 </VListItemTitle>
                 <template #append>
-                  <span class="text-h6 font-weight-black text-primary">{{ formatMoney(result.orderTotal) }}</span>
+                  <span class="text-h6 font-weight-black text-primary">{{ formatMoney(result.transactionAmount) }}</span>
                 </template>
               </VListItem>
 
@@ -110,7 +120,7 @@ const props = defineProps({
                   Tarjeta
                 </VListItemTitle>
                 <template #append>
-                  <span class="font-weight-medium">•••• {{ result.cardNumber }}</span>
+                  <span class="font-weight-medium">•••• {{ cardData }}</span>
                 </template>
               </VListItem>
 
@@ -124,7 +134,7 @@ const props = defineProps({
                   Fecha
                 </VListItemTitle>
                 <template #append>
-                  <span class="text-body-2">{{ formatDate(result.paymentDate) }}</span>
+                  <span class="text-body-2">{{ formatDate(new Date()) }}</span>
                 </template>
               </VListItem>
 
@@ -138,7 +148,7 @@ const props = defineProps({
                   Autorización
                 </VListItemTitle>
                 <template #append>
-                  <span class="text-body-2 font-mono">{{ result.authorization }}</span>
+                  <span class="text-body-2 font-mono">{{ result.authorizationCode }}</span>
                 </template>
               </VListItem>
             </VList>
@@ -148,7 +158,7 @@ const props = defineProps({
                 color="primary"
                 block
                 size="large"
-                rounded="lg"
+                rounded="0"
                 variant="flat"
                 to="/"
                 class="text-none"
@@ -159,7 +169,7 @@ const props = defineProps({
                 color="grey-lighten-4"
                 block
                 size="large"
-                rounded="lg"
+                rounded="0"
                 variant="flat"
                 class="text-none"
                 @click="downloadReceipt"
@@ -175,7 +185,8 @@ const props = defineProps({
 
         <VCard
           v-else
-          class="rounded-xl overflow-hidden"
+          class="overflow-hidden"
+          rounded="0"
           elevation="4"
         >
           <div class="bg-primary    pa-8 text-center text-white">
@@ -184,8 +195,9 @@ const props = defineProps({
               size="70"
               class="mb-4 shadow-sm"
             >
-              <i
-                class="ti ti-circle-x text-error"
+              <VIcon
+                class="tabler-alert-circle-filled text-white"
+                size="40"
                 style="font-size: 48px;"
               />
             </VAvatar>
@@ -218,7 +230,7 @@ const props = defineProps({
                 color="primary"
                 block
                 size="large"
-                rounded="lg"
+                rounded="0"
                 variant="flat"
                 to="/checkout"
                 class="text-none"
@@ -229,6 +241,7 @@ const props = defineProps({
                 variant="text"
                 block
                 to="/"
+                rounded="0"
                 color="grey-darken-1"
                 class="text-none"
               >

@@ -20,7 +20,7 @@ onMounted(async () => {
         body: {
           authorizationCode: paymentId,
           paymentMethodId: 15, //'mercadopago',
-          referenceType: "order",
+          referenceType: "invoice",
         },
       })
 

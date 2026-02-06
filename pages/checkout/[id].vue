@@ -317,7 +317,7 @@ const processPayment = async () => {
               size="x-large"
               color="primary"
               :disabled="!selectedPayment"
-              rounded="lg"
+              rounded="0"
               elevation="4"
               @click="processPayment"
             >

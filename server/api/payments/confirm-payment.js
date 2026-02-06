@@ -3,23 +3,26 @@ import { getDomainId } from "../../ailoo-domain"
 export default defineEventHandler(async event => {
   const config = useRuntimeConfig()
   const body = await readBody(event)
-  const { orderId, paymentId, token, gateway } = body
+  const { authorizationCode, paymentMethodId, referenceType } = body
 
-
+  let url = ""
 
   try {
-    const confirmRet = await $fetch(`${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`,
+
+    url = `${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`
+    if(referenceType && referenceType.toLowerCase() === "invoice"){
+      url = url + "-invoice"
+    }
+
+    const confirmRet = await $fetch(url,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-
         },
         body: {
-          orderId: orderId ? orderId : 0,
-          paymentMethodType: gateway,
-          paymentId: paymentId ? paymentId : null,
-          token: token ? token: null,
+          paymentMethodId: paymentMethodId,
+          authorizationCode: authorizationCode,
         },
       })
 

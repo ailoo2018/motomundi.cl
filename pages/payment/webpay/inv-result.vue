@@ -27,7 +27,7 @@ onMounted(async () => {
       body: {
         authorizationCode: token,
         paymentMethodId: 8,
-        referenceType: "order",
+        referenceType: "invoice",
       },
     })
 
@@ -47,7 +47,6 @@ onMounted(async () => {
   }
 
 })
-
 </script>
 
 <template>
