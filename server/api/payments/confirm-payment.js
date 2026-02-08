@@ -10,9 +10,6 @@ export default defineEventHandler(async event => {
   try {
 
     url = `${config.public.w3BaseUrl}/${getDomainId()}/checkout/payment-result`
-    if(referenceType && referenceType.toLowerCase() === "invoice"){
-      url = url + "-invoice"
-    }
 
     const confirmRet = await $fetch(url,
       {
@@ -23,6 +20,7 @@ export default defineEventHandler(async event => {
         body: {
           paymentMethodId: paymentMethodId,
           authorizationCode: authorizationCode,
+          referenceType: referenceType,
         },
       })
 

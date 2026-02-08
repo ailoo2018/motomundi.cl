@@ -339,15 +339,7 @@ const pay = async (mercadoPagoApiData = null) => {
 
     if (data.value) {
 
-      if (rq.paymentMethod.gateway === PaymentMethods.Webpay) {
-        window.location = `${data.value.paymentUrl}?token_ws=${data.value.token}`
-      } else if (rq.paymentMethod.gateway === PaymentMethods.PayPal) {
-        window.location = data.value.paymentUrl
-      } else if (rq.paymentMethod.gateway === PaymentMethods.MercadoPago) {
-        window.location = data.value.paymentUrl
-      } else if (rq.paymentMethod.gateway === PaymentMethods.TarjetaCredito) {
-        window.location = data.value.paymentUrl
-      }
+      window.location = data.value.paymentUrl
 
     } else {
       throw new Error('No data received from the server')

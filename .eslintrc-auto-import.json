@@ -1,4 +1,8 @@
 {
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
   "globals": {
     "$api": true,
     "COOKIE_MAX_AGE_1_YEAR": true,

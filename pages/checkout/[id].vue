@@ -39,6 +39,32 @@ const props = defineProps({
 
 const route = useRoute()
 
+const selectedCountry = ref()
+const selectedCurrency = ref()
+
+const countries = [
+  { id: "AR", name: "Argentina" },
+  { id: "BR", name: "Brazil" },
+  { id: "CL", name: "Chile" },
+  { id: "CO", name: "Colombia" },
+]
+
+const currenciesMap = {
+  "AR": ["ARS", "USD"],
+  "BR": ["BRL", "USD"],
+  "CL": ["CLP", "USD"],
+  "CO": ["COL", "USD"],
+}
+
+const currencies = computed(() => {
+  if(selectedCountry.value) {
+    return currenciesMap[selectedCountry.value]
+  }
+
+  return ["USD", "EUR"]
+})
+
+
 const webpayToken = ref("")
 const webpayUrl = ref("")
 const webpayForm = ref(null)
@@ -78,6 +104,12 @@ const paymentMethods = ref([
     description: 'Transbank - Tarjetas chilenas',
     color: '#00A84F',
   },
+  {
+    id: 19,
+    name: 'Compras Internacionales',
+    description: 'DLocal - Compras Internacionales',
+    color: '#006cfa',
+  },
 ])
 
 const selectedPayment = ref(null)
@@ -103,7 +135,7 @@ const buttonText = computed(() => {
 
 const selectPayment = methodId => {
   selectedPayment.value = methodId
-  emit('payment-selected', methodId)
+//  emit('payment-selected', methodId)
 }
 
 const processPayment = async () => {
@@ -117,10 +149,12 @@ const processPayment = async () => {
 
   const rq = {
     paymentMethodId: method.id,
-    invoiceId: invoiceId,
+    referenceId: "invoice-" + invoiceId,
+    country: selectedCountry.value || null,
+    currency: selectedCurrency.value || "CLP",
   }
 
-  const { data, error: fetchError } = await useFetch( '/api/invoices/pay', {
+  const { data, error: fetchError } = await useFetch( '/api/invoices/pay-invoice', {
     credentials: 'include',
     method: 'POST',
     headers: {},
@@ -146,16 +180,7 @@ const processPayment = async () => {
     return
   }
 
-  if (rq.paymentMethodId === PaymentMethods.Webpay) {
-    window.location = `${data.value.paymentUrl}?token_ws=${data.value.token}`
-  } else if (rq.paymentMethodId === PaymentMethods.PayPal) {
-    window.location = data.value.paymentUrl
-  } else if (rq.paymentMethodId === PaymentMethods.MercadoPago) {
-    window.location = data.value.paymentUrl
-  } else if (rq.paymentMethodId === PaymentMethods.TarjetaCredito) {
-    window.location = data.value.paymentUrl
-  }
-
+  window.location = data.value.paymentUrl
 
 
 }
@@ -303,8 +328,28 @@ const processPayment = async () => {
                       </VChip>
                     </div>
                   </div>
+
+
+                  <div v-if="method.id === 19 && selectedPayment === 19">
+                    <AppSelect
+                      v-model="selectedCountry"
+                      :items="countries"
+                      item-title="name"
+                      item-value="id"
+                      label="País"
+                      placecholder="Seleccione país"
+                    />
+                    <AppSelect
+                      v-model="selectedCurrency"
+                      :items="currencies"
+                      label="Moneda"
+                      placecholder="Seleccione moneda"
+                    />
+                  </div>
+
                 </VCardText>
               </VCard>
+
             </div>
 
 
@@ -357,17 +402,7 @@ const processPayment = async () => {
       </VContainer>
     </VMain>
 
-    <form
-      ref="webpayForm"
-      :action="webpayUrl"
-      method="post"
-    >
-      <input
-        type="hidden"
-        name="token_ws"
-        :value="webpayToken"
-      >
-    </form>
+
   </VApp>
 </template>
 
