@@ -1,9 +1,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { PaymentMethods } from "@/models/index.js"
 
-// Props - allow parent component to pass data
 const props = defineProps({
   items: {
     type: Array,
@@ -37,6 +35,9 @@ const props = defineProps({
   },
 })
 
+// Emits - allow parent component to listen to events
+const emit = defineEmits(['payment-selected', 'payment-processed'])
+
 const route = useRoute()
 
 const selectedCountry = ref()
@@ -49,11 +50,25 @@ const countries = [
   { id: "CO", name: "Colombia" },
 ]
 
+const ars = { id: "ARS", name: "Pesos Argentinos" }
+const usd = { id: "USD", name: "Dólar" }
+const clp = { id: "CLP", name: "Pesos Chilenos" }
+const col = { id: "COL", name: "Pesos Colombianos" }
+const brl = { id: "BRL", name: "Real Brasilero" }
+
 const currenciesMap = {
-  "AR": ["ARS", "USD"],
-  "BR": ["BRL", "USD"],
-  "CL": ["CLP", "USD"],
-  "CO": ["COL", "USD"],
+  "AR": [ars, usd],
+  "BR": [brl, usd],
+  "CL": [clp, usd],
+  "CO": [col, usd],
+}
+
+function formatCurrency(amount, currencyCode) {
+  // Fallback to 'en-US' locale, but you can change this to 'es-AR', etc.
+  return new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currency: currencyCode,
+  }).format(amount);
 }
 
 const currencies = computed(() => {
@@ -61,16 +76,15 @@ const currencies = computed(() => {
     return currenciesMap[selectedCountry.value]
   }
 
-  return ["USD", "EUR"]
+  return [usd]
 })
 
 
-const webpayToken = ref("")
-const webpayUrl = ref("")
-const webpayForm = ref(null)
+const conversionRate = ref(1)
 const error = ref()
 
 const invoiceId = parseInt(route.params.id)
+
 console.log("checkout quick: " + invoiceId)
 
 const invoice = await $fetch("/api/invoices/" + invoiceId, {
@@ -78,9 +92,6 @@ const invoice = await $fetch("/api/invoices/" + invoiceId, {
 })
 
 console.log("invoice: " + invoice)
-
-// Emits - allow parent component to listen to events
-const emit = defineEmits(['payment-selected', 'payment-processed'])
 
 definePageMeta({
   layout: 'blank',
@@ -132,9 +143,34 @@ const buttonText = computed(() => {
   return `Pagar con ${method?.name}`
 })
 
+watch(selectedCurrency, async () => {
+
+
+  if(!selectedCurrency.value) {
+    return
+  }
+
+  if(selectedCurrency.value === "CLP")
+    return
+
+  const data = await $fetch("/api/currency/exchange", {
+    method: 'GET',
+    query: {
+      from: "CLP",
+      to: selectedCurrency.value.id,
+    },
+  })
+
+  console.log(data)
+  conversionRate.value = data.rate
+
+
+})
+
 
 const selectPayment = methodId => {
   selectedPayment.value = methodId
+
 //  emit('payment-selected', methodId)
 }
 
@@ -147,11 +183,17 @@ const processPayment = async () => {
 
   const method = paymentMethods.value.find(m => m.id === selectedPayment.value)
 
+  let currency = "CLP"
+
+  if(selectedCurrency.value){
+    currency = selectedCurrency.value.id
+  }
+
   const rq = {
     paymentMethodId: method.id,
     referenceId: "invoice-" + invoiceId,
-    country: selectedCountry.value || null,
-    currency: selectedCurrency.value || "CLP",
+    country: selectedCountry.value || "CL",
+    currency: currency,
   }
 
   const { data, error: fetchError } = await useFetch( '/api/invoices/pay-invoice', {
@@ -194,7 +236,6 @@ const processPayment = async () => {
           class="mx-auto payment-container"
           max-width="600"
           elevation="10"
-
         >
           <!-- Header -->
           <VCardTitle class="header pa-8 text-center">
@@ -210,7 +251,7 @@ const processPayment = async () => {
                 class="text-subtitle-1 text-white mb-0"
                 style="opacity: 0.95;"
               >
-                Resumen de OC #{{invoice.number}}
+                Resumen de OC #{{ invoice.number }}
               </p>
             </div>
           </VCardTitle>
@@ -232,14 +273,13 @@ const processPayment = async () => {
                 >
                   <VCardText class="pa-4">
                     <div class="d-flex align-start">
-
                       <img
                         :src="getImageUrl(item.productItem?.image, 300, getDomainId())"
                         :alt="item.name"
                         class="mr-3"
                         width="100"
                         height="100"
-                      />
+                      >
 
                       <div class="flex-grow-1">
                         <div class="item-name mb-1">
@@ -281,6 +321,11 @@ const processPayment = async () => {
                 <div class="d-flex justify-space-between summary-total">
                   <span class="font-weight-bold">Total</span>
                   <span class="font-weight-bold text-primary">{{ formatMoney(invoice.total) }}</span>
+                </div>
+
+                <div v-if="selectedCurrency" class="d-flex justify-space-between summary-total mt-4">
+                  <span class="font-weight-bold">Total <small>({{ selectedCurrency.name }})</small></span>
+                  <span class="font-weight-bold text-primary">{{ formatCurrency(invoice.total * conversionRate, selectedCurrency.id ) }}</span>
                 </div>
               </VCardText>
             </VCard>
@@ -342,19 +387,23 @@ const processPayment = async () => {
                     <AppSelect
                       v-model="selectedCurrency"
                       :items="currencies"
+                      item-id="id"
+                      item-title="name"
                       label="Moneda"
                       placecholder="Seleccione moneda"
+                      return-object
                     />
                   </div>
-
                 </VCardText>
               </VCard>
-
             </div>
 
 
-            <VAlert v-if="error" color="warning">
-              {{error}}
+            <VAlert
+              v-if="error"
+              color="warning"
+            >
+              {{ error }}
             </VAlert>
             <!-- CTA Button -->
             <VBtn
@@ -401,8 +450,6 @@ const processPayment = async () => {
         </VCard>
       </VContainer>
     </VMain>
-
-
   </VApp>
 </template>
 

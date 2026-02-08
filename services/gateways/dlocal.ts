@@ -16,7 +16,7 @@ export async function processDLocal(rq : ProcessPaymentRq) {
 
 
   const orderData = {
-    amount: 900, // rq.amount, // e.g., 100.00
+    amount:  rq.amount, // e.g., 100.00
     currency: rq.currency || 'USD',
     country: rq.country, // e.g., 'BR', 'MX', 'AR'
     order_id: `${rq.referenceId}-${Date.now()}`,
