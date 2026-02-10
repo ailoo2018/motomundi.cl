@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import {getBaseUrl, type ProcessPaymentRq} from "@/services/gateways/gateway";
+import {currencyClient} from "@/services/clients/currencyClient";
 
 export async function processDLocal(rq : ProcessPaymentRq) {
 
@@ -16,14 +17,19 @@ export async function processDLocal(rq : ProcessPaymentRq) {
     returnUrl = returnUrl.replace("http://localhost:3000", baseUrl)
   }
 
+  let amount = rq.amount / 1.19
+  if(rq.currency !== "CLP"){
+    let exchangeRate = await currencyClient.exchangeRate("CLP", rq.currency);
+    amount = amount * exchangeRate;
+  }
 
   const orderData = {
-    amount:  rq.amount, // e.g., 100.00
+    amount:  Number(amount).toFixed(2), // e.g., 100.00
     currency: rq.currency || 'USD',
     country: rq.country, // e.g., 'BR', 'MX', 'AR'
     order_id: `${rq.referenceId}-${Date.now()}`,
     success_url: returnUrl,
-    back_url: returnUrl,
+    back_url: baseUrl + "/checkout/" + (rq.referenceType === "invoice" ? rq.referenceId : "") ,
     notification_url: `${baseUrl}/api/webhooks/dlocal`,
   }
 
@@ -42,8 +48,8 @@ export async function processDLocal(rq : ProcessPaymentRq) {
     referenceId: rq.referenceId,
     token: "",
     paymentUrl: dlocalRs.redirect_url,
-    DLOCAL_GO_BASE_URL: process.env.DLOCAL_GO_BASE_URL,
+/*    DLOCAL_GO_BASE_URL: process.env.DLOCAL_GO_BASE_URL,
     NUXT_DLOCAL_GO_BASE_URL: process.env.NUXT_DLOCAL_GO_BASE_URL,
-    dlocalApiUrl: config.dlocalApiKey,
+    dlocalApiUrl: config.dlocalApiKey,*/
   }
 }

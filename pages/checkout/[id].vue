@@ -64,11 +64,42 @@ const currenciesMap = {
 }
 
 function formatCurrency(amount, currencyCode) {
-  // Fallback to 'en-US' locale, but you can change this to 'es-AR', etc.
-  return new Intl.NumberFormat('es-CL', {
-    style: 'currency',
-    currency: currencyCode,
-  }).format(amount);
+  // Check if it's ARS to set decimals to 0
+  console.log("currencyCode:" + currencyCode)
+  let showDecimal = false
+  let prefix = ""
+  if(currencyCode === "ARS"){
+    showDecimal = false
+    prefix = "AR"
+  }else if(currencyCode === "BRL"){
+    showDecimal = true
+    prefix = "R"
+  }
+  else if(currencyCode === "CLP"){
+    showDecimal = false
+    prefix = ""
+  }
+  else if(currencyCode === "USD"){
+    showDecimal = true
+    prefix = ""
+  }
+
+  let frmt = ""
+  if(currencyCode !== "USD"){
+    frmt = formatMoney(amount, showDecimal)
+  }else{
+    frmt = new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: currencyCode,
+      minimumFractionDigits: !showDecimal ? 0 : 2,
+      maximumFractionDigits: !showDecimal ? 0 : 2,
+    }).format(amount)
+  }
+
+
+
+
+  return prefix  + frmt
 }
 
 const currencies = computed(() => {
@@ -83,15 +114,32 @@ const currencies = computed(() => {
 const conversionRate = ref(1)
 const error = ref()
 
+const total = computed( () => {
+  if(!selectedCountry.value || selectedCountry.value === 'CLAA' ) {
+    return invoice.total
+  }
+
+  return invoice.netTotal
+})
+
+const iva = computed( () => {
+  if(!selectedCountry.value || selectedCountry.value === 'CLAA' ) {
+    return invoice.iva
+  }
+
+  return 0
+})
+
+
 const invoiceId = parseInt(route.params.id)
 
-console.log("checkout quick: " + invoiceId)
+
 
 const invoice = await $fetch("/api/invoices/" + invoiceId, {
   key: 'find-invoice-' + invoiceId,
 })
 
-console.log("invoice: " + invoice)
+
 
 definePageMeta({
   layout: 'blank',
@@ -106,18 +154,21 @@ const paymentMethods = ref([
   {
     id: 15,
     name: 'MercadoPago',
+    button: "MercadoPago",
     description: 'Tarjetas de crédito y débito',
     color: '#009EE3',
   },
   {
     id: 8,
     name: 'WebPay',
+    button: "WebPay",
     description: 'Transbank - Tarjetas chilenas',
     color: '#00A84F',
   },
   {
     id: 19,
     name: 'Compras Internacionales',
+    button: "DLocal",
     description: 'DLocal - Compras Internacionales',
     color: '#006cfa',
   },
@@ -130,9 +181,7 @@ const subtotal = computed(() => {
   return props.items.reduce((sum, item) => sum + item.price, 0)
 })
 
-const total = computed(() => {
-  return subtotal.value + shipping.value
-})
+
 
 const buttonText = computed(() => {
   if (!selectedPayment.value) {
@@ -143,28 +192,43 @@ const buttonText = computed(() => {
   return `Pagar con ${method?.name}`
 })
 
+const loadingExchange = ref(false)
+
 watch(selectedCurrency, async () => {
 
+  loadingExchange.value = true
+  try {
 
-  if(!selectedCurrency.value) {
-    return
+    if (!selectedCurrency.value) {
+      return
+    }
+
+    if (selectedCurrency.value === "CLP")
+      return
+
+
+    const data = await $fetch("/api/currency/exchange", {
+      method: 'GET',
+      query: {
+        from: "CLP",
+        to: selectedCurrency.value.id,
+      },
+    })
+
+    console.log(data)
+    conversionRate.value = data.rate
+
+  }catch(e){
+    console.log("error: " + e.message)
+  }finally {
+    loadingExchange.value =false
   }
 
-  if(selectedCurrency.value === "CLP")
-    return
+})
 
-  const data = await $fetch("/api/currency/exchange", {
-    method: 'GET',
-    query: {
-      from: "CLP",
-      to: selectedCurrency.value.id,
-    },
-  })
-
-  console.log(data)
-  conversionRate.value = data.rate
-
-
+watch(selectedCountry, () => {
+  selectedCurrency.value = null
+  conversionRate.value = 0
 })
 
 
@@ -231,10 +295,11 @@ const processPayment = async () => {
 <template>
   <VApp>
     <VMain class="quick-payment-page">
-      <VContainer class="pa-4">
+      <VContainer class="pa-0">
         <VCard
           class="mx-auto payment-container"
           max-width="600"
+          rounded="0"
           elevation="10"
         >
           <!-- Header -->
@@ -257,7 +322,7 @@ const processPayment = async () => {
           </VCardTitle>
 
           <!-- Content -->
-          <VCardText class="pa-6 pa-sm-8">
+          <VCardText class="pa-md-6 pa-sm-0">
             <!-- Products Section -->
             <div class="mb-8">
               <h2 class="section-title mb-4">
@@ -268,10 +333,10 @@ const processPayment = async () => {
                 <VCard
                   v-for="(item, index) in invoice.items.filter(i => i.type === 0)"
                   :key="index"
-                  class="item-card mb-3"
+                  class="item-card mb-3 "
                   elevation="0"
                 >
-                  <VCardText class="pa-4">
+                  <VCardText class="pa-2 pa-md-2 ">
                     <div class="d-flex align-start">
                       <img
                         :src="getImageUrl(item.productItem?.image, 300, getDomainId())"
@@ -310,8 +375,13 @@ const processPayment = async () => {
             >
               <VCardText class="pa-5">
                 <div class="d-flex justify-space-between mb-3">
-                  <span>Subtotal</span>
+                  <span>Neto</span>
                   <span>{{ formatMoney(invoice.netTotal) }}</span>
+                </div>
+                <div class="d-flex justify-space-between mb-3">
+                  <span>Iva</span>
+                  <span v-if="iva > 0">{{ formatMoney( iva, true) }}</span>
+                  <span v-else>no aplica</span>
                 </div>
                 <div class="d-flex justify-space-between mb-3">
                   <span>Envío</span>
@@ -320,12 +390,29 @@ const processPayment = async () => {
                 <VDivider class="my-4" />
                 <div class="d-flex justify-space-between summary-total">
                   <span class="font-weight-bold">Total</span>
-                  <span class="font-weight-bold text-primary">{{ formatMoney(invoice.total) }}</span>
+                  <span class="font-weight-bold text-primary">{{ formatMoney(total) }}</span>
                 </div>
 
-                <div v-if="selectedCurrency" class="d-flex justify-space-between summary-total mt-4">
+                <div
+                  v-if="selectedCurrency"
+                  class="d-flex justify-space-between summary-total mt-4"
+                >
                   <span class="font-weight-bold">Total <small>({{ selectedCurrency.name }})</small></span>
-                  <span class="font-weight-bold text-primary">{{ formatCurrency(invoice.total * conversionRate, selectedCurrency.id ) }}</span>
+                  <span
+                    v-if="!loadingExchange"
+                    class="font-weight-bold text-primary"
+                  >
+                    {{ formatCurrency(total * conversionRate, selectedCurrency.id ) }}
+                  </span>
+                  <span v-else>
+                    <VProgressCircular
+                      indeterminate
+                      color="primary"
+                      size="24"
+
+                    />
+
+                  </span>
                 </div>
               </VCardText>
             </VCard>
@@ -369,7 +456,7 @@ const processPayment = async () => {
                         variant="flat"
                         size="large"
                       >
-                        <span class="font-weight-bold text-white">{{ method.name }}</span>
+                        <span class="font-weight-bold text-white">{{ method.button }}</span>
                       </VChip>
                     </div>
                   </div>
@@ -413,6 +500,7 @@ const processPayment = async () => {
               :disabled="!selectedPayment"
               rounded="0"
               elevation="4"
+              class="submit-btn"
               @click="processPayment"
             >
               <IconLock
@@ -424,8 +512,8 @@ const processPayment = async () => {
 
             <!-- Secure Badge -->
             <div class="secure-badge text-center mt-4">
-              <IconShieldCheck
-                class="mr-2"
+              <VIcon
+                class="tabler-shield mr-2"
                 :size="16"
               />
               <span>Pago 100% seguro y encriptado</span>
@@ -615,7 +703,7 @@ const processPayment = async () => {
 @media (max-width: 600px) {
   .item-price {
     margin-left: 0 !important;
-    width: 100%;
+    width: 90px;
     text-align: right;
     margin-top: 8px;
   }
@@ -623,6 +711,13 @@ const processPayment = async () => {
   .item-image {
     width: 70px !important;
     height: 70px !important;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .submit-btn {
+    font-size: 1rem;
   }
 }
 </style>

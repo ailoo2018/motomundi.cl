@@ -5,9 +5,10 @@ import {getReferenceId, getReturnUrl, processPayment, ProcessPaymentRq} from "@/
 
 export default defineEventHandler(async event => {
   let url = ""
+  const config = useRuntimeConfig()
 
   try {
-    const config = useRuntimeConfig()
+
     const baseUrl = config.public.w3BaseUrl
     const body = await readBody(event)
 
@@ -27,7 +28,7 @@ export default defineEventHandler(async event => {
 
     const paymentMethodTypeId = body.paymentMethodId
     const amount = invoice.total
-    const country =body.country
+    const country = body.country
     const currency = body.currency || "CLP"
 
     const returnUrl = getReturnUrl(paymentMethodTypeId, "invoice")
@@ -52,7 +53,11 @@ export default defineEventHandler(async event => {
       statusCode: error.statusCode || 500,
       message: error.data?.error || error.data?.message || error.message || 'Transbank Connection Failed',
       stack: error.stack,
-
+/*
+      DLOCAL_GO_BASE_URL: process.env.DLOCAL_GO_BASE_URL,
+      NUXT_DLOCAL_GO_BASE_URL: process.env.NUXT_DLOCAL_GO_BASE_URL,
+      dlocalApiUrl: config.dlocalApiKey,
+*/
     })
   }
 })
