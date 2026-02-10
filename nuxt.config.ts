@@ -59,6 +59,7 @@ export default defineNuxtConfig({
     dlocalApiKey: process.env.DLOCAL_GO_API_KEY,
     dlocalSecretKey: process.env.DLOCAL_GO_SECRET_KEY,
     dlocalApiUrl: process.env.DLOCAL_GO_BASE_URL,
+    test: process.env.TEST,
 
 
     public: {

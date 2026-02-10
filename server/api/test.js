@@ -13,5 +13,6 @@ export default defineEventHandler(async event => {
     WEBPAY_API_KEY: process.env.WEBPAY_API_KEY || '-',
     DLOCAL_GO_API_KEY: config.dlocalApiKey,
     NUXT_DLOCAL_GO_API_KEY: config.dlocalApiKey,
+    TEST: config.test,
   }
 })
