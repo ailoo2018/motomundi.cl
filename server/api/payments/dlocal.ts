@@ -1,7 +1,10 @@
 // server/api/checkout.post.ts
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig();
+  // const config = useRuntimeConfig();
   const body = await readBody(event);
+
+  const dlocalApiKey = process.env.DLOCK_API_KEY;
+  const dlocalSecretKey = process.env.DLOCAL_GO_SECRET_KEY;
 
 /*
   body.amount = 100;
@@ -27,7 +30,7 @@ export default defineEventHandler(async (event) => {
     const response = await $fetch(`${dlocalApiUrl}/v1/payments`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${config.dlocalApiKey}:${config.dlocalSecretKey}`,
+        'Authorization': `Bearer ${dlocalApiKey}:${dlocalSecretKey}`,
         'Content-Type': 'application/json',
       },
       body: orderData,

@@ -4,6 +4,8 @@ import {getBaseUrl, type ProcessPaymentRq} from "@/services/gateways/gateway";
 export async function processDLocal(rq : ProcessPaymentRq) {
 
   const config = useRuntimeConfig();
+  const dlocalApiKey = process.env.DLOCK_API_KEY;
+  const dlocalSecretKey = process.env.DLOCAL_GO_SECRET_KEY;
 
   // In a real app, calculate total price server-side based on product IDs
   // to prevent client-side price tampering.
@@ -30,7 +32,7 @@ export async function processDLocal(rq : ProcessPaymentRq) {
   const dlocalRs = await $fetch(`${dlocalApiUrl}/v1/payments`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${config.dlocalApiKey}:${config.dlocalSecretKey}`,
+      'Authorization': `Bearer ${dlocalApiKey}:${dlocalSecretKey}`,
       'Content-Type': 'application/json',
     },
     body: orderData,
