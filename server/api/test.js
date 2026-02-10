@@ -11,8 +11,8 @@ export default defineEventHandler(async event => {
     MERCADO_PAGO_ACCESS_TOKEN: process.env.MERCADO_PAGO_ACCESS_TOKEN,
     WEBPAY_COMMERCE_CODE: process.env.WEBPAY_COMMERCE_CODE || '-',
     WEBPAY_API_KEY: process.env.WEBPAY_API_KEY || '-',
-    DLOCAL_GO_API_KEY: config.dlocalApiKey,
-    NUXT_DLOCAL_GO_API_KEY: config.dlocalApiKey,
-    TEST: config.test,
+    DLOCAL_GO_API_KEY: config.dlocalApiKey || null,
+    NUXT_DLOCAL_GO_API_KEY: config.dlocalApiKey || null,
+    TEST: config.test || null,
   }
 })
