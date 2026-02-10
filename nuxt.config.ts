@@ -60,6 +60,7 @@ export default defineNuxtConfig({
     dlocalSecretKey: process.env.DLOCAL_GO_SECRET_KEY,
     dlocalApiUrl: process.env.DLOCAL_GO_BASE_URL,
     test: process.env.TEST,
+    test2: process.env.NUXT_TEST,
 
 
     public: {

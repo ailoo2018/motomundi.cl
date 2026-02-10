@@ -13,5 +13,6 @@ export default defineEventHandler(async event => {
     DLOCAL_GO_API_KEY: config.dlocalApiKey || null,
     NUXT_DLOCAL_GO_API_KEY: config.dlocalApiKey || null,
     TEST: config.test || null,
+    TEST2: config.test2 || null,
   }
 })
