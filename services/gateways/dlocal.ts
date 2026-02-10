@@ -4,8 +4,8 @@ import {getBaseUrl, type ProcessPaymentRq} from "@/services/gateways/gateway";
 export async function processDLocal(rq : ProcessPaymentRq) {
 
   const config = useRuntimeConfig();
-  const dlocalApiKey = process.env.DLOCK_API_KEY;
-  const dlocalSecretKey = process.env.DLOCAL_GO_SECRET_KEY;
+  const dlocalApiKey = config.dlocalApiKey ||  process.env.DLOCK_API_KEY || process.env.NUXT_DLOCAL_GO_API_KEY;
+  const dlocalSecretKey = config.dlocalSecretKey || process.env.DLOCAL_GO_SECRET_KEY || process.env.NUXT_DLOCAL_GO_SECRET_KEY;
 
   // In a real app, calculate total price server-side based on product IDs
   // to prevent client-side price tampering.
@@ -42,6 +42,8 @@ export async function processDLocal(rq : ProcessPaymentRq) {
     referenceId: rq.referenceId,
     token: "",
     paymentUrl: dlocalRs.redirect_url,
-
+    DLOCAL_GO_BASE_URL: process.env.DLOCAL_GO_BASE_URL,
+    NUXT_DLOCAL_GO_BASE_URL: process.env.NUXT_DLOCAL_GO_BASE_URL,
+    dlocalApiUrl: config.dlocalApiKey,
   }
 }
