@@ -56,9 +56,9 @@ export default defineNuxtConfig({
     webPayCommerceCode: process.env.WEBPAY_COMMERCE_CODE,
     webPayApiKey: process.env.WEBPAY_API_KEY,
     youtubeApiKey: process.env.YOUTUBE_API_KEY,
-    dlocalApiKey: process.env.DLOCAL_GO_API_KEY,
-    dlocalSecretKey: process.env.DLOCAL_GO_SECRET_KEY,
-    dlocalApiUrl: process.env.DLOCAL_GO_BASE_URL,
+    dlocalApiKey: process.env.NUXT_DLOCAL_GO_API_KEY,
+    dlocalSecretKey: process.env.NUXT_DLOCAL_GO_SECRET_KEY,
+    dlocalApiUrl: process.env.NUXT_DLOCAL_GO_BASE_URL,
     test: process.env.TEST,
     test2: process.env.NUXT_TEST,
 
