@@ -3,7 +3,6 @@ export default defineEventHandler(async event => {
   const config = useRuntimeConfig()
 
   return {
-    test: "test",
     webPayCommerceCode: config.webPayCommerceCode,
     webPayApiKey: config.webPayApiKey,
     mercadopagoAccessToken: config.mercadopagoAccessToken,
