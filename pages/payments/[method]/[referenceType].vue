@@ -18,29 +18,45 @@ const referenceType = route.params.referenceType
 onMounted(async () => {
 
   let token = ""
-
+  let referenceId = ""
   if(method === "mercadopago"){
     token = route.query.payment_id
   }else if(method === "dlocal"){
-    token = route.query.payment_id
+    referenceId = route.query.referenceId
   }else if(method === "webpay"){
     token = route.query.token_ws
   }
 
+  if(!token){
+    referenceId = route.query.referenceId
+  }
 
-  console.log("return token is : " + token)
+
+  console.log("return token is : " + token + " reference: " + referenceId)
 
   try {
     console.log("this should only be called once:")
-    result.value = await $fetch('/api/payments/confirm-payment', {
-      method: 'POST',
-      key: '' + token,
-      body: {
-        authorizationCode: token,
-        paymentMethodId: methdodMap[method],
-        referenceType: referenceType,
-      },
-    })
+    if(token && token.length > 0 ) {
+      result.value = await $fetch('/api/payments/confirm-payment', {
+        method: 'POST',
+        key: '' + token,
+        body: {
+          authorizationCode: token,
+          paymentMethodId: methdodMap[method],
+          referenceType: referenceType,
+        },
+      })
+    }else{
+      result.value = await $fetch('/api/payments/confirm-status', {
+        method: 'POST',
+        key: '' + token,
+        body: {
+          referenceId: referenceId,
+          referenceType: referenceType,
+          paymentMethodId: methdodMap[method],
+        },
+      })
+    }
 
     console.log("Result: " + result.value.success)
   } catch (error) {

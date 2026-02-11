@@ -134,7 +134,7 @@ const cardData = computed( () => {
                   Fecha
                 </VListItemTitle>
                 <template #append>
-                  <span class="text-body-2">{{ formatDate(new Date()) }}</span>
+                  <span class="text-body-2">{{ formatDate(result.transactionDate) }}</span>
                 </template>
               </VListItem>
 

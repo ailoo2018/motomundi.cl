@@ -28,7 +28,7 @@ export async function processDLocal(rq : ProcessPaymentRq) {
     currency: rq.currency || 'USD',
     country: rq.country, // e.g., 'BR', 'MX', 'AR'
     order_id: `${rq.referenceId}-${Date.now()}`,
-    success_url: returnUrl,
+    success_url: `${returnUrl}?referenceId=${rq.referenceId}&referenceType=${rq.referenceType}`,
     back_url: baseUrl + "/checkout/" + (rq.referenceType === "invoice" ? rq.referenceId : "") ,
     notification_url: `${baseUrl}/api/webhooks/dlocal`,
   }
