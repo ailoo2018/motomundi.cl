@@ -23,11 +23,16 @@ export async function processDLocal(rq : ProcessPaymentRq) {
     amount = amount * exchangeRate;
   }
 
+  let order_id = `${rq.referenceId}-${Date.now()}`
+  if(rq.referenceType === "invoice"){
+    order_id = `invoice-${order_id}`
+  }
+
   const orderData = {
     amount:  Number(amount).toFixed(2), // e.g., 100.00
     currency: rq.currency || 'USD',
     country: rq.country, // e.g., 'BR', 'MX', 'AR'
-    order_id: `${rq.referenceId}-${Date.now()}`,
+    order_id: order_id,
     success_url: `${returnUrl}?referenceId=${rq.referenceId}&referenceType=${rq.referenceType}`,
     back_url: baseUrl + "/checkout/" + (rq.referenceType === "invoice" ? rq.referenceId : "") ,
     notification_url: `${baseUrl}/api/webhooks/dlocal`,
