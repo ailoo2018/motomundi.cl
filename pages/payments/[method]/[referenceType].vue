@@ -21,11 +21,14 @@ onMounted(async () => {
 
   if(method === "mercadopago"){
     token = route.query.payment_id
+  }else if(method === "dlocal"){
+    token = route.query.payment_id
   }else if(method === "webpay"){
     token = route.query.token_ws
   }
 
 
+  console.log("return token is : " + token)
 
   try {
     console.log("this should only be called once:")
