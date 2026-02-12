@@ -20,6 +20,7 @@ const slugArray = Array.isArray(route.params.slug)
 
 const path = `/${slugArray.join('/')}`
 
+console.log("original path: " + path)
 
 if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
   // /Payment/QuickCheckout.rails?documentId=27759764&amount=249900&documentType=INVOICE
@@ -44,6 +45,8 @@ if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
     },
   })
 
+  console.log("hashlogin rs: " + JSON.stringify(data))
+
   useCookie('user_id').value = data.userId
   useCookie('accessToken').value = data.accessToken
 
@@ -52,6 +55,7 @@ if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
 
 }else if(path === "/Product/ReviewProduct.rails"){
 
+  console.log("/Product/ReviewProduct.rails : " + JSON.stringify(queryParams) )
   const wuid = useGuestUser().value
   const config = useRuntimeConfig()
   const baseUrl = config.public.w3BaseUrl
@@ -65,8 +69,10 @@ if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
     },
   })
 
-  useCookie('user_id').value = data.userId
-  useCookie('accessToken').value = data.accessToken
+  console.log("hashlogin rs: " + data.value.userId)
+
+  useCookie('user_id').value = data.value.userId
+  useCookie('accessToken').value = data.value.accessToken
 
 
   navigateTo("/account/review?productId=" + queryParams.prodId + "&invoiceId=" + queryParams.invoiceId)
