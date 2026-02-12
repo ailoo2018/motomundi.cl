@@ -106,7 +106,7 @@ const cardData = computed( () => {
                   Monto Total
                 </VListItemTitle>
                 <template #append>
-                  <span class="text-h6 font-weight-black text-primary">{{ formatMoney(result.transactionAmount) }}</span>
+                  <span class="text-h6 font-weight-black text-primary">{{ formatMoney(result.transactionAmount, result.currency) }}</span>
                 </template>
               </VListItem>
 

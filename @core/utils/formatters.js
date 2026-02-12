@@ -46,19 +46,22 @@ export const formatDateToMonthShort = (value, toTimeForCurrentDay = true) => {
 export const prefixWithPlus = value => value > 0 ? `+${value}` : value
 
 
-export const formatMoney = (number, fmtzero) => {
+export const formatMoney = (number, currency, fmtzero) => {
   if (number === 0 && !fmtzero)
     return ""
 
   // Convert to thousands
   const inThousands = number
+  let decimals = 0
+  if(currency === "USD")
+    decimals = 2
 
   // Create a formatter for Chilean Peso with 3 decimal places
   const formatter = new Intl.NumberFormat('es-CL', {
     style: 'currency',
-    currency: 'CLP',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
+    currency: currency || 'CLP',
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
   })
 
   // Format the number

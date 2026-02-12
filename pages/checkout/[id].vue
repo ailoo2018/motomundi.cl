@@ -86,7 +86,7 @@ function formatCurrency(amount, currencyCode) {
 
   let frmt = ""
   if(currencyCode !== "USD"){
-    frmt = formatMoney(amount, showDecimal)
+    frmt = formatMoney(amount, "CLP", showDecimal)
   }else{
     frmt = new Intl.NumberFormat('es-CL', {
       style: 'currency',
@@ -359,7 +359,7 @@ const processPayment = async () => {
                       </div>
 
                       <div class="item-price ml-4 flex-shrink-0">
-                        {{ formatMoney(item.price, true) }}
+                        {{ formatMoney(item.price, "CLP", true) }}
                       </div>
                     </div>
                   </VCardText>
@@ -380,12 +380,12 @@ const processPayment = async () => {
                 </div>
                 <div class="d-flex justify-space-between mb-3">
                   <span>Iva</span>
-                  <span v-if="iva > 0">{{ formatMoney( iva, true) }}</span>
+                  <span v-if="iva > 0">{{ formatMoney( iva, "CLP", true) }}</span>
                   <span v-else>no aplica</span>
                 </div>
                 <div class="d-flex justify-space-between mb-3">
                   <span>Envío</span>
-                  <span>{{ formatMoney(invoice.shipping, true) }}</span>
+                  <span>{{ formatMoney(invoice.shipping, "CLP", true) }}</span>
                 </div>
                 <VDivider class="my-4" />
                 <div class="d-flex justify-space-between summary-total">
