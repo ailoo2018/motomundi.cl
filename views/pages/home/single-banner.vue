@@ -30,12 +30,12 @@ const bgImg = computed(() => { return `url('${getBaseCDN()}${props.widget.config
           >
             <span>
               <img
-                :src="'https://www.motomundi.cl' + widget.configuration.foregroundImage"
+                :src="getBaseCDN() + widget.configuration.foregroundImage"
                 srcset=""
                 alt=""
                 class="cdn-img"
-              > <!----></span>
-          </div> <!----> <!---->
+              > </span>
+          </div>  
           <div class="banner-link center">
             <a
               :href="widget.configuration.link"
