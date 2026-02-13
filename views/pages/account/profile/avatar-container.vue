@@ -162,7 +162,7 @@ const userInitials = computed(() => {
   </section>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .profile__personal-info {
   color: #4a4a4a;
   display: flex;
@@ -194,6 +194,37 @@ const userInitials = computed(() => {
 .profile .profile__orders {
   margin: 25px 0;
   width: 100%;
+}
+
+.account__user-avatar .edit-user-avatar {
+  align-items: center;
+  background-color: hsla(0,0%,100%,0);
+  border-radius: 200px;
+  bottom: 0;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: all .2s ease;
+  width: 100%;
+}
+
+.account .user-avatar__container.club-member .account__user-avatar:after {
+  background: transparent url(https://cdn.motomundi.cl/Templates/MotoMundiDesktop/content/images/mmclub.png) 50% no-repeat;
+  background-size: contain;
+  content: "";
+  display: block;
+  height: 30px;
+  left: 0;
+  margin: -10px auto 10px;
+  position: absolute;
+  right: 0;
+  width: 55px;
+  top: 110px;
 }
 
 @media only screen and (min-width: 601px) {
