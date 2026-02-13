@@ -25,9 +25,9 @@ export const useCalendarStore = defineStore('calendar', {
     async fetchEvents(from, to, currentPage, pageSize, who) {
       console.log("calling events/list cartStore: " + JSON.stringify({ from, to, currentPage, pageSize, who }))
 
-      const data = await $fetch('/api/events/list', {
+      const  data = await $fetch('/api/events/list', {
         method: "POST",
-        key: `events-list-${from}-${currentPage}-${pageSize}`,
+        key: `events-list-` + JSON.stringify({ from, to, currentPage, pageSize, who }),
         body: {
           who: who || "unknown",
           from: from || null,
@@ -39,9 +39,6 @@ export const useCalendarStore = defineStore('calendar', {
         },
       })
 
-
-
-      console.log("data ", data)
 
       return data
     },

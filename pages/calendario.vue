@@ -11,9 +11,47 @@ import CalendarEventHandler from '@/views/apps/calendar/CalendarEventHandler.vue
 
 const store = useCalendarStore()
 
-const events = ref([])
+
+const currentPage = ref(1)
+const pageSize = ref(12)
+
 
 const now = new Date()
+
+
+// 1. Move the calculation logic into a computed property
+const fetchBody = computed(() => {
+  const firstDayMonth = new Date(now.getFullYear(), now.getMonth(), now.getDay() )
+  
+  return {
+    from: firstDayMonth,
+    to: null,
+    limit: pageSize.value,
+    currentPage: currentPage.value,
+    offset: (currentPage.value - 1) * pageSize.value,
+    calendars: store.selectedCalendars,
+  }
+})
+
+// 2. Use useFetch at the top level
+const { data: eventResponse, pending, refresh } = await useFetch('/api/events/list', {
+  method: 'POST',
+  body: fetchBody, // Nuxt watches this automatically because it's a computed
+  key: 'events-list', // Use a static key
+  watch: [currentPage, () => store.selectedCalendars], // Re-run when these change
+})
+
+const events = computed(() => {
+  return eventResponse.value?.events || []})
+
+const totalPages = computed(() => {
+  const total = eventResponse.value?.totalCount || 0
+  
+  return Math.ceil(total / pageSize.value)
+})
+
+const loading = computed(() => pending.value)
+
 
 
 // 👉 Event
@@ -52,31 +90,6 @@ Else if => all filters are selected (by checking length of both array) => Empty 
 const jumpToDateFn = date => {
   jumpToDate(date)
 }
-
-
-const currentPage = ref(1)
-const totalPages = ref(10)
-const pageSize = ref(12)
-const loading = ref(false)
-onMounted(async () => {
-
-  console.log("onMounted")
-  loading.value = true
-  try {
-
-    const firstDayMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-    console.log("firstDayMonth", firstDayMonth)
-    const eventsRs = await store.fetchEvents(firstDayMonth, null, currentPage.value, pageSize.value, "onmounted")
-    if(eventsRs && eventsRs.events) {
-      events.value = eventsRs.events
-      totalPages.value = Math.ceil(eventsRs.totalCount / pageSize.value)
-    }
-  }finally {
-    loading.value = false
-  }
-
-})
-
 </script>
 
 <template>
@@ -85,29 +98,40 @@ onMounted(async () => {
       <!-- `z-index: 0` Allows overlapping vertical nav on calendar -->
       <VLayout style="z-index: 0;">
         <!-- 👉 Navigation drawer -->
-        <VDialog v-model="isEventHandlerSidebarActive" max-width="800">
-          <VCard :title="event.title" >
+        <VDialog
+          v-model="isEventHandlerSidebarActive"
+          max-width="800"
+        >
+          <VCard :title="event.title">
             <VCardText>
               <VRow>
-                <VCol cols="12" sm="6">
-                  <VImg
-                    :src="getBaseCDN() + event.imageUrl"
-                  />
-
+                <VCol
+                  cols="12"
+                  sm="6"
+                >
+                  <VImg :src="getBaseCDN() + event.imageUrl" />
                 </VCol>
-                <VCol cols="12" sm="6">
+                <VCol
+                  cols="12"
+                  sm="6"
+                >
                   <p>
-                  {{ event.summary }}
+                    {{ event.summary }}
                   </p>
                   <p class="mt-4">
-                    <VIcon class="tabler-map-pin-filled" color="primary"/>
-                    {{event.location}}
+                    <VIcon
+                      class="tabler-map-pin-filled"
+                      color="primary"
+                    />
+                    {{ event.location }}
                   </p>
                   <p class="mt-2">
-                    <VIcon class="tabler-calendar" color="primary"/>
-                    {{formatDate( event.start )}}
+                    <VIcon
+                      class="tabler-calendar"
+                      color="primary"
+                    />
+                    {{ formatDate( event.start ) }}
                   </p>
-
                 </VCol>
               </VRow>
             </VCardText>
@@ -182,13 +206,20 @@ onMounted(async () => {
         </VMain>
       </VLayout>
     </VCard>
-
   </div>
 
 
   <VRow class="mt-5 ">
-    <VCol cols="6" sm="4" md="4" lg="4" v-for="event in events" :key="event.id" class="ma-0">
-      <VCard class="mb-2">
+    <VCol
+      v-for="event in events"
+      :key="event.id"
+      cols="6"
+      sm="4"
+      md="4"
+      lg="4"
+      class="ma-0"
+    >
+      <VCard class="h-100 mb-2">
         <VCardText>
           <VImg
             max-height="350px"
@@ -197,16 +228,21 @@ onMounted(async () => {
             :src="getBaseCDN() + event.imageUrl"
           />
 
-          {{event.summary}}
+          {{ event.summary }}
           <p class="mt-4">
-            <VIcon class="tabler-map-pin-filled" color="primary"/>
-            {{event.location}}
+            <VIcon
+              class="tabler-map-pin-filled"
+              color="primary"
+            />
+            {{ event.location }}
           </p>
           <p class="mt-2">
-            <VIcon class="tabler-calendar" color="primary"/>
-            {{formatDate( event.startDate )}}
+            <VIcon
+              class="tabler-calendar"
+              color="primary"
+            />
+            {{ formatDate( event.startDate ) }}
           </p>
-
         </VCardText>
       </VCard>
     </VCol>
@@ -219,7 +255,6 @@ onMounted(async () => {
       />
     </VCol>
   </VRow>
-
 </template>
 
 <style lang="scss">
