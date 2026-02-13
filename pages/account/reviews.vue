@@ -28,8 +28,8 @@ console.log("data", data)
     <VRow v-if="data && data.reviews && data.reviews?.length > 0">
       <VCol
         v-for="p in data.reviews"
-        cols="3"
-        sm="2"
+        cols="6"
+        sm="6"
         md="3"
         lg="3"
         class="prod-list"

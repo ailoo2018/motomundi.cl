@@ -71,7 +71,7 @@ injectSkinClasses()
     v-else
     class="layout-wrapper layout-blank"
   >
-    <div class="landing-page-wrapper">
+    <div class="landing-page-wrapper  desktop-only-container">
       <MotomundiHeaderbar />
       <MotomundiHeaderlogo />
       <MotomundiNavigation />
