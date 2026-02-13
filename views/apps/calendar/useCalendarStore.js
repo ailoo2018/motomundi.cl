@@ -22,9 +22,10 @@ export const useCalendarStore = defineStore('calendar', {
     selectedCalendars: ['Paseos', 'Eventos', 'Deporte', 'Clinicas'],
   }),
   actions: {
-    async fetchEvents() {
+    async fetchEvents(from) {
       const { data, error } = await useFetch('/api/events/list', {
         query: {
+          from: from,
           calendars: this.selectedCalendars,
         },
       })

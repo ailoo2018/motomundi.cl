@@ -11,7 +11,10 @@ import CalendarEventHandler from '@/views/apps/calendar/CalendarEventHandler.vue
 
 const store = useCalendarStore()
 
-//store.fetchEvents()
+const events = ref([])
+
+const now = new Date()
+events.value = await store.fetchEvents(new Date(now.getFullYear(), now.getMonth() , 1))
 
 // 👉 Event
 const event = ref(structuredClone(blankEvent))
@@ -154,14 +157,36 @@ const jumpToDateFn = date => {
         </VMain>
       </VLayout>
     </VCard>
-    <CalendarEventHandler
-      aav-model:is-drawer-open="isEventHandlerSidebarActive"
-      :event="event"
-      @add-event="addEvent"
-      @update-event="updateEvent"
-      @remove-event="removeEvent"
-    />
+
   </div>
+
+
+  <VRow class="mt-5 ">
+    <VCol cols="6" sm="4" md="4" lg="4" v-for="event in events" :key="event.id" class="ma-0">
+      <VCard class="mb-2">
+        <VCardText>
+          <VImg
+            max-height="350px"
+            class="mb-4"
+            cover
+            :src="getBaseCDN() + event.imageUrl"
+          />
+
+          {{event.summary}}
+          <p class="mt-4">
+            <VIcon class="tabler-map-pin-filled" color="primary"/>
+            {{event.location}}
+          </p>
+          <p class="mt-2">
+            <VIcon class="tabler-calendar" color="primary"/>
+            {{formatDate( event.startDate )}}
+          </p>
+
+        </VCardText>
+      </VCard>
+    </VCol>
+  </VRow>
+
 </template>
 
 <style lang="scss">
