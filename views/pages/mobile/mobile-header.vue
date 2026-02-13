@@ -2,7 +2,9 @@
 import MobileSearch from "@/views/pages/mobile/mobile-search.vue"
 import MobileMenu from "@/views/pages/mobile/mobile-menu.vue"
 import CartDrawer from "@/views/pages/mobile/cart-drawer.vue"
-
+import { useUserStore } from "@/stores/user"
+import AccountMenu from "@/views/pages/account/account-menu.vue";
+const { logout } = useUser()
 
 const cart = ref({ items_quantity: 0 })
 const isMenuOpen = ref(false)
@@ -10,7 +12,7 @@ const isSearchOpen = ref(false)
 const isCartOpen = ref(false)
 
 const currentUser = ref({
-  avatar: "https://www.motomundi.cl/Content/uploads/1/_data/9/47/9476a7923b1c47219b0b9d9b2379cbf6_600_original.jpg",
+  avatar: "https://cdn.motomundi.cl/Content/uploads/1/_data/9/47/9476a7923b1c47219b0b9d9b2379cbf6_600_original.jpg",
 
 })
 
@@ -20,8 +22,17 @@ const openLogin = () => {
 }
 
 const isUserLoggedIn = () => {
-  return false
+  const userId = useCookie("user_id").value
+
+  return (userId && userId > 0)
 }
+
+const userStore = useUserStore()
+
+const party = computed(() => {
+  return userStore.user.person
+})
+
 
 const toggleSearch = () => {
   console.log("toggleSearch")
@@ -42,7 +53,16 @@ const toggleUserMenu = () => {
   console.log("toggle user menu")
 }
 
+if((!userStore.user || !userStore.user.id) && useCookie("user_id").value){
+  userStore.fetchUser()
+}
+
 const getUserInitials = () => {
+  console.log("getUserInitials", userStore.user)
+  if (userStore.user && userStore.user.person) {
+    return userStore.user.person.name
+  }
+  
   return ""
 }
 
@@ -150,7 +170,7 @@ const getCartTotalItems = () => {
                     v-if="!isUserLoggedIn()"
                     style="transition: none;"
                     class=""
-                    @click="openLogin"
+                    href="/cuenta/perfil"
                   >
                     <svg
                       width="26"
@@ -180,11 +200,20 @@ const getCartTotalItems = () => {
                         :src="currentUser.avatar"
                         alt="user-avatar"
                       >
-                      JCF
+                      A{{ getUserInitials() }}B
                     </div>
-                    <span class="user-menu__title">Cuenta</span>
+                    <span class="user-menu__title" style="position:relative; top: 2px;">Cuenta</span>
+                    <VMenu
+                      activator="parent"
+                      rounded="0"
+                      transition="slide-y-transition"
+                    >
+                        <AccountMenu class="user-menu__account-content" @logout="logout" />
+
+                    </VMenu>
                   </a>
-                  <AccountMenu />
+
+
                 </li>
                 <!-- /cuenta -->
 
@@ -540,6 +569,18 @@ img {
     float: none;
     padding: 10px;
   }
+}
+
+
+
+.user-menu .user-menu__item a .account__user-avatar {
+  position: relative;
+}
+.user-menu__account div {
+  margin: 1px auto 2px;
+}
+.user-menu .user-menu__item a .account__user-avatar {
+  position: relative;
 }
 </style>
 

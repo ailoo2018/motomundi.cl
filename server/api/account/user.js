@@ -7,7 +7,6 @@ export default defineEventHandler(async event => {
     const baseUrl = config.public.w3BaseUrl
 
     const token = getCookie(event, "accessToken")
-    const token2 = getCookie(event, "accessToken")
 
     return await $fetch(`${baseUrl}/${getDomainId()}/account/user`, {
       method: 'GET',

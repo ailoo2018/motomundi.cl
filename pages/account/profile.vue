@@ -85,6 +85,7 @@ await userStore.fetchUser()
           </div>
         </aside>
       </section>
+
     </div>
   </div>
 </template>

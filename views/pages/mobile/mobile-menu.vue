@@ -8,6 +8,8 @@ import MobileMenuAccesorios from "@/views/pages/mobile/menu/mobile-menu-accesori
 import MobileMenuLifestyle from "@/views/pages/mobile/menu/mobile-menu-lifestyle.vue";
 import MobileMenuBrands from "@/views/pages/mobile/menu/mobile-menu-brands.vue";
 
+const { logout } = useUser()
+
 
 const isMenuOpen = defineModel({type: Boolean, default: false})
 const isShowUserMenuTab = ref(false)
@@ -134,6 +136,7 @@ const toggleMenu = () => {
               <span>Mi cuenta</span>
               <AccountMenu
                 v-if="isShowUserMenuTab"
+                @logout="logout"
                 component-class="user-menu__account-content"
               />
 

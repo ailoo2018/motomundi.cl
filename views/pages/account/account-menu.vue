@@ -1,4 +1,7 @@
 <script setup>
+
+const { logout } = useUser()
+
 const props= defineProps({
   componentClass: {
     type: String,
@@ -8,9 +11,10 @@ const props= defineProps({
 
 const emit = defineEmits(['logout'])
 
-const logout = async () => {
+/*const logout = async () => {
+  console.log("dologout")
   emit('logout')
-}
+}*/
 </script>
 
 <template>
@@ -273,6 +277,13 @@ const logout = async () => {
 .account__nav a svg {
   transition: all .2s ease;
   vertical-align: -4px;
+}
+
+@media only screen and (max-width: 600px) {
+  .user-menu__account-content a {
+    font-size: 10px;
+    padding: 5px 0;
+  }
 }
 
 </style>

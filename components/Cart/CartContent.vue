@@ -122,7 +122,7 @@ onMounted(async () => {
   width: 80px;
 }
 
-#shop-cart li>a, li .mtc-link {
+#shop-cart li>a {
   font-weight: 400;
   padding: 0;
   text-transform: none;
