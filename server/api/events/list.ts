@@ -11,6 +11,7 @@ export default defineEventHandler(async event => {
 
     return await $fetch(baseUrl + `/${getDomainId()}/events/list?limit=${limit}`,
       {
+        key: `events-list-${new Date().toISOString()}`,
         method: 'POST',
         body: {
           from: from,

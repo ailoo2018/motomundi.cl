@@ -24,6 +24,7 @@ export const useCalendarStore = defineStore('calendar', {
   actions: {
     async fetchEvents(from) {
       const { data, error } = await useFetch('/api/events/list', {
+        key: `events-list`,
         query: {
           from: from,
           calendars: this.selectedCalendars,

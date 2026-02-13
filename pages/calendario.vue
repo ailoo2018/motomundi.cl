@@ -14,7 +14,7 @@ const store = useCalendarStore()
 const events = ref([])
 
 const now = new Date()
-events.value = await store.fetchEvents(new Date(now.getFullYear(), now.getMonth() , 1))
+
 
 // 👉 Event
 const event = ref(structuredClone(blankEvent))
@@ -52,6 +52,12 @@ Else if => all filters are selected (by checking length of both array) => Empty 
 const jumpToDateFn = date => {
   jumpToDate(date)
 }
+
+onMounted(async () => {
+  events.value = await store.fetchEvents(new Date(now.getFullYear(), now.getMonth(), 1))
+
+})
+
 </script>
 
 <template>
