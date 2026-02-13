@@ -4,7 +4,7 @@ import MobileMenu from "@/views/pages/mobile/mobile-menu.vue"
 import CartDrawer from "@/views/pages/mobile/cart-drawer.vue"
 import { useUserStore } from "@/stores/user"
 import AccountMenu from "@/views/pages/account/account-menu.vue";
-const { logout } = useUser()
+const { logout, getInitials } = useUser()
 
 const cart = ref({ items_quantity: 0 })
 const isMenuOpen = ref(false)
@@ -57,14 +57,6 @@ if((!userStore.user || !userStore.user.id) && useCookie("user_id").value){
   userStore.fetchUser()
 }
 
-const getUserInitials = () => {
-  console.log("getUserInitials", userStore.user)
-  if (userStore.user && userStore.user.person) {
-    return userStore.user.person.name
-  }
-  
-  return ""
-}
 
 const getCartTotalItems = () => {
   return 1
@@ -200,7 +192,7 @@ const getCartTotalItems = () => {
                         :src="currentUser.avatar"
                         alt="user-avatar"
                       >
-                      A{{ getUserInitials() }}B
+                      {{ getInitials() }}
                     </div>
                     <span class="user-menu__title" style="position:relative; top: 2px;">Cuenta</span>
                     <VMenu

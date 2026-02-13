@@ -57,6 +57,7 @@ await userStore.fetchUser()
       </a>
     </div>
 
+
     <div class="profile">
       <AvatarContainer />
 
@@ -80,13 +81,14 @@ await userStore.fetchUser()
               </div>
             </div>
             <div>
-              <div class="row products banner--right" />
+              <div class="row products banner&#45;&#45;right" />
             </div>
           </div>
         </aside>
       </section>
 
     </div>
+
   </div>
 </template>
 <style >

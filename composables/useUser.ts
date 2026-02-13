@@ -1,8 +1,28 @@
+import {useUserStore} from "@/stores/user";
+
 export const useUser = () => {
   const router = useRouter()
 
+  const getInitials = () => {
+    const userStore = useUserStore()
+
+    if(!userStore.user || !userStore.user.id)
+      return ""
+
+    let fullName = userStore.user.person.name
+
+    return fullName
+      .trim()                    // Remove leading/trailing whitespace
+      .split(/\s+/)              // Split by one or more spaces
+      .map(word => word[0])      // Take the first character of each word
+      .join('')                  // Join them into a single string
+      .toUpperCase()             // Ensure they are uppercase
+      .slice(0, 3)              // Limit to the first 3 characters
+  }
+  
   const logout = async () => {
     console.log("clearing cookies")
+
     // 1. Clear the cookies
     useCookie("user_id").value = null
     useCookie("guest_id").value = null
@@ -10,6 +30,7 @@ export const useUser = () => {
 
     // 2. Clear reactive state
     const user = useState('user')
+
     user.value = null
 
     // 3. Redirect
@@ -18,6 +39,7 @@ export const useUser = () => {
   }
 
   return {
-    logout
+    logout,
+    getInitials,
   }
 }
