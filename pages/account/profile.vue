@@ -105,6 +105,7 @@ await userStore.fetchUser()
   }
 }
 
+
 @media only screen and (min-width: 601px) {
   .profile__club {
     margin: 0;
