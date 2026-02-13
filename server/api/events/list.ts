@@ -7,9 +7,11 @@ export default defineEventHandler(async event => {
     const baseUrl = config.public.w3BaseUrl
 
 
-    const { limit, offset,  from, to } = await readBody(event)
+    const { limit, offset,  from, to, who } = await readBody(event)
 
-    var rs = await $fetch(baseUrl + `/${getDomainId()}/events/list?limit=${limit}`,
+    console.log("who: " + who)
+
+    var rs = await $fetch(baseUrl + `/${getDomainId()}/events/list`,
       {
         key: `events-list-${new Date().toISOString()}`,
         method: 'POST',

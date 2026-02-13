@@ -86,7 +86,7 @@ export const useCalendar = (event, isEventHandlerSidebarActive, isLeftSidebarOpe
 
 
 
-    store.fetchEvents(null, null, 1, 10000)
+    store.fetchEvents(null, null, 1, 10000, "from useCalendar")
       .then(r => {
         console.log("r is: ", r)
         if(!r || !r.events)

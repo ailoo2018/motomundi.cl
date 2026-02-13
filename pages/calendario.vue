@@ -66,7 +66,7 @@ onMounted(async () => {
 
     const firstDayMonth = new Date(now.getFullYear(), now.getMonth(), 1)
     console.log("firstDayMonth", firstDayMonth)
-    const eventsRs = await store.fetchEvents(firstDayMonth, null, currentPage.value, pageSize.value)
+    const eventsRs = await store.fetchEvents(firstDayMonth, null, currentPage.value, pageSize.value, "onmounted")
     if(eventsRs && eventsRs.events) {
       events.value = eventsRs.events
       totalPages.value = Math.ceil(eventsRs.totalCount / pageSize.value)

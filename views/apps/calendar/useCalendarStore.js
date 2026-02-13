@@ -22,24 +22,28 @@ export const useCalendarStore = defineStore('calendar', {
     selectedCalendars: ['Paseos', 'Eventos', 'Deporte', 'Clinicas'],
   }),
   actions: {
-    async fetchEvents(from, to, currentPage, pageSize) {
-      const { data, error } = await useFetch('/api/events/list', {
+    async fetchEvents(from, to, currentPage, pageSize, who) {
+      console.log("calling events/list cartStore: " + JSON.stringify({ from, to, currentPage, pageSize, who }))
+
+      const data = await $fetch('/api/events/list', {
         method: "POST",
         key: `events-list-${from}-${currentPage}-${pageSize}`,
         body: {
-          from: from,
-          to: to,
-          limit: pageSize || 12,
-          currentPage: currentPage,
-          offset: (currentPage - 1) * pageSize,
+          who: who || "unknown",
+          from: from || null,
+          to: to || null,
+          limit: pageSize || 1000,
+          currentPage: currentPage || 1,
+          offset: currentPage && pageSize ? (currentPage - 1) * pageSize : 0,
           calendars: this.selectedCalendars,
         },
       })
 
-      if (error.value)
-        return error.value
-      
-      return data.value
+
+
+      console.log("data ", data)
+
+      return data
     },
     async addEvent(event) {
       await $api('/apps/calendar', {
