@@ -4,6 +4,7 @@ import listPlugin from '@fullcalendar/list'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useConfigStore } from '@core/stores/config'
 import { useCalendarStore } from '@/views/apps/calendar/useCalendarStore'
+import esLocale from '@fullcalendar/core/locales/es'
 
 export const blankEvent = {
   title: '',
@@ -191,6 +192,7 @@ export const useCalendar = (event, isEventHandlerSidebarActive, isLeftSidebarOpe
   const calendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
+    locale: esLocale,
     headerToolbar: {
       start: 'drawerToggler,prev,next title',
       end: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth',

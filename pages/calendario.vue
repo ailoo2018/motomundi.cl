@@ -75,7 +75,7 @@ const jumpToDateFn = date => {
                     <VIcon class="tabler-map-pin-filled" color="primary"/>
                     {{event.location}}
                   </p>
-                  <p >
+                  <p class="mt-2">
                     <VIcon class="tabler-calendar" color="primary"/>
                     {{formatDate( event.start )}}
                   </p>
