@@ -22,11 +22,16 @@ export const useCalendarStore = defineStore('calendar', {
     selectedCalendars: ['Paseos', 'Eventos', 'Deporte', 'Clinicas'],
   }),
   actions: {
-    async fetchEvents(from) {
+    async fetchEvents(from, to, currentPage, pageSize) {
       const { data, error } = await useFetch('/api/events/list', {
-        key: `events-list`,
-        query: {
+        method: "POST",
+        key: `events-list-${from}-${currentPage}-${pageSize}`,
+        body: {
           from: from,
+          to: to,
+          limit: pageSize || 12,
+          currentPage: currentPage,
+          offset: (currentPage - 1) * pageSize,
           calendars: this.selectedCalendars,
         },
       })

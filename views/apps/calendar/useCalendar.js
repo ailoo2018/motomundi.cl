@@ -80,11 +80,19 @@ export const useCalendar = (event, isEventHandlerSidebarActive, isLeftSidebarOpe
   // 👉 Fetch events
   const fetchEvents = (info, successCallback) => {
     // If there's no info => Don't make useless API call
+    console.log("fetchEvents", info)
     if (!info)
       return
-    store.fetchEvents()
+
+
+
+    store.fetchEvents(null, null, 1, 10000)
       .then(r => {
-        successCallback(r.map(e => ({
+        console.log("r is: ", r)
+        if(!r || !r.events)
+          return
+
+        successCallback(r.events.map(e => ({
           ...e,
           imageUrl: e.imageUrl || null,
           imageId: e.imageId || null,

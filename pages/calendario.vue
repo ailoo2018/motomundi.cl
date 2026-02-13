@@ -53,8 +53,27 @@ const jumpToDateFn = date => {
   jumpToDate(date)
 }
 
+
+const currentPage = ref(1)
+const totalPages = ref(10)
+const pageSize = ref(12)
+const loading = ref(false)
 onMounted(async () => {
-  events.value = await store.fetchEvents(new Date(now.getFullYear(), now.getMonth(), 1))
+
+  console.log("onMounted")
+  loading.value = true
+  try {
+
+    const firstDayMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+    console.log("firstDayMonth", firstDayMonth)
+    const eventsRs = await store.fetchEvents(firstDayMonth, null, currentPage.value, pageSize.value)
+    if(eventsRs && eventsRs.events) {
+      events.value = eventsRs.events
+      totalPages.value = Math.ceil(eventsRs.totalCount / pageSize.value)
+    }
+  }finally {
+    loading.value = false
+  }
 
 })
 
@@ -190,6 +209,14 @@ onMounted(async () => {
 
         </VCardText>
       </VCard>
+    </VCol>
+    <VCol cols="12">
+      <VPagination
+        v-model="currentPage"
+        :length="totalPages"
+        :disabled="loading"
+        total-visible="7"
+      />
     </VCol>
   </VRow>
 

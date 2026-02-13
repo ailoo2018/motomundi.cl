@@ -7,17 +7,22 @@ export default defineEventHandler(async event => {
     const baseUrl = config.public.w3BaseUrl
 
 
-    const { limit, from } = getQuery(event)
+    const { limit, offset,  from, to } = await readBody(event)
 
-    return await $fetch(baseUrl + `/${getDomainId()}/events/list?limit=${limit}`,
+    var rs = await $fetch(baseUrl + `/${getDomainId()}/events/list?limit=${limit}`,
       {
         key: `events-list-${new Date().toISOString()}`,
         method: 'POST',
         body: {
           from: from,
+          to: to,
+          limit: limit,
+          offset: offset,
         },
 
       })
+
+    return rs
   }catch(error){
     console.error('Error latest-events:', error)
     console.error('Stack trace:', error.stack)
