@@ -88,13 +88,17 @@ useIntersectionObserver([
 
 <template>
 
-<!--
-  <VAlert>
+
+  <VAlert v-if="false">
     <ul>
-      <li v-for="widget in widgets">{{widget.component}}</li>
+      <li v-for="widget in widgets">{{widget.id}} {{widget.component}}
+        <span v-if="widget.id == 114930">
+
+        </span>
+      </li>
     </ul>
   </VAlert>
--->
+
   <div style="background-color: rgb(245, 245, 245)">
 
 

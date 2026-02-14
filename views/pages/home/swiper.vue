@@ -50,6 +50,7 @@ register()
 </script>
 
 <template>
+
   <div
     id="home-block-0"
     class="block-container"
@@ -85,9 +86,10 @@ register()
                           class="slide__single-image"
                         >
                           <span>
+
                             <!-- IsMMobile $requestHelper.IsMobile  ShowFG: $img.showForegroundMobile -->
                             <img
-                              v-if="!isMobile"
+                              v-if="!isMobile || img.showForegroundMobile"
                               :src="getBaseCDN() + img.slideImage"
                               class="cdn-img carrusel-fg-image"
                             >
@@ -235,8 +237,17 @@ register()
 
 
 .slide .slide__content {
-  max-width: 50%;
+  /*max-width: 50%;*/
+  max-width: 100%;
 }
+
+@media (max-width: 900px){
+  .slide .slide__content {
+    max-width: 100%;
+  }
+
+}
+
 .slide .slide__content .slide__single-image {
   height: auto;
   max-height: 300px;
@@ -265,13 +276,6 @@ register()
   text-transform: uppercase;
   padding: 13px 20px;
   transition: 0.1s ease-in-out;
-}
-.slide .slide__content .slide__single-image {
-  height: auto;
-  max-height: 300px;
-  max-width: 100%;
-  text-align: center;
-  width: 560px;
 }
 
 .slide .slide__content .slide__main .slide__countdown-button.center {

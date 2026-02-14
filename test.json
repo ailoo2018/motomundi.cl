@@ -1,22 +1,64 @@
 {
-  "allDay": true,
-  "title": "Curso Offroad: Técnica, control y confianza fuera del asfalto",
-  "start": "2026-02-01",
-  "end": "2026-02-02",
-  "id": "390963a1-0332-483d-b985-6d7602df05b5",
-  "extendedProps": {
-    "calendar": "Business",
-    "status": "Approved",
-    "eventUrl": "https://www.instagram.com/p/DT8EfnPjjG6/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
-    "loading": false,
-    "imageUrl": "/Content/uploads/1/_data/7/33/733f56fbc9f445b4b4e70f0010fc41e9.jpg",
-    "imageId": "733f56fbc9f445b4b4e70f0010fc41e9.jpg",
-    "summary": "El Curso Offroad combina práctica intensiva en circuito con acompañamiento profesional, enfocado en control de la moto, postura, trazado y toma de decisiones en terrenos exigentes. Ideal para riders que quieren mejorar su desempeño, ganar confianza y disfrutar al máximo el manejo fuera del asfalto en un entorno preparado para aprender y desafiar tus propios límites.",
-    "startDate": "2026-02-01T12:02:00Z",
-    "endDate": "2026-02-01T12:02:00Z",
-    "location": "CIRCUITO CEOFF- CURACAVÍ",
-    "createDate": "2026-01-26T12:03:08.676Z",
-    "modifiedDate": "2026-01-26T12:03:08.676Z",
-    "domainId": "1"
-  }
+  "id": 114930,
+  "name": "Html_CarruselMotocard",
+  "configuration": {
+    "conditionsUrl": "#",
+    "title": "Carrusel Home",
+    "images": [
+      {
+        "link": "https://www.motomundi.cl/outlet",
+        "countdownDate": null,
+        "buttonColor": null,
+        "buttonTitle": null,
+        "align": "center",
+        "alignMobile": "center",
+        "imagePathSmall": null,
+        "showForegroundMobile": null,
+        "imagePath": "/Content/uploads/1/_data/0/55/0555b50a61cc4c5c8bed0ffd2e563f75.jpg",
+        "slideImage": "/Content/uploads/1/_data/d/33/d333257a075a428fba8b2c78a582f3a4.png",
+        "sliderButtonTitle": "OFERTA FLASH"
+      },
+      {
+        "link": "https://www.motomundi.cl/motocicleta/3414377-carpas-bulldg-bulldg-carpa-premium-para-motocicleta",
+        "countdownDate": null,
+        "buttonColor": null,
+        "buttonTitle": "COVER UP",
+        "align": "center",
+        "alignMobile": "center",
+        "imagePathSmall": "/Content/uploads/1/_data/5/eb/5ebfe32427ed4256b57490e2db9c2a19.jpg",
+        "showForegroundMobile": null,
+        "imagePath": "/Content/uploads/1/_data/9/49/9495f765329a40a995fd3f1118cc05bb.jpg",
+        "slideImage": "/Content/uploads/1/_data/3/bd/3bd907c5571b419989753fa34af1702a.png",
+        "sliderButtonTitle": "PROTECCIÓN PREMIUM"
+      },
+      {
+        "link": "https://www.motomundi.cl/products/list?sword=shoei",
+        "countdownDate": "",
+        "buttonColor": null,
+        "buttonTitle": "VER OFERTA",
+        "align": "center",
+        "alignMobile": "center",
+        "imagePathSmall": "/Content/uploads/1/_data/9/c1/9c1b02813d0c45939eed8a97bc402bc0.jpg",
+        "showForegroundMobile": null,
+        "imagePath": "/Content/uploads/1/_data/4/73/47315f042e804014b31a9294e4afe277.jpg",
+        "slideImage": "/Content/uploads/1/_data/d/18/d18b295cc9224808aadfc3caeb9a8466.png",
+        "sliderButtonTitle": "OPORTUNIDAD SHOEI"
+      },
+      {
+        "link": "https://www.motomundi.cl/motocicleta/2088497-chaquetas-textil-clover-netstyle-2",
+        "countdownDate": null,
+        "buttonColor": null,
+        "buttonTitle": "EXPLORAR MODELO",
+        "align": "center",
+        "alignMobile": "center",
+        "imagePathSmall": "/Content/uploads/1/_data/e/a9/ea986954acb74acf98d5104c66ab894d.jpg",
+        "showForegroundMobile": null,
+        "imagePath": "/Content/uploads/1/_data/e/9a/e9a1d5540622403481fe0ad414b263f6.jpg",
+        "slideImage": "/Content/uploads/1/_data/b/bd/bbd159dacec4446ca27e847cc372bbfa.png",
+        "sliderButtonTitle": "APROVECHA LA OFERTA"
+      }
+    ],
+    "cache-enabled": false
+  },
+  "component": "Swiper"
 }
