@@ -9,6 +9,8 @@ definePageMeta({
 
 })
 
+
+
 const route = useRoute()
 const queryParams = route.query
 const config = ref()
@@ -22,7 +24,12 @@ const path = `/${slugArray.join('/')}`
 
 console.log("original path: " + path)
 
-if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
+console.log("!!!!!!!!!!!!!" + path.includes('sitemap'))
+
+
+if (path.includes('sitemap') || path.includes('__sitemap__')) {
+  throw createError({ statusCode: 404 })
+}else if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
   // /Payment/QuickCheckout.rails?documentId=27759764&amount=249900&documentType=INVOICE
   navigateTo("/checkout/" + queryParams.documentId, {external:true})
 }else if(path.toLowerCase().startsWith("/product/view.rails")) {
@@ -82,6 +89,11 @@ if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
 }else{
   console.log("path received", path)
   try {
+
+    if(path.includes('sitemap') || path.includes('__sitemap__')) {
+      throw createError({ statusCode: 404 })
+    }
+
     const { data, error } = await useFetch(`/api/friendlyurl?path=${path}`)
 
     config.value = data.value

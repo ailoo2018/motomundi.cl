@@ -220,5 +220,25 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
 
-  modules: ['@vueuse/nuxt', '@nuxtjs/i18n', '@nuxtjs/device', '@pinia/nuxt'],
+  modules: ['@vueuse/nuxt', '@nuxtjs/i18n', '@nuxtjs/device', '@pinia/nuxt', '@nuxtjs/sitemap'],
+  site: {
+    url: 'https://www.motomundi.cl', // Replace with your actual production URL
+    name: "Motomundi 2",
+  },
+  sitemap: {
+    autoI18n: false,
+    dynamicUrlsApiEndpoint: '/__sitemap__/urls',
+    // Simple list of dynamic paths
+    /*urls: [
+      { loc: '/motocicleta/2993398-cascos-integrales-agv-k7', changefreq: 'daily' },
+      '/blog/hello-world',
+      '/blog/my-first-post',
+    ],
+*/
+    // OR: Use a function to fetch from an API
+
+    sources: [
+      '/api/sitemap'
+    ],
+  },
 })
