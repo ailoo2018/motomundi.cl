@@ -90,9 +90,6 @@ if (path.includes('sitemap') || path.includes('__sitemap__')) {
   console.log("path received", path)
   try {
 
-    if(path.includes('sitemap') || path.includes('__sitemap__')) {
-      throw createError({ statusCode: 404 })
-    }
 
     const { data, error } = await useFetch(`/api/friendlyurl?path=${path}`)
 
@@ -106,7 +103,7 @@ if (path.includes('sitemap') || path.includes('__sitemap__')) {
       })
     }
 
-    if(config.value.source.rawUrl.toLowerCase().includes("cms/page")){
+    if(config.value.source && config.value.source.rawUrl && config.value.source.rawUrl.toLowerCase().includes("cms/page")){
       type.value = "cms"
     }
 
