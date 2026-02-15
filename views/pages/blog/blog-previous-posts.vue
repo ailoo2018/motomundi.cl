@@ -17,8 +17,9 @@ const totalPages = ref(10)
       <VCol
         v-for="entry in rs.entries"
         :key="entry.id"
-        cols="6"
+        cols="12"
         sm="6"
+        md="6"
         xs="12"
 
       >

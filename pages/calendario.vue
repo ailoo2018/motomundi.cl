@@ -213,8 +213,8 @@ const jumpToDateFn = date => {
     <VCol
       v-for="event in events"
       :key="event.id"
-      cols="6"
-      sm="4"
+      cols="12"
+      sm="6"
       md="4"
       lg="4"
       class="ma-0"
