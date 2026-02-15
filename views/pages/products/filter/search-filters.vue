@@ -7,13 +7,18 @@ const filters = defineModel({
 const MAX_SHOW = 5
 const sliderValues = ref([10, 60])
 
+const activeFilters = computed(() => {
+  return filters?.value.filter(f => f.buckets.length > 0)
+})
+
 </script>
 
 <template>
   <ul style="overflow-y: auto;max-height: 60vh;">
 
     <li
-      v-for="facetGroup in filters"
+      v-for="facetGroup in activeFilters"
+
       v-bind:key="facetGroup.name"
       class="filter "
       style=""
