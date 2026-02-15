@@ -10,7 +10,7 @@ const sliderValues = ref([10, 60])
 </script>
 
 <template>
-  <ul>
+  <ul style="overflow-y: auto;max-height: 60vh;">
 
     <li
       v-for="facetGroup in filters"

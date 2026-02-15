@@ -97,27 +97,6 @@ const showFilters  = () => {
                       <SearchFilters v-model="filters" />
 
 
-
-                      <li
-                        class="facet"
-                        ng-class="isShowColors ? 'expanded' : ''"
-                        ng-init="isShowColors = false;"
-                      >
-                        <button ng-click="isShowColors = !isShowColors;">
-                          Colores
-                          <!-- ngIf: getTotalSelected(6) > 0 -->
-                        </button>
-                        <ul
-                          class="facets-mobile__list ng-hide"
-                          ng-show="isShowColors"
-                        >
-                          <li class="colors">
-                            <!-- ngRepeat: color in filterTree.colors -->
-                          </li>
-                        </ul>
-                      </li>
-                      <!-- /colores -->
-
                     </ul>
                   </nav>
                 </div>
