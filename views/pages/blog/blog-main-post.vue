@@ -10,7 +10,7 @@
         >
           <div
             class="image rocket-lazyload lazyloaded"
-            style="background-image: url(https://www.motomundi.cl/Content/uploads/1/_data/3/23/32373d2783dc48c0846100bc929f5554.png);"
+            style="background-image: url(https://cdn.motomundi.cl/Content/uploads/1/_data/3/23/32373d2783dc48c0846100bc929f5554.png);"
             data-ll-status="loaded"
           />
         </div>

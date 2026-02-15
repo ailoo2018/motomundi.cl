@@ -2,6 +2,9 @@
 import { onMounted } from "vue"
 import { register } from "swiper/element"
 
+import * as LinkHelper from "~/helpers/LinkHelper"
+import {getWccUrl} from "~/helpers/LinkHelper";
+
 const { data: featured } = useFetch("/api/blog/featured-posts", {
   method: "GET",
   key: "blog-featured-posts",
@@ -38,22 +41,14 @@ onMounted(() => {
           style="display: inline-block; cursor: pointer;"
           @click="slidePrev"
         >
-          <img
-            src="https://cf-cdn-blog.motocard.com/assets/icons/previous-w.svg"
-            class="lazyloaded"
-            
-          >
+          <img src="@/assets/images/svg/previous-w.svg">
         </span>
         <span
           class="next slick-arrow"
           style="display: inline-block; cursor: pointer;"
           @click="slideNext"
         >
-          <img
-            src="https://cf-cdn-blog.motocard.com/assets/icons/next-w.svg"
-            class="lazyloaded"
-            
-          >
+          <img src="@/assets/images/svg/next-w.svg">
         </span>
       </div>
       Te  recomendamos...
@@ -85,13 +80,13 @@ onMounted(() => {
               >
                 <header>
                   <a
-                    href="/$linkHelper.GetUrl($r)"
+                    :href="LinkHelper.getWccUrl(r)"
                     tabindex="-1"
                   >
                     <div class="img-wrapper">
 
                       <img
-                        :src="`https://www.motomundi.cl${r.previewImage}`"
+                        :src="`${getBaseCDN()}${r.previewImage}`"
                         class="attachment-big-grid size-big-grid lazyloaded"
                         alt="Estos son los mejores cascos de motocross"
                       >
@@ -104,14 +99,14 @@ onMounted(() => {
                     <span class="category">
                       <a
                         class="parent-category"
-                        href="/$linkHelper.GetUrl($r)"
+                        :href="LinkHelper.getWccUrl(r)"
                         tabindex="-1"
                       >
                         Comparativas y rankings
                       </a>
                     </span>
                     <a
-                      href="/$linkHelper.GetUrl($r)"
+                      :href="LinkHelper.getWccUrl(r)"
                       tabindex="-1"
                     >
                       <h2 class="post-title">{{r.title}}</h2>

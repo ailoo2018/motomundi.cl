@@ -11,11 +11,10 @@ const props = defineProps({
 <template>
   <article
     id="post-$entry.Id"
-
     v-bind="$attrs"
   >
     <header class="title-container">
-      <a href="$entry.friendlyUrl">
+      <a :href="entry.friendlyUrl">
         <h2 style="height: 96px;">{{ entry.title }} </h2>
       </a>
       <p class="posts-date-category">
