@@ -9,7 +9,10 @@ export const useUser = () => {
     if(!userStore.user || !userStore.user.id)
       return ""
 
-    let fullName = userStore.user.person.name
+    if(!userStore.user.person)
+      return ""
+
+    let fullName = userStore.user.person?.name
 
     return fullName
       .trim()                    // Remove leading/trailing whitespace
