@@ -52,9 +52,18 @@ const products = computed(() => {
           <div class="col s12 l12">
             <section class="product-list__title">
               <h2>{{ widget.configuration.title }}</h2>
+
               <a
                 :href="`/${widget.configuration.collection.url}`"
-                class="button button--primary hide-on-small-and-down mtc-link"
+                class="d-md-none " style="color:black;"
+              >
+                <VIcon class="tabler-arrow-right thick-icon" size="36"></VIcon>
+              </a>
+
+
+              <a
+                :href="`/${widget.configuration.collection.url}`"
+                class="button button--primary d-none d-md-block mtc-link"
               >
                 <span>Ver todo</span>
                 <svg
@@ -296,7 +305,7 @@ const products = computed(() => {
 @media only screen and (max-width: 600px) {
   .product-list__title h2 {
     font-size: 26px;
-    margin-bottom: 10px;
+  /*  margin-bottom: 10px;*/
   }
 
   .product-list .products.has-banner {
