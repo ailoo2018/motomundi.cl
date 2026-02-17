@@ -220,7 +220,15 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
 
-  modules: ['@vueuse/nuxt', '@nuxtjs/i18n', '@nuxtjs/device', '@pinia/nuxt', '@nuxtjs/sitemap'],
+  modules: ['@vueuse/nuxt', '@nuxtjs/i18n', '@nuxtjs/device', '@pinia/nuxt', '@nuxtjs/sitemap', 'nuxt3-winston-log'],
+  nuxt3WinstonLog: {
+    infoLogPath: './logs',
+    infoLogName: 'info.log',
+    errorLogPath: './logs',
+    errorLogName: 'error.log',
+    // Optional: automatically log all server requests
+    skipRequestMiddlewareHandler: false,
+  },
   site: {
     url: 'https://www.motomundi.cl', // Replace with your actual production URL
     name: "Motomundi 2",

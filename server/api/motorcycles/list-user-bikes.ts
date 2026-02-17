@@ -9,6 +9,8 @@ export default defineEventHandler(async event => {
 
     const token = getCookie(event, "accessToken")
 
+    if(!token)
+      return []
 
     return await $fetch(`${baseUrl}/motorcycles/list-user-bikes`, {
       method: 'GET',

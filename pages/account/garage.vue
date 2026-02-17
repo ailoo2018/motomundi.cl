@@ -11,6 +11,9 @@ const userBikes = ref([])
 const error = ref()
 const loading = ref(false)
 const bikeSelector = ref()
+const { logToFile } = useRemoteLog()
+
+logToFile("this is a test", {msg: "hello"})
 
 const saveBike = async bike =>  {
 
