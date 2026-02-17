@@ -99,7 +99,7 @@ register()
               </h2>
               <a
                 :href="`/${widget.configuration.collection.url}`"
-                class="d-md-none " style="color:black;"
+                class="d-md-none d-lg-none d-xl-none " style="color:black;"
               >
                 <VIcon class="tabler-arrow-right thick-icon" size="36"></VIcon>
               </a>

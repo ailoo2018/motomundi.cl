@@ -29,6 +29,7 @@ const onClickMiniture = img => {
 const imageError = ref(false)
 
 const handleImageError = () => {
+  console.log("handleImageError: " + props.product.id)
   $fetch("/api/product/create-images?id=" + props.product.id)
   imageError.value = true
 }
@@ -122,12 +123,13 @@ const miniatures = computed(() => {
             v-for="img in miniatures"
             class="prod-list-miniatures-item"
           >
-            <img
+            <VImg
               :title="img.colorName"
               :src="getImageUrl(img.image, 50, getDomainId())"
               :alt="img.colorName"
+              @error="handleImageError"
               @click="onClickMiniture(img)"
-            >
+            />
           </div>
         </div>
       </section>
