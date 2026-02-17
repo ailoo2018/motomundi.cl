@@ -119,11 +119,14 @@ const miniatures = computed(() => {
 
       <section v-if="showMiniatures">
         <div class="prod-list-miniatures">
+
           <div
             v-for="img in miniatures"
             class="prod-list-miniatures-item"
           >
-            <VImg
+
+            <img
+              :key="img.image"
               :title="img.colorName"
               :src="getImageUrl(img.image, 50, getDomainId())"
               :alt="img.colorName"
