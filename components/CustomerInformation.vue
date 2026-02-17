@@ -65,10 +65,13 @@ const getCurrentUser = async (loginData) => {
     }
 
 
+
     if (user.value)
       contactEmail.value = user.value.username
-    if (party.value)
-      contactPhone.value = party.value.phone
+    if (party.value) {
+      let phone = "" + party.value.phone;
+      contactPhone.value = phone.replace(/\D/g, "")
+    }
 
     if (contactEmail.value && contactEmail.value.length > 0) {
       disableEmail.value = true
