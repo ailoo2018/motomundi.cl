@@ -12,7 +12,7 @@ const props = defineProps(
   },
 )
 
-const emit = defineEmits(['update:size', 'update:color', 'add-to-cart', 'selected-variant'])
+const emit = defineEmits(['update:size', 'update:color', 'add-to-cart', 'selected-variant', 'show-size-chart'])
 
 const prodUtil = useProductsUtils()
 
@@ -38,7 +38,7 @@ const selectedProductItem = defineModel({
 const selectedSize = ref({ id: 0 })
 const selectedColor = ref({ id: 0 })
 
-const showSizeChart = ref(false)
+
 
 if (useComboForSize)
   selectedSize.value = null
@@ -51,6 +51,11 @@ const getColorImageUrl = colorId => {
 
   return getImageUrl(image.image, 600, getDomainId())
 
+}
+
+const onShowSizeChart = () => {
+  console.log("showSizeChart: " + props.product.sizeChart)
+  emit("show-size-chart", props.product.sizeChart)
 }
 
 const isColorAvailable = color => {
@@ -245,7 +250,7 @@ onMounted(() => {
                   id="size-guide-button"
                   type="button"
                   class="size_guide_button"
-                  @click="showSizeChart = !showSizeChart"
+                  @click="onShowSizeChart"
                 >
                   <span>
                     <svg

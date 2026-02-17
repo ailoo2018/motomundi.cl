@@ -32,6 +32,14 @@ for(var pit of props.product.productItems) {
   }
 }
 
+const showSizeChart = ref(false)
+const selectedSizeChart = ref()
+
+const onShowSizeChart = sizeChart => {
+  selectedSizeChart.value = sizeChart
+  showSizeChart.value = true
+}
+
 
 const showSeenCheaperForm = () => {
 
@@ -111,6 +119,18 @@ const onSelectedVariant = pit =>
 </script>
 
 <template>
+  <VDialog v-model="showSizeChart">
+    <DialogCloseBtn @click="showSizeChart = false" />
+    <VCard :title="selectedSizeChart.name">
+
+      <VCardText>
+
+
+        <VImg :src="getBaseCDN() + selectedSizeChart.image" />
+      </VCardText>
+    </VCard>
+  </VDialog>
+
   <div
     v-if="product"
     class="product-buy-panel ng-scope"
@@ -211,6 +231,7 @@ const onSelectedVariant = pit =>
       v-if="product.type === 0"
       v-model="selectedProductItem"
       :product="product"
+      @show-size-chart="onShowSizeChart"
       @selected-variant="onSelectedVariant"
     />
     <!-- normal product -->
@@ -366,7 +387,6 @@ const onSelectedVariant = pit =>
           {{ error }}
         </VAlert>
         <div class="product-buy-panel__buttons">
-
           <VBtn
             :loading="loading"
             rounded="0"
