@@ -1,4 +1,25 @@
 <script setup>
+const props = defineProps({
+  asRow: {
+    type: Boolean,
+    default: false,
+  },
+  isAddBike: {
+    type: Boolean,
+    default: false,
+  },
+  filterBikesWithProducts: {
+    type: Boolean,
+    default: false,
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+  }
+})
+
+const emit = defineEmits(['on-bike-select'])
+
 const enableSearch = ref(false)
 const enableModels = ref(false)
 const enableYears = ref(false)
@@ -11,17 +32,11 @@ const router = useRouter()
 const models = ref([])
 const years = ref([])
 
-const props = defineProps({
-  asRow: {
-    type: Boolean,
-    default: false,
-  }
-})
-
 watch(selectedBrand, async () => {
   if(selectedBrand.value) {
 
     const modelsRs = await $fetch("/api/motorcycles/models?brandId=" + selectedBrand.value.id)
+
     models.value = modelsRs
 
     enableModels.value = true
@@ -33,9 +48,11 @@ watch(selectedBrand, async () => {
 watch(selectedModel, async () => {
   if(selectedBrand.value) {
     enableYears.value = true
+
     const yearsRs = await $fetch("/api/motorcycles/years", {
-      query: { brandId: selectedBrand.value.id, modelId: selectedModel.value.id }
+      query: { brandId: selectedBrand.value.id, modelId: selectedModel.value.id },
     })
+
     years.value = yearsRs
   }else{
     enableYears.value = false
@@ -53,10 +70,18 @@ watch(selectedYear, () => {
 
 
 
-const marcas = await $fetch("/api/motorcycles/manufacturers", {
-  key: 'motorcycles-manufacturers'
+const marcas = await $fetch("/api/motorcycles/manufacturers?filterBikeWithProducts=" + props.filterBikesWithProducts, {
+  key: 'motorcycles-manufacturers',
 })
 
+const onAddBike = () => {
+  console.log("onAddBike")
+  emit("on-bike-select", {
+    bikeManufacturer: selectedBrand.value,
+    bikeModel: selectedModel.value,
+    bikeYear: selectedYear.value,
+  })
+}
 
 const filterMotorbikeProducts = () => {
   console.log("filterMotorbikeProducts")
@@ -76,9 +101,7 @@ const filterMotorbikeProducts = () => {
     class="bike-selector-wrapper"
     style="padding-right: 12px;"
   >
-
     <VForm>
-
       <div :class="asRow ? 'responsive-grid-row' : 'responsive-grid'">
         <div class="grid-item">
           <VSelect
@@ -100,7 +123,7 @@ const filterMotorbikeProducts = () => {
             </template>
           </VSelect>
         </div>
-        <div class="grid-item" >
+        <div class="grid-item">
           <VSelect
             v-model="selectedModel"
             :items="models"
@@ -120,7 +143,7 @@ const filterMotorbikeProducts = () => {
             </template>
           </VSelect>
         </div>
-        <div class="grid-item"        >
+        <div class="grid-item">
           <VSelect
             v-model="selectedYear"
             :items="years"
@@ -140,25 +163,36 @@ const filterMotorbikeProducts = () => {
             </template>
           </VSelect>
         </div>
-        <div class="grid-item">
+        <div v-if="!isAddBike" class="grid-item">
           <VBtn
+
             class="button mc expanded sm w-100"
             :disabled="!enableSearch"
+            :loading="loading"
             :rounded="0"
             color="#c74044"
             @click="filterMotorbikeProducts"
           >
             Buscar
           </VBtn>
-
+        </div>
+        <div v-if="isAddBike" class="grid-item">
+          <VBtn
+            :disabled="!enableSearch"
+            :rounded="0"
+            color="black"
+            :loading="loading"
+            @click="onAddBike"
+          >
+            Añadir Moto
+          </VBtn>
         </div>
       </div>
     </VForm>
   </div>
 </template>
 
-<style >
-
+<style>
 /* 1. Define the container context */
 .bike-selector-wrapper {
   container-type: inline-size;

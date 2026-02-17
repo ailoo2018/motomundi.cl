@@ -1,4 +1,4 @@
-import {useUserStore} from "@/stores/user";
+import { useUserStore } from "@/stores/user"
 
 export const useUser = () => {
   const router = useRouter()
@@ -41,8 +41,24 @@ export const useUser = () => {
     await navigateTo("/login", { replace: true })
   }
 
+  const getUserId = () => {
+    return useCookie("user_id").value
+  }
+
+  const listMotorcycles = async () => {
+    const userId = getUserId()
+    
+    if(userId > 0){
+      return await $fetch("/api/motorcycles/list-user-bikes")
+    }
+
+    return []
+  }
+
   return {
     logout,
     getInitials,
+    getUserId,
+    listMotorcycles,
   }
 }

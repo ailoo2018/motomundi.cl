@@ -109,11 +109,9 @@ const products = computed(() => {
                           <span class="banner__background">
                             <img
                               :src="getBaseCDN() + widget.configuration.backgroundImage"
-                              srcset=""
                               alt="Promo banner"
                               class="cdn-img"
                             >
-
                           </span>
                         </div>
 
@@ -122,6 +120,7 @@ const products = computed(() => {
 
                     <div
                       v-for="(product, index) in products"
+                      :key="product.id"
                       class="col s6 m4 lc5 "
                     >
                       <ProductListItem v-if="isMobile ? index < 4 : index < 3" :product="product" />

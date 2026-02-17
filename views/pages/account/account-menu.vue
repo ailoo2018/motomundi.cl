@@ -2,6 +2,10 @@
 
 const { logout } = useUser()
 
+const route = useRoute()
+
+const path = route.path
+
 const props= defineProps({
   componentClass: {
     type: String,
@@ -11,10 +15,7 @@ const props= defineProps({
 
 const emit = defineEmits(['logout'])
 
-/*const logout = async () => {
-  console.log("dologout")
-  emit('logout')
-}*/
+
 </script>
 
 <template>
@@ -22,10 +23,9 @@ const emit = defineEmits(['logout'])
     <li>
       <a
         href="/account/profile"
-        aria-current="page"
-        data-dr="true"
-        ng-class="activeMenu == 'profile' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         class="mtc-link"
+        :class="route.path.includes('account/profile') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+
         rel="nofollow"
       >
         <svg
@@ -44,9 +44,8 @@ const emit = defineEmits(['logout'])
     </li>
     <li>
       <a
-        ng-class="activeMenu == 'garage' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        :class="route.path.includes('account/garage') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         href="/account/garage"
-        data-dr="true"
         class="mtc-link"
         rel="nofollow"
       >
@@ -67,9 +66,8 @@ const emit = defineEmits(['logout'])
     <li>
       <a
         href="/account/gear"
-        data-dr="true"
         class="mtc-link"
-        ng-class="activeMenu == 'gear' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        :class="route.path.includes('account/gear') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         rel="nofollow"
       >
         <svg
@@ -89,9 +87,8 @@ const emit = defineEmits(['logout'])
     <li>
       <a
         href="/account/addresses"
-        data-dr="true"
         class="mtc-link"
-        ng-class="activeMenu == 'address' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        :class="route.path.includes('account/addresses') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         rel="nofollow"
       >
         <svg
@@ -110,9 +107,8 @@ const emit = defineEmits(['logout'])
     </li>
     <li>
       <a
-        ng-class="activeMenu == 'orders' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        :class="route.path.includes('account/orders') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         href="/account/orders"
-        data-dr="true"
         class="mtc-link"
         rel="nofollow"
       >
@@ -133,9 +129,8 @@ const emit = defineEmits(['logout'])
     </li>
     <li>
       <a
-        ng-class="activeMenu == 'favorites' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        :class="route.path.includes('account/wish-list') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         href="/account/wish-list"
-        data-dr="true"
         class="mtc-link"
         rel="nofollow"
       >
@@ -155,9 +150,8 @@ const emit = defineEmits(['logout'])
     </li>
     <li>
       <a
-        ng-class="activeMenu == 'club' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        :class="route.path.includes('account/club') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         href="/account/club"
-        data-dr="true"
         class="mtc-link"
         rel="nofollow"
       >
@@ -172,9 +166,8 @@ const emit = defineEmits(['logout'])
     </li>
     <li>
       <a
-        ng-class="activeMenu == 'friends' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        :class="route.path.includes('account/invita') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         href="/account/invita-tus-amigxs"
-        data-dr="true"
         class="mtc-link"
         rel="nofollow"
       >
@@ -195,9 +188,8 @@ const emit = defineEmits(['logout'])
     </li>
     <li>
       <a
-        ng-class="activeMenu == 'reviews' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        :class="route.path.includes('account/reviews') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         href="/account/reviews"
-        data-dr="true"
         class="mtc-link"
         rel="nofollow"
       >
@@ -218,9 +210,9 @@ const emit = defineEmits(['logout'])
     </li>
     <li>
       <a
-        ng-class="activeMenu == 'configuration' ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        :class="route.path.includes('account/configuration') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         href="/account/configuration"
-        data-dr="true"
+        
         class="mtc-link"
         rel="nofollow"
       >
@@ -267,6 +259,8 @@ const emit = defineEmits(['logout'])
   display: block;
   padding: 10px 20px;
 }
+
+
 
 .account__nav li a.nuxt-link-exact-active {
   background-color: #f5f5f5;
