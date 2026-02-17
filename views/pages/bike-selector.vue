@@ -35,7 +35,13 @@ const years = ref([])
 watch(selectedBrand, async () => {
   if(selectedBrand.value) {
 
-    const modelsRs = await $fetch("/api/motorcycles/models?brandId=" + selectedBrand.value.id)
+    const modelsRs = await $fetch("/api/motorcycles/models",
+      {
+        query: {
+          brandId: selectedBrand.value.id,
+          filterBikeWithProducts: props.filterBikesWithProducts,
+        },
+      })
 
     models.value = modelsRs
 
@@ -50,7 +56,11 @@ watch(selectedModel, async () => {
     enableYears.value = true
 
     const yearsRs = await $fetch("/api/motorcycles/years", {
-      query: { brandId: selectedBrand.value.id, modelId: selectedModel.value.id },
+      query: {
+        brandId: selectedBrand.value.id,
+        modelId: selectedModel.value.id,
+        filterBikeWithProducts: props.filterBikesWithProducts
+      },
     })
 
     years.value = yearsRs
