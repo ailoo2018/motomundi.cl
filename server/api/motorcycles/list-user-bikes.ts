@@ -9,6 +9,7 @@ export default defineEventHandler(async event => {
 
     const token = getCookie(event, "accessToken")
 
+    console.log("accessToken", token)
     if(!token)
       return []
 

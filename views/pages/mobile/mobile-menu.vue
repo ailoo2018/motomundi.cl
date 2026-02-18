@@ -17,6 +17,7 @@ const isShowUserMenuTab = ref(false)
 const currentMenu = ref(MobileMenuInicio)
 const menuTitleUrl = ref('/')
 const menuTitle = ref('Inicio')
+
 const showMainMenu = ref(true)
 
 const backToHome = () => {
@@ -43,6 +44,7 @@ const onMenuChange = menu => {
   console.log("menu selectd", menu)
   currentMenu.value = menuMap[menu.name]
   menuTitle.value = menu.title
+  menuTitleUrl.value = menu.url
 
   if(currentMenu.value !== MobileMenuInicio){
     showMainMenu.value = false
@@ -88,7 +90,7 @@ const toggleMenu = () => {
               <span v-if="!menuTitleUrl">{{ menuTitle }} {{ menuTitleUrl }}</span>
               <a
                 v-if="menuTitleUrl"
-                href="{{menuTitleUrl}}"
+                :href="menuTitleUrl"
                 class="mtc-link"
               >{{ menuTitle }}</a>
               <span style="display: none;"/>

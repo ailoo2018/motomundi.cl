@@ -227,7 +227,7 @@ export default defineNuxtConfig({
     errorLogPath: './logs',
     errorLogName: 'error.log',
     // Optional: automatically log all server requests
-    skipRequestMiddlewareHandler: false,
+    skipRequestMiddlewareHandler: true,
   },
   site: {
     url: 'https://www.motomundi.cl', // Replace with your actual production URL

@@ -1,9 +1,9 @@
 <script setup>
 const emit = defineEmits(['on-menu-change'])
 
-const loadMenu = (name, title) => {
+const loadMenu = (name, title, url) => {
   console.log("loadMenu")
-  emit('on-menu-change', { name, title })
+  emit('on-menu-change', { name, title, url })
 }
 </script>
 
