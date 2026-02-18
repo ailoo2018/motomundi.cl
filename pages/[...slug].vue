@@ -2,6 +2,7 @@
 import ProductsList from "@/views/pages/products/list/products-list.vue"
 import { getDomainId } from "@/server/ailoo-domain.js"
 import CmsContent from "@/views/pages/cms/CmsContent.vue"
+import { v4 as uuidv4 } from 'uuid';
 
 definePageMeta({
   /*layout: 'motomundi',*/
@@ -52,7 +53,7 @@ else if(path === "/Account/OrderDetail.rails"){
   const { data } = await useFetch(`${baseUrl}/${getDomainId()}/auth/hash-login`, {
     method: 'POST',
     body: {
-      origin: "order",
+      type: "order",
       hash: queryParams.hash,
       pid: queryParams.orderId,
       wuid: wuid,
@@ -61,6 +62,7 @@ else if(path === "/Account/OrderDetail.rails"){
 
   console.log("returned hash: " + data.value.userId)
 
+  useCookie('guest_id').value = uuidv4()
   useCookie('user_id').value = data.value.userId
   useCookie('accessToken').value = data.value.accessToken
 
@@ -79,6 +81,7 @@ else if(path.toLowerCase() === "/product/reviewproduct.rails"){
   const { data } = await useFetch(`${baseUrl}/${getDomainId()}/auth/hash-login`, {
     method: 'POST',
     body: {
+      type: "product",
       hash: queryParams.h,
       pid: queryParams.pid,
       wuid: wuid,

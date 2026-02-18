@@ -2,7 +2,7 @@
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
-
+const accessToken = useCookie('accessToken').value
 const party = computed(() => {
   return userStore.user.person
 })
@@ -13,6 +13,7 @@ const userInitials = computed(() => {
 </script>
 
 <template>
+
   <section
     v-if="party"
     class="profile__avatar-container"
