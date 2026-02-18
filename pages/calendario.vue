@@ -208,7 +208,7 @@ const jumpToDateFn = date => {
     </VCard>
   </div>
 
-
+  <VContainer>
   <VRow class="mt-5 ">
     <VCol
       v-for="event in events"
@@ -255,6 +255,7 @@ const jumpToDateFn = date => {
       />
     </VCol>
   </VRow>
+  </VContainer>
 </template>
 
 <style lang="scss">

@@ -152,7 +152,7 @@ const getCartTotalItems = () => {
                         xlink:href="/content/svg/motomundi.svg?v=1.4#i-menu-favorites"
                       />
                     </svg>
-                    <span class="user-menu__title">Favoritos</span></a>
+                    <span class="user-menu__title">Favs</span></a>
                 </li>
                 <!-- /favoritos -->
 
