@@ -26,7 +26,7 @@ export const formatDate = (value, formatting = { month: 'short', day: 'numeric',
   if (!value)
     return value
   
-  return new Intl.DateTimeFormat('es-CL', formatting).format(new Date(value))
+  return new Intl.DateTimeFormat('es-CL', formatting).format(new Date(value)).replaceAll("-", "/")
 }
 
 /**
@@ -201,7 +201,6 @@ export const formatChileanRUT = rut => {
   return `${body}-${dv}`
 }
 
-
 function formatLink(str) {
   if (str == null)
     return ''
@@ -229,7 +228,6 @@ export const getBrandUrl= function(brand){
 
   return "/" + formatLink(brand.name)
 }
-
 
 export const getProductUrl= function(product){
     return "/motocicleta/" + formatLink(product.linkName)

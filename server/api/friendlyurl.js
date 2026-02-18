@@ -2,6 +2,7 @@ import { getDomainId } from "../ailoo-domain.js"
 
 export default defineEventHandler(async (event) => {
 
+  let qpath = ""
   try {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
@@ -9,6 +10,7 @@ export default defineEventHandler(async (event) => {
 
     const query = getQuery(event)
 
+    qpath = query.path
     console.log("query: " + query.path)
 
     const fUrl = await $fetch(baseUrl + `/${getDomainId()}/friendly-url/lookup`, {
@@ -19,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
     return fUrl
   }catch(error){
-    console.error('Error in friendly-url lookup:', error)
+    console.error('Error in friendly-url lookup: ' + qpath, error)
     console.error('Stack trace:', error.stack)
     throw createError({
       statusCode: error.statusCode || 500,

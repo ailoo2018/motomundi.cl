@@ -69,8 +69,8 @@ const getCartTotalItems = () => {
   <header class="header-container">
     <div class="header">
       <div class="container">
-        <VRow class="margin: 0px">
-          <VCol cols="12">
+        <div class="margin: 0px">
+          <div >
             <div class="header__top">
               <button
                 class="mobile-menu__toggle"
@@ -234,8 +234,8 @@ const getCartTotalItems = () => {
                 </li>
               </ul>
             </div>
-          </VCol>
-        </VRow>
+          </div>
+        </div>
       </div>
     </div>
   </header>
