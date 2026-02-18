@@ -4,14 +4,14 @@ export const avatarText = value => {
   if (!value)
     return ''
   const nameArray = value.split(' ')
-  
+
   return nameArray.map(word => word.charAt(0).toUpperCase()).join('')
 }
 
 // TODO: Try to implement this: https://twitter.com/fireship_dev/status/1565424801216311297
 export const kFormatter = num => {
   const regex = /\B(?=(\d{3})+(?!\d))/g
-  
+
   return Math.abs(num) > 9999 ? `${Math.sign(num) * +((Math.abs(num) / 1000).toFixed(1))}k` : Math.abs(num).toFixed(0).replace(regex, ',')
 }
 
@@ -25,9 +25,22 @@ export const kFormatter = num => {
 export const formatDate = (value, formatting = { month: 'numeric', day: 'numeric', year: 'numeric' }) => {
   if (!value)
     return value
-  
+
   return new Intl.DateTimeFormat('es-CL', formatting).format(new Date(value)).replaceAll("-", "/")
 }
+
+export const formatDateTime = (value, formatting = {
+  month: 'numeric', day: 'numeric', year: '2-digit', hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false,
+}) => {
+  if (!value)
+    return value
+
+  return new Intl.DateTimeFormat('es-CL', formatting).format(new Date(value)).replaceAll("-", "/")
+}
+
 
 /**
  * Return short human friendly month representation of date
@@ -40,7 +53,7 @@ export const formatDateToMonthShort = (value, toTimeForCurrentDay = true) => {
   let formatting = { month: 'short', day: 'numeric' }
   if (toTimeForCurrentDay && isToday(date))
     formatting = { hour: 'numeric', minute: 'numeric' }
-  
+
   return new Intl.DateTimeFormat('en-US', formatting).format(new Date(value))
 }
 export const prefixWithPlus = value => value > 0 ? `+${value}` : value
@@ -53,7 +66,7 @@ export const formatMoney = (number, currency, fmtzero) => {
   // Convert to thousands
   const inThousands = number
   let decimals = 0
-  if(currency === "USD")
+  if (currency === "USD")
     decimals = 2
 
   // Create a formatter for Chilean Peso with 3 decimal places
@@ -124,9 +137,9 @@ export const getImageUrl = (guidString, width, domainId) => {
 
 export const getDataImageUrl = (guidString, width, domainId) => {
   let imageUrl = getImageUrl(guidString, width, domainId)
-  
+
   return imageUrl
-    .replace("/products/" + domainId, "/uploads/" + domainId + "/_data" )
+    .replace("/products/" + domainId, "/uploads/" + domainId + "/_data")
     .replace("_600.", "_600_original.")
 }
 
@@ -139,7 +152,7 @@ export const getYouTubeThumbnail = (videoId, quality = 'default') => {
   }
 
   const suffix = qualityMap[quality] || qualityMap.max
-  
+
   return `https://img.youtube.com/vi/${videoId}/${suffix}.jpg`
 }
 
@@ -151,8 +164,8 @@ export function formatDeliveryDateRange(dateRange) {
     const toDate = new Date(dateRange.to)
 
     // Add 4 days to each date for delivery estimation
-    const deliveryFromDate = new Date(fromDate.setDate(fromDate.getDate() ))
-    const deliveryToDate = new Date(toDate.setDate(toDate.getDate() ))
+    const deliveryFromDate = new Date(fromDate.setDate(fromDate.getDate()))
+    const deliveryToDate = new Date(toDate.setDate(toDate.getDate()))
 
     // Format dates in Spanish
     const formatter = new Intl.DateTimeFormat('es', {
@@ -172,16 +185,16 @@ export function formatDeliveryDateRange(dateRange) {
     return `${fromDay} y el ${toDay} de${month}`
   } catch (error) {
     console.error('Error formatting dates:', error)
-    
+
     return 'Error al procesar las fechas'
   }
 }
 
 
-export function isEntre(eta)        {
-  if(eta.from !== eta.to)
+export function isEntre(eta) {
+  if (eta.from !== eta.to)
     return " entre el "
-  
+
   return " el "
 }
 
@@ -224,13 +237,13 @@ function formatLink(str) {
   return str.length > 255 ? str.substring(0, 254) : str
 }
 
-export const getBrandUrl= function(brand){
+export const getBrandUrl = function (brand) {
 
   return "/" + formatLink(brand.name)
 }
 
-export const getProductUrl= function(product){
-    return "/motocicleta/" + formatLink(product.linkName)
+export const getProductUrl = function (product) {
+  return "/motocicleta/" + formatLink(product.linkName)
 }
 
 export const getCategoryUrl = function (category) {

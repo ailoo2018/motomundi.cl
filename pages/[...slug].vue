@@ -24,23 +24,27 @@ const path = `/${slugArray.join('/')}`
 
 console.log("original path: " + path)
 
-console.log("!!!!!!!!!!!!!" + path.includes('sitemap'))
+console.log("!!!!chabna!!!!!!!!" + path.includes('sitemap'))
 
 
 if (path.includes('sitemap') || path.includes('__sitemap__')) {
   throw createError({ statusCode: 404 })
-}else if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
+}
+else if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
   // /Payment/QuickCheckout.rails?documentId=27759764&amount=249900&documentType=INVOICE
   navigateTo("/checkout/" + queryParams.documentId, {external:true})
-}else if(path.toLowerCase().startsWith("/product/view.rails")) {
+}
+else if(path.toLowerCase().startsWith("/product/view.rails")) {
 
   navigateTo("/products/detail/" + queryParams.productId)
 
-}else if(path === "/Product/Search.rails"){
+}
+else if(path === "/Product/Search.rails"){
   navigateTo("/products/list?sword=" + queryParams.w)
-}else if(path === "/Account/OrderDetail.rails"){
+}
+else if(path === "/Account/OrderDetail.rails"){
+  console.log("orderDetail: " + queryParams.hash)
   // ?orderId=190920&hash=FF4970D2B241BAFFAACE2F654EAE60A8
-
   const wuid = useGuestUser().value
   const config = useRuntimeConfig()
   const baseUrl = config.public.w3BaseUrl
@@ -48,23 +52,26 @@ if (path.includes('sitemap') || path.includes('__sitemap__')) {
   const { data } = await useFetch(`${baseUrl}/${getDomainId()}/auth/hash-login`, {
     method: 'POST',
     body: {
+      origin: "order",
       hash: queryParams.hash,
       pid: queryParams.orderId,
       wuid: wuid,
     },
   })
 
-  console.log("hashlogin rs: " + JSON.stringify(data))
+  console.log("returned hash: " + data.value.userId)
 
-  useCookie('user_id').value = data.userId
-  useCookie('accessToken').value = data.accessToken
+  useCookie('user_id').value = data.value.userId
+  useCookie('accessToken').value = data.value.accessToken
+
 
 
   navigateTo("/account/orders/" + queryParams.orderId)
 
-}else if(path === "/Product/ReviewProduct.rails"){
+}
+else if(path.toLowerCase() === "/product/reviewproduct.rails"){
 
-  console.log("/Product/ReviewProduct.rails : " + JSON.stringify(queryParams) )
+  console.log("/Product/ReviewProduct.rails : ", queryParams )
   const wuid = useGuestUser().value
   const config = useRuntimeConfig()
   const baseUrl = config.public.w3BaseUrl
@@ -86,7 +93,8 @@ if (path.includes('sitemap') || path.includes('__sitemap__')) {
 
   navigateTo("/account/review?productId=" + queryParams.prodId + "&invoiceId=" + queryParams.invoiceId)
 
-}else{
+}
+else{
   console.log("path received", path)
   try {
 

@@ -3,23 +3,30 @@ import {onMounted} from "vue"
 
 const token = useCookie("accessToken").value
 
+const loading = ref(false)
 const latestOrders = ref()
 
 const viewOrder = order => {
   console.log("viewOrder", order)
-  navigateTo("/account/orders/" + order.id)
+  navigateTo("/account/orders/" + order.id, { external: true })
 }
 
 onMounted(async () => {
-  const latestOrdersRs = await $fetch("/api/account/latest-orders", {
-    method: 'GET',
+  loading.value = true
 
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  })
+  try {
+    const latestOrdersRs = await $fetch("/api/account/latest-orders", {
+      method: 'GET',
 
-  latestOrders.value = latestOrdersRs.orders
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+
+    latestOrders.value = latestOrdersRs.orders
+  }finally{
+    loading.value = false
+  }
 
 })
 
@@ -48,10 +55,12 @@ const getOrderIcon = order => {
   <section class="profile__orders ng-hide">
     <h1>Últimos pedidos </h1>
 
+    <VProgressCircular v-if="loading" color="primary" indeterminate/>
+
     <div
       v-for="order in latestOrders"
       :key="order.id"
-      class="account-order__detail simplified order "
+      class="account-order__detail simplified order cursor-pointer "
 
       @click="viewOrder(order)"
     >
@@ -98,6 +107,7 @@ const getOrderIcon = order => {
     </div>
 
     <a
+      v-if="!loading"
       href="/cuenta/pedidos"
       data-dr="true"
       class="button--text-only mtc-link"

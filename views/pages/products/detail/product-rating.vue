@@ -77,6 +77,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <VContainer>
   <VRow
     v-if="reviews.length > 0"
     id="reviews"
@@ -330,6 +331,7 @@ onMounted(async () => {
       </aside>
     </VCol>
   </VRow>
+  </VContainer>
 </template>
 
 <style>

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import OrderHistory from "@/views/pages/account/orders/OrderHistory.vue"
+import OrderShippingAddress from "@/views/pages/account/orders/OrderShippingAddress.vue";
+import OrderReturn from "@/views/pages/account/orders/OrderReturn.vue";
+
 definePageMeta({
   layout: 'account',
   middleware: 'auth', // Must match the filename (auth.ts)
@@ -6,28 +10,36 @@ definePageMeta({
 
 const route = useRoute()
 
-const { data, error } = useFetch("/api/account/orders/" + route.params.id)
+const {data, error} = useFetch("/api/account/orders/" + route.params.id)
 
 const order = data
 
+const startReturn = () => {
 
-const getDescription = () => {
+}
+
+
+const getStatusDescription = statusId => {
+  return useOrderStatus().getOrderStatusDescription(statusId)
+}
+
+const getDescription = state => {
   return ""
 }
 </script>
 
 <template>
-  <div class="row">
+  <VContainer class="pa-0 ma-0">
     <div class="account__content">
-      <div>
-        <div class="account-orders__header">
-          <h1 class="account__title">
+      <div class="account__order">
+        <div class="account-orders__header mb-5" >
+          <h1 class="account__title" style="border-bottom: 1px solid #ccc;">
             <svg
               class="sprite-line-icons"
               width="30"
               height="30"
             >
-              <use href="/content/svg/motomundi.svg#i-account-orders" />
+              <use href="/content/svg/motomundi.svg#i-account-orders"/>
             </svg>
             Pedido #{{ order.id }}
           </h1>
@@ -39,68 +51,35 @@ const getDescription = () => {
             cols="12"
             md="8"
           >
-            <div class="account-order__detail">
-              <div class="order-detail__header">
-                <h2 class="order-detail__order-id">
+            <div class="account-order">
+<!--
+              <div class="order-detail__header my-5">
+                <h3 class="order-detail__order-id">
                   Pedido #{{ order.id }}
-                </h2>
+                </h3>
               </div>
+-->
               <div class="order-detail__body">
                 <div class="order-detail__tracking">
                   <div class="order-detail__order-status">
                     Estado del pedido:
-                    <strong class="sent">{{ order.status }}</strong>
+                    <strong class="sent">{{ getStatusDescription(order.state) }}</strong>
                   </div>
                   <div class="order-detail__estimated-date">
                     Fecha de entrega prevista:
-                    <strong class="">{{ order.eta }}</strong>
+                    <strong class="">{{ formatDate(order.eta) }}</strong>
                   </div>
-                  <div class="order-detail__status">
-                    <div class="order-status__container">
-                      <ul>
-                        <li
-                          v-for="history in order.history"
-                          class="status-item"
-                        >
-                          <div class="status-item__information">
-                            <span class="status-item__title">{{ getDescription(history.status) }}</span>
-                            <p
-                              class="status-item__description"
-                              ng-if="history.statusId == 10"
-                            >
-                              Esperamos que
-                              te haya encantado todo lo que has recibido. ¡Disfruta al máximo
-                              de tu compra!
-                            </p>
-                          </div>
-                          <span class="status-item__date">{{ history.date }}</span>
-                        </li>
-                      <!--
-                        <li class="status-item">
-                        <div class="status-item__information"><span
-                        class="status-item__title">Enviado</span>
-                        </div>
-                        <span class="status-item__date">4/5/2020</span></li>
-                        <li class="status-item">
-                        <div class="status-item__information"><span
-
-                        class="status-item__title">Listo para enviar</span>
-                        </div>
-                        <span class="status-item__date">30/4/2020</span></li>
-                        <li class="status-item">
-                        <div class="status-item__information"><span
-                        class="status-item__title">Preparando el pedido</span>
-                        </div>
-                        <span class="status-item__date">29/4/2020</span></li>
-                        <li class="status-item">
-                        <div class="status-item__information"><span
-                        class="status-item__title">Pagado</span>
-                        </div>
-                        <span class="status-item__date">29/4/2020</span></li>
-                      -->
-                      </ul>
-                    </div>
-                  </div>
+                  <VCard
+                    variant="plain"
+                    class="order-detail__status my-6"
+                  >
+                    <VCardText class="pa-0">
+                      <div class="order-status__container">
+                        <h3>Historial</h3>
+                        <OrderHistory :journal="order.journals"/>
+                      </div>
+                    </VCardText>
+                  </VCard>
                 </div>
                 <div id="cart-products">
                   <h3>Productos</h3>
@@ -110,24 +89,56 @@ const getDescription = () => {
                       :key="item.id"
                     >
                       <div class="cart-item">
-                        <article class="cart-product__wrapper">
+                        <article
+                          v-if="item.type === 111"
+                          class="d-flex "
+                        >
+                          <span
+                            style="width: 100px;"
+                            class="align-center text-center"
+                          >
+                            <VIcon
+                              class="tabler-send"
+                              color="success"
+                              size="40"
+                            />
+                          </span>
+                          <div class="cart-product__info">
+                            <h1>Costo de envío</h1>
+                            <div class="cart-product__details">
+                              {{ item.comment }}
+                            </div>
+                          </div>
+                        </article>
+                        <article
+                          v-if="item.type === 1"
+                          class="cart-product__wrapper"
+                        >
                           <a
-                            class="cart-product mtc-link"
-                            data-dr="true"
+                            class="cart-product mtc-link d-flex"
                             :href="item.link"
                           >
                             <span>
-                              <img
-                                width="120"
-                                height="120"
-                                :src="item.imageUrl"
-                                alt="{{item.product ? item.product?.fullName : ''}}"
+
+                              <VImg
+                                v-if="item.productItem"
+                                width="100"
+                                :src="getImageUrl( item.productItem?.image, 150, getDomainId())"
+                                :alt="item.productItem.product?.fullName"
                                 class="cdn-img"
-                              >
+                              />
                             </span>
+
                             <div class="cart-product__info">
-                              <h1 class="cart-product__name">{{ item.product?.fullName }}</h1>
-                              <div class="cart-product__details" />
+                              <h1
+                                v-if="item.productItem"
+                                class="cart-product__name"
+                              >{{ item.productItem?.product?.fullName }}</h1>
+                              <h1
+                                v-else
+                                class="cart-product__name"
+                              >{{ item.description }} {{ item.comment }}</h1>
+                              <div class="cart-product__details"/>
                               <div
                                 v-if="item.size"
                                 class="cart-product__size"
@@ -145,7 +156,7 @@ const getDescription = () => {
                             </div>
                             <p class="cart-product__price">
                               <span class="price">{{ item.subtotal }}</span>
-                              <span class="product-old-price strike" />
+                              <span class="product-old-price strike"/>
                             </p>
                           </a>
                         </article>
@@ -161,7 +172,11 @@ const getDescription = () => {
             md="4"
           >
             <div class="order-detail__sidebar">
-              <div class="order-detail__details">
+              <VCard
+                variant="plain"
+                elevation="0"
+                class="order-detail__details mt-5 mb-10"
+              >
                 <h3>Detalles</h3>
                 <p><strong>Fecha de pedido:</strong> {{ formatDate(order.orderDate) }}</p>
                 <p><strong>Método de pago:</strong> {{ order.paymentMethod?.name }}</p>
@@ -179,110 +194,67 @@ const getDescription = () => {
                       width="16"
                       height="16"
                     >
-                      <use href="/content/svg/motomundi.svg#i-icon-copy" />
+                      <use href="/content/svg/motomundi.svg#i-icon-copy"/>
                     </svg>
                   </span>
                 </p>
-              </div>
-              <div class="order-detail__totals">
+              </VCard>
+              <VCard
+                variant="plain"
+                elevation="0"
+                class=" order-detail__totals mt-5 mb-10"
+              >
                 <h3>Resumen de pedido</h3>
                 <dl>
                   <dt>Subtotal</dt>
-                  <dd>{{ order.netTotal }}</dd>
+                  <dd>{{ formatMoney(order.netTotal) }}</dd>
                   <dt>Impuestos (I.V.A.)</dt>
-                  <dd>{{ order.iva }}</dd>
+                  <dd>{{ formatMoney(order.iva) }}</dd>
                   <dt>Gastos de envío</dt>
-                  <dd ng-if="order.shipping > 0">
-                    {{ order.shipping }}
+                  <dd v-if="order.shipping > 0">
+                    {{ formatMoney(order.shipping) }}
                   </dd>
-                  <dd ng-if="order.shipping == 0">
+                  <dd v-if="order.shipping == 0">
                     Envío grátis
                   </dd>
 
                   <dt>Total</dt>
-                  <dd>{{ order.total }}</dd>
+                  <dd>{{ formatMoney(order.total) }}</dd>
                 </dl>
-              </div>
-              <div class="order-detail__addresses">
-                <h3> Direcciones</h3>
-                <div class="shipping-address">
-                  <h4 class="order-detail__address-type">
-                    Envío
-                  </h4>
-                  <div>
-                    <p>
-                      {{ order.shippedTo?.name }}
-                      <br>
-                      {{ order.shippedTo?.address }},
-                      <br>
-                      <span ng-if="order.shippedTo?.postalCode">{{ order.shippedTo?.postalCode }} - </span>
-                      {{ order.shippedTo?.comuna?.name }}
-                    </p>
-                    <p>
-                      {{ order.shippedTo?.email }}<br>
-                      {{ order.shippedTo?.phone }}
-                    </p>
-                  </div>
-                </div>
-                <div class="shipping-address">
-                  <h4 class="order-detail__address-type">
-                    Facturación
-                  </h4>
-                  <div v-if="order.invoicedTo">
-                    <p>
-                      {{ order.invoicedTo.name }}<br>
-                      {{ order.invoicedTo.address }},<br>
-                      <span ng-if="order.invoicedTo.postalCode">{{ order.invoicedTo.postalCode }} - </span>
-                      {{ order.invoicedTo?.comuna?.name }}
-                    </p>
-                    <p>
-                      {{ order.invoicedTo?.email }}<br>
-                      {{ order.invoicedTo?.phone }}
-                    </p>
-                  </div>
-                  <div ng-if="!order.invoicedTo">
-                    <p>
-                      {{ order.customer?.name }}<br>
-                      <span ng-if="order.customer?.address">{{ order.customer?.address }},<br></span>
-                      <span ng-if="order.customer?.postalCode">{{ order.customer?.postalCode }} - </span>
-                      {{ order.customer?.comuna?.name }}
-                    </p>
-                    <p>
-                      {{ order.customer?.email }}<br>
-                      {{ order.customer?.phone }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="order-detail__actions">
-                <h3>Acciones</h3>
-                <div class="actions__buttons">
-                  <a
-                    class="button button--small button--filled mtc-link"
+              </VCard>
+              <OrderShippingAddress :order="order" />
+              <OrderReturn :order="order"/>
 
-                    href="/realizar-cambio-o-devolucion?email={{order.customer.email}}&amp;order={{order.id}}"
-                  ><span>Cambio o devolución</span></a>
-                </div>
-              </div>
-              <div class="order-detail__help">
-                <h3>
-                  ¿Tienes
-                  dudas?
-                </h3>
-                <p>
-                  Consulta nuestra sección de <a href="/contactanos.html">ayuda y
+              <VCard
+                variant="plain"
+                color="surface"
+                class="order-detail__help my-5"
+              >
+                <VCardText class="pa-0">
+                  <h3>
+                    ¿Tienes
+                    dudas?
+                  </h3>
+                  <p style="color:black;">
+                    Consulta nuestra sección de <a href="/contactanos.html">ayuda y
                     atención al cliente</a>.
-                </p>
-              </div>
+                  </p>
+                </VCardText>
+              </VCard>
             </div>
           </VCol>
         </VRow>
       </div>
     </div>
-  </div>
+  </VContainer>
 </template>
-<style>
-.account-order__detail h3 {
+
+<style scoped>
+.v-card--variant-plain {
+  opacity: 1;
+}
+
+h3 {
   border-bottom: 1px solid #000;
   font-size: 16px;
   font-weight: 700;
@@ -291,11 +263,63 @@ const getDescription = () => {
   text-transform: uppercase;
 }
 
-.account-order__detail .order-detail__body .order-detail__order-status {
+.account__order .account-order h3 {
+  border-bottom: 1px solid #000;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 4px 0 16px;
+  padding-bottom: 8px;
+  text-transform: uppercase;
+}
+
+ .order-detail__body .order-detail__order-status {
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 20px;
   text-transform: uppercase;
+}
+
+
+.order-detail__totals dl {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0;
+}
+
+
+ .order-detail__totals dl dd {
+  text-align: right;
+}
+ .order-detail__totals dl dd:last-of-type, .order-detail__totals dl dt:last-of-type {
+  font-weight: 700;
+  margin-top: 16px;
+  text-transform: uppercase;
+}
+
+ .order-detail__totals dl dd,  .order-detail__totals dl dt {
+  margin: 8px 0 0;
+}
+.order-detail__totals dl dd:last-of-type,  .order-detail__totals dl dt:last-of-type {
+  font-weight: 700;
+  margin-top: 16px;
+  text-transform: uppercase;
+}
+
+.order-detail__totals dl dd:last-of-type,  .order-detail__totals dl dt:last-of-type {
+  font-weight: 700;
+  margin-top: 16px;
+  text-transform: uppercase;
+}
+
+.order-detail__address-type {
+  display: inline-block;
+  padding: 0;
+}
+
+h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 4px 0;
 }
 </style>
 
