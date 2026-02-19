@@ -31,7 +31,7 @@ const blogArticle = ref()
 const loading = ref(false)
 
 const route = useRoute()
-
+const router = useRouter()
 console.log("router: " + route.params.id)
 
 // --- ID EXTRACTION LOGIC ---
