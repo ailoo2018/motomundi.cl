@@ -94,7 +94,7 @@ const props = defineProps({
               </svg>
               <h2 style="color:#fff;">Pantalones</h2></a>
             <a
-              href="/ropa-mx-para-moto"
+              href="/motocross-enduro-trial"
               class="mtc-link"
               style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
             >
