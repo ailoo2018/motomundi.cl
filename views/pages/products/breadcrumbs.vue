@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import breadCrumbsChevron from '@images/svg/breadcrumb-chevron.svg'
+
 import {getCategoryUrl, getCategoryBrandUrl} from "@core/utils/formatters";
 
 const props = defineProps({
@@ -17,6 +17,15 @@ const category = computed( () => {
   
   return { id: 0, name: "" }
 })
+
+const categoryUrl = computed(() => {
+  return getCategoryUrl(category.value)
+})
+
+const brandCategoryUrl = computed(() => {
+  return getCategoryBrandUrl(category.value, props.product.brand)
+})
+
 </script>
 
 <template>
@@ -25,7 +34,7 @@ const category = computed( () => {
     <ul class="breadcrumb">
       <li v-if="category" >
         <a
-          :href="'' + getCategoryUrl(category)"
+          :href="categoryUrl"
           class="mtc-link"
         >
          {{ category.name }}
@@ -33,7 +42,7 @@ const category = computed( () => {
       </li>
       <li>
         <a
-          :href="getCategoryBrandUrl(category, product.brand)"
+          :href="brandCategoryUrl"
           class="mtc-link"
         >
           {{ product.brand.name }}
