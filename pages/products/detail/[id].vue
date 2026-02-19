@@ -1,4 +1,5 @@
 <script setup>
+/* eslint-disable camelcase */
 import { useConfigStore } from "@core/stores/config"
 
 import ShareComponent from "@/views/pages/products/share-component.vue"
@@ -57,7 +58,7 @@ const productId = computed(() => {
 const productCarousel = ref()
 const currentVideoId = ref()
 
-const cartStore = useCartStore();
+const cartStore = useCartStore()
 
 const { data: product, pending } = await useFetch(() => `/api/product/${productId.value}`)
 
@@ -111,7 +112,44 @@ const onSelectedColor = color => {
 }
 
 
+onMounted(() => {
 
+  if(product.value) {
+
+
+    // 1. Clear previous ecommerce data (important for SPAs)
+    window.dataLayer.push({ ecommerce: null })
+
+
+    // 2. Push the new product view
+    let category = null
+    if(product.value.parentCategories?.length > 0){
+      category = product.value.parentCategories[0]
+    }
+
+    const gprod = {
+      event: 'view_item',
+      ecommerce: {
+        currency: 'CLP',
+        value: Number(product.value.minPrice), // Total value of the view
+        items: [
+          {
+            item_id: product.value.id,
+            item_name: product.value.name,
+            item_brand: product.value.brand?.name || "",
+            item_category: category?.name || '',
+            price: Number(product.value.minPrice),
+            quantity: 1,
+          },
+        ],
+      },
+    }
+
+    console.log("view_item", gprod)
+    
+    window.dataLayer.push(gprod)
+  }
+})
 </script>
 
 <template>
@@ -124,7 +162,7 @@ const onSelectedColor = color => {
         >
           <div class="s12">
             <div>
-              <Breadcrumbs :product="product"/>
+              <Breadcrumbs :product="product" />
 
 
 
@@ -135,7 +173,8 @@ const onSelectedColor = color => {
                     {{ product.brand.name }}
                     <strong>{{ product.name }}</strong>
                   </h1>
-                  <a v-if="!isMobile"
+                  <a
+                    v-if="!isMobile"
                     :href="getBrandUrl(product.brand)"
                     class="mtc-link"
                   >
@@ -176,9 +215,6 @@ const onSelectedColor = color => {
             @add-to-cart="addToCart"
           />
         </div>
-
-
-
       </section>
 
       <Packs :product="product" />
@@ -248,5 +284,4 @@ const onSelectedColor = color => {
   </VDialog>
 </template>
 
-<style scoped lang="scss">
-</style>
+
