@@ -63,6 +63,16 @@ const cartStore = useCartStore()
 
 const { data: product, pending } = await useFetch(() => `/api/product/${productId.value}`)
 
+useSeoMeta({
+  title: () =>  product.value?.name || 'Loading Product...',
+  ogTitle: () => product.value?.name,
+  description: () => product.value?.fullName,
+  ogDescription: () => product.value?.fullName,
+  ogImage: () => product.value && product.value.image ? getImageUrl(product.value.image, 600, getDomainId()) : null, // Optional: set social sharing image
+})
+
+console.log("ogImage: " + (product.value && product.value.image ? getBaseCDN() + getImageUrl(product.value.image, 600, getDomainId()) : null))
+
 const onShowVideo = videoId => {
   console.log("showVideo: " + videoId)
   currentVideoId.value = videoId
