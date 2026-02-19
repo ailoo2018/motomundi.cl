@@ -68,6 +68,39 @@ const onShowVideo = videoId => {
   showVideoDialog.value = true
 }
 
+const addToCartGEvent = () => {
+  try {
+    window.dataLayer.push({ ecommerce: null })
+
+    let category = null
+    if(product.value.parentCategories?.length > 0){
+      category = product.value.parentCategories[0]
+    }
+
+    window.dataLayer.push({
+      event: 'add_to_cart',
+      ecommerce: {
+        currency: 'CLP',
+        value: Number(product.price),
+        items: [
+          {
+            item_id: product.value.id,
+            item_name: product.value.name,
+            item_brand: product.value.brand?.name || '',
+            item_category: category?.name || '',
+            price: Number(product.value.minPrice),
+            quantity: 1, // Or your quantity ref
+          },
+        ],
+      },
+    })
+
+    console.log("addToCartGEvent success")
+  }catch(e){
+    console.error("Error addToCartGEvent", e)
+  }
+}
+
 const addToCart = async item => {
 
   loading.value = true
@@ -95,6 +128,7 @@ const addToCart = async item => {
 
     await cartStore.add(cartItem, wuid)
 
+    addToCartGEvent()
 
     window.location = "/cart"
 
