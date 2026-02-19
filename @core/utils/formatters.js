@@ -237,16 +237,23 @@ function formatLink(str) {
   return str.length > 255 ? str.substring(0, 254) : str
 }
 
+
+
+
 export const getBrandUrl = function (brand) {
 
-  return "/" + formatLink(brand.name)
+  return "/" + formatLink(brand?.name)
 }
 
 export const getProductUrl = function (product) {
-  return "/motocicleta/" + formatLink(product.linkName)
+  return "/motocicleta/" + formatLink(product?.linkName)
 }
 
 export const getCategoryUrl = function (category) {
+
+  if(!category)
+    return ""
+
   let prefix = "/"
 
   if (category.linkName && category.linkName.length > 0) {
@@ -254,4 +261,16 @@ export const getCategoryUrl = function (category) {
   }
 
   return prefix + formatLink(category.name)
+}
+
+
+export const getCategoryBrandUrl = function (category, brand) {
+  if(!category){
+    return getBrandUrl(brand)
+  }
+  if(!brand){
+    return getCategoryUrl(category)
+  }
+
+  return getCategoryUrl(category) + "-" + formatLink(brand?.name)
 }
