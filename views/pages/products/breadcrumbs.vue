@@ -20,19 +20,17 @@ const category = computed( () => {
   <!-- breadcrumbs -->
   <div class="breadcrumb-container">
     <ul class="breadcrumb">
-      <li>
+      <li v-if="product.parentCategories && product.parentCategories.length > 0" >
         <a
-          href="/cascos-integrales-para-moto"
-          data-dr="true"
+          :href="getCategoryUrl(product.parentCategories[0])"
           class="mtc-link"
         >
-          {{ category }}
+          {{ product.parentCategories[0].name }}
         </a>
       </li>
       <li>
         <a
-          href="/cascos-integrales-para-moto-hjc"
-          data-dr="true"
+          :href="getBrandUrl(product.brand)"
           class="mtc-link"
         >
           {{ product.brand.name }}
