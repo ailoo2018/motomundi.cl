@@ -29,9 +29,9 @@ const getDescription = state => {
 </script>
 
 <template>
-  <VContainer class="pa-0 ma-0">
+  <VContainer  class="pa-0 ma-0">
     <div class="account__content">
-      <div class="account__order">
+      <div id="account-order" class="account__order">
         <div class="account-orders__header mb-5" >
           <h1 class="account__title" style="border-bottom: 1px solid #ccc;">
             <svg
@@ -52,13 +52,7 @@ const getDescription = state => {
             md="8"
           >
             <div class="account-order">
-<!--
-              <div class="order-detail__header my-5">
-                <h3 class="order-detail__order-id">
-                  Pedido #{{ order.id }}
-                </h3>
-              </div>
--->
+
               <div class="order-detail__body">
                 <div class="order-detail__tracking">
                   <div class="order-detail__order-status">
@@ -249,12 +243,12 @@ const getDescription = state => {
   </VContainer>
 </template>
 
-<style scoped>
+<style >
 .v-card--variant-plain {
   opacity: 1;
 }
 
-h3 {
+#account-order h3 {
   border-bottom: 1px solid #000;
   font-size: 16px;
   font-weight: 700;
@@ -316,9 +310,9 @@ h3 {
   padding: 0;
 }
 
-h4 {
+#account-order h4 {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   margin: 4px 0;
 }
 </style>
