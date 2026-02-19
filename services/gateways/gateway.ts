@@ -60,7 +60,7 @@ export function getBaseUrl(){
 
   let baseUrl = config.public.baseUrl
   if(!baseUrl.startsWith("https")){
-    baseUrl = "https://encourage-pending-david-town.trycloudflare.com"
+    baseUrl = "https://arlington-favorites-established-refurbished.trycloudflare.com"
   }
 
 

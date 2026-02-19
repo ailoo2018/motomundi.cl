@@ -115,7 +115,9 @@ const conversionRate = ref(1)
 const error = ref()
 
 const total = computed( () => {
-  if(!selectedCountry.value || selectedCountry.value === 'CLAA' ) {
+
+
+  if(selectedPayment.value !== 19000 ) {
     return invoice.total
   }
 
@@ -123,7 +125,7 @@ const total = computed( () => {
 })
 
 const iva = computed( () => {
-  if(!selectedCountry.value || selectedCountry.value === 'CLAA' ) {
+  if(selectedPayment.value  !== 19000 ) {
     return invoice.iva
   }
 
@@ -154,23 +156,38 @@ const paymentMethods = ref([
   {
     id: 15,
     name: 'MercadoPago',
+    code: "mercadopago",
     button: "MercadoPago",
     description: 'Tarjetas de crédito y débito',
     color: '#009EE3',
+    isTax: true,
   },
   {
     id: 8,
     name: 'WebPay',
+    code: "webpay",
     button: "WebPay",
     description: 'Transbank - Tarjetas chilenas',
     color: '#00A84F',
+    isTax: true,
   },
   {
     id: 19,
+    name: 'Pago con moneda local',
+    code: "dlocal",
+    button: "DLocal",
+    description: 'DLocal - Si eres extranjero y quieres comprar en Chile con tu moneda local seleccione este método de pago ',
+    color: '#006cfa',
+    isTax: true,
+  },
+  {
+    id: 19000,
+    code: "dlocal",
     name: 'Compras Internacionales',
     button: "DLocal",
-    description: 'DLocal - Compras Internacionales',
+    description: 'DLocal - Compras Internacionales con envío fuera de Chile no pagan IVA local.',
     color: '#006cfa',
+    isTax: false,
   },
 ])
 
@@ -254,7 +271,7 @@ const processPayment = async () => {
   }
 
   const rq = {
-    paymentMethodId: method.id,
+    paymentMethodId: method.id === 19000 ? 19 : method.id,
     referenceId: "invoice-" + invoiceId,
     country: selectedCountry.value || "CL",
     currency: currency,
@@ -462,7 +479,26 @@ const processPayment = async () => {
                   </div>
 
 
-                  <div v-if="method.id === 19 && selectedPayment === 19">
+                  <div v-if="method.id === 19 && (selectedPayment === 19)">
+                    <AppSelect
+                      v-model="selectedCountry"
+                      :items="countries"
+                      item-title="name"
+                      item-value="id"
+                      label="País"
+                      placecholder="Seleccione país"
+                    />
+                    <AppSelect
+                      v-model="selectedCurrency"
+                      :items="currencies"
+                      item-id="id"
+                      item-title="name"
+                      label="Moneda"
+                      placecholder="Seleccione moneda"
+                      return-object
+                    />
+                  </div>
+                  <div v-if="method.id === 19000 && (selectedPayment === 19000)">
                     <AppSelect
                       v-model="selectedCountry"
                       :items="countries"
