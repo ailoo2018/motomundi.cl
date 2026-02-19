@@ -130,7 +130,7 @@ const addToCart = async item => {
 
     addToCartGEvent()
 
-    window.location = "/cart"
+    router.push('/cart')
 
   }catch(e){
     alert("error: " + e.message)
