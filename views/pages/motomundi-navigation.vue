@@ -36,7 +36,7 @@ const selectDepartment = () => {
       <ul id="menu-anchor" class="u0">
         <Cascos href="/cascos-para-moto"/>
         <RopaCalle href="/ropa-calle-para-moto"/>
-        <RopaOffroad href="/ropa-mx-para-moto"/>
+        <RopaOffroad href="/motocross-enduro-trial"/>
         <RopaCasual href="/ropa-casual"/>
         <Parts href="/accesorios-para-motos"/>
         <Neumaticos href="/neumaticos-para-moto"/>
