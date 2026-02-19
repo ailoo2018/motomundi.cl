@@ -32,6 +32,7 @@ const loading = ref(false)
 
 const route = useRoute()
 const router = useRouter()
+
 console.log("router: " + route.params.id)
 
 // --- ID EXTRACTION LOGIC ---
@@ -107,6 +108,8 @@ const addToCart = async item => {
   try {
     const wuid = useGuestUser().value
 
+    addToCartGEvent()
+    await nextTick()
     let cartItem = null
     if(product.value.type === ProductType.Simple){
       cartItem = {
@@ -128,7 +131,7 @@ const addToCart = async item => {
 
     await cartStore.add(cartItem, wuid)
 
-    addToCartGEvent()
+
 
     window.location = "/cart"
 
