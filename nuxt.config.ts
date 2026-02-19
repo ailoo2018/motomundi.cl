@@ -32,12 +32,20 @@ export default defineNuxtConfig({
       }],
       noscript: [
         {
-          children: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-57TQSHJ"
+          innerHTML: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-57TQSHJ"
         height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
           body: true, // This ensures it lands in the <body>, not the <head>
         },
       ],
       script: [
+        {
+          innerHTML: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      `,
+          type: 'text/javascript',
+        },
         {
           // Use innerHTML instead of children
           innerHTML: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
