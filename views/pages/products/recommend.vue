@@ -66,7 +66,8 @@ products.value = rs
   column-gap: 20px;
   display: grid;
   grid-auto-flow: dense;
-  grid-template-columns: repeat(var(--7e560bfa), calc(100% / var(--7e560bfa) - 10px));
+  grid-template-columns: repeat(5, 1fr);
+  /*grid-template-columns: repeat(var(--7e560bfa), calc(100% / var(--7e560bfa) - 10px));*/
   row-gap: 20px;
 }
 
@@ -91,11 +92,22 @@ products.value = rs
   text-align: center;
 }
 
-@media only screen and (min-width: 993px) {
+@media only screen and (min-width: 1100px) {
   .product-list .products {
     -moz-column-gap: 10px;
     column-gap: 10px;
-    grid-template-columns: repeat(var(--15fff006), calc(100% / var(--15fff006) - 24px));
+    grid-template-columns: repeat(5, 1fr);
+   /* grid-template-columns: repeat(var(--15fff006), calc(100% / var(--15fff006) - 24px));*/
+    row-gap: 25px;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 1099px) {
+  .product-list .products {
+    -moz-column-gap: 10px;
+    column-gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: repeat(var(--15fff006), calc(100% / var(--15fff006) - 24px));*/
     row-gap: 25px;
   }
 }

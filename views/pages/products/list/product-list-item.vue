@@ -96,7 +96,7 @@ const miniatures = computed(() => {
             max-width="232"
             :src="getImageUrl( product.image, 300, getDomainId())"
             :alt="product.name"
-            class="cdn-img mb-1"
+            class="cdn-img mb-1 mx-auto"
             @error="handleImageError"
           >
             <template #error>
