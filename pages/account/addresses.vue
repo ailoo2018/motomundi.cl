@@ -7,7 +7,7 @@ definePageMeta({
 
 
 const addAddress = () => {
-
+  navigateTo("/account/edit-address?id=0")
 }
 
 const setDefault = addr => {
@@ -50,7 +50,9 @@ const addresses  = computed(() => {
           <VBtn
             rounded="0"}
             color="#000"
-            @click="addAddress();">
+            prepend-icon="tabler-plus"
+            @click="addAddress">
+
             Añadir dirección
           </VBtn>
         </div>
@@ -158,24 +160,14 @@ const addresses  = computed(() => {
             </div>
           </div>
         </div>
-        <button
+        <VBtn
           v-if="addresses.length > 0"
           @click="addAddress();"
           class="button hide-on-large-only hide-on-extra-large-only"
         >
-          <svg
-            width="10"
-            height="10"
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon sprite-line-icons"
-          >
-            <use
-              href="/content/svg/motomundi.svg#i-icon-plus"
-              xlink:href="/content/svg/motomundi.svg#i-icon-plus"
-            />
-          </svg>
+          <VIcon class="tabler-plus"/>
           Añadir dirección
-        </button>
+        </VBtn>
       </div>
     </div>
   </VContainer>

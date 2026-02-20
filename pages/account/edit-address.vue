@@ -7,14 +7,19 @@ definePageMeta({
 const route = useRoute()
 const addressId = route.query.id
 const error = ref()
-
-const { data } = useFetch("/api/account/addresses/" + addressId)
-
 const address = ref({ id: 0 })
 
-watch(data, (val) => {
-  if (val) address.value = { ...val }
-}, { immediate: true })
+if(addressId > 0) {
+  const {data} = useFetch("/api/account/addresses/" + addressId)
+
+  watch(data, (val) => {
+    if (val) address.value = { ...val }
+  }, { immediate: true })
+
+}
+
+
+
 
 const loading = ref(false)
 
@@ -69,6 +74,7 @@ const saveAddress = async () => {
 
 <template>
   <VContainer>
+
     <VAlert v-if="error" color="warning">
       {{error}}
     </VAlert>
@@ -133,6 +139,13 @@ const saveAddress = async () => {
                 v-model="address.address"
                 label="Dirección"
                 :rules="[rules.required]"
+              />
+            </div>
+            <div class="input-field">
+              <AppTextField
+                v-model="address.address2"
+                label="Dirección 2"
+
               />
             </div>
 
