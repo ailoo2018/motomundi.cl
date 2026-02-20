@@ -5,31 +5,39 @@ definePageMeta({
   middleware: 'auth', // Must match the filename (auth.ts)
 })
 
+const { data,  refresh } = useFetch("/api/account/addresses")
 
 const addAddress = () => {
   navigateTo("/account/edit-address?id=0")
 }
 
-const setDefault = addr => {
+const setDefault = async addr => {
+  await $fetch("/api/account/addresses/set-default", {
+    method: "GET",
+    query: { id: addr.id },
+  })
 
+  await refresh()
 }
 
-const deleteAddress = addr => {
+const deleteAddress = async addr => {
+  await $fetch("/api/account/addresses/" + addr.id, {
+    method: "DELETE",
+    query: { id: addr.id },
+  })
 
+  await refresh()
 }
 
-const { data } = useFetch("/api/account/addresses")
+
 
 const addresses  = computed(() => {
   return data.value?.addresses || []
 })
-
-
 </script>
 
 <template>
   <VContainer>
-
     <div class="col s12 m9 l9 account__content ng-cloak">
       <div class="account__content-block">
         <div class="account__content-block-title">
@@ -48,11 +56,12 @@ const addresses  = computed(() => {
             Mis direcciones
           </h1>
           <VBtn
-            rounded="0"}
+            rounded="0"
+            }
             color="#000"
             prepend-icon="tabler-plus"
-            @click="addAddress">
-
+            @click="addAddress"
+          >
             Añadir dirección
           </VBtn>
         </div>
@@ -75,7 +84,7 @@ const addresses  = computed(() => {
             <p>Aún no has añadido ninguna dirección a tu cuenta.</p>
             <button
               class="button button--filled button--small"
-              @click="addAddress();"
+              @click="addAddress"
             >
               Añadir la primera dirección
             </button>
@@ -87,7 +96,7 @@ const addresses  = computed(() => {
           <div  
             v-for="addr in addresses"
             class="account__address "
-            :class="addr.isDefault ? 'account__address--default' : ''"
+            :class="addr.default ? 'account__address--default' : ''"
           >
             <div
               class="account__address-edit"
@@ -115,7 +124,7 @@ const addresses  = computed(() => {
               </div>
             </div>
             <div class="account__address-header">
-              <span v-if="addr.isDefault">Predeterminada
+              <span v-if="addr.default">Predeterminada
                 <strong> Envío</strong>
               </span>
               <button
@@ -137,10 +146,10 @@ const addresses  = computed(() => {
             </div>
             <div class="account__address-body">
               <p class="address__name">
-                <strong >{{ addr?.alias }}</strong>
+                <strong>{{ addr?.alias }} </strong>
               </p>
-              <p>{{ addr.fname }} {{ addr.lname }}</p>
-              <p>{{ addr.phone  }}</p>
+              <p>{{ addr.fname }} {{ addr.lname }} </p>
+              <p>{{ addr.phone }}</p>
               <p>
                 {{ addr.address }} {{ addr.address2 }},<br>
                 <span v-if="addr.postalCode && addr.postalCode.length > 0">{{ addr.postalCode }} - </span>{{ addr.comuna.name }}<br>
@@ -162,10 +171,10 @@ const addresses  = computed(() => {
         </div>
         <VBtn
           v-if="addresses.length > 0"
-          @click="addAddress();"
           class="button hide-on-large-only hide-on-extra-large-only"
+          @click="addAddress"
         >
-          <VIcon class="tabler-plus"/>
+          <VIcon class="tabler-plus" />
           Añadir dirección
         </VBtn>
       </div>
