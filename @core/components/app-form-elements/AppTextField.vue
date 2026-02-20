@@ -28,6 +28,7 @@ const label = computed(() => useAttrs().label)
       :text="label"
     />
     <VTextField
+      rounded="0"
       v-bind="{
         ...$attrs,
         class: null,

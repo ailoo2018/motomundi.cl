@@ -28,6 +28,9 @@ const saveBike = async bike =>  {
 
     const data = await $fetch("/api/motorcycles/add-user-bike", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: req,
     })
 
@@ -46,6 +49,9 @@ const deleteBike = async bike => {
   console.log("bike: " + JSON.stringify(bike))
   await $fetch("/api/motorcycles/delete-user-bike", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: bike,
   })
 

@@ -13,11 +13,6 @@ export default defineEventHandler(async event => {
       body = await readBody(event)
     }
 
-
-    //const query = getQuery(event)
-
-    //const params = new URLSearchParams(query)
-
     url = `${baseUrl}/${getDomainId()}/products/search`
 
     const res = await $fetch(url, {

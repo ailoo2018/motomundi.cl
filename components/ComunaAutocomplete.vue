@@ -26,6 +26,10 @@ const props = defineProps({
   },
   variant: {
     type: String,
+  },
+  showLabel: {
+    type: Boolean,
+    default: false,
   }
 })
 
@@ -107,6 +111,14 @@ watch(searchInput, newValue => {
 <template>
   <div>
 
+    <VLabel
+      v-if="label && showLabel"
+      :for="elementId"
+      class="mb-1 text-body-2 text-wrap"
+      style="line-height: 15px;"
+      :text="label"
+    />
+
     <VAutocomplete
       v-model="selectedValue"
       v-model:menu="isMenuOpen"
@@ -119,7 +131,7 @@ watch(searchInput, newValue => {
       :variant="variant"
       label="Comuna"
       placeholder="Buscar comuna..."
-
+      rouned="0"
       hide-no-data
       hide-selected
       return-object

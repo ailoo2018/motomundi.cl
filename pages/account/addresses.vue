@@ -147,7 +147,7 @@ const addresses  = computed(() => {
             </div>
             <div class="account__address-actions">
               <a 
-                :href="'/account/addresses' + addr.id"
+                :href="'/account/edit-address?id=' + addr.id"
                 class="mtc-link"
               >
                 Modificar
