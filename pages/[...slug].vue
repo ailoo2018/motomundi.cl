@@ -43,13 +43,7 @@ else if(path.toLowerCase().startsWith("/product/view.rails")) {
 else if(path === "/Product/Search.rails"){
   navigateTo("/products/list?sword=" + queryParams.w)
 }
-else if(path.toLowerCase().includes("checkout/recover.rails")){
-  console.log("/checkout/recover.rails")
-  useCartStore().findCart( queryParams.id)
 
-  navigateTo("/cart" )
-
-}
 else if(path === "/Account/OrderDetail.rails"){
   console.log("orderDetail: " + queryParams.hash)
   // ?orderId=190920&hash=FF4970D2B241BAFFAACE2F654EAE60A8

@@ -3,7 +3,7 @@ import { onMounted } from "vue"
 import { register } from "swiper/element"
 
 import * as LinkHelper from "~/helpers/LinkHelper"
-import {getWccUrl} from "~/helpers/LinkHelper";
+import { getWccUrl } from "~/helpers/LinkHelper"
 
 const { data: featured } = useFetch("/api/blog/featured-posts", {
   method: "GET",
@@ -41,14 +41,14 @@ onMounted(() => {
           style="display: inline-block; cursor: pointer;"
           @click="slidePrev"
         >
-          <img src="@/assets/images/svg/previous-w.svg">
+          <img src="/svg/previous-w.svg">
         </span>
         <span
           class="next slick-arrow"
           style="display: inline-block; cursor: pointer;"
           @click="slideNext"
         >
-          <img src="@/assets/images/svg/next-w.svg">
+          <img src="/svg/next-w.svg">
         </span>
       </div>
       Te  recomendamos...
@@ -109,7 +109,7 @@ onMounted(() => {
                       :href="LinkHelper.getWccUrl(r)"
                       tabindex="-1"
                     >
-                      <h2 class="post-title">{{r.title}}</h2>
+                      <h2 class="post-title">{{ r.title }}</h2>
                     </a>
                   </div>
                 </header>
