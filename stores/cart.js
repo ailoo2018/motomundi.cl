@@ -7,6 +7,22 @@ export const useCartStore = defineStore('cart', {
   }),
 
   actions: {
+    async findCart(id)
+    {
+      this.loading = true
+      try {
+        const data = await $fetch('/api/cart/find-by-id', { query: { id } })
+
+        this.cart = data
+        this.cart.wuid = data.wuid
+        this.cart.items.forEach(i => i.loading = false)
+        
+        return this.cart
+      } finally {
+        this.loading = false
+      }
+
+    },
     async fetchCart(wuid) {
       this.loading = true
       try {

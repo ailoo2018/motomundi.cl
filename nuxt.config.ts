@@ -74,6 +74,7 @@ export default defineNuxtConfig({
     '/motocross-enduro-trial': createCachedRoute('motocross'),
     '/ropa-casual': createCachedRoute('ropa-casual'),
     '/moto-blog': createCachedRoute('blog'),
+    '/checkout/recover.rails': { redirect: '/checkout/recover' },
   },
 
   runtimeConfig: {
