@@ -111,5 +111,16 @@ products.value = rs
     row-gap: 25px;
   }
 }
+
+@media only screen and (max-width: 599px) {
+  .product-list .products {
+    -moz-column-gap: 10px;
+    column-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-columns: repeat(var(--15fff006), calc(100% / var(--15fff006) - 24px));*/
+    row-gap: 25px;
+  }
+}
+
 </style>
 
