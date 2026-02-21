@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import ReviewForm from "@/pages/account/reviews/review-form.vue"
+import { getDataImageUrl } from "@core/utils/formatters.js"
 
 definePageMeta({
   alias: '/cuenta/evaluaciones',
@@ -22,7 +23,7 @@ const conTags = ['Instalación difícil', 'Calidad mejorable', 'Llegó tarde', '
 // ─── Mock Data ───────────────────────────────────────────────
 const wuid = useGuestUser().value
 
-const { data } = await useFetch("/api/account/reviews",
+const { data, refresh } = await useFetch("/api/account/reviews",
   { key: "reviews-" + wuid },
 )
 
@@ -157,8 +158,14 @@ function submitReview(product) {
   snackbar.value = true
 }
 
-function deleteReview(id) {
-  reviewedProducts.value = reviewedProducts.value.filter(p => p.id !== id)
+const deleteReview = async id => {
+
+  await $fetch("/api/account/reviews/" + id, {
+    method: "DELETE",
+  }  )
+
+  await refresh()
+  // data.value.reviewed = data.value.reviewed.filter(p => p.review.id !== id)
 }
 </script>
 
@@ -488,6 +495,21 @@ stroke-linejoin="round"
               <p class="review-body">
                 {{ product.review?.body }}
               </p>
+              <div v-if="product.review?.configuration?.images" class="review-images v-row">
+                <VCol
+                  v-for="(image, index) in product.review?.configuration?.images"
+                  :key="index"
+                  cols="3"
+                  sm="6"
+                  md="3"
+                  class="mr-5"
+                >
+                  <div
+                    class="review-file-upload"
+                    :style="{ backgroundImage: `url(${getImageUrl(image.id, 300, getDomainId())})` }"
+                  />
+                </VCol>
+              </div>
               <div
                 v-if="product.review?.pros?.length || product.review?.cons?.length"
                 class="review-tags-row"
@@ -524,7 +546,7 @@ stroke-linejoin="round"
                 </button>
                 <button
                   class="action-link delete-link"
-                  @click="deleteReview(product.id)"
+                  @click="deleteReview(product.review.id)"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1010,7 +1032,7 @@ stroke-linejoin="round"
   padding: 48px;
   background: #ffffff;
   border: 1.5px dashed #E2E8F0;
-  border-radius: 16px;
+  border-radius: 0px;
   color: #CBD5E1;
   text-align: center;
 }
