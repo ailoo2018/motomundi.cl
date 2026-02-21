@@ -4,7 +4,17 @@ const props = defineProps({
     type: Object,
     default: () => null,
   },
+  invoiceId: {
+    type: Number,
+    default: () => 0,
+  },
+  productItemId: {
+    type: Number,
+    default: () => null
+  },
 })
+
+const emit = defineEmits(["on-cancel"])
 
 const title = ref('')
 const opinion = ref('')
@@ -12,6 +22,8 @@ const youtubeUrl = ref('')
 const termsAccepted = ref(false)
 const rating = ref(0)
 const images = ref([])
+const isSubmitting = ref(false)
+
 
 // --- Validation States ---
 const productReviewError = ref(false)
@@ -21,15 +33,20 @@ const titleError = ref(false)
 const opinionError = ref(false)
 
 
+
 const triggerUpload = () => {
   const el = fileInput.value?.$el || fileInput.value
   const input = el?.querySelector('input')
   if (input) input.click()
 }
 
-
+const ratingLabels = ['Muy malo','Muy malo', 'Malo','Malo', 'Regular','Regular', 'Bueno','Bueno', '¡Excelente!', '¡Excelente!']
 
 const fileInput = ref(null)
+
+const onCancel = () => {
+  emit("on-cancel")
+}
 
 const handleFileChange = (event: any) => {
   const files = Array.from(event.target.files) as File[]
@@ -91,11 +108,10 @@ const sendProductReviews = async () => {
     // We use FormData for file uploads
     const formData = new FormData()
 
-    if(productItemId)
-      formData.append('productItemId', productItemId)
-    if(productId)
-      formData.append('productId', productId)
-    formData.append('invoiceId', invoiceId.toString())
+    if(props.productItemId)
+      formData.append('productItemId', props.productItemId)
+    formData.append('productId', props.product.id)
+    formData.append('invoiceId', props.invoiceId.toString())
     formData.append('rating', rating.value.toString())
     formData.append('title', title.value)
     formData.append('comment', opinion.value)
@@ -128,15 +144,68 @@ const sendProductReviews = async () => {
   <div class="review-form">
     <div class="form-divider" />
 
+    <VRow
+      v-if="productReviewError"
+      id="product-review-error"
+    >
+      <VCol>
+        <div class="warning callout">
+          <p><VIcon class="tabler-alert-square-rounded" size="md" />Por favor, puntúa algún producto haciendo click en las estrellas.</p>
+        </div>
+      </VCol>
+    </VRow>
+    <VRow
+      v-if="titleError"
+      id="title-error"
+    >
+      <VCol>
+        <div class="warning callout">
+          <p><VIcon class="tabler-alert-square-rounded" />Por favor, ingresa un título para tu review.</p>
+        </div>
+      </VCol>
+    </VRow>
+    <VRow
+      v-if="opinionError"
+      id="opinion-error"
+    >
+      <VCol>
+        <div class="warning callout">
+          <p><VIcon class="tabler-alert-square-rounded" />Por favor, ingresa tu opinión sobre el producto.</p>
+        </div>
+      </VCol>
+    </VRow>
+    <VRow
+      v-if="productFileReviewError"
+      id="product-review-error-size"
+      class="row ng-hide"
+    >
+      <VCol>
+        <div class="warning callout">
+          <p><VIcon class="tabler-alert-square-rounded" />Archivo muy grande El tamaño máximo permitido es de 2MB</p>
+        </div>
+      </VCol>
+    </VRow>
+    <VRow v-if="termsError" class="row">
+      <VCol cols="12">
+        <div class="warning callout">
+          <p><VIcon class="tabler-alert-square-rounded" />Debes aceptar los términos y condiciones para continuar.</p>
+        </div>
+      </VCol>
+    </VRow>
+
+
     <!-- Star Rating -->
     <div class="rating-section mb-4">
       <label class="form-label">Tu puntuación</label>
+      <div class="d-flex">
       <VRating
         v-model="rating"
         half-increments
         color="primary"
         hover
       />
+      <span class="rating-label-text pt-1" v-if="rating"> {{ ratingLabels[rating * 2 - 1] }}</span>
+      </div>
     </div>
 
     <!-- Title -->
@@ -168,6 +237,8 @@ const sendProductReviews = async () => {
     </div>
 
     <div class="video-input-div mb-5">
+      <label class="form-label" :for="`image-upload-${product.id}`">¿Te has animado a grabar un video? Déjanos el enlace a YouTube, Instagram o Tiktok aquí:</label>
+
       <AppTextField
         v-model="youtubeUrl"
         id="video-input"
@@ -240,6 +311,24 @@ const sendProductReviews = async () => {
 
     <!-- Pros / Cons quick picks -->
     <div class="quick-tags mb-5">
+      <VCheckbox
+        v-model="termsAccepted"
+        id="gdpr-legal-accept-products"
+        type="checkbox"
+        name="gdpr-legal-accept-products"
+        ng-model="termsAccepted.productReview"
+      >
+        <template #label>
+          <p>
+            Autorizo a Motomundi SPA a publicar mis opiniones en su página web y cedo los derechos de las imágenes que adjunto a los únicos
+            fines de complementar mis comentarios
+            para ayudar a otros usuarios en su proceso de compra.
+            <a>Más información</a>
+          </p>
+        </template>
+      </VCheckbox>
+    </div>
+    <div class="d-none quick-tags mb-5">
       <div class="tags-col">
         <span class="tags-header pro">
           <svg
@@ -305,34 +394,21 @@ const sendProductReviews = async () => {
     </div>
 
     <div class="form-actions">
-      <button
+      <VBtn
         class="btn-cancel"
-        @click="toggleExpand(null)"
+        rounded="0"
+        color="secondary"
+        variant="outlined"
+        @click="onCancel"
       >
         Cancelar
-      </button>
-      <button
-        class="btn-submit"
-        :disabled="!product.draftRating || !product.draftBody"
-        @click="submitReview(product)"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ><path
-          stroke="none"
-          d="M0 0h24v24H0z"
-          fill="none"
-        /><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-        Publicar reseña
-      </button>
+      </VBtn>
+      <VBtn
+        prepend-icon="tabler-send"
+        rounded="0"
+        @click="sendProductReviews"
+        >Publicar reseña</VBtn>
+
     </div>
   </div>
 </template>
@@ -378,4 +454,32 @@ const sendProductReviews = async () => {
   margin-bottom: 20px
 }
 
+
+.callout.warning {
+  background-color: #ffe8b8;
+  color: #7a5400;
+}
+.callout.warning {
+  background-color: #fff3d9;
+  color: #0a0a0a;
+}
+.callout {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+.callout {
+  border-radius: 3px;
+  text-align: center;
+}
+.callout {
+  position: relative;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  border: 0;
+  border-radius: 0;
+  background-color: #fff;
+  color: #0a0a0a;
+}
 </style>
