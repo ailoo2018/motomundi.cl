@@ -419,40 +419,45 @@ stroke-linejoin="round"
               </h4>
               <p class="review-body" >
                 {{ product.review?.body }}
-              </p>
-              <div v-if="product.review?.configuration?.images" class="review-images v-row">
-                <VCol
-                  v-for="(image, index) in product.review?.configuration?.images"
-                  :key="index"
-                  cols="3"
-                  sm="6"
-                  md="3"
-                  class="mr-5"
-                >
-                  <div
-                    class="review-file-upload"
-                    :style="{ backgroundImage: `url(${getImageUrl(image.id, 300, getDomainId())})` }"
-                  />
-                </VCol>
 
-              </div>
-              <hr/>
-              <div>
-                <VCol v-if="product.review?.videoUrl" >
-                  <div class="thumbnail-wrapper">
-                    <img
-                      :src="getVideoThumb(product.review?.videoUrl)"
-                      alt="Vista previa del video"
-                      class="thumbnail-img"
-                    />
-                    <div class="thumbnail-play-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48" width="68" height="48">
-                        <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
-                        <path d="M45 24 27 14v20" fill="#fff"/>
-                      </svg>
+
+              </p>
+              <div style="border-top: 1px solid #ccc;margin-top: 10px;padding-top: 15px;">
+                <div>
+                  <VCol v-if="product.review?.videoUrl" >
+                    <div class="thumbnail-wrapper">
+                      <img
+                        :src="getVideoThumb(product.review?.videoUrl)"
+                        alt="Vista previa del video"
+                        class="thumbnail-img"
+                      />
+                      <div class="thumbnail-play-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48" width="68" height="48">
+                          <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
+                          <path d="M45 24 27 14v20" fill="#fff"/>
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                </VCol>
+                  </VCol>
+                </div>
+                <div v-if="product.review?.configuration?.images" class="review-images v-row ml-1">
+                  <VCol
+                    v-for="(image, index) in product.review?.configuration?.images"
+                    :key="index"
+                    cols="3"
+                    sm="6"
+                    md="3"
+                    class="mr-5"
+                  >
+                    <div
+                      class="review-file-upload"
+                      :style="{ backgroundImage: `url(${getImageUrl(image.id, 300, getDomainId())})` }"
+                    />
+                  </VCol>
+
+                </div>
+
+
               </div>
               <div
                 v-if="product.review?.pros?.length || product.review?.cons?.length"
@@ -1059,5 +1064,17 @@ stroke-linejoin="round"
   font-size: 16px
 }
 
+.review-file-upload {
+  background-size: cover;
+  background-position: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #bdbdbd;
+  height: 145px;
+  width: 145px;
+  text-align: center;
+  border-radius: 3px;
+  margin-bottom: 20px
+}
 
 </style>
