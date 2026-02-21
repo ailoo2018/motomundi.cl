@@ -245,9 +245,7 @@ onMounted(async () => {
             v-model="opinion"
             id="review-opinion"
             style="width: 100%;"
-            ng-model="products[$product.Id].review"
             placeholder="Por favor, escribe aquí tu opinión sobre este producto."
-            ng-init="products[$product.Id].review = &#39;&#39;"
             :error="opinionError"
             class="ng-pristine ng-untouched ng-valid ng-empty"
           />

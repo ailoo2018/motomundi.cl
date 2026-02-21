@@ -37,6 +37,7 @@ watch(selectedBrand, async () => {
 
     const modelsRs = await $fetch("/api/motorcycles/models",
       {
+        key: "motorcycles-models",
         query: {
           brandId: selectedBrand.value.id,
           filterBikeWithProducts: props.filterBikesWithProducts,
@@ -56,6 +57,7 @@ watch(selectedModel, async () => {
     enableYears.value = true
 
     const yearsRs = await $fetch("/api/motorcycles/years", {
+      key: "motorcycles-years",
       query: {
         brandId: selectedBrand.value.id,
         modelId: selectedModel.value.id,

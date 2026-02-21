@@ -93,7 +93,7 @@ else if(path.toLowerCase() === "/product/reviewproduct.rails"){
   useCookie('accessToken').value = data.value.accessToken
 
 
-  navigateTo("/account/review?productId=" + queryParams.prodId + "&invoiceId=" + queryParams.invoiceId)
+  navigateTo("/account/reviews/review?productId=" + queryParams.prodId + "&invoiceId=" + queryParams.invoiceId)
 
 }
 else{
