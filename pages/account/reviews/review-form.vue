@@ -16,6 +16,7 @@ const props = defineProps({
 
 const emit = defineEmits(["on-cancel"])
 
+
 const title = ref('')
 const opinion = ref('')
 const youtubeUrl = ref('')
