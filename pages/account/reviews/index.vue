@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import ReviewForm from "@/pages/account/reviews/review-form.vue"
-import { getDataImageUrl } from "@core/utils/formatters.js"
+import { extractYoutubeId, getDataImageUrl } from "@core/utils/formatters.js"
 
 definePageMeta({
   alias: '/cuenta/evaluaciones',
@@ -35,85 +35,10 @@ const reviewedProducts = computed( () => {
   return data.value?.reviewed
 })
 
-const pendingProductsaaa = ref([
-  {
-    id: 1,
-    name: 'Casco Shoei NXR2 Matte Black',
-    category: 'Cascos',
-    image: 'https://placehold.co/120x120/1a1a2e/e2e8f0?text=Casco',
-    orderId: 'MM-4821',
-    purchaseDate: '12 ene 2025',
-    price: 289990,
-    draftRating: 0,
-    draftTitle: '',
-    draftBody: '',
-    selectedProTags: [],
-    selectedConTags: [],
-  },
-  {
-    id: 2,
-    name: 'Guantes Alpinestars SP-8 V3',
-    category: 'Protección',
-    image: 'https://placehold.co/120x120/1a1a2e/e2e8f0?text=Guantes',
-    orderId: 'MM-4821',
-    purchaseDate: '12 ene 2025',
-    price: 54990,
-    draftRating: 0,
-    draftTitle: '',
-    draftBody: '',
-    selectedProTags: [],
-    selectedConTags: [],
-  },
-  {
-    id: 3,
-    name: 'Aceite Motul 7100 10W40 4T 1L',
-    category: 'Lubricantes',
-    image: 'https://placehold.co/120x120/1a1a2e/e2e8f0?text=Aceite',
-    orderId: 'MM-5033',
-    purchaseDate: '3 feb 2025',
-    price: 18990,
-    draftRating: 0,
-    draftTitle: '',
-    draftBody: '',
-    selectedProTags: [],
-    selectedConTags: [],
-  },
-])
-
-const reviewedProductsAAA = ref([
-  {
-    id: 101,
-    name: 'Moto Givi E55 Maxia 5',
-    category: 'Baúles',
-    image: 'https://placehold.co/80x80/1a1a2e/e2e8f0?text=Baúl',
-    orderId: 'MM-3960',
-    review: {
-      rating: 5,
-      title: 'El mejor baúl que he tenido',
-      body: 'Excelente capacidad, el sistema de apertura es muy cómodo y la calidad del plástico es superior. Lo recomiendo 100% para viajes largos.',
-      date: '18 nov 2024',
-      helpful: 14,
-      pros: ['Buena calidad', 'Fácil de instalar'],
-      cons: [],
-    },
-  },
-  {
-    id: 102,
-    name: 'Intercom Cardo Packtalk Edge',
-    category: 'Comunicación',
-    image: 'https://placehold.co/80x80/1a1a2e/e2e8f0?text=Cardo',
-    orderId: 'MM-3701',
-    review: {
-      rating: 4,
-      title: 'Muy buena calidad de audio',
-      body: 'El sonido es espectacular. La app podría ser más intuitiva pero el producto en sí supera las expectativas. La batería dura perfectamente un día completo de ruta.',
-      date: '5 oct 2024',
-      helpful: 7,
-      pros: ['Buen precio'],
-      cons: ['Instalación difícil'],
-    },
-  },
-])
+const getVideoThumb = videoUrl => {
+  const id = extractYoutubeId(videoUrl)
+  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+}
 
 // ─── Computed ─────────────────────────────────────────────────
 const averageRating = computed(() => {
@@ -492,7 +417,7 @@ stroke-linejoin="round"
               <h4 class="review-title">
                 {{ product.review?.title }}
               </h4>
-              <p class="review-body">
+              <p class="review-body" >
                 {{ product.review?.body }}
               </p>
               <div v-if="product.review?.configuration?.images" class="review-images v-row">
@@ -508,6 +433,25 @@ stroke-linejoin="round"
                     class="review-file-upload"
                     :style="{ backgroundImage: `url(${getImageUrl(image.id, 300, getDomainId())})` }"
                   />
+                </VCol>
+
+              </div>
+              <hr/>
+              <div>
+                <VCol v-if="product.review?.videoUrl" >
+                  <div class="thumbnail-wrapper">
+                    <img
+                      :src="getVideoThumb(product.review?.videoUrl)"
+                      alt="Vista previa del video"
+                      class="thumbnail-img"
+                    />
+                    <div class="thumbnail-play-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48" width="68" height="48">
+                        <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
+                        <path d="M45 24 27 14v20" fill="#fff"/>
+                      </svg>
+                    </div>
+                  </div>
                 </VCol>
               </div>
               <div
@@ -1062,4 +1006,58 @@ stroke-linejoin="round"
   .review-toggle-btn { width: 100%; justify-content: center; }
   .stats-bar { padding: 16px; }
 }
+
+
+.youtube-thumbnail-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.thumbnail-wrapper {
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  max-width: 320px;
+  width: 100%;
+}
+
+.thumbnail-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.thumbnail-play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  transition: background 0.2s ease;
+}
+
+.thumbnail-wrapper:hover .thumbnail-play-icon {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.thumbnail-caption {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.video-input-div {
+  position: relative;
+
+  font-size: 16px
+}
+
+
 </style>

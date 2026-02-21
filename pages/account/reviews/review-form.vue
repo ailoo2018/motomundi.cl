@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {extractYoutubeId} from "@core/utils/formatters";
+
 const props = defineProps({
   product: {
     type: Object,
@@ -16,7 +18,6 @@ const props = defineProps({
 
 const emit = defineEmits(["on-cancel"])
 
-
 const title = ref('')
 const opinion = ref('')
 const youtubeUrl = ref('')
@@ -24,7 +25,14 @@ const termsAccepted = ref(false)
 const rating = ref(0)
 const images = ref([])
 const isSubmitting = ref(false)
+const youtubeThumbnail = ref('')
 
+// --- YouTube thumbnail extraction ---
+
+watch(youtubeUrl, (val) => {
+  const id = extractYoutubeId(val)
+  youtubeThumbnail.value = id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : ''
+})
 
 // --- Validation States ---
 const productReviewError = ref(false)
@@ -199,13 +207,13 @@ const sendProductReviews = async () => {
     <div class="rating-section mb-4">
       <label class="form-label">Tu puntuación</label>
       <div class="d-flex">
-      <VRating
-        v-model="rating"
-        half-increments
-        color="primary"
-        hover
-      />
-      <span class="rating-label-text pt-1" v-if="rating"> {{ ratingLabels[rating * 2 - 1] }}</span>
+        <VRating
+          v-model="rating"
+          half-increments
+          color="primary"
+          hover
+        />
+        <span class="rating-label-text pt-1" v-if="rating"> {{ ratingLabels[rating * 2 - 1] }}</span>
       </div>
     </div>
 
@@ -247,6 +255,24 @@ const sendProductReviews = async () => {
         prepend-inner-icon="tabler-brand-youtube"
         style="width:100%;"
       />
+
+      <!-- YouTube Thumbnail Preview -->
+      <div v-if="youtubeThumbnail" class="youtube-thumbnail-preview mt-3">
+        <div class="thumbnail-wrapper">
+          <img
+            :src="youtubeThumbnail"
+            alt="Vista previa del video"
+            class="thumbnail-img"
+          />
+          <div class="thumbnail-play-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48" width="68" height="48">
+              <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
+              <path d="M45 24 27 14v20" fill="#fff"/>
+            </svg>
+          </div>
+        </div>
+        <p class="thumbnail-caption">Vista previa del video</p>
+      </div>
     </div>
     <div class="form-group mb-5">
 
@@ -407,21 +433,15 @@ const sendProductReviews = async () => {
       <VBtn
         prepend-icon="tabler-send"
         rounded="0"
+        :loading="isSubmitting"
         @click="sendProductReviews"
-        >Publicar reseña</VBtn>
+      >Publicar reseña</VBtn>
 
     </div>
   </div>
 </template>
 
-
-<style>
-.video-input-div {
-  position: relative;
-
-  font-size: 16px
-}
-
+<style scoped>
 .file-plus img {
   width: 65px
 }

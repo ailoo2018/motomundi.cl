@@ -143,6 +143,21 @@ export const getDataImageUrl = (guidString, width, domainId) => {
     .replace("_600.", "_600_original.")
 }
 
+export const extractYoutubeId = url => {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/,
+    /youtube\.com\/shorts\/([\w-]{11})/,
+  ]
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern)
+    if (match) return match[1]
+  }
+  
+  return null
+}
+
+
 export const getYouTubeThumbnail = (videoId, quality = 'default') => {
   const qualityMap = {
     max: 'maxresdefault',
