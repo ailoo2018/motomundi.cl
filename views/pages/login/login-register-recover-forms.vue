@@ -1,41 +1,26 @@
-<script setup>
-import RegisterForm from "@/views/pages/login/register-form.vue"
+<script setup lang="ts">
 import LoginForm from "@/views/pages/login/login-form.vue"
+import RegisterForm from "@/views/pages/login/register-form.vue"
 
-definePageMeta({
- // layout: 'motomundi',
-  public: true,
-
-})
-
-
+const emit = defineEmits(['onLoggedIn'])
 const isShowForgotPassword = ref(false)
-const currentTab = ref('register')
+const currentTab = ref('login')
 
-const loginLoading = ref(false)
-
-const recover = async () => {
-
+const onLoggedIn = data => {
+  console.log("login-register-recover-forms::onLoggedId")
+  emit('onLoggedIn', data)
 }
 
-const register = async () => {
+const onShowRegister = () => {
 
+  currentTab.value = "register"
 }
-
-const login = async () => {
-
-}
-
-const onLoggedIn = async () => {
-  await navigateTo("/cuenta/perfil")
-}
-
 </script>
 
 <template>
-  <VContainer class="auth w-full pv-10 ">
-    <VRow class="" style="max-width: 700px; margin: 0 auto; ">
-      <div class="tabs w-100">
+  <div class="auth w-full pv-10 ">
+    <div style="max-width: 700px; margin: 0 auto; ">
+      <div class="tabs ">
         <span
           class="tab"
           :class="{ 'is-active': currentTab == 'register'}"
@@ -48,22 +33,28 @@ const onLoggedIn = async () => {
           @click="currentTab = 'login'"
         >¿Ya tienes cuenta?</span>
       </div>
-      <div class="tabs-panels w-100 " >
-
-
-        <div v-if="!isShowForgotPassword && currentTab == 'login'"  style="opacity: 1 !important;">
-          <LoginForm on-logged-in="onLoggedIn" />
+      <div class="tabs-panels w-100 ">
+        <div
+          v-if="!isShowForgotPassword && currentTab == 'login'"
+          style="opacity: 1 !important;"
+        >
+          <LoginForm
+            @on-logged-in="onLoggedIn"
+            @on-show-register="onShowRegister"
+          />
         </div>
-        <div v-if="currentTab == 'register'"  style="opacity: 1 !important;">
-          <RegisterForm />
+        <div
+          v-if="currentTab == 'register'"
+          style="opacity: 1 !important;"
+        >
+          <RegisterForm @on-logged-in="onLoggedIn" />
         </div>
       </div>
-    </VRow>
-  </VContainer>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
-
 form  .required {
   margin-left: 2px;
   color: #d6001c;

@@ -8,6 +8,14 @@ const isLoading = ref(false)
 const recoverFormValues = ref({email: '', sent: false})
 const showForgotPassword = ref(false)
 const loginForm = ref()
+
+
+const emit = defineEmits(['on-register', 'on-logged-in', 'on-show-register'])
+
+const onShowRegister = () => {
+  emit('on-show-register')
+}
+
 const serverErrors = ref({
   email: '',
   password: ''
@@ -50,7 +58,8 @@ const login = async () => {
     useCookie('user_id').value = data.userId
     useCookie('accessToken').value = data.accessToken
 
-    await navigateTo("/cuenta/perfil")
+    emit('on-logged-in', data)
+ //   await navigateTo("/cuenta/perfil")
   } catch (error) {
     const errorCode = error.data?.data?.code
 
@@ -96,7 +105,8 @@ const handleCallback = async response => {
       useCookie('accessToken').value = data.value.accessToken
 
 
-      await navigateTo("/cuenta/perfil")
+      emit('on-logged-in', data.value)
+//      await navigateTo("/cuenta/perfil")
     } else {
       console.error('Failed to get access token')
 
@@ -133,13 +143,12 @@ onMounted(() => {
   <VCard
     v-else
     variant="plain"
-
     class="login-container pt-5 opacity-100"
 
   >
     <VCardText>
       <VRow>
-        <VCol cols="12">
+        <VCol cols="12" >
           <VForm
             method="post"
             ref="loginForm"
@@ -147,12 +156,12 @@ onMounted(() => {
             autocomplete="on"
             @submit.prevent="login"
           >
-            <span class="h2">Entra en tu cuenta</span>
+            <span class="h2" style="text-align: left;">Entra en tu cuenta</span>
             <div class="form-fieldset">
               <VRow class="form-item">
                 <VCol
                   cols="12"
-                  sm="12"
+                  md="6"
                   lg="6"
                   class="input__group"
                 >
@@ -170,7 +179,7 @@ onMounted(() => {
                 </VCol>
                 <VCol
                   cols="12"
-                  sm="12"
+                  md="6"
                   lg="6"
                   class="input__group"
                 >
@@ -187,7 +196,7 @@ onMounted(() => {
                 </VCol>
               </VRow>
             </div>
-            <div class="w-100 form-actions justify-center">
+            <div class="w-100 form-actions justify-center mt-4">
               <VBtn
                 id="login-button-20"
                 type="submit"
@@ -208,7 +217,7 @@ onMounted(() => {
               </a>
               <a
                 class="link-register"
-                @click="currentTab = 'register'"
+                @click="onShowRegister"
               >
                 <span>¿No tienes cuenta? <br> Crea una aquí</span>
               </a>
@@ -218,7 +227,7 @@ onMounted(() => {
       </VRow>
       <VRow
         xxclass="social social-buttons "
-        style="background-color: white;max-width:600px"
+        style="background-color: white;"
       >
         <VCol
           cols="12"

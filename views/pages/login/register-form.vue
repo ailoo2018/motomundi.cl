@@ -13,6 +13,8 @@ const registerFormValues = ref({
   receiveNewsletter: false
 })
 
+const emit = defineEmits(['on-logged-in'])
+
 // 3. Define Validation Rules
 const rules = {
   required: (value: string) => !!value || 'Este campo es obligatorio.',
@@ -27,7 +29,8 @@ const loading = ref(false)
 const error = ref()
 
 const router = useRouter()
-// 4. Validate on Submit
+
+
 const register = async () => {
   const { valid } = await form.value.validate()
 
@@ -38,9 +41,10 @@ const register = async () => {
     error.value = null
     try{
 
-      await useUser().createAccount(registerFormValues.value)
+      const data = await useUser().createAccount(registerFormValues.value)
 
-      router.push("/account/profile")
+      emit('on-logged-in', data)
+      //router.push("/account/profile")
     }catch(e){
       console.error("error", e)
       error.value = e.data?.message || e.message
@@ -70,7 +74,7 @@ const register = async () => {
         <div class="field-group">
           <span class="h3">¿Cómo quieres que nos dirijamos a ti?</span>
           <VRow class="mt-2">
-            <VCol cols="6">
+            <VCol cols="12" md="6" >
               <label class="login-label">Nombre <span class="required">*</span></label>
               <VTextField
                 v-model="registerFormValues.fname"
@@ -79,7 +83,7 @@ const register = async () => {
                 type="text"
               />
             </VCol>
-            <VCol cols="6">
+            <VCol cols="12" md="6" >
               <label class="login-label">Apellido <span class="required">*</span></label>
               <VTextField
                 v-model="registerFormValues.lname"
@@ -94,7 +98,7 @@ const register = async () => {
         <div class="field-group mt-8">
           <span class="h3 pb-10">Tu email y contraseña</span>
           <VRow class="mt-2">
-            <VCol cols="6">
+            <VCol cols="12" md="6" >
               <label class="login-label">EMAIL <span class="required">*</span></label>
               <VTextField
                 v-model="registerFormValues.email"
@@ -103,7 +107,7 @@ const register = async () => {
                 type="email"
               />
             </VCol>
-            <VCol cols="6">
+            <VCol cols="12" md="6" >
               <label class="login-label">CONTRASEÑA <span class="required">*</span></label>
               <VTextField
                 v-model="registerFormValues.password"

@@ -31,7 +31,7 @@ const disableEmail = ref(true)
 console.log("CustomerInfo.vue")
 
 const handleUserLoggedIn = async loginData => {
-  console.log("loginData:::", loginData)
+  console.log("CustomerInformation::handleUserLoggedIn", loginData)
   showLogin.value = false
   await getCurrentUser(loginData)
   await getAddresses()
@@ -41,7 +41,7 @@ const closedLogin = () => {
   showLogin.value = false
 }
 
-const getCurrentUser = async (loginData) => {
+const getCurrentUser = async loginData => {
 
 
   const accessToken = useCookie('accessToken').value
@@ -69,7 +69,7 @@ const getCurrentUser = async (loginData) => {
     if (user.value)
       contactEmail.value = user.value.username
     if (party.value) {
-      let phone = "" + party.value.phone;
+      let phone = "" + party.value.phone
       contactPhone.value = phone.replace(/\D/g, "")
     }
 
@@ -221,9 +221,6 @@ const handlePhoneInput = event => {
 </script>
 
 <template>
-
-
-
   <LoginDialog
     v-model:is-dialog-visible="showLogin"
     @user-logged-in="handleUserLoggedIn"
@@ -307,7 +304,6 @@ const handlePhoneInput = event => {
       </div>
     </div>
   </div>
-
 </template>
 
 
