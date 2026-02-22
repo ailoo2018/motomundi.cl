@@ -8,11 +8,12 @@ const party = computed(() => {
 })
 
 const userInitials = computed(() => {
-  return "AB"
+  return useUser().getInitials()
 })
 </script>
 
 <template>
+
 
   <section
     v-if="party"

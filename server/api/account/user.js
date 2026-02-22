@@ -8,7 +8,7 @@ export default defineEventHandler(async event => {
 
     const token = getCookie(event, "accessToken")
 
-    return await $fetch(`${baseUrl}/${getDomainId()}/account/user`, {
+    const data =  await $fetch(`${baseUrl}/${getDomainId()}/account/user`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -16,6 +16,8 @@ export default defineEventHandler(async event => {
       },
     })
 
+
+    return data
   }catch(error){
     console.error('Error', error)
     console.error('Stack trace:', error.stack)
