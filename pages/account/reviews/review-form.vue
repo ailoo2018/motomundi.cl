@@ -293,7 +293,7 @@ const sendProductReviews = async () => {
           cols="3"
           sm="6"
           md="3"
-          class="mr-5"
+          class="mr-1"
         >
           <a
             class="delete-file"
@@ -322,14 +322,12 @@ const sendProductReviews = async () => {
             href="javascript:void(0);"
             @click="triggerUpload"
           >
+
             <div class="review-file-upload">
-              <div class="file-plus d-flex justify-content-center">
-                <img
-                  src="/content/images/new-image.png"
-                  style="margin:auto"
-                  alt="Add image"
-                >
-              </div>
+
+              <VRow justify="center" class="ma-0 h-100 file-plus d-flex  align-center">
+                <VIcon color="primary" size="60" class="tabler-photo-plus"></VIcon>
+              </VRow>
             </div>
           </a>
         </VCol>

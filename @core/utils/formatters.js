@@ -261,6 +261,10 @@ export const getBrandUrl = function (brand) {
 }
 
 export const getProductUrl = function (product) {
+  if(!product)
+    return ""
+  if(!product?.linkName)
+    return "/products/detail/" + product.id
   return "/motocicleta/" + formatLink(product?.linkName)
 }
 

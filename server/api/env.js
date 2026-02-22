@@ -4,11 +4,13 @@ export default defineEventHandler(async (event) => {
 
   try {
 
+    const token = getCookie(event, "accessToken")
 
     return {
       NODE_ENV: process.env.NODE_ENV,
       WEBPAY_COMMERCE_CODE: process.env.WEBPAY_COMMERCE_CODE,
-      MERCADO_PAGO_ACCESS_TOKEN: process.env.MERCADO_PAGO_ACCESS_TOKEN
+      MERCADO_PAGO_ACCESS_TOKEN: process.env.MERCADO_PAGO_ACCESS_TOKEN,
+      accessToken: token,
     }
   }catch(error){
     console.error('Error in friendly-url lookup:', error)

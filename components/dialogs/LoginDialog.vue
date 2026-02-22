@@ -45,19 +45,10 @@ const handleLogin = async () => {
 
   try {
 
-    const data = await $fetch("/api/login/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        username: loginFormValues.value.email,
-        password: loginFormValues.value.password,
-      },
-    })
+    const username = loginFormValues.value.email
+    const password = loginFormValues.value.password
 
-    useCookie('user_id').value = data.userId
-    useCookie('accessToken').value = data.accessToken
+    const data = await useUser().login(username, password)
 
     await nextTick()
     emit("user-logged-in", data)

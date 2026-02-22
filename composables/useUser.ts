@@ -1,15 +1,34 @@
 import { useUserStore } from "@/stores/user"
+import { useWishlistStore } from "@/stores/wishlist" // Import the new store
+
 
 export const useUser = () => {
-  const router = useRouter()
+
+  const onLoggedIn = async data => {
+    useCookie('user_id').value = data.userId
+    useCookie('accessToken').value = data.accessToken
+
+    // --- SYNC GUEST WISHLIST TO DB ---
+    const wishlistStore = useWishlistStore()
+    if (wishlistStore.items.length > 0) {
+      await $fetch("/api/wishlist/sync", {
+        method: "POST",
+        body: {
+          userId: data.userId,
+          productIds: wishlistStore.items, // Send the array from cookies/Pinia
+        },
+      })
+    }
+  }
+
 
   const getInitials = () => {
     const userStore = useUserStore()
 
-    if(!userStore.user || !userStore.user.id)
+    if (!userStore.user || !userStore.user.id)
       return ""
 
-    if(!userStore.user.person)
+    if (!userStore.user.person)
       return ""
 
     let fullName = userStore.user.person?.name
@@ -22,7 +41,7 @@ export const useUser = () => {
       .toUpperCase()             // Ensure they are uppercase
       .slice(0, 3)              // Limit to the first 3 characters
   }
-  
+
   const logout = async () => {
     console.log("clearing cookies")
 
@@ -31,13 +50,10 @@ export const useUser = () => {
     useCookie("guest_id").value = null
     useCookie("accessToken").value = null
 
-    // 2. Clear reactive state
     const user = useState('user')
 
     user.value = null
 
-    // 3. Redirect
-    // navigateTo is the Nuxt 3 standard for redirects
     await navigateTo("/login", { replace: true })
   }
 
@@ -47,18 +63,72 @@ export const useUser = () => {
 
   const listMotorcycles = async () => {
     const userId = getUserId()
-    
-    if(userId > 0){
+
+    if (userId > 0) {
       return await $fetch("/api/motorcycles/list-user-bikes")
     }
 
     return []
   }
 
+  const addToWishList = async productId => {
+
+    wishlistStore.toggleItem(productId)
+
+    const userId = getUserId()
+
+    if (userId && wishlistStore.items.length > 0) {
+      await $fetch("/api/wishlist/sync", {
+        method: "POST",
+        body: {
+          userId: data.userId,
+          productIds: wishlistStore.items, // Send the array from cookies/Pinia
+        },
+      })
+    }
+
+    console.log(`Product ${productId} toggled in wishlist`)
+  }
+
+  const createAccount = async acct => {
+    const data = await $fetch("/api/account/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: acct,
+    })
+
+    await onLoggedIn(data)
+
+    return data
+  }
+
+
+  const login = async (email, password) => {
+    const data = await $fetch("/api/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        username: email,
+        password: password,
+      },
+    })
+
+    await onLoggedIn(data)
+
+
+    return data
+  }
+
   return {
+    login,
     logout,
     getInitials,
     getUserId,
     listMotorcycles,
+    createAccount,
   }
 }

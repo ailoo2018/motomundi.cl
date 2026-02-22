@@ -1,44 +1,90 @@
 <script setup lang="ts">
-const registerFormValues = ref({ fname: '', lname: '' })
+import { ref } from 'vue'
 
+// 1. Define the form reference
+const form = ref<any>(null)
+
+// 2. Expand your state to include email and password
+const registerFormValues = ref({
+  fname: '',
+  lname: '',
+  email: '',
+  password: '',
+  receiveNewsletter: false
+})
+
+// 3. Define Validation Rules
+const rules = {
+  required: (value: string) => !!value || 'Este campo es obligatorio.',
+  email: (value: string) => {
+    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return pattern.test(value) || 'Email no válido.'
+  },
+  min: (value: string) => value.length >= 8 || 'Mínimo 8 caracteres',
+}
+
+const loading = ref(false)
+const error = ref()
+
+const router = useRouter()
+// 4. Validate on Submit
+const register = async () => {
+  const { valid } = await form.value.validate()
+
+  if (valid) {
+    console.log('Form is valid! Sending data:', registerFormValues.value)
+
+    loading.value = true
+    error.value = null
+    try{
+
+      await useUser().createAccount(registerFormValues.value)
+
+      router.push("/account/profile")
+    }catch(e){
+      console.error("error", e)
+      error.value = e.data?.message || e.message
+    }finally{
+      loading.value = false
+    }
+
+    // Perform your API call here
+  } else {
+    console.log('Form has errors.')
+  }
+}
 </script>
 
 <template>
-  <VCard
-    class="register-container opacity-100"
-    variant="plain"
-
-  >
+  <VCard class="register-container opacity-100" variant="plain">
     <VCardText class="basic-data">
+      <VAlert v-if="error" color="warning" class="mb-5 d-flex gap-2" >
+        <VIcon class="tabler-exclamation-circle mr-1"></VIcon>
+        Error: {{error}}
+      </VAlert>
       <VForm
-        method="post"
+        ref="form"
         name="registerForm"
-        @submit="register()"
+        @submit.prevent="register"
       >
         <div class="field-group">
           <span class="h3">¿Cómo quieres que nos dirijamos a ti?</span>
           <VRow class="mt-2">
-            <VCol cols="6" >
-              <label class="login-label" for="register_fname">
-                Nombre <span class="required">*</span>
-              </label>
+            <VCol cols="6">
+              <label class="login-label">Nombre <span class="required">*</span></label>
               <VTextField
-                id="register_fname"
                 v-model="registerFormValues.fname"
                 placeholder="Nombre"
-                required
+                :rules="[rules.required]"
                 type="text"
               />
-
             </VCol>
             <VCol cols="6">
-              <label class="login-label" for="register_fname">
-                Apellido <span class="required">*</span>
-              </label>
+              <label class="login-label">Apellido <span class="required">*</span></label>
               <VTextField
-                required
-                placeholder="Apellido"
                 v-model="registerFormValues.lname"
+                placeholder="Apellido"
+                :rules="[rules.required]"
                 type="text"
               />
             </VCol>
@@ -46,56 +92,34 @@ const registerFormValues = ref({ fname: '', lname: '' })
         </div>
 
         <div class="field-group mt-8">
-          <span class="h3 pb-10">Tu email y contraseña para acceder dónde y cuando quieras</span>
-
+          <span class="h3 pb-10">Tu email y contraseña</span>
           <VRow class="mt-2">
             <VCol cols="6">
-              <label class="login-label" for="register-email">EMAIL <span class="required">*</span></label>
+              <label class="login-label">EMAIL <span class="required">*</span></label>
               <VTextField
-                id="register-email"
                 v-model="registerFormValues.email"
                 placeholder="Correo electrónico"
-
+                :rules="[rules.required, rules.email]"
                 type="email"
               />
-
             </VCol>
             <VCol cols="6">
-              <label  class="login-label" for="register-pass">CONTRASEÑA <span class="required">*</span></label>
+              <label class="login-label">CONTRASEÑA <span class="required">*</span></label>
               <VTextField
-                id="register-password-338"
                 v-model="registerFormValues.password"
                 type="password"
                 placeholder="Contraseña"
+                :rules="[rules.required, rules.min]"
               />
-
             </VCol>
           </VRow>
-
         </div>
+
         <div class="gdpr-legal-text pt-8">
           <VCheckbox
-            id="recv-newsletter"
             v-model="registerFormValues.receiveNewsletter"
-            label="Regístrate para recibir correos electrónicos y no perderte las últimas novedades, ofertas y cupones de descuento."
-
+            label="Regístrate para recibir correos electrónicos..."
           />
-
-
-          <div class="gdpr-legal-text mt-5">
-            <small>Al crearte
-              una cuenta, aceptas la <a
-                href="/terminos-y-condiciones.html?open=privacy-policy"
-                target="_blank"
-              >Política
-                de privacidad</a> y los <a
-                href="/terminos-y-condiciones.html?open=general"
-                target="_blank"
-              >Términos y condiciones</a> de
-              Motomundi.</small>
-          </div>
-
-
 
           <VBtn color="#41a334" class="pl-10 pr-10 w-100 mt-10 rounded-0" type="submit">
             <span>Regístrate</span>
@@ -105,7 +129,6 @@ const registerFormValues = ref({ fname: '', lname: '' })
     </VCardText>
   </VCard>
 </template>
-
 <style  lang="scss">
 form label.login-label {
   color: #000;
@@ -116,10 +139,6 @@ form label.login-label {
   letter-spacing: -.25px;
 
   text-transform: uppercase;
-}
-.v-text-field  {
-  border: 1px solid black;
-  border-radius: 0px;
 }
 
 .register-container .basic-data, .register-container .extra-data {

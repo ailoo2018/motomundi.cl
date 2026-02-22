@@ -7,8 +7,10 @@ definePageMeta({
 
 const { data,  refresh } = useFetch("/api/account/addresses")
 
+const router = useRouter()
 const addAddress = () => {
-  navigateTo("/account/edit-address?id=0")
+  // navigateTo("/account/edit-address?id=0", {external: true})
+  router.push("/account/edit-address?id=0")
 }
 
 const setDefault = async addr => {
@@ -70,24 +72,18 @@ const addresses  = computed(() => {
 
         <div v-if="addresses != null && addresses.length == 0">
           <div class="col s12 l12 empty-addresses">
-            <svg
-              width="30"
-              height="30"
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon sprite-line-icons"
-            >
-              <use 
-                href="/content/svg/motomundi.svg#i-account-address"
-                xlink:href="/content/svg/motomundi.svg#i-account-address"
-              />
-            </svg>
+
             <p>Aún no has añadido ninguna dirección a tu cuenta.</p>
-            <button
-              class="button button--filled button--small"
+            <VBtn
+              color="#000"
+              rounded="0"
+              class="mt-3"
+              size="small"
+              prepend-icon="tabler-plus"
               @click="addAddress"
             >
               Añadir la primera dirección
-            </button>
+            </VBtn>
           </div>
         </div>
 

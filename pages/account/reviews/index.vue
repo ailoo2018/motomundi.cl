@@ -43,7 +43,7 @@ const getVideoThumb = videoUrl => {
 // ─── Computed ─────────────────────────────────────────────────
 const averageRating = computed(() => {
   if (!reviewedProducts.value?.length) return '—'
-  const avg = 2 // reviewedProducts.value.reduce((s, p) => s + p.review.rating, 0) / reviewedProducts.value.length
+  const avg = reviewedProducts.value.reduce((s, p) => s + p.review.rating, 0) / reviewedProducts.value.length
   
   return avg.toFixed(1)
 })
@@ -221,11 +221,13 @@ class="tabler-icon"
             <!-- Card top -->
             <div class="card-top">
               <div class="product-img-wrap">
+                <a :href="getProductUrl(product.product)">
                 <img
                   :src="getImageUrl(product.product.image, 300, getDomainId())"
                   :alt="product.product.fullName"
                   class="product-img"
                 >
+                </a>
                 <div class="purchase-badge">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -323,7 +325,7 @@ stroke-linecap="round" stroke-linejoin="round"
               stroke="currentColor"
               stroke-width="2.5"
               stroke-linecap="round"
-stroke-linejoin="round"
+              stroke-linejoin="round"
             ><path
               stroke="none"
               d="M0 0h24v24H0z"
@@ -371,11 +373,16 @@ stroke-linejoin="round"
             class="reviewed-card"
           >
             <div class="reviewed-product-side">
+              <a :href="getProductUrl(product.product)">
               <img
                 :src="getImageUrl(product.product.image, 300, getDomainId())"
                 :alt="product.product.fullName"
                 class="reviewed-img"
-              >
+              />
+
+              </a>
+
+              <VChip size="xs">pubicado</VChip>
               <div class="reviewed-product-info">
                 <span class="product-category">{{ product.product.parentCategories[0].name }}</span>
                 <h3 class="reviewed-name">
