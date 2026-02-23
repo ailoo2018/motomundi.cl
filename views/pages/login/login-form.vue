@@ -123,17 +123,21 @@ onMounted(() => {
 
 <template>
 
-  <RecoverPassword v-if="showForgotPassword" />
+
 
   <VCard
-    v-else
+
     variant="plain"
     class="login-container pt-5 opacity-100"
 
   >
     <VCardText>
       <VRow>
-        <VCol cols="12" >
+
+        <VCol v-if="showForgotPassword" cols="12">
+        <RecoverPassword v-model:is-visible="showForgotPassword" />
+        </VCol>
+        <VCol v-if="!showForgotPassword" cols="12" >
           <VForm
             method="post"
             ref="loginForm"

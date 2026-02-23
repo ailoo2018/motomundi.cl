@@ -1,13 +1,63 @@
 <script setup lang="ts">
 
+const props = defineProps({
+  isVisible: {
+    type: Boolean,
+    required: true,
+  },
+})
+
+const emit = defineEmits([
+  'sent',
+  'update:isVisible',
+])
+
+const isVisible = computed({
+  get: () => props.isVisible,
+  set: (value) => {
+    if (!value) emit('closed') // Keep your closed event if needed
+    emit('update:isVisible', value)
+  }
+})
+
+const sent = ref(false)
+const email = ref()
+const error = ref()
+const loading = ref(false)
+const emailRules = [
+  (v: string) => !!v || 'El correo electrónico es obligatorio',
+  (v: string) => /.+@.+\..+/.test(v) || 'El correo electrónico debe ser válido'
+]
+
+const login = () =>{
+  isVisible.value = false
+  emit('update:isVisible', false)
+}
+
+const recover = async () => {
+  console.log("recover")
+  try {
+    const data = await $fetch("/api/login/recover", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: {
+        email: email.value,
+      }
+    })
+  }catch(e){
+    console.error("error calling recover: " + e.message, e)
+    error.value = e.message
+  }
+}
 </script>
 
 <template>
-  <VCard  variant="plain" class="opacity-100" >
-    <VCardText>
+
+  <VCard v-if="isVisible" variant="plain" class="opacity-100 w-100 pa-0 ma-0" >
+    <VCardText class="pa-0 ma-0">
       <div >
         <div
-          v-if="recoverFormValues.sent"
+          v-if="sent"
           class="success-message"
         >
           <img
@@ -17,7 +67,7 @@
           >
           <p>
             Recibirá un enlace para restablecer su contraseña en
-            {{ recoverFormValues.email }}.
+            {{ email }}.
           </p>
           <button
             ng-click="goBack();"
@@ -26,25 +76,26 @@
             Volver
           </button>
         </div>
-        <div v-if="!recoverFormValues.sent" class="mb-10">
+        <div  class="mb-10">
 
           <VForm
-
             class="recover-password"
             method="post"
+            @submit.prevent="recover"
           >
-            <span class="h2">¿Has olvidado tu contraseña?</span>
-            <div v-if="recoverFormValues.error" class="error-message">
-              <p>
-                {{ recoverFormValues.error }}
-              </p>
-            </div>
+            <h2 class="pa-0 ma-0 mb-4">¿Has olvidado tu contraseña?</h2>
+            <VAlert v-if="error"  color="warning">
+              <VIcon class="tabler-alert-circle mr-2"  />
+
+                error: {{ error }}
+
+            </VAlert>
             <div class="form-fieldset">
               <div class="form-item full-width">
                 <div class="input__group">
                   <AppTextField
                     id="forgot-email"
-                    v-model="recoverFormValues.email"
+                    v-model="email"
                     type="email"
                     :rules="emailRules"
                     required="required"
@@ -59,14 +110,14 @@
               <VBtn
                 type="submit"
                 class="button w-100"
+                rounded="0"
+                :loading="loading"
 
-                :loading="recoverFormValues.loading"
-                @click="recover"
               >
-                <span v-if="!recoverFormValues.loading">Recuperar tu contraseña</span>
+                <span v-if="!loading">Recuperar tu contraseña</span>
               </VBtn>
             </div>
-            <a @click="showForgotPassword = false;">Entra en tu cuenta</a>
+            <a @click="login">Entra en tu cuenta {{isVisible}}</a>
           </VForm>
         </div>
       </div>
