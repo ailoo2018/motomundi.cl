@@ -29,7 +29,7 @@ const emailRules = [
 
 const passwordRules = [
   (v: string) => !!v || 'La contraseña es obligatoria',
-  (v: string) => (v && v.length >= 6) || 'La contraseña debe tener al menos 6 caracteres'
+  (v: string) => (v && v.length >= 4) || 'La contraseña debe tener al menos 4 caracteres'
 ]
 
 const login = async () => {
