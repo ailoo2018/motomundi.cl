@@ -6,7 +6,14 @@ export const useWishlistStore = defineStore('wishlist', {
     items: useCookie('wishlist_items', { default: () => [] }).value,
   }),
   actions: {
-    toggleItem(productId) {
+
+    isWished(productId) {
+      const index = this.items.indexOf(productId)
+      // console.log(`product: ${productId} is wished : ${index}`)
+      return index !== -1
+    },
+
+    async toggleItem(productId) {
       const index = this.items.indexOf(productId)
       const cookie = useCookie('wishlist_items')
 
@@ -16,7 +23,17 @@ export const useWishlistStore = defineStore('wishlist', {
         this.items.splice(index, 1)
       }
 
-      // Sync the cookie with the new state
+      let userId = useUser().getUserId()
+
+      if (userId > 0) {
+
+        try {
+          await $fetch(`/api/account/wishlist/toggle?productId=${productId}`)
+        } catch (error) {
+          console.error('Error wishlist toggle: ' + url, error)
+        }
+      }
+
       cookie.value = this.items
     },
 
@@ -26,9 +43,6 @@ export const useWishlistStore = defineStore('wishlist', {
       const cookie = useCookie('wishlist_items')
 
       cookie.value = []
-
-
-      console.log("Wishlist cleared")
     },
 
     async sync(userId) {
@@ -41,10 +55,14 @@ export const useWishlistStore = defineStore('wishlist', {
           },
         })
 
-        //
+        this.items = data.productIds
+
+        const cookie = useCookie('wishlist_items')
+
+        cookie.value = this.items
       }
 
-    }
+    },
 
 
   },

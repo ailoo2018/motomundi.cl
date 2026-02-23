@@ -24,6 +24,12 @@ const props = defineProps(
 //const isWished = ref(props.product.isWished)
 const localIsWished = ref(props.product?.isWished ?? false)
 
+const wishListStore = useWishlistStore()
+if(wishListStore.isWished(props.product.id)) {
+  console.log(`product: ${props.product.id} is wished`)
+  localIsWished.value = true;
+}
+
 watch(() => props.product.isWished, (newVal) => {
   localIsWished.value = newVal ?? false
 })
@@ -75,8 +81,7 @@ const onToggleWishlist = async (val: boolean) => {
   localIsWished.value = val
 
   try {
-    await useUser().addToWishList(props.product.id)
-
+    await useWishlistStore().toggleItem(props.product.id)
   }catch(err){
     console.error("Failed to update wishlist", err)
   }

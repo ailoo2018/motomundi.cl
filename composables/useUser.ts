@@ -71,16 +71,7 @@ export const useUser = () => {
   }
 
   const addToWishList = async productId => {
-
-    wishlistStore.toggleItem(productId)
-
-    const userId = getUserId()
-
-    if (userId) {
-      await wishlistStore.sync(userId)
-    }
-
-    console.log(`Product ${productId} toggled in wishlist`)
+    await wishlistStore.toggleItem(productId)
   }
 
   const createAccount = async acct => {

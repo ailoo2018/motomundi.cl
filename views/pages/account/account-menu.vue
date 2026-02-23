@@ -7,6 +7,7 @@ const route = useRoute()
 const path = route.path
 
 const props= defineProps({
+  alias: "wish-list",
   componentClass: {
     type: String,
     default: '',
@@ -129,8 +130,8 @@ const emit = defineEmits(['logout'])
     </li>
     <li>
       <a
-        :class="route.path.includes('account/wish-list') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/account/wish-list"
+        :class="route.path.includes('account/wishlist') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        href="/account/wishlist"
         class="mtc-link"
         rel="nofollow"
       >

@@ -5,17 +5,18 @@ definePageMeta({
   middleware: 'auth', // Must match the filename (auth.ts)
 })
 
-// Use your preferred state management (Pinia/Vuex)
-const favorites = ref([
-  { id: 1, name: 'Casco AGV K6 S', brand: 'AGV', price: 450000, image: 'https://images.example.com/helmet.jpg' },
-  { id: 2, name: 'Chaqueta Alpinestars T-GP', brand: 'Alpinestars', price: 280000, image: 'https://images.example.com/jacket.jpg' },
+const loading = ref(false)
 
-  // ... more items
-])
+loading.value = true
 
-const formatPrice = value => {
-  return value.toLocaleString('es-CL')
-}
+const { data, refresh } = useFetch("/api/account/wishlist", { key: "account-wishlist-" + useUser().getUserId() })
+
+loading.value = false
+
+const favorites = computed(() => data.value?.products || [])
+
+
+
 
 const removeFromFavorites = id => {
   favorites.value = favorites.value.filter(item => item.id !== id)
@@ -27,17 +28,16 @@ const removeFromFavorites = id => {
     class="favorites-page py-10"
     min-height="700"
   >
+    <Spinner v-model="loading" />
+
     <VRow
       align="center"
       class="mb-8"
     >
-      <VCol
-        cols="12"
-        md="6"
-      >
-        <h1 class="text-h4 font-weight-black text-uppercase italic">
-          <ITablerHeartFilled class="brand-red-text mr-2" />
-          Mi Garaje <span class="brand-red-text">Favoritos</span>
+      <VCol cols="12">
+        <h1 class="text-h4 font-weight-black text-uppercase">
+          <VIcon class="tabler-heart-filled brand-red-text mr-2" />
+          Mis <span class="brand-red-text">Favoritos</span>
         </h1>
         <p class="text-subtitle-1 text-grey-darken-1">
           Prepárate para tu próxima ruta. Guarda tus productos favoritos aquí.
@@ -55,9 +55,9 @@ const removeFromFavorites = id => {
         sm="6"
         class="text-center"
       >
-        <ITablerMotorcycle
+        <VIcon
           size="80"
-          class="text-grey-lighten-1 mb-4"
+          class="tabler-heart text-grey-lighten-1 mb-4"
         />
         <h2 class="text-h5 font-weight-bold">
           Tu garaje está vacío
@@ -67,8 +67,9 @@ const removeFromFavorites = id => {
         </p>
         <VBtn
           color="#d6001c"
+          rounded="0"
           size="large"
-          to="/tienda"
+          to="/"
           class="text-white"
         >
           Explorar Productos
@@ -99,8 +100,8 @@ const removeFromFavorites = id => {
           />
 
           <VImg
-            :src="product.image"
-            height="250px"
+            :src="getImageUrl(product.image, 300, getDomainId())"
+
             cover
             class="bg-grey-lighten-4"
           >
@@ -120,13 +121,13 @@ const removeFromFavorites = id => {
 
           <VCardItem>
             <div class="text-overline mb-1">
-              {{ product.brand }}
+              {{ product.brand.name }}
             </div>
             <VCardTitle class="text-subtitle-1 font-weight-bold pt-0">
               {{ product.name }}
             </VCardTitle>
             <div class="text-h6 brand-red-text font-weight-black">
-              ${{ formatPrice(product.price) }}
+              {{ formatMoney(product.minPrice) }}
             </div>
           </VCardItem>
 
@@ -163,9 +164,5 @@ const removeFromFavorites = id => {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   border-color: #d6001c;
-}
-
-.italic {
-  font-style: italic;
 }
 </style>
