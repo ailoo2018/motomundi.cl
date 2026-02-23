@@ -9,6 +9,14 @@ import { useCalendarStore } from '@/views/apps/calendar/useCalendarStore'
 // Components
 import CalendarEventHandler from '@/views/apps/calendar/CalendarEventHandler.vue'
 
+useSeoMeta({
+  title: "Calendario de eventos moteros en Chile",
+  ogTitle: "Calendario de eventos moteros en Chile",
+  description: "Calendario de eventos moteros en Chile",
+  ogDescription: "Calendario de eventos moteros en Chile",
+
+})
+
 const store = useCalendarStore()
 
 

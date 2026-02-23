@@ -17,7 +17,6 @@ import { ProductType } from "@/models/products.js"
 import ProductRating from "@/views/pages/products/detail/product-rating.vue"
 
 definePageMeta({
-  //  layout: 'motomundi',
   public: true,
 })
 
