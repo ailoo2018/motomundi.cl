@@ -1,4 +1,6 @@
 <script setup>
+import { useWishlistStore } from "@/stores/wishlist.js"
+
 definePageMeta({
   alias: '/cuenta/perfil',
   layout: 'account',
@@ -18,14 +20,20 @@ const favorites = computed(() => data.value?.products || [])
 
 
 
-const removeFromFavorites = id => {
-  favorites.value = favorites.value.filter(item => item.id !== id)
+const removeFromFavorites = async id => {
+  useWishlistStore().toggleItem(id)
+  loading.value = true
+  try {
+    await refresh()
+  }finally {
+    loading.value = false
+  }
 }
 </script>
 
 <template>
   <VContainer
-    class="favorites-page py-10"
+    class="favorites-page"
     min-height="700"
   >
     <Spinner v-model="loading" />
@@ -91,17 +99,18 @@ const removeFromFavorites = id => {
           class="product-card"
         >
           <VBtn
-            icon="i-tabler-x"
+            icon="tabler-x"
             variant="text"
             position="absolute"
             location="top right"
-            class="mt-2 mr-2 z-index-1"
+            class="mt-2 mr-2 z-index-1000"
+            style="z-index: 1000000;"
             @click="removeFromFavorites(product.id)"
-          />
+          >
+          </VBtn>
 
           <VImg
             :src="getImageUrl(product.image, 300, getDomainId())"
-
             cover
             class="bg-grey-lighten-4"
           >
