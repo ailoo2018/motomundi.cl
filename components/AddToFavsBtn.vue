@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const props = defineProps<{
-  product: {
-    id: number | string;
-    isWished: boolean;
+const props = defineProps({
+  isWished: {
+    type: Boolean,
+    default: false,
   }
-}>()
+})
 
 const emit = defineEmits(['toggle-wishlist'])
 
@@ -12,12 +12,13 @@ const addRemoveToWishList = async event => {
   event.preventDefault() // Prevent the parent link from being triggered
   event.stopPropagation() // Stop event bubbling
 
-  try {
+  emit('toggle-wishlist', !props.isWished)
+/*  try {
     await useUser().addToWishList(props.product.id)
     emit('toggle-wishlist', !props.product.isWished)
   }catch(err){
     console.error("Failed to update wishlist", err)
-  }
+  }*/
 
 }
 </script>
@@ -26,7 +27,7 @@ const addRemoveToWishList = async event => {
 
   <button
     class="add-to-favs"
-    :class="product.isWished ? 'wished' : ''"
+    :class="isWished ? 'wished' : ''"
     @click="addRemoveToWishList"
     @touchstart.passive
   >

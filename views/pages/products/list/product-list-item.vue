@@ -21,6 +21,12 @@ const props = defineProps(
   },
 )
 
+//const isWished = ref(props.product.isWished)
+const localIsWished = ref(props.product?.isWished ?? false)
+
+watch(() => props.product.isWished, (newVal) => {
+  localIsWished.value = newVal ?? false
+})
 
 const onClickMiniture = img => {
   props.product.image = img.image
@@ -62,13 +68,26 @@ const miniatures = computed(() => {
 
   return uniqueImages
 })
+
+const onToggleWishlist = async (val: boolean) => {
+
+  console.log("product-list-item::onToggleWishlist", val)
+  localIsWished.value = val
+
+  try {
+    await useUser().addToWishList(props.product.id)
+
+  }catch(err){
+    console.error("Failed to update wishlist", err)
+  }
+}
 </script>
 
 
 <template>
   <article class="item">
     <section>
-      <AddToFavsBtn :product="product" @toggle-wishlist="(val) => product.isWished = val" />
+      <AddToFavsBtn :is-wished="localIsWished" @toggle-wishlist="onToggleWishlist" />
 
       <a
         class="mtc-link product-link"
