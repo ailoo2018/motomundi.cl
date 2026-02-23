@@ -138,7 +138,7 @@ const recover = async () => {
                 Te acabamos de enviar las instrucciones para recuperar tu acceso a <b>{{sentToEmail}}</b>. Solo haz clic en el enlace que recibas y estarás de vuelta en un abrir y cerrar de ojos.
                 <br/>
                 <br/>
-                <h4>¿El correo no llega?</h4>
+                <div style="font-weight: 700;" class="my-1">¿El correo no llega?</div>
                 No desesperes. Verifica que el email sea el correcto o echa un vistazo en tu carpeta de correo no deseado.
               </VAlert>
             </div>
