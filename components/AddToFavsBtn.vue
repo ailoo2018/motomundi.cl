@@ -13,13 +13,6 @@ const addRemoveToWishList = async event => {
   event.stopPropagation() // Stop event bubbling
 
   emit('toggle-wishlist', !props.isWished)
-/*  try {
-    await useUser().addToWishList(props.product.id)
-    emit('toggle-wishlist', !props.product.isWished)
-  }catch(err){
-    console.error("Failed to update wishlist", err)
-  }*/
-
 }
 </script>
 
@@ -60,19 +53,18 @@ const addRemoveToWishList = async event => {
 .add-to-favs {
   background-color: transparent;
   height: 24px;
-  opacity: 0;
   padding: 0;
   position: absolute;
   right: 10px;
   top: 15px;
-  transform: scale(0);
-  transform-origin: center center;
-  transition: all .2s ease;
-  width: 29px;
   cursor: pointer;
-  -webkit-tap-highlight-color: rgba(214, 0, 28, 0.1);
-  border: none; /* Remove default button border */
-  z-index: 10; /* Ensure it's above the product link */
+  border: none;
+  z-index: 20; /* High z-index to ensure it's clickable over the product link */
+
+  /* On mobile, we want it visible immediately */
+  opacity: 1;
+  transform: scale(1);
+  transition: all .2s ease;
 }
 
 .add-to-favs svg {
@@ -92,27 +84,32 @@ const addRemoveToWishList = async event => {
 }
 
 /* Only apply hover effects on devices that support hover */
+
 @media (hover: hover) and (pointer: fine) {
-  .add-to-favs:hover svg use {
-    stroke: #d6001c;
+  .add-to-favs {
+    opacity: 0;
+    transform: scale(0);
   }
 
-  button:hover {
-    cursor: pointer;
-  }
-
+  /* Target the parent container (assuming it's .item) */
   .item:hover .add-to-favs {
-    display: block;
     opacity: 1;
     transform: scale(1);
   }
+
+  .add-to-favs:hover svg use {
+    stroke: #d6001c;
+  }
 }
 
+
 /* On touch devices, show the button when the item is tapped/active */
+
 @media (hover: none) {
   .item .add-to-favs {
     opacity: 1;
     transform: scale(1);
   }
 }
+
 </style>

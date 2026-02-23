@@ -1,6 +1,7 @@
 <script setup>
 import RegisterForm from "@/views/pages/login/register-form.vue"
 import LoginForm from "@/views/pages/login/login-form.vue"
+import LoginRegisterRecoverForms from "@/views/pages/login/login-register-recover-forms.vue"
 
 definePageMeta({
  // layout: 'motomundi',
@@ -34,31 +35,7 @@ const onLoggedIn = async () => {
 
 <template>
   <VContainer class="auth w-full pv-10 ">
-    <VRow class="" style="max-width: 700px; margin: 0 auto; ">
-      <div class="tabs w-100">
-        <span
-          class="tab"
-          :class="{ 'is-active': currentTab == 'register'}"
-          @click="currentTab = 'register'"
-        >¿Eres nuevo? </span>
-        <span
-          data-ref="login"
-          class="tab "
-          :class="{ 'is-active': currentTab == 'login' }"
-          @click="currentTab = 'login'"
-        >¿Ya tienes cuenta?</span>
-      </div>
-      <div class="tabs-panels w-100 " >
-
-
-        <div v-if="!isShowForgotPassword && currentTab == 'login'"  style="opacity: 1 !important;">
-          <LoginForm on-logged-in="onLoggedIn" />
-        </div>
-        <div v-if="currentTab == 'register'"  style="opacity: 1 !important;">
-          <RegisterForm />
-        </div>
-      </div>
-    </VRow>
+    <LoginRegisterRecoverForms @on-logged-in="onLoggedIn" />
   </VContainer>
 </template>
 

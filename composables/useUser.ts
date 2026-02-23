@@ -11,16 +11,9 @@ export const useUser = () => {
     useCookie('accessToken').value = data.accessToken
 
     // --- SYNC GUEST WISHLIST TO DB ---
-    const wishlistStore = useWishlistStore()
-    if (wishlistStore.items.length > 0) {
-      await $fetch("/api/wishlist/sync", {
-        method: "POST",
-        body: {
-          userId: data.userId,
-          productIds: wishlistStore.items, // Send the array from cookies/Pinia
-        },
-      })
-    }
+
+
+    await wishlistStore.sync(data.userId)
   }
 
 
@@ -77,18 +70,12 @@ export const useUser = () => {
 
     wishlistStore.toggleItem(productId)
 
-    /*const userId = getUserId()
+    const userId = getUserId()
 
-    if (userId && wishlistStore.items.length > 0) {
-      await $fetch("/api/wishlist/sync", {
-        method: "POST",
-        body: {
-          userId: data.userId,
-          productIds: wishlistStore.items, // Send the array from cookies/Pinia
-        },
-      })
+    if (userId) {
+      await wishlistStore.sync(userId)
     }
-*/
+
     console.log(`Product ${productId} toggled in wishlist`)
   }
 

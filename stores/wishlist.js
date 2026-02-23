@@ -31,6 +31,21 @@ export const useWishlistStore = defineStore('wishlist', {
       console.log("Wishlist cleared")
     },
 
+    async sync(userId) {
+      if (this.items.length > 0) {
+        const data = await $fetch("/api/wishlist/sync", {
+          method: "POST",
+          body: {
+            userId: userId,
+            productIds: this.items, // Send the array from cookies/Pinia
+          },
+        })
+
+        //
+      }
+
+    }
+
 
   },
 })
