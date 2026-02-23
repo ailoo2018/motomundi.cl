@@ -1,5 +1,9 @@
 <script setup>
-const { data: brands } = useFetch("/api/product/brands", { key: "brands-all"})
+const { data } = useFetch("/api/product/brands", { key: "brands-all"})
+
+const brands = computed(() => {
+  return data.value?.brands || []
+})
 </script>
 <template>
   <!-- marcas -->
@@ -155,7 +159,7 @@ const { data: brands } = useFetch("/api/product/brands", { key: "brands-all"})
                     <div class="submenu__outstanding-list">
 
                       <ul class="">
-                        <li v-for="brand in brands.brands" :key="brand.id">
+                        <li v-for="brand in brands" :key="brand.id">
                            <a
                             :href="getBrandUrl(brand)"
                             class="mtc-link"
