@@ -106,27 +106,28 @@ const removeFromFavorites = async id => {
             class="mt-2 mr-2 z-index-1000"
             style="z-index: 1000000;"
             @click="removeFromFavorites(product.id)"
-          >
-          </VBtn>
+          />
 
-          <VImg
-            :src="getImageUrl(product.image, 300, getDomainId())"
-            cover
-            class="bg-grey-lighten-4"
-          >
-            <template #placeholder>
-              <VRow
-                class="fill-height ma-0"
-                align="center"
-                justify="center"
-              >
-                <VProgressCircular
-                  indeterminate
-                  color="#d6001c"
-                />
-              </VRow>
-            </template>
-          </VImg>
+          <a :href="getProductUrl(product)">
+            <VImg
+              :src="getImageUrl(product.image, 300, getDomainId())"
+              cover
+              class="bg-grey-lighten-4"
+            >
+              <template #placeholder>
+                <VRow
+                  class="fill-height ma-0"
+                  align="center"
+                  justify="center"
+                >
+                  <VProgressCircular
+                    indeterminate
+                    color="#d6001c"
+                  />
+                </VRow>
+              </template>
+            </VImg>
+          </a>
 
           <VCardItem>
             <div class="text-overline mb-1">
