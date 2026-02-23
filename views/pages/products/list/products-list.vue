@@ -209,6 +209,7 @@ const search = async () => {
       total.value = rs.totalHits
       totalPages.value = Math.ceil( rs.totalHits / pageSize.value )
       queryDesc.value = getQueryDescription(rs.query)
+      rs.products.forEach(p => p.isWished = false )
       products.value = rs.products
       if (!filters.value)
         filters.value = rs.filters

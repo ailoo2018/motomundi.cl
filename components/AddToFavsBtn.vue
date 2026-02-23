@@ -1,22 +1,32 @@
 <script setup lang="ts">
-
-const props = {
+const props = defineProps<{
   product: {
-    type: Object,
+    id: number | string;
+    isWished: boolean;
   }
-}
+}>()
 
-const addRemoveToWishList = (event) => {
+const emit = defineEmits(['toggle-wishlist'])
+
+const addRemoveToWishList = async event => {
   event.preventDefault() // Prevent the parent link from being triggered
   event.stopPropagation() // Stop event bubbling
-  console.log("addRemoveToWishList")
-}
 
+  try {
+    await useUser().addToWishList(props.product.id)
+    emit('toggle-wishlist', !props.product.isWished)
+  }catch(err){
+    console.error("Failed to update wishlist", err)
+  }
+
+}
 </script>
 
 <template>
+
   <button
     class="add-to-favs"
+    :class="product.isWished ? 'wished' : ''"
     @click="addRemoveToWishList"
     @touchstart.passive
   >
@@ -26,7 +36,7 @@ const addRemoveToWishList = (event) => {
       width="29"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Añadir a favoritos</title>
+      <title>Añadir a favoritos </title>
       <use
         href="/content/svg/motomundi.svg#i-icon-favorite"
         xlink:href="/content/svg/motomundi.svg#i-icon-favorite"
@@ -104,5 +114,4 @@ const addRemoveToWishList = (event) => {
     transform: scale(1);
   }
 }
-
 </style>

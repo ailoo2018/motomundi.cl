@@ -4,6 +4,8 @@ import { useWishlistStore } from "@/stores/wishlist" // Import the new store
 
 export const useUser = () => {
 
+  const wishlistStore = useWishlistStore()
+
   const onLoggedIn = async data => {
     useCookie('user_id').value = data.userId
     useCookie('accessToken').value = data.accessToken
@@ -75,7 +77,7 @@ export const useUser = () => {
 
     wishlistStore.toggleItem(productId)
 
-    const userId = getUserId()
+    /*const userId = getUserId()
 
     if (userId && wishlistStore.items.length > 0) {
       await $fetch("/api/wishlist/sync", {
@@ -86,7 +88,7 @@ export const useUser = () => {
         },
       })
     }
-
+*/
     console.log(`Product ${productId} toggled in wishlist`)
   }
 
@@ -130,5 +132,6 @@ export const useUser = () => {
     getUserId,
     listMotorcycles,
     createAccount,
+    addToWishList,
   }
 }

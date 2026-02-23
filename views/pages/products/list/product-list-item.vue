@@ -68,7 +68,7 @@ const miniatures = computed(() => {
 <template>
   <article class="item">
     <section>
-      <AddToFavsBtn :product="product" />
+      <AddToFavsBtn :product="product" @toggle-wishlist="(val) => product.isWished = val" />
 
       <a
         class="mtc-link product-link"
@@ -156,7 +156,7 @@ const miniatures = computed(() => {
               </span>
             </span>
             <h3 class="heading-tag">
-              <span>{{ product.brand.name }}</span>
+              <span>{{ product.brand.name }} {{product.isWished}}</span>
               <strong>{{ product.name }}</strong>
             </h3>
           </div>
