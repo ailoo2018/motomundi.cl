@@ -305,7 +305,7 @@ const toggleMenu = () => {
   box-shadow: 30px 0 20px 0 rgba(0, 0, 0, .1), 30px 0 35px 0 rgba(0, 0, 0, .15);
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100dvh;
   /*    height: calc(var(--vh, 1vh) * 100);*/
   isolation: isolate;
   justify-content: space-between;
