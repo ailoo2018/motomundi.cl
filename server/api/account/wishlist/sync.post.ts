@@ -1,3 +1,5 @@
+import { getDomainId } from "@/server/ailoo-domain.js"
+
 export default defineEventHandler(async (event) => {
   // 1. Get the body (array of product IDs or a single ID)
   const body = await readBody(event)
@@ -5,10 +7,12 @@ export default defineEventHandler(async (event) => {
 
 
   try {
+    const config = useRuntimeConfig()
+    const baseUrl = config.public.w3BaseUrl
 
     const token = getCookie(event, "accessToken")
 
-    return $fetch(`/${getDomainId()}/account/wishlist/sync`, {
+    var data = await $fetch(`${baseUrl}/${getDomainId()}/wishlist/sync`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -18,10 +22,14 @@ export default defineEventHandler(async (event) => {
         productIds: productIds,
       },
     })
+
+    return data
   } catch (error) {
-    return createError({
+    const retErr = createError({
       statusCode: 500,
-      statusMessage: 'Failed to sync wishlist to database',
+      statusMessage: error.data?.message || 'Failed to sync wishlist to database: ' + error.message,
     })
+
+    return retErr
   }
 })

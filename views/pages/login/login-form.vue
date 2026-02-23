@@ -34,32 +34,15 @@ const passwordRules = [
 
 const login = async () => {
 
-  // Validar el formulario programáticamente
   const { valid } = await loginForm.value.validate()
 
   if (!valid) return // Si no es válido, no hace el fetch
 
   try {
 
-    const data = await $fetch("/api/login/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        username: loginFormValues.value.email,
-        password: loginFormValues.value.password,
-      }
-
-
-
-    })
-
-    useCookie('user_id').value = data.userId
-    useCookie('accessToken').value = data.accessToken
+    const data = await useUser().login(loginFormValues.value.email, loginFormValues.value.password)
 
     emit('on-logged-in', data)
- //   await navigateTo("/cuenta/perfil")
   } catch (error) {
     const errorCode = error.data?.data?.code
 
@@ -100,6 +83,8 @@ const handleCallback = async response => {
         },
 
       })
+
+      await useUser.onLoggedIn(data.value)
 
       useCookie('user_id').value = data.value.userId
       useCookie('accessToken').value = data.value.accessToken
@@ -272,7 +257,7 @@ form span.h2 {
   font-weight: 800;
   letter-spacing: -.25px;
   margin: 0 auto 30px;
-  padding: 30px 0 0;
+  /*padding: 30px 0 0;*/
   text-align: center;
   text-transform: uppercase;
 }

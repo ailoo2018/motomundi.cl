@@ -33,7 +33,7 @@ export const useWishlistStore = defineStore('wishlist', {
 
     async sync(userId) {
       if (this.items.length > 0) {
-        const data = await $fetch("/api/wishlist/sync", {
+        const data = await $fetch("/api/account/wishlist/sync", {
           method: "POST",
           body: {
             userId: userId,

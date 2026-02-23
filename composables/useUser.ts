@@ -12,8 +12,12 @@ export const useUser = () => {
 
     // --- SYNC GUEST WISHLIST TO DB ---
 
-
-    await wishlistStore.sync(data.userId)
+    try {
+      console.log("useUser::onLoggedIn - about to call")
+      await wishlistStore.sync(data.userId)
+    }catch(e){
+      console.error("useUser::onLoggedIn", e)
+    }
   }
 
 
@@ -120,5 +124,6 @@ export const useUser = () => {
     listMotorcycles,
     createAccount,
     addToWishList,
+    onLoggedIn
   }
 }

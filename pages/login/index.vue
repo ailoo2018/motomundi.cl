@@ -1,36 +1,16 @@
 <script setup>
-import RegisterForm from "@/views/pages/login/register-form.vue"
-import LoginForm from "@/views/pages/login/login-form.vue"
 import LoginRegisterRecoverForms from "@/views/pages/login/login-register-recover-forms.vue"
 
 definePageMeta({
- // layout: 'motomundi',
   public: true,
 
 })
 
 
-const isShowForgotPassword = ref(false)
-const currentTab = ref('register')
-
-const loginLoading = ref(false)
-
-const recover = async () => {
-
-}
-
-const register = async () => {
-
-}
-
-const login = async () => {
-
-}
-
 const onLoggedIn = async () => {
+  console.log("index.vue::onLoggedIn")
   await navigateTo("/cuenta/perfil")
 }
-
 </script>
 
 <template>
