@@ -1,6 +1,14 @@
 <script setup lang="ts">
 
+import AccountMenu from "@/views/pages/account/account-menu.vue";
+
 const serverTimestamp = useState('cache-timestamp', () => new Date().toISOString())
+
+
+const userId = computed(() => {
+  return useUser().getUserId() || 0
+})
+
 
 </script>
 
@@ -23,7 +31,19 @@ const serverTimestamp = useState('cache-timestamp', () => new Date().toISOString
           <a href="/contactenos">Contáctenos</a>
         </div>
         <div class="hmnuentry">
-          <a href="/cuenta/perfil"> Su cuenta </a>
+          <a v-if="userId > 0" href="/cuenta/perfil"> Su cuenta </a>
+          <VMenu
+            open-on-hover
+            :close-delay="200"
+            :open-delay="100"
+            activator="parent"
+            rounded="0"
+            transition="slide-y-transition"
+          >
+            <AccountMenu class="user-menu__account-content" @logout="logout" />
+
+          </VMenu>
+          <a v-if="userId === 0" href="/cuenta/perfil"> Ingresar </a>
         </div>
       </div>
       <div
