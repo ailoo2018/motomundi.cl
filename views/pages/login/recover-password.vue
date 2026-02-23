@@ -12,6 +12,10 @@ const emit = defineEmits([
   'update:isVisible',
 ])
 
+const success = ref(false)
+const sentToEmail = ref()
+
+
 const isVisible = computed({
   get: () => props.isVisible,
   set: (value) => {
@@ -36,6 +40,9 @@ const login = () =>{
 
 const recover = async () => {
   console.log("recover")
+
+  loading.value = true
+  error.value = null
   try {
     const data = await $fetch("/api/login/recover", {
       method: 'POST',
@@ -44,9 +51,14 @@ const recover = async () => {
         email: email.value,
       }
     })
+
+    success.value = true;
+    sentToEmail.value = email.value
   }catch(e){
-    console.error("error calling recover: " + e.message, e)
-    error.value = e.message
+    console.log("error calling recover: " + e.message, e)
+    error.value = e.data.message || e.message
+  }finally{
+    loading.value = false
   }
 }
 </script>
@@ -87,7 +99,7 @@ const recover = async () => {
             <VAlert v-if="error"  color="warning">
               <VIcon class="tabler-alert-circle mr-2"  />
 
-                error: {{ error }}
+                {{ error }}
 
             </VAlert>
             <div class="form-fieldset">
@@ -116,8 +128,20 @@ const recover = async () => {
               >
                 <span v-if="!loading">Recuperar tu contraseña</span>
               </VBtn>
+
             </div>
-            <a @click="login">Entra en tu cuenta {{isVisible}}</a>
+            <a @click="login">Entra en tu cuenta </a>
+
+            <div class="form-actions mt-8">
+              <VAlert variant="tonal" v-if="success" color="success">
+                <VIcon class="tabler-check" />
+                Te acabamos de enviar las instrucciones para recuperar tu acceso a <b>{{sentToEmail}}</b>. Solo haz clic en el enlace que recibas y estarás de vuelta en un abrir y cerrar de ojos.
+                <br/>
+                <br/>
+                <h4>¿El correo no llega?</h4>
+                No desesperes. Verifica que el email sea el correcto o echa un vistazo en tu carpeta de correo no deseado.
+              </VAlert>
+            </div>
           </VForm>
         </div>
       </div>

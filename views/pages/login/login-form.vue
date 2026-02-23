@@ -126,10 +126,8 @@ onMounted(() => {
 
 
   <VCard
-
     variant="plain"
     class="login-container pt-5 opacity-100"
-
   >
     <VCardText>
       <VRow>

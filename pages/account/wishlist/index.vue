@@ -146,9 +146,11 @@ const removeFromFavorites = async id => {
               block
               color="#d6001c"
               variant="flat"
-              class="text-white font-weight-bold"
-              prepend-icon="i-tabler-shopping-cart"
+              class="text-white font-weight-bold "
+              @click="navigateTo(getProductUrl(product), { external: true})"
+              prepend-icon="tabler-shopping-cart"
             >
+
               Añadir al Carrito
             </VBtn>
           </VCardActions>

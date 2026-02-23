@@ -1,19 +1,21 @@
-import { getDomainId } from "@/server/ailoo-domain"
+import {getDomainId} from "~/server/ailoo-domain";
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
 
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
-    let { email } = await readBody(event)
+    let { email, hash, password } = await readBody(event)
 
 
-    return await $fetch(`${baseUrl}/${getDomainId()}/auth/recover`, {
+    return await $fetch(`${baseUrl}/${getDomainId()}/auth/reset-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: {
         email: email,
+        hash: hash,
+        password: password,
       },
     })
   }catch(error) {
