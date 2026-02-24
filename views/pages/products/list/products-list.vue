@@ -18,6 +18,7 @@ if (!props.injectedQuery) {
 console.log("the query", query)
 
 const total = ref(0)
+const title = ref()
 const totalPages = ref(0)
 const queryDesc = ref()
 const currentPage = ref(1)
@@ -30,10 +31,10 @@ let rs = {}
 const products = ref([])
 
 useSeoMeta({
-  title: () =>  queryDesc.value?.name || 'Loading Product...',
-  ogTitle: () => queryDesc.value?.name,
-  description: () => queryDesc.value?.fullName,
-  ogDescription: () => queryDesc.value?.fullName,
+  title: () =>  title.value || 'Loading Product...',
+  ogTitle: () => title.value,
+  description: () => title.value,
+  ogDescription: () => title.value,
 })
 
 
@@ -190,10 +191,18 @@ const search = async () => {
     }
 
 
+    const { data } = await useFetch(`/api/product/search`, {
+      key: `product-search-` + JSON.stringify(body),
+      method: "POST",
+      body: body,
+    })
 
+    rs = data.value
+
+    /*
     let debug = false
 
-    if(debug) {
+    if(!debug) {
       const { data } = await useFetch(`/api/product/search`, {
         key: `product-search-` + JSON.stringify(body),
         method: "POST",
@@ -208,6 +217,7 @@ const search = async () => {
         body: body,
       })
     }
+*/
 
 
 
@@ -217,7 +227,7 @@ const search = async () => {
       totalPages.value = Math.ceil( rs.totalHits / pageSize.value )
 
 
-
+      title.value = rs.query.description
       queryDesc.value = getQueryDescription(rs.query)
       rs.products.forEach(p => p.isWished = false )
       products.value = rs.products
@@ -243,6 +253,7 @@ search()
         <div class="row">
           <div class="container">
             <div class="filters__header-title">
+              title {{ title }}
               <h1
                 class="header-title mb-4"
                 v-html="queryDesc"
@@ -298,13 +309,13 @@ search()
   max-inline-size: 1280px;
 }
 
-.row .col {
+/*.row .col {
   box-sizing: border-box;
   float: inline-start;
   min-block-size: 1px;
   padding-block: 0;
   padding-inline: 0.375rem;
-}
+}*/
 
 .products > .col {
   margin-block-end: 15px;
