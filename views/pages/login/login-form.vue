@@ -84,14 +84,9 @@ const handleCallback = async response => {
 
       })
 
-      await useUser.onLoggedIn(data.value)
-
-      useCookie('user_id').value = data.value.userId
-      useCookie('accessToken').value = data.value.accessToken
-
+      await useUser().onLoggedIn(data.value)
 
       emit('on-logged-in', data.value)
-//      await navigateTo("/cuenta/perfil")
     } else {
       console.error('Failed to get access token')
 

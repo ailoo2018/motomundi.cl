@@ -30,7 +30,7 @@ export default defineEventHandler(async event => {
       query: {
         categoryId,
         limit,
-        offset
+        offset,
       },
     })
     console.log("ret" + ret)
