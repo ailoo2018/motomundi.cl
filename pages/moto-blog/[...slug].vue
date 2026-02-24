@@ -6,7 +6,6 @@ import BlogPosts from "@/views/pages/blog/blog-posts.vue";
 definePageMeta({
   layout: "blog",
   public: true,
-
 })
 
 const route = useRoute()

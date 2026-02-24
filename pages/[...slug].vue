@@ -4,11 +4,7 @@ import { getDomainId } from "@/server/ailoo-domain.js"
 import CmsContent from "@/views/pages/cms/CmsContent.vue"
 import { v4 as uuidv4 } from 'uuid';
 
-definePageMeta({
-  /*layout: 'motomundi',*/
-  public: true,
-
-})
+definePageMeta({  public: true })
 
 
 

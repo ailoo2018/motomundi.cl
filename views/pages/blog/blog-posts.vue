@@ -1,29 +1,57 @@
 <script setup>
 import { ref, computed } from 'vue'
 import BlogGridItem from "@/views/pages/blog/blog-grid-item.vue"
+import BlogBreadcrumbs from "@/views/pages/blog/blog-breadcrumbs.vue"
+import BlogCategoryHeader from "@/views/pages/blog/categories/blog-category-header.vue"
 
 const props = defineProps({
   categoryId: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 })
+
+useSeoMeta({
+  title: () =>  title.value?.name || 'Loading Product...',
+  ogTitle: () => title.value?.name,
+  description: () => title.value?.description,
+  ogDescription: () => title.value?.description,
+})
+
 
 const limit = 10
 const currentPage = ref(1)
+const title = ref({ name: "", description: "" })
 
-// 1. Calculate offset based on current page
-// Page 1 -> offset 0, Page 2 -> offset 10, etc.
+useSeoMeta({
+  title: () =>  title.value?.name || 'Loading Product...',
+  ogTitle: () => title.value?.name,
+  description: () => title.value?.description,
+  ogDescription: () => title.value?.description,
+})
+
+
 const offset = computed(() => (currentPage.value - 1) * limit)
 
-// 2. Use a getter function () => ... for the URL
-// This tells Nuxt to auto-refresh whenever 'offset' or 'props.categoryId' changes
 const { data: rs, pending } = useFetch(() =>
-    `/api/blog/search?offset=${offset.value}&limit=${limit}&categoryId=${props.categoryId}`,
-  {
-    watch: [currentPage] // Explicitly watch currentPage
-  }
+  `/api/blog/search?offset=${offset.value}&limit=${limit}&categoryId=${props.categoryId}`,
+{
+  key: "blog-category-" + `offset=${offset.value}&limit=${limit}&categoryId=${props.categoryId}` ,
+  watch: [currentPage], // Explicitly watch currentPage
+},
 )
+
+if(rs.value && rs.value.category){
+  title.value.name = rs.value.category.name
+  title.value.description = rs.value.category.name
+}
+
+
+
+
+const category = computed(() => {
+  return rs.value?.category || null
+})
 
 // 3. Compute total pages from API metadata
 // Assuming your API returns a "total" field
@@ -34,9 +62,20 @@ const totalPages = computed(() => {
 
 <template>
   <div class="blog-container">
-    <VProgressLinear v-if="pending" indeterminate color="primary" />
+    <VProgressLinear
+      v-if="pending"
+      indeterminate
+      color="primary"
+    />
 
-    <VRow class="row flex" v-if="rs?.entries">
+    <BlogBreadcrumbs :category="category" />
+
+    <BlogCategoryHeader :category="category"/>
+
+    <VRow
+      v-if="rs?.entries"
+      class="row flex"
+    >
       <VCol
         v-for="entry in rs.entries"
         :key="entry.id"
