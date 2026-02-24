@@ -290,10 +290,10 @@ const sendProductReviews = async () => {
         <VCol
           v-for="(image, index) in images"
           :key="index"
-          cols="3"
+          cols="6"
           sm="6"
           md="3"
-          class="mr-1"
+
         >
           <a
             class="delete-file"
@@ -313,7 +313,7 @@ const sendProductReviews = async () => {
 
         <VCol
           v-if="images.length < 10"
-          cols="3"
+          cols="6"
           sm="6"
           md="3"
 
@@ -460,6 +460,7 @@ const sendProductReviews = async () => {
 }
 
 
+/*
  .review-file-upload {
   background-size: cover;
   background-position: 50%;
@@ -472,6 +473,7 @@ const sendProductReviews = async () => {
   border-radius: 3px;
   margin-bottom: 20px
 }
+*/
 
 
 .callout.warning {

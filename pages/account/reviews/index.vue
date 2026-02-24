@@ -1077,8 +1077,10 @@ stroke-linejoin="round"
   position: relative;
   overflow: hidden;
   border: 1px solid #bdbdbd;
-  height: 145px;
+  height: 155px;
+  /*
   width: 145px;
+  */
   text-align: center;
   border-radius: 3px;
   margin-bottom: 20px
