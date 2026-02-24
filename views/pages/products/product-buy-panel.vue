@@ -5,6 +5,7 @@ import ProductVariantSelector from "@/views/pages/products/detail/product-varian
 import CompositeVariantSelector from "@/views/pages/products/detail/composite-variant-selector.vue"
 import { ProductType } from "@/models/products"
 import StorePickup from "@/views/pages/products/detail/store-pickup.vue"
+import { useWishlistStore } from "@/stores/wishlist.js"
 
 const props = defineProps({
   product: {
@@ -116,16 +117,27 @@ const onSelectedVariant = pit =>
   error.value = null
 
 }
+
+
+const wishStore = useWishlistStore()
+
+const addRemoveToWishList = async () => {
+  const isWished = await wishStore.toggleItem(props.product.id)
+}
+
+
+const localIsWished = computed(() => {
+  // Assuming your store has a state or getter named 'items' or 'wishlist'
+  // logic: return true if the current product.id is in the store's list
+  return wishStore.isWished(props.product.id)
+})
 </script>
 
 <template>
   <VDialog v-model="showSizeChart">
     <DialogCloseBtn @click="showSizeChart = false" />
     <VCard :title="selectedSizeChart.name">
-
       <VCardText>
-
-
         <VImg :src="getBaseCDN() + selectedSizeChart.image" />
       </VCardText>
     </VCard>
@@ -410,10 +422,11 @@ const onSelectedVariant = pit =>
           </VBtn>
 
           <div class="add-to-favs__product-page">
+            <span class="d-none">{{localIsWished}}</span>
             <button
-              ng-class="isWished(product.id) ? 'wished' : ''"
+              :class="{ 'wished': localIsWished }"
               class="add-to-favs"
-              ng-click="addRemoveToWishList(product.id, $event);"
+              @click="addRemoveToWishList"
             >
               <svg
                 width="29"
@@ -436,6 +449,15 @@ const onSelectedVariant = pit =>
 </template>
 
 <style>
+
+.add-to-favs:hover svg use {
+  stroke: #d6001c;
+}
+.add-to-favs.wished svg use {
+  fill: #d6001c;
+  stroke: #d6001c;
+}
+
 .product-old-price {
   font-size: 14px;
   opacity: .4;

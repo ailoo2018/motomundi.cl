@@ -17,8 +17,10 @@ export const useWishlistStore = defineStore('wishlist', {
       const index = this.items.indexOf(productId)
       const cookie = useCookie('wishlist_items')
 
+      let isSelected = false
       if (index === -1) {
         this.items.push(productId)
+        isSelected = true
       } else {
         this.items.splice(index, 1)
       }
@@ -35,6 +37,8 @@ export const useWishlistStore = defineStore('wishlist', {
       }
 
       cookie.value = this.items
+
+      return isSelected
     },
 
     clear() {
