@@ -144,3 +144,11 @@ button {
 }
 
 
+.form-item.full-width {
+  max-width: 100%;
+  width: 100%;
+}
+
+.form-item.half-width {
+  width: calc(50% - 5px);
+}
