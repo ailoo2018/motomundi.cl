@@ -34,19 +34,14 @@ const router = useRouter()
 
 console.log("router: " + route.params.id)
 
-// --- ID EXTRACTION LOGIC ---
 const productId = computed(() => {
-  // Case A: Direct hit on /products/detail/2993400
   if (route.params.id) return route.params.id
 
-  // Case B: Friendly URL /motocicleta/2993400-some-name
-  // route.params.slug is an array due to the '+' in config
   const slugValue = Array.isArray(route.params.slug)
     ? route.params.slug[0]
     : route.params.slug
 
   if (slugValue) {
-    // Extract everything before the first hyphen
     return slugValue.split('-')[0]
   }
 
@@ -158,6 +153,10 @@ const onSelectedColor = color => {
 }
 
 
+const isInStock = computed(() => {
+  return useProductsUtils().isInStock(product.value)
+})
+
 onMounted(() => {
 
   if(product.value) {
@@ -254,6 +253,9 @@ onMounted(() => {
 
         <div class="col s12 m5 l5">
           <PreProductBanner />
+
+
+
           <ProductBuyPanel
             :product="product"
             :loading="loading"

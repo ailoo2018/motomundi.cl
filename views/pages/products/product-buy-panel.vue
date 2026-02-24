@@ -125,6 +125,12 @@ const addRemoveToWishList = async () => {
   const isWished = await wishStore.toggleItem(props.product.id)
 }
 
+const productHelper = useProductsUtils()
+
+const isInStock = computed(() => {
+  return productHelper.isInStock(props.product)
+})
+
 
 const localIsWished = computed(() => {
   // Assuming your store has a state or getter named 'items' or 'wishlist'
@@ -398,31 +404,53 @@ const localIsWished = computed(() => {
           <VIcon class="tabler-alert-circle" />
           {{ error }}
         </VAlert>
+
+        <VAlert
+          v-if="!isInStock"
+          color="warning"
+          class="mb-4"
+        >
+          <VIcon class="tabler-alert-circle" />
+
+          Actualmente no tenemos unidades disponibles de este artículo. Suscríbete a nuestra alerta de reposición y
+          serás el primero en recibir un correo en cuanto entre de nuevo en el almacén.
+        </VAlert>
         <div class="product-buy-panel__buttons">
+
           <VBtn
             :loading="loading"
+            :disabled="!isInStock"
             rounded="0"
-            color="#41a334"
+            variant="outlined"
+            :acolor="isInStock ? '' : 'secondary'"
             class="buy-button h-100"
+            style="color: white;"
             @click="addToCart"
           >
             <div class="blocked-by-country">
               Este producto no se puede enviar a
               <strong>z</strong>
             </div>
-            <span>
+
+            <span v-if="isInStock" class="d-flex text-white align-items-center align-center">
+              <VIcon size="28" class="tabler-shopping-bag mr-1"/>
               <svg
                 width="22"
                 height="24"
                 xmlns="http://www.w3.org/2000/svg"
-                class="icon sprite-line-icons"
+                class="d-none icon sprite-line-icons"
               ><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-shopping-bag" /></svg>
               Añadir a la cesta
             </span>
+            <span v-if="!isInStock" class="d-flex text-white align-items-center align-center">
+              <VIcon size="22" class="tabler-cancel mr-2"/>
+              Producto Agotado
+            </span>
           </VBtn>
 
+
           <div class="add-to-favs__product-page">
-            <span class="d-none">{{localIsWished}}</span>
+            <span class="d-none">{{ localIsWished }}</span>
             <button
               :class="{ 'wished': localIsWished }"
               class="add-to-favs"
@@ -449,7 +477,6 @@ const localIsWished = computed(() => {
 </template>
 
 <style>
-
 .add-to-favs:hover svg use {
   stroke: #d6001c;
 }
