@@ -9,6 +9,7 @@ const props = defineProps({
 
 <template>
   <div class="breadcrumbs">
+
     <span
       property="itemListElement"
       typeof="ListItem"

@@ -19,7 +19,6 @@ export default defineEventHandler(async event => {
       categoryId = query.categoryId
 
 
-
     url = `${baseUrl}/${getDomainId()}/blog/search`
 
     var ret =  await $fetch(url, {
@@ -31,6 +30,7 @@ export default defineEventHandler(async event => {
         categoryId,
         limit,
         offset,
+        sword: query.sword || "",
       },
     })
     console.log("ret" + ret)

@@ -1,23 +1,13 @@
 <script setup lang="ts">
 
+import BlogSearch from "@/views/pages/blog/blog-search.vue";
 </script>
 
 <template>
   <nav id="blognav">
     <ul class="categories-menu">
       <li>
-        <form
-          role="search"
-          method="get"
-          class="search-form blog-search-form"
-        >
-          <VSelect />
-          <input
-            type="submit"
-            class="search-submit submit button button--primary"
-            value="Buscar"
-          >
-        </form>
+        <BlogSearch />
       </li>
       <li class="submenu-content">
         <a
@@ -25,9 +15,7 @@
           href="/moto-blog/reviews/"
         >
           <div class="icon-container">
-            <img
-              src="/content/images/assets/icons/review.svg"
-            >
+            <img src="/content/images/assets/icons/review.svg">
           </div>
           <div class="text-container"><p>Reviews y pruebas</p>
             <span>Conoce al detalle lo que buscas.</span>
@@ -39,9 +27,8 @@
           class="main-category"
           href="/moto-blog/comparativas-y-rankings/"
         >
-          <div class="icon-container"><img
-            src="/content/images/assets/icons/comparison.svg"
-          >
+          <div class="icon-container">
+            <img src="/content/images/assets/icons/comparison.svg">
           </div>
           <div class="text-container"><p>Comparativas y rankings</p><span>¿Dudas entre varios productos? Te ayudamos.</span>
           </div>

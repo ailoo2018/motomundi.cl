@@ -5,10 +5,11 @@ import BlogBreadcrumbs from "@/views/pages/blog/blog-breadcrumbs.vue"
 import BlogCategoryHeader from "@/views/pages/blog/categories/blog-category-header.vue"
 
 const props = defineProps({
-  categoryId: {
-    type: String,
-    default: '',
-  },
+  query: {
+    type: Object,
+    default: () => null
+  }
+
 })
 
 useSeoMeta({
@@ -34,9 +35,9 @@ useSeoMeta({
 const offset = computed(() => (currentPage.value - 1) * limit)
 
 const { data: rs, pending } = useFetch(() =>
-  `/api/blog/search?offset=${offset.value}&limit=${limit}&categoryId=${props.categoryId}`,
+  `/api/blog/search?offset=${offset.value}&limit=${limit}&categoryId=${props.query?.categoryId || ''}&sword=${props.query?.sword || ''}`,
 {
-  key: "blog-category-" + `offset=${offset.value}&limit=${limit}&categoryId=${props.categoryId}` ,
+  key: "blog-category-" + JSON.stringify(props.query || {}),
   watch: [currentPage], // Explicitly watch currentPage
 },
 )
@@ -70,7 +71,18 @@ const totalPages = computed(() => {
 
     <BlogBreadcrumbs :category="category" />
 
-    <BlogCategoryHeader :category="category"/>
+    <div v-if="query?.sword?.length > 0" class="category-title-container">
+
+      <div class="title-container mb-10">
+        <h2 class="page-title ">
+          <VIcon class="tabler-search mr-3" size="28" style="color: #d6001c" />
+          <span>Resultado de búsqueda </span>
+          <span style="color: #d6001c">'{{query?.sword}}' </span>
+
+        </h2>
+      </div>
+    </div>
+    <BlogCategoryHeader v-else :category="category"/>
 
     <VRow
       v-if="rs?.entries"
