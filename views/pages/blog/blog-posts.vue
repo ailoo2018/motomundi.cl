@@ -12,17 +12,17 @@ const props = defineProps({
 
 })
 
+const title = ref({ name: "", description: "" })
+
+
 useSeoMeta({
   title: () =>  title.value?.name || 'Loading Product...',
   ogTitle: () => title.value?.name,
   description: () => title.value?.description,
   ogDescription: () => title.value?.description,
 })
-
-
 const limit = 10
 const currentPage = ref(1)
-const title = ref({ name: "", description: "" })
 
 useSeoMeta({
   title: () =>  title.value?.name || 'Loading Product...',
@@ -42,10 +42,12 @@ const { data: rs, pending } = useFetch(() =>
 },
 )
 
+
 if(rs.value && rs.value.category){
   title.value.name = rs.value.category.name
   title.value.description = rs.value.category.name
 }
+
 
 
 

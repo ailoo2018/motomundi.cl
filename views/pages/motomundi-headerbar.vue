@@ -33,6 +33,7 @@ const userId = computed(() => {
         <div class="hmnuentry">
           <a v-if="userId > 0" href="/cuenta/perfil"> Su cuenta </a>
           <VMenu
+            v-if="userId > 0"
             open-on-hover
             :close-delay="200"
             :open-delay="100"
