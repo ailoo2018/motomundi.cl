@@ -2,7 +2,7 @@
 import { useWishlistStore } from "@/stores/wishlist.js"
 
 definePageMeta({
-  alias: '/cuenta/perfil',
+  alias: '/cuenta/favoritos',
   layout: 'account',
   middleware: 'auth', // Must match the filename (auth.ts)
 })
