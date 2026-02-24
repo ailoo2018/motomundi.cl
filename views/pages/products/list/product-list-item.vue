@@ -180,7 +180,7 @@ const onToggleWishlist = async (val: boolean) => {
               </span>
             </span>
             <h3 class="heading-tag">
-              <span>{{ product.brand.name }} {{product.isWished}}</span>
+              <span>{{ product.brand.name }} </span>
               <strong>{{ product.name }}</strong>
             </h3>
           </div>

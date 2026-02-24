@@ -4,11 +4,27 @@ import Widget from "@/views/pages/home/widget.vue";
 const props = defineProps({ id: { type: Number } })
 
 const showMessage = ref(false)
+const title = ref({ name: "", description: "" })
+
+useSeoMeta({
+  title: () =>  title.value?.name || 'Loading Product...',
+  ogTitle: () => title.value?.name,
+  description: () => title.value?.description,
+  ogDescription: () => title.value?.description,
+})
+
 
 const { data: entry } = await useFetch(`/api/blog/articles/${props.id}`,
   {
     key: "blog-article-" + props.id,
   })
+
+if(entry.value){
+  title.value.name = entry.value.name
+  if(entry.value?.configuration && entry.value?.configuration["preview-text"]){
+    title.value.description = entry.value?.configuration["preview-text"]
+  }
+}
 
 function extractVideoID(url) {
   const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/

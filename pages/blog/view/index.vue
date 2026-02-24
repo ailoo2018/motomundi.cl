@@ -3,7 +3,6 @@
 definePageMeta({
   layout: "blog",
   public: true,
-
 })
 
 </script>

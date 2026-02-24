@@ -12,6 +12,14 @@ definePageMeta({
 
 })
 
+useSeoMeta({
+  title: 'Blog Motomundi: Guías de Equipamiento, Seguridad y Motociclismo',
+  ogTitle: 'Blog Motomundi: Todo para el Motociclista en Chile',
+  description: 'Expertos en seguridad sobre dos ruedas. Encuentra reseñas de cascos, comparativas de chaquetas y consejos de mantenimiento. ¡Equípate con los mejores!',
+  ogDescription: 'Reseñas de gear, rutas y consejos técnicos de la mano de los expertos de Motomundi.',
+  ogImage: 'https://www.motomundi.cl/images/seo/og-blog-home.jpg', // Usa una imagen de alta calidad de un motero equipado
+  twitterCard: 'summary_large_image',
+})
 const currentPage = ref(1)
 const totalPages = ref(10)
 const showBlogMenu = ref(false)
