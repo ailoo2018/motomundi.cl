@@ -253,7 +253,6 @@ search()
         <div class="row">
           <div class="container">
             <div class="filters__header-title">
-              title {{ title }}
               <h1
                 class="header-title mb-4"
                 v-html="queryDesc"
