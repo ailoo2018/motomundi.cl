@@ -29,6 +29,14 @@ const filters = ref()
 let rs = {}
 const products = ref([])
 
+useSeoMeta({
+  title: () =>  queryDesc.value?.name || 'Loading Product...',
+  ogTitle: () => queryDesc.value?.name,
+  description: () => queryDesc.value?.fullName,
+  ogDescription: () => queryDesc.value?.fullName,
+})
+
+
 watch(currentPage, async () => {
 // If this was triggered by a filter change, skip this execution
   if (ignoreNextPageWatch.value) {
@@ -45,8 +53,8 @@ watch(currentPage, async () => {
 
 
 const getQueryDescription = q => {
-  if(q.category)
-    return  `<span class="total-results">${ rs?.totalHits } </span>` + q.category.name
+  if(q.description?.length > 0)
+    return  `<span class="total-results">${ rs?.totalHits } </span>` + q.description
 
   return "Resultado"
 }
@@ -183,24 +191,23 @@ const search = async () => {
 
 
 
+    let debug = false
 
+    if(debug) {
+      const { data } = await useFetch(`/api/product/search`, {
+        key: `product-search-` + JSON.stringify(body),
+        method: "POST",
+        body: body,
+      })
 
-/*
-    const { data } = await useFetch(`/api/product/search`, {
-      key: `product-search-` + JSON.stringify(body),
-      method: "POST",
-      body: body,
-    })
-
-    rs = data.value
-*/
-
-
-    rs = await $fetch(`/api/product/search`, {
-      key: `product-search-` + JSON.stringify(body),
-      method: "POST",
-      body: body,
-    })
+      rs = data.value
+    }else {
+      rs = await $fetch(`/api/product/search`, {
+        key: `product-search-` + JSON.stringify(body),
+        method: "POST",
+        body: body,
+      })
+    }
 
 
 
@@ -208,6 +215,9 @@ const search = async () => {
     if (rs && rs.products) {
       total.value = rs.totalHits
       totalPages.value = Math.ceil( rs.totalHits / pageSize.value )
+
+
+
       queryDesc.value = getQueryDescription(rs.query)
       rs.products.forEach(p => p.isWished = false )
       products.value = rs.products
