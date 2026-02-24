@@ -8,7 +8,7 @@ const MAX_SHOW = 5
 const sliderValues = ref([10, 60])
 
 const activeFilters = computed(() => {
-  return filters?.value.filter(f => f.buckets.length > 0)
+  return filters?.value?.filter(f => f.buckets.length > 0) || []
 })
 
 </script>
