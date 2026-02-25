@@ -87,12 +87,12 @@ export function useProfileForm() {
 
   // Expose store's async state as refs — components read these directly
   // instead of managing their own duplicated loading/error booleans.
-  const { loading, saving, fetchError, saveError, hydrated } = storeToRefs(store)
+  const { loading, saving, fetchError, saveError, hydrated, isDirty } = storeToRefs(store)
 
   // ── Local UI state (not in store — ephemeral, per-form-instance) ──────────
   const profileForm = ref()
   const isFormValid = ref(false)
-  const isDirty     = ref(false)
+  // const isDirty     = ref(false)
 
   const showSuccessSnackbar         = ref(false)
   const showErrorSnackbar           = ref(false)
@@ -112,6 +112,7 @@ export function useProfileForm() {
     phone:        '',
     dateOfBirth:  null,
     gender:       '',
+    makeDirty: '',
     ridingStyles: [],
   })
 
@@ -133,8 +134,12 @@ export function useProfileForm() {
   )
 
   watch(form, (val) => {
+
     isDirty.value = JSON.stringify(val) !== original
+
     store.saveDraft({ ...val })
+
+    console.log("formchanged isDirty: " + isDirty.value)
   }, { deep: true })
 
   function syncFormFromStore() {
@@ -193,9 +198,13 @@ export function useProfileForm() {
 
   // ── Riding style toggle ───────────────────────────────────────────────────
   const toggleRidingStyle = (id: string) => {
+    console.log("toggleRidingStyle")
+    form.makeDirty = form.makeDirty + "-"
     const idx = form.ridingStyles.indexOf(id)
-    if (idx === -1) form.ridingStyles.push(id)
-    else            form.ridingStyles.splice(idx, 1)
+    if (idx === -1)
+      form.ridingStyles.push(id)
+    else
+      form.ridingStyles.splice(idx, 1)
   }
 
   const isStyleSelected = (id: string) => form.ridingStyles.includes(id)

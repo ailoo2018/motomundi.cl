@@ -85,7 +85,7 @@ export const useProfileStore = defineStore('profile', {
     dateOfBirth:  null,
     gender:       '',
     ridingStyles: [],
-
+    isDirty: false,
     loading:     false,
     saving:      false,
     fetchError:  null,

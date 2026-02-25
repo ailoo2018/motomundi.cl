@@ -47,6 +47,9 @@ const {
   discardChanges,
 } = useProfileForm()
 
+watch(() => isDirty.value, () => {
+  console.log("!!!!!!!!!!!!!!!!!!configuration: isDirty: " + isDirty.value)
+})
 
 const genderOptions = [
   { title: 'Masculino', value: 'male' },
@@ -61,7 +64,9 @@ const genderOptions = [
     class="profile-container py-8"
     max-width="860"
   >
+<!--
     <AccountBreadCrumbs />
+-->
 
     <AccountProfileHeader />
 
@@ -259,11 +264,12 @@ const genderOptions = [
       </p>
 
       <div class="form-actions">
+
         <VBtn
           type="submit"
           color="primary"
           rounded="0"
-          size="x-large"
+          size="large"
           :loading="saving"
           :disabled="!isDirty || saving"
 
@@ -279,7 +285,7 @@ const genderOptions = [
           type="button"
           rounded="0"
           variant="outlined"
-          size="x-large"
+          size="large"
           :disabled="saving"
           color="#000"
           @click="handleCancel"
@@ -291,7 +297,7 @@ const genderOptions = [
         </VBtn>
 
         <p class="keyboard-hint">
-          <kbd>Ctrl</kbd> + <kbd>S</kbd> para guardar
+<!--          <kbd>Ctrl</kbd> + <kbd>S</kbd> para guardar-->
         </p>
       </div>
     </VForm>
@@ -396,7 +402,7 @@ const genderOptions = [
   --color-text:           #1a1a1a;
   --color-text-muted:     #6b6b6b;
   --color-shadow:         rgba(0, 0, 0, 0.07);
-  --radius-card: 12px;
+  --radius-card: 0px;
   --radius-chip: 8px;
   font-family: 'Barlow', sans-serif;
 
