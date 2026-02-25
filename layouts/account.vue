@@ -57,7 +57,7 @@ injectSkinClasses()
   <div v-if="deviceType === 'mobile'">
     <main class="main-content">
       <MobileHeader />
-      <section class="account container col-sm-12 pa-2">
+      <section class="account container col-sm-12 pa-3">
         <div class="account__content">
           <slot />
         </div>
@@ -78,7 +78,7 @@ injectSkinClasses()
 
       <main class="main-content">
         <div class="row">
-          <section
+          <VContainer
             class="row col s12 account-container"
             AAstyle="width:95%;"
           >
@@ -90,12 +90,12 @@ injectSkinClasses()
                 >
                   <AccountMenu @logout="logout" />
                 </aside>
-                <VCol class="col-sm-12 col-md-9 account__content">
+                <VCol class="col-sm-12 col-md-9 account__content w-100" >
                   <slot />
                 </VCol>
               </div>
             </section>
-          </section>
+          </VContainer>
         </div>
 
         <MotomundiFooter />

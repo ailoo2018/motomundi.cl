@@ -36,9 +36,8 @@ await userStore.fetchUser()
         Mi perfil
       </h1>
       <a
-        href="/account/editgeneralinfo.rails"
-        data-dr="true"
-        class="profile__edit mtc-link"
+        href="/account/configuration"
+        class="profile__edit mtc-link mr-2"
       >
         <svg
           width="12"

@@ -61,8 +61,7 @@ const genderOptions = [
 
 <template>
   <VContainer
-    class="profile-container py-8"
-    max-width="860"
+    class="profile-container pa-0 w-100 pa-md-5"
   >
 <!--
     <AccountBreadCrumbs />
