@@ -972,6 +972,7 @@ kbd {
   gap: 8px;
 }
 
+
 /* ─── Draft banner ──────────────────────────────────────────────────────── */
 .draft-banner { border-left: 3px solid #29b6f6; }
 
