@@ -93,6 +93,9 @@ const genderOptions = [
 const ridingStylesError = computed(() =>
   form.ridingStyles.length === 0 ? 'Selecciona al menos un estilo' : ''
 )
+
+
+
 </script>
 
 <template>
@@ -588,9 +591,7 @@ const ridingStylesError = computed(() =>
   </v-container>
 </template>
 
-<style scoped>
-/* ─── Google Font import ────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
+<style >
 
 /* ─── Root tokens — Light Theme ─────────────────────────────────────────── */
 .profile-container {
