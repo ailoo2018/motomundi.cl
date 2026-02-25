@@ -37,6 +37,9 @@ importers:
       '@sindresorhus/is':
         specifier: 7.1.0
         version: 7.1.0
+      '@tabler/icons-vue':
+        specifier: ^3.37.1
+        version: 3.37.1(vue@3.5.22(typescript@5.9.3))
       '@tiptap/extension-highlight':
         specifier: ^2.27.1
         version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))
@@ -58,6 +61,12 @@ importers:
       '@tiptap/vue-3':
         specifier: ^2.27.1
         version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(vue@3.5.22(typescript@5.9.3))
+      '@vuelidate/core':
+        specifier: ^2.0.3
+        version: 2.0.3(vue@3.5.22(typescript@5.9.3))
+      '@vuelidate/validators':
+        specifier: ^2.0.4
+        version: 2.0.4(vue@3.5.22(typescript@5.9.3))
       '@vueuse/core':
         specifier: 10.11.1
         version: 10.11.1(vue@3.5.22(typescript@5.9.3))
@@ -1941,6 +1950,14 @@ packages:
   '@swc/helpers@0.5.2':
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
 
+  '@tabler/icons-vue@3.37.1':
+    resolution: {integrity: sha512-iLO8Gl2ry77C4JHFxLzVGuF505M+HHgEx+u1IyKPFdgVY3ebBCP76go/62qVHNeIIGwsw8cErKi0aQjanlTCqQ==}
+    peerDependencies:
+      vue: '>=3.0.1'
+
+  '@tabler/icons@3.37.1':
+    resolution: {integrity: sha512-neLCWkuyNHEPXCyYu6nbN4S3g/59BTa4qyITAugYVpq1YzYNDOZooW7/vRWH98ZItXAudxdKU8muFT7y1PqzuA==}
+
   '@tiptap/core@2.27.1':
     resolution: {integrity: sha512-nkerkl8syHj44ZzAB7oA2GPmmZINKBKCa79FuNvmGJrJ4qyZwlkDzszud23YteFZEytbc87kVd/fP76ROS6sLg==}
     peerDependencies:
@@ -2544,6 +2561,24 @@ packages:
 
   '@vue/shared@3.5.22':
     resolution: {integrity: sha512-F4yc6palwq3TT0u+FYf0Ns4Tfl9GRFURDN2gWG7L1ecIaS/4fCIuFOjMTnCyjsu/OK6vaDKLCrGAa+KvvH+h4w==}
+
+  '@vuelidate/core@2.0.3':
+    resolution: {integrity: sha512-AN6l7KF7+mEfyWG0doT96z+47ljwPpZfi9/JrNMkOGLFv27XVZvKzRLXlmDPQjPl/wOB1GNnHuc54jlCLRNqGA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^2.0.0 || >=3.0.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
+  '@vuelidate/validators@2.0.4':
+    resolution: {integrity: sha512-odTxtUZ2JpwwiQ10t0QWYJkkYrfd0SyFYhdHH44QQ1jDatlZgTh/KRzrWVmn/ib9Gq7H4hFD4e8ahoo5YlUlDw==}
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^2.0.0 || >=3.0.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
 
   '@vuetify/loader-shared@2.1.1':
     resolution: {integrity: sha512-jSZTzTYaoiv8iwonFCVZQ0YYX/M+Uyl4ng+C4egMJT0Hcmh9gIxJL89qfZICDeo3g0IhqrvipW2FFKKRDMtVcA==}
@@ -6693,6 +6728,17 @@ packages:
       chart.js: ^4.1.1
       vue: ^3.0.0-0 || ^2.7.0
 
+  vue-demi@0.13.11:
+    resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
+    engines: {node: '>=12'}
+    hasBin: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
   vue-demi@0.14.10:
     resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
     engines: {node: '>=12'}
@@ -8725,6 +8771,13 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  '@tabler/icons-vue@3.37.1(vue@3.5.22(typescript@5.9.3))':
+    dependencies:
+      '@tabler/icons': 3.37.1
+      vue: 3.5.22(typescript@5.9.3)
+
+  '@tabler/icons@3.37.1': {}
+
   '@tiptap/core@2.27.1(@tiptap/pm@2.27.1)':
     dependencies:
       '@tiptap/pm': 2.27.1
@@ -9436,6 +9489,16 @@ snapshots:
       vue: 3.5.22(typescript@5.9.3)
 
   '@vue/shared@3.5.22': {}
+
+  '@vuelidate/core@2.0.3(vue@3.5.22(typescript@5.9.3))':
+    dependencies:
+      vue: 3.5.22(typescript@5.9.3)
+      vue-demi: 0.13.11(vue@3.5.22(typescript@5.9.3))
+
+  '@vuelidate/validators@2.0.4(vue@3.5.22(typescript@5.9.3))':
+    dependencies:
+      vue: 3.5.22(typescript@5.9.3)
+      vue-demi: 0.13.11(vue@3.5.22(typescript@5.9.3))
 
   '@vuetify/loader-shared@2.1.1(vue@3.5.22(typescript@5.9.3))(vuetify@3.10.8(typescript@5.9.3)(vite-plugin-vuetify@2.1.2)(vue@3.5.22(typescript@5.9.3)))':
     dependencies:
@@ -14330,6 +14393,10 @@ snapshots:
   vue-chartjs@5.3.2(chart.js@4.5.1)(vue@3.5.22(typescript@5.9.3)):
     dependencies:
       chart.js: 4.5.1
+      vue: 3.5.22(typescript@5.9.3)
+
+  vue-demi@0.13.11(vue@3.5.22(typescript@5.9.3)):
+    dependencies:
       vue: 3.5.22(typescript@5.9.3)
 
   vue-demi@0.14.10(vue@3.5.22(typescript@5.9.3)):

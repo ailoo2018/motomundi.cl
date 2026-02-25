@@ -661,7 +661,7 @@ const ridingStylesError = computed(() =>
 }
 .page-header__logo-mark {
   margin-left: auto;
-  /*  opacity: 0.08;*/
+/*  opacity: 0.08;*/
 }
 .logo-mark-icon { color: var(--color-primary); }
 
