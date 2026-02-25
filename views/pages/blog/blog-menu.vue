@@ -1,120 +1,18 @@
 <script>
+import { defineComponent } from "vue"
+import BlogSearch from "@/views/pages/blog/blog-search.vue"
+import BlogNavigation from "@/layouts/blog/blog-navigation.vue"
+
 const entry = ref()
 const searchSelector = ref({ isShow: false })
+
+export default defineComponent({
+  components: { BlogNavigation, BlogSearch },
+})
 </script>
 
 <template>
-  <nav id="blognav">
-    <ul class="categories-menu">
-      <li>
-        <form
-          role="search"
-          method="get"
-          class="search-form blog-search-form"
-        >
-          <VSelect
-            placeholder="Buscar..."
-            label="Bascar"
-          />
-          <VBtn>
-            Buscar
-          </VBtn>
-        </form>
-      </li>
-      <li class="submenu-content">
-        <a
-          class="main-category"
-          href="/moto-blog/reviews/"
-        >
-          <div class="icon-container">
-            <img src="/content/images/assets/icons/review.svg">
-          </div>
-          <div class="text-container"><p>Reviews y pruebas</p>
-            <span>Conoce al detalle lo que buscas.</span>
-          </div>
-        </a>
-      </li>
-      <li class="submenu-content">
-        <a
-          class="main-category"
-          href="/moto-blog/comparativas-y-rankings/"
-        >
-          <div class="icon-container"><img src="/content/images/assets/icons/comparison.svg">
-          </div>
-          <div class="text-container"><p>Comparativas y rankings</p>
-            <span>¿Dudas entre varios productos? Te ayudamos.</span>
-          </div>
-        </a>
-      </li>
-      <li class="submenu-content">
-        <a
-          class="main-category"
-          href="/moto-blog/tutoriales/"
-        >
-          <div class="icon-container"><img src="/content/images/assets/icons/tutorial.svg">
-          </div>
-          <div class="text-container"><p>Tutoriales y tecnología</p>
-            <span>Conviértete en un experto de la equipación.</span>
-          </div>
-        </a>
-      </li>
-      <li class="submenu-content">
-        <a
-          class="main-category"
-          href="/moto-blog/guias-de-compra/"
-        >
-          <div class="icon-container"><img src="/content/images/assets/icons/shopping-guide.svg">
-          </div>
-          <div class="text-container"><p>Guías de compra</p>
-            <span>Todo lo que debes saber antes de decidirte.</span>
-          </div>
-        </a>
-      </li>
-      <li class="submenu-content">
-        <a
-          class="main-category"
-          href="/moto-blog/noticias/"
-        >
-          <div class="icon-container"><img src="/content/assets/icons/news.png">
-          </div>
-          <div class="text-container"><p>Tendencias y novedades</p>
-            <span>La evolución del mercado de motocicletas en Chile.</span>
-          </div>
-        </a>
-      </li>
-      <li class="submenu-content">
-        <a
-          class="main-category"
-          href="/moto-blog/planeta-motero/"
-        >
-          <div class="icon-container"><img src="/content/images/assets/icons/planet-biker.svg">
-            <noscript><img
-              src="/content/images/assets/icons/planet-biker.svg"
-              >
-            </noscript>
-          </div>
-          <div class="text-container"><p>Planeta motero</p><span>Adéntrate en el mundo de la moto.</span>
-          </div>
-        </a>
-      </li>
-      <li class="submenu-content">
-        <a
-          class="main-category"
-          href="/moto-blog/videos/"
-        >
-          <div class="icon-container">
-            <img src="/content/images/assets/icons/video.svg">
-            <noscript>
-              <img src="/content/images/assets/icons/video.svg">
-            </noscript>
-          </div>
-          <div class="text-container"><p>Nuestros vídeos</p>
-            <span>Disfruta de nuestros mejores vídeos.</span>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <BlogNavigation />
   <div class="subscribe-rss-container">
     <div class="newsletter-container">
       <p class="sidebar-title">
