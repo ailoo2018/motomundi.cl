@@ -554,14 +554,12 @@ svg:not(:root) {
 }
 .profile__name {
   border-bottom: 1px solid #d8d8d8;
-  font-size: 21px;
+  font-size: 16px;
   font-weight: 800;
   margin-bottom: 12px;
   padding-bottom: 12px;
   text-transform: uppercase;
 }
-
-
 
 .account__user-avatar .edit-user-avatar input {
   cursor: pointer;
@@ -571,8 +569,6 @@ svg:not(:root) {
   width: 32px;
   z-index: 1;
 }
-
-
 
 /**** product detail page ****/
 .product-wrapper.product-detail .swatch.color-value.selected, .product-wrapper.product-detail .swatch.size-value.selected {

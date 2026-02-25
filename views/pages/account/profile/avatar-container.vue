@@ -6,7 +6,6 @@ const file = ref()
 
 const userStore = useUserStore()
 const accessToken = useCookie('accessToken').value
-const openCropper = ref(false)
 
 
 const party = computed(() => {
@@ -20,10 +19,10 @@ const userInitials = computed(() => {
 const isUploading = ref(false)
 const userAvatarUrl = ref() // Local preview state
 
-/**
- * Helper: Converts the Base64 DataURL from the cropper to a Blob
- * so it can be appended to FormData.
- */
+if(userStore.user.avatar)
+  userAvatarUrl.value = getImageUrl( userStore.user.avatar, 300, getDomainId())
+console.log("userAvatarUrl:" + userAvatarUrl.value)
+
 const dataURLtoBlob = (dataurl: string) => {
   const arr = dataurl.split(',')
   const mime = arr[0].match(/:(.*?);/)?.[1]

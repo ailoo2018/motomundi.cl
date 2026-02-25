@@ -13,7 +13,6 @@ definePageMeta({
 const userStore = useUserStore()
 
 await userStore.fetchUser()
-// Fetch once on mount
 </script>
 
 <template>

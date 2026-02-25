@@ -28,12 +28,11 @@
         <span class="motocoins-conversion">(229)</span>
       </div>
     </div>
-    <a
-      href="/cuenta/club-mi-motomundi"
-      data-dr="true"
-      class="button button--filled mtc-link"
-      rel="nofollow"
-    ><span>Aprovecha las ventajas</span></a>
+    <VBtn
+      @click="navigateTo('/cuenta/club-mi-motomundi')"
+      rounded="0"
+      color="#000"
+    >Aprovecha las ventajas</VBtn>
   </section>
 </template>
 
@@ -106,5 +105,10 @@
     order: 2;
     width: 50%;
   }
+}
+.profile__name .profile__email {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: none;
 }
 </style>
