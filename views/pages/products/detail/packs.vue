@@ -35,10 +35,10 @@ const showPackDialog = pack => {
 
 <template>
 
-  <div
+  <VContainer
     v-if="packs && packs.length > 0"
     :key="packs.id"
-    class="row mx-2"
+
   >
     <!-- packs dialog -->
     <PacksModal
@@ -66,7 +66,7 @@ const showPackDialog = pack => {
 
       </VCol>
     </VRow>
-  </div>
+  </VContainer>
 </template>
 
 <style >
