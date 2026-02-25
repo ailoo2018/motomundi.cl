@@ -152,6 +152,7 @@ export function useProfileForm() {
   }
 
   // ── Password section ──────────────────────────────────────────────────────
+  const passwordError = ref()
   const passwordExpanded = ref(false)
   const passwordForm     = ref()
   const changingPassword = ref(false)
@@ -172,7 +173,7 @@ export function useProfileForm() {
 
   const validateCurrentPassword = (v: string): true | string => {
     if (!v)           return 'Ingresa tu contraseña actual'
-    if (v.length < 6) return 'Contraseña inválida'
+    if (v.length < 3) return 'Contraseña inválida'
     return true
   }
 
@@ -223,6 +224,7 @@ export function useProfileForm() {
     const { valid } = await passwordForm.value.validate()
     if (!valid) return
 
+    passwordError.value = null
     passwordSaving.value = true
     try {
       await $fetch('/api/account/password', {
@@ -235,7 +237,10 @@ export function useProfileForm() {
       passwordForm.value.reset()
       passwordExpanded.value = false
       showSuccessPasswordSnackbar.value = true
-    } catch {
+    } catch(e) {
+
+      passwordError.value = e.data?.message || e.message
+
       showErrorSnackbar.value = true
     } finally {
       passwordSaving.value = false
@@ -306,6 +311,7 @@ export function useProfileForm() {
     hydrated,
 
     // Password
+    passwordError,
     passwordExpanded,
     passwordForm,
     changingPassword,

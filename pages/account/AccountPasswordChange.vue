@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import {
   IconUser,
   IconPhone,
@@ -43,27 +43,14 @@ const {
   showNewPw,
   showConfirmPw,
   passwordStrength,
-  showSuccessSnackbar,
-  showErrorSnackbar,
-  showCancelDialog,
-  showDraftBanner,
-  showSuccessPasswordSnackbar,
-  ridingStyles,
-  validateFirstName,
-  validateLastName,
-  validatePhone,
-  validateDateOfBirth,
-  validateRidingStyles,
+
   validateNewPassword,
   validateConfirmPassword,
   validateCurrentPassword,
-  onPhoneInput,
-  toggleRidingStyle,
-  isStyleSelected,
-  handleSave,
-  handleCancel,
-  discardChanges,
+  passwordError,
+
   handlePasswordChange,
+
 } = useProfileForm()
 </script>
 
@@ -183,6 +170,7 @@ const {
               </VTextField>
 
               <!-- Password strength meter -->
+<!--
               <Transition name="fade">
                 <div
                   v-if="passwords.new"
@@ -194,7 +182,7 @@ const {
                       :key="i"
                       class="strength-bar"
                       :class="[
-                        i <= passwordStrength.score ? `strength-bar--${passwordStrength.color}` : '',
+                        i <= passwordStrength.score ? `strength-bar&#45;&#45;${passwordStrength.color}` : '',
                       ]"
                     />
                   </div>
@@ -203,6 +191,7 @@ const {
                   </span>
                 </div>
               </Transition>
+-->
             </VCol>
 
             <!-- Confirm password -->
@@ -243,6 +232,13 @@ const {
               </VTextField>
             </VCol>
 
+            <VCol v-if="passwordError" cols="12">
+              <VAlert color="warning" >
+                <VIcon class="tabler-alert-circle"/>
+                Error al tratar de actualizar clave: {{passwordError}}
+              </VAlert>
+            </VCol>
+
             <!-- Change password action -->
             <VCol
               cols="12"
@@ -254,7 +250,7 @@ const {
                 color="primary"
                 :loading="passwordSaving"
                 size="large"
-                class="pw-submit-btn"
+                rounded="0"
                 @click="handlePasswordChange"
               >
                 <template #prepend>
