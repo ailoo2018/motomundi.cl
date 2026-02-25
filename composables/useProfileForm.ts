@@ -1,86 +1,82 @@
 // composables/useProfileForm.ts
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useProfileStore, RIDING_STYLES } from '~/stores/profile'
+import type { ProfileState } from '~/stores/profile'
 
-// ─── Validation helpers ──────────────────────────────────────────────────────
+// ─── SSR-safe localStorage wrapper ──────────────────────────────────────────
+const storage = {
+  get:    (k: string) => (typeof window !== 'undefined' ? localStorage.getItem(k) : null),
+  set:    (k: string, v: string) => { if (typeof window !== 'undefined') localStorage.setItem(k, v) },
+  remove: (k: string) => { if (typeof window !== 'undefined') localStorage.removeItem(k) },
+}
 
-const lettersOnly = (v: string) =>
-  /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s-]+$/.test(v)
+// ─── Pure validators ─────────────────────────────────────────────────────────
 
+const lettersOnly       = (v: string) => /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s-]+$/.test(v)
 const parseChileanPhone = (v: string) => v.replace(/\s/g, '').replace('+', '')
 
 export function validateFirstName(v: string): true | string {
-  if (!v) return 'El nombre es requerido'
-  if (v.length < 2) return 'Mínimo 2 caracteres'
+  if (!v)              return 'El nombre es requerido'
+  if (v.length < 2)    return 'Mínimo 2 caracteres'
   if (!lettersOnly(v)) return 'Solo letras permitidas'
   return true
 }
 
 export function validateLastName(v: string): true | string {
-  if (!v) return 'El apellido es requerido'
-  if (v.length < 2) return 'Mínimo 2 caracteres'
+  if (!v)              return 'El apellido es requerido'
+  if (v.length < 2)    return 'Mínimo 2 caracteres'
   if (!lettersOnly(v)) return 'Solo letras permitidas'
   return true
 }
 
 export function validatePhone(v: string): true | string {
   if (!v) return 'El teléfono es requerido'
-  const cleaned = parseChileanPhone(v)
-  // Valid: 56912345678 or 912345678
-  if (!/^(56)?9\d{8}$/.test(cleaned)) return 'Formato inválido (+56 9 XXXX XXXX)'
+  if (!/^(56)?9\d{8}$/.test(parseChileanPhone(v))) return 'Formato inválido (+56 9 XXXX XXXX)'
   return true
 }
 
 export function validateDateOfBirth(v: string | null): true | string {
-  if (!v) return true // optional
+  if (!v) return true
   const dob = new Date(v)
   if (isNaN(dob.getTime())) return 'Fecha inválida'
-  const ageDiff = Date.now() - dob.getTime()
-  const age = Math.floor(ageDiff / (1000 * 60 * 60 * 24 * 365.25))
-  if (age < 16) return 'Debes tener al menos 16 años'
+  const age = Math.floor((Date.now() - dob.getTime()) / (1000 * 60 * 60 * 24 * 365.25))
+  if (age < 16)  return 'Debes tener al menos 16 años'
   if (age > 120) return 'Fecha inválida'
   return true
 }
 
 export function validateRidingStyles(styles: string[]): true | string {
-  if (!styles.length) return 'Selecciona al menos un estilo de conducción'
-  return true
+  return styles.length ? true : 'Selecciona al menos un estilo de conducción'
 }
 
-// ─── Password validation ─────────────────────────────────────────────────────
+// ─── Password helpers ────────────────────────────────────────────────────────
 
-export interface PasswordStrength {
-  score: number // 0-4
-  label: string
-  color: string
-}
+export interface PasswordStrength { score: number; label: string; color: string }
 
 export function getPasswordStrength(password: string): PasswordStrength {
   if (!password) return { score: 0, label: '', color: 'grey' }
   let score = 0
-  if (password.length >= 8) score++
-  if (password.length >= 12) score++
+  if (password.length >= 8)                              score++
+  if (password.length >= 12)                             score++
   if (/[A-Z]/.test(password) && /[a-z]/.test(password)) score++
-  if (/\d/.test(password)) score++
-  if (/[^a-zA-Z0-9]/.test(password)) score++
-  score = Math.min(score, 4)
-
-  const levels: PasswordStrength[] = [
-    { score: 0, label: '', color: 'grey' },
-    { score: 1, label: 'Muy débil', color: 'error' },
-    { score: 2, label: 'Débil', color: 'warning' },
-    { score: 3, label: 'Buena', color: 'info' },
-    { score: 4, label: 'Fuerte', color: 'success' },
-  ]
-  return levels[score]
+  if (/\d/.test(password))                               score++
+  if (/[^a-zA-Z0-9]/.test(password))                    score++
+  return [
+    { score: 0, label: '',          color: 'grey'    },
+    { score: 1, label: 'Muy débil', color: 'error'   },
+    { score: 2, label: 'Débil',     color: 'warning' },
+    { score: 3, label: 'Buena',     color: 'info'    },
+    { score: 4, label: 'Fuerte',    color: 'success' },
+  ][Math.min(score, 4)]
 }
 
 export function validateNewPassword(v: string): true | string {
-  if (!v) return 'La contraseña es requerida'
-  if (v.length < 8) return 'Mínimo 8 caracteres'
-  if (!/[A-Z]/.test(v)) return 'Debe contener al menos una mayúscula'
-  if (!/\d/.test(v)) return 'Debe contener al menos un número'
-  if (!/[^a-zA-Z0-9]/.test(v)) return 'Debe contener al menos un símbolo'
+  if (!v)                      return 'La contraseña es requerida'
+  if (v.length < 8)            return 'Mínimo 8 caracteres'
+ // if (!/[A-Z]/.test(v))        return 'Debe contener al menos una mayúscula'
+ // if (!/\d/.test(v))           return 'Debe contener al menos un número'
+//  if (!/[^a-zA-Z0-9]/.test(v)) return 'Debe contener al menos un símbolo'
   return true
 }
 
@@ -89,86 +85,116 @@ export function validateNewPassword(v: string): true | string {
 export function useProfileForm() {
   const store = useProfileStore()
 
-  // ── Form state ────────────────────────────────────────────────────────────
+  // Expose store's async state as refs — components read these directly
+  // instead of managing their own duplicated loading/error booleans.
+  const { loading, saving, fetchError, saveError, hydrated } = storeToRefs(store)
+
+  // ── Local UI state (not in store — ephemeral, per-form-instance) ──────────
   const profileForm = ref()
   const isFormValid = ref(false)
-  const isDirty = ref(false)
-  const saving = ref(false)
-  const showSuccessSnackbar = ref(false)
-  const showErrorSnackbar = ref(false)
-  const showCancelDialog = ref(false)
-  const showDraftBanner = ref(false)
+  const isDirty     = ref(false)
 
-  const form = reactive({
-    firstName: store.firstName,
-    lastName: store.lastName,
-    phone: store.phone,
-    dateOfBirth: store.dateOfBirth,
-    gender: store.gender,
-    ridingStyles: [...store.ridingStyles],
+  const showSuccessSnackbar         = ref(false)
+  const showErrorSnackbar           = ref(false)
+  const showCancelDialog            = ref(false)
+  const showDraftBanner             = ref(false)
+  const showSuccessPasswordSnackbar = ref(false)
+
+  // ── Form data ─────────────────────────────────────────────────────────────
+  // Always start empty — syncFormFromStore() immediately populates values.
+  // Do NOT initialise from store here: if the page awaited fetchProfile()
+  // before calling useProfileForm(), store state exists in Pinia but Vue's
+  // reactivity system hasn't flushed it into a new reactive() snapshot yet,
+  // so you would still get stale empty strings.
+  const form = reactive<Omit<ProfileState, 'loading' | 'saving' | 'fetchError' | 'saveError' | 'hydrated'>>({
+    firstName:    '',
+    lastName:     '',
+    phone:        '',
+    dateOfBirth:  null,
+    gender:       '',
+    ridingStyles: [],
   })
 
-  // Track original for dirty check
-  const original = JSON.stringify({ ...form })
+  // Dirty-check baseline — re-taken by syncFormFromStore() and after saves.
+  let original = JSON.stringify({ ...form })
+
+  // { immediate: true } means this runs right now during composable init.
+  // This is the critical fix: if the page already awaited fetchProfile()
+  // before calling useProfileForm(), store.hydrated is already true and
+  // a normal (non-immediate) watcher would never fire — leaving the form empty.
+  watch(
+    () => store.hydrated,
+    (isHydrated) => {
+      if (isHydrated && !isDirty.value) {
+        syncFormFromStore()
+      }
+    },
+    { immediate: true },
+  )
 
   watch(form, (val) => {
     isDirty.value = JSON.stringify(val) !== original
-    // Auto-save draft
     store.saveDraft({ ...val })
   }, { deep: true })
 
+  function syncFormFromStore() {
+    Object.assign(form, {
+      firstName:    store.firstName    ?? '',
+      lastName:     store.lastName     ?? '',
+      phone:        store.phone        ?? '',
+      dateOfBirth:  store.dateOfBirth  ?? null,
+      gender:       store.gender       ?? '',
+      ridingStyles: [...(store.ridingStyles ?? [])],
+    })
+    // Re-snapshot so the form isn't immediately dirty after a server load
+    original = JSON.stringify({ ...form })
+    isDirty.value = false
+  }
+
   // ── Password section ──────────────────────────────────────────────────────
   const passwordExpanded = ref(false)
-  const passwordForm = ref()
+  const passwordForm     = ref()
   const changingPassword = ref(false)
-  const passwordSaving = ref(false)
-  const showSuccessPasswordSnackbar = ref(false)
+  const passwordSaving   = ref(false)
 
-  const passwords = reactive({
-    current: '',
-    new: '',
-    confirm: '',
-  })
-
+  const passwords     = reactive({ current: '', new: '', confirm: '' })
   const showCurrentPw = ref(false)
-  const showNewPw = ref(false)
+  const showNewPw     = ref(false)
   const showConfirmPw = ref(false)
 
   const passwordStrength = computed(() => getPasswordStrength(passwords.new))
 
   const validateConfirmPassword = (v: string): true | string => {
-    if (!v) return 'Confirma tu contraseña'
+    if (!v)                  return 'Confirma tu contraseña'
     if (v !== passwords.new) return 'Las contraseñas no coinciden'
     return true
   }
 
   const validateCurrentPassword = (v: string): true | string => {
-    if (!v) return 'Ingresa tu contraseña actual'
+    if (!v)           return 'Ingresa tu contraseña actual'
     if (v.length < 6) return 'Contraseña inválida'
     return true
   }
 
-  // ── Phone formatting ──────────────────────────────────────────────────────
+  // ── Phone auto-format ─────────────────────────────────────────────────────
   const formatPhone = (raw: string) => {
     const digits = raw.replace(/\D/g, '')
-    // Strip leading 56
-    const core = digits.startsWith('56') ? digits.slice(2) : digits
-    const trimmed = core.slice(0, 9)
-    if (trimmed.length <= 1) return trimmed
-    if (trimmed.length <= 5) return `${trimmed.slice(0, 1)} ${trimmed.slice(1)}`
-    return `${trimmed.slice(0, 1)} ${trimmed.slice(1, 5)} ${trimmed.slice(5)}`
+    const core   = digits.startsWith('56') ? digits.slice(2) : digits
+    const t      = core.slice(0, 9)
+    if (t.length <= 1) return t
+    if (t.length <= 5) return `${t[0]} ${t.slice(1)}`
+    return `${t[0]} ${t.slice(1, 5)} ${t.slice(5)}`
   }
 
   const onPhoneInput = (e: Event) => {
-    const el = e.target as HTMLInputElement
-    form.phone = formatPhone(el.value)
+    form.phone = formatPhone((e.target as HTMLInputElement).value)
   }
 
   // ── Riding style toggle ───────────────────────────────────────────────────
   const toggleRidingStyle = (id: string) => {
     const idx = form.ridingStyles.indexOf(id)
     if (idx === -1) form.ridingStyles.push(id)
-    else form.ridingStyles.splice(idx, 1)
+    else            form.ridingStyles.splice(idx, 1)
   }
 
   const isStyleSelected = (id: string) => form.ridingStyles.includes(id)
@@ -179,16 +205,16 @@ export function useProfileForm() {
     if (!valid) return
     if (validateRidingStyles(form.ridingStyles) !== true) return
 
-    saving.value = true
     try {
       await store.saveProfile({ ...form })
       store.clearDraft()
       isDirty.value = false
+      // Re-snapshot after successful save so the new values become the baseline
+      original = JSON.stringify({ ...form })
       showSuccessSnackbar.value = true
     } catch {
+      // store.saveError is already set by the store action
       showErrorSnackbar.value = true
-    } finally {
-      saving.value = false
     }
   }
 
@@ -199,10 +225,12 @@ export function useProfileForm() {
 
     passwordSaving.value = true
     try {
-      // Simulate API call
-      await new Promise((r) => setTimeout(r, 1000))
+      await $fetch('/api/account/password', {
+        method: 'POST',
+        body: { current: passwords.current, new: passwords.new },
+      })
       passwords.current = ''
-      passwords.new = ''
+      passwords.new     = ''
       passwords.confirm = ''
       passwordForm.value.reset()
       passwordExpanded.value = false
@@ -214,31 +242,19 @@ export function useProfileForm() {
     }
   }
 
-  // ── Cancel ────────────────────────────────────────────────────────────────
+  // ── Cancel / discard ──────────────────────────────────────────────────────
   const handleCancel = () => {
-    if (isDirty.value) {
-      showCancelDialog.value = true
-    } else {
-      discardChanges()
-    }
+    isDirty.value ? (showCancelDialog.value = true) : discardChanges()
   }
 
   const discardChanges = () => {
-    Object.assign(form, {
-      firstName: store.firstName,
-      lastName: store.lastName,
-      phone: store.phone,
-      dateOfBirth: store.dateOfBirth,
-      gender: store.gender,
-      ridingStyles: [...store.ridingStyles],
-    })
-    isDirty.value = false
+    syncFormFromStore()
     showCancelDialog.value = false
     store.clearDraft()
     profileForm.value?.resetValidation()
   }
 
-  // ── Keyboard shortcut Ctrl+S ──────────────────────────────────────────────
+  // ── Ctrl+S shortcut ───────────────────────────────────────────────────────
   const onKeydown = (e: KeyboardEvent) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
       e.preventDefault()
@@ -246,16 +262,27 @@ export function useProfileForm() {
     }
   }
 
-  onMounted(() => {
+  // ── Lifecycle ─────────────────────────────────────────────────────────────
+  onMounted(async () => {
     window.addEventListener('keydown', onKeydown)
-    // Check for saved draft
-    const draft = localStorage.getItem('motomundi_profile_draft')
-    if (draft) {
+
+    // Restore draft first — it may have more recent edits than the server
+    const raw = storage.get('motomundi_profile_draft')
+    if (raw) {
       try {
-        const parsed = JSON.parse(draft)
-        Object.assign(form, parsed)
+        Object.assign(form, JSON.parse(raw) as Partial<typeof form>)
         showDraftBanner.value = true
-      } catch {}
+      } catch {
+        storage.remove('motomundi_profile_draft')
+      }
+    }
+
+    // Then fetch from server (skips if already hydrated in this session)
+    await store.fetchProfile()
+
+    // If no draft was restored, sync form with the freshly loaded server data
+    if (!showDraftBanner.value) {
+      syncFormFromStore()
     }
   })
 
@@ -263,17 +290,24 @@ export function useProfileForm() {
     window.removeEventListener('keydown', onKeydown)
   })
 
+  // ── Public API ────────────────────────────────────────────────────────────
   return {
-    // Form refs
+    // Form
     profileForm,
-    passwordForm,
     isFormValid,
     isDirty,
-    saving,
     form,
+
+    // Store async state (reactive refs — components can use directly)
+    loading,
+    saving,
+    fetchError,
+    saveError,
+    hydrated,
 
     // Password
     passwordExpanded,
+    passwordForm,
     changingPassword,
     passwordSaving,
     passwords,

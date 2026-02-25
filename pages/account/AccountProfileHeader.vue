@@ -1,4 +1,5 @@
 <script setup>
+import { IconMotorbike } from '@tabler/icons-vue'
 </script>
 <template>
   <div class="page-header mb-8">

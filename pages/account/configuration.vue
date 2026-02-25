@@ -24,7 +24,7 @@ definePageMeta({
   middleware: 'auth', // Must match the filename (auth.ts)
 })
 
-await useProfileStore().fetchProfile(true)
+
 
 const {
   profileForm,
@@ -262,10 +262,11 @@ const genderOptions = [
         <VBtn
           type="submit"
           color="primary"
+          rounded="0"
           size="x-large"
           :loading="saving"
           :disabled="!isDirty || saving"
-          class="save-btn"
+
           :title="isDirty ? 'Guardar cambios (Ctrl+S)' : 'No hay cambios'"
         >
           <template #prepend>
@@ -276,10 +277,11 @@ const genderOptions = [
 
         <VBtn
           type="button"
+          rounded="0"
           variant="outlined"
           size="x-large"
           :disabled="saving"
-          class="cancel-btn"
+          color="#000"
           @click="handleCancel"
         >
           <template #prepend>
