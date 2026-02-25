@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { useUserStore } from "@/stores/user"
+import AccountProfileCropper from "@/views/pages/account/profile/account-profile-cropper.vue";
+
+const file = ref()
 
 const userStore = useUserStore()
 const accessToken = useCookie('accessToken').value
+const openCropper = ref(false)
+
+
 const party = computed(() => {
   return userStore.user.person
 })
@@ -10,6 +16,52 @@ const party = computed(() => {
 const userInitials = computed(() => {
   return useUser().getInitials()
 })
+
+const isUploading = ref(false)
+const userAvatarUrl = ref() // Local preview state
+
+/**
+ * Helper: Converts the Base64 DataURL from the cropper to a Blob
+ * so it can be appended to FormData.
+ */
+const dataURLtoBlob = (dataurl: string) => {
+  const arr = dataurl.split(',')
+  const mime = arr[0].match(/:(.*?);/)?.[1]
+  const bstr = atob(arr[1])
+  let n = bstr.length
+  const u8arr = new Uint8Array(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
+  }
+  return new Blob([u8arr], { type: mime })
+}
+
+const uploadAvatar = async (croppedDataUrl: string) => {
+  try {
+    isUploading.value = true
+
+    const blob = dataURLtoBlob(croppedDataUrl)
+    const formData = new FormData()
+
+    formData.append('image', blob, 'user-avatar.png')
+
+    const response = await $fetch('/api/account/upload-avatar', {
+      method: 'POST',
+      body: formData,
+    })
+
+    if(response.uploads?.length > 0) {
+      userAvatarUrl.value = getImageUrl(response.uploads[0].imageId, 300, getDomainId())
+    }
+
+    console.log('Upload successful!')
+  } catch (error) {
+    console.error('Upload failed:', error)
+    // Add a toast notification here if you have one
+  } finally {
+    isUploading.value = false
+  }
+}
 </script>
 
 <template>
@@ -19,54 +71,32 @@ const userInitials = computed(() => {
     v-if="party"
     class="profile__avatar-container"
   >
+
     <div
       class="account__user"
       style="z-index:0;"
     >
       <div class="user-avatar__container club-member">
         <div
-          ng-click="uploadAvatar()"
-
+          @click="uploadAvatar"
           class="account__user-avatar big"
           style="cursor: pointer;background: linear-gradient(45deg, rgb(120, 168, 188) 0%, rgb(127, 167, 26) 100%);"
         >
+          <div v-if="isUploading" style="position: relative;" class="d-flex align-center justify-center fill-height">
+            <VProgressCircular indeterminate color="primary" />
+          </div>
+
           <img
-            v-if="userStore.user.avatar"
-            ng-show="avatarUrl == null"
-            :src="getDataImageUrl(userStore.user.avatar, 600, getDomainId())"
+            v-if="userAvatarUrl"
+            :src="userAvatarUrl"
             alt="user-avatar"
           >
-
-
           {{ userInitials }}
 
 
-          <div class="cropper-wrapper">
-            <div class="edit-user-avatar">
-              <div class="upload-image">
-                <input
-                  type="file"
-                  ngf-select
-                  ng-model="file"
-                  name="file"
-                  ngf-max-size="20MB"
-                  accept="image/*"
-                >
-                <svg
-                  width="11"
-                  height="11"
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="edit-icon icon sprite-line-icons"
-                >
-                  <title>Upload image</title>
-                  <use
-                    href="/content/svg/motomundi.svg#i-icon-upload"
-                    xlink:href="/content/svg/motomundi.svg#i-icon-upload"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
+          <AccountProfileCropper @cropped="uploadAvatar" />
+          <!-- /cropper-wrapper -->
+
         </div>
         <svg
           width="130"
@@ -227,6 +257,53 @@ const userInitials = computed(() => {
   right: 0;
   width: 55px;
   top: 110px;
+}
+
+.account__user-avatar .edit-user-avatar svg {
+  cursor: pointer;
+}
+.account__user-avatar .edit-user-avatar svg.edit-icon use {
+  stroke: #fff;
+  stroke-width: .8;
+}
+.account__user-avatar .edit-user-avatar input {
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  width: 0;
+  z-index: 1;
+}
+
+.cropper-wrapper .delete-image svg {
+  transform: scale(1);
+  transform-origin: center center;
+}
+
+.cropper-wrapper .delete-image svg use {
+  stroke-width: 1;
+  stroke: #fff;
+}
+.cropper-wrapper:hover .edit-user-avatar {
+  background-color: #fffc;
+}
+.cropper-wrapper .delete-image {
+  align-items: center;
+  background: #000;
+  border-radius: 200px;
+  display: flex;
+  height: 20px;
+  justify-content: center;
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  top: -15px;
+  transform: translate(-50%);
+  transition: opacity .2s ease;
+  width: 20px;
+}
+.cropper-wrapper:hover .delete-image, .cropper-wrapper:hover .edit-user-avatar {
+  cursor: pointer;
+  opacity: 1;
 }
 
 @media only screen and (min-width: 601px) {
