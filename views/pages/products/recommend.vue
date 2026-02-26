@@ -49,7 +49,7 @@ products.value = rs
               :product="prod"
             />
           </div>
-          <div class="product-list__view-more">
+          <div class="d-none product-list__view-more">
             <button class="button button--tiny">
               <span>Ver más</span>
             </button>

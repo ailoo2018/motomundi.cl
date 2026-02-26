@@ -292,9 +292,8 @@ onMounted(() => {
       <!-- /product-description-container -->
 
 
-      <Recommend :product="product" />
-
       <ProductRating :product="product" />
+      <Recommend :product="product" />
     </div>
   </article>
 

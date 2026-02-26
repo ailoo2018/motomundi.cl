@@ -28,8 +28,16 @@ export async function processDLocal(rq : ProcessPaymentRq) {
     order_id = `invoice-${order_id}`
   }
 
+  let fractions = 2
+  if(rq.currency === "CLP"
+    || rq.currency === "ARS"
+    || rq.currency === "COL"
+  ){
+    fractions = 0
+  }
+
   const orderData = {
-    amount:  Number(amount).toFixed(2), // e.g., 100.00
+    amount:  Number(amount).toFixed(fractions), // e.g., 100.00
     currency: rq.currency || 'USD',
     country: rq.country, // e.g., 'BR', 'MX', 'AR'
     order_id: order_id,

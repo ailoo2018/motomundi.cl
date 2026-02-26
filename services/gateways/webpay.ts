@@ -25,7 +25,7 @@ export async function processWebpay(rq : ProcessPaymentRq){
   const response = await tx.create(
     order_id,
     `session-${Date.now()}`,
-    rq.amount,
+    Math.round( rq.amount ),
     rq.returnUrl,
   )
 

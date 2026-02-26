@@ -34,7 +34,7 @@ export async function processMercadoPago(rq : ProcessPaymentRq) {
           id: `${rq.referenceId}`,
           title: `Orden #${rq.referenceId}`,
           quantity: 1,
-          unit_price: Number(rq.amount),
+          unit_price: Math.round(Number(rq.amount)),
           currency_id: 'CLP', // Required for Chile
         },
       ],
