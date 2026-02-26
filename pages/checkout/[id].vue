@@ -173,7 +173,7 @@ const paymentMethods = ref([
   },
   {
     id: 19,
-    name: 'Pago con moneda local',
+    name: 'Extranjero comprando dentro de Chile',
     code: "dlocal",
     button: "DLocal",
     description: 'DLocal - Si eres extranjero y quieres comprar en Chile con tu moneda local seleccione este método de pago ',
