@@ -1,3 +1,5 @@
+<script setup>
+</script>
 <template>
   <span class="free-shipping">
     <svg
@@ -21,11 +23,6 @@
   </span>
 </template>
 
-<script>
-export default {
-  name: 'ProductPriceGuarantee',
-}
-</script>
 
 <style>
 .add-to-favs:hover svg use {
