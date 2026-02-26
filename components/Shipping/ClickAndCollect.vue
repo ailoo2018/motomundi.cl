@@ -42,10 +42,12 @@ if(props.store && props.store.id > 0) {
 }
 
 watch(selectedStore, async () => {
-  console.log('Selected store: ', selectedStore.value)
+  console.log('Selected store: ' + selectedStore.value?.id)
 
-  if(selectedStore.value && selectedStore.value.id > 0)
+  if(selectedStore.value && selectedStore.value.id > 0) {
+
     await getPickupDate(selectedStore.value.id)
+  }
 
   emit('storeSelected', selectedStore.value, selectedPickupOption.value)
 })
@@ -60,16 +62,16 @@ const getPickupDate = async facilityId => {
   try {
     loadingPickupDate.value = true
 
-    const { data } = await useFetch( '/api/checkout/pickup-date?facilityId=' + facilityId, {
+    const data = await $fetch( '/api/checkout/pickup-date?facilityId=' + facilityId, {
       credentials: 'include',
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
 
-    if (data.value) {
-      pickupDate.value = data.value.description
+    if (data) {
+      pickupDate.value = data.description
 
-      if(data.value.availableIn2Hours){
+      if(data.availableIn2Hours){
         selectedPickupOption.value = 'pickup_in_2_hours'
         has2HourPickup.value = true
       }else{
