@@ -254,8 +254,6 @@ onMounted(() => {
         <div class="col s12 m5 l5">
           <PreProductBanner />
 
-
-
           <ProductBuyPanel
             :product="product"
             :loading="loading"

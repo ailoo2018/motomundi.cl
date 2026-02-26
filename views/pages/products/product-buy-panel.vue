@@ -6,6 +6,7 @@ import CompositeVariantSelector from "@/views/pages/products/detail/composite-va
 import { ProductType } from "@/models/products"
 import StorePickup from "@/views/pages/products/detail/store-pickup.vue"
 import { useWishlistStore } from "@/stores/wishlist.js"
+import ProductPriceGuarantee from "@/views/pages/products/ProductPriceGuarantee.vue"
 
 const props = defineProps({
   product: {
@@ -48,9 +49,6 @@ const showSeenCheaperForm = () => {
 
 const selectedProductItem = ref()
 const selectedProductItems = ref([])
-
-
-
 const prodUtil = useProductsUtils()
 
 const error = ref('')
@@ -215,28 +213,7 @@ const localIsWished = computed(() => {
           ><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-check" /></svg>
             Envío $4.900 todo Chile
           </span>
-          <span class="free-shipping">
-            <svg
-              width="10"
-              height="8"
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon sprite-line-icons"
-            >
-              <use
-                href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-check"
-                xlink:href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-check"
-              />
-            </svg>
-            <a
-
-              href="/terminos-y-condiciones-precio-minimo-garantizado"
-              data-dr="true"
-              class="mtc-link"
-              rel="nofollow"
-            >
-              Precio mínimo garantizado
-            </a>
-          </span>
+          <ProductPriceGuarantee />
         </div>
       </div>
     </div>
@@ -416,7 +393,6 @@ const localIsWished = computed(() => {
           serás el primero en recibir un correo en cuanto entre de nuevo en el almacén.
         </VAlert>
         <div class="product-buy-panel__buttons">
-
           <VBtn
             :loading="loading"
             :disabled="!isInStock"
@@ -432,8 +408,14 @@ const localIsWished = computed(() => {
               <strong>z</strong>
             </div>
 
-            <span v-if="isInStock" class="d-flex text-white align-items-center align-center">
-              <VIcon size="28" class="tabler-shopping-bag mr-1"/>
+            <span
+              v-if="isInStock"
+              class="d-flex text-white align-items-center align-center"
+            >
+              <VIcon
+                size="28"
+                class="tabler-shopping-bag mr-1"
+              />
               <svg
                 width="22"
                 height="24"
@@ -442,8 +424,14 @@ const localIsWished = computed(() => {
               ><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-shopping-bag" /></svg>
               Añadir a la cesta
             </span>
-            <span v-if="!isInStock" class="d-flex text-white align-items-center align-center">
-              <VIcon size="22" class="tabler-cancel mr-2"/>
+            <span
+              v-if="!isInStock"
+              class="d-flex text-white align-items-center align-center"
+            >
+              <VIcon
+                size="22"
+                class="tabler-cancel mr-2"
+              />
               Producto Agotado
             </span>
           </VBtn>
