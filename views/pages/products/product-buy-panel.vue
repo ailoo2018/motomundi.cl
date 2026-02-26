@@ -189,7 +189,7 @@ const localIsWished = computed(() => {
             <span
               class="product-price product-price__offer ng-binding"
               style="font-size: 55px;"
-            >{{ formatMoney(price) }} {{ useComboForSize }}</span>
+            >{{ formatMoney(price) }} </span>
           </div>
           <!-- /price -->
           <button
@@ -353,8 +353,8 @@ const localIsWished = computed(() => {
             <!-- /modal popup -->
           </div>
           <StorePickup
-            v-if="selectedVariant"
-            :product-item-id="selectedVariant.id"
+            v-if="selectedVariant || product.isSimpleProduct"
+            :product-item-id="selectedVariant?.id || product.productItems[0].id"
           />
         </div>
       </div>
