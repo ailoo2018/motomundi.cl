@@ -182,8 +182,8 @@ onMounted(() => {
               <VBtn
                 id="login-button-20"
                 type="submit"
-                style="margin: 20px auto"
-                class="button w-lg-50 w-sm-100 rounded-0"
+
+                class="w-lg-50 w-sm-100 rounded-0 mt-1"
                 color="#41a334"
                 :loading="loginLoading"
               >

@@ -18,7 +18,7 @@ const onShowRegister = () => {
 </script>
 
 <template>
-  <div class="auth w-full pv-10 ">
+  <div id="login-register-recover" class="auth w-full pv-10 ">
     <div style="max-width: 700px; margin: 0 auto; ">
       <div class="tabs ">
         <span
@@ -55,22 +55,22 @@ const onShowRegister = () => {
 </template>
 
 <style lang="scss">
-form  .required {
+#login-register-recover form .required {
   margin-left: 2px;
   color: #d6001c;
 }
 
-.mobile .v-card-text{
+#login-register-recover .mobile .v-card-text{
   padding: 34px 4px 4px;
 }
 
-.auth label.v-label {
+#login-register-recover .auth label.v-label {
   font-size: 11px !important;
   font-weight: bold;
 }
 
 
-form.recover-password a {
+#login-register-recover form.recover-password a {
   color: #41a334;
   display: block;
   font-size: 12px;
@@ -79,7 +79,7 @@ form.recover-password a {
   text-align: center;
 }
 
-form.recover-password span.h2 {
+#login-register-recover form.recover-password span.h2 {
   display: block;
   font-size: 14px;
   font-weight: 800;
@@ -91,7 +91,7 @@ form.recover-password span.h2 {
   text-transform: uppercase;
 }
 
-.form-fieldset {
+#login-register-recover .form-fieldset {
   align-items: flex-start;
   -webkit-column-gap: 10px;
   -moz-column-gap: 10px;
@@ -103,13 +103,13 @@ form.recover-password span.h2 {
   row-gap: 5px;
 }
 
-.form-item.full-width {
+#login-register-recover .form-item.full-width {
   max-width: 100%;
   width: 100%;
 }
 
 
-.form-actions .button {
+#login-register-recover .form-actions .button {
   background-color: #41a334;
   border-color: #41a334;
   color: #fff;
@@ -123,7 +123,7 @@ form.recover-password span.h2 {
   width: 100%;
 }
 
-.button:active, .button:focus {
+#login-register-recover .button:active, .button:focus {
   background-color: #41a334;
   border-color: #41a334;
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, .3);
@@ -148,16 +148,16 @@ form.recover-password span.h2 {
 }
 
 
-.tabs {
+#login-register-recover .tabs {
   display: flex;
 }
 
-.tabs .tab.is-active {
+#login-register-recover .tabs .tab.is-active {
   border-color: #d6001c;
   color: #000;
 }
 
-.tabs .tab {
+#login-register-recover .tabs .tab {
   border-bottom: 2px solid #ccc;
   color: #949494;
   cursor: pointer;
@@ -170,11 +170,11 @@ form.recover-password span.h2 {
   text-transform: uppercase;
 }
 
-.mobile .tabs .tab{
+#login-register-recover .mobile .tabs .tab{
   font-size: 13px;
 }
 
-form .field-group .h3 {
+#login-register-recover form .field-group .h3 {
   flex: 0 0 100%;
   font-size: 14px;
   font-weight: 800;
@@ -183,7 +183,7 @@ form .field-group .h3 {
   text-transform: uppercase;
 }
 
-label[for="recv-newsletter"] {
+#login-register-recover label[for="recv-newsletter"] {
   color: #41a335;
   font-weight: bold;
 }

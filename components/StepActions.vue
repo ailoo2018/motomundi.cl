@@ -47,15 +47,16 @@ const prev = () => {
       <VBtn
         v-if="currentStep > 1"
         rounded="0"
-        color="white"
-        class="button button--outline actions__back"
+        color="secondary"
+        variant="outlined"
+        class="pa-2"
         @click="prev"
       >
         <span>Atrás</span>
       </VBtn>
       <VBtn
         type="submit"
-        class="button actions__continue"
+        class="actions__continue"
         rounded="0"
         color="#000"
         :disabled="loading"
