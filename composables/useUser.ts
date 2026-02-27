@@ -16,6 +16,10 @@ export const useUser = () => {
       console.log("useUser::onLoggedIn - about to call")
       await nextTick()
       await wishlistStore.sync(data.userId)
+
+      const wuid = useGuestUser().value
+
+      await useCartStore().setUser(wuid, data.userId)
     }catch(e){
       console.error("useUser::onLoggedIn", e)
     }

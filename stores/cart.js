@@ -7,8 +7,7 @@ export const useCartStore = defineStore('cart', {
   }),
 
   actions: {
-    async findCart(id)
-    {
+    async findCart(id){
       this.loading = true
       try {
         const data = await $fetch('/api/cart/find-by-id', { query: { id } })
@@ -23,6 +22,7 @@ export const useCartStore = defineStore('cart', {
       }
 
     },
+
     async fetchCart(wuid) {
       this.loading = true
       try {
@@ -32,6 +32,28 @@ export const useCartStore = defineStore('cart', {
         this.cart.wuid = wuid
         this.cart.items.forEach(i => i.loading = false)
       } finally {
+        this.loading = false
+      }
+    },
+
+    async setUser(wuid, userId) {
+
+      this.loading = true
+      try {
+        const data = await $fetch('/api/cart/set-user', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: { wuid, userId },
+        })
+
+        this.cart = data
+        this.cart.wuid = wuid
+        this.cart.items.forEach(i => i.loading = false)
+      }catch(e){
+        console.error(e)
+      }finally{
         this.loading = false
       }
     },

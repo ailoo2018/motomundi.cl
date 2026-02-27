@@ -10,32 +10,23 @@ export default defineEventHandler(async event => {
 
 
 
-    url = `${baseUrl}/${getDomainId()}/cart/add`
+    url = `${baseUrl}/${getDomainId()}/cart/set-user`
 
-    const res = await $fetch(url, {
+    return await $fetch(url, {
       headers: {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      body: body, // $fetch does support query parameter
+      body: body,
     })
 
-    if (res && res.filters) {
-      for (const f of res.filters) {
-        f.expanded = false
-        f.showExtraContent = false
-        f.buckets.forEach(b => b.checked = false)
-      }
 
-    }
-
-    return res
   } catch (error) {
     console.error('Error in products/search lookup: ' + url, error)
     console.error('Stack trace:', error.stack)
     throw createError({
       statusCode: error.statusCode || 500,
-      message: error.data?.message || 'ERROR Cart Add ' + error.message,
+      message: error.date?.message || 'Error cart set user: ' + e.message,
     })
   }
 })

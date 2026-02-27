@@ -40,7 +40,7 @@ const handleSendCode = async () => {
   error.value = ""
   loading.value = true
   try {
-    const { data } = await useFetch(config.public.LEGACY_URL + '/Cart/AddPromoCode.rails', {
+    const  data  = await $fetch( '/api/checkout/promocode', {
       credentials: 'include',
       method: 'POST',
       body: {
@@ -49,22 +49,25 @@ const handleSendCode = async () => {
     })
 
 
-    console.log("Result AddCoupon", data.value)
+    console.log("Result AddCoupon", data)
 
-    if (data.value.error) {
-      error.value = data.value.error
+    if (data.error) {
+      error.value = data.error
       
       return
     }
 
     coupon.value = {
-      code: data.value.couponName,
-      discountAmount: data.value.discount,
+      code: data.coupon.name,
+      discountAmount: data.discount,
     }
 
     code.value = ''
-    await checkoutService.couponAdded(coupon.value)
-  } finally {
+    await checkoutService.couponAdded(coupon)
+  }catch(e){
+    error.value = e.data?.message || e.message
+  }
+  finally {
     loading.value = false
   }
 
@@ -76,9 +79,9 @@ const handleRemoveCoupon = async () => {
     return
   }
 
-  const { data } = await useFetch(config.public.LEGACY_URL + '/AJAX/RemoveCoupon.rails?id=' + coupon.value.id, {
+  const  data  = await $fetch('/api/checkout/promocode?code=' + coupon.value.id, {
     credentials: 'include',
-    method: 'GET',
+    method: 'DELETE',
   })
 
   coupon.value = null
@@ -112,13 +115,14 @@ const handleRemoveCoupon = async () => {
           >
             Aplicar
           </VBtn>
-
         </div>
         <div>
-          <label for="promo-code__cart-summary">Código promocional o tarjeta regalo</label>
-        </div>
+          <label
+            class="promo-code__cart-label"
+            for="promo-code__cart-summary"
 
-        
+          >Código promocional o tarjeta regalo</label>
+        </div>
       </form>
       <span
         v-if="error"
@@ -261,5 +265,10 @@ input:not([type]):focus:not([readonly]), input[type=date]:not(.browser-default):
   margin-top: 15px;
   text-transform: uppercase;
   width: 100%;
+}
+
+.promo-code__cart-label{
+  font-size: 0.8em;
+  margin-left: 2px;
 }
 </style>

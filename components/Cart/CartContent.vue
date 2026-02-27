@@ -1,49 +1,56 @@
 <script setup lang="ts">
+import { ProductType } from "@/models/products"
+import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
+import CartItemProduct from "@/views/pages/cart/cart-item-product.vue"
+import  { CartItemType } from "@/models/cart"
+import CartItemCoupon from "@/views/pages/cart/cart-item-coupon.vue";
 
-import {ProductType} from "@/models/products";
-import CartItemPack from "@/views/pages/cart/cart-item-pack.vue";
-import CartItemProduct from "@/views/pages/cart/cart-item-product.vue";
+
+
 
 const getProductType = product => {
   if(!product)
     return -1
   if(!product.type)
     return ProductType.Simple
+  
   return product.type
 }
 
 const cartStore = useCartStore()
 const loading = ref(false)
-
-onMounted(async () => {
-
-/*  loading.value = true
-  try {
-    const wuid = useGuestUser().value
-    await cartStore.fetchCart(wuid)
-  }finally{
-    loading.value = false
-  }*/
-})
-
 </script>
 
 <template>
   <div class="cart__content">
-<!--    <div class="spinner-container" v-if="loading">
+    <!--
+      <div class="spinner-container" v-if="loading">
       <div class="spinner"></div>
-    </div>-->
+      </div>
+    -->
+
     <ul class="cart-items">
-      <li v-for="(cartItem, index) in cartStore.cart.items" :key="cartItem.id">
-        <CartItemProduct v-if="cartItem.type === 0 && getProductType(cartItem.product) === ProductType.Simple" :cartItem="cartItem"  />
-        <CartItemPack v-if="cartItem.type === 3 || getProductType(cartItem.product) === ProductType.Composite" :cartItem="cartItem" />
+      <li
+        v-for="cartItem in cartStore.cart.items"
+        :key="cartItem.id"
+      >
+        <CartItemProduct
+          v-if="cartItem.type === CartItemType.Product && getProductType(cartItem.product) === ProductType.Simple"
+          :cart-item="cartItem"
+        />
+        <CartItemPack
+          v-if="cartItem.type === CartItemType.Pack || getProductType(cartItem.product) === ProductType.Composite"
+          :cart-item="cartItem"
+        />
+        <CartItemCoupon v-if="cartItem.type === CartItemType.Coupon" :cart-item="cartItem"/>
 
-
-        <div class="spinner-container" v-if="cartItem.loading">
-          <div class="spinner"></div>
+        <div
+          v-if="cartItem.loading"
+          class="spinner-container"
+        >
+          <div class="spinner" />
         </div>
       </li>
-
     </ul>
     <ul />
     <ul class="insurances-list" />
@@ -51,7 +58,6 @@ onMounted(async () => {
 </template>
 
 <style  lang="scss">
-
 #shop-cart .cart-product .cart-product__info .cart-product__name {
   display: block;
   font-size: 14px;
@@ -354,5 +360,4 @@ input::-webkit-inner-spin-button {
   justify-content: center;
   padding: 0 6px;
 }
-
 </style>
