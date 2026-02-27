@@ -11,7 +11,6 @@ useHead({
     <VMain>
       <slot />
     </VMain>
-    <WhatsAppFab />
   </VApp>
 </template>
 

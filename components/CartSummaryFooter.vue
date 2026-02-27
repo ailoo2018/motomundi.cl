@@ -11,6 +11,8 @@ const props = defineProps({
   },
 })
 
+const cartStore = useCartStore()
+
 const emit = defineEmits(['update:modelValue'])
 
 watch(props, newValue => {
@@ -88,7 +90,7 @@ const { cart } = inject('checkoutService')
       <div class="cart-summary__info">
         <div class="cart-summary__amount">
           <span class="cart-summary__total">Total: </span>
-          <strong>{{formatMoney(cart.total)}}  </strong>
+          <strong>{{formatMoney(cartStore.total)}}  </strong>
           <span
             v-if="checkoutInfo.discount > 0"
             class="cart-summary__old-amount"

@@ -60,6 +60,8 @@ export const prefixWithPlus = value => value > 0 ? `+${value}` : value
 
 
 export const formatMoney = (number, currency, fmtzero) => {
+  if(!number)
+    return ""
   if (number === 0 && !fmtzero)
     return ""
 

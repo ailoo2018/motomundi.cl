@@ -2,11 +2,47 @@ import { defineStore } from 'pinia'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
+    coupon: null,
     cart: { wuid: null, items: [] },
     loading: false,
+    isApplyingCoupon: false,
   }),
+  getters: {
+    points: state => state.total * .02,
+    items: state => state.items,
+    subtotal: state => state.cart.items.reduce((acc, item) => acc + (item.price * item.quantity)/1.19, 0),
+    total: state => {
+      let discount = state.coupon?.discount || 0
 
+      return (state.cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0) ) - discount || 0
+    },
+    iva: state =>{
+      return (state.total - state.subtotal) || 0
+    },
+  },
   actions: {
+
+    async onCartModified(){
+      await this.reapplyCoupon()
+    },
+
+    async reapplyCoupon() {
+      if (!this.coupon) return
+
+      try {
+        this.isApplyingCoupon = true
+
+        console.log("reapply: " + this.coupon.name)
+        await this.addCoupon(this.coupon.name)
+      } catch (e) {
+        // If the cart no longer meets coupon requirements, clear it
+
+        this.coupon = null
+      }finally{
+        this.isApplyingCoupon = false
+      }
+    },
+
     async findCart(id){
       this.loading = true
       try {
@@ -23,6 +59,26 @@ export const useCartStore = defineStore('cart', {
 
     },
 
+
+    async addCoupon(code) {
+      this.loading = true
+      try {
+        const data = await $fetch('/api/checkout/promocode', {
+          credentials: 'include',
+          method: 'POST',
+          body: {
+            code: code,
+          },
+        })
+
+        this.coupon = data.coupon
+      }finally {
+        this.loading = false
+      }
+
+
+    },
+
     async fetchCart(wuid) {
       this.loading = true
       try {
@@ -31,6 +87,8 @@ export const useCartStore = defineStore('cart', {
         this.cart = data
         this.cart.wuid = wuid
         this.cart.items.forEach(i => i.loading = false)
+
+
       } finally {
         this.loading = false
       }
@@ -68,7 +126,7 @@ export const useCartStore = defineStore('cart', {
       )
 
       await this.fetchCart(resAdd.wuid)
-
+      await this.onCartModified()
     },
 
     async removeItem(cartItem) {
@@ -80,9 +138,8 @@ export const useCartStore = defineStore('cart', {
           query: { wuid: this.cart.wuid, itemId: cartItem.id, type: cartItem.type },
         })
 
-        console.log("returned cart", cart)
-
         this.cart = cart
+        await this.onCartModified()
       } catch (e) {
         console.error(e)
       } finally {
@@ -98,6 +155,7 @@ export const useCartStore = defineStore('cart', {
       })
 
       this.cart = data
+      this.coupon = null
 
     },
 
@@ -119,12 +177,8 @@ export const useCartStore = defineStore('cart', {
         })
 
 
-        // 3. Optional: refresh cart to get updated totals/discounts
+        await this.onCartModified()
 
-        /*
-                const updatedCart = await $fetch('/api/cart/', { query: { wuid } })
-                this.cart = updatedCart
-        */
 
       } catch (error) {
         // 4. Rollback if API fails

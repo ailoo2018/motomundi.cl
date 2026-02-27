@@ -288,6 +288,7 @@ const pay = async (mercadoPagoApiData = null) => {
 
     var rq = {
       "wuid": wuid,
+      "coupon": cartStore.coupon || null,
       "addresses": {
         "selectedShipping": shippingInfo.address,
         "askForInvoice": paymentInfo.billingAddress && paymentInfo.billingAddress.rut && paymentInfo.billingAddress.rut.length > 0,
@@ -320,7 +321,7 @@ const pay = async (mercadoPagoApiData = null) => {
 
         console.log('Error data:', errorData)
         if(errorData)
-          alert("Error " + errorData.message )
+          alert("Error " + errorData.data?.message ||errorData.message )
       },
     })
 

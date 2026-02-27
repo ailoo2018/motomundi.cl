@@ -1,91 +1,44 @@
 <script setup>
 import { formatMoney } from "~/@core/utils/formatters"
-import { sleep } from "~/@core/utils/helpers.js"
 
-const props = defineProps({
-  couponDiscount: {
-    type: Number,
-    required: true,
-  },
-  modelValue: {
-    type: Object,
-    required: true,
-  },
-})
 
-//const couponDiscount = ref(0)
-const config = useRuntimeConfig()
 const code = ref('')
 const error = ref('')
 const loading = ref(false)
 const coupon = ref(null)
 
-// const emit = defineEmits(['addCoupon'])
-
+const cartStore = useCartStore()
 
 const checkoutService = inject('checkoutService')
 const { couponDiscount } = checkoutService
 
-if(props.modelValue){
-  coupon.value = props.modelValue
-}
-
-
-watch(props,  props => {
-//  couponDiscount.value = props.couponDiscount;
-  coupon.value = props.modelValue
-}, { deep: true })
 
 const handleSendCode = async () => {
   error.value = ""
-  loading.value = true
   try {
-    const  data  = await $fetch( '/api/checkout/promocode', {
-      credentials: 'include',
-      method: 'POST',
-      body: {
-        code: code.value,
-      },
-    })
 
+    await cartStore.addCoupon(code.value)
 
-    console.log("Result AddCoupon", data)
-
-    if (data.error) {
-      error.value = data.error
-      
-      return
-    }
-
-    coupon.value = {
-      code: data.coupon.name,
-      discountAmount: data.discount,
-    }
 
     code.value = ''
-    await checkoutService.couponAdded(coupon)
+
+    // await checkoutService.couponAdded(coupon)
   }catch(e){
     error.value = e.data?.message || e.message
-  }
-  finally {
-    loading.value = false
   }
 
 }
 
-const handleRemoveCoupon = async () => {
+const handleRemoveCoupon = async (coupon) => {
 
-  if(!coupon.value){
-    return
-  }
+  cartStore.removeCoupon()
 
   const  data  = await $fetch('/api/checkout/promocode?code=' + coupon.value.id, {
     credentials: 'include',
     method: 'DELETE',
   })
 
-  coupon.value = null
-  await checkoutService.couponAdded(null)
+
 }
 </script>
 
@@ -108,7 +61,7 @@ const handleRemoveCoupon = async () => {
             class="flex-grow-1"
           />
           <VBtn
-            :loading="loading"
+            :loading="cartStore.loading"
             rounded="0"
             color="primary"
             @click="handleSendCode"
@@ -120,7 +73,6 @@ const handleRemoveCoupon = async () => {
           <label
             class="promo-code__cart-label"
             for="promo-code__cart-summary"
-
           >Código promocional o tarjeta regalo</label>
         </div>
       </form>
@@ -131,21 +83,21 @@ const handleRemoveCoupon = async () => {
     </div>
 
     <article
-      v-if="coupon"
+      v-if="cartStore.coupon"
       class="applied-promo-code"
     >
       <div class="applied-promo-code__section">
         <div class="applied-promo-code__section--left">
           <div class="applied-promo-code__title">
-            <span>PROMO CODE</span>
+            <span>CÓDIGO PROMO</span>
           </div>
-          <div class="applied-promo-code__code">
-            {{ coupon?.code }}
+          <div class="applied-promo-code__code font-weight-bold">
+            {{ cartStore.coupon?.name }}
           </div>
         </div>
         <div class="applied-promo-code__section--right">
-          <div>
-            {{ formatMoney( couponDiscount ) }}
+          <div v-if="cartStore.coupon" style="color: #f44a4a" class="font-weight-bold">
+            ({{formatMoney(cartStore.coupon.discount)}})
           </div>
           <button
             type="button"

@@ -1,11 +1,7 @@
 <script setup>
-const props = defineProps({
-  cart: {
-    type: Object,
-  },
-})
 
 const cartStore = useCartStore()
+const cart = cartStore.cart
 
 const checkout = async cart => {
   await navigateTo('/checkout')
@@ -37,6 +33,16 @@ const itemsTotal = computed(() => {
   return total
 })
 
+const total = computed(() => {
+  let total = 0
+  for(var item of cartStore.cart.items){
+    total = total + (item.quantity*item.price)
+  }
+
+  return total
+})
+
+
 const getTotalPoints = () => {
   return 0
 }
@@ -44,13 +50,14 @@ const getTotalPoints = () => {
 
 <template>
   <aside class="cart__summary">
+
     <div class="cart-summary collapsed show-free-shipping">
       <div
         id="cart-summary__content"
         class="cart-summary__content"
       >
         <div class="cart-summary__content-body">
-          <h2>Resumen de pedido</h2>
+          <h2>Resumen de pedido  aa</h2>
           <div class="free-shipping-indicator free no-animated">
             <p
               v-if="cart.shipping?.cost == 0"
@@ -106,7 +113,7 @@ const getTotalPoints = () => {
             </div>
             <div class="totals__item totals__item--total">
               <span class="item__label">Total</span>
-              <span class="item__price"><span id="cart-total">{{ formatMoney( cart.total ) }}</span>
+              <span class="item__price"><span id="cart-total">{{ formatMoney( total ) }}</span>
                 <span
                   v-if="cart.oldPrice > cart.total"
                   class="totals__item--old-total"

@@ -9,6 +9,16 @@ const props = defineProps({
 const cartStore = useCartStore()
 const wuid = useGuestUser().value // Access your guest ID
 
+const updateQuantity = (newVal: number) => {
+  cartStore.updateQuantity(wuid, props.cartItem.id, newVal)
+}
+
+watch(() => props.cartItem.quantity, (newQty) => {
+  if (newQty >= 1) {
+    updateQuantity(newQty)
+  }
+})
+
 const increment = () => {
   cartStore.updateQuantity(wuid, props.cartItem.id, props.cartItem.quantity + 1)
 }

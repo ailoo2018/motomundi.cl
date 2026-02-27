@@ -7,9 +7,8 @@ import Shipping from '~/components/Shipping.vue'
 import Payment from '~/components/Payment.vue'
 import CartSummary from "~/components/CartSummary.vue"
 import Empty from "~/components/Empty.vue"
-import { useCartStore } from "@/stores/cart.js"
-import { useGuestUser } from "@/composables/useGuestUser.js"
-import { getHeader } from "h3"
+import { useCartStore } from "@/stores/cart"
+import { useGuestUser } from "@/composables/useGuestUser"
 
 useHead({
   link: [
@@ -211,24 +210,6 @@ provide('checkoutService', {
     console.log("setShippingMethod", shipMethod)
   },
 
-  setCart: c => {
-    console.log("CheckoutServcice:setCart", c)
-
-    cart.value = c
-    isCartEmpty.value = c.items.length === 0
-    coupon.value = c.coupon
-    couponDiscount.value = c.couponDiscount
-    checkoutInfo.value.total = c.total
-    checkoutInfo.value.oldPrice = c.oldPrice
-    checkoutInfo.value.discount = c.discount
-
-    console.log("CheckoutServcice:couponDiscount", couponDiscount)
-
-  },
-
-  couponAdded: async coupon => {
-    cartSummary.value.getCart()
-  },
   attach: observer => {
     observers.push(observer)
   },

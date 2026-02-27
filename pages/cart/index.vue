@@ -15,17 +15,6 @@ const cartStore = useCartStore()
 const wuid = useGuestUser().value
 const hasFetched = ref(false)
 
-
-const getProductType = product => {
-  if(!product)
-    return -1
-  if(!product.type)
-    return ProductType.Simple
-  
-  return product.type
-}
-
-
 if(wuid && (!cartStore.cart || !cartStore.cart.wuid) ){
   await cartStore.fetchCart(wuid)
   hasFetched.value = true
@@ -33,16 +22,6 @@ if(wuid && (!cartStore.cart || !cartStore.cart.wuid) ){
 {
   hasFetched.value = true
 }
-
-// Fetch once on mount
-/*onMounted(async () => {
-  try {
-
-    await cartStore.fetchCart(wuid)
-  }finally{
-    hasFetched.value = true
-  }
-})*/
 </script>
 
 <template>
@@ -70,7 +49,7 @@ if(wuid && (!cartStore.cart || !cartStore.cart.wuid) ){
 
         <CartSummary
           v-if="!cartStore.loading && cartStore.cart"
-          :cart="cartStore.cart"
+
         />
 
       </div>

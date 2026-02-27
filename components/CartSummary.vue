@@ -84,18 +84,6 @@ const decrease = async item => {
 
 }
 
-const removeItem = async item => {
-  // call rest
-  cart.value.items = cart.value.items.filter(it => {
-    return it.id !== item.id
-  })
-  item.quantity = 0
-  await updateQuanity(item)
-  console.log("removed item")
-
-  if (cart.value.items.length === 0)
-    emit('cartEmpty', true)
-}
 
 const quantityChanged = async (item, qty) => {
   console.log("quantityChanged", item)
@@ -109,23 +97,24 @@ const quantityChanged = async (item, qty) => {
 const cartStore = useCartStore()
 const wuid = useGuestUser().value
 
-onMounted(async () => {
-  updateLoading(true)
 
-  await cartStore.fetchCart(wuid)
-  cart.value = cartStore.cart
+const itemsTotal = computed(() => {
+  let total = 0
+  for(var item of cartStore.cart.items){
+    total = total + (item.quantity*item.price)
+  }
 
-  updateLoading(false)
-
+  return total
 })
 
-const handleNextStep = async () => {
-  emit("nextStep")
-}
+const total = computed(() => {
+  let total = 0
+  for(var item of cartStore.cart.items){
+    total = total + (item.quantity*item.price)
+  }
 
-const getCart = async () => {}
-
-defineExpose({ getCart })
+  return total
+})
 </script>
 
 <template>
@@ -168,11 +157,11 @@ defineExpose({ getCart })
             <div class="cart-summary__totals">
               <div class="totals__item">
                 <span class="item__label">Subtotal</span>
-                <span class="item__price">{{ formatMoney(cart.netTotal) }}</span>
+                <span class="item__price">{{ formatMoney(cartStore.subtotal) }}</span>
               </div>
               <div class="totals__item">
                 <span class="item__label">Impuestos (I.V.A.)</span>
-                <span class="item__price">{{ formatMoney(cart.iva) }}</span>
+                <span class="item__price">{{ formatMoney(cartStore.iva) }}</span>
               </div>
               <div class="totals__item">
                 <span class="item__label">Envío</span>
@@ -180,17 +169,30 @@ defineExpose({ getCart })
                   cart.shipping && cart.shipping.cost > 0 ? formatMoney(cart.shipping.cost) : 'Gratis'
                 }} </span>
               </div>
+              <div v-if="cartStore.coupon" class="totals__item " >
+                <span class="item__label">Código Promo<VChip size="sm" class="ml-2 px-2 py-1 font-weight-medium" style="color: #f44a4a">{{cartStore.coupon.name}}</VChip></span>
+                <span class="item__price">
+
+                  <span v-if="!cartStore.isApplyingCoupon" id="cart-total" style="color: #f44a4a">
+                    ({{ formatMoney(cartStore.coupon.discount) }})
+                  </span>
+                  <span v-else>
+                    <VProgressCircular size="20" width="2" indeterminate color="primary"/>
+
+                  </span>
+                </span>
+              </div>
               <div class="totals__item totals__item--total">
                 <span class="item__label">Total</span>
                 <span class="item__price">
-                  <span id="cart-total">{{ formatMoney(cart.total) }}</span>
+                  <span id="cart-total">{{ formatMoney(cartStore.total) }}</span>
                 </span>
               </div>
             </div>
             <div class="motocoins-claim cart-summary__motocoins">
               <VIcon class="tabler-coin-monero-filled" color="primary"></VIcon>
               <div class="motocoins-claim__info">
-                <span class="motocoins-claim__amount">Acumula <strong>{{ cart.points }} Mundipesos </strong> con esta compra.</span>
+                <span class="motocoins-claim__amount">Acumula <strong>{{ formatMoney( cartStore.points ) }} Mundipesos </strong> con esta compra.</span>
               </div>
             </div>
           </VCardText>
@@ -198,11 +200,7 @@ defineExpose({ getCart })
 
         <VCard class="mt-4 mobile-plain-card">
           <VCardText>
-            <Coupon
-              v-model="coupon"
-
-              :coupon-discount="couponDiscount"
-            />
+            <Coupon />
           </VCardText>
         </VCard>
 

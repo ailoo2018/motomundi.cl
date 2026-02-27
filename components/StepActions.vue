@@ -56,7 +56,9 @@ const prev = () => {
       </VBtn>
       <VBtn
         type="submit"
-        class="actions__continue"
+        class="actions__continue "
+        :class="{ 'w-100' : currentStep === 1 }"
+        style="min-width:80%"
         rounded="0"
         color="#000"
         :disabled="loading"

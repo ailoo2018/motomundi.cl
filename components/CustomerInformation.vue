@@ -253,41 +253,47 @@ const handlePhoneInput = event => {
       </div>
 
 
+      <VCard
+        :loading="isLoading"
+        elevation="0"
+      >
+        <VCardText class="px-1">
+          <div class="data__contact-details">
+            <h2>Información de contacto</h2>
+            <p>Usaremos estos datos para avisarte sobre el estado del pedido</p>
 
-      <div class="data__contact-details">
-        <h2>Información de contacto</h2>
-        <p>Usaremos estos datos para avisarte sobre el estado del pedido</p>
 
-
-        <div class="form-fieldset">
-          <div class="form-item half-width">
-            <div class="input__group">
-              <VTextField
-                v-model="contactEmail"
-                label="Email *"
-                variant="solo"
-                :disabled="disableEmail"
-                class="custom-text-field"
-                :rules="reqRules"
-                required
-              />
+            <div class="form-fieldset">
+              <div class="form-item half-width">
+                <div class="input__group">
+                  <VTextField
+                    v-model="contactEmail"
+                    label="Email *"
+                    variant="solo"
+                    :disabled="disableEmail"
+                    class="custom-text-field"
+                    :rules="reqRules"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-item half-width">
+                <div class="input__group">
+                  <VTextField
+                    v-model="contactPhone"
+                    label="Teléfono Movil *"
+                    required
+                    variant="solo"
+                    :rules="reqPhoneRules"
+                    class="custom-text-field"
+                    @input="handlePhoneInput"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-item half-width">
-            <div class="input__group">
-              <VTextField
-                v-model="contactPhone"
-                label="Teléfono Movil *"
-                required
-                variant="solo"
-                :rules="reqPhoneRules"
-                class="custom-text-field"
-                @input="handlePhoneInput"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+        </VCardText>
+      </VCard>
 
 
       <div class="data__personal-details">
@@ -295,11 +301,13 @@ const handlePhoneInput = event => {
           :loading="isLoading"
           elevation="0"
         >
-          <h2>Tus datos</h2>
-          <AddressForm
-            ref="addressForm"
-            v-model="address"
-          />
+          <VCardText class="px-1">
+            <h2>Tus datos</h2>
+            <AddressForm
+              ref="addressForm"
+              v-model="address"
+            />
+          </VCardText>
         </VCard>
       </div>
     </div>
