@@ -7,6 +7,7 @@ const isSearchOpen = defineModel({ type: Boolean, default: false })
 
 const sword = ref()
 const currentQuery = ref([])
+const total = ref(0)
 const loading = ref(false)
 const filters = ref({})
 const products = ref([]) // Changed from a plain array to a ref
@@ -300,7 +301,7 @@ const search = async (isNextPage = false) => {
         class="search__results-summary"
       >
         <p>
-          <strong>{{ total }}</strong> resultados {{ loading }}
+          <strong>{{total}}</strong> resultados {{ loading }}
         </p>
         <a @click="toggleSearchFilter">Filtrar
           <svg
