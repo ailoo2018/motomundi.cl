@@ -178,19 +178,18 @@ onMounted(() => {
                 </VCol>
               </VRow>
             </div>
-            <div class="w-100 form-actions justify-center mt-4">
+            <div class="w-100 d-flex form-actions justify-center mt-4">
               <VBtn
                 id="login-button-20"
                 type="submit"
-
-                class="w-lg-50 w-sm-100 rounded-0 mt-1"
+                class="w-100 w-lg-50 w-xl-50 rounded-0 mt-1"
                 color="#41a334"
                 :loading="loginLoading"
               >
                 Entrar
               </VBtn>
             </div>
-            <div class="login-form__links">
+            <div class="mt-3 login-form__links">
               <a
                 class="link-forgot-password"
                 @click="showForgotPassword = true"

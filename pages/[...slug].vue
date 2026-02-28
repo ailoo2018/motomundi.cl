@@ -26,6 +26,8 @@ console.log("!!!!chabna!!!!!!!!" + path.includes('sitemap'))
 
 if (path.includes('sitemap') || path.includes('__sitemap__')) {
   throw createError({ statusCode: 404 })
+}else if(path.startsWith("/api")){
+  throw createError({ statusCode: 404 })
 }
 else if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
   // /Payment/QuickCheckout.rails?documentId=27759764&amount=249900&documentType=INVOICE

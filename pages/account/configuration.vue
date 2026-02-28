@@ -45,6 +45,7 @@ const {
   handleSave,
   handleCancel,
   discardChanges,
+  error,
 } = useProfileForm()
 
 watch(() => isDirty.value, () => {
@@ -271,7 +272,6 @@ const genderOptions = [
           size="large"
           :loading="saving"
           :disabled="!isDirty || saving"
-
           :title="isDirty ? 'Guardar cambios (Ctrl+S)' : 'No hay cambios'"
         >
           <template #prepend>
@@ -372,7 +372,7 @@ const genderOptions = [
 
     <!-- Error snackbar -->
     <VSnackbar
-      v-model="showErrorSnackbar"
+      v-model="error"
       color="error"
       location="bottom right"
       :timeout="5000"
@@ -380,7 +380,7 @@ const genderOptions = [
     >
       <div class="d-flex align-center gap-2">
         <IconAlertTriangle :size="20" />
-        <span><strong>Error al guardar.</strong> Intenta nuevamente en unos segundos.</span>
+        <span><strong>Error: </strong> {{error}}</span>
       </div>
     </VSnackbar>
   </VContainer>

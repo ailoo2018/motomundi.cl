@@ -50,8 +50,6 @@ export function validateRidingStyles(styles: string[]): true | string {
   return styles.length ? true : 'Selecciona al menos un estilo de conducción'
 }
 
-// ─── Password helpers ────────────────────────────────────────────────────────
-
 export interface PasswordStrength { score: number; label: string; color: string }
 
 export function getPasswordStrength(password: string): PasswordStrength {
@@ -99,6 +97,7 @@ export function useProfileForm() {
   const showCancelDialog            = ref(false)
   const showDraftBanner             = ref(false)
   const showSuccessPasswordSnackbar = ref(false)
+  const error = ref()
 
   // ── Form data ─────────────────────────────────────────────────────────────
   // Always start empty — syncFormFromStore() immediately populates values.
@@ -211,18 +210,41 @@ export function useProfileForm() {
 
   // ── Save ──────────────────────────────────────────────────────────────────
   const handleSave = async () => {
-    const { valid } = await profileForm.value.validate()
-    if (!valid) return
-    if (validateRidingStyles(form.ridingStyles) !== true) return
+    try {
+      const validRs = await profileForm.value.validate()
+      if (!validRs.valid) {
+        const firstErrorId = validRs.errors[0]?.id
+        const el = document.getElementById(firstErrorId)
+
+        if (el) {
+          el.scrollIntoView({behavior: 'smooth', block: 'center'})
+          el.focus()
+        }
+
+        error.value = "Error de validación: " + validRs.errors[0]?.errorMessages
+        showErrorSnackbar.value = true
+        return
+      }
+    }catch(e){
+
+    }
+ //   if (validateRidingStyles(form.ridingStyles) !== true) return
 
     try {
       await store.saveProfile({ ...form })
+
+      if(store.saveError){
+        throw new Error(store.saveError)
+      }
+
       store.clearDraft()
       isDirty.value = false
       // Re-snapshot after successful save so the new values become the baseline
       original = JSON.stringify({ ...form })
       showSuccessSnackbar.value = true
-    } catch {
+    } catch (e) {
+      error.value =  e.data?.message || e.message
+
       // store.saveError is already set by the store action
       showErrorSnackbar.value = true
     }
@@ -359,5 +381,7 @@ export function useProfileForm() {
     handleCancel,
     discardChanges,
     handlePasswordChange,
+
+    error
   }
 }

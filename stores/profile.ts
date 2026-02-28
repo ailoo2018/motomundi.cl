@@ -126,6 +126,8 @@ export const useProfileStore = defineStore('profile', {
           method: 'GET',
         })
 
+
+
         this.$patch({
           firstName:    data.firstName    ?? '',
           lastName:     data.lastName     ?? '',
@@ -138,6 +140,7 @@ export const useProfileStore = defineStore('profile', {
       } catch (err: any) {
         // Store the error message so the UI can display it.
         // We intentionally do NOT rethrow — the component decides how to react.
+        alert("Error: " + err?.data?.message ?? err?.message ?? 'Error al cargar el perfil')
         this.fetchError = err?.data?.message ?? err?.message ?? 'Error al cargar el perfil'
       } finally {
         this.loading = false
@@ -160,6 +163,7 @@ export const useProfileStore = defineStore('profile', {
           method: 'POST',
           body:   data,
         })
+
 
         // Only patch local state after a confirmed server success
         this.$patch(data)
