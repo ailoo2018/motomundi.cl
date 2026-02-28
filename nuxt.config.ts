@@ -2,10 +2,13 @@
 import { fileURLToPath } from 'node:url'
 import vuetify from 'vite-plugin-vuetify'
 import svgLoader from 'vite-svg-loader'
+import LRU from 'lru-cache'
+
+const cache = new LRU({ max: 500, ttl: 1000 * 300 })
 
 // nuxt.config.ts
 const createCachedRoute = tag => ({
-  swr: 3600,
+  swr: (60*60) * 5, // five hours
   cache: {
     tags: [tag],
     varies: ['Accept-Language'],
@@ -257,6 +260,34 @@ export default defineNuxtConfig({
     'nuxt3-winston-log',
     'nuxt-ssr-cache',
   ],
+
+  cache: {
+    useHostPrefix: false,
+    pages: [/^\/products\/detail\/.*/],
+    store: {
+      get(key) {
+        const val = cache.get(key)
+        console.log(`[CACHE] ${val ? '✅ HIT' : '❌ MISS'} → ${key}`)
+        return val
+      },
+      set(key, val, ttl) {
+        console.log(`[CACHE] 💾 SET → ${key} (ttl: ${ttl}s)`)
+        cache.set(key, val, { ttl: ttl * 1000 })
+      },
+      del(key) {
+        console.log(`[CACHE] 🗑️ DEL → ${key}`)
+        cache.delete(key)
+      },
+    },
+/*
+    store: {
+      type: 'memory',
+      max: 500,
+      ttl: 60 * 10, // seconds * minutes
+    },
+*/
+  },
+
   nuxt3WinstonLog: {
     infoLogPath: './logs',
     infoLogName: 'info.log',

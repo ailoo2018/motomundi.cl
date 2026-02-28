@@ -195,6 +195,8 @@ onMounted(() => {
     window.dataLayer.push(gprod)
   }
 })
+
+
 </script>
 
 <template>
