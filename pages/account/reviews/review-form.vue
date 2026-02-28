@@ -1,23 +1,17 @@
 <script setup lang="ts">
-import {extractYoutubeId} from "@core/utils/formatters";
+import { extractYoutubeId } from "@core/utils/formatters";
+import {IconAlertTriangle} from "@tabler/icons-vue";
 
 const props = defineProps({
-  product: {
-    type: Object,
-    default: () => null,
-  },
-  invoiceId: {
-    type: Number,
-    default: () => 0,
-  },
-  productItemId: {
-    type: Number,
-    default: () => null
-  },
+  product: { type: Object, default: () => null },
+  invoiceId: { type: Number, default: 0 },
+  productItemId: { type: Number, default: () => null },
 })
 
-const emit = defineEmits(["on-cancel"])
+const emit = defineEmits(["on-cancel", "on-rated"])
 
+// Form States
+const refForm = ref() // Reference to VForm
 const title = ref('')
 const opinion = ref('')
 const youtubeUrl = ref('')
@@ -26,22 +20,26 @@ const rating = ref(0)
 const images = ref([])
 const isSubmitting = ref(false)
 const youtubeThumbnail = ref('')
+const error = ref()
+const showErrorSnackbar = ref(false)
+const isRatingError = ref(false)
 
-// --- YouTube thumbnail extraction ---
+// Validation Rules
+const rules = {
+  required: (v: any) => !!v || 'Este campo es obligatorio',
+  rating: (v: number) => v > 0 || 'Por favor, selecciona una puntuación',
+  terms: (v: boolean) => !!v || 'Debes aceptar los términos y condiciones',
+}
 
+// Watchers
 watch(youtubeUrl, (val) => {
   const id = extractYoutubeId(val)
   youtubeThumbnail.value = id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : ''
 })
 
-// --- Validation States ---
-const productReviewError = ref(false)
-const productFileReviewError = ref(false)
-const termsError = ref(false)
-const titleError = ref(false)
-const opinionError = ref(false)
-
-
+// Logic
+const ratingLabels = ['Muy malo', 'Muy malo', 'Malo', 'Malo', 'Regular', 'Regular', 'Bueno', 'Bueno', '¡Excelente!', '¡Excelente!']
+const fileInput = ref(null)
 
 const triggerUpload = () => {
   const el = fileInput.value?.$el || fileInput.value
@@ -49,30 +47,16 @@ const triggerUpload = () => {
   if (input) input.click()
 }
 
-const ratingLabels = ['Muy malo','Muy malo', 'Malo','Malo', 'Regular','Regular', 'Bueno','Bueno', '¡Excelente!', '¡Excelente!']
-
-const fileInput = ref(null)
-
-const onCancel = () => {
-  emit("on-cancel")
-}
-
 const handleFileChange = (event: any) => {
   const files = Array.from(event.target.files) as File[]
-  productFileReviewError.value = false
 
   files.forEach(file => {
-    // 2MB Limit Validation
     if (file.size > 2 * 1024 * 1024) {
-      productFileReviewError.value = true
+      alert("Archivo muy grande. Máximo 2MB.")
       return
     }
-
     if (images.value.length < 10) {
-      images.value.push({
-        file: file,
-        url: URL.createObjectURL(file),
-      })
+      images.value.push({ file, url: URL.createObjectURL(file) })
     }
   })
   event.target.value = ''
@@ -84,41 +68,46 @@ const removeImage = (index: number) => {
 }
 
 const sendProductReviews = async () => {
-  // Reset Errors
-  productReviewError.value = false
-  titleError.value = false
-  opinionError.value = false
-  termsError.value = false
+  // Execute Vuetify Validation
+  const { valid, errors } = await refForm.value.validate()
 
-  // Basic Validations
-  if (rating.value === 0) {
-    productReviewError.value = true
+  isRatingError.value = false
+  if(!(rating.value > 0)){
+    const el = document.getElementById("rating-label")
+
+    if (el) {
+      el.scrollIntoView({behavior: 'smooth', block: 'center'})
+      el.focus()
+    }
+
+    error.value = 'Por favor, selecciona una puntuación'
+    showErrorSnackbar.value = true
+    isRatingError.value = true
+    return;
+  }
+
+  if (!valid) {
+    const firstErrorId = errors[0]?.id
+    const el = document.getElementById(firstErrorId)
+
+    if (el) {
+      el.scrollIntoView({behavior: 'smooth', block: 'center'})
+      el.focus()
+    }
+
+    error.value = "Error de validación: " + errors[0]?.errorMessages
+    showErrorSnackbar.value = true
     return
   }
 
-  if (!title.value.trim()) {
-    titleError.value = true
-    return
-  }
 
-  if (!opinion.value.trim()) {
-    opinionError.value = true
-    return
-  }
-
-  if (!termsAccepted.value) {
-    termsError.value = true
-    return
-  }
+  if (!valid) return
 
   isSubmitting.value = true
 
   try {
-    // We use FormData for file uploads
     const formData = new FormData()
-
-    if(props.productItemId)
-      formData.append('productItemId', props.productItemId)
+    if (props.productItemId) formData.append('productItemId', props.productItemId)
     formData.append('productId', props.product.id)
     formData.append('invoiceId', props.invoiceId.toString())
     formData.append('rating', rating.value.toString())
@@ -126,381 +115,159 @@ const sendProductReviews = async () => {
     formData.append('comment', opinion.value)
     formData.append('videoUrl', youtubeUrl.value)
 
-    // Append images
-    images.value.forEach((img, index) => {
-      formData.append(`images`, img.file)
-    })
+    images.value.forEach((img) => formData.append(`images`, img.file))
 
-    const response = await $fetch('/api/reviews/add', {
-      method: 'POST',
-      body: formData,
-    })
+    await $fetch('/api/reviews/add', { method: 'POST', body: formData })
 
-    // Success Handling (e.g., redirect or show message)
-    navigateTo('/account/reviews-success')
+    emit("on-rated", { productId: props.product?.id, productItemId: props.productItemId })
+  //  navigateTo('/account/reviews-success')
   } catch (e) {
     console.error("Submission failed", e)
-    alert("Hubo un error al enviar tu reseña. Por favor intenta más tarde.")
   } finally {
     isSubmitting.value = false
   }
 }
-
-
 </script>
 
 <template>
   <div class="review-form">
-    <div class="form-divider" />
-
-    <VRow
-      v-if="productReviewError"
-      id="product-review-error"
+    <VForm
+      ref="refForm"
+      validate-on="submit"
+      @submit.prevent="sendProductReviews"
     >
-      <VCol>
-        <div class="warning callout">
-          <p><VIcon class="tabler-alert-square-rounded" size="md" />Por favor, puntúa algún producto haciendo click en las estrellas.</p>
-        </div>
-      </VCol>
-    </VRow>
-    <VRow
-      v-if="titleError"
-      id="title-error"
-    >
-      <VCol>
-        <div class="warning callout">
-          <p><VIcon class="tabler-alert-square-rounded" />Por favor, ingresa un título para tu review.</p>
-        </div>
-      </VCol>
-    </VRow>
-    <VRow
-      v-if="opinionError"
-      id="opinion-error"
-    >
-      <VCol>
-        <div class="warning callout">
-          <p><VIcon class="tabler-alert-square-rounded" />Por favor, ingresa tu opinión sobre el producto.</p>
-        </div>
-      </VCol>
-    </VRow>
-    <VRow
-      v-if="productFileReviewError"
-      id="product-review-error-size"
-      class="row ng-hide"
-    >
-      <VCol>
-        <div class="warning callout">
-          <p><VIcon class="tabler-alert-square-rounded" />Archivo muy grande El tamaño máximo permitido es de 2MB</p>
-        </div>
-      </VCol>
-    </VRow>
-    <VRow v-if="termsError" class="row">
-      <VCol cols="12">
-        <div class="warning callout">
-          <p><VIcon class="tabler-alert-square-rounded" />Debes aceptar los términos y condiciones para continuar.</p>
-        </div>
-      </VCol>
-    </VRow>
-
-
-    <!-- Star Rating -->
-    <div class="rating-section mb-4">
-      <label class="form-label">Tu puntuación</label>
-      <div class="d-flex">
+      <div class="rating-section mb-6">
+        <label id="rating-label" class="form-label d-block mb-1">Tu puntuación</label>
         <VRating
           v-model="rating"
+          :rules="[rules.rating]"
           half-increments
           color="primary"
           hover
         />
-        <span class="rating-label-text pt-1" v-if="rating"> {{ ratingLabels[rating * 2 - 1] }}</span>
+        <div v-if="!(rating > 0) && isRatingError" class="text-error text-caption mt-1">
+          {{ rules.rating(rating) }}
+        </div>
+        <span class="text-caption ms-2" v-if="rating > 0">
+          {{ ratingLabels[Math.round(rating * 2) - 1] }}
+      </span>
       </div>
-    </div>
 
-    <!-- Title -->
-    <div class="mb-4">
-      <label class="form-label">Título de tu reseña</label>
-      <input
+      <AppTextField
         v-model="title"
-        class="form-input"
-        placeholder="Resume tu experiencia en una frase..."
+        label="Título de tu reseña"
+        placeholder="Resume tu experiencia..."
+        persistent-placeholder
+        :rules="[rules.required]"
+        counter="80"
         maxlength="80"
-        :error="titleError"
-      >
-    </div>
-
-    <!-- Body -->
-    <div class="mb-5">
-      <label class="form-label">Tu reseña</label>
-      <textarea
-        v-model="opinion"
-        class="form-textarea"
-        placeholder="¿Qué te pareció el producto? ¿Lo recomendarías?"
-        rows="4"
-        :error="opinionError"
-        maxlength="600"
+        class="mb-4"
       />
-      <div class="char-count">
-        {{ (product.draftBody || '').length }}/600
-      </div>
-    </div>
 
-    <div class="video-input-div mb-5">
-      <label class="form-label" :for="`image-upload-${product.id}`">¿Te has animado a grabar un video? Déjanos el enlace a YouTube, Instagram o Tiktok aquí:</label>
+      <AppTextarea
+        v-model="opinion"
+        label="Tu reseña"
+        placeholder="¿Qué te pareció el producto?"
+        persistent-placeholder
+        :rules="[rules.required]"
+        counter="600"
+        maxlength="600"
+        rows="4"
+        class="mb-4"
+      />
 
       <AppTextField
         v-model="youtubeUrl"
-        id="video-input"
-        placeholder="https://www.youtube.com/watch?v=xxxxxxxxxx"
+        label="¿Video de YouTube/Instagram?"
+        placeholder="https://..."
         prepend-inner-icon="tabler-brand-youtube"
-        style="width:100%;"
+        class="mb-4"
       />
 
-      <!-- YouTube Thumbnail Preview -->
-      <div v-if="youtubeThumbnail" class="youtube-thumbnail-preview mt-3">
-        <div class="thumbnail-wrapper">
-          <img
-            :src="youtubeThumbnail"
-            alt="Vista previa del video"
-            class="thumbnail-img"
-          />
-          <div class="thumbnail-play-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48" width="68" height="48">
-              <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
-              <path d="M45 24 27 14v20" fill="#fff"/>
-            </svg>
-          </div>
-        </div>
-        <p class="thumbnail-caption">Vista previa del video</p>
-      </div>
-    </div>
-    <div class="form-group mb-5">
-
-      <label class="form-label" :for="`image-upload-${product.id}`">Añade tus imágenes a continuación</label>
-
-      <VFileInput
-        ref="fileInput"
-        class="image-upload d-none"
-        accept="image/x-png,image/gif,image/jpeg"
-        multiple
-        @change="handleFileChange"
-      />
-
-      <VRow>
-        <VCol
-          v-for="(image, index) in images"
-          :key="index"
-          cols="6"
-          sm="6"
-          md="3"
-
-        >
-          <a
-            class="delete-file"
-            @click="removeImage(index)"
-          >
-            <VIcon
-              class="tabler-x"
-              size="sm"
+      <div class="mb-6">
+        <label class="form-label">Imágenes (Máx 10)</label>
+        <VFileInput
+          ref="fileInput"
+          class="d-none"
+          accept="image/*"
+          multiple
+          @change="handleFileChange"
+        />
+        <VRow class="mt-2">
+          <VCol v-for="(img, i) in images" :key="i" cols="3" class="position-relative">
+            <VBtn
+              icon="tabler-x"
+              size="x-small"
+              color="error"
+              class="delete-btn"
+              @click="removeImage(i)"
             />
-          </a>
-
-          <div
-            class="review-file-upload"
-            :style="{ backgroundImage: `url(${image.url})` }"
-          />
-        </VCol>
-
-        <VCol
-          v-if="images.length < 10"
-          cols="6"
-          sm="6"
-          md="3"
-
-        >
-          <a
-            href="javascript:void(0);"
-            @click="triggerUpload"
-          >
-
-            <div class="review-file-upload">
-
-              <VRow justify="center" class="ma-0 h-100 file-plus d-flex  align-center">
-                <VIcon color="primary" size="60" class="tabler-photo-plus"></VIcon>
-              </VRow>
+            <VImg :src="img.url" cover aspect-ratio="1" class="rounded border" />
+          </VCol>
+          <VCol v-if="images.length < 10" cols="3">
+            <div class="upload-placeholder" @click="triggerUpload">
+              <VIcon icon="tabler-camera-plus" size="32" />
             </div>
-          </a>
-        </VCol>
-      </VRow>
-    </div>
+          </VCol>
+        </VRow>
+      </div>
 
-    <!-- Pros / Cons quick picks -->
-    <div class="quick-tags mb-5">
       <VCheckbox
         v-model="termsAccepted"
-        id="gdpr-legal-accept-products"
-        type="checkbox"
-        name="gdpr-legal-accept-products"
-        ng-model="termsAccepted.productReview"
+        :rules="[rules.terms]"
+        class="mb-6"
       >
         <template #label>
-          <p>
-            Autorizo a Motomundi SPA a publicar mis opiniones en su página web y cedo los derechos de las imágenes que adjunto a los únicos
-            fines de complementar mis comentarios
-            para ayudar a otros usuarios en su proceso de compra.
-            <a>Más información</a>
-          </p>
+          <span class="text-body-2">
+            Autorizo a Motomundi SPA a publicar mis opiniones y cedo derechos de imagen...
+          </span>
         </template>
       </VCheckbox>
-    </div>
-    <div class="d-none quick-tags mb-5">
-      <div class="tags-col">
-        <span class="tags-header pro">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="13"
-            height="13"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ><path
-            stroke="none"
-            d="M0 0h24v24H0z"
-            fill="none"
-          /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          Pros
-        </span>
-        <div class="tag-list">
-          <button
-            v-for="tag in proTags"
-            :key="tag"
-            class="tag-chip pro-chip"
-            :class="{ selected: (product.selectedProTags || []).includes(tag) }"
-            @click="toggleTag(product, 'selectedProTags', tag)"
-          >
-            {{ tag }}
-          </button>
-        </div>
-      </div>
-      <div class="tags-col">
-        <span class="tags-header con">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="13"
-            height="13"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ><path
-            stroke="none"
-            d="M0 0h24v24H0z"
-            fill="none"
-          /><path d="M5 12l14 0" /></svg>
-          Contras
-        </span>
-        <div class="tag-list">
-          <button
-            v-for="tag in conTags"
-            :key="tag"
-            class="tag-chip con-chip"
-            :class="{ selected: (product.selectedConTags || []).includes(tag) }"
-            @click="toggleTag(product, 'selectedConTags', tag)"
-          >
-            {{ tag }}
-          </button>
-        </div>
-      </div>
-    </div>
 
-    <div class="form-actions">
-      <VBtn
-        class="btn-cancel"
-        rounded="0"
-        color="secondary"
-        variant="outlined"
-        @click="onCancel"
-      >
-        Cancelar
-      </VBtn>
-      <VBtn
-        prepend-icon="tabler-send"
-        rounded="0"
-        :loading="isSubmitting"
-        @click="sendProductReviews"
-      >Publicar reseña</VBtn>
-
-    </div>
+      <div class="d-flex gap-4">
+        <VBtn variant="outlined" color="secondary" @click="emit('on-cancel')">
+          Cancelar
+        </VBtn>
+        <VBtn
+          type="submit"
+          color="primary"
+          :loading="isSubmitting"
+        >
+          Publicar reseña
+        </VBtn>
+      </div>
+    </VForm>
   </div>
+
+  <!-- Error snackbar -->
+  <VSnackbar
+    v-model="error"
+    color="error"
+    location="bottom right"
+    :timeout="5000"
+    rounded="lg"
+  >
+    <div class="d-flex align-center gap-2">
+      <IconAlertTriangle :size="20" />
+      <span><strong></strong> {{error}}</span>
+    </div>
+  </VSnackbar>
 </template>
 
 <style scoped>
-.file-plus img {
-  width: 65px
+.upload-placeholder {
+  border: 2px dashed #ddd;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px;
 }
-
-.delete-file {
+.delete-btn {
   position: absolute;
-  margin-top: -5px;
-  margin-left: 115px;
-  border: 1px solid #c74044;
-  background-color: #c74044;
-  color: #fff;
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
-  font-weight: 900;
-  text-align: center;
-  z-index: 60
-}
-
-
-/*
- .review-file-upload {
-  background-size: cover;
-  background-position: 50%;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid #bdbdbd;
-  height: 145px;
-  width: 145px;
-  text-align: center;
-  border-radius: 3px;
-  margin-bottom: 20px
-}
-*/
-
-
-.callout.warning {
-  background-color: #ffe8b8;
-  color: #7a5400;
-}
-.callout.warning {
-  background-color: #fff3d9;
-  color: #0a0a0a;
-}
-.callout {
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-}
-.callout {
-  border-radius: 3px;
-  text-align: center;
-}
-.callout {
-  position: relative;
-  margin: 0 0 1rem;
-  padding: 1rem;
-  border: 0;
-  border-radius: 0;
-  background-color: #fff;
-  color: #0a0a0a;
+  top: -5px;
+  right: -5px;
+  z-index: 10;
 }
 </style>

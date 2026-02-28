@@ -14,6 +14,7 @@ definePageMeta({
 const expandedId = ref(null)
 const hoverRating = ref(0)
 const snackbar = ref(false)
+const loading = ref(false)
 
 const ratingLabels = ['Muy malo', 'Malo', 'Regular', 'Bueno', '¡Excelente!']
 
@@ -47,6 +48,15 @@ const averageRating = computed(() => {
   
   return avg.toFixed(1)
 })
+
+const onRated = () => {
+  loading.value = true
+  try {
+    refresh()
+  }finally{
+    loading.value = false
+  }
+}
 
 // ─── Methods ──────────────────────────────────────────────────
 function toggleExpand(id) {
@@ -131,6 +141,10 @@ class="tabler-icon"
       </p>
     </div>
 
+
+
+
+
     <VContainer
       max-width="1100"
       class="px-2 pb-10"
@@ -153,8 +167,9 @@ class="tabler-icon"
         </div>
       </div>
 
+
       <!-- ─────────────────── PENDING REVIEWS ─────────────────── -->
-      <section class="mb-10">
+      <section  class="mb-10">
         <div class="section-header mb-5">
           <div class="section-badge pending-badge">
             <svg
@@ -186,6 +201,9 @@ class="tabler-icon"
           </p>
         </div>
 
+        <div v-if="loading" class="w-100 d-flex justify-center pa-10">
+          <VProgressCircular indeterminate color="primary" size="40"/>
+        </div>
         <div
           v-if="pendingProducts?.length === 0"
           class="empty-state"
@@ -209,7 +227,7 @@ class="tabler-icon"
         </div>
 
         <div
-          v-else
+          v-else-if="!loading"
           class="products-grid"
         >
           <div
@@ -306,6 +324,7 @@ stroke-linecap="round" stroke-linejoin="round"
                 :product="product.product"
                 :invoice-id="product.invoiceId"
                 :product-item-id="product.productItemId"
+                @on-rated="onRated"
                 @on-cancel="toggleExpand(product.id)" />
             </Transition>
           </div>
@@ -382,14 +401,38 @@ stroke-linecap="round" stroke-linejoin="round"
 
               </a>
 
-              <VChip size="xs">pubicado</VChip>
+
               <div class="reviewed-product-info">
+
                 <span class="product-category">{{ product.product.parentCategories[0].name }}</span>
                 <h3 class="reviewed-name">
                   {{ product.product.fullName }}
                 </h3>
                 <span class="order-num">Pedido #{{ product.invoiceNumber }}</span>
+
+
+                <div class="purchase-badge" style="position:relative">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ><path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  /><path d="M5 12l5 5l10 -10" /></svg>
+                  Comprado
+                </div>
+
+
               </div>
+
             </div>
 
             <div class="reviewed-content-side">
