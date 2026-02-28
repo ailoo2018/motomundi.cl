@@ -169,6 +169,7 @@ export const useProfileStore = defineStore('profile', {
         this.$patch(data)
       } catch (err: any) {
         this.saveError = err?.data?.message ?? err?.message ?? 'Error al guardar el perfil'
+        alert(this.saveError)
         throw err // re-throw so useProfileForm can show the snackbar
       } finally {
         this.saving = false
