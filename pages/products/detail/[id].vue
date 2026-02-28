@@ -266,7 +266,7 @@ onMounted(() => {
       <Packs :product="product" />
 
       <!-- product-description-container -->
-      <VRow class="row product-description-container mt-10">
+      <VRow class=" product-description-container mt-10">
         <VCol
           cols="12"
           md="7"
@@ -281,7 +281,7 @@ onMounted(() => {
           md="5"
         >
           <!-- blog -->
-          <RelatedBlog v-if="blogArticle" />
+          <RelatedBlog v-if="product.relatedBlogArticle" :article="product.relatedBlogArticle"/>
           <!-- /blog -->
           <DataSheet :product="product" />
         </VCol>
@@ -290,8 +290,9 @@ onMounted(() => {
       <!-- /product-description-container -->
 
 
-      <ProductRating :product="product" />
+      <!-- recommend -->
       <Recommend :product="product" />
+      <ProductRating :product="product" />
     </div>
   </article>
 

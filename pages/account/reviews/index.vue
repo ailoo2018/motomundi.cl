@@ -373,7 +373,7 @@ const deleteReview = async id => {
         </div>
 
         <div
-          v-if="reviewedProducts.length === 0"
+          v-if="reviewedProducts?.length === 0"
           class="empty-state"
         >
           <svg

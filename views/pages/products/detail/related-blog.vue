@@ -1,5 +1,10 @@
 <script setup lang="ts">
-
+const props = defineProps({
+  article: {
+    type: Object,
+    default: () => null,
+  },
+})
 </script>
 
 <template>
@@ -7,21 +12,21 @@
     <h2>Lee la review en nuestro blog</h2>
     <a aaahref="/$linkHelper.GetBlogEntryUrl($relatedBlogContent.title.ToString())">
       <div class="related-blog-post"><img
-        aasrc="${relatedBlogContent.previewImage}"
-        alt="${relatedBlogContent.title}"
-      >
+                                       :src="getBaseCDN() + article.previewImage"
+                                       alt="${relatedBlogContent.title}"
+                                     >
         <div class="related-blog-post__content">
-          <h3>$relatedBlogContent.title</h3>
-          <small>$relatedBlogContent.createDate.ToString("dd/MM/yy HH:mm") · <strong>Reviews y
-            pruebas</strong></small>
+          <h3>{{ article.title }}</h3>
+          <small>{{ article.createDate }} ·
+            <strong>Reviews y pruebas</strong></small>
           <p>
-            $relatedBlogContent.previewText
+            {{ article.previewText }}
           </p>
           <span>Lee la review completa &nbsp;
-                    <img
-                      src="data:image/svg+xml,%3csvg%20height='11'%20viewBox='0%200%206%2011'%20width='6'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='m98%208%205%205%205-5'%20fill='none'%20stroke='%23eb0012'%20stroke-linecap='round'%20stroke-linejoin='round'%20transform='matrix(0%20-1%201%200%20-7.5%20108.5)'/%3e%3c/svg%3e"
-                      alt="Angle icon"
-                    ></span>
+            <img
+              src="data:image/svg+xml,%3csvg%20height='11'%20viewBox='0%200%206%2011'%20width='6'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='m98%208%205%205%205-5'%20fill='none'%20stroke='%23eb0012'%20stroke-linecap='round'%20stroke-linejoin='round'%20transform='matrix(0%20-1%201%200%20-7.5%20108.5)'/%3e%3c/svg%3e"
+              alt="Angle icon"
+            ></span>
         </div>
       </div>
     </a>
@@ -29,7 +34,6 @@
 </template>
 
 <style scoped lang="scss">
-
 .related-blog-content {
   margin-bottom: 50px;
 }

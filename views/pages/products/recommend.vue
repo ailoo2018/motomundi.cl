@@ -29,8 +29,8 @@ products.value = rs
 </script>
 
 <template>
-  <div class="row">
-    <div class="col s12">
+  <div class="">
+    <div class="">
       <aside class="related algolia-recommended">
         <section
           class="product-list"
@@ -49,13 +49,7 @@ products.value = rs
               :product="prod"
             />
           </div>
-<!--
-          <div class="d-none product-list__view-more">
-            <button class="button button&#45;&#45;tiny">
-              <span>Ver más</span>
-            </button>
-          </div>
--->
+
         </section>
       </aside>
     </div>

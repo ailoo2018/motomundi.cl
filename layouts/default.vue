@@ -111,13 +111,7 @@ injectSkinClasses()
   }
 }
 
-@media (min-width: 960px) {
-  .v-container {
-    width: 90%;
-    min-width: 800px;
-    max-width: 1300px;
-  }
-}
+
 
 
 
