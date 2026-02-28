@@ -38,6 +38,7 @@ const reviewedProducts = computed( () => {
 
 const getVideoThumb = videoUrl => {
   const id = extractYoutubeId(videoUrl)
+  
   return `https://img.youtube.com/vi/${id}/hqdefault.jpg`
 }
 
@@ -100,6 +101,7 @@ const deleteReview = async id => {
   }  )
 
   await refresh()
+
   // data.value.reviewed = data.value.reviewed.filter(p => p.review.id !== id)
 }
 </script>
@@ -123,7 +125,7 @@ const deleteReview = async id => {
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-class="tabler-icon"
+            class="tabler-icon"
           >
             <path
               stroke="none"
@@ -169,7 +171,7 @@ class="tabler-icon"
 
 
       <!-- ─────────────────── PENDING REVIEWS ─────────────────── -->
-      <section  class="mb-10">
+      <section class="mb-10">
         <div class="section-header mb-5">
           <div class="section-badge pending-badge">
             <svg
@@ -201,8 +203,15 @@ class="tabler-icon"
           </p>
         </div>
 
-        <div v-if="loading" class="w-100 d-flex justify-center pa-10">
-          <VProgressCircular indeterminate color="primary" size="40"/>
+        <div
+          v-if="loading"
+          class="w-100 d-flex justify-center pa-10"
+        >
+          <VProgressCircular
+            indeterminate
+            color="primary"
+            size="40"
+          />
         </div>
         <div
           v-if="pendingProducts?.length === 0"
@@ -240,11 +249,11 @@ class="tabler-icon"
             <div class="card-top">
               <div class="product-img-wrap">
                 <a :href="getProductUrl(product.product)">
-                <img
-                  :src="getImageUrl(product.product.image, 300, getDomainId())"
-                  :alt="product.product.fullName"
-                  class="product-img"
-                >
+                  <img
+                    :src="getImageUrl(product.product.image, 300, getDomainId())"
+                    :alt="product.product.fullName"
+                    class="product-img"
+                  >
                 </a>
                 <div class="purchase-badge">
                   <svg
@@ -292,7 +301,8 @@ class="tabler-icon"
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2.5"
-stroke-linecap="round" stroke-linejoin="round"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 ><path
                   stroke="none"
                   d="M0 0h24v24H0z"
@@ -307,7 +317,8 @@ stroke-linecap="round" stroke-linejoin="round"
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2.5"
-stroke-linecap="round" stroke-linejoin="round"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 ><path
                   stroke="none"
                   d="M0 0h24v24H0z"
@@ -325,7 +336,8 @@ stroke-linecap="round" stroke-linejoin="round"
                 :invoice-id="product.invoiceId"
                 :product-item-id="product.productItemId"
                 @on-rated="onRated"
-                @on-cancel="toggleExpand(product.id)" />
+                @on-cancel="toggleExpand(product.id)"
+              />
             </Transition>
           </div>
         </div>
@@ -393,17 +405,16 @@ stroke-linecap="round" stroke-linejoin="round"
           >
             <div class="reviewed-product-side">
               <a :href="getProductUrl(product.product)">
-              <img
-                :src="getImageUrl(product.product.image, 300, getDomainId())"
-                :alt="product.product.fullName"
-                class="reviewed-img"
-              />
+                <img
+                  :src="getImageUrl(product.product.image, 300, getDomainId())"
+                  :alt="product.product.fullName"
+                  class="reviewed-img"
+                >
 
               </a>
 
 
               <div class="reviewed-product-info">
-
                 <span class="product-category">{{ product.product.parentCategories[0].name }}</span>
                 <h3 class="reviewed-name">
                   {{ product.product.fullName }}
@@ -411,7 +422,10 @@ stroke-linecap="round" stroke-linejoin="round"
                 <span class="order-num">Pedido #{{ product.invoiceNumber }}</span>
 
 
-                <div class="purchase-badge" style="position:relative">
+                <div
+                  class="purchase-badge"
+                  style="position:relative"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="12"
@@ -429,10 +443,7 @@ stroke-linecap="round" stroke-linejoin="round"
                   /><path d="M5 12l5 5l10 -10" /></svg>
                   Comprado
                 </div>
-
-
               </div>
-
             </div>
 
             <div class="reviewed-content-side">
@@ -467,34 +478,46 @@ stroke-linecap="round" stroke-linejoin="round"
               <h4 class="review-title">
                 {{ product.review?.title }}
               </h4>
-              <p class="review-body" >
+              <p class="review-body">
                 {{ product.review?.body }}
-
-
               </p>
               <div style="border-top: 1px solid #ccc;margin-top: 10px;padding-top: 15px;">
                 <div>
-                  <VCol v-if="product.review?.videoUrl" >
+                  <VCol v-if="product.review?.videoUrl">
                     <div class="thumbnail-wrapper">
                       <img
                         :src="getVideoThumb(product.review?.videoUrl)"
                         alt="Vista previa del video"
                         class="thumbnail-img"
-                      />
+                      >
                       <div class="thumbnail-play-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48" width="68" height="48">
-                          <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
-                          <path d="M45 24 27 14v20" fill="#fff"/>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 68 48"
+                          width="68"
+                          height="48"
+                        >
+                          <path
+                            d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z"
+                            fill="#f00"
+                          />
+                          <path
+                            d="M45 24 27 14v20"
+                            fill="#fff"
+                          />
                         </svg>
                       </div>
                     </div>
                   </VCol>
                 </div>
-                <div v-if="product.review?.configuration?.images" class="review-images v-row ml-1">
+                <div
+                  v-if="product.review?.configuration?.images"
+                  class="review-images v-row ml-1"
+                >
                   <VCol
                     v-for="(image, index) in product.review?.configuration?.images"
                     :key="index"
-                    cols="3"
+                    cols="6"
                     sm="6"
                     md="3"
                     class="mr-5"
@@ -504,10 +527,7 @@ stroke-linecap="round" stroke-linejoin="round"
                       :style="{ backgroundImage: `url(${getImageUrl(image.id, 300, getDomainId())})` }"
                     />
                   </VCol>
-
                 </div>
-
-
               </div>
               <div
                 v-if="product.review?.pros?.length || product.review?.cons?.length"
@@ -589,7 +609,7 @@ stroke-linecap="round" stroke-linejoin="round"
           stroke="currentColor"
           stroke-width="2.5"
           stroke-linecap="round"
-stroke-linejoin="round"
+          stroke-linejoin="round"
         ><path
           stroke="none"
           d="M0 0h24v24H0z"
@@ -602,7 +622,7 @@ stroke-linejoin="round"
 </template>
 
 
-<style >
+<style>
 /* ─── Base ─────────────────────────────────────────── */
 .account-reviews {
 /*  background: #F4F6F9;*/
@@ -1128,5 +1148,4 @@ stroke-linejoin="round"
   border-radius: 3px;
   margin-bottom: 20px
 }
-
 </style>

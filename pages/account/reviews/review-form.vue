@@ -184,6 +184,25 @@ const sendProductReviews = async () => {
         class="mb-4"
       />
 
+      <!-- YouTube Thumbnail Preview -->
+      <div v-if="youtubeThumbnail" class="youtube-thumbnail-preview mt-3 mb-3">
+        <div class="thumbnail-wrapper">
+          <img
+            :src="youtubeThumbnail"
+            alt="Vista previa del video"
+            class="thumbnail-img"
+          />
+          <div class="thumbnail-play-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48" width="68" height="48">
+              <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
+              <path d="M45 24 27 14v20" fill="#fff"/>
+            </svg>
+          </div>
+        </div>
+        <p class="thumbnail-caption">Vista previa del video</p>
+      </div>
+
+
       <div class="mb-6">
         <label class="form-label">Imágenes (Máx 10)</label>
         <VFileInput
@@ -194,7 +213,7 @@ const sendProductReviews = async () => {
           @change="handleFileChange"
         />
         <VRow class="mt-2">
-          <VCol v-for="(img, i) in images" :key="i" cols="3" class="position-relative">
+          <VCol cols="6" md="3" v-for="(img, i) in images" :key="i" class="position-relative">
             <VBtn
               icon="tabler-x"
               size="x-small"
@@ -204,7 +223,7 @@ const sendProductReviews = async () => {
             />
             <VImg :src="img.url" cover aspect-ratio="1" class="rounded border" />
           </VCol>
-          <VCol v-if="images.length < 10" cols="3">
+          <VCol v-if="images.length < 10" cols="6" md="3">
             <div class="upload-placeholder" @click="triggerUpload">
               <VIcon icon="tabler-camera-plus" size="32" />
             </div>
