@@ -21,15 +21,6 @@ const ua = process.server && event
   : (process.client ? navigator.userAgent : '')
 
 const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
-
-
-
-
-console.log("isMobile", isMobile)
-console.log("isTable", isTablet)
-console.log("isDesktop", isDesktop)
-
-
 useHead({
   bodyAttrs: {
     class: computed(() => isMobile ? 'mobile' : 'desktoaaap'),
@@ -37,11 +28,10 @@ useHead({
 })
 
 const onShowBlogMenu = () => {
-  console.log("showBlogMenu")
   showBlogMenu.value = !showBlogMenu.value
 }
 
-// ℹ️ This will inject classes in body tag for accurate styling
+
 injectSkinClasses()
 </script>
 
@@ -49,7 +39,7 @@ injectSkinClasses()
   <!-- mobile -->
   <div v-if="deviceType === 'mobile'">
     <main class="main-content">
-      <MobileHeader />
+      <MobileHeader/>
       <div class="home-container">
         <main class="main-content">
           <div id="blogContent">
@@ -64,15 +54,15 @@ injectSkinClasses()
                   class="tcon tcon-menu--arrow tcon-menu--arrowup white home"
                   @click="onShowBlogMenu"
                 >
-                  <span class="tcon-menu__lines" />
+                  <span class="tcon-menu__lines"/>
                   <span class="tcon-visuallyhidden">toggle menu</span>
 
                 </button>
                 <div v-if="showBlogMenu">
-                  <BlogMenu />
+                  <BlogMenu/>
                 </div>
               </div>
-              <slot name="blog-top" />
+              <slot name="blog-top"/>
               <div
                 id="content"
                 class="home-container"
@@ -82,16 +72,16 @@ injectSkinClasses()
                   class="inner-content row"
                 >
                   <div class="left-content">
-                    <slot />
+                    <slot/>
                   </div>
-                  <BlogRightContent />
+                  <BlogRightContent/>
                 </div>
               </div>
             </div>
           </div>
         </main>
       </div>
-      <MobileFooter />
+      <MobileFooter/>
     </main>
   </div>
   <!-- /mobile -->
@@ -102,9 +92,9 @@ injectSkinClasses()
     class="layout-wrapper layout-blank"
   >
     <div class="landing-page-wrapper">
-      <MotomundiHeaderbar />
-      <MotomundiHeaderlogo />
-      <MotomundiNavigation />
+      <MotomundiHeaderbar/>
+      <MotomundiHeaderlogo/>
+      <MotomundiNavigation/>
 
       <main class="main-content main-container">
         <div id="blogContent">
@@ -122,18 +112,13 @@ injectSkinClasses()
                     aria-label="toggle menu"
                     @click="showBlogMenu = !showBlogMenu;"
                   >
-                    <span class="tcon-menu__lines" />
+                    <span class="tcon-menu__lines"/>
                     <span class="tcon-visuallyhidden">toggle menu</span>
                   </button>
-                  <div
-                    class="menu-mobile"
-                    ng-show="showBlogMenu"
-                  >
-
-                  </div>
+                  <div class="menu-mobile"></div>
                 </div>
 
-                <slot name="blog-top" />
+                <slot name="blog-top"/>
 
 
                 <div
@@ -145,9 +130,9 @@ injectSkinClasses()
                     class="inner-content row"
                   >
                     <div class="left-content">
-                      <slot />
+                      <slot/>
                     </div>
-                    <BlogRightContent />
+                    <BlogRightContent/>
                   </div>
                 </div>
               </div>
@@ -157,7 +142,7 @@ injectSkinClasses()
 
 
         <!-- 👉 Footer -->
-        <MotomundiFooter />
+        <MotomundiFooter/>
       </main>
     </div>
   </div>
@@ -209,8 +194,6 @@ injectSkinClasses()
     max-width: 1300px;
   }
 }
-
-
 
 
 .layout-wrapper.layout-blank {

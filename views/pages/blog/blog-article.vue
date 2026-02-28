@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Widget from "@/views/pages/home/widget.vue";
-import BlogArticleProducts from "@/views/pages/blog/blog-article-products.vue";
-import BlogBreadcrumbs from "@/views/pages/blog/blog-breadcrumbs.vue";
-import BlogArticleShare from "@/views/pages/blog/blog-article-share.vue";
+import Widget from "@/views/pages/home/widget.vue"
+import BlogArticleProducts from "@/views/pages/blog/blog-article-products.vue"
+import BlogBreadcrumbs from "@/views/pages/blog/blog-breadcrumbs.vue"
+import BlogArticleShare from "@/views/pages/blog/blog-article-share.vue"
 
 const props = defineProps({ id: { type: Number } })
 
@@ -17,55 +17,21 @@ useSeoMeta({
 })
 
 
-const { data: entry } = await useFetch(`/api/blog/articles/${props.id}`,
-  {
-    key: "blog-article-" + props.id,
-  })
+const blogStore = useBlogStore()
 
-if(entry.value){
-  title.value.name = entry.value.name
-  if(entry.value?.configuration && entry.value?.configuration["preview-text"]){
-    title.value.description = entry.value?.configuration["preview-text"]
-  }
+await blogStore.fetchArticle(props.id)
+
+if(blogStore.article){
+  title.value.name = blogStore.article.name
+  title.value.description = blogStore.previewText
 }
 
-function extractVideoID(url) {
-  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
-  const match = url.match(regExp)
-  
-  return (match && match[7].length === 11) ? match[7] : null
-}
-
-const youtubeVideo = computed(() => {
-  if(entry.value && entry.value.configuration && entry.value.configuration["youtube-video"]){
-    return "https://www.youtube.com/embed/" + extractVideoID( entry.value.configuration["youtube-video"] )
-  }
-  
-  return null
-})
-
-const previewText = computed( () => {
-  if(entry.value && entry.value.config && entry.value.configuration["preview-text"]) {
-    return entry.value.config["preview-text"]
-  }
-  
-  return ""
-})
-
-const previewImage = computed( () => {
-  if(entry.value && entry.value.configuration && entry.value.configuration["preview-image"]) {
-    return getBaseCDN() + entry.value.configuration["preview-image"]
-  }
-  
-  return ""
-})
 
 const savingComment = ref(false)
 
 const commentForm = ref({
 
 })
-const ret = ref({ products: [] })
 </script>
 
 <template>
@@ -73,32 +39,27 @@ const ret = ref({ products: [] })
     <BlogBreadcrumbs />
 
     <article>
-
       <header class="article-header">
         <h1
           class="entry-title single-title"
           itemprop="headline"
         >
-           {{ entry.name }}
+          {{ blogStore.article.name }}
         </h1>
         <div class="entry-date-category-share">
           <p class="posts-date-category single">
             <img
-              src="/content/images/assets/icons/planet-biker-g.svg"
-              class="lazyloaded"
-              data-ll-status="loaded"
-            >
+              src="/content/images/assets/icons/planet-biker-g.svg">
             <a
               class="parent-category"
               href="/moto-blog/planeta-motero/"
             >
               Planeta motero </a>
             <span class="date">
-              <span class="bull">●</span> {{ entry.createDate }}
+              <span class="bull">●</span> {{ blogStore.article.createDate }}
             </span>
           </p>
-          <BlogArticleShare :entry="entry" />
-
+          <BlogArticleShare :entry="blogStore.article" />
         </div>
       </header>
       <div class="post-content-container">
@@ -107,7 +68,7 @@ const ret = ref({ products: [] })
           role="main"
         >
           <div
-            :id="`post-${entry.id}`"
+            :id="`post-${blogStore.article.id}`"
             class="post-36197 planet-biker type-planet-biker status-publish has-post-thumbnail hentry category-rutas"
             role="article"
           >
@@ -116,13 +77,13 @@ const ret = ref({ products: [] })
               itemprop="articleBody"
             >
               <div
-                v-if="youtubeVideo"
+                v-if="blogStore.youtubeVideo"
                 class="youtube-video-container"
               >
                 <iframe
                   loading="lazy"
                   class="youtube-video lazyloaded"
-                  :src="youtubeVideo"
+                  :src="blogStore.youtubeVideo"
                   allowfullscreen=""
                 />
               </div>
@@ -133,26 +94,24 @@ const ret = ref({ products: [] })
               >
                 <img
                   class="attachment-full size-full wp-post-image "
-                  :src="previewImage"
-                  data-ll-status="loaded"
+                  :src="blogStore.previewImage"
+                  
                 >
               </div>
 
 
-                <Widget
-                  v-for="widget in entry.widgets"
-                  :key="widget.id"
-                  :widget="widget"
-                />
-
-
+              <Widget
+                v-for="widget in blogStore.article.widgets"
+                :key="widget.id"
+                :widget="widget"
+              />
             </section>
           </div>
         </main>
       </div>
     </article>
 
-    <BlogArticleProducts :article="entry" />
+    <BlogArticleProducts :article="blogStore.article" />
 
 
     <div
@@ -167,8 +126,8 @@ const ret = ref({ products: [] })
       />
 
       <div
-        class="message-box-container"
         v-if="showMessage"
+        class="message-box-container"
         :class="{'show': showMessage}"
       >
         <div class="message-box">
@@ -214,12 +173,11 @@ const ret = ref({ products: [] })
           class="comment-form"
           novalidate
         >
-
           <div class="small-12 textarea-container">
             <VTextarea
               id="comment"
-              name="comment"
               v-model="commentForm.comment"
+              name="comment"
               placeholder="Deja un comentario*"
               required="required"
             />
@@ -285,8 +243,8 @@ const ret = ref({ products: [] })
           <div class="gdpr-legal-comment">
             <VCheckbox
               id="gdpr-legal-accept-blog-comment"
-              type="checkbox"
               v-model="commentForm.accept"
+              type="checkbox"
               name="gdpr-legal-accept"
               class="mc-checkbox"
               required="required"
@@ -308,7 +266,6 @@ const ret = ref({ products: [] })
               :loading="savingComment"
             >
               Enviar
-
             </VBtn>
           </p>
         </form>
@@ -320,8 +277,8 @@ const ret = ref({ products: [] })
     </div>
   </div>
 </template>
-<style >
 
+<style>
 #blog-wrapper .entry-content p {
   margin: 20px 0px;
 }

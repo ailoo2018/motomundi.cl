@@ -7,11 +7,12 @@ const props = defineProps({
 
 const { data } = await useFetch("/api/product/list-by-ids", {
   "method": "POST",
+  "key": "list-by-ids-" + props.article?.configuration?.assets?.products?.map(p => p.id),
   headers: {
     'Content-Type': 'application/json',
   },
   body: {
-    ids: props.article.configuration?.assets?.products?.map(p => p.id),
+    ids: props.article?.configuration?.assets?.products?.map(p => p.id),
   },
 })
 
