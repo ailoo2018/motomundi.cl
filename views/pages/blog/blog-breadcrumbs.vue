@@ -34,10 +34,10 @@ const props = defineProps({
       <a
         property="item"
         typeof="WebPage"
-        :href="category.friendlyUrl"
+        :href="category?.friendlyUrl"
         class="home"
       >
-        <span property="name">{{ category.name }}</span>
+        <span property="name">{{ category?.name }}</span>
       </a>
       <meta
         property="position"

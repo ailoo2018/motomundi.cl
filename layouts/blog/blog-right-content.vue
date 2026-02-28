@@ -1,6 +1,7 @@
 <script setup>
 import BlogNavigation from "@/layouts/blog/blog-navigation.vue"
 import BlogFollowUsContainer from "@/layouts/blog/blog-follow-us-container.vue"
+import BlogSocialMediaSidebar from "@/views/pages/blog/blog-social-media-sidebar.vue"
 
 const ret = ref({ products: null })
 
@@ -39,7 +40,7 @@ const { data: featured } = await useFetch("/api/blog/featured-posts?limit=4", {
       <div class="image"><img
       aasrc="$imageHelper.GetUrl($p, 300)"
       class="lazyloaded"
-      data-ll-status="loaded"
+      
       >
       </div>
       <div class="product-details">
@@ -71,7 +72,7 @@ const { data: featured } = await useFetch("/api/blog/featured-posts?limit=4", {
       <div
       class="image rocket-lazyload lazyloaded"
       style="background-image: url(&quot;https://www.motomundi.cl$r.previewImage&quot;);"
-      data-ll-status="loaded"
+      
       />
       </div>
       <div class="text-container">
@@ -96,7 +97,7 @@ const { data: featured } = await useFetch("/api/blog/featured-posts?limit=4", {
       <div
       class="image rocket-lazyload lazyloaded"
       style="background-image: url(&quot;https://www.motomundi.cl$r.Value('preview-image')&quot;);"
-      data-ll-status="loaded"
+      
       />
       </div>
       <div class="text-container">
@@ -109,92 +110,13 @@ const { data: featured } = await useFetch("/api/blog/featured-posts?limit=4", {
       </div>
       </div>
       <div class="social-media-container">
-      <div class="social-media-sidebar sidebar-block">
-      <p class="sidebar-title">
-      Social media
-      </p>
-      <div class="social-media-content">
-      <a
-      href="https://www.youtube.com/user/motomunditv?sub_confirmation=1 "
-      target="_blank"
-      >
-      <img
-      class="large lazyloaded"
-      src="/content/images/assets/img/blog-social-yt.png"
-      data-ll-status="loaded"
-      >
-      </a> <a
-      href="https://www.youtube.com/user/motomunditv?sub_confirmation=1 "
-      target="_blank"
-      >
-      <img
-      class="small"
-      src="/content/images/assets/img/blog-social-yt-mobile.png"
-      data-lazy-src="/content/images/assets/img/blog-social-yt-mobile.png"
-      >
-      </a> <a
-      href="https://www.facebook.com/motomundi.la"
-      target="_blank"
-      >
-      <img
-      class="large lazyloaded"
-      src="/content/images/assets/img/blog-social-fb.png"
-      data-ll-status="loaded"
-      >
-      </a> <a
-      href="https://www.facebook.com/motomundi.la"
-      target="_blank"
-      >
-      <img
-      class="small"
-      src="/content/images/assets/img/blog-social-fb-mobile.png"
-      data-lazy-src="/content/images/assets/img/blog-social-fb-mobile.png"
-      >
-      </a> <a
-      href="https://twitter.com/motomundi"
-      target="_blank"
-      ><img
-      class="large lazyloaded"
-      src="/content/images/assets/img/blog-social-tw.png"
-      data-ll-status="loaded"
-      >
-      </a> <a
-      href="https://twitter.com/motomundi"
-      target="_blank"
-      >
-      <img
-      class="small"
-      src="/content/images/assets/img/blog-social-tw-mobile.png"
-      data-lazy-src="/content/images/assets/img/blog-social-tw-mobile.png"
-      >
-      </a>
-      <a
-      href="https://www.instagram.com/motomundi/"
-      target="_blank"
-      >
-      <img
-      class="large"
-      src="/content/images/assets/img/blog-social-ig.png"
-      data-lazy-src="/content/images/assets/img/blog-social-ig.png"
-      >
-
-      </a> <a
-      href="https://www.instagram.com/motocardstore/"
-      target="_blank"
-      ><img
-      style="margin-top: 5px;"
-      class="small"
-      src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
-      data-lazy-src="/content/images/assets/img/blog-social-ig-mobile.png"
-      >
-
-      </a>
-      </div>
-      </div>
-      </div>
-      </div>
     -->
+
+
+    <BlogSocialMediaSidebar />
   </div>
+
+
 </template>
 
 <style>

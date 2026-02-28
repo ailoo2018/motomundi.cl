@@ -82,7 +82,7 @@ watch(selectedYear, () => {
 
 
 
-const marcas = await $fetch("/api/motorcycles/manufacturers?filterBikeWithProducts=" + props.filterBikesWithProducts, {
+const { data: marcas, refresh } = await useFetch("/api/motorcycles/manufacturers?filterBikeWithProducts=" + props.filterBikesWithProducts, {
   key: 'motorcycles-manufacturers',
 })
 

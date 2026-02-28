@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import Widget from "@/views/pages/home/widget.vue";
+import BlogArticleProducts from "@/views/pages/blog/blog-article-products.vue";
+import BlogBreadcrumbs from "@/views/pages/blog/blog-breadcrumbs.vue";
+import BlogArticleShare from "@/views/pages/blog/blog-article-share.vue";
 
 const props = defineProps({ id: { type: Number } })
 
@@ -50,8 +53,8 @@ const previewText = computed( () => {
 })
 
 const previewImage = computed( () => {
-  if(entry.value && entry.value.config && entry.value.configuration["preview-image"]) {
-    return entry.value.config["preview-image"]
+  if(entry.value && entry.value.configuration && entry.value.configuration["preview-image"]) {
+    return getBaseCDN() + entry.value.configuration["preview-image"]
   }
   
   return ""
@@ -67,48 +70,16 @@ const ret = ref({ products: [] })
 
 <template>
   <div>
-    <div class="breadcrumbs">
-      <span
-        property="itemListElement"
-        typeof="ListItem"
-      >
-        <a
-          property="item"
-          typeof="WebPage"
-          href="/moto-blog/"
-          class="home"
-        >
-          <span property="name">Blog Motomundi</span>
-        </a>
+    <BlogBreadcrumbs />
 
-      </span>
-      <span
-        property="itemListElement"
-        typeof="ListItem"
-      >
-        <a
-          property="item"
-          typeof="WebPage"
-          href="/moto-blog/planeta-motero/"
-          class="post post-planet-biker-archive"
-        >
-          <span property="name">Planeta motero</span>
-        </a>
-      </span>
-      <span
-        property="itemListElement"
-        typeof="ListItem"
-      >
-        <span property="name">{{ entry.name }}</span>
-      </span>
-    </div>
     <article>
+
       <header class="article-header">
         <h1
           class="entry-title single-title"
           itemprop="headline"
         >
-          {{ entry.name }}
+           {{ entry.name }}
         </h1>
         <div class="entry-date-category-share">
           <p class="posts-date-category single">
@@ -117,9 +88,6 @@ const ret = ref({ products: [] })
               class="lazyloaded"
               data-ll-status="loaded"
             >
-            <noscript>
-              <img src="/content/images/assets/icons/planet-biker-g.svg">
-            </noscript>
             <a
               class="parent-category"
               href="/moto-blog/planeta-motero/"
@@ -129,48 +97,8 @@ const ret = ref({ products: [] })
               <span class="bull">●</span> {{ entry.createDate }}
             </span>
           </p>
-          <div class="share-links-wrapper">
-            <a
-              href="#"
-              onclick="window.open(`https://twitter.com/intent/tweet?source=webclient&amp;text=${entry.Name}+-+https://www.motomundi.cl/$linkHelper.GetUrl($entry)`, 'Twitter','width=600, height=600'); return false;"
-            >
-              <img
-                src="/content/images/assets/icons/social-twitter.svg"
-                class="lazyloaded"
-                data-ll-status="loaded"
-              >
-              <noscript><img
-                src="/content/images/assets/icons/social-twitter.svg"
-                >
-              </noscript>
-            </a> <a
-              href="#"
-              onclick="window.open('https://www.facebook.com/sharer.php?u=https://www.motomundi.cl/$linkHelper.GetUrl($entry)&amp;t=$entry.Name', 'Facebook','width=600, height=600'); return false;"
-            >
-              <img
-                src="/content/images/assets/icons/social-facebook.svg"
-                class="lazyloaded"
-                data-ll-status="loaded"
-              >
-              <noscript><img
-                src="/content/images/assets/icons/social-facebook.svg"
-                >
-              </noscript>
-            </a> <a
-              href="#"
-              onclick="window.open('https://web.whatsapp.com/send?text=$entry.Name - https://www.motomundi.cl/$linkHelper.GetUrl($entry)', 'Whatsapp','width=600, height=600'); return false;"
-            >
-              <img
-                src="/content/images/assets/icons/social-whatsapp.svg"
-                class="lazyloaded"
-                data-ll-status="loaded"
-              >
-              <noscript><img
-                src="/content/images/assets/icons/social-whatsapp.svg"
-                >
-              </noscript>
-            </a>
-          </div>
+          <BlogArticleShare :entry="entry" />
+
         </div>
       </header>
       <div class="post-content-container">
@@ -223,6 +151,8 @@ const ret = ref({ products: [] })
         </main>
       </div>
     </article>
+
+    <BlogArticleProducts :article="entry" />
 
 
     <div

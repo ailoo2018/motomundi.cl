@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ProductItem from "@/views/pages/products/product-item.vue"
 import { fetchRecommendProducts } from "@/api/ailoo"
-import ProductListItem from "@/views/pages/products/list/product-list-item.vue";
+import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
 
 const props = defineProps(
   {
@@ -15,16 +15,9 @@ const props = defineProps(
 const product = ref(props.product)
 
 
-// const rs = await fetchRecommendProducts(props.product.id, 10)
-/*
-const { data: products } = await useAsyncData(`recommend-${props.product.id}`, () =>
-  fetchRecommendProducts(props.product.id, 10)
-)
-*/
-
-// client side
 const rs = await fetchRecommendProducts(props.product.id, 10)
 const products = ref([])
+
 products.value = rs
 </script>
 
@@ -42,14 +35,12 @@ products.value = rs
             </h2>
           </hgroup>
           <div class="products px-3">
-
             <ProductListItem
               v-for="prod in products"
               :key="prod.id"
               :product="prod"
             />
           </div>
-
         </section>
       </aside>
     </div>
@@ -117,6 +108,5 @@ products.value = rs
     row-gap: 25px;
   }
 }
-
 </style>
 

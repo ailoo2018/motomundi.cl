@@ -1,64 +1,36 @@
 {
-  "id": 114930,
-  "name": "Html_CarruselMotocard",
+  "id": 119949,
+  "name": "¿Funcionan realmente las toallitas Vulcanet? Mi experiencia limpiando moto y auto",
+  "createDate": "2025-06-12T21:43:10.000Z",
+  "widgets": [
+    {
+      "id": 119950,
+      "name": "Html",
+      "configuration": {
+        "contenido": "<article>&#10; <h1>&#191;Funcionan realmente las toallitas Vulcanet? Mi experiencia limpiando moto y auto</h1>&#10;&#10; <p>Limpiar el auto o la moto puede transformarse f&#225;cilmente en una de esas tareas que uno va postergando eternamente. Cubetas, esponjas, detergente, pa&#241;os&#8230; y despu&#233;s buscar un espacio sin polvo, sin viento, sin sol directo. En fin, todo un operativo. Pero entonces llegaron las toallitas Vulcanet. &#191;La promesa? Poder limpiar pr&#225;cticamente cualquier superficie sin agua, sin accesorios adicionales y sin perder horas. &#191;Realidad o puro marketing? Te cuento mi experiencia.</p>&#10;&#10; <h2>No soy fan de limpiar&#8230; pero esto me sorprendi&#243;</h2>&#10; <p>Lo confieso: lavar el auto o la moto nunca ha sido lo m&#237;o. Lo hago por necesidad, no por gusto. As&#237; que cuando me hablaron de unas toallitas &#8220;m&#225;gicas&#8221; que limpiaban todo con una sola pasada, mi escepticismo fue total. Pero tambi&#233;n soy curioso, as&#237; que un d&#237;a decid&#237; probarlas.</p>&#10;&#10; <p>El bote de Vulcanet no es cualquier cosa: es grande, pesado, y trae 80 toallitas bastante impregnadas, m&#225;s un pa&#241;o de microfibra escondido en la tapa. Todo bien presentado, muy pro. No es barato, pero si funcionaba como dec&#237;an, val&#237;a la pena probar.</p>&#10;&#10; <h2>&#191;Qu&#233; tal limpian?</h2>&#10; <p>Eleg&#237; como conejillo de indias mi moto, que ven&#237;a de una salida con barro, polvo y huellas por todos lados. Empec&#233; suave, sin aplicar presi&#243;n. Y la verdad&#8230; qued&#233; impresionado. Una sola toallita logr&#243; quitar el polvo, la suciedad m&#225;s superficial, e incluso algunas manchas rebeldes del tanque y los pl&#225;sticos. Dejaba una especie de capa protectora satinada que, aunque no dura para siempre, da un acabado impecable.</p>&#10;&#10; <p>Donde m&#225;s brillaron fue en los rincones dif&#237;ciles: los radios de las llantas, la horquilla trasera, los escapes&#8230; todo eso que normalmente te obliga a usar hisopos o pinceles. Incluso me anim&#233; con el casco y los guantes, &#161;y quedaron perfectos!</p>&#10;&#10; <h2>&#191;Y el auto? Misma historia.</h2>&#10; <p>Prob&#233; con el auto tambi&#233;n. Faros, espejos, molduras pl&#225;sticas, los rines&#8230; todo qued&#243; limpio con apenas un par de toallitas. Eso s&#237;: si vienes saliendo de una ruta de ripio con barro hasta los espejos, no esperes milagros. Ah&#237; sigue siendo buena idea una manguera previa o al menos un enjuague r&#225;pido.</p>&#10;&#10; <h2>Lo bueno y lo no tan bueno</h2>&#10; <ul>&#10; <li><strong>&#9989; Lo que me encant&#243;:</strong>&#10; <ul>&#10; <li>S&#250;per pr&#225;cticas para zonas de dif&#237;cil acceso.</li>&#10; <li>Sirven para casi cualquier superficie: pintura, pl&#225;stico, vidrio, cuero.</li>&#10; <li>Ideal para mantenimientos r&#225;pidos entre lavados grandes.</li>&#10; <li>El pa&#241;o de microfibra incluido es un plus para el acabado final.</li>&#10; <li>Son perfectas para llevar en salidas largas o viajes: &#161;limpieza express en cualquier lugar!</li>&#10; </ul>&#10; </li>&#10; <li><strong>&#10060; Lo que hay que tener en cuenta:</strong>&#10; <ul>&#10; <li>El precio puede parecer alto al principio, aunque rinden bastante.</li>&#10; <li>En texturas rugosas (tipo pl&#225;sticos porosos) hay que pasar varias veces y a veces dejan fibras.</li>&#10; <li>No reemplazan un lavado profundo si tu veh&#237;culo viene muy, muy sucio.</li>&#10; </ul>&#10; </li>&#10; </ul>&#10;&#10; <h2>&#191;Cu&#225;ntas toallitas se usan?</h2>&#10; <p>Depende. Si solo haces retoques y detalles, una o dos toallitas pueden bastar para una moto. Para un auto, entre 3 y 5 si quieres limpiarlo todo. Yo las uso m&#225;s para acabados y limpieza puntual, as&#237; que me duran bastante. Y ese equilibrio entre practicidad y resultados es lo que m&#225;s me gust&#243;.</p>&#10;&#10; <h2>Veredicto: &#191;Valen la pena?</h2>&#10; <p>S&#237;. Vulcanet no es una soluci&#243;n m&#225;gica para limpiar un auto tras un rally, pero es una herramienta espectacular para el mantenimiento frecuente. Ideal para gente que, como yo, no disfruta demasiado de pasar la tarde entre baldes y mangueras. &#191;Lo mejor? Terminas en minutos y tu veh&#237;culo queda con un acabado digno de exhibici&#243;n.</p>&#10;&#10; <p><strong>&#191;Mi consejo?</strong> Si cuidas tu moto o auto con cari&#241;o pero no quieres perder tiempo lavando cada semana, dale una oportunidad a estas toallitas. No vas a volver atr&#225;s.</p>&#10;&#10; <p><em>&#191;Ya las probaste? &#191;Tienes dudas? &#161;Cu&#233;ntamelo en los comentarios!</em></p>&#10;</article>&#10;"
+      },
+      "component": "HtmlWidget",
+      "template": null
+    }
+  ],
   "configuration": {
-    "conditionsUrl": "#",
-    "title": "Carrusel Home",
-    "images": [
-      {
-        "link": "https://www.motomundi.cl/outlet",
-        "countdownDate": null,
-        "buttonColor": null,
-        "buttonTitle": null,
-        "align": "center",
-        "alignMobile": "center",
-        "imagePathSmall": null,
-        "showForegroundMobile": null,
-        "imagePath": "/Content/uploads/1/_data/0/55/0555b50a61cc4c5c8bed0ffd2e563f75.jpg",
-        "slideImage": "/Content/uploads/1/_data/d/33/d333257a075a428fba8b2c78a582f3a4.png",
-        "sliderButtonTitle": "OFERTA FLASH"
-      },
-      {
-        "link": "https://www.motomundi.cl/motocicleta/3414377-carpas-bulldg-bulldg-carpa-premium-para-motocicleta",
-        "countdownDate": null,
-        "buttonColor": null,
-        "buttonTitle": "COVER UP",
-        "align": "center",
-        "alignMobile": "center",
-        "imagePathSmall": "/Content/uploads/1/_data/5/eb/5ebfe32427ed4256b57490e2db9c2a19.jpg",
-        "showForegroundMobile": null,
-        "imagePath": "/Content/uploads/1/_data/9/49/9495f765329a40a995fd3f1118cc05bb.jpg",
-        "slideImage": "/Content/uploads/1/_data/3/bd/3bd907c5571b419989753fa34af1702a.png",
-        "sliderButtonTitle": "PROTECCIÓN PREMIUM"
-      },
-      {
-        "link": "https://www.motomundi.cl/products/list?sword=shoei",
-        "countdownDate": "",
-        "buttonColor": null,
-        "buttonTitle": "VER OFERTA",
-        "align": "center",
-        "alignMobile": "center",
-        "imagePathSmall": "/Content/uploads/1/_data/9/c1/9c1b02813d0c45939eed8a97bc402bc0.jpg",
-        "showForegroundMobile": null,
-        "imagePath": "/Content/uploads/1/_data/4/73/47315f042e804014b31a9294e4afe277.jpg",
-        "slideImage": "/Content/uploads/1/_data/d/18/d18b295cc9224808aadfc3caeb9a8466.png",
-        "sliderButtonTitle": "OPORTUNIDAD SHOEI"
-      },
-      {
-        "link": "https://www.motomundi.cl/motocicleta/2088497-chaquetas-textil-clover-netstyle-2",
-        "countdownDate": null,
-        "buttonColor": null,
-        "buttonTitle": "EXPLORAR MODELO",
-        "align": "center",
-        "alignMobile": "center",
-        "imagePathSmall": "/Content/uploads/1/_data/e/a9/ea986954acb74acf98d5104c66ab894d.jpg",
-        "showForegroundMobile": null,
-        "imagePath": "/Content/uploads/1/_data/e/9a/e9a1d5540622403481fe0ad414b263f6.jpg",
-        "slideImage": "/Content/uploads/1/_data/b/bd/bbd159dacec4446ca27e847cc372bbfa.png",
-        "sliderButtonTitle": "APROVECHA LA OFERTA"
-      }
-    ],
-    "cache-enabled": false
+    "author": "jcfuentes",
+    "category": "GbW8bYTnGk",
+    "keywords": "toallitas Vulcanet limpiar moto sin agua limpiar auto rápido limpieza de motos productos para limpiar auto limpieza sin agua Vulcanet toallitas para auto y moto cómo limpiar la moto fácil cuidado de la moto mantenimiento rápido de vehículos limpieza express auto moto opiniones toallitas Vulcanet Vulcanet Chile toallitas limpieza profesional",
+    "meta_description": "¿Cansado de lavar tu moto o auto con cubetas y esponjas? Descubre las toallitas Vulcanet, la solución rápida y efectiva para limpiar todo tipo de superficies sin agua. ¡Te contamos nuestra experiencia y si realmente valen la pena!",
+    "preview-image": "/Content/uploads/1/_data/e/aa/eaa67f232e774ec8996e0a9c096d3371.jpg",
+    "preview-text": "¿Cansado de lavar tu moto o auto con cubetas y esponjas? Descubre las toallitas Vulcanet, la solución rápida y efectiva para limpiar todo tipo de superficies sin agua. ¡Te contamos nuestra experiencia y si realmente valen la pena!",
+    "tags": "",
+    "youtube-video": "",
+    "assets": {
+      "images": [],
+      "products": [
+        {
+          "id": 3273603,
+          "name": "Toallitas limpiadoras"
+        }
+      ]
+    }
   },
-  "component": "Swiper"
+  "template": null
 }

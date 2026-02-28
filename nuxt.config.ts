@@ -59,6 +59,7 @@ export default defineNuxtConfig({
     },
   },
 
+  debug: true,
   devtools: { enabled: true },
 
   sourcemap: {
@@ -247,7 +248,15 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
 
-  modules: ['@vueuse/nuxt', '@nuxtjs/i18n', '@nuxtjs/device', '@pinia/nuxt', '@nuxtjs/sitemap', 'nuxt3-winston-log'],
+  modules: [
+    '@vueuse/nuxt',
+    '@nuxtjs/i18n',
+    '@nuxtjs/device',
+    '@pinia/nuxt',
+    '@nuxtjs/sitemap',
+    'nuxt3-winston-log',
+    'nuxt-ssr-cache',
+  ],
   nuxt3WinstonLog: {
     infoLogPath: './logs',
     infoLogName: 'info.log',

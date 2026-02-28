@@ -1,6 +1,4 @@
-<script setup lang="ts">
 
-</script>
 
 <template>
   <div class="subscribe-rss-container">
@@ -47,10 +45,10 @@
           class="mc-checkbox"
           ng-model="formData.termsAccepted"
         > <label
-        class="mc-checkbox-label sidebar-gdrp"
-        for="gdpr-legal-accept-blog-sidebar"
-      > <span class="checkbox-block" /> He leído y acepto la política de
-        privacidad. </label>
+          class="mc-checkbox-label sidebar-gdrp"
+          for="gdpr-legal-accept-blog-sidebar"
+        > <span class="checkbox-block" /> He leído y acepto la política de
+          privacidad. </label>
         <p
           class="gdpr-small-newsletter"
           style="font-size: 10px"
@@ -60,14 +58,14 @@
           Podrás revocar cualquier consentimiento y modificar tus datos cuando
           quieras y con efecto inmediato desde tu panel de usuario. Para más
           información consulta nuestra <a
-          href="/terminos-y-condiciones.html?open=privacy-policy"
-          target="_blank"
-        >política de privacidad.</a>
+            href="/terminos-y-condiciones.html?open=privacy-policy"
+            target="_blank"
+          >política de privacidad.</a>
         </p>             <a
-        gdpr-more-info=""
-        style="text-transform: uppercase;font-size: 11px;margin-top: 5px;display: block;"
-      >Más
-        información</a>
+          gdpr-more-info=""
+          style="text-transform: uppercase;font-size: 11px;margin-top: 5px;display: block;"
+        >Más
+          información</a>
       </form>
     </div>
     <div class="follow-us-container">
@@ -79,61 +77,40 @@
         <li>
           <a
             target="_blank"
-            rel="nofollow"
+            rel="noopener noreferrer"
             href="https://twitter.com/motomundi?lang=es"
-          > <img
-            src="https://cf-cdn-blog.motocard.com/assets/icons/twitter.svg"
-            class="lazyloaded"
-            data-ll-status="loaded"
           >
-            <noscript><img
-              src="/content/images/assets/icons/twitter.svg">
-            </noscript>
+            <VIcon class="tabler-brand-twitter-filled" color="#6E6E6E"/>
+
           </a>
         </li>
         <li>
           <a
             target="_blank"
-            rel="nofollow"
+            rel="noopener noreferrer"
             href="https://es-es.facebook.com/motomundi.la/"
-          > <img
-            src="https://cf-cdn-blog.motocard.com/assets/icons/facebook.svg"
-            class="lazyloaded"
-            data-ll-status="loaded"
           >
-            <noscript><img
-              src="/content/images/assets/icons/facebook.svg">
-            </noscript>
+            <VIcon class="tabler-brand-facebook-filled" color="#6E6E6E"/>
+
           </a>
         </li>
         <li>
           <a
             target="_blank"
-            rel="nofollow"
+            rel="noopener noreferrer"
             href="https://www.youtube.com/user/motomunditv"
-          > <img
-            src="/content/images/assets/icons/youtube.svg"
-            class="lazyloaded"
-            data-ll-status="loaded"
           >
-            <noscript><img
-              src="/content/images/assets/icons/youtube.svg">
-            </noscript>
+            <VIcon class="tabler-brand-youtube" color="#6E6E6E"/>
           </a>
         </li>
         <li>
           <a
             target="_blank"
-            rel="nofollow"
+            rel="noopener noreferrer"
             href="https://www.instagram.com/motomundi/"
-          > <img
-            src="/content/images/assets/icons/instagram.svg"
-            class="lazyloaded"
-            data-ll-status="loaded"
           >
-            <noscript><img
-              src="/content/images/assets/icons/instagram.svg">
-            </noscript>
+            <VIcon class="tabler-brand-instagram-filled" color="#6E6E6E" />
+      
           </a>
         </li>
       </ul>
@@ -141,6 +118,9 @@
   </div>
 </template>
 
-<style scoped lang="scss">
+<style>
+
 
 </style>
+<script setup lang="ts">
+</script>
