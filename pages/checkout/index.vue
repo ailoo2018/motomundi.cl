@@ -262,7 +262,7 @@ onMounted(async () => {
       </div>
     </VContainer>
 
-    <div v-if="!isCartEmpty">
+    <VContainer v-if="!isCartEmpty">
       <VRow>
         <VCol
           cols="12"
@@ -355,7 +355,7 @@ onMounted(async () => {
           </div>
         </VCol>
       </VRow>
-    </div>
+    </VContainer>
 
     <div
       v-if="isCartEmpty"

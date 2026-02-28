@@ -9,6 +9,7 @@ useHead({
 <template>
   <VApp>
     <VMain>
+
       <slot />
     </VMain>
   </VApp>

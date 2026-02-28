@@ -58,7 +58,7 @@ injectSkinClasses()
     <main class="main-content">
       <MobileHeader />
       <section class="account container col-sm-12 pa-3">
-        <div class="account__content">
+        <div class="home-container account__content">
           <slot />
         </div>
       </section>
