@@ -263,7 +263,7 @@ search()
         <!-- / page title -->
         <DesktopFilters v-model="filters" />
       </div>
-      <section class="container results-list">
+      <section class="pa-1 results-list">
         <div
           v-if="loading"
           class="d-flex justify-center align-center py-12"

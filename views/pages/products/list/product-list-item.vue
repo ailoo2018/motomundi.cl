@@ -86,6 +86,15 @@ const onToggleWishlist = async (val: boolean) => {
     console.error("Failed to update wishlist", err)
   }
 }
+
+const formatName = name => {
+  if(!name)
+    return ""
+
+  if(name.length > 35)
+    return name.substring(0, 32) + "..."
+  return name.substring(0, 35)
+}
 </script>
 
 
@@ -181,7 +190,7 @@ const onToggleWishlist = async (val: boolean) => {
             </span>
             <h3 class="heading-tag">
               <span>{{ product.brand.name }} </span>
-              <strong>{{ product.name }}</strong>
+              <strong>{{ formatName( product.name ) }}</strong>
             </h3>
           </div>
         </a>

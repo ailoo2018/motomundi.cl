@@ -268,6 +268,7 @@ onMounted(async () => {
           cols="12"
           sm="12"
           md="7"
+          class="pa-0"
         >
           <main
             id="checkout__body"

@@ -229,55 +229,72 @@ const handlePhoneInput = event => {
 
   <div class="active">
     <div class="data">
-      <div
+      <VCard
         v-if="!user"
-        class="data__login-message"
+        elevation="0"
+        class="data__login-message ma-2 rounded-0"
       >
-        <p>Completa tu pedido más rápido</p>
-        <a @click="showLogin = true">
-          <span>Inicia sesión</span>
-          <svg
-            width="13"
-            height="13"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 14 14"
-            class="icon sprite-line-icons"
-          >
-            <title>Inicia sesión</title>
-            <use
-              href="/svg/ailoo.svg#i-icon-arrow-right"
-              xlink:href="/svg/ailoo.svg#i-icon-arrow-right"
-            />
-          </svg>
-        </a>
-      </div>
+        <VCardText class="pa-3">
+          <p>Completa tu pedido más rápido</p>
+          <a @click="showLogin = true">
+            <span>Inicia sesión</span>
+            <svg
+              width="13"
+              height="13"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 14 14"
+              class="icon sprite-line-icons"
+            >
+              <title>Inicia sesión</title>
+              <use
+                href="/svg/ailoo.svg#i-icon-arrow-right"
+                xlink:href="/svg/ailoo.svg#i-icon-arrow-right"
+              />
+            </svg>
+          </a>
+        </VCardText>
+      </VCard>
 
 
       <VCard
         :loading="isLoading"
         elevation="0"
       >
-        <VCardText class="px-1">
-          <div class="data__contact-details">
+        <VCardText class="pa-1 ma-1 pa-md-2 ma-md-2">
+          <div >
             <h2>Información de contacto</h2>
-            <p>Usaremos estos datos para avisarte sobre el estado del pedido</p>
+            <p class="ma-2">
+              Usaremos estos datos para avisarte sobre el estado del pedido
+            </p>
 
 
-            <div class="form-fieldset">
-              <div class="form-item half-width">
+            <VRow class="ma-0 pa-0">
+              <VCol
+                cols="12"
+                md="6"
+                lg="6"
+                xl="6"
+                class="pa-0 ma-1"
+              >
+
                 <div class="input__group">
                   <VTextField
                     v-model="contactEmail"
                     label="Email *"
                     variant="solo"
                     :disabled="disableEmail"
-                    class="custom-text-field"
                     :rules="reqRules"
                     required
                   />
                 </div>
-              </div>
-              <div class="form-item half-width">
+              </VCol>
+              <VCol
+                cols="12"
+                md="6"
+                lg="6"
+                xl="6"
+                class="pa-0 ma-1"
+              >
                 <div class="input__group">
                   <VTextField
                     v-model="contactPhone"
@@ -285,12 +302,11 @@ const handlePhoneInput = event => {
                     required
                     variant="solo"
                     :rules="reqPhoneRules"
-                    class="custom-text-field"
                     @input="handlePhoneInput"
                   />
                 </div>
-              </div>
-            </div>
+              </VCol>
+            </VRow>
           </div>
         </VCardText>
       </VCard>
@@ -301,7 +317,7 @@ const handlePhoneInput = event => {
           :loading="isLoading"
           elevation="0"
         >
-          <VCardText class="px-1">
+          <VCardText class="pa-1 ma-1 pa-md-2 ma-md-2">
             <h2>Tus datos</h2>
             <AddressForm
               ref="addressForm"
@@ -337,7 +353,7 @@ const handlePhoneInput = event => {
 }
 
 .data {
-  padding: 0 15px;
+/*  padding: 0 15px;*/
 }
 
 .steps__content > div.active {
