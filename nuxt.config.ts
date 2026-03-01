@@ -251,7 +251,13 @@ export default defineNuxtConfig({
 
     storage: {
       cache: {
-        driver: 'memory',  // or 'redis' in production
+        // 1 Memory
+        // driver: 'memory',  // or 'redis' in production
+
+        // 4. LRU Cache (in-memory with size limit)
+        driver: 'lru-cache',
+        max: 2000,
+        ttl: 60 * 1000, // ms
       },
     },
     // Development: filesystem

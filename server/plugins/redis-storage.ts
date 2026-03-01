@@ -4,14 +4,13 @@ import redisDriver from 'unstorage/drivers/redis'
 export default defineNitroPlugin(async () => {
 
 /*
+
   const redisUrl = process.env.REDIS_URL
 
   if (!redisUrl) {
     console.warn('⚠️ REDIS_URL not set, using default fs/memory cache')
     return
   }
-
-
   const storage = useStorage() as any
 
 
@@ -23,5 +22,9 @@ export default defineNitroPlugin(async () => {
     console.log('✅ Redis cache driver mounted')
   } catch (e: any) {
     console.error('❌ Failed to mount Redis:', e.message)
-  }*/
+  }
+
+*/
+
+
 })
