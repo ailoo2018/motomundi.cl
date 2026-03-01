@@ -9,7 +9,11 @@ export default defineEventHandler(async (event) => {
     const userId = getCookie(event, "user_id")
     const wishList = getCookie(event, 'wishlist_items')
 
+    const response = await fetch('https://api.ipify.org?format=json');
+    const myip = await response.json();
+
     return {
+      myip: myip,
       NODE_ENV: process.env.NODE_ENV,
 //      REDIS_URL: process.env.REDIS_URL,
 //      WEBPAY_COMMERCE_CODE: process.env.WEBPAY_COMMERCE_CODE,
