@@ -8,7 +8,7 @@ const cache = new LRU({ max: 500, ttl: 1000 * 300 })
 
 // nuxt.config.ts
 const createCachedRoute = (tag: string) => ({
-  swr: (60 * 60) * 5,
+  swr: (60 * 60) * 2,
   cache: {
     tags: [tag],
     varies: ['accept-language', 'x-device-type'],
@@ -72,8 +72,9 @@ export default defineNuxtConfig({
     '/ropa-casual': createCachedRoute('ropa-casual'),
     '/moto-blog': createCachedRoute('blog'),
     '/checkout/recover.rails': { redirect: '/checkout/recover' },
-    '/cascos-para-moto': createCachedRoute('cascos-para-moto'),
     '/motocicleta/**': createCachedRoute('product'),
+    '/cascos-para-moto': createCachedRoute('cascos-para-moto'),
+
   },
 
   runtimeConfig: {
@@ -238,21 +239,19 @@ export default defineNuxtConfig({
 
 
   nitro: {
-/*
     storage: {
       cache: {
         driver: 'memory',  // or 'redis' in production
       },
     },
-*/
 
-    storage: {
+  /*  storage: {
       cache: {
         driver: 'redis',
         url: process.env.REDIS_URL,
       },
     },
-
+*/
     prerender: {
       crawlLinks: false,
     },
