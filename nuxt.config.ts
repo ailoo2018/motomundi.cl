@@ -72,6 +72,7 @@ export default defineNuxtConfig({
     '/ropa-casual': createCachedRoute('ropa-casual'),
     '/moto-blog': createCachedRoute('blog'),
     '/checkout/recover.rails': { redirect: '/checkout/recover' },
+    '/cascos-para-moto': createCachedRoute('cascos-para-moto'),
     '/motocicleta/**': createCachedRoute('product'),
   },
 
@@ -237,19 +238,21 @@ export default defineNuxtConfig({
 
 
   nitro: {
+/*
     storage: {
       cache: {
         driver: 'memory',  // or 'redis' in production
       },
     },
-/*
+*/
+
     storage: {
       cache: {
         driver: 'redis',
         url: process.env.REDIS_URL,
       },
     },
-*/
+
     prerender: {
       crawlLinks: false,
     },
