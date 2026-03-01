@@ -2,7 +2,6 @@
 import { fileURLToPath } from 'node:url'
 import vuetify from 'vite-plugin-vuetify'
 import svgLoader from 'vite-svg-loader'
-import LRU from 'lru-cache'
 
 
 
@@ -87,7 +86,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-
+    redisUrl: process.env.REDIS_URL || '',
     mercadopagoAccessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN,
     webPayCommerceCode: process.env.WEBPAY_COMMERCE_CODE,
     webPayApiKey: process.env.WEBPAY_API_KEY,
@@ -249,12 +248,14 @@ export default defineNuxtConfig({
 
   nitro: {
 
+/*
     storage: {
       cache: {
         driver: 'memory',  // or 'redis' in production
       },
     },
 
+*/
 
 /*
     storage: {
@@ -265,12 +266,12 @@ export default defineNuxtConfig({
     },
 */
     // Development: filesystem
-    devStorage: {
+/*    devStorage: {
       cache: {
         driver: 'fs',
         base: './.nitro/cache',
       },
-    },
+    },*/
     prerender: {
       crawlLinks: false,
     },
