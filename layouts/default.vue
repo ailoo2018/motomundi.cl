@@ -13,6 +13,7 @@ const { injectSkinClasses } = useSkins()
 
 // Get user-agent from request event
 const event = useRequestEvent()
+
 const ua = process.server && event
   ? (getHeader(event, 'user-agent') || '')
   : (process.client ? navigator.userAgent : '')
@@ -35,30 +36,31 @@ injectSkinClasses()
 <template>
   <!-- mobile -->
   <div v-if="deviceType === 'mobile'">
-    <main class="main-content" >
-        <MobileHeader />
+    <main class="main-content">
+      <MobileHeader />
       <div class="home-container">
         <slot />
       </div>
-        <MobileFooter />
+      <MobileFooter />
     </main>
   </div>
   <!-- /mobile -->
 
   <!-- desktop -->
-  <div v-else
+  <div
+    v-else
     class="layout-wrapper layout-blank"
     data-allow-mismatch
   >
     <div class="landing-page-wrapper desktop-only-container">
-        <MotomundiHeaderbar/>
-        <MotomundiHeaderlogo/>
-        <MotomundiNavigation/>
+      <MotomundiHeaderbar />
+      <MotomundiHeaderlogo />
+      <MotomundiNavigation />
 
       <main class="main-content">
-        <slot/>
+        <slot />
         <!-- 👉 Footer -->
-        <MotomundiFooter/>
+        <MotomundiFooter />
       </main>
     </div>
   </div>
@@ -68,7 +70,6 @@ injectSkinClasses()
 </template>
 
 <style>
-
 /* Background for Desktop */
 @media (min-width: 961px) {
   body {
@@ -113,6 +114,4 @@ injectSkinClasses()
 .layout-wrapper.layout-blank {
   flex-direction: column;
 }
-
-
 </style>
