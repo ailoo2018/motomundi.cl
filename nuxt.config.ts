@@ -7,18 +7,11 @@ import LRU from 'lru-cache'
 const cache = new LRU({ max: 500, ttl: 1000 * 300 })
 
 // nuxt.config.ts
-const createCachedRoute = tag => ({
-  swr: (60*60) * 5, // five hours
+const createCachedRoute = (tag: string) => ({
+  swr: (60 * 60) * 5,
   cache: {
     tags: [tag],
-    varies: ['Accept-Language'],
-    getKey: event => {
-      const ua = getHeader(event, 'user-agent') || ''
-      const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
-      const lang = (getHeader(event, 'accept-language') || 'default').split(',')[0]
-      
-      return `${tag}:${deviceType}:${lang}`
-    },
+    varies: ['accept-language', 'x-device-type'],
   },
 })
 
