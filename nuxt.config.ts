@@ -244,8 +244,12 @@ export default defineNuxtConfig({
 
   nitro: {
     prerender: {
+      storage: {
+        cache: {
+          driver: 'memory',  // or 'redis' in production
+        },
+      },
       crawlLinks: false,
-      ignore: ['/guantes-para-moto'],
     },
   },
 
