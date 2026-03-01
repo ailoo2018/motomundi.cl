@@ -4,7 +4,7 @@ import vuetify from 'vite-plugin-vuetify'
 import svgLoader from 'vite-svg-loader'
 import LRU from 'lru-cache'
 
-const cache = new LRU({ max: 500, ttl: 1000 * 300 })
+
 
 // nuxt.config.ts
 const createCachedRoute = (tag: string) => ({
@@ -57,6 +57,7 @@ export default defineNuxtConfig({
 
 
   devtools: { enabled: true },
+  // debug: true,
 
   sourcemap: {
     server: true,
@@ -247,19 +248,21 @@ export default defineNuxtConfig({
 
 
   nitro: {
+/*
     storage: {
       cache: {
         driver: 'memory',  // or 'redis' in production
       },
     },
+*/
 
-  /*  storage: {
+    storage: {
       cache: {
         driver: 'redis',
         url: process.env.REDIS_URL,
       },
     },
-*/
+
     prerender: {
       crawlLinks: false,
     },
