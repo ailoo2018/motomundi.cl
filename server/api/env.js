@@ -8,8 +8,10 @@ export default defineEventHandler(async (event) => {
     const wuid = getCookie(event, "guest_id")
     const userId = getCookie(event, "user_id")
     const wishList = getCookie(event, 'wishlist_items')
+
     return {
       NODE_ENV: process.env.NODE_ENV,
+      REDIS_URL: process.env.REDIS_URL,
 //      WEBPAY_COMMERCE_CODE: process.env.WEBPAY_COMMERCE_CODE,
   //    MERCADO_PAGO_ACCESS_TOKEN: process.env.MERCADO_PAGO_ACCESS_TOKEN,
       accessToken: token,
