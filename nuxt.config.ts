@@ -80,6 +80,7 @@ export default defineNuxtConfig({
     '/cart': { cache: false },
     '/checkout/**': { cache: false },
     '/cuenta/**': { cache: false },
+    '/account/**': { cache: false },
     '/api/**': { cache: false },
 
   },
