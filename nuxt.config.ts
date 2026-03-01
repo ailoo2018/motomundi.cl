@@ -242,6 +242,7 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
 
+
   nitro: {
     storage: {
       cache: {
