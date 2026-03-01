@@ -76,6 +76,12 @@ export default defineNuxtConfig({
     '/motocicleta/**': createCachedRoute('product'),
     '/cascos-para-moto': createCachedRoute('cascos-para-moto'),
 
+    // Never cache these
+    '/cart': { cache: false },
+    '/checkout/**': { cache: false },
+    '/cuenta/**': { cache: false },
+    '/api/**': { cache: false },
+
   },
 
   runtimeConfig: {
