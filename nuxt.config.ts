@@ -248,21 +248,29 @@ export default defineNuxtConfig({
 
 
   nitro: {
-/*
+
     storage: {
       cache: {
         driver: 'memory',  // or 'redis' in production
       },
     },
-*/
 
+
+/*
     storage: {
       cache: {
         driver: 'redis',
         url: process.env.REDIS_URL,
       },
     },
-
+*/
+    // Development: filesystem
+    devStorage: {
+      cache: {
+        driver: 'fs',
+        base: './.nitro/cache',
+      },
+    },
     prerender: {
       crawlLinks: false,
     },

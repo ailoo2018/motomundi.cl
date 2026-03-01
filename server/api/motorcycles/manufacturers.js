@@ -7,9 +7,6 @@ export default defineEventHandler(async event => {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
-
-
-
     return await $fetch(`${baseUrl}/motorcycles/manufacturers`, {
       method: 'GET',
       headers: {
@@ -24,4 +21,9 @@ export default defineEventHandler(async event => {
       message: error.message || 'Failed remove cart',
     })
   }
+}, {
+  maxAge: 60 * 60 * 24, // 24 hours
+  name: 'motorcycles-manufacturers',
+  getKey: () => 'manufacturers', // static key since response is always the same
+  swr: true, // serve stale while revalidating in background
 })
