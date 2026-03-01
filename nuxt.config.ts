@@ -66,6 +66,7 @@ export default defineNuxtConfig({
   ssr: true,
 
   routeRules: {
+    '/**': createCachedRoute('all'),
     '/': createCachedRoute('homepage'),
     '/cafe-racer': createCachedRoute('cafe-racer'),
     '/motocross-enduro-trial': createCachedRoute('motocross'),
