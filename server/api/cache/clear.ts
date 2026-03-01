@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('cache')
   const keys = await storage.getKeys()
 
+/*
   for(var key of keys){
     try {
       await storage.removeItem(key)
@@ -19,7 +20,8 @@ export default defineEventHandler(async (event) => {
       console.error("Unable to delete key: " + key + " " + error.message, error)
     }
   }
-//  await Promise.all(keys.map(key => storage.removeItem(key)))
+*/
+  await Promise.all(keys.map(key => storage.removeItem(key)))
 
   console.log('storage getMounted: ' + storage?.getMount("cache")?.driver?.name)
 
