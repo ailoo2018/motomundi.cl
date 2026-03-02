@@ -1,51 +1,28 @@
-// server/api/cache/clear.post.ts
-import Redis from 'ioredis'
+import redisDriver from 'unstorage/drivers/redis'
 
-export default defineEventHandler(async (event) => {
-
-
+export default defineNitroPlugin(async () => {
 
   const redisUrl = process.env.REDIS_URL
 
   if (!redisUrl) {
-    throw createError({ statusCode: 500, message: 'REDIS_URL not found' })
+    console.warn('⚠️ REDIS_URL not set, using default fs/memory cache')
+    return
   }
-
-  // Create a temporary direct connection
-  const redis = new Redis(redisUrl)
+  const storage = useStorage() as any
 
   try {
-    // 1. Find all keys starting with your prefix
-    // We use SCAN instead of KEYS to be production-safe
-    let cursor = '0'
-    let totalDeleted = 0
-    const prefix = 'w3:*'
 
-    do {
-      // SCAN returns [nextCursor, keysArray]
-      const [nextCursor, keys] = await redis.scan(cursor, 'MATCH', prefix, 'COUNT', 100)
-      cursor = nextCursor
+    await storage.unmount('cache', true)
+    storage.mount('cache', redisDriver({
+      url: process.env.REDIS_URL,
+      base: 'w3:',
+      ttl: 600,
+      useUnlink: false,
+      retryStrategy: (times) => Math.min(times * 50, 2000),
+    }))
 
-      if (keys.length > 0) {
-        // 2. Use 'del' explicitly (NOT unlink)
-        await redis.del(...keys)
-        totalDeleted += keys.length
-      }
-    } while (cursor !== '0')
-
-    // Clean up connection
-    await redis.quit()
-
-    return {
-      status: 'success',
-      message: `Manually cleared ${totalDeleted} keys using DEL command.`,
-    }
+    console.log('✅ Redis cache driver mounted')
   } catch (e: any) {
-    await redis.quit()
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Redis direct clear failed',
-      data: e.message
-    })
+    console.error('❌ Failed to mount Redis:', e.message)
   }
 })
