@@ -22,6 +22,7 @@ injectSkinClasses()
 
   <!-- desktop -->
   <div class="desktop-layout layout-wrapper layout-blank">
+
     <div class="landing-page-wrapper desktop-only-container">
       <MotomundiHeaderbar />
       <MotomundiHeaderlogo />
