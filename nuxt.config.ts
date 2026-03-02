@@ -82,6 +82,17 @@ export default defineNuxtConfig({
     '/cuenta/**': { cache: false },
     '/account/**': { cache: false },
     '/api/**': { cache: false },
+    '/Account/**': { cache: false },
+    '/payment/**': { cache: false },
+    '/product/view.rails': { cache: false },
+    '/Product/View.rails': { cache: false },
+    '/Product/Search.rails': { cache: false },
+    '/Product/ReviewProduct.rails': { cache: false },
+    '/product/reviewproduct.rails': { cache: false },
+    '/sitemap.xml': { cache: false },
+    '/__sitemap__**': { cache: false },
+    '/payment/quickcheckout.rails': { cache: false },
+    '/Payment/QuickCheckout.rails': { cache: false },
 
   },
 
