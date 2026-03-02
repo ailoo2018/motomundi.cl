@@ -8,7 +8,7 @@ import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-
     <div class="d-flex justify-space-between">
       <div>
         <a href="/">
-          <VImg
+          <img
             src="/logo-motomundi.png"
             width="400"
           />
