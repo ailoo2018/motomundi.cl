@@ -4,7 +4,7 @@ import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-
 </script>
 <template>
 
-  <VContainer style="color:white">
+  <div class="main-container my-4" style="color:white">
     <div class="d-flex justify-space-between">
       <div>
         <a href="/">
@@ -22,7 +22,7 @@ import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-
 
 
     </div>
-  </VContainer>
+  </div>
 </template>
 
 
