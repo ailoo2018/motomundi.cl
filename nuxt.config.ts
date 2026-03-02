@@ -78,6 +78,8 @@ export default defineNuxtConfig({
 
     // Never cache these
     '/cart': { cache: false },
+    '/cart/**': { cache: false },
+    '/checkout': { cache: false },
     '/checkout/**': { cache: false },
     '/cuenta/**': { cache: false },
     '/account/**': { cache: false },
