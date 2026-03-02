@@ -9,37 +9,32 @@ import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
 
 const { injectSkinClasses } = useSkins()
 
+
+
+// Get user-agent from request event
 const event = useRequestEvent()
 
-const deviceType = useState('deviceType', () => {
-  let ua = ''
-  if (import.meta.server) {
-    ua = event ? (getHeader(event, 'user-agent') || '') : ''
-  } else {
-    ua = navigator.userAgent
-  }
-  return ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
-})
+const ua = process.server && event
+  ? (getHeader(event, 'user-agent') || '')
+  : (process.client ? navigator.userAgent : '')
+
+const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
 
 
+console.log("deviceType " +  deviceType + " ua: " + ua)
 
 useHead({
   bodyAttrs: {
-    class: deviceType.value,
+    class: deviceType,
   },
 })
 
 // ℹ️ This will inject classes in body tag for accurate styling
 injectSkinClasses()
-
-onMounted(() => {
-  console.log("deviceType is: " + deviceType.value)
-})
 </script>
 
 <template>
   <!-- mobile -->
-
   <div v-if="deviceType === 'mobile'">
     <main class="main-content">
       <MobileHeader />
