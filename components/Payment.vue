@@ -38,7 +38,6 @@ const onSelectPayment = pmId => {
   selectedPayment.value = pmId
 }
 
-
 const icons = {
   "8": {
     label: "Webpay",
