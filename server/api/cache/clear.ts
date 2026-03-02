@@ -14,23 +14,39 @@ export default defineEventHandler(async (event) => {
         'Content-Type': 'application/json',
       },
     })
-    const storage = useStorage('cache');
 
-    // 1. Get all keys (this driver is already scoped to 'w3:')
-    const keys = await storage.getKeys();
 
-    // 2. Manually delete each key.
-    // storage.removeItem() uses the standard 'DEL' command,
-    // avoiding the problematic 'UNLINK' command.
-    await Promise.all(
-      keys.map(key => storage.removeItem(key))
-    );
+    const redisUrl = process.env.REDIS_URL
 
-    return {
+    if (!redisUrl) {
+      throw createError({ statusCode: 500, message: 'REDIS_URL not found' })
+    }
+
+
+    let cursor = '0'
+    let totalDeleted = 0
+    const prefix = 'w3:*'
+
+    do {
+      // SCAN returns [nextCursor, keysArray]
+      const [nextCursor, keys] = await redis.scan(cursor, 'MATCH', prefix, 'COUNT', 100)
+      cursor = nextCursor
+
+      if (keys.length > 0) {
+        // 2. Use 'del' explicitly (NOT unlink)
+        await redis.del(...keys)
+        totalDeleted += keys.length
+      }
+    } while (cursor !== '0')
+
+
+    var rs =  {
       w3ClearRs: w3ClearRs,
       status: 'success',
-      clearedCount: keys.length
+      totalDeleted
     };
+
+    return rs
   } catch (e: any) {
     throw createError({
       statusCode: 500,
