@@ -153,8 +153,6 @@ const getPaymentInfo = async () => {
 
 
 /************************ MERCADO PAGO SCRIPT **********************/
-let mercadoPagoPaymentData = null
-const cardPaymentBrickController = ref(null)
 
 // Function to load MercadoPago SDK
 const loadMercadoPagoScript = () => {
@@ -194,11 +192,6 @@ const renderCardPaymentBrick = async bricksBuilder => {
     },
   }
 
-  cardPaymentBrickController.value = await bricksBuilder.create(
-    'cardPayment',
-    'cardPaymentBrick_container',
-    settings,
-  )
 }
 
 /************************ /MERCADO PAGO SCRIPT **********************/
@@ -242,13 +235,6 @@ onMounted(async() => {
 })
 
 // Clean up when component unmounts
-onUnmounted(() => {
-  if (cardPaymentBrickController.value) {
-    cardPaymentBrickController.value.unmount()
-  }
-
-
-})
 
 
 const webpayToken = ref("")
@@ -387,7 +373,6 @@ defineExpose({ getPaymentInfo, validate, pay })
       <VForm ref="form">
         <div class="payment__payment-methods">
           <VRadioGroup v-model="selectedPayment">
-            <div>
               <div
                 v-for="pm in gateways"
                 class="payment-method"
@@ -433,7 +418,6 @@ defineExpose({ getPaymentInfo, validate, pay })
                   </div>
                 </div>
               </div>
-            </div>
           </VRadioGroup>
         </div>
 
