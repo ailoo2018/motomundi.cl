@@ -373,51 +373,51 @@ defineExpose({ getPaymentInfo, validate, pay })
       <VForm ref="form">
         <div class="payment__payment-methods">
           <VRadioGroup v-model="selectedPayment">
-              <div
-                v-for="pm in gateways"
-                class="payment-method"
-                :class="{'current' : selectedPayment === pm.id }"
-              >
-                <div class="payment-method__heading input__group radio ">
-                  <VRadio
-                    :id="'addon-payments-' + pm.id"
-                    :key="pm.id"
-                    :value="pm.id"
-                  />
+            <div
+              v-for="pm in gateways"
+              class="payment-method"
+              :class="{'current' : selectedPayment === pm.id }"
+            >
+              <div class="payment-method__heading input__group radio ">
+                <VRadio
+                  :id="'addon-payments-' + pm.id"
+                  :key="pm.id"
+                  :value="pm.id"
+                />
 
-                  <label :for="'addon-payments-' + pm.id">
-                    <div class="payment-method__info">
-                      <span class="payment-method__name"> {{
-                        icons['' + pm.id] ? icons['' + pm.id].label : pm.name
-                      }} </span>
-                      <div
-                        v-if="icons['' + pm.id]"
-                        class="payment-method__icon"
-                      >
-                        <img
-                          v-for="img in icons['' + pm.id].icons"
-                          :key="img"
-                          :src="img"
-                          alt="{{pm.name}}"
-                        >
-                      </div>
-                    </div>
-                  </label>
-                </div>
-
-                <div
-                  v-show="icons['' + pm.id].comment && selectedPayment === pm.id"
-                  class="payment-method__body"
-                >
-                  <div>{{ icons['' + pm.id].comment }}</div>
-                  <div v-if="pm.id=== 18">
+                <label :for="'addon-payments-' + pm.id" @click="selectedPayment = pm.id">
+                  <div class="payment-method__info">
+                    <span class="payment-method__name"> {{
+                      icons['' + pm.id] ? icons['' + pm.id].label : pm.name
+                    }} </span>
                     <div
-                      id="cardPaymentBrick_container"
-                      class="mpbrick"
-                    />
+                      v-if="icons['' + pm.id]"
+                      class="payment-method__icon"
+                    >
+                      <img
+                        v-for="img in icons['' + pm.id].icons"
+                        :key="img"
+                        :src="img"
+                        alt="{{pm.name}}"
+                      >
+                    </div>
                   </div>
+                </label>
+              </div>
+
+              <div
+                v-show="icons['' + pm.id].comment && selectedPayment === pm.id"
+                class="payment-method__body"
+              >
+                <div>{{ icons['' + pm.id].comment }}</div>
+                <div v-if="pm.id=== 18">
+                  <div
+                    id="cardPaymentBrick_container"
+                    class="mpbrick"
+                  />
                 </div>
               </div>
+            </div>
           </VRadioGroup>
         </div>
 
