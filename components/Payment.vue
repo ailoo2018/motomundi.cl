@@ -33,6 +33,10 @@ const PaymentMethods = Object.freeze({
 
 //const billingAddress = checkoutStore.billingAddress
 
+const onSelectPayment = pmId => {
+  console.log("Selected Payment: " + pmId)
+  selectedPayment.value = pmId
+}
 
 
 const icons = {
@@ -378,14 +382,15 @@ defineExpose({ getPaymentInfo, validate, pay })
               class="payment-method"
               :class="{'current' : selectedPayment === pm.id }"
             >
-              <div class="payment-method__heading input__group radio ">
+              <div class="payment-method__heading input__group radio " @click="onSelectPayment(pm.id)">
                 <VRadio
                   :id="'addon-payments-' + pm.id"
                   :key="pm.id"
                   :value="pm.id"
+
                 />
 
-                <label :for="'addon-payments-' + pm.id" @click="selectedPayment = pm.id">
+                <label :for="'addon-payments-' + pm.id" @click="onSelectPayment(pm.id)">
                   <div class="payment-method__info">
                     <span class="payment-method__name"> {{
                       icons['' + pm.id] ? icons['' + pm.id].label : pm.name
