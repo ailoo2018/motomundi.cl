@@ -1,5 +1,4 @@
 <script setup>
-import { getHeader } from 'h3'
 import MotomundiHeaderbar from "@/views/pages/motomundi-headerbar.vue"
 import MotomundiNavigation from "@/views/pages/motomundi-navigation.vue"
 import MotomundiHeaderlogo from "@/views/pages/motomundi-headerlogo.vue"
@@ -8,68 +7,44 @@ import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
 
 const { injectSkinClasses } = useSkins()
-
-
-
-// Get user-agent from request event
-const event = useRequestEvent()
-
-const ua = process.server && event
-  ? (getHeader(event, 'user-agent') || '')
-  : (process.client ? navigator.userAgent : '')
-
-const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
-
-
-console.log("deviceType " +  deviceType + " ua: " + ua)
-
-useHead({
-  bodyAttrs: {
-    class: deviceType,
-  },
-})
-
-// ℹ️ This will inject classes in body tag for accurate styling
 injectSkinClasses()
 </script>
 
 <template>
   <!-- mobile -->
-  <div v-if="deviceType === 'mobile'">
+  <div class="mobile-layout">
     <main class="main-content">
       <MobileHeader />
-      <div class="home-container">
-        <slot />
-      </div>
+      <div class="home-container"><slot /></div>
       <MobileFooter />
     </main>
   </div>
-  <!-- /mobile -->
 
   <!-- desktop -->
-  <div
-    v-else
-    class="layout-wrapper layout-blank"
-    data-allow-mismatch
-  >
+  <div class="desktop-layout layout-wrapper layout-blank">
     <div class="landing-page-wrapper desktop-only-container">
       <MotomundiHeaderbar />
       <MotomundiHeaderlogo />
       <MotomundiNavigation />
-
       <main class="main-content">
         <slot />
-        <!-- 👉 Footer -->
         <MotomundiFooter />
       </main>
     </div>
   </div>
-  <!-- /desktop -->
 
   <WhatsAppFab />
 </template>
 
 <style>
+/* Mobile layout: show on small screens, hide on large */
+.mobile-layout  { display: block; }
+.desktop-layout { display: none;  }
+
+@media (min-width: 961px) {
+  .mobile-layout  { display: none;  }
+  .desktop-layout { display: block; }
+}
 /* Background for Desktop */
 @media (min-width: 961px) {
   body {
