@@ -2,32 +2,25 @@
 import FacetGroup from "@/views/pages/products/filter/facet-group.vue"
 import SearchFilters from "@/views/pages/products/filter/search-filters.vue";
 
-const filters = defineModel({
-  type: Array,
-  default: () => []
+const props = defineProps({
+  filters : {
+    type: Array,
+    default: () => [],
+  },
 })
+
+const filters = computed(() => {
+  return props.filters ?? []
+})
+const emit = defineEmits(["on-filter"])
 
 const orderBy = ref()
 
-/*        <option
-          value="name:asc"
-          selected="selected"
-        >
-          Orden: Marca
-        </option>
-        <!-- <option value="best_seller" >Popularidad</option> -->
-        <option value="newest:asc">
-          Orden: Novedades
-        </option>
-        <option value="bestseller">
-          Orden: Más Vendidos
-        </option>
-        <option value="price:asc">
-          Orden: Precio Menos a Más
-        </option>
-        <option value="price:desc">
-          Orden: Precio Más a Menos
-        </option>*/
+watch(props.filters, (value, oldValue) => {
+  emit("on-filter",filters.value )
+})
+
+
 const sorts = [
   { id: "name:asc", name: "Orden: Marca" },
   { id: "newest:asc", name: "Orden: Novedades" },
@@ -40,6 +33,9 @@ orderBy.value = sorts[0]
 
 const isShowFilters = ref(false)
 
+const onFilterChanged = filters => {
+  emit("on-filter",filters )
+}
 
 
 const removeAllFilters = () => {
@@ -56,6 +52,7 @@ const showFilters  = () => {
     <div class="desktop__filters-main">
       <div class="facets-desktop__main">
         <div class="facets-bar-desktop">
+
           <VBtn
             :rounded="0"
             color="#c74044"
@@ -80,7 +77,7 @@ const showFilters  = () => {
               <div class="facets-desktop__container fade ">
                 <div class="facets-desktop__container-content">
                   <nav class="facets-desktop">
-                    <ul ng-init="isShowAttrCat = {}">
+                    <ul >
                       <li class="facets__in-use">
                         <div class="in-use__header">
                           <strong>Tus filtros</strong>
@@ -94,7 +91,7 @@ const showFilters  = () => {
                       </li>
 
 
-                      <SearchFilters v-model="filters" />
+                      <SearchFilters @filters-changed="onFilterChanged" :filters="filters" />
 
 
                     </ul>
@@ -105,19 +102,7 @@ const showFilters  = () => {
           </VBtn>
         </div>
       </div>
-<!--
-      <div  class="fast-delivery-button hide-on-small-only">
-        <nav class="fast-delivery">
-          <span
-            class="mtc-link fake-checkbox"
-            data-dr="true"
-            style="block-size: 42px;"
-          >
-            <span>En stock</span>
-          </span>
-        </nav>
-      </div>
--->
+
       <div
         class="most-used-filters"
         style="display: none;"

@@ -12,6 +12,7 @@ export const useUserStore = defineStore('user', {
       try {
 
         const userId = useCookie("user_id").value
+        if(!userId) return
 
         const { data, pending } = await useFetch(`/api/account/user`, {
           key: `current-user-` + userId,

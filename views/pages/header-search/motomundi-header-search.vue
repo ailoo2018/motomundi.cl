@@ -52,11 +52,12 @@ watchDebounced(
     if (newVal.length > 2) {
       try {
         // Use $fetch for manual triggers inside watchers/methods
+        console.log(`newVal ${newVal} vs ${oldVal} `)
         if(newVal !== oldVal) {
-          filters.value = null
+          filters.value = []
         }
 
-        search()
+        await search()
 
       } catch (e) {
         console.error("Search error:", e)
@@ -66,7 +67,7 @@ watchDebounced(
       products.value = []
     }
   },
-  { debounce: 300, maxWait: 1000 }, // Configurable delay
+  { debounce: 300, maxWait: 100 }, // Configurable delay
 )
 
 
@@ -138,7 +139,7 @@ const search = async (isNextPage = false) => {
         products.value.push(...rs.products)
       } else {
         products.value = rs.products
-        if (!filters.value)
+        if (!filters.value || filters.value.length === 0)
           filters.value = rs.filters
       }
 
@@ -157,6 +158,35 @@ const search = async (isNextPage = false) => {
   }
 }
 
+const onFilter = filters => {
+  const map = new Map()
+  for (const f of filters) {
+    for (const b of f.buckets) {
+      if (b.checked) {
+        if (!map.has(f.type))
+          map.set(f.type, { type: f.type, values: [] })
+        map.get(f.type).values.push(b.id)
+      }
+    }
+  }
+
+  const newQuery = [...map.values()]
+  if (currentQuery.value.length === 0 && newQuery.length === 0) {
+    return
+  }
+
+  if (JSON.stringify(currentQuery.value) !== JSON.stringify(newQuery)) {
+
+
+    console.log("NEW QUERY!" + JSON.stringify(newQuery))
+    console.log("OLD QUERY!" + JSON.stringify(currentQuery.value))
+    currentQuery.value = newQuery
+
+    search()
+  }
+}
+
+/*
 watch(filters, () => {
 
   if (!sword.value || sword.value.trim().length === 0) {
@@ -192,6 +222,7 @@ watch(filters, () => {
 
 
 }, { deep: true })
+*/
 
 
 const closeSearch = () => {
@@ -223,7 +254,7 @@ const closeSearch = () => {
     class="search__dropdown"
   >
     <div class="search-dropdown__filters">
-      <SearchFilters v-model="filters" />
+      <SearchFilters :filters="filters" @filters-changed="onFilter" />
     </div>
     <!-- /filters panel -->
 

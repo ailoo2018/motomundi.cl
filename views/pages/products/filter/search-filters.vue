@@ -1,16 +1,31 @@
 <script setup>
-const filters = defineModel({
-  type: Array,
-  default: () => []
+const props = defineProps({
+  filters: {
+    type: Array,
+    default: () => []
+  }
 })
+
+const emit = defineEmits(['filters-changed'])
 
 const MAX_SHOW = 5
 const sliderValues = ref([10, 60])
+
+const filters = computed(() => {
+  return props.filters || []
+})
 
 const activeFilters = computed(() => {
   return filters?.value?.filter(f => f.buckets.length > 0) || []
 })
 
+watch(
+  () => props.filters,
+  (newFilters) => {
+    emit('filters-changed', newFilters)
+  },
+  { deep: true }
+)
 </script>
 
 <template>

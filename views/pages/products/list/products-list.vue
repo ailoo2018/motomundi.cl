@@ -81,11 +81,11 @@ if(query.sword){
   baseQuery.push({ type: "sword", value: query.sword })
 }
 
+let currQuery = ""
 
-watch(filters, () => {
-
+const onFilter = filters => {
   const map = new Map()
-  for (const f of filters.value) {
+  for (const f of filters) {
     for (const b of f.buckets) {
       if (b.checked) {
         if (!map.has(f.type))
@@ -112,10 +112,50 @@ watch(filters, () => {
 
     search()
   }
+}
+
+/*
+watch(filters, (newVal, oldVal) => {
+
+  const map = new Map()
+  for (const f of filters.value) {
+    for (const b of f.buckets) {
+      if (b.checked) {
+        if (!map.has(f.type))
+          map.set(f.type, { type: f.type, values: [] })
+        map.get(f.type).values.push(b.id)
+      }
+    }
+  }
+
+  const newQuery = [...map.values()]
+  if (currentQuery.value.length === 0 && newQuery.length === 0) {
+    return
+  }
+
+  if (currQuery !== JSON.stringify(newQuery)) {
+
+    if (currentPage.value !== 1) {
+      ignoreNextPageWatch.value = true // Prevent the watcher from calling search()
+      currentPage.value = 1
+    }
+/!*
+    console.log("newVal" + JSON.stringify(newVal))
+    console.log("oldVal" + JSON.stringify(oldVal))
+*!/
+
+    console.log("currQuery before:" + currQuery + " vs previous: " +  JSON.stringify(newQuery))
+    currQuery = JSON.stringify(newQuery)
+    console.log("currQuery value is now: " + currQuery)
+    nextTick()
+
+    search(true)
+  }
 }, { deep: true })
+*/
 
 
-const search = async () => {
+const search = async (isUseFetch = false) => {
   try {
     products.value = []
     loading.value = true
@@ -137,8 +177,7 @@ const search = async () => {
 
     var cQuery = JSON.parse(JSON.stringify(currentQuery.value))
 
-    // add baseQuery filters if not selected
-    console.log(JSON.stringify(baseQuery))
+
     for (const bq of baseQuery) {
       const fg = cQuery.find(cq => cq.type === bq.type)
       if (!fg) {
@@ -191,18 +230,7 @@ const search = async () => {
     }
 
 
-    const { data } = await useFetch(`/api/product/search`, {
-      key: `product-search-` + JSON.stringify(body),
-      method: "POST",
-      body: body,
-    })
-
-    rs = data.value
-
-    /*
-    let debug = false
-
-    if(!debug) {
+    if(!isUseFetch) {
       const { data } = await useFetch(`/api/product/search`, {
         key: `product-search-` + JSON.stringify(body),
         method: "POST",
@@ -210,14 +238,14 @@ const search = async () => {
       })
 
       rs = data.value
-    }else {
+    }else{
       rs = await $fetch(`/api/product/search`, {
         key: `product-search-` + JSON.stringify(body),
         method: "POST",
         body: body,
       })
     }
-*/
+
 
 
 
@@ -243,7 +271,9 @@ const search = async () => {
 }
 
 
-search()
+search();
+
+
 </script>
 
 <template>
@@ -261,7 +291,7 @@ search()
           </div>
         </div>
         <!-- / page title -->
-        <DesktopFilters v-model="filters" />
+        <DesktopFilters :filters="filters" @on-filter="onFilter" />
       </div>
       <section class="pa-1 results-list">
         <div
