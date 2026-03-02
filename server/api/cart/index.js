@@ -24,7 +24,7 @@ export default defineEventHandler(async event => {
     console.error('Stack trace:', error.stack)
     throw createError({
       statusCode: error.statusCode || 500,
-      message: error.message || 'Failed to lookup friendly URL',
+      message: error.data?.message || error.data?.error || error.message || 'Failed cart: ' + url,
     })
   }
 })
