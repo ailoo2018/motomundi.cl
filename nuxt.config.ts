@@ -250,6 +250,7 @@ export default defineNuxtConfig({
 
 
     storage: {
+/*
       cache: {
         // 1 Memory
         // driver: 'memory',  // or 'redis' in production
@@ -259,6 +260,7 @@ export default defineNuxtConfig({
         max: 2000,
         ttl: 60 * 1000, // ms
       },
+*/
     },
     // Development: filesystem
 /*    devStorage: {

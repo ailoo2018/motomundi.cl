@@ -1,35 +1,41 @@
+import { getDomainId } from "../../ailoo-domain"
+
 export default defineEventHandler(async (event) => {
-  // Protect this endpoint
+  try {
 
+    let w3ClearRs = null
 
-  /*
-  const { secret } = await readBody(event)
-    if (secret !== process.env.CACHE_CLEAR_SECRET) {
-      throw createError({ statusCode: 401, message: 'Unauthorized' })
-    }
-  */
+    const config = useRuntimeConfig()
+    const baseUrl = config.public.w3BaseUrl
 
-  const storage = useStorage('cache')
-  const keys = await storage.getKeys()
+    w3ClearRs = await $fetch(`${baseUrl}/${getDomainId()}/refresh`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const storage = useStorage('cache');
 
-/*
-  for(var key of keys){
-    try {
-      await storage.removeItem(key)
-    }catch(error){
-      console.error("Unable to delete key: " + key + " " + error.message, error)
-    }
+    // 1. Get all keys (this driver is already scoped to 'w3:')
+    const keys = await storage.getKeys();
+
+    // 2. Manually delete each key.
+    // storage.removeItem() uses the standard 'DEL' command,
+    // avoiding the problematic 'UNLINK' command.
+    await Promise.all(
+      keys.map(key => storage.removeItem(key))
+    );
+
+    return {
+      w3ClearRs: w3ClearRs,
+      status: 'success',
+      clearedCount: keys.length
+    };
+  } catch (e: any) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Manual cache clear failed',
+      data: e.message
+    });
   }
-*/
-  await Promise.all(keys.map(key => storage.removeItem(key)))
-
-  console.log('storage getMounted: ' + storage?.getMount("cache")?.driver?.name)
-
-
-  return {
-    success: true,
-    driver: storage?.getMount("cache")?.driver?.name,
-    cleared: keys.length,
-    keys: keys,
-  }
-})
+});

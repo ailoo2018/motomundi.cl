@@ -1,6 +1,6 @@
 import { getDomainId } from "../../ailoo-domain"
 
-export default defineEventHandler(async event => {
+export default defineCachedEventHandler(async event => {
 
   let url = ""
   try {
