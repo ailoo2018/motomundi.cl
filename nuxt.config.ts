@@ -84,6 +84,7 @@ export default defineNuxtConfig({
     '/api/**': { cache: false },
     '/Account/**': { cache: false },
     '/payment/**': { cache: false },
+    '/payments/**': { cache: false },
     '/product/view.rails': { cache: false },
     '/Product/View.rails': { cache: false },
     '/Product/Search.rails': { cache: false },
