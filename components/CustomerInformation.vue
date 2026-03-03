@@ -261,50 +261,45 @@ const handlePhoneInput = event => {
         elevation="0"
       >
         <VCardText class="pa-1 ma-1 pa-md-2 ma-md-2">
-          <div >
+          <div>
             <h2>Información de contacto</h2>
             <p class="ma-2">
               Usaremos estos datos para avisarte sobre el estado del pedido
             </p>
 
 
-            <VRow class="ma-0 pa-0">
+            <VRow class="ma-0 pa-0  ">
               <VCol
                 cols="12"
                 md="6"
                 lg="6"
                 xl="6"
-                class="pa-0 ma-1"
+                class="pa-0 pr-2 mt-4"
               >
-
-                <div class="input__group">
-                  <VTextField
-                    v-model="contactEmail"
-                    label="Email *"
-                    variant="solo"
-                    :disabled="disableEmail"
-                    :rules="reqRules"
-                    required
-                  />
-                </div>
+                <VTextField
+                  v-model="contactEmail"
+                  label="Email *"
+                  variant="solo"
+                  :disabled="disableEmail"
+                  :rules="reqRules"
+                  required
+                />
               </VCol>
               <VCol
                 cols="12"
                 md="6"
                 lg="6"
                 xl="6"
-                class="pa-0 ma-1"
+                class="pa-0 mt-4"
               >
-                <div class="input__group">
-                  <VTextField
-                    v-model="contactPhone"
-                    label="Teléfono Movil *"
-                    required
-                    variant="solo"
-                    :rules="reqPhoneRules"
-                    @input="handlePhoneInput"
-                  />
-                </div>
+                <VTextField
+                  v-model="contactPhone"
+                  label="Teléfono Movil *"
+                  required
+                  variant="solo"
+                  :rules="reqPhoneRules"
+                  @input="handlePhoneInput"
+                />
               </VCol>
             </VRow>
           </div>
