@@ -9,13 +9,13 @@ const props = defineProps(
 
 function formatName(str) {
   // Remove extra spaces
-  str = str.trim();
+  str = str.trim()
 
   // Capitalize the first letter of each word
-  const words = str.split(" ");
-  const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+  const words = str.split(" ")
+  const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
 
-  return formattedWords.join(" ");
+  return formattedWords.join(" ")
 }
 
 const reviews = ref([])
@@ -29,7 +29,7 @@ const listReviews = () => {
 
 const getReviewInitial = review => {
   if(review.party != null && review.party.name != null && review.party.name.length > 0){
-    return review.party.name[0].toUpperCase();
+    return review.party.name[0].toUpperCase()
   }
 
   return "A"
@@ -39,6 +39,7 @@ const getReviewInitial = review => {
 const getReviewerName = review => {
   if(review.party != null && review.party.name != null){
     var arr = review.party.name.split(' ')
+    
     return formatName( arr[0] )
   }
 
@@ -55,11 +56,13 @@ const selectTodos = () => {
 
 
 onMounted(async () => {
-  var rs = await $fetch("/api/reviews/list?productId=" + props.product.id)
+  var rs = await $fetch("/api/reviews/list?productId=" + props.product.id
+    + "&modelId=" + (props.product.model?.id || 0) )
   if(rs.reviews)
     reviews.value = rs.reviews
 
-  reviewStats.value = await $fetch("/api/reviews/stats?productId=" + props.product.id)
+  reviewStats.value = await $fetch("/api/reviews/stats?productId=" + props.product.id
+    + "&modelId=" + (props.product.model?.id || 0) )
 
   reviewStats.value.stars = Math.floor(reviewStats.value.avgRating*2)
 
@@ -78,169 +81,169 @@ onMounted(async () => {
 
 <template>
   <VContainer>
-  <VRow
-    v-if="reviews.length > 0"
-    id="reviews"
-    style="padding: 12px;"
-  >
-    <VCol cols="12">
-      <aside
-        id="ratings"
-        class="v-row"
-      >
-        <VCol cols="12">
-          <div class="group-title">
-            <h2>Valoraciones</h2>
-          </div>
-        </VCol>
-        <VCol
-          cols="12"
-          md="4"
-          lg="3"
+    <VRow
+      v-if="reviews.length > 0"
+      id="reviews"
+      style="padding: 12px;"
+    >
+      <VCol cols="12">
+        <aside
+          id="ratings"
+          class="v-row"
         >
-          <div class="ratings-summary">
-            <span class="rating-block">
-              <span>
-                <VRating
-                  readonly
-                  color="primary"
-                  :model-value="reviewStats.avgRating"
-                />
-              </span>
-            </span>
-            <p>
-              Basada en <strong>{{ reviewStats.totalReviews }}</strong> valoraciones
-            </p>
-            <div
-              class="rating-star-summary"
-              :class="{'rating-selected': ratingCriteria.rating == 5 }"
-              @click="selectRating(5)"
-            >
-              <span>5 estrellas</span>
-              <div class="rating-outer">
-                <div
-
-                  class="rating-inner"
-                  :style="`width: ${reviewStats['5']}%;`"
-                />
-              </div>
+          <VCol cols="12">
+            <div class="group-title">
+              <h2>Valoraciones</h2>
             </div>
-            <div
-
-              class="rating-star-summary"
-              :class="{'rating-selected': ratingCriteria.rating == 4 }"
-              @click="selectRating(4)"
-            >
-              <span>4 estrellas</span>
-              <div class="rating-outer">
-                <div
-
-                  class="rating-inner"
-                  :style="`width: ${reviewStats['4']}%;`"
-                />
-              </div>
-            </div>
-            <div
-
-              class="rating-star-summary"
-              :class="{'rating-selected': ratingCriteria.rating == 3 }"
-              @click="selectRating(3)"
-            >
-              <span>3 estrellas</span>
-              <div class="rating-outer">
-                <div
-                  class="rating-inner"
-                  :style="`width: ${reviewStats['3']}%;`"
-                />
-              </div>
-            </div>
-            <div
-              class="rating-star-summary"
-              :class="{'rating-selected': ratingCriteria.rating == 2 }"
-              @click="selectRating(2)"
-            >
-              <span>2 estrellas</span>
-              <div class="rating-outer">
-                <div
-                  class="rating-inner"
-                  :style="`width: ${reviewStats['2']}%;`"
-                />
-              </div>
-            </div>
-            <div
-              class="rating-star-summary"
-              :class="{'rating-selected': ratingCriteria.rating == 1 }"
-              @click="selectRating(1)"
-            >
-              <span>1 estrella</span>
-              <div class="rating-outer">
-                <div
-                  class="rating-inner"
-                  :style="`width: ${reviewStats['1']}%;`"
-                />
-              </div>
-            </div>
-          </div>
-        </VCol>
-        <VCol
-          cols="12"
-          sm="12"
-          md="7"
-          lg="8"
-          class="col-lg-offset-1"
-        >
-          <div class="review-filters">
-            <button
-              :class="{'selected': ratingCriteria.selected == 'TODOS'}"
-              @click="ratingCriteria.selected = 'TODOS'"
-            >
-              Todas
-            </button>
-            <button
-              :class="{'selected': ratingCriteria.selected == 'MEJOR_VALORADO'}"
-              @click="ratingCriteria.selected = 'MEJOR_VALORADO'"
-            >
-              Mejor valorado
-            </button>
-            <button
-              :class="{'selected': ratingCriteria.selected == 'PEOR_VALORADO'}"
-              @click="ratingCriteria.selected = 'PEOR_VALORADO'"
-            >
-              Peor valorado
-            </button>
-            <button
-              :class="{'selected': ratingCriteria.selected == 'CON_FOTOS'}"
-              @click="ratingCriteria.selected = 'CON_FOTOS'"
-            >
-              Con fotos
-            </button>
-            <button
-              :class="{'selected': ratingCriteria.selected == 'CON_VIDEOS'}"
-              @click="ratingCriteria.selected = 'CON_VIDEOS'"
-            >
-              Con vídeos
-            </button>
-          </div>
-          <div
-            v-for="review in reviews"
-            class="user-reviews"
+          </VCol>
+          <VCol
+            cols="12"
+            md="4"
+            lg="3"
           >
-            <div class="user-review-block">
-              <div>
-                <div class="rating">
-                  <div class="rating-aside">
-                    <span class="rating-block">
-                      <span>
-                        <VRating
-                          readonly
-                          color="primary"
-                          density="compact"
-                          size="x-small"
-                          :model-value="review.rating / 2 "
-                        />
+            <div class="ratings-summary">
+              <span class="rating-block">
+                <span>
+                  <VRating
+                    readonly
+                    color="primary"
+                    :model-value="reviewStats.avgRating"
+                  />
+                </span>
+              </span>
+              <p>
+                Basada en <strong>{{ reviewStats.totalReviews }}</strong> valoraciones
+              </p>
+              <div
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 5 }"
+                @click="selectRating(5)"
+              >
+                <span>5 estrellas</span>
+                <div class="rating-outer">
+                  <div
+
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['5']}%;`"
+                  />
+                </div>
+              </div>
+              <div
+
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 4 }"
+                @click="selectRating(4)"
+              >
+                <span>4 estrellas</span>
+                <div class="rating-outer">
+                  <div
+
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['4']}%;`"
+                  />
+                </div>
+              </div>
+              <div
+
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 3 }"
+                @click="selectRating(3)"
+              >
+                <span>3 estrellas</span>
+                <div class="rating-outer">
+                  <div
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['3']}%;`"
+                  />
+                </div>
+              </div>
+              <div
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 2 }"
+                @click="selectRating(2)"
+              >
+                <span>2 estrellas</span>
+                <div class="rating-outer">
+                  <div
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['2']}%;`"
+                  />
+                </div>
+              </div>
+              <div
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 1 }"
+                @click="selectRating(1)"
+              >
+                <span>1 estrella</span>
+                <div class="rating-outer">
+                  <div
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['1']}%;`"
+                  />
+                </div>
+              </div>
+            </div>
+          </VCol>
+          <VCol
+            cols="12"
+            sm="12"
+            md="7"
+            lg="8"
+            class="col-lg-offset-1"
+          >
+            <div class="review-filters">
+              <button
+                :class="{'selected': ratingCriteria.selected == 'TODOS'}"
+                @click="ratingCriteria.selected = 'TODOS'"
+              >
+                Todas
+              </button>
+              <button
+                :class="{'selected': ratingCriteria.selected == 'MEJOR_VALORADO'}"
+                @click="ratingCriteria.selected = 'MEJOR_VALORADO'"
+              >
+                Mejor valorado
+              </button>
+              <button
+                :class="{'selected': ratingCriteria.selected == 'PEOR_VALORADO'}"
+                @click="ratingCriteria.selected = 'PEOR_VALORADO'"
+              >
+                Peor valorado
+              </button>
+              <button
+                :class="{'selected': ratingCriteria.selected == 'CON_FOTOS'}"
+                @click="ratingCriteria.selected = 'CON_FOTOS'"
+              >
+                Con fotos
+              </button>
+              <button
+                :class="{'selected': ratingCriteria.selected == 'CON_VIDEOS'}"
+                @click="ratingCriteria.selected = 'CON_VIDEOS'"
+              >
+                Con vídeos
+              </button>
+            </div>
+            <div
+              v-for="review in reviews"
+              class="user-reviews"
+            >
+              <div class="user-review-block">
+                <div>
+                  <div class="rating">
+                    <div class="rating-aside">
+                      <span class="rating-block">
+                        <span>
+                          <VRating
+                            readonly
+                            color="primary"
+                            density="compact"
+                            size="x-small"
+                            :model-value="review.rating / 2 "
+                          />
    
+                        </span>
                       </span>
-                    </span>
                     <!--
                       <a data-v-0fe02913="" 
                       href="/cascos/ls2-ff327_challenger_gp_black_red_32.aspx" data-dr="true"
@@ -252,85 +255,88 @@ onMounted(async () => {
                       alt="FF327 Challenger GP Black / Red" width="21" height="21"
                       > <noscript></noscript></span></a>
                     -->
-                  </div>
-                  <h4>
-                    <div
-                      class="account__user-avatar small"
-                      style="background: linear-gradient(45deg, rgb(127, 167, 26) 0%, rgb(119, 138, 191) 100%);"
-                    >
-                      <img
-                        alt="user-avatar"
-                        style="display: none;"
-                      >
-                      {{ getReviewInitial(review) }}
                     </div>
-                    <span>{{ getReviewerName(review) }} • {{ formatDate( review.date, { day: '2-digit', month: '2-digit', year: 'numeric' } ) }}</span>
-                    <svg
-                      width="18"
-                      height="18"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="language-icon icon sprite-icons"
-                    >
-                      <title>Español</title>
-                      <use href="/content/svg/motomundi.svg#i-ratings-es" />
-                    </svg>
-                  </h4>
-                  <p>
-                    {{ review.comment }}
-                  </p>
-                  <div v-if="review.images" class="review-gallery">
-                    <span
-                      v-for="revImg in review.images"
-
-                      class="image-cover"
-                    >
-                      <img
-                        v-if="revImg.image"
-                        :src="revImg.image"
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="Review image"
-                        width="110"
-                        height="70"
+                    <h4>
+                      <div
+                        class="account__user-avatar small"
+                        style="background: linear-gradient(45deg, rgb(127, 167, 26) 0%, rgb(119, 138, 191) 100%);"
                       >
-                      <noscript />
-                    </span>
+                        <img
+                          alt="user-avatar"
+                          style="display: none;"
+                        >
+                        {{ getReviewInitial(review) }}
+                      </div>
+                      <span>{{ getReviewerName(review) }} • {{ formatDate( review.date, { day: '2-digit', month: '2-digit', year: 'numeric' } ) }}</span>
+                      <svg
+                        width="18"
+                        height="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="language-icon icon sprite-icons"
+                      >
+                        <title>Español</title>
+                        <use href="/content/svg/motomundi.svg#i-ratings-es" />
+                      </svg>
+                    </h4>
+                    <p>
+                      {{ review.comment }}
+                    </p>
+                    <div
+                      v-if="review.images"
+                      class="review-gallery"
+                    >
+                      <span
+                        v-for="revImg in review.images"
+
+                        class="image-cover"
+                      >
+                        <img
+                          v-if="revImg.image"
+                          :src="revImg.image"
+                          class="cdn-img v-lazy-image v-lazy-image-loaded"
+                          alt="Review image"
+                          width="110"
+                          height="70"
+                        >
+                        <noscript />
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div
-            v-if="reviews.length == 0"
-            class="empty-review"
-          >
-            <p>
-              <svg
-                width="16"
-                height="18"
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon sprite-line-icons"
-              >
-                <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-thumbs-up" />
-              </svg>
-              <span>Aún no hay valoraciones</span>
-            </p>
-          </div>
-          <div
-            class="reviews-load-more"
-            style=""
-          >
-            <button
-              class="button"
-              @click="listReviews"
+            <div
+              v-if="reviews.length == 0"
+              class="empty-review"
             >
-              Ver más comentarios
-            </button>
-          </div>
-        </VCol>
-      </aside>
-    </VCol>
-  </VRow>
+              <p>
+                <svg
+                  width="16"
+                  height="18"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon sprite-line-icons"
+                >
+                  <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-thumbs-up" />
+                </svg>
+                <span>Aún no hay valoraciones</span>
+              </p>
+            </div>
+            <div
+              class="reviews-load-more"
+              style=""
+            >
+              <button
+                class="button"
+                @click="listReviews"
+              >
+                Ver más comentarios
+              </button>
+            </div>
+          </VCol>
+        </aside>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

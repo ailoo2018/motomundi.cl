@@ -7,10 +7,12 @@ export default defineEventHandler(async event => {
   try {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
-    const { productId } = getQuery(event)
+    const { productId, modelId } = getQuery(event)
 
 
-    url = `${baseUrl}/${getDomainId()}/reviews/list?productId=` + parseInt(productId)
+    url = `${baseUrl}/${getDomainId()}/reviews/list?productId=`
+      + parseInt(productId)
+      + "&modelId=" + parseInt(modelId)
 
     return await $fetch(url, {
       method: 'GET',
