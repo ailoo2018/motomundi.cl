@@ -117,8 +117,6 @@ const commentForm = ref({
     <div
       id="comments"
       class="comments-area ng-cloak"
-      ng-controller="BlogCommentsCtrl"
-      ng-init="commentForm.postId= $page.Id"
     >
       <span
         id="comment-post-id"

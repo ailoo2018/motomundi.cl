@@ -53,7 +53,7 @@ const products = computed(() => {
                 Oferta {{ Math.round(p.discountPercent) }}%
               </div>
               <div class="name">{{ p.fullName }}</div>
-              <VRating v-model="p.rating" color="primary" />
+              <VRating v-model="p.rating" color="primary" density="compact" />
               <div class="price">{{ formatMoney(p.minPrice) }}</div>
             </div>
           </div>
@@ -99,6 +99,19 @@ const products = computed(() => {
   .multi-products .product-container:nth-last-child(n+3),
   .multi-products .product-container:nth-last-child(n+3) ~ .product-container {
     flex: 0 0 calc(33.333% - 0.7rem);
+  }
+}
+
+
+@media (max-width: 768px) {
+  #blog-wrapper .products-shortcode-container .product-container {
+    padding: 10px 0;
+    background-color: #FFF;
+  }
+
+  #blog-wrapper .products-shortcode-container .price {
+    font-size: 14px;
+    font-weight: bold;
   }
 }
 </style>

@@ -48,7 +48,7 @@ injectSkinClasses()
               class="home blog"
               style="background-color: #f5f5f5;"
             >
-              <div class="menu-mobile-container">
+              <div class="menu-mobile-container container v-container">
                 <button
                   type="button"
                   class="tcon tcon-menu--arrow tcon-menu--arrowup white home"
@@ -74,7 +74,9 @@ injectSkinClasses()
                   <div class="left-content">
                     <slot/>
                   </div>
+                  <div class="d-none d-lg-block">
                   <BlogRightContent/>
+                  </div>
                 </div>
               </div>
             </div>

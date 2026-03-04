@@ -44,7 +44,7 @@ const addRemoveToWishList = async event => {
 .sprite-line-icons use {
   fill-rule: evenodd;
   fill: none;
-  stroke: #2a2a2a;
+  stroke: #bebebe;
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
