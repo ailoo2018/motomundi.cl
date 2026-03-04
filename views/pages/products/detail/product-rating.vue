@@ -163,6 +163,37 @@ const getStats = async () => {
 }
 
 
+// Add these new refs for the lightbox
+const lightboxOpen = ref(false)
+const lightboxImage = ref('')
+const lightboxImages = ref([])
+const lightboxIndex = ref(0)
+
+const openLightbox = (images, index) => {
+  lightboxImages.value = images
+  lightboxIndex.value = index
+  lightboxImage.value = getImageUrl(images[index].id, 'org', getDomainId())
+  lightboxOpen.value = true
+}
+
+const closeLightbox = () => {
+  lightboxOpen.value = false
+}
+
+const prevImage = () => {
+  if (lightboxIndex.value > 0) {
+    lightboxIndex.value--
+    lightboxImage.value = getImageUrl(lightboxImages.value[lightboxIndex.value].id, 1200, getDomainId())
+  }
+}
+
+const nextImage = () => {
+  if (lightboxIndex.value < lightboxImages.value.length - 1) {
+    lightboxIndex.value++
+    lightboxImage.value = getImageUrl(lightboxImages.value[lightboxIndex.value].id, 1200, getDomainId())
+  }
+}
+
 onMounted(async () => {
 
   await getStats()
@@ -173,7 +204,6 @@ onMounted(async () => {
 
 <template>
   <VContainer>
-
     <VRow
       v-if="product.totalReviews > 0"
       id="reviews"
@@ -381,27 +411,28 @@ onMounted(async () => {
                     <p>
                       {{ review.comment }}
                     </p>
+
+                    <!-- Replace the existing review-gallery div -->
                     <div
                       v-if="review.configuration?.images"
                       class="review-gallery"
                     >
                       <span
-                        v-for="revImg in review.configuration.images"
-
+                        v-for="(revImg, imgIndex) in review.configuration.images"
+                        :key="revImg.id"
                         class="image-cover"
+                        style="cursor: pointer;"
+                        @click="openLightbox(review.configuration.images, imgIndex)"
                       >
-
-
                         <img
                           v-if="revImg.id"
-                          :src="getImageUrl(revImg.id, 300, getDomainId())"
-                          @error="handleImageError(revImg.id)"
+                          :src="getImageUrl(revImg.id, 'org', getDomainId())"
                           class="cdn-img v-lazy-image v-lazy-image-loaded"
                           alt="Review image"
                           width="110"
                           height="70"
+                          @error="handleImageError(revImg.id)"
                         >
-
                       </span>
                     </div>
                   </div>
@@ -409,8 +440,14 @@ onMounted(async () => {
               </div>
             </div>
 
-            <div v-if="loading" class="mt-10 pt-4 w-100 d-flex justify-center">
-              <VProgressCircular  indeterminate color="primary" />
+            <div
+              v-if="loading"
+              class="mt-10 pt-4 w-100 d-flex justify-center"
+            >
+              <VProgressCircular
+                indeterminate
+                color="primary"
+              />
             </div>
 
             <div
@@ -444,6 +481,129 @@ onMounted(async () => {
         </aside>
       </VCol>
     </VRow>
+
+
+    <!-- Add this lightbox dialog BEFORE the closing </VContainer> -->
+    <VDialog
+      v-model="lightboxOpen"
+      max-width="900"
+      @keydown.esc="closeLightbox"
+    >
+      <VCard class="lightbox-card pa-0">
+        <VToolbar
+          density="compact"
+          color="transparent"
+          class="lightbox-toolbar"
+        >
+          <VSpacer />
+          <span class="text-caption text-medium-emphasis">
+            {{ lightboxIndex + 1 }} / {{ lightboxImages.length }}
+          </span>
+          <VBtn
+            icon
+            variant="text"
+            @click="closeLightbox"
+          >
+            <VIcon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ><path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+            </VIcon>
+          </VBtn>
+        </VToolbar>
+
+        <VCardText class="d-flex align-center justify-center pa-2 lightbox-content">
+          <VBtn
+            icon
+            variant="text"
+            :disabled="lightboxIndex === 0"
+            class="lightbox-nav"
+            @click="prevImage"
+          >
+            <VIcon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ><path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              /><path d="M15 6l-6 6l6 6" /></svg>
+            </VIcon>
+          </VBtn>
+
+          <img
+            :src="lightboxImage"
+            class="lightbox-img"
+            alt="Review image"
+          >
+
+          <VBtn
+            icon
+            variant="text"
+            :disabled="lightboxIndex === lightboxImages.length - 1"
+            class="lightbox-nav"
+            @click="nextImage"
+          >
+            <VIcon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ><path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              /><path d="M9 6l6 6l-6 6" /></svg>
+            </VIcon>
+          </VBtn>
+        </VCardText>
+
+        <!-- Thumbnail strip (only shown if multiple images) -->
+        <VCardText
+          v-if="lightboxImages.length > 1"
+          class="d-flex justify-center gap-2 pt-0 pb-3 flex-wrap"
+        >
+
+          <img
+            v-for="(thumb, i) in lightboxImages"
+            :key="thumb.id"
+            :src="getImageUrl(thumb.id, 'org', getDomainId())"
+            class="lightbox-thumb"
+            :class="{ 'lightbox-thumb-active': i === lightboxIndex }"
+            alt=""
+            width="60"
+            height="40"
+            @click="lightboxIndex = i; lightboxImage = getImageUrl(thumb.id, 300, getDomainId())"
+          >
+        </VCardText>
+      </VCard>
+    </VDialog>
   </VContainer>
 </template>
 
@@ -715,6 +875,65 @@ onMounted(async () => {
   line-height: 27px;
   width: 26px;
   margin: 0;
+}
+
+/* Lightbox styles */
+.image-cover {
+  cursor: pointer;
+  display: inline-block;
+  transition: opacity 0.2s;
+}
+
+.image-cover:hover {
+  opacity: 0.85;
+}
+
+.lightbox-card {
+  background: #111 !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.lightbox-toolbar {
+  background: rgba(0,0,0,0.6) !important;
+}
+
+.lightbox-toolbar .v-btn,
+.lightbox-toolbar span {
+  color: #fff !important;
+}
+
+.lightbox-content {
+  min-height: 300px;
+  background: #111;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+}
+
+.lightbox-nav {
+  color: #fff !important;
+  flex-shrink: 0;
+}
+
+.lightbox-nav:disabled {
+  opacity: 0.2;
+}
+
+.lightbox-thumb {
+  object-fit: cover;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.lightbox-thumb-active {
+  border-color: #fff;
 }
 </style>
 
