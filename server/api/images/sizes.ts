@@ -7,7 +7,7 @@ export default defineEventHandler(async event => {
   try {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
-    const { imageId, sizes } = getQuery(event)
+    const { imageId, sizes, maintainAspectRatio } = getQuery(event)
 
 
     url = `${baseUrl}/${getDomainId()}/images/sizes`
@@ -20,6 +20,7 @@ export default defineEventHandler(async event => {
       body: {
         imageId,
         sizes: sizes || [300, 600],
+        maintainAspectRatio,
       },
     })
   }catch(error) {

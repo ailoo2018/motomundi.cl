@@ -26,12 +26,19 @@ const pageSize = ref(10)
 const ratingCriteria = ref({ rating: 0, selected: "TODOS", orderBy: "date", orderDir: "desc" })
 
 
-const handleImageError = () => {
-/*
+const handleImageError = imageId => {
+
   console.log("handleImageError: " + props.product.id)
-  $fetch("/api/product/create-images?id=" + props.product.id)
+  $fetch("/api/images/sizes", {
+    method: "POST",
+    body: {
+      imageId: imageId,
+      sizes: [300],
+      maintainAspectRatio: true,
+    },
+  })
   imageError.value = true
-*/
+
 }
 
 const nextPage = async () => {
@@ -387,8 +394,8 @@ onMounted(async () => {
 
                         <img
                           v-if="revImg.id"
-                          :src="getImageUrl(revImg.id, 'org', getDomainId())"
-                          @error="handleImageError"
+                          :src="getImageUrl(revImg.id, 300, getDomainId())"
+                          @error="handleImageError(revImg.id)"
                           class="cdn-img v-lazy-image v-lazy-image-loaded"
                           alt="Review image"
                           width="110"
