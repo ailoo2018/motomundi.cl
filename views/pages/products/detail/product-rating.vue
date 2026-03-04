@@ -23,13 +23,40 @@ const loading = ref(false)
 const reviewStats = ref({})
 const currentPage = ref(1)
 const pageSize = ref(10)
-const ratingCriteria = ref({ rating: 0, selected: "TODOS" })
+const ratingCriteria = ref({ rating: 0, selected: "TODOS", orderBy: "date", orderDir: "desc" })
 
 
 const nextPage = async () => {
   currentPage.value = currentPage.value + 1
   await listReviews()
 }
+
+const showAll = async () => {
+  ratingCriteria.value.selected = "TODOS"
+  ratingCriteria.value.rating = 0
+  ratingCriteria.value.orderBy= "date"
+  ratingCriteria.value.orderDir = "desc"
+  reviews.value = []
+
+  await listReviews()
+}
+
+const orderBy = async(field, dir, sel) => {
+  ratingCriteria.value.selected = sel
+  ratingCriteria.value.rating = 0
+  ratingCriteria.value.orderBy= field
+  ratingCriteria.value.orderDir = dir
+
+  reviews.value = []
+  await listReviews()
+
+}
+
+watch(ratingCriteria, () => {
+  if(ratingCriteria.value.rating > 0){
+    ratingCriteria.value.selected = ""
+  }
+}, { deep: true})
 
 const getReviewInitial = review => {
   if(review.party != null && review.party.name != null && review.party.name.length > 0){
@@ -52,15 +79,13 @@ const getReviewerName = review => {
 
 const selectRating = async stars => {
   ratingCriteria.value.rating = stars
+  ratingCriteria.value.selected = ""
   reviews.value = []
   currentPage.value = 1
 
   await listReviews()
 }
 
-const selectTodos = () => {
-
-}
 
 const listReviews = async () => {
 
@@ -79,8 +104,8 @@ const listReviews = async () => {
         limit: limit,
         offset: offset,
         rating: ratingCriteria.value?.rating || null,
-        orderBy: "date",
-        orderDir: "desc",
+        orderBy: ratingCriteria.value.orderBy,
+        orderDir: ratingCriteria.value.orderDir,
       },
     })
 
@@ -248,19 +273,19 @@ onMounted(async () => {
             <div class="review-filters">
               <button
                 :class="{'selected': ratingCriteria.selected == 'TODOS'}"
-                @click="ratingCriteria.selected = 'TODOS'"
+                @click="showAll"
               >
                 Todas
               </button>
               <button
                 :class="{'selected': ratingCriteria.selected == 'MEJOR_VALORADO'}"
-                @click="ratingCriteria.selected = 'MEJOR_VALORADO'"
+                @click="orderBy('rating', 'desc', 'MEJOR_VALORADO')"
               >
                 Mejor valorado
               </button>
               <button
                 :class="{'selected': ratingCriteria.selected == 'PEOR_VALORADO'}"
-                @click="ratingCriteria.selected = 'PEOR_VALORADO'"
+                @click="orderBy('rating', 'asc', 'PEOR_VALORADO')"
               >
                 Peor valorado
               </button>
