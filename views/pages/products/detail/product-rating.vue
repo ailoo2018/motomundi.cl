@@ -426,7 +426,7 @@ onMounted(async () => {
                       >
                         <img
                           v-if="revImg.id"
-                          :src="getImageUrl(revImg.id, 'org', getDomainId())"
+                          :src="getImageUrl(revImg.id, 300, getDomainId())"
                           class="cdn-img v-lazy-image v-lazy-image-loaded"
                           alt="Review image"
                           width="110"
