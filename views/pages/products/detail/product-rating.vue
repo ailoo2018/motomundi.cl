@@ -19,12 +19,16 @@ function formatName(str) {
 }
 
 const reviews = ref([])
+const loading = ref(false)
 const reviewStats = ref({})
+const currentPage = ref(1)
+const pageSize = ref(10)
 const ratingCriteria = ref({ rating: 0, selected: "TODOS" })
 
 
-const listReviews = () => {
-
+const nextPage = async () => {
+  currentPage.value = currentPage.value + 1
+  await listReviews()
 }
 
 const getReviewInitial = review => {
@@ -46,23 +50,63 @@ const getReviewerName = review => {
   return "Anónimo"
 }
 
-const selectRating = stars => {
+const selectRating = async stars => {
   ratingCriteria.value.rating = stars
+  reviews.value = []
+  currentPage.value = 1
+
+  await listReviews()
 }
 
 const selectTodos = () => {
 
 }
 
+const listReviews = async () => {
 
-onMounted(async () => {
-  var rs = await $fetch("/api/reviews/list?productId=" + props.product.id
-    + "&modelId=" + (props.product.model?.id || 0) )
-  if(rs.reviews)
-    reviews.value = rs.reviews
+  loading.value = true
 
-  reviewStats.value = await $fetch("/api/reviews/stats?productId=" + props.product.id
-    + "&modelId=" + (props.product.model?.id || 0) )
+  try {
+    const limit = pageSize.value
+    const offset = (currentPage.value - 1) * pageSize.value
+
+    var rs = await $fetch("/api/reviews/list", {
+      key: "ratings-" + props.product.id,
+      method: "GET",
+      query: {
+        productId: props.product.id,
+        modelId: props.product.model?.id || 0,
+        limit: limit,
+        offset: offset,
+        rating: ratingCriteria.value?.rating || null,
+        orderBy: "date",
+        orderDir: "desc",
+      },
+    })
+
+
+    if (rs.reviews)
+      rs.reviews.forEach(r => {
+        reviews.value.push(r)
+      })
+    else
+      review.value = []
+
+  }finally {
+    loading.value = false
+  }
+
+
+}
+
+const getStats = async () => {
+  reviewStats.value = await $fetch("/api/reviews/stats", {
+    method: "GET",
+    query: {
+      productId: props.product.id,
+      modelId: props.product.model?.id,
+    },
+  } )
 
   reviewStats.value.stars = Math.floor(reviewStats.value.avgRating*2)
 
@@ -76,13 +120,22 @@ onMounted(async () => {
     reviewStats.value["" + r.ratingGroup] = r.totalReviews / reviewStats.value.totalReviews * 100
   }
 
+}
+
+
+onMounted(async () => {
+
+  await getStats()
+  await listReviews()
+
 })
 </script>
 
 <template>
   <VContainer>
+
     <VRow
-      v-if="reviews.length > 0"
+      v-if="product.totalReviews > 0"
       id="reviews"
       style="padding: 12px;"
     >
@@ -224,6 +277,8 @@ onMounted(async () => {
                 Con vídeos
               </button>
             </div>
+
+            <!-- review entries -->
             <div
               v-for="review in reviews"
               class="user-reviews"
@@ -244,17 +299,22 @@ onMounted(async () => {
    
                         </span>
                       </span>
-                    <!--
-                      <a data-v-0fe02913="" 
-                      href="/cascos/ls2-ff327_challenger_gp_black_red_32.aspx" data-dr="true"
-                      class="rating-version mtc-link"><span
-                      data-v-0fe02913="">{{product.brand.name}} {{product.name}}</span>
-                      <span data-v-0fe02913=""><img
-                      src="https://images.motocard.com/eyJidWNrZXQiOiJtb3RvY2FyZCIsImtleSI6InByb2R1Y3RzL2ltYWdlcy8wOTI5My9sczItZmYzMjdfY2hhbGxlbmdlcl9ncF9ibGFja19yZWRfMzItNi1NLTA5MjkzNjY1LmpwZyIsImVkaXRzIjp7IndlYnAiOnsicXVhbGl0eSI6ODV9LCJqcGVnIjp7InF1YWxpdHkiOjkxfSwicmVzaXplIjp7IndpZHRoIjoyMSwiaGVpZ2h0IjoyMSwiZml0IjoiY292ZXIifX0sInYiOiJmMjczMDczNTc2MjMyODQxYTA4Y2YxODNkNDYxYTFkOCJ9"
-                      class="cdn-img v-lazy-image v-lazy-image-loaded"
-                      alt="FF327 Challenger GP Black / Red" width="21" height="21"
-                      > <noscript></noscript></span></a>
-                    -->
+
+                      <a
+                        :href="getProductUrl(review.product)"
+                        class="rating-version mtc-link"
+                      >
+                        <span>{{ review.product.fullName }}</span>
+                        <span>
+                          <img
+                            :src="getImageUrl(review.product?.image, 300, getDomainId())"
+                            class="cdn-img"
+                            alt=""
+                            width="21"
+                            height="21"
+                          > 
+                        </span>
+                      </a>
                     </div>
                     <h4>
                       <div
@@ -306,8 +366,12 @@ onMounted(async () => {
               </div>
             </div>
 
+            <div v-if="loading" class="mt-10 pt-4 w-100 d-flex justify-center">
+              <VProgressCircular  indeterminate color="primary" />
+            </div>
+
             <div
-              v-if="reviews.length == 0"
+              v-if="!loading && reviews.length == 0"
               class="empty-review"
             >
               <p>
@@ -328,7 +392,7 @@ onMounted(async () => {
             >
               <button
                 class="button"
-                @click="listReviews"
+                @click="nextPage"
               >
                 Ver más comentarios
               </button>

@@ -7,16 +7,20 @@ export default defineEventHandler(async event => {
   try {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
-    const { productId } = getQuery(event)
+    const { productId, modelId } = getQuery(event)
 
 
-    url = `${baseUrl}/${getDomainId()}/reviews/stats?productId=` + parseInt(productId)
+    url = `${baseUrl}/${getDomainId()}/reviews/stats`
 
     return await $fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
+      query: {
+        productId: productId,
+        modelId: modelId,
+      }
     })
   }catch(error) {
     console.error('Error in products/search lookup: ' + url, error)
