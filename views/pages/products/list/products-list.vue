@@ -30,6 +30,106 @@ const filters = ref()
 let rs = {}
 const products = ref([])
 
+const baseQuery = []
+if (query.categoryId) {
+  baseQuery.push({ type: "categories", values: [query.categoryId] })
+}
+if (query.brandId) {
+  baseQuery.push({ type: "brands", values: [query.brandId] })
+}
+if (query.collection) {
+  baseQuery.push({ type: "collection", value: query.collection })
+}
+if(query.bikeManufacturer){
+  baseQuery.push({ type: "bike", value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear } })
+}
+if(query.minDiscount){
+  baseQuery.push({ type: "minDiscount", value: query.minDiscount })
+}
+if(query.sword){
+  baseQuery.push({ type: "sword", value: query.sword })
+}
+
+const getQueryDescription = q => {
+  if(q.description?.length > 0)
+    return  `<span class="total-results">${ rs?.totalHits } </span>` + q.description
+
+  return "Resultado"
+}
+
+
+const buildBody = (queryOverride = []) => {
+  let body = {
+    brands: [],
+    models: [],
+    colors: [],
+    tags: [],
+    sword: null,
+    bike: null,
+    collectionId: null,
+    sizes: [],
+    categories: [],
+    limit: pageSize.value,
+    offset: (currentPage.value - 1) * pageSize.value,
+  }
+
+  var cQuery = JSON.parse(JSON.stringify(queryOverride))
+
+  for (const bq of baseQuery) {
+    const fg = cQuery.find(cq => cq.type === bq.type)
+    if (!fg) {
+      cQuery.push(bq)
+    } else {
+      if (fg && !fg.values && fg.values.length === 0) {
+        fg.values = bq.values
+      }
+    }
+  }
+
+  for (const facet of cQuery) {
+    if (facet.type === "brands") body.brands = facet.values
+    else if (facet.type === "categories") body.categories = facet.values
+    else if (facet.type === "tags") facet.values.forEach(t => body.tags.push(t))
+    else if (facet.type === "sizes") facet.values.forEach(t => body.sizes.push(t))
+    else if (facet.type === "models") facet.values.forEach(t => body.models.push(t))
+    else if (facet.type === "collection") body.collectionId = facet.value
+    else if (facet.type === "colors") facet.values.forEach(t => body.colors.push(t))
+    else if (facet.type === "bike") body.bike = facet.value
+    else body[facet.type] = facet.value
+  }
+
+  return body
+}
+
+const applyResults = (data) => {
+  if (data && data.products) {
+    total.value = data.totalHits
+    totalPages.value = Math.ceil(data.totalHits / pageSize.value)
+    title.value = data.query.description
+    queryDesc.value = getQueryDescription(data.query)
+    data.products.forEach(p => p.isWished = false)
+    products.value = data.products
+    if (!filters.value) filters.value = data.filters
+  }
+}
+
+
+
+
+
+const initialBody = buildBody([])
+
+const { data: initialData } = await useFetch(`/api/product/search`, {
+  key: `product-search-` + JSON.stringify(initialBody),
+  method: "POST",
+  body: initialBody,
+})
+
+if (initialData.value) {
+  rs = initialData.value
+  applyResults(rs)
+}
+
 useSeoMeta({
   title: () =>  title.value || 'Loading Product...',
   ogTitle: () => title.value,
@@ -53,35 +153,7 @@ watch(currentPage, async () => {
 })
 
 
-const getQueryDescription = q => {
-  if(q.description?.length > 0)
-    return  `<span class="total-results">${ rs?.totalHits } </span>` + q.description
 
-  return "Resultado"
-}
-
-const baseQuery = []
-
-if (query.categoryId) {
-  baseQuery.push({ type: "categories", values: [query.categoryId] })
-}
-if (query.brandId) {
-  baseQuery.push({ type: "brands", values: [query.brandId] })
-}
-if (query.collection) {
-  baseQuery.push({ type: "collection", value: query.collection })
-}
-if(query.bikeManufacturer){
-  baseQuery.push({ type: "bike", value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear } })
-}
-if(query.minDiscount){
-  baseQuery.push({ type: "minDiscount", value: query.minDiscount })
-}
-if(query.sword){
-  baseQuery.push({ type: "sword", value: query.sword })
-}
-
-let currQuery = ""
 
 const onFilter = filters => {
   const map = new Map()
@@ -114,166 +186,25 @@ const onFilter = filters => {
   }
 }
 
-/*
-watch(filters, (newVal, oldVal) => {
-
-  const map = new Map()
-  for (const f of filters.value) {
-    for (const b of f.buckets) {
-      if (b.checked) {
-        if (!map.has(f.type))
-          map.set(f.type, { type: f.type, values: [] })
-        map.get(f.type).values.push(b.id)
-      }
-    }
-  }
-
-  const newQuery = [...map.values()]
-  if (currentQuery.value.length === 0 && newQuery.length === 0) {
-    return
-  }
-
-  if (currQuery !== JSON.stringify(newQuery)) {
-
-    if (currentPage.value !== 1) {
-      ignoreNextPageWatch.value = true // Prevent the watcher from calling search()
-      currentPage.value = 1
-    }
-/!*
-    console.log("newVal" + JSON.stringify(newVal))
-    console.log("oldVal" + JSON.stringify(oldVal))
-*!/
-
-    console.log("currQuery before:" + currQuery + " vs previous: " +  JSON.stringify(newQuery))
-    currQuery = JSON.stringify(newQuery)
-    console.log("currQuery value is now: " + currQuery)
-    nextTick()
-
-    search(true)
-  }
-}, { deep: true })
-*/
-
-
-const search = async (isUseFetch = false) => {
+const search = async () => {
   try {
     products.value = []
     loading.value = true
 
-    let body = {
-      brands: [],
-      models: [],
-      colors: [],
-      tags: [],
-      sword: null,
-      bike: null,
-      collectionId: null,
-      sizes: [],
-      categories: [],
-      limit: pageSize.value,
-      offset: (currentPage.value - 1) * pageSize.value,
-    }
+    const body = buildBody(currentQuery.value)
 
+    rs = await $fetch(`/api/product/search`, {
+      method: "POST",
+      body: body,
+    })
 
-    var cQuery = JSON.parse(JSON.stringify(currentQuery.value))
-
-
-    for (const bq of baseQuery) {
-      const fg = cQuery.find(cq => cq.type === bq.type)
-      if (!fg) {
-        cQuery.push(bq)
-      } else {
-        if (fg && !fg.values && fg.values.length === 0) {
-          fg.values = bq.values
-        }
-      }
-    }
-
-    for (const facet of cQuery) {
-      if (facet.type === "brands") {
-        body.brands = facet.values
-      }
-      else if (facet.type === "categories") {
-        body.categories = facet.values
-      }
-
-      else if (facet.type === "tags") {
-        facet.values.forEach(t => {
-          body.tags.push(t)
-        })
-      }
-      else if (facet.type === "sizes") {
-        facet.values.forEach(t => {
-          body.sizes.push(t)
-        })
-      }
-      else if (facet.type === "models") {
-        facet.values.forEach(t => {
-          body.models.push(t)
-        })
-      }
-      else if (facet.type === "collection") {
-        body.collectionId = facet.value
-      }
-      else if (facet.type === "colors") {
-        facet.values.forEach(t => {
-          body.colors.push(t)
-        })
-      }
-      else if (facet.type === "bike") {
-        body.bike = facet.value
-      }
-      else {
-        body[facet.type] = facet.value
-      }
-
-    }
-
-
-    if(!isUseFetch) {
-      const { data } = await useFetch(`/api/product/search`, {
-        key: `product-search-` + JSON.stringify(body),
-        method: "POST",
-        body: body,
-      })
-
-      rs = data.value
-    }else{
-      rs = await $fetch(`/api/product/search`, {
-        key: `product-search-` + JSON.stringify(body),
-        method: "POST",
-        body: body,
-      })
-    }
-
-
-
-
-
-    if (rs && rs.products) {
-      total.value = rs.totalHits
-      totalPages.value = Math.ceil( rs.totalHits / pageSize.value )
-
-
-      title.value = rs.query.description
-      queryDesc.value = getQueryDescription(rs.query)
-      rs.products.forEach(p => p.isWished = false )
-      products.value = rs.products
-      if (!filters.value)
-        filters.value = rs.filters
-
-    }
+    applyResults(rs)
   } catch (e) {
     console.log(e.message)
   } finally {
     loading.value = false
   }
 }
-
-
-search();
-
-
 </script>
 
 <template>
