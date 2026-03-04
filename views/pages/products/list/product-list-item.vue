@@ -40,10 +40,18 @@ const onClickMiniture = img => {
 
 const imageError = ref(false)
 
-const handleImageError = () => {
-  console.log("handleImageError: " + props.product.id)
-  $fetch("/api/product/create-images?id=" + props.product.id)
-  imageError.value = true
+const handleImageError = (imageId) => {
+
+  $fetch("/api/images/sizes", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: {
+      imageId: imageId
+    }
+  })
+
 }
 
 watch(() => props.product.image, () => {

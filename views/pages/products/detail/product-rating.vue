@@ -26,6 +26,14 @@ const pageSize = ref(10)
 const ratingCriteria = ref({ rating: 0, selected: "TODOS", orderBy: "date", orderDir: "desc" })
 
 
+const handleImageError = () => {
+/*
+  console.log("handleImageError: " + props.product.id)
+  $fetch("/api/product/create-images?id=" + props.product.id)
+  imageError.value = true
+*/
+}
+
 const nextPage = async () => {
   currentPage.value = currentPage.value + 1
   await listReviews()
@@ -56,7 +64,7 @@ watch(ratingCriteria, () => {
   if(ratingCriteria.value.rating > 0){
     ratingCriteria.value.selected = ""
   }
-}, { deep: true})
+}, { deep: true })
 
 const getReviewInitial = review => {
   if(review.party != null && review.party.name != null && review.party.name.length > 0){
@@ -367,23 +375,26 @@ onMounted(async () => {
                       {{ review.comment }}
                     </p>
                     <div
-                      v-if="review.images"
+                      v-if="review.configuration?.images"
                       class="review-gallery"
                     >
                       <span
-                        v-for="revImg in review.images"
+                        v-for="revImg in review.configuration.images"
 
                         class="image-cover"
                       >
+
+
                         <img
-                          v-if="revImg.image"
-                          :src="revImg.image"
+                          v-if="revImg.id"
+                          :src="getImageUrl(revImg.id, 'org', getDomainId())"
+                          @error="handleImageError"
                           class="cdn-img v-lazy-image v-lazy-image-loaded"
                           alt="Review image"
                           width="110"
                           height="70"
                         >
-                        <noscript />
+
                       </span>
                     </div>
                   </div>
