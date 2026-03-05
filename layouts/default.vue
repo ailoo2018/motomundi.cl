@@ -6,13 +6,18 @@ import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
 
+
+const event = useRequestEvent()
+const deviceType = event?.node.req.headers['x-device-type'] ?? 'desktop'
+const isMobile = deviceType === 'mobile'
+
 const { injectSkinClasses } = useSkins()
 injectSkinClasses()
 </script>
 
 <template>
   <!-- mobile -->
-  <div class="mobile-layout">
+  <div  v-if="isMobile" class="mobile-layout">
     <main class="main-content">
       <MobileHeader />
       <div class="home-container"><slot /></div>
@@ -21,7 +26,7 @@ injectSkinClasses()
   </div>
 
   <!-- desktop -->
-  <div class="desktop-layout layout-wrapper layout-blank">
+  <div v-else class="desktop-layout layout-wrapper layout-blank">
 
     <div class="landing-page-wrapper desktop-only-container">
       <MotomundiHeaderbar />

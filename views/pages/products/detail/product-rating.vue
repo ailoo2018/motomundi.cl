@@ -7,6 +7,8 @@ const props = defineProps(
   },
 )
 
+console.log("in product rating")
+
 const { data: reviewStats } = await useAsyncData(
   `stats-${props.product.id}`,
   () => $fetch("/api/reviews/stats", {

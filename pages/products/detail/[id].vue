@@ -18,6 +18,7 @@ import ProductRating from "@/views/pages/products/detail/product-rating.vue"
 
 definePageMeta({
   public: true,
+
 })
 
 
@@ -34,18 +35,9 @@ console.log("router: " + route.params.id)
 
 const productId = computed(() => {
   if (route.params.id) return route.params.id
-
-  const slugValue = Array.isArray(route.params.slug)
-    ? route.params.slug[0]
-    : route.params.slug
-
-  if (slugValue) {
-    return slugValue.split('-')[0]
-  }
-
-  return null
+  const slugValue = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
+  return slugValue ? slugValue.split('-')[0] : null
 })
-
 
 
 const productCarousel = ref()
@@ -53,7 +45,11 @@ const currentVideoId = ref()
 
 const cartStore = useCartStore()
 
-const { data: product, pending } = await useFetch(() => `/api/product/${productId.value}`)
+const { data: product, pending } = await useFetch(`/api/product/${productId.value}`, {
+  // Use a unique key based on the STABLE computed value
+  key: `product-data-${productId.value}`,
+
+})
 
 useSeoMeta({
   title: () =>  product.value?.name || 'Loading Product...',
@@ -186,7 +182,7 @@ onMounted(() => {
     }
 
     console.log("view_item", gprod)
-    
+
     window.dataLayer.push(gprod)
   }
 })

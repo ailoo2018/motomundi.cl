@@ -56,7 +56,7 @@ export default defineNuxtConfig({
 
 
   devtools: { enabled: true },
-  // debug: true,
+  debug: true,
 
   sourcemap: {
     server: true,
@@ -66,7 +66,7 @@ export default defineNuxtConfig({
   ssr: true,
 
   routeRules: {
-    '/**': createCachedRoute('all'),
+//    '/**': createCachedRoute('all'),
     '/': createCachedRoute('homepage'),
     '/cafe-racer': createCachedRoute('cafe-racer'),
     '/motocross-enduro-trial': createCachedRoute('motocross'),
@@ -77,6 +77,7 @@ export default defineNuxtConfig({
     '/cascos-para-moto': createCachedRoute('cascos-para-moto'),
 
     // Never cache these
+    '/test': { cache: false, ssr: true },
     '/cart': { cache: false },
     '/env': { cache: false },
     '/cart/**': { cache: false },
@@ -215,11 +216,6 @@ export default defineNuxtConfig({
       chunkSizeWarningLimit: 5000,
     },
 
-    // REMOVE this - not a valid option
-    // server: {
-    //   sourcemap: true,
-    // },
-
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('.', import.meta.url)),
@@ -265,25 +261,9 @@ export default defineNuxtConfig({
 
 
     storage: {
-/*
-      cache: {
-        // 1 Memory
-        // driver: 'memory',  // or 'redis' in production
 
-        // 4. LRU Cache (in-memory with size limit)
-        driver: 'lru-cache',
-        max: 2000,
-        ttl: 60 * 1000, // ms
-      },
-*/
     },
-    // Development: filesystem
-/*    devStorage: {
-      cache: {
-        driver: 'fs',
-        base: './.nitro/cache',
-      },
-    },*/
+
     prerender: {
       crawlLinks: false,
     },
@@ -298,18 +278,9 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@pinia/nuxt',
     '@nuxtjs/sitemap',
-    'nuxt3-winston-log',
   ],
 
 
-  nuxt3WinstonLog: {
-    infoLogPath: './logs',
-    infoLogName: 'info.log',
-    errorLogPath: './logs',
-    errorLogName: 'error.log',
-    // Optional: automatically log all server requests
-    skipRequestMiddlewareHandler: true,
-  },
   site: {
     url: 'https://www.motomundi.cl', // Replace with your actual production URL
     name: "Motomundi 2",

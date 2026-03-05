@@ -1,21 +1,25 @@
-<script setup lang="ts">
+<script setup>
+/* eslint-disable camelcase */
+import { useConfigStore } from "@core/stores/config"
 
-import ProductRating from "@/views/pages/products/detail/product-rating.vue";
-import Breadcrumbs from "@/views/pages/products/breadcrumbs.vue";
-import ProductImagesCarousel from "@/views/pages/products/product-images-carousel.vue";
-import ShareComponent from "@/views/pages/products/share-component.vue";
-import PreProductBanner from "@/views/pages/products/pre-product-banner.vue";
-import ProductBuyPanel from "@/views/pages/products/product-buy-panel.vue";
-import Packs from "@/views/pages/products/detail/packs.vue";
-import Recommend from "@/views/pages/products/recommend.vue";
-import {useConfigStore} from "@core/stores/config";
-import {useGuestUser} from "@/composables/useGuestUser";
-import {ProductType} from "@/models/products";
+import ShareComponent from "@/views/pages/products/share-component.vue"
+import Breadcrumbs from "@/views/pages/products/breadcrumbs.vue"
+import ProductImagesCarousel from "@/views/pages/products/product-images-carousel.vue"
+import ProductBuyPanel from "@/views/pages/products/product-buy-panel.vue"
+import PreProductBanner from "@/views/pages/products/pre-product-banner.vue"
+import Recommend from "@/views/pages/products/recommend.vue"
+import { useGuestUser } from "@/composables/useGuestUser.js"
+import RelatedBlog from "@/views/pages/products/detail/related-blog.vue"
+import ProductDescription from "@/views/pages/products/detail/product-description.vue"
+import DataSheet from "@/views/pages/products/detail/data-sheet.vue"
+import Packs from "@/views/pages/products/detail/packs.vue"
+import { ProductType } from "@/models/products.js"
+import ProductRating from "@/views/pages/products/detail/product-rating.vue"
 
 definePageMeta({
   public: true,
-  layout: 'motomundi',
 })
+
 
 
 const { isMobile, isTablet, isDesktop } = useDevice()
@@ -29,9 +33,9 @@ const router = useRouter()
 console.log("router: " + route.params.id)
 
 const productId = computed(() => {
-  if (route.query.id) return route.query.id
+  if (route.params.id) return route.params.id
   const slugValue = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
-  return slugValue ? slugValue.split('-')[0] : 3192276
+  return slugValue ? slugValue.split('-')[0] : null
 })
 
 
@@ -289,8 +293,38 @@ onMounted(() => {
     </div>
   </article>
 
+  <VDialog
+    v-model="showVideoDialog"
+    max-width="800"
+  >
+    <VCard>
+      <VCardTitle class="d-flex justify-space-between pa-2">
+        <h1 class="pa-2">
+          {{ product.fullName }}}
+        </h1>
+        <div>
+          <VBtn
+            icon="tabler-x"
+            variant="text"
+            @click="showVideoDialog = false"
+          />
+        </div>
+      </VCardTitle>
+
+      <VCardText class="pa-1">
+        <div class="video-container">
+          <iframe
+            :src="`https://www.youtube.com/embed/${currentVideoId}`"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          />
+        </div>
+      </VCardText>
+    </VCard>
+  </VDialog>
 </template>
 
-<style scoped lang="scss">
 
-</style>

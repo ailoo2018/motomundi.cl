@@ -51,9 +51,12 @@ export const useLayoutConfigStore = defineStore('layoutConfig', () => {
 
 
   // Sync with `useMediaQuery`
+
+
   watchEffect(() => {
     breakpointRef.value = useMediaQuery(`(max-width: ${layoutConfig.app.overlayNavFromBreakpoint}px)`).value
   })
+
 
   const isLessThanOverlayNavBreakpoint = computed({
     get() {
@@ -68,7 +71,7 @@ export const useLayoutConfigStore = defineStore('layoutConfig', () => {
   // 👉 Layout Classes
   const _layoutClasses = computed(() => {
     const { y: windowScrollY } = useWindowScroll()
-    
+
     return [
       `layout-nav-type-${appContentLayoutNav.value}`,
       `layout-navbar-${navbarType.value}`,
