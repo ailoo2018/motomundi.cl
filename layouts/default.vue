@@ -53,6 +53,7 @@ injectSkinClasses()
 
 <style>
 /* Mobile layout: show on small screens, hide on large */
+/*
 .mobile-layout {
   display: block;
 }
@@ -60,6 +61,7 @@ injectSkinClasses()
 .desktop-layout {
   display: none;
 }
+*/
 
 @media (min-width: 961px) {
   .mobile-layout {
