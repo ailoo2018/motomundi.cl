@@ -209,10 +209,10 @@ const elementId = computed(() => {
 
 <style lang="scss">
 @use "@core/scss/template/mixins" as templateMixins;
+@use "@core/scss/base/mixins";
 
 /* stylelint-disable no-descending-specificity */
 @import "flatpickr/dist/flatpickr.css";
-@use "@core/scss/base/mixins";
 
 .flat-picker-custom-style {
   position: absolute;
