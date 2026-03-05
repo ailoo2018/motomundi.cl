@@ -212,7 +212,7 @@ const elementId = computed(() => {
 @use "@core/scss/base/mixins";
 
 /* stylelint-disable no-descending-specificity */
-@import "flatpickr/dist/flatpickr.css";
+@import "/node_modules/flatpickr/dist/flatpickr.css";
 
 .flat-picker-custom-style {
   position: absolute;
