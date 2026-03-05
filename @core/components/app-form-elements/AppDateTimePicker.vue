@@ -211,7 +211,7 @@ const elementId = computed(() => {
 @use "@core/scss/template/mixins" as templateMixins;
 
 /* stylelint-disable no-descending-specificity */
-@use "flatpickr/dist/flatpickr.css";
+@import "flatpickr/dist/flatpickr.css";
 @use "@core/scss/base/mixins";
 
 .flat-picker-custom-style {
