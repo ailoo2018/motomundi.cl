@@ -372,10 +372,11 @@ if (import.meta.client) {
                         </span>
 
                         <a
+                          v-if="review.product"
                           :href="getProductUrl(review.product)"
                           class="rating-version mtc-link"
                         >
-                          <span>{{ review.product.fullName }}</span>
+                          <span>{{ review.product?.fullName }}</span>
                           <span>
                             <img
                               :src="getImageUrl(review.product?.image, 300, getDomainId())"
