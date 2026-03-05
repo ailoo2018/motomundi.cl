@@ -12,6 +12,12 @@ definePageMeta({
 
 })
 
+useHead({
+  bodyAttrs: {
+    class: 'home',
+  },
+})
+
 useSeoMeta({
   title: 'Blog Motomundi: Guías de Equipamiento, Seguridad y Motociclismo',
   ogTitle: 'Blog Motomundi: Todo para el Motociclista en Chile',
@@ -26,7 +32,7 @@ const showBlogMenu = ref(false)
 </script>
 
 <template>
-  <NuxtLayout name="blog">
+  <NuxtLayout name="blog-home-layout">
     <template #blog-top>
       <BlogMainPost v-if="currentPage === 1" />
       <BlogRecommendedPosts v-if="currentPage === 1" />

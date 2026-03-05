@@ -47,5 +47,8 @@ if(path.includes("search")){
     :query="query"
   />
 </template>
+<style>
 
+
+</style>
 

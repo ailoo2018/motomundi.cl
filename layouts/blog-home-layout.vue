@@ -51,7 +51,7 @@ injectSkinClasses()
               <div class="menu-mobile-container">
                 <button
                   type="button"
-                  class="tcon tcon-menu--arrow tcon-menu--arrowup"
+                  class="tcon tcon-menu--arrow tcon-menu--arrowup white home"
                   @click="onShowBlogMenu"
                 >
                   <span class="tcon-menu__lines"/>
@@ -75,7 +75,7 @@ injectSkinClasses()
                     <slot/>
                   </div>
                   <div class="d-none d-lg-block">
-                  <BlogRightContent/>
+                    <BlogRightContent/>
                   </div>
                 </div>
               </div>
