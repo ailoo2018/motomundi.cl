@@ -12,10 +12,12 @@ COPY package.json pnpm-lock.yaml ./
 
 # 3. Install dependencies using pnpm
 # --frozen-lockfile ensures the build fails if the lockfile is out of sync
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # 4. Copy the rest of the source code
 COPY . .
+
+RUN pnpm run postinstall
 
 # 5. Build the Nuxt application
 RUN pnpm run build
