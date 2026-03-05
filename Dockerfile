@@ -1,10 +1,15 @@
 # Stage 1: Build
 FROM node:20-alpine AS builder
+# Install pnpm in the container
+RUN npm install -g pnpm
 WORKDIR /app
-COPY . .
-RUN npm install
-RUN npm run build
 
+# Copy pnpm's lockfile specifically
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+RUN pnpm run build
 
 # Stage 2: Run
 FROM node:20-alpine
