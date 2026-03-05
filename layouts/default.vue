@@ -63,6 +63,7 @@ injectSkinClasses()
 }
 */
 
+/*
 @media (min-width: 961px) {
   .mobile-layout {
     display: none;
@@ -72,6 +73,7 @@ injectSkinClasses()
     display: block;
   }
 }
+*/
 
 /* Background for Desktop */
 @media (min-width: 961px) {
