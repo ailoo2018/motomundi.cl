@@ -24,9 +24,7 @@ definePageMeta({
 
 const { isMobile, isTablet, isDesktop } = useDevice()
 const store = useConfigStore()
-const productForm = ref()
 const showVideoDialog = ref(false)
-const blogArticle = ref()
 const loading = ref(false)
 
 const route = useRoute()
@@ -153,9 +151,6 @@ const onSelectedColor = color => {
 }
 
 
-const isInStock = computed(() => {
-  return useProductsUtils().isInStock(product.value)
-})
 
 onMounted(() => {
 
@@ -294,7 +289,12 @@ onMounted(() => {
 
       <!-- recommend -->
       <Recommend :product="product" />
-      <ProductRating :product="product" />
+
+      <ProductRating
+        v-if="product && product.id"
+        :key="product.id"
+        :product="product" />
+
     </div>
   </article>
 
