@@ -56,7 +56,8 @@ export default defineNuxtConfig({
 
 
   devtools: { enabled: true },
-  debug: true,
+
+//  debug: true,
 
   sourcemap: {
     server: true,
@@ -66,7 +67,7 @@ export default defineNuxtConfig({
   ssr: true,
 
   routeRules: {
-//    '/**': createCachedRoute('all'),
+    '/**': createCachedRoute('all'),
     '/': createCachedRoute('homepage'),
     '/cafe-racer': createCachedRoute('cafe-racer'),
     '/motocross-enduro-trial': createCachedRoute('motocross'),

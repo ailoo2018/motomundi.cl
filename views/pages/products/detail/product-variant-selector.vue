@@ -100,16 +100,17 @@ const onSelectSize = size => {
    */
 }
 
-const setSizeProps = (item) => {
-  const available = isSizeAvailable(item);
+const setSizeProps = item => {
+  const available = isSizeAvailable(item)
 
   return {
     disabled: !available,
     subtitle: !available ? 'Agotado' : '',
+
     // You can even add custom classes here
-    class: !available ? 'opacity-50' : ''
-  };
-};
+    class: !available ? 'opacity-50' : '',
+  }
+}
 
 watch(selectedSize, size => {
   updateModel()
@@ -311,15 +312,15 @@ onMounted(() => {
               </div>
             </div>
             <div v-else>
-<VSelect
-  v-model="selectedSize"
-  :items="sizes"
-  :item-props="setSizeProps"
-  placeholder="Seleccione talla"
-  item-title="description"
-  item-value="id"
-  return-object
-/>
+              <VSelect
+                v-model="selectedSize"
+                :items="sizes"
+                :item-props="setSizeProps"
+                placeholder="Seleccione talla"
+                item-title="description"
+                item-value="id"
+                return-object
+              />
             </div>
           </div>
 

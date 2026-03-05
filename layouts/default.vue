@@ -5,17 +5,13 @@ import MotomundiHeaderlogo from "@/views/pages/motomundi-headerlogo.vue"
 import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
+import { useDeviceType } from "@/composables/useDeviceType.js"
 
 
-const event = useRequestEvent()
-const deviceType = event?.node.req.headers['x-device-type'] ?? 'desktop'
-// const isMobile = deviceType === 'mobile'
 
-const { isMobile, isTablet, isDesktop } = useDevice()
+const {  isMobile } = useDeviceType()
 
-console.log("deviceType: " + deviceType)
-
-
+console.log("isMobile: " + isMobile + " : " + import.meta.server)
 const { injectSkinClasses } = useSkins()
 injectSkinClasses()
 </script>
@@ -51,6 +47,7 @@ injectSkinClasses()
 /* Mobile layout: show on small screens, hide on large */
 /*.mobile-layout  { display: block; }
 .desktop-layout { display: none;  }
+
 
 @media (min-width: 961px) {
   .mobile-layout  { display: none;  }
