@@ -9,16 +9,17 @@ import { useDeviceType } from "@/composables/useDeviceType.js"
 
 
 
-const {  isMobile } = useDeviceType()
+const deviceType = useCookie('device-type', { default: () => 'desktop' })
 
-console.log("isMobile: " + isMobile + " : " + import.meta.server)
+
 const { injectSkinClasses } = useSkins()
 injectSkinClasses()
 </script>
 
 <template>
   <!-- mobile -->
-  <div  v-if="isMobile" class="mobile-layout">
+
+  <div  v-if="deviceType === 'mobile'" class="mobile-layout">
     <main class="main-content">
       <MobileHeader />
       <div class="home-container"><slot /></div>
@@ -27,7 +28,7 @@ injectSkinClasses()
   </div>
 
   <!-- desktop -->
-  <div v-else class="desktop-layout layout-wrapper layout-blank">
+  <div v-if="deviceType === 'desktop'" class="desktop-layout layout-wrapper layout-blank">
 
     <div class="landing-page-wrapper desktop-only-container">
       <MotomundiHeaderbar />
@@ -47,12 +48,8 @@ injectSkinClasses()
 /* Mobile layout: show on small screens, hide on large */
 /*.mobile-layout  { display: block; }
 .desktop-layout { display: none;  }
+*/
 
-
-@media (min-width: 961px) {
-  .mobile-layout  { display: none;  }
-  .desktop-layout { display: block; }
-}*/
 /* Background for Desktop */
 @media (min-width: 961px) {
   body {
