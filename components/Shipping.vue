@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useCheckoutStore } from '~/stores/checkout'
 import AddressForm from "~/components/AddressForm.vue"
 import ClickAndCollect from "~/components/Shipping/ClickAndCollect.vue"
-import { formatChileanRUT, formatDeliveryDateRange, formatMoney, isEntre } from "../@core/utils/formatters.js"
+import { formatChileanRUT, formatDeliveryDateRange, formatMoney, isEntre } from "@core/utils/formatters.js"
 
 const checkoutStore = useCheckoutStore()
 

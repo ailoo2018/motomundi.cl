@@ -1,60 +1,75 @@
+// layouts/default.vue
 <script setup>
+
 import MotomundiHeaderbar from "@/views/pages/motomundi-headerbar.vue"
 import MotomundiNavigation from "@/views/pages/motomundi-navigation.vue"
 import MotomundiHeaderlogo from "@/views/pages/motomundi-headerlogo.vue"
 import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
-import { useDeviceType } from "@/composables/useDeviceType.js"
 
 
+const deviceType = useState('device-type', () => {
+  // This function only runs on the SERVER during the first request
+  const event = useRequestEvent()
+  return event?.context.deviceType || 'desktop'
+})
 
-const {  isMobile, isDesktop } = useDeviceType()
+const isMobile = computed(() => deviceType.value === 'mobile')
 
 const { injectSkinClasses } = useSkins()
-
 injectSkinClasses()
 </script>
 
 <template>
+
   <!-- mobile -->
-  <div
-    v-if="isMobile"
-    class="mobile-layout"
-  >
+  <div v-if="isMobile" class="mobile-layout">
     <main class="main-content">
-      <MobileHeader />
+      <MobileHeader/>
       <div class="home-container">
-        <slot />
+        <slot/>
       </div>
-      <MobileFooter />
+      <MobileFooter/>
     </main>
   </div>
 
   <!-- desktop -->
-  <div
-    v-if="isDesktop"
-    class="desktop-layout layout-wrapper layout-blank"
-  >
+  <div v-else class="desktop-layout layout-wrapper layout-blank">
+
     <div class="landing-page-wrapper desktop-only-container">
-      <MotomundiHeaderbar />
-      <MotomundiHeaderlogo />
-      <MotomundiNavigation />
+      <MotomundiHeaderbar/>
+      <MotomundiHeaderlogo/>
+      <MotomundiNavigation/>
       <main class="main-content">
-        <slot />
-        <MotomundiFooter />
+        <slot/>
+        <MotomundiFooter/>
       </main>
     </div>
   </div>
 
-  <WhatsAppFab />
+  <WhatsAppFab/>
 </template>
 
 <style>
 /* Mobile layout: show on small screens, hide on large */
-/*.mobile-layout  { display: block; }
-.desktop-layout { display: none;  }
-*/
+.mobile-layout {
+  display: block;
+}
+
+.desktop-layout {
+  display: none;
+}
+
+@media (min-width: 961px) {
+  .mobile-layout {
+    display: none;
+  }
+
+  .desktop-layout {
+    display: block;
+  }
+}
 
 /* Background for Desktop */
 @media (min-width: 961px) {
@@ -91,6 +106,7 @@ injectSkinClasses()
     padding-inline: 2rem !important;
   }
 }
+
 
 .layout-wrapper.layout-blank {
   flex-direction: column;

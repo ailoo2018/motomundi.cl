@@ -277,7 +277,7 @@ Text Domain: JointsWp-child
 ******************************************************************/
 
 .mobile #blog-wrapper .off-canvas-content {
-  margin-top: 23px;
+ /* margin-top: 23px;*/
 }
 
 .searchwp-live-search-results {
@@ -2581,10 +2581,6 @@ freshchat-widget {
 
 .main-nav__list > li > .mtc-link, .main-nav__list > li > a {
   line-height: 1.05em
-}
-
-[data-v-cb0d13fa]:root {
-  --swiper-pagination-color: hsla(0, 0%, 100%, .8)
 }
 
 

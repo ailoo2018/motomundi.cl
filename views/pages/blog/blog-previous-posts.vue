@@ -1,5 +1,4 @@
 <script setup>
-import { getBaseCDN } from "@core/utils/formatters.js"
 import BlogGridItem from "@/views/pages/blog/blog-grid-item.vue"
 
 const { data: rs } = useFetch("/api/blog/featured-posts?limit=10")

@@ -140,8 +140,8 @@ export const useProfileStore = defineStore('profile', {
       } catch (err: any) {
         // Store the error message so the UI can display it.
         // We intentionally do NOT rethrow — the component decides how to react.
-        alert("Error: " + err?.data?.message ?? err?.message ?? 'Error al cargar el perfil')
-        this.fetchError = err?.data?.message ?? err?.message ?? 'Error al cargar el perfil'
+        alert("Error: " + err?.data?.message || err?.message || 'Error al cargar el perfil')
+        this.fetchError = err?.data?.message || err?.message || 'Error al cargar el perfil'
       } finally {
         this.loading = false
       }
@@ -168,7 +168,7 @@ export const useProfileStore = defineStore('profile', {
         // Only patch local state after a confirmed server success
         this.$patch(data)
       } catch (err: any) {
-        this.saveError = err?.data?.message ?? err?.message ?? 'Error al guardar el perfil'
+        this.saveError = err?.data?.message || err?.message || 'Error al guardar el perfil'
         alert(this.saveError)
         throw err // re-throw so useProfileForm can show the snackbar
       } finally {

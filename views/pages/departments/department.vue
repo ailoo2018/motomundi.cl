@@ -40,7 +40,8 @@ const componentMap = {
   Community,
   FeaturedProductsWithBanner,
   LatestEvents,
-//  Seo2,
+
+  //  Seo2,
   BikeSearch,
   CafeRacerCategories,
   YoutubeLatest,
@@ -76,32 +77,19 @@ const { data: homeRs, pending } = await useFetch(`/api/home/home?id=` + props.wc
 const widgets = computed( () => {
   return homeRs.value?.widgets.filter(w =>  !(isMobile && w.name === "SEO") )
 })
-
-
-useIntersectionObserver([
-
-], ([{ isIntersecting, target }]) => {
-  if (isIntersecting)
-    activeSectionId.value = target.id
-}, { threshold: 0.25 })
 </script>
 
 <template>
-
-
   <VAlert v-if="false">
     <ul>
-      <li v-for="widget in widgets">{{widget.id}} {{widget.component}}
-        <span v-if="widget.id == 114930">
-
-        </span>
+      <li v-for="widget in widgets">
+        {{ widget.id }} {{ widget.component }}
+        <span v-if="widget.id == 114930" />
       </li>
     </ul>
   </VAlert>
 
   <div style="background-color: rgb(245, 245, 245)">
-
-
     <Component
       :is="componentMap[widget.component]"
 
@@ -109,7 +97,6 @@ useIntersectionObserver([
       :key="widget.id"
       :widget="widget"
     />
-
   </div>
 </template>
 

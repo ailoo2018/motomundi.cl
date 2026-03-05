@@ -172,6 +172,7 @@ export const hexToRgb = hex => {
 /**
  *RGBA color to Hex color with / without opacity
  */
+/*
 export const rgbaToHex = (rgba, forceRemoveAlpha = false) => {
   return (`#${rgba
     .replace(/^rgba?\(|\s+|\)$/g, '') // Get's rgba / rgb string values
@@ -183,3 +184,4 @@ export const rgbaToHex = (rgba, forceRemoveAlpha = false) => {
     .map(string => (string.length === 1 ? `0${string}` : string)) // Adds 0 when length of one number is 1
     .join('')}`)
 }
+*/

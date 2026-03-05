@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, defineComponent } from "vue"
-import { formatDeliveryDateRange, formatMoney } from "../@core/utils/formatters.js"
+import { formatDeliveryDateRange, formatMoney } from "@core/utils/formatters.js"
 import { useCartStore } from "@/stores/cart.js"
 
 

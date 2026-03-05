@@ -4,7 +4,7 @@ import { Departments } from "@/models/index.js"
 
 definePageMeta({
   public: true,
-
+  layout: "default",
 })
 
 

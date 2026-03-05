@@ -5,25 +5,25 @@ import MotomundiHeaderlogo from "@/views/pages/motomundi-headerlogo.vue"
 import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import BlogRightContent from "@/layouts/blog/blog-right-content.vue"
-import { getHeader } from "h3"
 import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
 import BlogMenu from "@/views/pages/blog/blog-menu.vue"
 
 const { injectSkinClasses } = useSkins()
 
-const { isMobile, isTablet, isDesktop } = useDevice()
-
 const showBlogMenu = ref(false)
 
 
-const event = useRequestEvent()
-const deviceType = event?.node.req.headers['x-device-type'] ?? 'desktop'
-// const isMobile = deviceType === 'mobile'
+const deviceType = useState('device-type', () => {
+  // This function only runs on the SERVER during the first request
+  const event = useRequestEvent()
+  return event?.context.deviceType || 'desktop'
+})
 
+const isMobile = computed(() => deviceType.value === 'mobile')
 
 useHead({
   bodyAttrs: {
-    class: computed(() => isMobile ? 'mobile' : 'desktoaaap'),
+    class: computed(() => isMobile ? 'mobile' : 'desktop'),
   },
 })
 
@@ -48,7 +48,7 @@ injectSkinClasses()
               class="home blog"
               style="background-color: #f5f5f5;"
             >
-              <div class="menu-mobile-container container v-container">
+              <div class="menu-mobile-container">
                 <button
                   type="button"
                   class="tcon tcon-menu--arrow tcon-menu--arrowup white home"
@@ -106,7 +106,7 @@ injectSkinClasses()
             style="background-color: #f5f5f5;"
           >
             <div class="off-canvas-wrapper">
-              <div class="off-canvas-content">
+              <div class="off-canvas-content ">
                 <div class="menu-mobile-container">
                   <button
                     type="button"

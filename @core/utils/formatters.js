@@ -258,7 +258,6 @@ function formatLink(str) {
 
 
 export const getBrandUrl = function (brand) {
-
   return "/" + formatLink(brand?.name)
 }
 
@@ -295,3 +294,5 @@ export const getCategoryBrandUrl = function (category, brand) {
 
   return getCategoryUrl(category) + "-" + formatLink(brand?.name)
 }
+
+export const brand = {}

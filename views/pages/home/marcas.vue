@@ -1,5 +1,10 @@
 <script setup>
-const { data } = useFetch("/api/product/brands", { key: "brands-all"})
+import { computed } from "vue"
+import { useFetch } from "@vueuse/core"
+
+const { data } = useFetch("/api/product/brands", { key: "brands-all" })
+
+
 
 const brands = computed(() => {
   return data.value?.brands || []
@@ -29,55 +34,48 @@ const brands = computed(() => {
                       <span>Marcas</span>
                     </span>
                   </div>
-                  <div
-                    class="submenu__content submenu__outstanding"
-                    parent-menu-title="Marcas"
-                    icon="/assets/menu/categories/134-marcas.svg"
-                    order="7"
-                    link=""
-                    identifier="13"
-                  >
+                  <div class="submenu__content submenu__outstanding">
                     <div class="submenu__outstanding-showcase brands">
                       <a
                         href="/agv"
                         class="mtc-link"
                         title="AGV"
                       ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-82.png"
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="AGV"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
+                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-82.png"
+                        class="cdn-img v-lazy-image v-lazy-image-loaded"
+                        alt="AGV"
+                        width="80"
+                        height="41"
+                      > </span>
+                        <div class="submenu__outstanding-icon"/>
                       </a>
                       <a
                         href="/alpinestars"
                         class="mtc-link"
                         title="ALPINESTARS"
                       ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-77.png"
+                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-77.png"
 
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="ALPINESTARS"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
+                        class="cdn-img v-lazy-image v-lazy-image-loaded"
+                        alt="ALPINESTARS"
+                        width="80"
+                        height="41"
+                      > </span>
+                        <div class="submenu__outstanding-icon"/>
                       </a>
                       <a
                         href="/arai"
                         class="mtc-link"
                         title="ARAI"
                       ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-83.png"
+                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-83.png"
 
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="ARAI"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
+                        class="cdn-img v-lazy-image v-lazy-image-loaded"
+                        alt="ARAI"
+                        width="80"
+                        height="41"
+                      > </span>
+                        <div class="submenu__outstanding-icon"/>
                       </a>
 
                       <a
@@ -86,13 +84,13 @@ const brands = computed(() => {
                         class="mtc-link"
                         title="DAINESE"
                       ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-79.png"
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="DAINESE"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
+                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-79.png"
+                        class="cdn-img v-lazy-image v-lazy-image-loaded"
+                        alt="DAINESE"
+                        width="80"
+                        height="41"
+                      > </span>
+                        <div class="submenu__outstanding-icon"/>
                       </a>
                       <a
 
@@ -108,20 +106,20 @@ const brands = computed(() => {
                           height="41"
                         >
                         </span>
-                        <div class="submenu__outstanding-icon" />
+                        <div class="submenu__outstanding-icon"/>
                       </a>
                       <a
                         href="/hjc"
                         class="mtc-link"
                         title="HJC"
                       ><span lazy="true"><img
-                         src="/content/assets/brands/brand-293.png"
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="HJC"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
+                        src="/content/assets/brands/brand-293.png"
+                        class="cdn-img v-lazy-image v-lazy-image-loaded"
+                        alt="HJC"
+                        width="80"
+                        height="41"
+                      > </span>
+                        <div class="submenu__outstanding-icon"/>
                       </a>
 
                       <a
@@ -129,28 +127,28 @@ const brands = computed(() => {
                         class="mtc-link"
                         title="SHARK"
                       ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-106.png"
+                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-106.png"
 
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="SHARK"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
+                        class="cdn-img v-lazy-image v-lazy-image-loaded"
+                        alt="SHARK"
+                        width="80"
+                        height="41"
+                      > </span>
+                        <div class="submenu__outstanding-icon"/>
                       </a>
                       <a
                         href="/shoei"
                         class="mtc-link"
                         title="SHOEI"
                       ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-78.png"
+                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-78.png"
 
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="SHOEI"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
+                        class="cdn-img v-lazy-image v-lazy-image-loaded"
+                        alt="SHOEI"
+                        width="80"
+                        height="41"
+                      > </span>
+                        <div class="submenu__outstanding-icon"/>
                       </a>
                     </div>
                     <div class="submenu__divider">
@@ -160,12 +158,12 @@ const brands = computed(() => {
 
                       <ul class="">
                         <li v-for="brand in brands" :key="brand.id">
-                           <a
+                          <a
                             :href="getBrandUrl(brand)"
                             class="mtc-link"
                             title="brand.name"
                           >
-                            {{brand.name}}
+                            {{ brand.name }}
                           </a>
 
                         </li>
@@ -176,7 +174,7 @@ const brands = computed(() => {
                 </div>
               </div>
               <div class="col s12 submenu__extra-nav">
-                <div class="extra__container" />
+                <div class="extra__container"/>
               </div>
             </div>
           </div>
@@ -195,6 +193,7 @@ const brands = computed(() => {
   display: inline-block;
   line-height: inherit;
 }
+
 #nav ul.u0 #ni_2529_marcas ul.u1 a {
   line-height: 5px;
 }
@@ -228,6 +227,7 @@ const brands = computed(() => {
 ul.u0 #ni_2529_marcas ul.u1 a {
   line-height: 5px;
 }
+
 .submenu__outstanding-showcase.brands .mtc-link, .submenu__outstanding-showcase.brands a {
   flex: 1 1 auto;
 }
@@ -241,7 +241,6 @@ ul.u0 #ni_2529_marcas ul.u1 a {
 .submenu__outstanding-showcase:has(>:last-child:nth-child(6)) a, .submenu__outstanding-showcase:has(>:last-child:nth-child(6)) span.mtc-link {
   flex: 1 1 16.66%;
 }
-
 
 
 .submenu__outstanding-showcase .mtc-link img, .submenu__outstanding-showcase a img {
@@ -264,6 +263,7 @@ ul.u0 #ni_2529_marcas ul.u1 a {
   display: inline-block;
   text-align: center;
 }
+
 .submenu__outstanding-showcase {
   display: flex;
   flex-wrap: wrap;
@@ -283,6 +283,7 @@ ul.u0 #ni_2529_marcas ul.u1 a {
   -moz-columns: 100px 6;
   columns: 100px 6;
 }
+
 .submenu__outstanding-list ul li {
   margin-bottom: 0px;
   /*max-width: 90%;*/
@@ -290,6 +291,7 @@ ul.u0 #ni_2529_marcas ul.u1 a {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .submenu__content li .mtc-link, .submenu__content li > a {
   display: flex;
   flex-wrap: wrap;
