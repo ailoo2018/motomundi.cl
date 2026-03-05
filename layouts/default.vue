@@ -9,7 +9,12 @@ import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
 
 const event = useRequestEvent()
 const deviceType = event?.node.req.headers['x-device-type'] ?? 'desktop'
-const isMobile = deviceType === 'mobile'
+// const isMobile = deviceType === 'mobile'
+
+const { isMobile, isTablet, isDesktop } = useDevice()
+
+console.log("deviceType: " + deviceType)
+
 
 const { injectSkinClasses } = useSkins()
 injectSkinClasses()
@@ -44,13 +49,13 @@ injectSkinClasses()
 
 <style>
 /* Mobile layout: show on small screens, hide on large */
-.mobile-layout  { display: block; }
+/*.mobile-layout  { display: block; }
 .desktop-layout { display: none;  }
 
 @media (min-width: 961px) {
   .mobile-layout  { display: none;  }
   .desktop-layout { display: block; }
-}
+}*/
 /* Background for Desktop */
 @media (min-width: 961px) {
   body {

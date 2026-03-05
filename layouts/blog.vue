@@ -13,14 +13,14 @@ const { injectSkinClasses } = useSkins()
 
 const { isMobile, isTablet, isDesktop } = useDevice()
 
-const event = useRequestEvent()
 const showBlogMenu = ref(false)
 
-const ua = process.server && event
-  ? (getHeader(event, 'user-agent') || '')
-  : (process.client ? navigator.userAgent : '')
 
-const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
+const event = useRequestEvent()
+const deviceType = event?.node.req.headers['x-device-type'] ?? 'desktop'
+// const isMobile = deviceType === 'mobile'
+
+
 useHead({
   bodyAttrs: {
     class: computed(() => isMobile ? 'mobile' : 'desktoaaap'),
@@ -37,7 +37,7 @@ injectSkinClasses()
 
 <template>
   <!-- mobile -->
-  <div v-if="deviceType === 'mobile'">
+  <div v-if="isMobile">
     <main class="main-content">
       <MobileHeader/>
       <div class="home-container">

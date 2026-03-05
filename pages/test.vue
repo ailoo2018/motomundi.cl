@@ -1,294 +1,32 @@
 <script setup lang="ts">
 
 import ProductRating from "@/views/pages/products/detail/product-rating.vue";
-import Breadcrumbs from "@/views/pages/products/breadcrumbs.vue";
-import ProductImagesCarousel from "@/views/pages/products/product-images-carousel.vue";
-import ShareComponent from "@/views/pages/products/share-component.vue";
-import PreProductBanner from "@/views/pages/products/pre-product-banner.vue";
-import ProductBuyPanel from "@/views/pages/products/product-buy-panel.vue";
-import Packs from "@/views/pages/products/detail/packs.vue";
-import Recommend from "@/views/pages/products/recommend.vue";
-import {useConfigStore} from "@core/stores/config";
-import {useGuestUser} from "@/composables/useGuestUser";
-import {ProductType} from "@/models/products";
 
 definePageMeta({
   public: true,
-  layout: 'motomundi',
+  layout: 'blank',
 })
 
+// This will tell you if the component runs on server, client, or both
+console.log("setup running on:", import.meta.server ? "SERVER" : "CLIENT")
 
-const { isMobile, isTablet, isDesktop } = useDevice()
-const store = useConfigStore()
-const showVideoDialog = ref(false)
-const loading = ref(false)
+const { data: product } = await useFetch(`/api/product/3192276`)
 
-const route = useRoute()
-const router = useRouter()
-
-console.log("router: " + route.params.id)
-
-const productId = computed(() => {
-  if (route.query.id) return route.query.id
-  const slugValue = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
-  return slugValue ? slugValue.split('-')[0] : 3192276
-})
-
-
-const productCarousel = ref()
-const currentVideoId = ref()
-
-const cartStore = useCartStore()
-
-const { data: product, pending } = await useFetch(`/api/product/${productId.value}`, {
-  // Use a unique key based on the STABLE computed value
-  key: `product-data-${productId.value}`,
-
-})
-
-useSeoMeta({
-  title: () =>  product.value?.name || 'Loading Product...',
-  ogTitle: () => product.value?.name,
-  description: () => product.value?.fullName,
-  ogDescription: () => product.value?.fullName,
-  ogImage: () => product.value && product.value.image ? getImageUrl(product.value.image, 600, getDomainId()) : null, // Optional: set social sharing image
-})
-
-console.log("ogImage: " + (product.value && product.value.image ? getBaseCDN() + getImageUrl(product.value.image, 600, getDomainId()) : null))
-
-const onShowVideo = videoId => {
-  console.log("showVideo: " + videoId)
-  currentVideoId.value = videoId
-  showVideoDialog.value = true
-}
-
-const addToCartGEvent = () => {
-  try {
-    window.dataLayer.push({ ecommerce: null })
-
-    let category = null
-    if(product.value.parentCategories?.length > 0){
-      category = product.value.parentCategories[0]
-    }
-
-    window.dataLayer.push({
-      event: 'add_to_cart',
-      ecommerce: {
-        currency: 'CLP',
-        value: Number(product.price),
-        items: [
-          {
-            item_id: product.value.id,
-            item_name: product.value.name,
-            item_brand: product.value.brand?.name || '',
-            item_category: category?.name || '',
-            price: Number(product.value.minPrice),
-            quantity: 1, // Or your quantity ref
-          },
-        ],
-      },
-    })
-
-    console.log("addToCartGEvent success")
-  }catch(e){
-    console.error("Error addToCartGEvent", e)
-  }
-}
-
-const addToCart = async item => {
-
-  loading.value = true
-  try {
-    const wuid = useGuestUser().value
-
-    addToCartGEvent()
-    await nextTick()
-    let cartItem = null
-    if(product.value.type === ProductType.Simple){
-      cartItem = {
-        wuid: wuid,
-        type: 0, // cart item product
-        quantity: item.quantity,
-        productItemId: item.productItemId,
-      }
-    }else{
-      cartItem =  {
-        wuid: wuid,
-        type: 0, // cart item product
-        quantity: 1,
-        productItemId: product.value.productItems[0].id,
-        packContents: item,
-      }
-    }
-
-
-    await cartStore.add(cartItem, wuid)
-
-
-
-    window.location = "/cart"
-
-  }catch(e){
-    alert("error: " + e.message)
-  }finally{
-    loading.value = false
-  }
-}
-
-const onSelectedColor = color => {
-  // ref="productCarousel"
-  console.log("onSelectedColor", color)
-  productCarousel.value.selectSlideByProductColor(color)
-}
-
-
-
-onMounted(() => {
-
-  if(product.value) {
-
-
-    // 1. Clear previous ecommerce data (important for SPAs)
-    window.dataLayer.push({ ecommerce: null })
-
-
-    // 2. Push the new product view
-    let category = null
-    if(product.value.parentCategories?.length > 0){
-      category = product.value.parentCategories[0]
-    }
-
-    const gprod = {
-      event: 'view_item',
-      ecommerce: {
-        currency: 'CLP',
-        value: Number(product.value.minPrice), // Total value of the view
-        items: [
-          {
-            item_id: product.value.id,
-            item_name: product.value.name,
-            item_brand: product.value.brand?.name || "",
-            item_category: category?.name || '',
-            price: Number(product.value.minPrice),
-            quantity: 1,
-          },
-        ],
-      },
-    }
-
-    console.log("view_item", gprod)
-
-    window.dataLayer.push(gprod)
-  }
-})
-
-
+console.log("after useFetch, data:", product.value ? "HAS DATA" : "NULL")
 </script>
 
 <template>
-  <article v-if="product">
-    <div class="container product">
-      <section class="row product-main ">
-        <div
-          class="col s12 m7 l7"
-          style="padding-right: 20px;"
-        >
-          <div class="s12">
-            <div>
-              <Breadcrumbs :product="product" />
+  <VContainer class="w-100 d-flex " style="background-color: white">
+    <VRow>
+      <VCol>
+        <h1>Test Page</h1>
+
+        <ProductRating :product="product" />
 
 
-
-              <!-- product-title -->
-              <div class="product-title">
-                <div class="product-title__container">
-                  <h1>
-                    {{ product.brand.name }}
-                    <strong>{{ product.name }}</strong>
-                  </h1>
-                  <a
-                    v-if="!isMobile"
-                    :href="getBrandUrl(product.brand)"
-                    class="mtc-link"
-                  >
-                    <span>
-                      <img
-                        onerror="this.style.display='none'"
-                        :src="`/content/images/brands/${product.brand.id}.webp`"
-                        srcset=""
-                        :alt="product.brand.name"
-                        width="98"
-                        height="50"
-                        class="cdn-img"
-                      >
-                    </span>
-                  </a>
-                </div>
-              </div>
-              <!-- /product-title -->
-            </div>
-          </div>
-
-          <ShareComponent />
-          <!-- /share -->
-
-          <ProductImagesCarousel
-            ref="productCarousel"
-            :product="product"
-            @on-show-video="onShowVideo"
-          />
-        </div>
-
-        <div class="col s12 m5 l5">
-          <PreProductBanner />
-
-          <ProductBuyPanel
-            :product="product"
-            :loading="loading"
-            @update:color="onSelectedColor"
-            @add-to-cart="addToCart"
-          />
-        </div>
-      </section>
-
-      <Packs :product="product" />
-
-      <!-- product-description-container -->
-      <VRow class=" product-description-container mt-10">
-        <VCol
-          cols="12"
-          md="7"
-        >
-          <ProductDescription :description="product.description" />
-        </VCol>
-
-
-        <!-- ficha-tecnica -->
-        <VCol
-          cols="12"
-          md="5"
-        >
-          <!-- blog -->
-          <RelatedBlog v-if="product.relatedBlogArticle" :article="product.relatedBlogArticle"/>
-          <!-- /blog -->
-          <DataSheet :product="product" />
-        </VCol>
-        <!-- /ficha-tecnica -->
-      </VRow>
-      <!-- /product-description-container -->
-
-
-      <!-- recommend -->
-      <Recommend :product="product" />
-
-      <ProductRating
-        v-if="product && product.id"
-        :key="product.id"
-        :product="product" />
-
-    </div>
-  </article>
-
+      </VCol>
+    </VRow>
+  </VContainer>
 </template>
 
 <style scoped lang="scss">
