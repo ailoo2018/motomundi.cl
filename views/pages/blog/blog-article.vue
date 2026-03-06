@@ -3,10 +3,10 @@ import Widget from "@/views/pages/home/widget.vue"
 import BlogArticleProducts from "@/views/pages/blog/blog-article-products.vue"
 import BlogBreadcrumbs from "@/views/pages/blog/blog-breadcrumbs.vue"
 import BlogArticleShare from "@/views/pages/blog/blog-article-share.vue"
+import BlogCommentForm from "@/pages/moto-blog/blog-comment-form.vue"
 
 const props = defineProps({ id: { type: Number } })
 
-const showMessage = ref(false)
 const title = ref({ name: "", description: "" })
 
 useSeoMeta({
@@ -22,20 +22,15 @@ const blogStore = useBlogStore()
 await blogStore.fetchArticle(props.id)
 
 if(blogStore.article){
-  title.value.name = blogStore.article.name
-  title.value.description = blogStore.previewText
+  title.value.name = blogStore.article?.name
+  title.value.description = blogStore.previewText || ''
 }
 
 
-const savingComment = ref(false)
-
-const commentForm = ref({
-
-})
 </script>
 
 <template>
-  <div>
+  <div v-if="blogStore.article">
     <BlogBreadcrumbs />
 
     <article>
@@ -44,12 +39,11 @@ const commentForm = ref({
           class="entry-title single-title"
           itemprop="headline"
         >
-          {{ blogStore.article.name }}
+          {{ blogStore.article?.name }}
         </h1>
         <div class="entry-date-category-share">
           <p class="posts-date-category single">
-            <img
-              src="/content/images/assets/icons/planet-biker-g.svg">
+            <img src="/content/images/assets/icons/planet-biker-g.svg">
             <a
               class="parent-category"
               href="/moto-blog/planeta-motero/"
@@ -68,8 +62,8 @@ const commentForm = ref({
           role="main"
         >
           <div
-            :id="`post-${blogStore.article.id}`"
-            class="post-36197 planet-biker type-planet-biker status-publish has-post-thumbnail hentry category-rutas"
+            :id="`post-${blogStore.article?.id}`"
+            class="planet-biker type-planet-biker status-publish has-post-thumbnail hentry category-rutas"
             role="article"
           >
             <section
@@ -95,7 +89,6 @@ const commentForm = ref({
                 <img
                   class="attachment-full size-full wp-post-image "
                   :src="blogStore.previewImage"
-                  
                 >
               </div>
 
@@ -112,167 +105,7 @@ const commentForm = ref({
     </article>
 
     <BlogArticleProducts :article="blogStore.article" />
-
-
-    <div
-      id="comments"
-      class="comments-area ng-cloak"
-    >
-      <span
-        id="comment-post-id"
-        data-post-id="$page.Id"
-      />
-
-      <div
-        v-if="showMessage"
-        class="message-box-container"
-        :class="{'show': showMessage}"
-      >
-        <div class="message-box">
-          ¡Gracias por su comentario! Será publicado en breve.
-        </div>
-      </div>
-
-
-      <div class="comments-title">
-        <img
-          class="image"
-          src="/content/images/assets/icons/comments.svg"
-          data-lazy-src="/content/images/assets/icons/comments.svg"
-        >
-        <noscript><img class="image"
-          src="/content/images/assets/icons/comments.svg"
-          >
-        </noscript>
-        <span>Comentarios</span>
-      </div>
-      <div
-        id="respond"
-        class="comment-respond"
-      >
-        <p
-          id="reply-title"
-          class="comment-reply-title"
-        >
-          Deja un comentario
-          <small>
-            <a
-              id="cancel-comment-reply-link"
-              rel="nofollow"
-              href="#respond"
-              style="display:none;"
-            >Cancelar
-              respuesta</a>
-          </small>
-        </p>
-        <form
-          name="myForm"
-          ng-submit="sendComment();"
-          class="comment-form"
-          novalidate
-        >
-          <div class="small-12 textarea-container">
-            <VTextarea
-              id="comment"
-              v-model="commentForm.comment"
-              name="comment"
-              placeholder="Deja un comentario*"
-              required="required"
-            />
-
-            <div
-              class="error"
-              ng-show="myForm.comment.$error.required  && myForm.comment.$touched"
-            >
-              Escribe un mensaje por favor.
-            </div>
-          </div>
-          <input
-            name="wpml_language_code"
-            type="hidden"
-            value="es"
-          >
-          <div class="row">
-            <div class="comment-form-author large-12 columns">
-              <input
-                id="author"
-                name="author"
-                ng-model="commentForm.author"
-                type="text"
-                value=""
-                maxlength="245"
-                required="required"
-                placeholder="Nombre*"
-              >
-
-              <div
-                class="error"
-                ng-show="myForm.author.$error.required && myForm.author.$touched"
-              >
-                Escribe tu nombre por favor.
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="comment-form-email large-12 columns">
-              <input
-                id="email"
-                ng-model="commentForm.email"
-                type="email"
-                name="email"
-                value=""
-                maxlength="100"
-                required="required"
-                placeholder="Correo electrónico*"
-              >
-
-              <div
-                class="error"
-                ng-show="myForm.email.$error.required && myForm.email.$touched"
-              >
-                Escribe un email válido por favor.
-              </div>
-            </div>
-          </div>
-          <p class="comment-notes">
-            <span id="email-notes">Tu dirección de correo electrónico no será publicada.</span>
-            Los campos obligatorios están marcados con <span class="required">*</span>
-          </p>
-          <div class="gdpr-legal-comment">
-            <VCheckbox
-              id="gdpr-legal-accept-blog-comment"
-              v-model="commentForm.accept"
-              type="checkbox"
-              name="gdpr-legal-accept"
-              class="mc-checkbox"
-              required="required"
-            />
-            <label
-              class="mc-checkbox-label sidebar-gdrp gdrp-comments"
-              for="gdpr-legal-accept-blog-comment"
-            > <span class="checkbox-block" />Autorizo a MOTOMUNDI SPA a
-              publicar mis opiniones en su página web para ayudar a otros usuarios en
-              su proceso de compra.<a gdpr-more-info=""> Más información</a>
-              <div class="error-gdpr hidden">
-                Debes aceptar las condiciones antes de continuar
-              </div>
-            </label>
-          </div>
-          <p class="form-submit">
-            <VBtn
-              :disabled="false"
-              :loading="savingComment"
-            >
-              Enviar
-            </VBtn>
-          </p>
-        </form>
-      </div>
-      <CommentTree
-        comments="comments"
-        depth="1"
-      />
-    </div>
+    <BlogCommentForm :article="blogStore.article" />
   </div>
 </template>
 

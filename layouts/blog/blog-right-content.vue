@@ -24,38 +24,7 @@ const { data: featured } = await useFetch("/api/blog/featured-posts?limit=4", {
     </div>
 
     <BlogArticlesRelatedProducts :article="article"/>
-    <BlogRelatedArticles />
-    
-
-    <!--
-      <div class="recommended-posts mini-posts-container sidebar-block">
-      <p class="sidebar-title">
-      Los más leídos
-      </p>
-      <div class="posts">
-      <div
-      v-for="r in mostViewed"
-      class="post-container"
-      >
-      <a href="/$linkHelper.GetUrl($r)">
-      <div class="image-container">
-      <div
-      class="image rocket-lazyload lazyloaded"
-      style="background-image: url(&quot;https://www.motomundi.cl$r.Value('preview-image')&quot;);"
-      
-      />
-      </div>
-      <div class="text-container">
-      <div class="title">$r.Name</div>
-      <div class="date">$!r.CreateDate.ToString("dd/MM/yyyy")</div>
-      </div>
-      </a>
-      </div>
-      #end
-      </div>
-      </div>
-      <div class="social-media-container">
-    -->
+    <BlogRelatedArticles :article="article"/>
 
 
     <BlogSocialMediaSidebar />

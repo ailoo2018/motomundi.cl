@@ -1,5 +1,25 @@
 <script setup lang="ts">
+import { useBlogStore } from "@/stores/blog"
 
+const blogStore = useBlogStore()
+
+
+
+const { data }  = useFetch("/api/blog/articles/related", {
+  method: "GET",
+  query: {
+    limit: 5,
+    id: blogStore.article?.id || 0,
+  },
+})
+
+const articles = computed(() => {
+  return data.value?.entries || []
+})
+
+const getArticleImage = a => {
+  return getBaseCDN() + a.previewImage
+}
 </script>
 
 <template>
@@ -10,14 +30,14 @@
       </p>
       <div class="posts">
         <div
-          v-for="r in entries"
+          v-for="r in articles"
           class="post-container"
         >
-          <a href="$r.friendlyUrl">
+          <a :href="r.friendlyUrl">
             <div class="image-container">
               <div
                 class="image rocket-lazyload lazyloaded"
-                style="background-image: url(&quot;https://www.motomundi.cl$r.previewImage&quot;);"
+                :style="`background-image: url('${getArticleImage(r)}');`"
               />
             </div>
             <div class="text-container">
@@ -31,6 +51,4 @@
   </div>
 </template>
 
-<style scoped lang="scss">
 
-</style>

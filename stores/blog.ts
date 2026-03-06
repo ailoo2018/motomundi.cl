@@ -57,9 +57,17 @@ export const useBlogStore = defineStore('blog', {
       },
 
       async fetchArticle(id) {
-        const { data } = await useFetch(`/api/blog/articles/${id}`,
+        const { data, error } = await useFetch(`/api/blog/articles/${id}`,
           { key: "blog-article-" + id }
         )
+
+        if (error.value) {
+          // Handle the error (logging, showing a notification, etc.)
+          console.error('Fetch failed:', error.value.statusCode, error.value.statusMessage)
+          this.article = null
+          return
+        }
+
         this.article = data.value
       }
 
