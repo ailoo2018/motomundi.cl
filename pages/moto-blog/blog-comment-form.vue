@@ -79,7 +79,7 @@ async function submitComment() {
 
   savingComment.value = true
   try {
-    await $fetch('/api/blog/comments', {
+    await $fetch('/api/blog/articles/comments', {
       method: 'POST',
       body: {
         postId: props.postId,
@@ -112,7 +112,7 @@ async function submitComment() {
 async function fetchComments() {
   loadingComments.value = true
   try {
-    const data = await $fetch('/api/blog/comments', {
+    const data = await $fetch('/api/blog/articles/comments', {
       params: { postId: props.postId },
     })
     comments.value = data ?? []
@@ -381,7 +381,7 @@ onMounted(fetchComments)
   --c-text-muted:  #e9afb1;
   --c-error:       #dc2626;
   --radius-card:   12px;
-  --radius-sm:     6px;
+  --radius-sm:     0px;
   --shadow-card:   0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
 
   font-family: 'DM Sans', 'Segoe UI', sans-serif;
@@ -596,10 +596,12 @@ onMounted(fetchComments)
 ────────────────────────────────────────────── */
 .comment-respond {
   background: var(--c-surface);
+  /*
   border: 1px solid var(--c-border);
   border-radius: var(--radius-card);
+  */
   padding: 1.75rem 1.5rem;
-  box-shadow: var(--shadow-card);
+/*  box-shadow: var(--shadow-card);*/
 }
 .comment-reply-title {
   font-size: 1.2rem;

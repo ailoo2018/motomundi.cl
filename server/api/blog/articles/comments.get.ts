@@ -10,7 +10,11 @@ export default defineEventHandler(async event => {
 
     url = `${baseUrl}/${getDomainId()}/blog/articles/related/` + id
 
-    return [{}]
+    return [{
+      author: "Juan",
+      createdAt: new Date(),
+      comment: "Hello World!",
+    }]
 
   } catch (error) {
     console.error('Error GET CART: ' + url, error)
