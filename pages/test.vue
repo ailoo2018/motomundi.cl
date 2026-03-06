@@ -138,19 +138,19 @@ useSeoMeta({
 })
 
 
-watch(currentPage, async () => {
-// If this was triggered by a filter change, skip this execution
-  if (ignoreNextPageWatch.value) {
-    ignoreNextPageWatch.value = false
+  watch(currentPage, async () => {
+  // If this was triggered by a filter change, skip this execution
+    if (ignoreNextPageWatch.value) {
+      ignoreNextPageWatch.value = false
 
-    return
-  }
+      return
+    }
 
-  if (process.client) {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-  await search()
-})
+    if (process.client) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+    await search()
+  })
 
 
 
