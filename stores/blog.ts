@@ -57,8 +57,11 @@ export const useBlogStore = defineStore('blog', {
       },
 
       async fetchArticle(id) {
-        const { data, error } = await useFetch(`/api/blog/articles/${id}`,
-          { key: "blog-article-" + id }
+        const { data, error } = await useFetch(`/api/blog/posts/${id}`,
+          {
+            key: "blog-article-" + id,
+            method: "GET",
+          }
         )
 
         if (error.value) {

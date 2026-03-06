@@ -1,4 +1,4 @@
-import { getDomainId } from "@/server/ailoo-domain"
+import { getDomainId } from "@/server/ailoo-domain.js"
 
 export default defineEventHandler(async event => {
   let url = ""
@@ -6,16 +6,24 @@ export default defineEventHandler(async event => {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
-    const { id, limit} = getQuery(event)
 
-    url = `${baseUrl}/${getDomainId()}/blog/articles/related/` + id
+    const id = getRouterParam(event, 'id')
 
-    return [{
-      author: "Juan",
-      createdAt: new Date(),
-      comment: "Hello World!",
-    }]
+    if(!id)
+      return null
 
+
+    url = `${baseUrl}/${getDomainId()}/blog/posts/` + id
+
+    var ret =  await $fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+    console.log("ret" + ret)
+
+    return ret
   } catch (error) {
     console.error('Error GET CART: ' + url, error)
     console.error('Stack trace:', error.stack)

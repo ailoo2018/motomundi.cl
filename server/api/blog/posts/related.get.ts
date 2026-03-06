@@ -6,19 +6,19 @@ export default defineEventHandler(async event => {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
-    const body = await readBody(event)
+    const { id, limit} = getQuery(event)
 
-    url = `${baseUrl}/${getDomainId()}/blog/articles/comments`
-
+    url = `${baseUrl}/${getDomainId()}/blog/posts/related/` + id
 
     return await $fetch(url, {
       headers: {
         'Content-Type': 'application/json',
       },
-      method: 'POST',
-      body: body
+      method: 'GET',
+      query: {
+        limit: limit
+      }
     })
-
   } catch (error) {
     console.error('Error GET CART: ' + url, error)
     console.error('Stack trace:', error.stack)

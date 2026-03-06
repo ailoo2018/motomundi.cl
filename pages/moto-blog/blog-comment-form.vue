@@ -35,7 +35,7 @@ const errors = ref({
 // Validation
 // ─────────────────────────────────────────────
 function validateEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  return /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/.test(email)
 }
 
 function validateForm() {
@@ -79,7 +79,7 @@ async function submitComment() {
 
   savingComment.value = true
   try {
-    await $fetch('/api/blog/articles/comments', {
+    await $fetch('/api/blog/posts/comments', {
       method: 'POST',
       body: {
         postId: props.postId,
@@ -100,6 +100,7 @@ async function submitComment() {
       showMessage.value = false
     }, 6000)
   } catch (err) {
+    alert("err: " + (err.message) )
     console.error('Error al enviar el comentario:', err)
   } finally {
     savingComment.value = false
@@ -112,10 +113,11 @@ async function submitComment() {
 async function fetchComments() {
   loadingComments.value = true
   try {
-    const data = await $fetch('/api/blog/articles/comments', {
+    const data = await $fetch('/api/blog/posts/comments', {
       params: { postId: props.postId },
     })
-    comments.value = data ?? []
+
+    comments.value = data?.comments ?? []
   } catch (err) {
     console.error('Error al cargar comentarios:', err)
   } finally {
@@ -128,6 +130,7 @@ async function fetchComments() {
 // ─────────────────────────────────────────────
 function formatDate(dateStr) {
   if (!dateStr) return ''
+  
   return new Intl.DateTimeFormat('es-CL', {
     year: 'numeric',
     month: 'long',
@@ -141,18 +144,26 @@ function getInitials(name) {
   return name
     .split(' ')
     .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase())
+    .map(w => w[0]?.toUpperCase())
     .join('')
 }
 
 // Avatar palette based on name hash
 const AVATAR_COLORS = [
-  '#4361ee', '#3a0ca3', '#7209b7', '#f72585',
-  '#4cc9f0', '#06d6a0', '#f4a261', '#e63946',
+  '#4361ee',
+  '#3a0ca3',
+  '#7209b7',
+  '#f72585',
+  '#4cc9f0',
+  '#06d6a0',
+  '#f4a261',
+  '#e63946',
 ]
+
 function avatarColor(name) {
   let hash = 0
   for (const ch of name) hash = ch.charCodeAt(0) + ((hash << 5) - hash)
+  
   return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length]
 }
 
@@ -163,13 +174,22 @@ onMounted(fetchComments)
 </script>
 
 <template>
-  <div id="comments" class="comments-area">
+  <div
+    id="comments"
+    class="comments-area"
+  >
     <!-- ── Success toast ──────────────────────────── -->
     <Transition name="toast">
-      <div v-if="showMessage" class="success-toast">
+      <div
+        v-if="showMessage"
+        class="success-toast"
+      >
         <i class="tabler-circle-check-filled toast-icon" />
         <span>¡Gracias por su comentario! Será publicado en breve.</span>
-        <button class="toast-close" @click="showMessage = false">
+        <button
+          class="toast-close"
+          @click="showMessage = false"
+        >
           <i class="tabler-x" />
         </button>
       </div>
@@ -181,8 +201,13 @@ onMounted(fetchComments)
         <i class="tabler-message-circle header-icon" />
       </span>
       <div>
-        <h2 class="comments-title">Comentarios</h2>
-        <p v-if="!loadingComments" class="comments-count">
+        <h2 class="comments-title">
+          Comentarios
+        </h2>
+        <p
+          v-if="!loadingComments"
+          class="comments-count"
+        >
           {{ comments.length }}
           {{ comments.length === 1 ? 'comentario' : 'comentarios' }}
         </p>
@@ -190,11 +215,20 @@ onMounted(fetchComments)
     </div>
 
     <!-- ── Comment list ───────────────────────────── -->
-    <section class="comment-list" aria-label="Comentarios de usuarios">
-
+    <section
+      class="comment-list"
+      aria-label="Comentarios de usuarios"
+    >
       <!-- Loading skeleton -->
-      <div v-if="loadingComments" class="skeleton-list">
-        <div v-for="n in 3" :key="n" class="skeleton-item">
+      <div
+        v-if="loadingComments"
+        class="skeleton-list"
+      >
+        <div
+          v-for="n in 3"
+          :key="n"
+          class="skeleton-item"
+        >
           <div class="skeleton-avatar" />
           <div class="skeleton-body">
             <div class="skeleton-line short" />
@@ -205,13 +239,21 @@ onMounted(fetchComments)
       </div>
 
       <!-- Empty state -->
-      <div v-else-if="comments.length === 0" class="empty-state">
+      <div
+        v-else-if="comments.length === 0"
+        class="empty-state"
+      >
         <i class="tabler-messages empty-icon" />
         <p>Sé el primero en comentar.</p>
       </div>
 
       <!-- Comments -->
-      <TransitionGroup v-else name="comment" tag="ul" class="comment-ul">
+      <TransitionGroup
+        v-else
+        name="comment"
+        tag="ul"
+        class="comment-ul"
+      >
         <li
           v-for="(c, i) in comments"
           :key="c.id ?? i"
@@ -233,7 +275,9 @@ onMounted(fetchComments)
                 <i class="tabler-clock meta-icon" />{{ formatDate(c.createdAt) }}
               </span>
             </div>
-            <p class="comment-text">{{ c.comment }}</p>
+            <p class="comment-text">
+              {{ c.comment }}
+            </p>
           </div>
         </li>
       </TransitionGroup>
@@ -243,8 +287,15 @@ onMounted(fetchComments)
     <div class="section-divider" />
 
     <!-- ── Comment form ───────────────────────────── -->
-    <section id="respond" class="comment-respond" aria-label="Formulario de comentario">
-      <p id="reply-title" class="comment-reply-title">
+    <section
+      id="respond"
+      class="comment-respond"
+      aria-label="Formulario de comentario"
+    >
+      <p
+        id="reply-title"
+        class="comment-reply-title"
+      >
         <i class="tabler-pencil reply-icon" />
         Deja un comentario
       </p>
@@ -255,7 +306,6 @@ onMounted(fetchComments)
         novalidate
         @submit.prevent="submitComment"
       >
-
         <!-- Textarea -->
         <div class="field-group">
           <VTextarea
@@ -322,7 +372,10 @@ onMounted(fetchComments)
         </p>
 
         <!-- GDPR checkbox -->
-        <div class="gdpr-wrapper" :class="{ 'gdpr-error': errors.accept }">
+        <div
+          class="gdpr-wrapper"
+          :class="{ 'gdpr-error': errors.accept }"
+        >
           <VCheckbox
             id="gdpr-legal-accept-blog-comment"
             v-model="commentForm.accept"
@@ -335,12 +388,18 @@ onMounted(fetchComments)
               <span class="gdpr-label">
                 Autorizo a <strong>MOTOMUNDI SPA</strong> a publicar mis opiniones
                 en su página web para ayudar a otros usuarios en su proceso de compra.
-                <a href="#" class="gdpr-link">Más información</a>
+                <a
+                  href="#"
+                  class="gdpr-link"
+                >Más información</a>
               </span>
             </template>
           </VCheckbox>
           <Transition name="fade">
-            <p v-if="errors.accept" class="gdpr-error-msg">
+            <p
+              v-if="errors.accept"
+              class="gdpr-error-msg"
+            >
               <i class="tabler-alert-triangle" /> {{ errors.accept }}
             </p>
           </Transition>
@@ -361,7 +420,6 @@ onMounted(fetchComments)
             Enviar comentario
           </VBtn>
         </div>
-
       </form>
     </section>
   </div>

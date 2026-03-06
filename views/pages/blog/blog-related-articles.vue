@@ -5,7 +5,7 @@ const blogStore = useBlogStore()
 
 
 
-const { data }  = useFetch("/api/blog/articles/related", {
+const { data }  = useFetch("/api/blog/posts/related", {
   method: "GET",
   query: {
     limit: 5,

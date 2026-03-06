@@ -5,7 +5,7 @@ const props = defineProps({
   },
 })
 
-const { data: entry } = await useFetch(`/api/blog/articles/${props.id}`,
+const { data: entry } = await useFetch(`/api/blog/posts/${props.id}`,
   {
     key: "blog-article-" + props.id,
   })

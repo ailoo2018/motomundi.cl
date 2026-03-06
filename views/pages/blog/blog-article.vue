@@ -105,7 +105,7 @@ if(blogStore.article){
     </article>
 
     <BlogArticleProducts :article="blogStore.article" />
-    <BlogCommentForm :article="blogStore.article" />
+    <BlogCommentForm v-if="blogStore.article" :post-id="blogStore.article?.id" />
   </div>
 </template>
 
@@ -122,14 +122,6 @@ if(blogStore.article){
   line-height: 1.8;
 }
 
-#blog-wrapper  .comment-reply-title {
-  padding: 0;
-  display: flex;
-  font-size: 16px;
-  font-weight: bold;
-  align-items: center;
-  text-transform: uppercase;
-  justify-content: space-between;
-}
+
 </style>
 
