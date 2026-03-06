@@ -64,9 +64,9 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
 
     for (const bq of (ops.baseQuery ?? [])) {
       const fg = cQuery.find((cq: any) => cq.type === bq.type)
-      if (!fg) {
+      if (!fg && !fg.value) {
         cQuery.push(bq)
-      } else if (fg && !fg.values && fg.values.length === 0) {
+      } else if (fg && !fg.values && fg.values?.length === 0) {
         fg.values = bq.values
       }
     }
