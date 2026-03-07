@@ -46,6 +46,10 @@ const userId = computed(() => {
           </VMenu>
           <a v-if="userId === 0" href="/cuenta/perfil"> Ingresar </a>
         </div>
+        <div class="hmnuentry">
+
+          <CountrySwitcher />
+        </div>
       </div>
       <div
         id="community_links"

@@ -1,10 +1,6 @@
 <script setup>
-import { computed } from "vue"
-import { useFetch } from "@vueuse/core"
 
-const { data } = useFetch("/api/product/brands", { key: "brands-all" })
-
-
+const { data } = await useFetch("/api/product/brands", { key: "brands-all" })
 
 const brands = computed(() => {
   return data.value?.brands || []
@@ -17,7 +13,7 @@ const brands = computed(() => {
     v-bind="props"
   >
     <a>
-      <span>Marcas</span>
+      <span>Marcas </span>
     </a>
     <ul class="u1 main-nav">
       <li class="l1 c0 primary subCategories">

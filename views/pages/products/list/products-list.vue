@@ -44,7 +44,7 @@ if(query.sword){
   baseQuery.push({ type: "sword", value: query.sword })
 }
 
-
+console.log("baseQuery: " + JSON.stringify(baseQuery))
 
 
 const { products, currentPage, totalPages, applyFilters, filters } = useProductList({ baseQuery: baseQuery })
@@ -66,7 +66,8 @@ const onFilter = filters => {
 </script>
 
 <template>
-  <div class="list-container pt-6">
+
+  <div class="list-continer pt-6">
     <section>
       <div class="filters__header">
         <div class="row">

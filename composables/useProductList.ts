@@ -95,10 +95,14 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   const initialBody = buildBody(currentQuery.value)
   const fetchKey = `products-${JSON.stringify(initialBody)}`
 
+  console.log("initialBody: " + JSON.stringify(initialBody))
+
+
   const { data: initialData, pending } = useAsyncData(
     fetchKey,
     () => $fetch('/api/product/search', { method: 'POST', body: initialBody }),
   )
+
 
   // ─── Helpers ──────────────────────────────────────────────────
 
@@ -113,6 +117,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   }
 
   const applyResults = (dataResult: any) => {
+    console.log("initialData: " + dataResult.products?.length)
     if (dataResult?.products) {
       total.value       = dataResult.totalHits
       totalPages.value  = Math.ceil(dataResult.totalHits / pageSize.value)
@@ -122,14 +127,18 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
       products.value    = dataResult.products
       if (!filters.value) filters.value = dataResult.filters
     }
+
+    console.log("products.value: " +products.value?.length)
   }
 
   // Hydrate from SSR data on first render
-  if (initialData.value) applyResults(initialData.value)
-
+  watch(initialData, (val) => {
+    if (val) applyResults(val)
+  }, { immediate: true })
   // ─── Core search (always uses current ref state) ──────────────
 
   const search = async () => {
+     console.log("!!!!!!!!!!!! ecexcuting search")
     try {
       products.value = []
       loading.value  = true
@@ -157,6 +166,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     (newRouteQuery) => {
       currentPage.value  = parseInt(newRouteQuery.page as string) || 1
       currentQuery.value = parseFiltersFromUrl(newRouteQuery)
+      console.log("watch route.query")
       search()
     },
   )
@@ -197,7 +207,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   }
 
   return {
-    products:    computed(() => products.value ?? initialData.value?.products ?? []),
+    products:    computed(() => products.value || []),
     total:       computed(() => total.value    || initialData.value?.totalHits || 0),
     queryDesc,
     totalPages,

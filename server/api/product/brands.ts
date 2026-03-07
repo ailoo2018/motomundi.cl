@@ -1,6 +1,6 @@
 import { getDomainId } from "../../ailoo-domain.js"
 
-export default defineEventHandler(async event => {
+export default defineCachedEventHandler(async event => {
 
   let url = ""
   try {
@@ -18,11 +18,16 @@ export default defineEventHandler(async event => {
 
     return rs
   }catch (error) {
-    console.error('Error in collection: ' + url, error)
+    console.error('Error in coll  ection: ' + url, error)
     console.error('Stack trace:', error.stack)
     throw createError({
       statusCode: error.statusCode || 500,
       message: error.data?.message || error.message ,
     })
   }
+}, {
+  maxAge: 60 * 60 * 24, // 24 hours
+  name: 'api-brands',
+  getKey: () => 'api-brands', // static key since response is always the same
+  swr: true, // serve stale while revalidating in background
 })

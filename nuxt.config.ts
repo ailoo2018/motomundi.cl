@@ -67,15 +67,17 @@ export default defineNuxtConfig({
   ssr: true,
 
   routeRules: {
-    '/**': createCachedRoute('all'),
+/*
+    '/!**': createCachedRoute('all'),
     '/': createCachedRoute('homepage'),
     '/cafe-racer': createCachedRoute('cafe-racer'),
     '/motocross-enduro-trial': createCachedRoute('motocross'),
     '/ropa-casual': createCachedRoute('ropa-casual'),
     '/moto-blog': createCachedRoute('blog'),
     '/checkout/recover.rails': { redirect: '/checkout/recover' },
-    '/motocicleta/**': createCachedRoute('product'),
+    '/motocicleta/!**': createCachedRoute('product'),
     '/cascos-para-moto': createCachedRoute('cascos-para-moto'),
+*/
 
     // Never cache these
     '/test': { cache: false, ssr: true },
