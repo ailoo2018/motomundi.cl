@@ -29,7 +29,7 @@ export const COUNTRY_DATA = {
   UY: { name: 'Uruguay',        currency: 'UYU', symbol: '$',   flag: '🇺🇾', iso: "uy" },
   VE: { name: 'Venezuela',      currency: 'VES', symbol: 'Bs.', flag: '🇻🇪', iso: "ve" },
 };
-export const DEFAULT_COUNTRY = 'PE'
+export const DEFAULT_COUNTRY = 'CL'
 export const COOKIE_NAME     = 'store_country'
 export const COOKIE_DAYS     = 365
 

@@ -7,12 +7,12 @@ import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-
   <div class="main-container my-4" style="color:white">
     <div class="d-flex justify-space-between">
       <div>
-        <a href="/">
+        <NuxtLink to="/">
           <img
             src="/logo-motomundi.png"
             width="400"
           />
-        </a>
+        </NuxtLink>
       </div>
       <div>
 
