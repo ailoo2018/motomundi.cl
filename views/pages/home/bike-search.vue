@@ -3,12 +3,14 @@
 import BikeSelector from "@/views/pages/bike-selector.vue"
 import {getHeader} from "h3";
 
-const event = useRequestEvent()
-const ua = process.server && event
-  ? (getHeader(event, 'user-agent') || '')
-  : (process.client ? navigator.userAgent : '')
+const deviceType = useState('device-type', () => {
+  // This function only runs on the SERVER during the first request
+  const event = useRequestEvent()
+  return event?.context.deviceType || 'desktop'
+})
 
-const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
+const isMobile = computed(() => deviceType.value === 'mobile')
+// const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
 
 </script>
 
@@ -20,7 +22,7 @@ const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
           Elige tu modelo de moto para ver accesorios específicos
         </h2> 
         <div class="bike-search-filter">
-          <BikeSelector :as-row="deviceType === 'desktop'" />
+          <BikeSelector :as-row="!isMobile" />
         </div>
         <div
           class="add-bike"
