@@ -8,6 +8,7 @@ export default defineEventHandler(async event => {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
+    const {country} = getQuery(event)
 
     url = `${baseUrl}/${getDomainId()}/checkout/payment-methods`
 
@@ -16,6 +17,9 @@ export default defineEventHandler(async event => {
       headers: {
         'Content-Type': 'application/json',
       },
+      query: {
+        country
+      }
 
     })
   }catch(error) {

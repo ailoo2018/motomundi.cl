@@ -2,6 +2,7 @@
 import Coupon from "~/components/Cart/Coupon.vue"
 import { useGuestUser } from "@/composables/useGuestUser.js"
 import CartContent from "@/components/Cart/CartContent.vue"
+import { useShipping } from "@/composables/checkout/useShipping.js"
 
 const props = defineProps({
   isCollapsed: {
@@ -12,6 +13,8 @@ const props = defineProps({
 
 const emit = defineEmits(['cartEmpty', 'nextStep', 'collapse'])
 
+const { formatCurrency, formatToCurrentCurrency, iso, convert } = useCurrencyConverter()
+
 const { isMobile } = useDevice()
 
 const { isLoading, updateLoading } = inject('loading')
@@ -20,6 +23,7 @@ const { cart, coupon } = inject('checkoutService')
 const config = useRuntimeConfig()
 const isCollapsed = ref(false)
 
+const { shippingCost, selectedShippingMethod } = useShipping()
 
 
 const baseUrl = config.public.LEGACY_URL
@@ -155,19 +159,25 @@ const total = computed(() => {
           </VCardTitle>
           <VCardText>
             <div class="cart-summary__totals">
-              <div class="totals__item">
+              <div v-if="iso === 'cl'" class="totals__item" >
                 <span class="item__label">Subtotal</span>
-                <span class="item__price">{{ formatMoney(cartStore.subtotal) }}</span>
+                <span class="item__price">{{ formatCurrency(cartStore.subtotal) }}</span>
               </div>
-              <div class="totals__item">
-                <span class="item__label">Impuestos (I.V.A.)</span>
-                <span class="item__price">{{ formatMoney(cartStore.iva) }}</span>
+              <div v-else class="totals__item">
+                <span class="item__label">Subtotal</span>
+                <span class="item__price">{{ formatCurrency(cartStore.total) }}</span>
+              </div>
+              <div class="totals__item" v-if="iso === 'cl'">
+                <span class="item__label">Impuestos (I.V.A.) </span>
+                <span class="item__price">{{ formatCurrency(cartStore.iva) }}</span>
               </div>
               <div class="totals__item">
                 <span class="item__label">Envío</span>
-                <span class="item__price">{{
-                  cart.shipping && cart.shipping.cost > 0 ? formatMoney(cart.shipping.cost) : 'Gratis'
+
+                <span v-if="selectedShippingMethod > 0" class="item__price">{{
+                  shippingCost.amount > 0 ? formatToCurrentCurrency(shippingCost.amount, shippingCost.currency, { toSelectedCurrency: true }) : 'Gratis'
                 }} </span>
+                <span v-else>(seleccione un método de envío)</span>
               </div>
               <div v-if="cartStore.coupon" class="totals__item " >
                 <span class="item__label">Código Promo<VChip size="sm" class="ml-2 px-2 py-1 font-weight-medium" style="color: #f44a4a">{{cartStore.coupon.name}}</VChip></span>
@@ -185,14 +195,14 @@ const total = computed(() => {
               <div class="totals__item totals__item--total">
                 <span class="item__label">Total</span>
                 <span class="item__price">
-                  <span id="cart-total">{{ formatMoney(cartStore.total) }}</span>
+                  <span id="cart-total">{{ formatCurrency(cartStore.total) }}</span>
                 </span>
               </div>
             </div>
             <div class="motocoins-claim cart-summary__motocoins">
               <VIcon class="tabler-coin-monero-filled" color="primary"></VIcon>
               <div class="motocoins-claim__info">
-                <span class="motocoins-claim__amount">Acumula <strong>{{ formatMoney( cartStore.points ) }} Mundipesos </strong> con esta compra.</span>
+                <span class="motocoins-claim__amount">Acumula <strong><VIcon class="tabler-coin-monero" size="12" color="secondary"></VIcon>{{ convert( cartStore.points, { decimals: 0} ) }} Mundipesos </strong> con esta compra.</span>
               </div>
             </div>
           </VCardText>

@@ -1,34 +1,28 @@
 // composables/useCountryDetection.js
 
 export const COUNTRY_DATA = {
-  DE: { name: 'Alemania',       currency: 'EUR', symbol: '€',   flag: '🇩🇪', iso: "de" },
-  AR: { name: 'Argentina',      currency: 'ARS', symbol: '$',   flag: '🇦🇷', iso: "ar" },
+  AR: { name: 'Argentina',      currency: 'ARS', symbol: '$',   flag: '🇦🇷', iso: "ar", hasDecimals: false },
   BO: { name: 'Bolivia',        currency: 'BOB', symbol: 'Bs.', flag: '🇧🇴', iso: "bo" },
   BR: { name: 'Brasil',         currency: 'BRL', symbol: 'R$',  flag: '🇧🇷', iso: "br" },
-  CA: { name: 'Canadá',         currency: 'CAD', symbol: 'CA$', flag: '🇨🇦', iso: "ca" },
-  CL: { name: 'Chile',          currency: 'CLP', symbol: '$',   flag: '🇨🇱', iso: "cl" },
+  CL: { name: 'Chile',          currency: 'CLP', symbol: '$',   flag: '🇨🇱', iso: "cl", hasDecimals: false },
   CO: { name: 'Colombia',       currency: 'COP', symbol: '$',   flag: '🇨🇴', iso: "co" },
   CR: { name: 'Costa Rica',     currency: 'CRC', symbol: '₡',   flag: '🇨🇷', iso: "cr" },
-  CU: { name: 'Cuba',           currency: 'CUP', symbol: '$',   flag: '🇨🇺', iso: "cu" },
   EC: { name: 'Ecuador',        currency: 'USD', symbol: '$',   flag: '🇪🇨', iso: "ec" },
   SV: { name: 'El Salvador',    currency: 'USD', symbol: '$',   flag: '🇸🇻', iso: "sv" },
   ES: { name: 'España',         currency: 'EUR', symbol: '€',   flag: '🇪🇸', iso: "es" },
-  US: { name: 'Estados Unidos', currency: 'USD', symbol: '$',   flag: '🇺🇸', iso: "us" },
-  FR: { name: 'Francia',        currency: 'EUR', symbol: '€',   flag: '🇫🇷', iso: "fr" },
+  US: { name: 'Estados Unidos', currency: 'USD', symbol: '$',   flag: '🇺🇸', iso: "us", hasDecimals: true },
   GT: { name: 'Guatemala',      currency: 'GTQ', symbol: 'Q',   flag: '🇬🇹', iso: "gt" },
   HN: { name: 'Honduras',       currency: 'HNL', symbol: 'L',   flag: '🇭🇳', iso: "hn" },
-  IT: { name: 'Italia',         currency: 'EUR', symbol: '€',   flag: '🇮🇹', iso: "it" },
   MX: { name: 'México',         currency: 'MXN', symbol: '$',   flag: '🇲🇽', iso: "mx" },
   NI: { name: 'Nicaragua',      currency: 'NIO', symbol: 'C$',  flag: '🇳🇮', iso: "ni" },
   PA: { name: 'Panamá',         currency: 'PAB', symbol: 'B/.', flag: '🇵🇦', iso: "pa" },
   PY: { name: 'Paraguay',       currency: 'PYG', symbol: '₲',   flag: '🇵🇾', iso: "py" },
   PE: { name: 'Perú',           currency: 'PEN', symbol: 'S/',  flag: '🇵🇪', iso: "pe" },
   PR: { name: 'Puerto Rico',    currency: 'USD', symbol: '$',   flag: '🇵🇷', iso: "pr" },
-  GB: { name: 'Reino Unido',    currency: 'GBP', symbol: '£',   flag: '🇬🇧', iso: "gb" },
   DO: { name: 'República Dominicana', currency: 'DOP', symbol: 'RD$', flag: '🇩🇴', iso: "do" },
   UY: { name: 'Uruguay',        currency: 'UYU', symbol: '$',   flag: '🇺🇾', iso: "uy" },
   VE: { name: 'Venezuela',      currency: 'VES', symbol: 'Bs.', flag: '🇻🇪', iso: "ve" },
-};
+}
 export const DEFAULT_COUNTRY = 'CL'
 export const COOKIE_NAME     = 'store_country'
 export const COOKIE_DAYS     = 365
@@ -51,15 +45,15 @@ export function useCountryDetection() {
   })
 
   const selectedCountry = computed(
-    () => countryCookie.value ?? DEFAULT_COUNTRY
+    () => countryCookie.value ?? DEFAULT_COUNTRY,
   )
 
   const selectedCountryData = computed(
-    () => COUNTRY_DATA[selectedCountry.value] ?? COUNTRY_DATA[DEFAULT_COUNTRY]
+    () => COUNTRY_DATA[selectedCountry.value] ?? COUNTRY_DATA[DEFAULT_COUNTRY],
   )
 
   const detectedCountryData = computed(
-    () => COUNTRY_DATA[detectedCountry.value] ?? null
+    () => COUNTRY_DATA[detectedCountry.value] ?? null,
   )
 
   /** Fetch visitor country via ipapi.co (free, no key needed) */

@@ -2,22 +2,18 @@
 import { ref } from 'vue'
 import { useCheckoutStore } from '~/stores/checkout'
 import LoginDialog from "~/components/dialogs/LoginDialog.vue"
+import { useCheckout } from "@/composables/useCheckout.js"
+
 
 const checkoutStore = useCheckoutStore()
 
 const { validatePhone, formatPhone } = usePhoneValidation()
 
 const showLogin = ref(false)
-const isLoading = ref(true)
+// const isLoading = ref(true)
 const error = ref('')
 
-const address = ref({
-  id: 0,
-  address: '',
-  name: '',
-  phone: '',
-  email: '',
-})
+
 
 const config = useRuntimeConfig()
 const addressForm = ref(null)
@@ -30,11 +26,14 @@ const disableEmail = ref(true)
 
 console.log("CustomerInfo.vue")
 
+// const { getAddresses, selectedAddress, isLoading } = useAddressForm()
+
+
 const handleUserLoggedIn = async loginData => {
   console.log("CustomerInformation::handleUserLoggedIn", loginData)
   showLogin.value = false
   await getCurrentUser(loginData)
-  await getAddresses()
+  await addressForm.value.getAddresses()
 }
 
 const closedLogin = () => {
@@ -87,47 +86,11 @@ const getCurrentUser = async loginData => {
 
 }
 
-const getAddresses = async () => {
-  isLoading.value = true
-  try {
-
-    const accessToken = useCookie('accessToken').value
-    if(!accessToken || accessToken === '') {
-      return
-    }
-    console.log("accesToken: " + accessToken)
-
-    const data = await $fetch('/api/account/addresses', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    })
-
-
-
-    if (data) {
-      const addresses = data.addresses
-      if (addresses && addresses.length > 0) {
-        var defaultAddr = addresses.find(addr => addr.default)
-        if (!defaultAddr) {
-          defaultAddr = addresses[0]
-        }
-
-        address.value = defaultAddr
-      }
-
-    } else {
-      throw new Error('No data received from the server')
-    }
-  } catch (err) {
-    console.log("Error", err)
-    error.value = err.message || 'Error al tratar de ingresar. Por favor probar nuevamente.'
-  } finally {
-    isLoading.value = false
-  }
-}
 
 const getCustomerInfo = async () => {
-  const addr = await addressForm.value.getAddress()
+  console.log("CustomerInformation::getCustomerInfo")
+
+  const addr = addressForm.value.getAddress()
   if (!addr)
     return null
 
@@ -137,13 +100,14 @@ const getCustomerInfo = async () => {
     address: addr,
   }
 
+  console.log("CustomerInformation::getCustomerInfo: " + JSON.stringify(custInfo))
   checkoutStore.setCustomerInfo(custInfo)
 
   if (user.value) {
     checkoutStore.setCurrentUser(user.value)
   }
 
-  console.log("CustomerInformation::getCustomerInfo", custInfo)
+
 
   return custInfo
 }
@@ -186,11 +150,11 @@ onMounted(async () => {
     user.value = checkoutStore.user
     contactEmail.value = checkoutStore.customerInfo.email
     contactPhone.value = checkoutStore.customerInfo.phone
-    address.value = checkoutStore.customerInfo.address
+   // selectedAddress.value = checkoutStore.customerInfo.address
 
   } else {
     console.log("Loading address data")
-    await getAddresses()
+
   }
 
 })
@@ -314,10 +278,8 @@ const handlePhoneInput = event => {
         >
           <VCardText class="pa-1 ma-1 pa-md-2 ma-md-2">
             <h2>Tus datos</h2>
-            <AddressForm
-              ref="addressForm"
-              v-model="address"
-            />
+
+            <AddressForm ref="addressForm"/>
           </VCardText>
         </VCard>
       </div>
@@ -335,10 +297,6 @@ const handlePhoneInput = event => {
   text-transform: uppercase;
 }
 
-.data__contact-details {
-  margin: 10px auto 25px;
-}
-
 
 .data__login-message {
   background-color: #e9e9e9;
@@ -347,9 +305,6 @@ const handlePhoneInput = event => {
   text-align: center;
 }
 
-.data {
-/*  padding: 0 15px;*/
-}
 
 .steps__content > div.active {
   display: block;
@@ -361,28 +316,18 @@ const handlePhoneInput = event => {
   }
 }
 
-.custom-text-field {
-  /* Apply styles to the container */
-}
-
 .custom-text-field :deep(.v-field__outline) {
-  /* Change the border color to green */
   border-color: green !important;
 }
 
 .custom-text-field :deep(.v-field__input) {
-  /* Change the background to white */
   background-color: white !important;
 }
 
-/* Ensure the background stays white when focused or filled */
 .custom-text-field:hover :deep(.v-field__input),
 .custom-text-field:focus-within :deep(.v-field__input) {
   background-color: white !important;
 }
 
 
-input#address-form__different-country33 {
-  position: relative;
-}
 </style>

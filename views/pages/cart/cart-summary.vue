@@ -3,6 +3,8 @@
 const cartStore = useCartStore()
 const cart = cartStore.cart
 
+const { formatCurrency, convert, iso } = useCurrencyConverter()
+
 const checkout = async cart => {
   await navigateTo('/checkout')
 }
@@ -57,7 +59,7 @@ const getTotalPoints = () => {
         class="cart-summary__content"
       >
         <div class="cart-summary__content-body">
-          <h2>Resumen de pedido  aa</h2>
+          <h2>Resumen de pedido</h2>
           <div class="free-shipping-indicator free no-animated">
             <p
               v-if="cart.shipping?.cost == 0"
@@ -98,7 +100,7 @@ const getTotalPoints = () => {
           <div class="cart-summary__totals">
             <div class="totals__item">
               <span class="item__label">{{ totalItems }} artículos</span>
-              <span class="item__price">{{ formatMoney( itemsTotal ) }}</span>
+              <span class="item__price">{{ formatCurrency( itemsTotal ) }}</span>
             </div>
             <div class="totals__item">
               <span class="item__label">Envío</span>
@@ -109,11 +111,11 @@ const getTotalPoints = () => {
               <span
                 v-if="cart.shipping?.cost > 0"
                 class="item__price"
-              >{{ formatMoney(cart.shipping?.cost) }}</span>
+              >{{ formatCurrency(cart.shipping?.cost) }}</span>
             </div>
             <div class="totals__item totals__item--total">
               <span class="item__label">Total</span>
-              <span class="item__price"><span id="cart-total">{{ formatMoney( total ) }}</span>
+              <span class="item__price"><span id="cart-total">{{ formatCurrency( total ) }}</span>
                 <span
                   v-if="cart.oldPrice > cart.total"
                   class="totals__item--old-total"
@@ -128,7 +130,7 @@ const getTotalPoints = () => {
             />
             <div class="motocoins-claim__info">
               <span class="motocoins-claim__amount">
-                Acumula <strong style="font-weight: 500">{{ formatMoney( cart.points ) }} mundipesos</strong> con esta compra.
+                Acumula <strong style="font-weight: 500">{{ convert( cart.points, { decimal: 0} ) }} mundipesos</strong> con esta compra.
               </span>
             </div>
           </div>
@@ -194,7 +196,7 @@ const getTotalPoints = () => {
             class="d-flex gap-2 financing"
           >
             <span class="financing__description">
-              <span>Desde <strong>{{ formatMoney(cart.financing.cuota ) }}</strong> sin intereses (0% TAE)</span>
+              <span>Desde <strong>{{ formatCurrency(cart.financing.cuota ) }}</strong> sin intereses (0% TAE)</span>
             </span>
             <span class="d-flex gap-1 financing__logos">
               <span>

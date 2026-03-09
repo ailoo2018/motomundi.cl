@@ -68,6 +68,7 @@ export default defineNuxtConfig({
 
   routeRules: {
 
+/*
     '/!**': createCachedRoute('all'),
     '/': createCachedRoute('homepage'),
     '/cafe-racer': createCachedRoute('cafe-racer'),
@@ -77,6 +78,7 @@ export default defineNuxtConfig({
     '/checkout/recover.rails': { redirect: '/checkout/recover' },
     '/motocicleta/!**': createCachedRoute('product'),
     '/cascos-para-moto': createCachedRoute('cascos-para-moto'),
+*/
 
 
     // Never cache these

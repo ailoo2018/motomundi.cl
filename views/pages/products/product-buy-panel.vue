@@ -20,6 +20,11 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:size', 'update:color', 'add-to-cart'])
+
+const { formatCurrency, selectedCountryData } = useCurrencyConverter()
+
+const iso = computed(() => { return selectedCountryData.value.iso })
+
 const loading = toRef(props, 'loading')
 
 const hasSinglePrice = ref(true)
@@ -189,7 +194,11 @@ const localIsWished = computed(() => {
             <span
               class="product-price product-price__offer ng-binding"
               style="font-size: 55px;"
-            >{{ formatMoney(price) }} </span>
+            >
+              <span class="currency-flag">
+                <img :src="`/content/images/flags/${iso}.png`">
+              </span>
+              {{ formatCurrency(price) }}  </span>
           </div>
           <!-- /price -->
           <button
@@ -465,6 +474,14 @@ const localIsWished = computed(() => {
 </template>
 
 <style>
+.currency-flag{
+  position: relative;
+  top:-20px;
+  left: 10px;
+  padding: 0;
+  margin:0;
+}
+
 .add-to-favs:hover svg use {
   stroke: #d6001c;
 }

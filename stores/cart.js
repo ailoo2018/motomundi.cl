@@ -60,6 +60,23 @@ export const useCartStore = defineStore('cart', {
     },
 
 
+    async removeCoupon() {
+      console.log("remove coupon")
+      if(!this.coupon)
+        return
+
+/*
+      const  data  = await $fetch('/api/checkout/promocode?id=' + this.coupon.id, {
+        credentials: 'include',
+        method: 'DELETE',
+      })
+*/
+
+      this.coupon = null
+
+
+    },
+
     async addCoupon(code) {
       this.loading = true
       try {

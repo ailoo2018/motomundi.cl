@@ -1,255 +1,320 @@
 <script setup>
-import ComunaAutocomplete from "~/components/ComunaAutocomplete.vue"
+import { ref, computed, watch } from 'vue'
+import { useAddressForm } from "@/composables/useAddressForm.js"
 import { useRut } from "~/@core/utils/rut"
-
-
-const props = defineProps({
-  modelValue: {
-    type: Object,
-  },
-  isCompany: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-})
-
-const emit = defineEmits(['update:modelValue'])
+import { useCheckoutStore } from "@/stores/checkout.js"
 
 const { formatRutInput, validateRut } = useRut()
 
-const isCompanyInfo = ref(props.isCompany)
+const {
+  getAddress,
+  setAddress,
+  getAddresses,
+  selectedAddress,
+  selectedIdType,
+  countryItems,
+  selectedCountry,
+  country,
+  idNumber,
+  name,
+  surname,
+  addressLine1,
+  addressLine2,
+  state,
+  city,
+  postalCode,
+  comuna,
+  form,
+  isChile,
+} = useAddressForm()
 
 
-const address = ref({
-  name: props.modelValue.name || '',
-  surnames: props.modelValue.surnames || '',
-  phone: props.modelValue.phone || '',
-  rut: props.modelValue.rut || '',
-  address: props.modelValue.address || '',
-  address2: props.modelValue.address2 || '',
-  legalName: props.modelValue.legalName || '',
-  type: props.modelValue.type || '',
-  comuna: props.modelValue.comuna || null,
-  postal_code: props.modelValue.postal_code || '',
-})
+const checkoutStore = useCheckoutStore()
+if(checkoutStore.customerInfo?.address)
+  setAddress(checkoutStore.customerInf?.address)
 
-console.log("AddressForm::address", address)
+// ─── Computed ─────────────────────────────────────────────────────────────────
 
-// Watch for changes in props to update local state
-watch(() => props.modelValue, newValue => {
-  console.log("AddressForm::watch", newValue)
-  Object.assign(address.value, newValue)
-  selectedComuna.value = address.value.comuna
-}, { deep: true })
+const idTypeItems = computed(() =>
+  country.value.idTypes.map(t => ({ title: t.label, value: t.value })),
+)
 
-const updateModelValue = () => {
-  emit('update:modelValue', { ...address.value })
-}
-
-const type = ref('customer')
-
-if(props.config && props.config.type){
-  type.value = props.config.type
-}
-
-
-
-console.log("props.address", props.address)
-
-/*
-watch(props, props => {
-  address.value = structuredClone(toRaw(props.address))
-  selectedComuna.value = address.value.comuna
-  console.log("watch address", props.address)
-})
-*/
-
-// const address = ref(structuredClone(toRaw(props.address)))
-const selectedComuna = ref(null)
-const form = ref(null)
-const valid = ref(false)
+const stateItems = computed(() =>
+  country.value.states.map(s => ({ title: s, value: s })),
+)
 
 const reqRules = [
-  v => !!v || 'El campo es requerido',
+  v => !!v || 'Este campo es requerido',
 ]
 
-const rutRules = [
-  v =>  {
-    if(!validateRut(v))
-      return "El RUT no es valido"
-  },
+const nameRules = [
+  v => !!v || 'El nombre es requerido',
 ]
 
+const surnameRules = [
+  v => !!v || 'El apellido  es requerido',
+]
 
-if(address.value.comuna){
-  selectedComuna.value = address.value.comuna
-}
+const idTypeRules = [
+  v => !!v || 'Selecciona el tipo de documento',
+]
 
-const handleComunaSelection =  comuna => {
-  console.log("Comuna selected", comuna)
-  address.value.comuna = comuna
-  updateModelValue()
-}
+const idNumberRules = [
+  v => !!v || `El número de ${selectedIdType.value || 'documento'} es requerido`,
+  v => isChile && validateRut(v) || "El RUT no es valido"
+]
 
-const handleRutInput = event => {
-  console.log("handleRutInput", event)
+const addressRules = [
+  v => !!v || 'La dirección es requerida',
+  v => (v && v.length >= 5) || 'Ingresa una dirección válida',
+]
 
-  const input = event.target
-  if(validateRut(input.value))
-    address.value.rut = formatRutInput(input.value)
-  else{
-    address.value.rut =input.value
-  }
-  updateModelValue()
+const stateRules = [
+  v => !!v || `${country.value.stateLabel} es requerido`,
+]
 
-//  isValid.value = validateRut(rut.value);
-}
+const cityRules = [
+  v => !!v || `${country.value.cityLabel} es requerido`,
+]
 
-const getAddress = async () => {
+const postalRules = computed(() => [
+  v => !country.value.hasPostalCode || !!v || `El ${country.value.postalCodeLabel} es requerido`,
+])
 
-  const { valid } = await form.value.validate()
+const comunaRules = [
+  v => !!v || 'La región / comuna es requerida',
+]
 
-  if (!valid) {
-    return null
-  }
-
-  address.value.comuna = selectedComuna.value
-  
-  return address.value
-}
 
 const validate = async () => {
-  const { valid, a, b, c } = await form.value.validate()
-  if (!valid) {
-    return "Hay errores en el formulario. Por favor, revisa los campos e inténtalo de nuevo."
+  const validate = await form.value.validate()
+
+  if (!validate.valid) {
+    // Scroll the first error into view so the user notices it immediately
+    console.log("not valid")
+    await nextTick()
+    const firstError = document.querySelector('.v-field--error')
+    firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+    return 'Hay campos con errores. Por favor revísalos antes de continuar.'
   }
 
   return null
 }
 
+const handleRutInput = event => {
+  console.log("handleRutInput: " + isChile.value, event)
 
-defineExpose({ getAddress, validate })
+  if(!isChile.value)
+    return
+
+
+  const input = event.target
+  if(validateRut(input.value))
+    idNumber.value = formatRutInput(input.value)
+  else{
+    idNumber.value =input.value
+  }
+
+}
+
+
+
+onMounted(async () => {
+  console.log("AddressForm::onMounted")
+  const addresses = await getAddresses()
+
+  if(checkoutStore.customerInfo?.address){
+    setAddress(checkoutStore.customerInfo.address)
+  }else if(addresses.length > 0){
+    setAddress(addresses[0])
+  }
+
+})
+
+defineExpose({ getAddresses, getAddress, validate })
 </script>
 
 <template>
-  <VForm
-    ref="form"
-    v-model="valid"
-  >
-    <div class="address-form form-fieldset">
-      <div
-        v-if="!isCompany"
-        class="form-item half-width"
-      >
-        <div class="input__group">
-          <VTextField
-            v-model="address.name"
-            label="Nombre *"
-            :rules="reqRules"
-            variant="solo"
-            required
-            @input="updateModelValue"
-          />
-        </div>
-      </div>
-      <div
-        v-if="!isCompany"
-        class="form-item half-width"
-      >
-        <div class="input__group">
-          <VTextField
-            v-model="address.surnames"
-            label="Apellido *"
-            :rules="reqRules"
-            variant="solo"
-            required
-            @input="updateModelValue"
-          />
-        </div>
-      </div>
-      <div
-        v-if="isCompany"
-        class="form-item full-width"
-      >
-        <div class="input__group">
-          <VTextField
-            v-model="address.legalName"
-            label="Razón Social *"
-            :rules="reqRules"
-            variant="solo"
-            required
-            @input="updateModelValue"
-          />
-        </div>
-      </div>
+  <!-- VForm wrapper: required for form.validate() to reach all child fields -->
+  <VForm ref="form" class="address-form" validate-on="submit">
 
-      <div class="form-item full-width">
-        <div class="input__group">
-          <VTextField
-            v-model="address.rut"
-            label="RUT *"
-            :rules="rutRules"
-            variant="solo"
-            required
-            @input="handleRutInput"
-          />
-        </div>
-      </div>
-      <div class="form-item full-width">
-        <div class="input__group">
-          <VTextField
-            v-model="address.address"
-            label="Calle y Numero*"
-            :rules="reqRules"
-            variant="solo"
-            required
-            @input="updateModelValue"
-          />
-        </div>
-      </div>
-      <div class="form-item full-width">
-        <div class="input__group ">
-          <VTextField
-            v-model="address.address2"
-            label="Piso, puerta, otros (Opcional)"
-            required
-            variant="solo"
-            style="background-color: white"
-            @input="updateModelValue"
-          />
-        </div>
-      </div>
 
-      <div class="form-item half-width">
-        <div class="input__group">
-          <ComunaAutocomplete
-            v-model="selectedComuna"
-            variant="solo"
-            :rules="reqRules"
-            style="background-color: white"
-            @update:model-value="handleComunaSelection"
-          />
-        </div>
-      </div>
+    <!-- ── Country ──────────────────────────────────────────── -->
+    <VRow class="ma-0 pa-0 mt-4">
+      <VCol cols="12" class="pa-0">
+        <VSelect
+          v-model="selectedCountry"
+          :items="countryItems"
+          item-value="code"
+          item-title="name"
+          label="País *"
+          variant="solo"
+          :rules="reqRules"
+          prepend-inner-icon="tabler-world"
+          required
+          return-object
+        >
+          <template #item="{ props, item }">
+            <VListItem v-bind="props">
+              <template #prepend>
+                <img
+                  class="mr-2"
+                  :src="`/content/images/flags/${item.raw.value?.toLowerCase()}.png`"
+                />
+              </template>
+              <VListItemSubtitle>Code: {{ item.raw.value }}</VListItemSubtitle>
+            </VListItem>
+          </template>
+        </VSelect>
+      </VCol>
+    </VRow>
 
-      <div class="form-item half-width">
-        <div class="input__group">
-          <VTextField
-            v-model="address.postal_code"
-            label="Código Postal (Opcional)"
-            variant="solo"
+    <!-- ── Full name ─────────────────────────────────────────── -->
+    <VRow class="ma-0 pa-0">
+      <VCol cols="12" md="6" class="pa-0 pr-md-4">
+        <VTextField
+          v-model="name"
+          label="Nombre *"
+          variant="solo"
+          :rules="nameRules"
+          required
+          autocomplete="name"
+        />
+      </VCol>
+      <VCol cols="12" md="6" class="pa-0">
+        <VTextField
+          v-model="surname"
+          label="Apellido *"
+          variant="solo"
+          :rules="surnameRules"
+          required
+        />
+      </VCol>
+    </VRow>
 
-            @input="updateModelValue"
-          />
-        </div>
-      </div>
-    </div>
+    <!-- ── ID type + number ──────────────────────────────────── -->
+    <VRow class="ma-0 pa-0 mt-4">
+      <VCol cols="12" md="4" class="pa-0 pr-md-2">
+        <VSelect
+          v-model="selectedIdType"
+          :items="idTypeItems"
+          label="Tipo de documento *"
+          variant="solo"
+          :rules="idTypeRules"
+
+          required
+        />
+      </VCol>
+      <VCol cols="12" md="8" class="pa-0">
+        <VTextField
+          v-model="idNumber"
+          :label="`N° de ${selectedIdType || 'documento'} *`"
+          :placeholder="country.idPlaceholder"
+          variant="solo"
+          :rules="idNumberRules"
+          required
+          @input="handleRutInput"
+          autocomplete="off"
+        />
+      </VCol>
+    </VRow>
+
+    <!-- ── Address line 1 ────────────────────────────────────── -->
+    <VRow class="ma-0 pa-0 mt-4">
+      <VCol cols="12" class="pa-0">
+        <VTextField
+          v-model="addressLine1"
+          label="Dirección *"
+          placeholder="Calle, número, colonia..."
+          variant="solo"
+          :rules="addressRules"
+          required
+          autocomplete="address-line1"
+        />
+      </VCol>
+    </VRow>
+
+    <!-- ── Address line 2 (optional) ─────────────────────────── -->
+    <VRow class="ma-0 pa-0">
+      <VCol cols="12" class="pa-0">
+        <VTextField
+          v-model="addressLine2"
+          :label="country.addressLine2Label"
+          variant="solo"
+          autocomplete="address-line2"
+        />
+      </VCol>
+    </VRow>
+
+    <!-- ── Chile: ComunaAutocomplete + optional postal code ──── -->
+    <VRow v-if="isChile" class="ma-0 pa-0">
+      <VCol cols="12" md="12" class="pa-0 pr-md-2">
+        <ComunaAutocomplete
+          v-model="comuna"
+          :items="stateItems"
+          :label="`${country.stateLabel} *`"
+          variant="solo"
+          :rules="comunaRules"
+          required
+          autocomplete="address-level1"
+        />
+      </VCol>
+
+    </VRow>
+
+    <!-- ── Other countries: state + city ─────────────────────── -->
+    <VRow v-else class="ma-0 pa-0">
+      <VCol cols="12" md="6" class="pa-0 pr-md-2">
+        <VAutocomplete
+          v-model="state"
+          :items="stateItems"
+          :label="`${country.stateLabel} *`"
+          variant="solo"
+          :rules="stateRules"
+          required
+          autocomplete="address-level1"
+        />
+      </VCol>
+      <VCol cols="12" md="6" class="pa-0">
+        <VTextField
+          v-model="city"
+          :label="`${country.cityLabel} *`"
+          variant="solo"
+          :rules="cityRules"
+          required
+          autocomplete="address-level2"
+        />
+      </VCol>
+    </VRow>
+
+    <!-- ── Postal code for non-CL countries that require it ──── -->
+    <VRow v-if="country.hasPostalCode && !isChile" class="ma-0 pa-0 mt-4">
+      <VCol cols="12" class="pa-0">
+        <VTextField
+          v-model="postalCode"
+          :label="`${country.postalCodeLabel} *`"
+          variant="solo"
+          :rules="postalRules"
+          :required="country.hasPostalCode"
+          autocomplete="postal-code"
+        />
+      </VCol>
+    </VRow>
+
   </VForm>
 </template>
 
 <style scoped>
-.address-form__different-country.form-item.full-width {
-  padding: 2px 0 10px 10px;
+.address-form {
+  width: 100%;
+}
+
+.address-form :deep(.v-row) {
+  margin-bottom: 0 !important;
+}
+
+.address-form :deep(.v-col) {
+  padding-bottom: 16px !important;
 }
 </style>

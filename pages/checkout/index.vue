@@ -65,6 +65,7 @@ if (route.query && route.query.step) {
 
 const nextStep = async () => {
 
+  console.log("!!!!nextStep: " + currentStep.value)
   error.value = ""
 
   if (currentStep.value === 1) {
@@ -72,9 +73,14 @@ const nextStep = async () => {
     if (errMsg) {
       error.value = errMsg
 
+
       return
     }
-    const custInfo = await customerInformation.value.getCustomerInfo()
+
+    console.log("save to storage: customerInformation.value.getCustomerInfo()")
+    // save
+    customerInformation.value.getCustomerInfo()
+
   }
   if (currentStep.value === 2) {
 
@@ -205,9 +211,7 @@ provide('checkoutService', {
   },
 
   setShippingMethod: async shipMethod => {
-    cartSummary.value.getCart()
     checkoutInfo.value.shippingMethod = shipMethod
-    console.log("setShippingMethod", shipMethod)
   },
 
   attach: observer => {

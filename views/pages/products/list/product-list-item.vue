@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import emptyImage from "@images/empty-image.avif"
 import AddToFavsBtn from "@/components/AddToFavsBtn.vue"
+import {useCurrencyConverter} from "@/composables/useCurrencyConverter";
+import {computed} from "vue";
 
-
+const { formatCurrency, selectedCountryData } = useCurrencyConverter()
+const iso = computed (() => selectedCountryData.value?.iso )
 const props = defineProps(
   {
     product: {
@@ -130,6 +133,8 @@ const formatName = name => {
           </span>
         </div>
         <div class="special-tag" />
+
+        <!-- product-image -->
         <span class="product-image">
 
           <VImg
@@ -156,8 +161,10 @@ const formatName = name => {
             max-width="232"
           />
         </span>
+        <!-- /product-image -->
       </a>
 
+      <!-- miniatures -->
       <section v-if="showMiniatures">
         <div class="prod-list-miniatures">
 
@@ -177,6 +184,7 @@ const formatName = name => {
           </div>
         </div>
       </section>
+      <!-- /miniatures -->
 
       <section class="item__info">
         <a
@@ -197,7 +205,7 @@ const formatName = name => {
               </span>
             </span>
             <h3 class="heading-tag">
-              <span>{{ product.brand.name }} </span>
+              <span>{{ product.brand.name }}  </span>
               <strong>{{ formatName( product.name ) }}</strong>
             </h3>
           </div>
@@ -208,17 +216,21 @@ const formatName = name => {
           :href="props.product.url"
         >
           <span class="item__bottom">
+
             <span
-              class="item__price"
+              class="item__price d-flex"
               style="font-size: 14px;"
             >
-              {{ formatMoney(product.minPrice - product.discountAmount) }}
+              <img :src="`/content/images/flags/${iso}.png`" style="margin-top: 5px; width: 15px; height: 10px; margin-right: 4px;">
+              {{ formatCurrency( product.minPrice - product.discountAmount ) }}
               <span
                 v-if="product.discountAmount > 0"
                 class="item__old-price strike"
                 style="font-size: 10px;"
               >
-                {{ formatMoney(product.minPrice) }}
+
+
+                {{ formatCurrency( product.minPrice ) }}
               </span>
             </span>
             <span

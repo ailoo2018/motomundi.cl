@@ -9,7 +9,7 @@ export default defineEventHandler(async event => {
 
     const { from, to } = getQuery(event)
 
-    return await $fetch(baseUrl + `/api/convert`,
+    return await $fetch(baseUrl + `/exchange/all/CLP`,
       {
         method: "GET",
         headers: {

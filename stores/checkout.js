@@ -11,6 +11,7 @@ export const useCheckoutStore = defineStore('checkout', {
   }),
   actions: {
     setCustomerInfo(info) {
+      console.log("useCheckoutStore::setCustomerInfo: " + JSON.stringify(info))
       this.customerInfo = info
       this.saveToLocalStorage()
     },
@@ -23,6 +24,7 @@ export const useCheckoutStore = defineStore('checkout', {
       this.saveToLocalStorage()
     },
     setCurrentUser(user) {
+
       this.user = user
       this.saveToLocalStorage()
     },
@@ -42,6 +44,8 @@ export const useCheckoutStore = defineStore('checkout', {
     },
 
     loadFromLocalStorage() {
+
+      console.log("useCheckoutStore::loadFromLocalStorage")
       const checkoutCookie = useCookie('checkout-data')
       if (checkoutCookie.value) {
         const data = checkoutCookie.value

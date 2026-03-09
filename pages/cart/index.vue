@@ -1,9 +1,6 @@
 <script setup>
 import { useGuestUser } from "@/composables/useGuestUser.js"
-import CartItemProduct from "@/views/pages/cart/cart-item-product.vue"
 import CartSummary from "@/views/pages/cart/cart-summary.vue"
-import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
-import { ProductType } from "@/models/products.js"
 
 definePageMeta({
   public: true,
@@ -47,10 +44,7 @@ if(wuid && (!cartStore.cart || !cartStore.cart.wuid) ){
           <CartContent />
         </main>
 
-        <CartSummary
-          v-if="!cartStore.loading && cartStore.cart"
-
-        />
+        <CartSummary v-if="!cartStore.loading && cartStore.cart"/>
 
       </div>
     </span>

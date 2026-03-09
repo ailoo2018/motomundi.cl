@@ -9,6 +9,7 @@ export default defineEventHandler(async event => {
     const baseUrl = config.public.w3BaseUrl
 
     const wuid  = getCookie(event, "guest_id")
+    const { country, comuna  } = getQuery(event)
 
     url = `${baseUrl}/${getDomainId()}/shipping/methods`
 
@@ -17,7 +18,7 @@ export default defineEventHandler(async event => {
       headers: {
         'Content-Type': 'application/json',
       },
-      query: { wuid },
+      query: { wuid, comuna, country },
     })
   }catch(error) {
     console.error('Error in products/search lookup: ' + url, error)

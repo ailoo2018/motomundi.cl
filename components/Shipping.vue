@@ -4,6 +4,9 @@ import { useCheckoutStore } from '~/stores/checkout'
 import AddressForm from "~/components/AddressForm.vue"
 import ClickAndCollect from "~/components/Shipping/ClickAndCollect.vue"
 import { formatChileanRUT, formatDeliveryDateRange, formatMoney, isEntre } from "@core/utils/formatters.js"
+import { useExchangeRate } from "@/composables/useExchange.js"
+import { useCountryDetection } from "@/composables/useCountryDetection.js"
+import { useShipping } from "@/composables/checkout/useShipping.js"
 
 const checkoutStore = useCheckoutStore()
 
@@ -17,16 +20,18 @@ const error = ref('')
 const toggleComments = ref(false)
 const isChangeAddress = ref(false)
 const storeSelected = ref(null)
-const selectedShippingMethod = ref(0)
+
 const shippingInformation = ref({})
 const shippingAddress = ref(null)
 const pickupOption = ref('')
-const shippingMethods = ref([])
+
 const config = useRuntimeConfig()
 const shippingComments = ref('')
 const shippingRemarks = ref('')
 
 // const  cartService  = inject('cartService')
+const uShipping = useShipping()
+const { selectedShippingMethod, shippingMethods,   setShippingCost } = uShipping
 
 
 const ShippingMethods = {
@@ -34,11 +39,18 @@ const ShippingMethods = {
   HomeDelivery: 2,
   ExpressDelivery: 3,
   PickupPoint: 4,
+  International: 5,
 }
 
 
+
+const listShippingMethods = async () => {
+  await uShipping.listShippingMethods(shippingAddress.value?.countryCode || null, shippingAddress.value.comuna?.id || 0)
+}
+
 if (!shippingAddress.value || !shippingAddress.value.address) {
   // get from customer information
+  console.log("setting shipping address same as customer address: " + JSON.stringify(checkoutStore.customerInfo.address))
   shippingAddress.value = checkoutStore.customerInfo.address
 }
 
@@ -67,6 +79,8 @@ watch(selectedShippingMethod, async shipMethodCatType => {
       return
     }
 
+    setShippingCost(shipMethod.price, shipMethod.currency || "CLP")
+
 
     await setCarrier(shipMethod.id)
     await checkoutService.setShippingMethod(shipMethod)
@@ -85,6 +99,7 @@ const handleClickAndCollect = (store, selPickupOption) => {
 const setShippingMethod = methodId => {
   console.log("setShippingMethod:" + methodId)
   selectedShippingMethod.value = methodId
+  uShipping.setShippingMethodType(methodId)
   if (ShippingMethods.HomeDelivery === methodId) {
 
   }
@@ -139,25 +154,7 @@ const isWithinLastThreeMinutes = modifiedDate => {
 }
 
 
-const listShippingMethods = async () => {
 
-  const { data, error: fetchError } = await useFetch ("/api/shipping/methods", {
-    method: "GET",
-    headers: { 'Content-Type': 'application/json' },
-    async onResponseError({ response }) {
-      // Access error response data here
-      const errorData = response._data  // or response.body
-
-      console.log('Error data:', errorData)
-      alert("Error calling ListShippingMethods")
-    },
-  })
-
-
-  shippingMethods.value = data.value.methods
-  
-  return shippingMethods.value
-}
 
 const setShippingComuna = async comunaId => {
 
@@ -168,7 +165,7 @@ const setShippingComuna = async comunaId => {
   const { data, error: fetchError } = await useFetch( "/api/cart/comuna", {
     method: "GET",
     headers: { 'Content-Type': 'application/json' },
-    query: {comunaId: comunaId, wuid: wuid},
+    query: { comunaId: comunaId, wuid: wuid },
     async onResponseError({ response }) {
       alert("Error calling SetComuna", response._data)
     },
@@ -192,25 +189,37 @@ const getShippingAddressName = () => {
 }
 
 
+const { formatCurrency, formatToCurrentCurrency } = useCurrencyConverter()
+const { convert } = useExchangeRate()
+const { selectedCountryData } = useCountryDetection()
+const iso = computed(() => { return selectedCountryData.value.iso })
+
+const convertAndFormat = (amount, curr) => {
+  const convertAmount = convert(amount, curr, selectedCountryData.value?.currency)
+
+  return formatCurrency(convertAmount, selectedCountryData.value?.currency)
+
+}
+
+
+
 onMounted(async () => {
 
 
-  /**
-   * we have a limit of three minutes, if not validate stock in store
-   */
+
   if(checkoutStore.shippingInfo && checkoutStore.shippingInfo.modifiedDate && isWithinLastThreeMinutes( checkoutStore.shippingInfo.modifiedDate )) {
     selectedShippingMethod.value = checkoutStore.shippingInfo.method
+    console.log("to set ship")
+
     storeSelected.value = checkoutStore.shippingInfo.store
-    shippingAddress.value = checkoutStore.shippingInfo.address
+
+    //    shippingAddress.value = checkoutStore.shippingInfo.address
     pickupOption.value = checkoutStore.shippingInfo.pickupOption
     shippingComments.value = checkoutStore.shippingInfo.comments
     shippingRemarks.value = checkoutStore.shippingInfo.remarks
 
     toggleComments.value = checkoutStore.shippingInfo.comments || checkoutStore.shippingInfo.remarks
 
-    if(selectedShippingMethod.value > 0 ){
-      console.log("serarch!!!")
-    }
   }else{
     console.log("Not loaded from cache")
   }
@@ -220,7 +229,11 @@ onMounted(async () => {
     await setShippingComuna(shippingAddress.value.comuna.id)
   }
 
-  var methods = await listShippingMethods()
+
+  await listShippingMethods()
+  if(selectedShippingMethod.value > 0 ){
+    uShipping.setShippingMethodType(selectedShippingMethod.value)
+  }
 
 
 })
@@ -379,10 +392,10 @@ onMounted(async () => {
                     <div class="address__info">
                       <div class="address__content">
                         <p class="address__name">
-                          {{ getShippingAddressName() }}<span>, {{ formatChileanRUT( shippingAddress.rut ) }} </span>
+                          {{ getShippingAddressName() }}<span>, {{ formatChileanRUT( shippingAddress?.nif ) }} </span>
                         </p>
                         <p class="address__address">
-                          {{ shippingAddress.address }}, {{ shippingAddress.comuna != null ? shippingAddress.comuna.name : '' }}, Chile
+                          {{ shippingAddress.address }}, {{ shippingAddress.comuna != null ? shippingAddress.comuna.name : shippingAddress.state }}, {{ shippingAddress.countryName }}
                         </p>
                       </div>
                       <button
@@ -469,6 +482,280 @@ onMounted(async () => {
                       <button class="button button--light button--small address__modify">
                         Cambiar
                       </button>
+                    </div>
+                  </div>
+                  <div style="display:none;">
+                    <div class="address-form form-fieldset">
+                      <div class="form-item half-width">
+                        <div class="input__group">
+                          <input
+                            id="address-form__name74"
+                            type="text"
+                            placeholder=" "
+                            maxlength="255"
+                            class=""
+                          > <label for="address-form__name74">Nombre *</label>
+                        </div>
+                      </div>
+                      <div class="form-item half-width">
+                        <div class="input__group">
+                          <input
+                            id="address-form__surnames74"
+                            type="text"
+                            placeholder=" "
+                            maxlength="255"
+                            class=""
+                          > <label for="address-form__surnames74">Apellido *</label>
+                        </div>
+                      </div>
+                      <div class="form-item full-width">
+                        <div class="input__group">
+                          <div>
+                            <input
+                              id="address-form__address74"
+                              type="text"
+                              placeholder=" "
+                              maxlength="255"
+                              autocomplete="street-address"
+                              value=""
+                            > <label for="address-form__address74">Calle y número *</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-item full-width">
+                        <div class="input__group">
+                          <input
+                            id="address-form__floor74"
+                            type="text"
+                            placeholder=" "
+                            maxlength="50"
+                            class=""
+                          > <label for="address-form__floor74">Piso, puerta, otros (Opcional)</label>
+                        </div>
+                      </div>
+                      <div class="form-item half-width">
+                        <div class="input__group">
+                          <input
+                            id="address-form__city74"
+                            type="text"
+                            placeholder=" "
+                            maxlength="255"
+                            class=""
+                          > <label for="address-form__city74">Localidad *</label>
+                        </div>
+                      </div>
+                      <div class="form-item half-width">
+                        <div class="input__group">
+                          <input
+                            id="address-form__postal-code74"
+                            type="text"
+                            placeholder=" "
+                            maxlength="255"
+                            class=""
+                          > <label for="address-form__postal-code74">Código Postal *</label>
+                        </div>
+                      </div>
+                      <div class="form-item half-width">
+                        <div class="input__group">
+                          <div class="motocard-select select--light select--small select--with-label">
+                            <div
+                              dir="auto"
+                              class="v-select vs--single vs--searchable"
+                            >
+                              <div
+                                id="vs9__combobox"
+                                role="combobox"
+                                aria-expanded="false"
+                                aria-owns="vs9__listbox"
+                                aria-label="Search for option"
+                                class="vs__dropdown-toggle"
+                              >
+                                <div class="vs__selected-options">
+                                  <span class="vs__selected"><div>
+                                    Málaga
+                                  </div> </span> <input
+                                    id="address-form__state74"
+                                    aria-autocomplete="list"
+                                    aria-labelledby="vs9__combobox"
+                                    aria-controls="vs9__listbox"
+                                    type="search"
+                                    autocomplete="one-time-code"
+                                    class="vs__search vs__hidden_input"
+                                  >
+                                </div>
+                                <div class="vs__actions">
+                                  <button
+                                    type="button"
+                                    title="Clear Selected"
+                                    aria-label="Clear Selected"
+                                    class="vs__clear"
+                                    style="display: none;"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="10"
+                                      height="10"
+                                    >
+                                      <path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z" />
+                                    </svg>
+                                  </button>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="14"
+                                    height="10"
+                                    role="presentation"
+                                    class="vs__open-indicator"
+                                  >
+                                    <path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z" />
+                                  </svg>
+                                  <div
+                                    class="vs__spinner"
+                                    style="display: none;"
+                                  >
+                                    Loading...
+                                  </div>
+                                </div>
+                              </div>
+                              <ul
+                                id="vs9__listbox"
+                                role="listbox"
+                                style="display: none; visibility: hidden;"
+                              />
+                            </div>
+                          </div>
+                          <label for="address-form__state74">Provincia</label>
+                        </div>
+                      </div>
+                      <div class="form-item half-width">
+                        <div class="input__group">
+                          <div class="motocard-select select--light select--small select--with-label">
+                            <div
+                              dir="auto"
+                              class="v-select vs--single vs--searchable vs--disabled"
+                            >
+                              <div
+                                id="vs3__combobox"
+                                role="combobox"
+                                aria-expanded="false"
+                                aria-owns="vs3__listbox"
+                                aria-label="Search for option"
+                                class="vs__dropdown-toggle"
+                              >
+                                <div class="vs__selected-options">
+                                  <span class="vs__selected"><div>
+                                    España
+                                  </div> </span> <input
+                                    id="address-form__country74"
+                                    disabled="disabled"
+                                    aria-autocomplete="list"
+                                    aria-labelledby="vs3__combobox"
+                                    aria-controls="vs3__listbox"
+                                    type="search"
+                                    autocomplete="one-time-code"
+                                    value=""
+                                    class="vs__search vs__hidden_input"
+                                  >
+                                </div>
+                                <div class="vs__actions">
+                                  <button
+                                    disabled="disabled"
+                                    type="button"
+                                    title="Clear Selected"
+                                    aria-label="Clear Selected"
+                                    class="vs__clear"
+                                    style="display:none;"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="10"
+                                      height="10"
+                                    >
+                                      <path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z" />
+                                    </svg>
+                                  </button>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="14"
+                                    height="10"
+                                    role="presentation"
+                                    class="vs__open-indicator"
+                                  >
+                                    <path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z" />
+                                  </svg>
+                                  <div
+                                    class="vs__spinner"
+                                    style="display:none;"
+                                  >
+                                    Loading...
+                                  </div>
+                                </div>
+                              </div>
+                              <ul
+                                id="vs3__listbox"
+                                role="listbox"
+                                style="display:none;visibility:hidden;"
+                              />
+                            </div>
+                          </div>
+                          <label for="address-form__country74">País</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-actions align-left">
+                      <button class="button">
+                        Guardar
+                      </button>
+                      <button class="button button--outline">
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTERNATIONAL -->
+          <div
+            v-if="shipping.type === ShippingMethods.International"
+            class="shipping-method__category"
+            :class="{ 'current' : selectedShippingMethod === ShippingMethods.International, 'valid' : shippingAddress != null }"
+            @click="setShippingMethod(ShippingMethods.International)"
+          >
+            <div class="shipping-method__heading">
+              <div class="shipping-method__title">
+                <h3>
+                  <VIcon class="tabler-world" />
+                  Envío Internacional
+                </h3>
+              </div>
+              <div class="shipping-method__price">
+
+                <img :src="`/content/images/flags/${iso}.png`"/>
+                {{ shipping.price === 0 ? 'Gratis' : formatToCurrentCurrency(shipping.price, shipping.currency) }}
+                <span
+                  v-if="shipping.oldPrice !== shipping.price"
+                  class="old-price"
+                >{{ formatMoney(shipping.oldPrice) }}</span>
+              </div>
+            </div>
+            <div class="shipping-method__body">
+              <div class="shipping-method__description">
+                Recíbelo el <strong>{{ formatDate( shipping.eta.from ) }} al {{ formatDate( shipping.eta.from ) }}</strong>.
+              </div>
+              <div class="shipping-method__content">
+                <div class="express-delivery">
+                  <div>
+                    <div class="address__info">
+                      <div class="address__content">
+                        <p class="address__name">
+                          {{ shippingAddress != null ? shippingAddress.name : '' }}<span>, {{ shippingAddress.rut }} </span>
+                        </p>
+                        <p class="address__address">
+                          {{ shippingAddress.address }}, {{shippingAddress.postalCode}} {{ shippingAddress.state }}, {{ shippingAddress.countryName }}
+                        </p>
+                      </div>
+
                     </div>
                   </div>
                   <div style="display:none;">

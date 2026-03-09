@@ -5,6 +5,7 @@ import BillingForm from "~/components/Payments/BillingForm.vue"
 import { useCheckoutStore } from '~/stores/checkout'
 import Coupon from "~/components/Cart/Coupon.vue"
 import { useCartStore } from "@/stores/cart.js"
+import { useShipping } from "@/composables/checkout/useShipping.js"
 
 const emit = defineEmits(["acceptPolicy", "paid-with-mp-api"])
 const paymentMethod = ref(0)
@@ -64,7 +65,11 @@ const icons = {
     comment: "Todo el proceso de pago se efectúa de forma segura a través del banco. Para facilitar futuras compras el banco puede guardar tu forma de pago. Motomundi no guarda los datos sensibles de tus tarjetas.",
 
   },
-
+  "19": {
+    label: "Pagar con moneda local",
+    icons: ["/gateways/dlocal.png"],
+    comment: "Utilizamos dLocal para que puedas pagar de forma rápida y segura con tu moneda local y los métodos de pago que ya conoces. Tus datos están protegidos bajo estándares de seguridad internacional.",
+  },
 }
 
 
@@ -100,16 +105,20 @@ const validate = () => {
   return null
 }
 
+
 const listPaymentMethods = async () => {
 
   loading.value = true
   error.value = null
+  console.log("listPaymentMethods")
   try {
-    const response = await fetch( '/api/checkout/payment-methods')
-    if (!response.ok) {
-      throw new Error('Failed to fetch countries')
-    }
-    const data = await response.json()
+    const data = await $fetch( '/api/checkout/payment-methods', {
+      method: "GET",
+      query: {
+        country: checkoutStore.shippingInfo?.address?.countryCode || "CL",
+      },
+    })
+
 
     gateways.value = data.gateways
 

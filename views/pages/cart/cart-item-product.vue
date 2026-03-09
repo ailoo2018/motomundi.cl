@@ -7,6 +7,7 @@ const props = defineProps({
 })
 
 const cartStore = useCartStore()
+const { formatCurrency, iso } = useCurrencyConverter()
 const wuid = useGuestUser().value // Access your guest ID
 
 const updateQuantity = (newVal: number) => {
@@ -59,7 +60,7 @@ const removeCartItem = () => {
           </span>
 
           <div class="cart-product__info ml-2">
-            <h1 class="cart-product__name">{{ cartItem.description }}</h1>
+            <h1 class="cart-product__name">{{ cartItem.description }} </h1>
 
 
             <!-- color -->
@@ -93,19 +94,21 @@ const removeCartItem = () => {
                   class="tag product-tag product-tag--old product-tag--sales"
                 >
                   <span class="discount">{{ cartItem.coupon.name }}
-                    -{{ formatMoney(cartItem.couponDiscount) }}
+                    -{{ formatCurrency(cartItem.couponDiscount) }}
                   </span>
                 </span>
 
               </span>
 
-              <span class="price"> {{ formatMoney(cartItem.price) }}</span>
+              <span class="price">
+                <img :src="`/content/images/flags/${iso}.png`"/>
+                {{ formatCurrency(cartItem.price) }}</span>
               <span
                 v-if="cartItem.discount > 0"
                 class="product-old-price strike ml-2"
               >
 
-                {{ formatMoney(cartItem.oldPrice) }}
+                {{ formatCurrency(cartItem.oldPrice) }}
               </span>
             </p>
           </div>

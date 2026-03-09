@@ -31,12 +31,8 @@ const handleSendCode = async () => {
 
 const handleRemoveCoupon = async (coupon) => {
 
-  cartStore.removeCoupon()
+  await cartStore.removeCoupon()
 
-  const  data  = await $fetch('/api/checkout/promocode?code=' + coupon.value.id, {
-    credentials: 'include',
-    method: 'DELETE',
-  })
 
 
 }
