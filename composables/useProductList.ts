@@ -3,6 +3,8 @@
 const ARRAY_FACETS = ['brands', 'categories', 'tags', 'sizes', 'models', 'colors'] as const
 const SCALAR_FACETS = ['bike', 'collection', 'sword'] as const
 
+
+
 export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   const route = useRoute()
   const router = useRouter()
@@ -14,7 +16,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   const pageSize = ref(60)
   const queryDesc = ref()
   const filters = ref()
-
+  const ignoreNextPageWatch = ref(true)
   // ─── URL helpers ──────────────────────────────────────────────
 
   /** Deserialise ?brands=nike,adidas&page=2 → internal query array */
@@ -171,6 +173,17 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     },
   )
 
+  watch(currentPage, async () => {
+
+    console.log("pageChanged")
+    if (process.client) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+   // await router.push({ query: filtersToUrlQuery(currentQuery, currentPage) })
+     setPage(currentPage.value)
+  })
+
+
   // ─── Public API ───────────────────────────────────────────────
 
   /**
@@ -211,7 +224,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     total:       computed(() => total.value    || initialData.value?.totalHits || 0),
     queryDesc,
     totalPages,
-    currentPage: computed(() => currentPage.value),
+    currentPage,
     filters,
     applyFilters,
     setPage,

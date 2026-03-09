@@ -24,6 +24,7 @@ const loading = ref(false)
 let rs = {}
 
 
+
 const baseQuery = []
 if (query.categoryId) {
   baseQuery.push({ type: "categories", values: [query.categoryId] })
@@ -115,6 +116,7 @@ const onFilter = filters => {
         </div>
       </section>
     </section>
+
 
     <VPagination
       v-model="currentPage"

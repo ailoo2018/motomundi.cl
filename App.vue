@@ -44,9 +44,7 @@ if (process.client) {
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
-<!--
       <CountryPopup />
--->
       <ScrollToTop />
     </VApp>
   </VLocaleProvider>
