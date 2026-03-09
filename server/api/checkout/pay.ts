@@ -35,7 +35,7 @@ export default defineEventHandler(async event => {
       amount: amount,
       currency: currency,
       returnUrl: returnUrl,
-      country: "CL"
+      country: body.country || "CL",
     })
 
   } catch (error) {

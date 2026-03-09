@@ -6,6 +6,7 @@ import { useCheckoutStore } from '~/stores/checkout'
 import Coupon from "~/components/Cart/Coupon.vue"
 import { useCartStore } from "@/stores/cart.js"
 import { useShipping } from "@/composables/checkout/useShipping.js"
+import { useCountryDetection } from "@/composables/useCountryDetection.js"
 
 const emit = defineEmits(["acceptPolicy", "paid-with-mp-api"])
 const paymentMethod = ref(0)
@@ -278,7 +279,7 @@ const pay = async (mercadoPagoApiData = null) => {
     if(!shippingInfo.address.phone)
       shippingInfo.address.phone = customerInfo.phone
 
-    shippingInfo.address.comuna_id = shippingInfo.address.comuna.id
+    shippingInfo.address.comuna_id = shippingInfo.address.comuna?.id || 0
 
     checkoutService.setLoading(true)
 
@@ -286,6 +287,7 @@ const pay = async (mercadoPagoApiData = null) => {
 
     var rq = {
       "wuid": wuid,
+      "country": useCountryDetection().selectedCountryData?.value?.iso?.toUpperCase() || "CL",
       "coupon": cartStore.coupon || null,
       "addresses": {
         "selectedShipping": shippingInfo.address,
