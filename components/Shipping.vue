@@ -44,9 +44,6 @@ const ShippingMethods = {
 
 
 
-const listShippingMethods = async () => {
-  await uShipping.listShippingMethods(shippingAddress.value?.countryCode || null, shippingAddress.value.comuna?.id || 0)
-}
 
 if (!shippingAddress.value || !shippingAddress.value.address) {
   // get from customer information
@@ -79,8 +76,10 @@ watch(selectedShippingMethod, async shipMethodCatType => {
       return
     }
 
-    setShippingCost(shipMethod.price, shipMethod.currency || "CLP")
 
+  //  setShippingCost(shipMethod.price, shipMethod.currency || "CLP")
+
+    uShipping.setShippingMethodType(shipMethodCatType)
 
     await setCarrier(shipMethod.id)
     await checkoutService.setShippingMethod(shipMethod)
@@ -100,9 +99,8 @@ const setShippingMethod = methodId => {
   console.log("setShippingMethod:" + methodId)
   selectedShippingMethod.value = methodId
   uShipping.setShippingMethodType(methodId)
-  if (ShippingMethods.HomeDelivery === methodId) {
+  useCartStore().setShippingMethod(uShipping.getShippingMethod())
 
-  }
 }
 
 const getShippingInfo = () => {
@@ -144,11 +142,11 @@ const validate = async () => {
 
 defineExpose({ getShippingInfo, validate })
 
-const isWithinLastThreeMinutes = modifiedDate => {
+const isWithinLast15Minutes = modifiedDate => {
   const modified = new Date(modifiedDate)
   const now = new Date()
   const diffInMs = now - modified
-  const threeMinutesInMs = 3 * 60 * 1000
+  const threeMinutesInMs = 15 * 60 * 1000
 
   return diffInMs <= threeMinutesInMs
 }
@@ -189,7 +187,7 @@ const getShippingAddressName = () => {
 }
 
 
-const { formatCurrency, formatToCurrentCurrency } = useCurrencyConverter()
+const { formatCurrency } = useCurrencyConverter()
 const { convert } = useExchangeRate()
 const { selectedCountryData } = useCountryDetection()
 const iso = computed(() => { return selectedCountryData.value.iso })
@@ -207,7 +205,7 @@ onMounted(async () => {
 
 
 
-  if(checkoutStore.shippingInfo && checkoutStore.shippingInfo.modifiedDate && isWithinLastThreeMinutes( checkoutStore.shippingInfo.modifiedDate )) {
+  if(checkoutStore.shippingInfo && checkoutStore.shippingInfo.modifiedDate && isWithinLast15Minutes( checkoutStore.shippingInfo.modifiedDate )) {
     selectedShippingMethod.value = checkoutStore.shippingInfo.method
     console.log("to set ship")
 
@@ -220,6 +218,7 @@ onMounted(async () => {
 
     toggleComments.value = checkoutStore.shippingInfo.comments || checkoutStore.shippingInfo.remarks
 
+
   }else{
     console.log("Not loaded from cache")
   }
@@ -230,10 +229,14 @@ onMounted(async () => {
   }
 
 
-  await listShippingMethods()
+  await uShipping.listShippingMethods(shippingAddress.value?.countryCode || null, shippingAddress.value.comuna?.id || 0)
   if(selectedShippingMethod.value > 0 ){
     uShipping.setShippingMethodType(selectedShippingMethod.value)
+    useCartStore().setShippingMethod(uShipping.getShippingMethod())
   }
+
+  checkoutStore.shippingInfo.modifiedDate = new Date()
+  checkoutStore.saveToLocalStorage()
 
 
 })
@@ -732,7 +735,8 @@ onMounted(async () => {
               <div class="shipping-method__price">
 
                 <img :src="`/content/images/flags/${iso}.png`"/>
-                {{ shipping.price === 0 ? 'Gratis' : formatToCurrentCurrency(shipping.price, shipping.currency) }}
+
+                {{ shipping.price === 0 ? 'Gratis' : formatCurrency(shipping.price) }}
                 <span
                   v-if="shipping.oldPrice !== shipping.price"
                   class="old-price"

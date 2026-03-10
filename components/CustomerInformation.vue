@@ -10,6 +10,7 @@ const checkoutStore = useCheckoutStore()
 const { validatePhone, formatPhone } = usePhoneValidation()
 
 const showLogin = ref(false)
+const isLoading = ref(false)
 // const isLoading = ref(true)
 const error = ref('')
 
@@ -41,7 +42,6 @@ const closedLogin = () => {
 }
 
 const getCurrentUser = async loginData => {
-
 
   const accessToken = useCookie('accessToken').value
 
@@ -83,14 +83,13 @@ const getCurrentUser = async loginData => {
   } else {
     return null
   }
-
 }
 
 
 const getCustomerInfo = async () => {
   console.log("CustomerInformation::getCustomerInfo")
 
-  const addr = addressForm.value.getAddress()
+  const addr = addressForm.value.getCustomerAddress()
   if (!addr)
     return null
 
@@ -102,6 +101,8 @@ const getCustomerInfo = async () => {
 
   console.log("CustomerInformation::getCustomerInfo: " + JSON.stringify(custInfo))
   checkoutStore.setCustomerInfo(custInfo)
+
+
 
   if (user.value) {
     checkoutStore.setCurrentUser(user.value)

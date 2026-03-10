@@ -8,6 +8,8 @@ const shippingMethods = ref([])
 export function useShipping() {
 
 
+
+
   const setShippingCost = (amount, curr) => {
     console.log("set shippingcost")
     shippingCost.value = { amount, currency: curr }
@@ -15,16 +17,22 @@ export function useShipping() {
 
   const setShippingMethodType = id => {
     const sm  = shippingMethods.value?.find(m => m.type === id)
-    if(sm)
+    if(sm) {
       setShippingCost(sm.price, sm.currency)
+    }
   }
+
+  const getShippingMethod = () => {
+    return shippingMethods.value?.find(m => m.type === selectedShippingMethod.value)
+  }
+
+
 
 
   const listShippingMethods = async (country, comuna) => {
 
-
-
-    const { data, error: fetchError } = await useFetch ("/api/shipping/methods", {
+    console.log("listShippingMethods")
+    const data = await $fetch("/api/shipping/methods", {
       method: "GET",
       headers: { 'Content-Type': 'application/json' },
       query: {
@@ -41,7 +49,7 @@ export function useShipping() {
     })
 
 
-    shippingMethods.value = data.value?.methods
+    shippingMethods.value = data.methods
 
     return shippingMethods.value
   }
@@ -52,6 +60,7 @@ export function useShipping() {
     shippingCost,
     selectedShippingMethod,
     shippingMethods,
+    getShippingMethod,
 
     listShippingMethods,
     setShippingCost,

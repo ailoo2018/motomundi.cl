@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { useAddressForm } from "@/composables/useAddressForm.js"
 import { useRut } from "~/@core/utils/rut"
 import { useCheckoutStore } from "@/stores/checkout.js"
+import { useCountryDetection } from "@/composables/useCountryDetection.js"
 
 const { formatRutInput, validateRut } = useRut()
 
@@ -132,7 +133,17 @@ onMounted(async () => {
 
 })
 
-defineExpose({ getAddresses, getAddress, validate })
+
+const getCustomerAddress = () => {
+  console.log("getCustomerData")
+  const countryData = useCountryDetection().getCountryData(country.value.code)
+  checkoutStore.setCountryData(countryData)
+  checkoutStore.saveToLocalStorage()
+
+  return getAddress()
+}
+
+defineExpose({ getAddresses, getCustomerAddress, validate })
 </script>
 
 <template>

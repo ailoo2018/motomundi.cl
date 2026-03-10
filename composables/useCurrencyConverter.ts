@@ -73,13 +73,9 @@ export function useCurrencyConverter() {
 
   const formatCurrency = (amount, currency) => {
 
-
-
-
-    const amnt = convert(amount )
-
-    if(!currency)
-      currency = selectedCountryData.value?.currency
+    let amnt = amount
+    if(getCurrentCurrency() !== currency)
+      amnt = convert(amount )
 
     return formatMoney(amnt, currency, selectedCountryData.value?.symbol)
   }

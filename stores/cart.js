@@ -3,27 +3,55 @@ import { defineStore } from 'pinia'
 export const useCartStore = defineStore('cart', {
   state: () => ({
     coupon: null,
-    cart: { wuid: null, items: [] },
+    cart: { wuid: null, items: [], total: 0 },
+    shippingMethod: null,
+
     loading: false,
     isApplyingCoupon: false,
   }),
   getters: {
+    currency: state => {
+      return useCookie("mm_currency").value || "CLP"
+    },
     points: state => state.total * .02,
     items: state => state.items,
     subtotal: state => state.cart.items.reduce((acc, item) => acc + (item.price * item.quantity)/1.19, 0),
     total: state => {
       let discount = state.coupon?.discount || 0
 
-      return (state.cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0) ) - discount || 0
+      return (state.cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0) )
+        - discount
+        || 0
     },
     iva: state =>{
       return (state.total - state.subtotal) || 0
+    },
+    shippingCost: state => {
+      let shippingCost = null
+      if(state.shippingMethod){
+
+        shippingCost = { amount: state.shippingMethod.price, currency: state.shippingMethod.currency }
+        if(state.shippingMethod.freeShipping?.amount > 0){
+          if(state.subtotal > state.shippingMethod.freeShipping.amount)
+            shippingCost = { amount: 0, currency: state.shippingMethod.currency }
+        }
+
+
+      }
+
+      return shippingCost
     },
   },
   actions: {
 
     async onCartModified(){
       await this.reapplyCoupon()
+    },
+
+    async setShippingMethod(m){
+      this.shippingMethod = m || null
+
+
     },
 
     async reapplyCoupon() {
@@ -65,16 +93,7 @@ export const useCartStore = defineStore('cart', {
       if(!this.coupon)
         return
 
-/*
-      const  data  = await $fetch('/api/checkout/promocode?id=' + this.coupon.id, {
-        credentials: 'include',
-        method: 'DELETE',
-      })
-*/
-
       this.coupon = null
-
-
     },
 
     async addCoupon(code) {

@@ -13,7 +13,7 @@ const props = defineProps({
 
 const emit = defineEmits(['cartEmpty', 'nextStep', 'collapse'])
 
-const { formatCurrency, formatToCurrentCurrency, iso, convert } = useCurrencyConverter()
+const { formatCurrency,  iso, convert } = useCurrencyConverter()
 
 const { isMobile } = useDevice()
 
@@ -23,7 +23,8 @@ const { cart, coupon } = inject('checkoutService')
 const config = useRuntimeConfig()
 const isCollapsed = ref(false)
 
-const { shippingCost, selectedShippingMethod } = useShipping()
+
+const {  selectedShippingMethod } = useShipping()
 
 
 const baseUrl = config.public.LEGACY_URL
@@ -156,8 +157,11 @@ const total = computed(() => {
             <h2 style="margin:4px">
               Resumen de pedido
             </h2>
+
+
           </VCardTitle>
           <VCardText>
+
             <div class="cart-summary__totals">
               <div v-if="iso === 'cl'" class="totals__item" >
                 <span class="item__label">Subtotal</span>
@@ -174,17 +178,17 @@ const total = computed(() => {
               <div class="totals__item">
                 <span class="item__label">Envío</span>
 
-                <span v-if="selectedShippingMethod > 0" class="item__price">{{
-                  shippingCost.amount > 0 ? formatToCurrentCurrency(shippingCost.amount, shippingCost.currency, { toSelectedCurrency: true }) : 'Gratis'
-                }} </span>
-                <span v-else>(seleccione un método de envío)</span>
+                <span v-if="cartStore.shippingCost" class="item__price">
+                  {{ formatCurrency(cartStore.shippingCost.amount)  }}
+                </span>
+                <span v-else>(seleccione un método de envío) </span>
               </div>
               <div v-if="cartStore.coupon" class="totals__item " >
                 <span class="item__label">Código Promo<VChip size="sm" class="ml-2 px-2 py-1 font-weight-medium" style="color: #f44a4a">{{cartStore.coupon.name}}</VChip></span>
                 <span class="item__price">
 
                   <span v-if="!cartStore.isApplyingCoupon" id="cart-total" style="color: #f44a4a">
-                    ({{ formatMoney(cartStore.coupon.discount) }})
+                    ({{ formatCurrency(cartStore.coupon.discount) }})
                   </span>
                   <span v-else>
                     <VProgressCircular size="20" width="2" indeterminate color="primary"/>
@@ -195,7 +199,7 @@ const total = computed(() => {
               <div class="totals__item totals__item--total">
                 <span class="item__label">Total</span>
                 <span class="item__price">
-                  <span id="cart-total">{{ formatCurrency(cartStore.total) }}</span>
+                  <span id="cart-total">{{ formatCurrency((cartStore.shippingCost?.amount || 0) + cartStore.total) }}</span>
                 </span>
               </div>
             </div>

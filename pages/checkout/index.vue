@@ -183,6 +183,8 @@ const coupon = ref(null)
 const couponDiscount = ref(0)
 const isCartEmpty = ref(false)
 
+const cartStore = useCartStore()
+
 provide('checkoutService', {
 
   observers,
@@ -212,6 +214,7 @@ provide('checkoutService', {
 
   setShippingMethod: async shipMethod => {
     checkoutInfo.value.shippingMethod = shipMethod
+    cartStore.setShippingMethod()
   },
 
   attach: observer => {
@@ -226,8 +229,9 @@ const handleCartEmpty = val => {
   isCartEmpty.value = val
 }
 
-const cartStore = useCartStore()
+
 const wuid = useGuestUser().value
+
 
 onMounted(async () => {
   cartStore.fetchCart(wuid)
@@ -245,6 +249,12 @@ onMounted(async () => {
         v-if="isMobile"
         class="mt-1"
       />
+<!--
+      <VAlert style="max-height: 300px; overflow: auto;">
+          code: {{checkoutStore.countryData}} <br/>
+          currency: {{checkoutStore.countryData?.currency}}
+      </VAlert>
+-->
       <div class="d-flex align-center ga-0 checkout-stepper ">
         <h1
           v-if="!isMobile"

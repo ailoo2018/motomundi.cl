@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 export const useCheckoutStore = defineStore('checkout', {
   state: () => ({
     step: 1,
+    countryData: null,
     customerInfo: null,
     shippingInfo: null,
     paymentInfo: null,
@@ -14,6 +15,9 @@ export const useCheckoutStore = defineStore('checkout', {
       console.log("useCheckoutStore::setCustomerInfo: " + JSON.stringify(info))
       this.customerInfo = info
       this.saveToLocalStorage()
+    },
+    setCountryData(countryData) {
+      this.countryData = countryData
     },
     setShippingInfo(info) {
       this.shippingInfo = info

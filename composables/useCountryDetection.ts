@@ -24,7 +24,8 @@ export const COUNTRY_DATA = {
   VE: { name: 'Venezuela',      currency: 'VES', symbol: 'Bs.', flag: '🇻🇪', iso: "ve" },
 }
 export const DEFAULT_COUNTRY = 'CL'
-export const COOKIE_NAME     = 'store_country'
+export const COOKIE_NAME     = 'mm_country'
+export const CURRENCY_COOKIE_NAME     = 'mm_currency'
 export const COOKIE_DAYS     = 365
 
 // ── Singleton state (shared across all calls to useCountryDetection) ──────────
@@ -39,6 +40,11 @@ let   detectionRan    = false   // prevents duplicate fetch on hot-reload
 export function useCountryDetection() {
   // Nuxt's useCookie — reactive & SSR-safe
   const countryCookie = useCookie(COOKIE_NAME, {
+    maxAge: COOKIE_DAYS * 24 * 60 * 60,
+    path: '/',
+    sameSite: 'lax',
+  })
+  const currencyCookie = useCookie(CURRENCY_COOKIE_NAME, {
     maxAge: COOKIE_DAYS * 24 * 60 * 60,
     path: '/',
     sameSite: 'lax',
@@ -92,18 +98,26 @@ export function useCountryDetection() {
 
   function acceptDetectedCountry() {
     if (!detectedCountry.value) return
-    countryCookie.value = detectedCountry.value
+    changeCountr(detectedCountry.value)
     showPopup.value     = false
   }
 
   function keepDefaultCountry() {
-    countryCookie.value = DEFAULT_COUNTRY
+    changeCountry(DEFAULT_COUNTRY)
     showPopup.value     = false
+  }
+
+  function getCountryCurrency(code){
+    return COUNTRY_DATA[code]?.currency || "CLP"
+  }
+  function getCountryData(code){
+    return COUNTRY_DATA[code] || null
   }
 
   function changeCountry(code) {
     if (COUNTRY_DATA[code]) {
       countryCookie.value = code
+      currencyCookie.value = getCountryCurrency(code)
     }
   }
 
@@ -123,6 +137,7 @@ export function useCountryDetection() {
     keepDefaultCountry,
     changeCountry,
     dismissPopup,
+    getCountryData,
     COUNTRY_DATA,
     DEFAULT_COUNTRY,
   }

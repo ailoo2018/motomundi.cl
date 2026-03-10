@@ -1,7 +1,6 @@
 import {useCountryDetection} from "@/composables/useCountryDetection"
 import {computed, ref, watch} from "vue"
 import {COUNTRIES} from "@/models/countries"
-import {useCheckoutStore} from "@/stores/checkout";
 
 const form = ref(null)
 
@@ -25,16 +24,6 @@ export function useAddressForm() {
 
   console.log("useAddressForm")
 
-
-/*  if (checkoutStore.customerInfo?.address) {
-    state.value = checkoutStore.customerInfo?.address.state
-    city.value = checkoutStore.customerInfo?.address.city
-    addressLine1.value = checkoutStore.customerInfo?.address.address
-    addressLine2.value = checkoutStore.customerInfo?.address.address2
-    postalCode.value = checkoutStore.customerInfo?.address.postalCode,
-    selectedIdType.value = checkoutStore.customerInfo?.address.idType || null
-    idNumber.value = checkoutStore.customerInfo?.address.postalCode.nif
-  }*/
 
   const isLoading = ref(false)
 
@@ -92,7 +81,6 @@ export function useAddressForm() {
     if(!isInit )
       return null
 
-    const stateValue = isChile.value ? comuna.value : state.value
 
     return {
       countryCode: selectedCountry.value?.code,
@@ -103,7 +91,7 @@ export function useAddressForm() {
       surnames: surname.value,
       address: addressLine1.value,
       address2: addressLine2.value,
-      state: stateValue,
+      state: state.value,
       city: city.value,
       comuna: comuna.value,
       postalCode: postalCode.value,
