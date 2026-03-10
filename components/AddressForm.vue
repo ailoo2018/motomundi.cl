@@ -127,7 +127,7 @@ onMounted(async () => {
 
   if(checkoutStore.customerInfo?.address){
     setAddress(checkoutStore.customerInfo.address)
-  }else if(addresses.length > 0){
+  }else if(addresses?.length > 0){
     setAddress(addresses[0])
   }
 
