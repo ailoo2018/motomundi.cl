@@ -193,7 +193,7 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
           autocomplete="name"
         />
       </VCol>
-      <VCol cols="12" md="6" class="pa-0">
+      <VCol cols="12" md="6" class="pa-0 mt-2 mt-md-0">
         <VTextField
           v-model="surname"
           label="Apellido *"
@@ -217,7 +217,7 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
           required
         />
       </VCol>
-      <VCol cols="12" md="8" class="pa-0">
+      <VCol cols="12" md="8" class="pa-0 mt-2 mt-md-0">
         <VTextField
           v-model="idNumber"
           :label="`N° de ${selectedIdType || 'documento'} *`"
@@ -287,7 +287,7 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
           autocomplete="address-level1"
         />
       </VCol>
-      <VCol cols="12" md="6" class="pa-0">
+      <VCol cols="12" md="6" class="pa-0 mt-2 mt-md-0">
         <VTextField
           v-model="city"
           :label="`${country.cityLabel} *`"

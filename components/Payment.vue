@@ -268,6 +268,9 @@ const pay = async (mercadoPagoApiData = null) => {
     const wuid = useGuestUser().value
     const customerInfo = checkoutStore.customerInfo
     const shippingInfo = checkoutStore.shippingInfo
+    const country = checkoutStore.countryData.iso
+    const currency = checkoutStore.countryData.currency
+    const exhangeRate = useExchangeRate().convertFromClp(1, currency)
     const paymentInfo = await getPaymentInfo()
 
 
@@ -286,27 +289,29 @@ const pay = async (mercadoPagoApiData = null) => {
 
 
     var rq = {
-      "wuid": wuid,
-      "country": useCountryDetection().selectedCountryData?.value?.iso?.toUpperCase() || "CL",
-      "coupon": cartStore.coupon || null,
-      "addresses": {
-        "selectedShipping": shippingInfo.address,
-        "askForInvoice": paymentInfo.billingAddress && paymentInfo.billingAddress.rut && paymentInfo.billingAddress.rut.length > 0,
-        "shipping": shippingInfo.address,
-        "billing": paymentInfo.billingAddress,
+      wuid: wuid,
+      country: country,
+      currency: currency,
+      exhangeRate: exhangeRate,
+      coupon: cartStore.coupon || null,
+      addresses: {
+        selectedShipping: shippingInfo.address,
+        askForInvoice: paymentInfo.billingAddress && paymentInfo.billingAddress.rut && paymentInfo.billingAddress.rut.length > 0,
+        shipping: shippingInfo.address,
+        billing: paymentInfo.billingAddress,
       },
-      "customerInformation": customerInfo,
-      "shipmentInformation": shippingInfo,
-      "createAccount": false,
-      "subscribe": true,
-      "notifyWhatsApp": true,
-      "selectedCarrier": shippingInfo.carrierId,
-      "paymentMethod": { gateway: paymentInfo.gateway },
-      "pickupStore": shippingInfo.store,
-      "selectedMapData": {
-        "store_id": shippingInfo.store ? shippingInfo.store.id : 0,
+      customerInformation: customerInfo,
+      shipmentInformation: shippingInfo,
+      createAccount: false,
+      subscribe: true,
+      notifyWhatsApp: true,
+      selectedCarrier: shippingInfo.carrierId,
+      paymentMethod: { gateway: paymentInfo.gateway },
+      pickupStore: shippingInfo.store,
+      selectedMapData: {
+        store_id: shippingInfo.store ? shippingInfo.store.id : 0,
       },
-      "items": cartStore.cart.items,
+      items: cartStore.cart.items,
       mercadoPagoPaymentData: mercadoPagoApiData,
     }
 
@@ -357,6 +362,10 @@ const pay = async (mercadoPagoApiData = null) => {
 }
 
 // const coupon  = ref(null);
+onMounted(async () => {
+
+})
+
 
 defineExpose({ getPaymentInfo, validate, pay })
 </script>
