@@ -250,10 +250,12 @@ onMounted(async () => {
         class="mt-1"
       />
 
+<!--
       <VAlert style="max-height: 300px; overflow: auto;">
           code: {{checkoutStore.countryData}} <br/>
           currency: {{checkoutStore.countryData?.currency}}
       </VAlert>
+-->
 
       <div class="d-flex align-center ga-0 checkout-stepper ">
         <h1

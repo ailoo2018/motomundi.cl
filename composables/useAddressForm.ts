@@ -65,6 +65,10 @@ export function useAddressForm() {
         headers: {'Content-Type': 'application/json'},
       })
 
+      if((!addressLine1.value || addressLine1.value.length === 0) && data.addresses?.length > 0){
+        setAddress(data.addresses[0])
+      }
+
       return data.addresses
 
     } catch (err) {
