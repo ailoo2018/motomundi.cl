@@ -58,6 +58,12 @@ export const useUser = () => {
 
     user.value = null
 
+    const checkoutStore = useCheckoutStore()
+
+    checkoutStore.setCurrentUser(null)
+    checkoutStore.setCustomerInfo(null)
+    checkoutStore.clearCheckout()
+
     await navigateTo("/login", { replace: true })
   }
 
