@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import { ref } from "vue"
 import BillingForm from "~/components/Payments/BillingForm.vue"
-import { useCheckoutStore } from '~/stores/checkout'
+import { useCheckoutStore } from '~/stores/checkout.ts'
 import Coupon from "~/components/Cart/Coupon.vue"
 import { useCartStore } from "@/stores/cart.js"
 import { useShipping } from "@/composables/checkout/useShipping.js"
@@ -267,9 +267,19 @@ const pay = async (mercadoPagoApiData = null) => {
 
     const wuid = useGuestUser().value
     const customerInfo = checkoutStore.customerInfo
+
+
     const shippingInfo = checkoutStore.shippingInfo
-    const country = checkoutStore.countryData.iso
-    const currency = checkoutStore.countryData.currency
+
+    let country = "CL"
+    let currency = "CLP"
+    if(customerInfo.address.countryCode){
+      const countryData  = useCountryDetection().getCountryData( customerInfo.address.countryCode)
+
+      country = countryData.iso
+      currency = countryData.currency
+    }
+
     const exhangeRate = useExchangeRate().convertFromClp(1, currency)
     const paymentInfo = await getPaymentInfo()
 

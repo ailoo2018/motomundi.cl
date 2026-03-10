@@ -5,7 +5,7 @@ import {COUNTRIES} from "@/models/countries"
 
 const selectedAddress = ref()
 
-let isInit = false
+
 const isLoading = ref(false)
 const idNumber = ref('')
 const name = ref('')
@@ -81,9 +81,6 @@ export function useAddressForm() {
 
   const getAddress = () => {
 
-    if(!isInit )
-      return null
-
 
     return {
       countryCode: selectedCountry.value?.code,
@@ -114,8 +111,6 @@ export function useAddressForm() {
 
     if(!addr)
       return
-
-    isInit = true
 
     console.log("useAddressForm::setAddress " + JSON.stringify(addr))
     name.value = addr.name

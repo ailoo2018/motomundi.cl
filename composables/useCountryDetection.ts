@@ -1,5 +1,14 @@
 // composables/useCountryDetection.js
 
+export interface Country {
+  name: string;
+  currency: string;
+  symbol: string;
+  flag: string;
+  iso: string;
+  hasDecimals: boolean;
+}
+
 export const COUNTRY_DATA = {
   AR: { name: 'Argentina',      currency: 'ARS', symbol: '$',   flag: '🇦🇷', iso: "AR", hasDecimals: false },
   BO: { name: 'Bolivia',        currency: 'BOB', symbol: 'Bs.', flag: '🇧🇴', iso: "BO" },
@@ -110,7 +119,7 @@ export function useCountryDetection() {
   function getCountryCurrency(code){
     return COUNTRY_DATA[code]?.currency || "CLP"
   }
-  function getCountryData(code){
+  function getCountryData(code) : Country {
     return COUNTRY_DATA[code] || null
   }
 

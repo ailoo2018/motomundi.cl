@@ -120,7 +120,7 @@ const validate = async () => {
   }
 
   if (!contactPhone.value || !contactEmail.value)
-    return "Hay errores en el formulario. Por favor, revisa los campos e inténtalo de nuevo."
+    return "Hay errores en el formulario. Ingresar teléfono y email.  Por favor, revisa los campos e inténtalo de nuevo."
 
   return null
 }

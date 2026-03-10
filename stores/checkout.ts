@@ -1,17 +1,28 @@
 import { defineStore } from 'pinia'
+import {Customer} from "mercadopago";
+import type {CustomerInformation, ShipmentInformation} from "@/types/checkout.types";
+
+interface CheckoutState {
+  step: number;
+  countryData: Country | null;
+  customerInfo: CustomerInformation | null;
+  shippingInfo: ShipmentInformation | null;
+  paymentInfo: any | null;
+  user: any | null;
+}
 
 
 export const useCheckoutStore = defineStore('checkout', {
-  state: () => ({
+  state: (): CheckoutState => ({
     step: 1,
     countryData: null,
-    customerInfo: null,
+    customerInfo:  null,
     shippingInfo: null,
     paymentInfo: null,
     user: null,
   }),
   actions: {
-    setCustomerInfo(info) {
+    setCustomerInfo(info : CustomerInformation) {
       console.log("useCheckoutStore::setCustomerInfo: " + JSON.stringify(info))
       this.customerInfo = info
       this.saveToLocalStorage()
@@ -19,7 +30,7 @@ export const useCheckoutStore = defineStore('checkout', {
     setCountryData(countryData) {
       this.countryData = countryData
     },
-    setShippingInfo(info) {
+    setShippingInfo(info : ShipmentInformation) {
       this.shippingInfo = info
       this.saveToLocalStorage()
     },

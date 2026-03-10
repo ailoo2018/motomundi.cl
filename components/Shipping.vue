@@ -47,8 +47,7 @@ const ShippingMethods = {
 
 if (!shippingAddress.value || !shippingAddress.value.address) {
   // get from customer information
-  console.log("setting shipping address same as customer address: " + JSON.stringify(checkoutStore.customerInfo.address))
-  shippingAddress.value = checkoutStore.customerInfo.address
+  shippingAddress.value = checkoutStore.customerInfo?.address
 }
 
 
