@@ -43,7 +43,9 @@ const isValidRut = (rut: string): boolean => {
   const body = cleanValue.slice(0, -1);
   const dv = cleanValue.slice(-1);
 
-  return calculateDv(body) === dv;
+  const calcDv = calculateDv(body)
+
+  return calcDv === dv;
 };
 
 /**

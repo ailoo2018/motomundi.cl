@@ -2,7 +2,6 @@ import {useCountryDetection} from "@/composables/useCountryDetection"
 import {computed, ref, watch} from "vue"
 import {COUNTRIES} from "@/models/countries"
 
-const form = ref(null)
 
 const selectedAddress = ref()
 
@@ -157,7 +156,7 @@ export function useAddressForm() {
   watch(selectedCountry, newVal => {
     setIdType()
     comuna.value = null
-    form.value?.resetValidation()
+  //  form.value?.resetValidation()
   })
 
   return {
@@ -186,6 +185,5 @@ export function useAddressForm() {
     postalCode,
     comuna,
 
-    form,
   }
 }

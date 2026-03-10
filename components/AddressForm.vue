@@ -6,6 +6,8 @@ import { useCheckoutStore } from "@/stores/checkout.js"
 import { useCountryDetection } from "@/composables/useCountryDetection.js"
 
 const { formatRutInput, validateRut } = useRut()
+const form = ref(null)
+
 
 const {
   getAddress,
@@ -25,13 +27,13 @@ const {
   city,
   postalCode,
   comuna,
-  form,
+
   isChile,
 } = useAddressForm()
 
 
 const checkoutStore = useCheckoutStore()
-if(checkoutStore.customerInfo?.address)
+if (checkoutStore.customerInfo?.address)
   setAddress(checkoutStore.customerInf?.address)
 
 // ─── Computed ─────────────────────────────────────────────────────────────────
@@ -62,7 +64,12 @@ const idTypeRules = [
 
 const idNumberRules = [
   v => !!v || `El número de ${selectedIdType.value || 'documento'} es requerido`,
-  v => isChile && validateRut(v) || "El RUT no es valido"
+  v => {
+    if (!isChile.value) return true
+
+    const isValid = validateRut(v)
+    return isValid || "El RUT no es valido"
+  },
 ]
 
 const addressRules = [
@@ -106,28 +113,27 @@ const validate = async () => {
 const handleRutInput = event => {
   console.log("handleRutInput: " + isChile.value, event)
 
-  if(!isChile.value)
+  if (!isChile.value)
     return
 
 
   const input = event.target
-  if(validateRut(input.value))
+  if (validateRut(input.value))
     idNumber.value = formatRutInput(input.value)
-  else{
-    idNumber.value =input.value
+  else {
+    idNumber.value = input.value
   }
 
 }
-
 
 
 onMounted(async () => {
   console.log("AddressForm::onMounted")
   const addresses = await getAddresses()
 
-  if(checkoutStore.customerInfo?.address){
+  if (checkoutStore.customerInfo?.address) {
     setAddress(checkoutStore.customerInfo.address)
-  }else if(addresses?.length > 0){
+  } else if (addresses?.length > 0) {
     setAddress(addresses[0])
   }
 
@@ -149,7 +155,7 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
 <template>
   <!-- VForm wrapper: required for form.validate() to reach all child fields -->
   <VForm ref="form" class="address-form" validate-on="submit">
-
+    {{ isChile }}
 
     <!-- ── Country ──────────────────────────────────────────── -->
     <VRow class="ma-0 pa-0 mt-4">
