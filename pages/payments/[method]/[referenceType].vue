@@ -89,8 +89,9 @@ onMounted(async () => {
     token = route.query.payment_id
 
     // avoid dual payments for invoice
-    if(referenceType === "invoice")
-      justConfirmStatus = true
+    if(referenceType === "invoice") {
+     // justConfirmStatus = true
+    }
   }else if(method === "dlocal"){
     referenceId = route.query.referenceId
   }else if(method === "webpay"){
