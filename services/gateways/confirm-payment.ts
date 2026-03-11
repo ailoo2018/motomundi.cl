@@ -17,6 +17,7 @@ export async function confirmPayment(paymentMethodId: number, authCode: string){
       })
 
     console.log("CofnrimRet: ", confirmRet)
+    return confirmRet
   } catch (e) {
     console.error(e)
     console.error(e.stack)

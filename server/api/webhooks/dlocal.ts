@@ -1,5 +1,5 @@
 import { confirmPayment } from "@/services/gateways/confirm-payment"
-import {Gateways, getReferenceId} from "@/services/gateways/gateway"
+import {Gateways, getReferenceId } from "@/services/gateways/gateway"
 import crypto from 'crypto'
 
 export default defineEventHandler(async event => {
@@ -11,7 +11,9 @@ export default defineEventHandler(async event => {
     const authCode = notification.payment_id
 
     try {
-      await confirmPayment(Gateways.DLOCAL, authCode)
+      const confirmRet = await confirmPayment(Gateways.DLOCAL, authCode)
+
+      console.log("dlocal::webhook confirmRet: " + JSON.stringify(confirmRet))
     }catch(e){
       console.log(e)
       console.log(e.stack)
@@ -20,7 +22,7 @@ export default defineEventHandler(async event => {
 
     return {
       success: true,
-      notificationId,
+      notificationId: notification.payment_id,
     }
 
   } catch (error) {

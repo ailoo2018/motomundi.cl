@@ -60,7 +60,7 @@ export function getBaseUrl(){
 
   let baseUrl = config.public.baseUrl
   if(!baseUrl.startsWith("https")){
-    baseUrl = "https://normal-llp-stamp-baptist.trycloudflare.com"
+    baseUrl = "https://forgotten-sell-spatial-games.trycloudflare.com"
   }
 
 
