@@ -80,122 +80,62 @@ const notifyTagManager = async orderId => {
 }
 
 onMounted(async () => {
+  let token = route.query.payment_id || route.query.collection_id || ""
+  let referenceId = route.query.referenceId || route.query.TBK_ORDEN_COMPRA || ""
+  const webpayToken = route.query.token_ws
 
-  let token = ""
-  let referenceId = ""
-  let isSuccess = true
-  let justConfirmStatus = false
-  if(method === "mercadopago"){
-    token = route.query.payment_id
+  // Normalizing variables for different gateways
+  if (method === "webpay") token = webpayToken
 
-    // avoid dual payments for invoice
-    if(referenceType === "invoice") {
-     // justConfirmStatus = true
-    }
-  }else if(method === "dlocal"){
-    referenceId = route.query.referenceId
-  }else if(method === "webpay"){
-    token = route.query.token_ws
-    referenceId = route.query.TBK_ORDEN_COMPRA
+  const paymentData = {
+    authorizationCode: token,
+    referenceId: referenceId,
+    paymentMethodId: methdodMap[method],
+    referenceType: referenceType,
   }
-
-  if(!token && !referenceId ){
-    referenceId = route.query.referenceId
-  }
-
-
-  console.log("return token is : " + token + " reference: " + referenceId)
 
   try {
-    console.log("this should only be called once:")
-    let orderId = null
-    if(token && token.length > 0 && !justConfirmStatus) {
-      result.value = await $fetch('/api/payments/confirm-payment', {
-        method: 'POST',
-        key: '' + token,
-        body: {
-          authorizationCode: token,
-          paymentMethodId: methdodMap[method],
-          referenceType: referenceType,
-        },
-      })
+    // Strategy: Try to confirm, then fallback to status polling
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      const endpoint = token ? '/api/payments/confirm-payment' : '/api/payments/confirm-status'
 
-      orderId = result.value.referenceId
-      isSuccess = result.value?.success || false
-    }else{
+      try {
+        const response = await $fetch(endpoint, {
+          method: 'POST',
+          body: paymentData,
+        })
 
-
-      for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-          const response = await $fetch('/api/payments/confirm-status', {
-            method: 'POST',
-            key: `${token}-${attempt}`, // Unique key per attempt if using useFetch
-            body: {
-              referenceId: referenceId,
-              referenceType: referenceType,
-              paymentMethodId: methdodMap[method],
-            },
-          })
-
-          if (response?.success) {
-            result.value = response
-            isSuccess = true
-            orderId = result.value.referenceId
-
-            break // Exit loop on success
-          }
-
-          console.warn(`Attempt ${attempt} failed. Retrying...`)
-        } catch (error) {
-          console.error(`Attempt ${attempt} error:`, error)
+        if (response?.success) {
+          result.value = response
+          break // Success! Exit loop
         }
-
-        // If we haven't succeeded and have retries left, wait before next try
-        if (!isSuccess && attempt < maxRetries) {
-          await sleep(delayMs)
-        }
+      } catch (e) {
+        console.error(`Attempt ${attempt} failed:`, e)
       }
 
-      /*
-      result.value = await $fetch('/api/payments/confirm-status', {
-        method: 'POST',
-        key: '' + token,
-        body: {
-          referenceId: referenceId,
-          referenceType: referenceType,
-          paymentMethodId: methdodMap[method],
-        },
-      })
-*/
-
-
+      if (attempt < maxRetries) await sleep(delayMs)
     }
 
-    console.log("Result: " + result.value.success)
-    isSuccess = result.value.success
+    // Final check after loop
+    if (result.value?.success) {
+      const orderId = result.value.referenceId
 
-    console.log("about to notify tag manager: " + referenceType + " " + orderId)
-    if(result.value.success && referenceType === "order" && orderId){
-      await notifyTagManager(orderId)
+      if (referenceType === "order" && orderId) {
+        await notifyTagManager(orderId)
+
+        const cartStore = useCartStore()
+
+        await cartStore.emptyCart()
+      }
+    } else {
+      result.value = { success: false, message: "No pudimos confirmar tu pago. Si ves el cargo en tu cuenta, contacta a soporte." }
     }
 
   } catch (error) {
-    result.value = { success: false, error: error.message, message: error.message }
+    result.value = { success: false, message: error.message }
   } finally {
     loading.value = false
   }
-
-  try {
-
-    if(isSuccess && referenceType === "order") {
-      const cartStore = useCartStore()
-
-      await cartStore.emptyCart()
-    }
-  }finally{
-
-  }
-
 })
 </script>
 
