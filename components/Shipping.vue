@@ -1,13 +1,14 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useCheckoutStore } from '~/stores/checkout'
+import {ref} from 'vue'
+import {useCheckoutStore} from '~/stores/checkout'
 import AddressForm from "~/components/AddressForm.vue"
 import ClickAndCollect from "~/components/Shipping/ClickAndCollect.vue"
-import { formatChileanRUT, formatDeliveryDateRange, formatMoney, isEntre } from "@core/utils/formatters.js"
-import { useExchangeRate } from "@/composables/useExchange.js"
-import { useCountryDetection } from "@/composables/useCountryDetection.js"
-import { useShipping } from "@/composables/checkout/useShipping.js"
-import type { ShipmentInformation } from "@/types/checkout.types.js"
+import {formatChileanRUT, formatDeliveryDateRange, formatMoney, isEntre} from "@core/utils/formatters.js"
+import {useExchangeRate} from "@/composables/useExchange.js"
+import {useCountryDetection} from "@/composables/useCountryDetection.js"
+import {useShipping} from "@/composables/checkout/useShipping.js"
+import type {ShipmentInformation} from "@/types/checkout.types.js"
+import {useCartSummary} from "@/composables/checkout/useCartSummary";
 
 const checkoutStore = useCheckoutStore()
 
@@ -32,8 +33,10 @@ const shippingRemarks = ref('')
 
 // const  cartService  = inject('cartService')
 const uShipping = useShipping()
-const { selectedShippingMethod, shippingMethods,   setShippingCost } = uShipping
+const {selectedShippingMethod, shippingMethods, setShippingCost} = uShipping
 
+
+const { totalBeforeShipping } = useCartSummary()
 
 const ShippingMethods = {
   ClickAndCollect: 1,
@@ -42,8 +45,6 @@ const ShippingMethods = {
   PickupPoint: 4,
   International: 5,
 }
-
-
 
 
 if (!shippingAddress.value || !shippingAddress.value.address) {
@@ -57,8 +58,8 @@ const checkoutService = inject('checkoutService')
 const setCarrier = async carrierId => {
   const data = await $fetch("/api/shipping/set-carrier?id=" + carrierId, {
     method: "GET",
-    headers: { 'Content-Type': 'application/json' },
-    async onResponseError({ response }) {
+    headers: {'Content-Type': 'application/json'},
+    async onResponseError({response}) {
       const errorData = response._data  // or response.body
 
       console.log('Error data:', errorData)
@@ -68,16 +69,16 @@ const setCarrier = async carrierId => {
 }
 
 watch(selectedShippingMethod, async shipMethodCatType => {
-  if(shipMethodCatType > 0 && shippingMethods.value.length > 0 ) {
+  if (shipMethodCatType > 0 && shippingMethods.value.length > 0) {
     const shipMethod = shippingMethods.value.find(item => item.type === shipMethodCatType)
-    if(shipMethod == null) {
+    if (shipMethod == null) {
       alert("Something went wrong. Shipmethod not found for type: " + shipMethodCatType)
-      
+
       return
     }
 
 
-  //  setShippingCost(shipMethod.price, shipMethod.currency || "CLP")
+    //  setShippingCost(shipMethod.price, shipMethod.currency || "CLP")
 
     uShipping.setShippingMethodType(shipMethodCatType)
 
@@ -99,7 +100,7 @@ const handleClickAndCollect = (store, selPickupOption) => {
 const saveShippingMethodToCheckoutStore = () => {
   const shipMethod = shippingMethods.value.find(item => item.type === selectedShippingMethod.value)
 
-  const shippingMethod : ShipmentInformation = {
+  const shippingMethod: ShipmentInformation = {
     method: selectedShippingMethod.value,
     shipmentMethod: shipMethod,
     address: shippingAddress.value,
@@ -124,28 +125,27 @@ const setShippingMethod = methodId => {
 }
 
 
-
-const getShippingInfo : ShipmentInformation = () => {
+const getShippingInfo: ShipmentInformation = () => {
   saveShippingMethodToCheckoutStore()
   return checkoutStore.shippingInfo
 }
 
 const validate = async () => {
 
-  if(!selectedShippingMethod.value) {
+  if (!selectedShippingMethod.value) {
     return "Selecciona un método de envío"
   }
 
 
   console.log("store selected", storeSelected.value)
-  if(selectedShippingMethod.value === ShippingMethods.ClickAndCollect && storeSelected.value == null){
+  if (selectedShippingMethod.value === ShippingMethods.ClickAndCollect && storeSelected.value == null) {
     return "Selecciona una tienda"
   }
 
   return null
 }
 
-defineExpose({ getShippingInfo, validate })
+defineExpose({getShippingInfo, validate})
 
 const isWithinLast15Minutes = modifiedDate => {
   const modified = new Date(modifiedDate)
@@ -161,11 +161,11 @@ const setShippingComuna = async comunaId => {
 
   const wuid = useGuestUser().value
 
-  const { data, error: fetchError } = await useFetch( "/api/cart/comuna", {
+  const {data, error: fetchError} = await useFetch("/api/cart/comuna", {
     method: "GET",
-    headers: { 'Content-Type': 'application/json' },
-    query: { comunaId: comunaId, wuid: wuid },
-    async onResponseError({ response }) {
+    headers: {'Content-Type': 'application/json'},
+    query: {comunaId: comunaId, wuid: wuid},
+    async onResponseError({response}) {
       alert("Error calling SetComuna", response._data)
     },
   })
@@ -178,24 +178,25 @@ const setShippibngAddress = async () => {
 
 const getShippingAddressName = () => {
   console.log("getShippingAddressName", shippingAddress.value)
-  if(shippingAddress.value != null){
+  if (shippingAddress.value != null) {
     return shippingAddress.value.name + " " + shippingAddress.value.surnames
   }
-  
+
   return ""
 }
 
-
-const { formatCurrency } = useCurrencyConverter()
-const { convert } = useExchangeRate()
-const { selectedCountryData } = useCountryDetection()
-const iso = computed(() => { return selectedCountryData.value.iso?.toLowerCase() })
-
+const {shippingCost} = useCartSummary()
+const {formatCurrency} = useCurrencyConverter()
+const {convert} = useExchangeRate()
+const {selectedCountryData} = useCountryDetection()
+const iso = computed(() => {
+  return selectedCountryData.value.iso?.toLowerCase()
+})
 
 
 onMounted(async () => {
 
-  if(checkoutStore.shippingInfo && checkoutStore.shippingInfo.modifiedDate && isWithinLast15Minutes( checkoutStore.shippingInfo.modifiedDate )) {
+  if (checkoutStore.shippingInfo && checkoutStore.shippingInfo.modifiedDate && isWithinLast15Minutes(checkoutStore.shippingInfo.modifiedDate)) {
     selectedShippingMethod.value = checkoutStore.shippingInfo.method
     console.log("to set ship")
 
@@ -209,18 +210,18 @@ onMounted(async () => {
     toggleComments.value = checkoutStore.shippingInfo.comments || checkoutStore.shippingInfo.remarks
 
 
-  }else{
+  } else {
     console.log("Not loaded from cache")
   }
 
-  if(shippingAddress.value && shippingAddress.value.comuna){
+  if (shippingAddress.value && shippingAddress.value.comuna) {
     console.log("shipping address", shippingAddress.value)
     await setShippingComuna(shippingAddress.value.comuna.id)
   }
 
 
   await uShipping.listShippingMethods(shippingAddress.value?.countryCode || null, shippingAddress.value.comuna?.id || 0)
-  if(selectedShippingMethod.value > 0 ){
+  if (selectedShippingMethod.value > 0) {
     uShipping.setShippingMethodType(selectedShippingMethod.value)
     saveShippingMethodToCheckoutStore()
   }
@@ -327,7 +328,7 @@ onMounted(async () => {
             <div class="shipping-method__body">
               <div class="shipping-method__description">
                 Recíbelo entre el <strong>22 y el 23 de
-                  octubre</strong>.
+                octubre</strong>.
               </div>
               <div
                 class="shipping-method__content"
@@ -361,7 +362,7 @@ onMounted(async () => {
                 </h3>
               </div>
               <div class="shipping-method__price">
-                {{ shipping.price === 0 ? 'Gratis' : formatMoney(shipping.price) }}
+                {{ totalBeforeShipping > 150000 ? 'Gratis' : formatMoney(shipping.price) }}
                 <span
                   v-if="shipping.oldPrice !== shipping.price"
                   class="old-price"
@@ -369,26 +370,33 @@ onMounted(async () => {
               </div>
             </div>
             <div class="shipping-method__body">
+              <div v-if="totalBeforeShipping  < 150000" aaclass="shipping-promo shipping-promo--pending">
+                <VAlert color="info my-2" variant="tonal">
+                  <VIcon class="tabler-alert-circle"/>
+                Agrega <strong>{{ formatMoney(150000 - totalBeforeShipping ) }}</strong> más y tu envío será <strong>¡GRATIS!</strong>
+                </VAlert>
+              </div>
+              <div v-else-if="selectedShippingMethod === ShippingMethods.HomeDelivery" class="shipping-promo shipping-promo--success">
+                ¡Felicidades! Tu compra califica para <strong>Envío Gratis</strong>.
+              </div>
               <div class="shipping-method__description">
-                Recíbelo {{ isEntre(shipping.eta) }} <strong>{{ formatDeliveryDateRange( shipping.eta ) }}</strong>.
+                Recíbelo {{ isEntre(shipping.eta) }} <strong>{{ formatDeliveryDateRange(shipping.eta) }}</strong>.
               </div>
               <div
                 v-if="selectedShippingMethod === ShippingMethods.HomeDelivery"
                 class="shipping-method__content"
-                astyle="display:none;"
               >
-                <div
-                  class="home-delivery"
-                  astyle="display:none;"
-                >
+                <div class="home-delivery">
                   <div>
                     <div class="address__info">
                       <div class="address__content">
                         <p class="address__name">
-                          {{ getShippingAddressName() }}<span>, {{ formatChileanRUT( shippingAddress?.nif ) }} </span>
+                          {{ getShippingAddressName() }}<span>, {{ formatChileanRUT(shippingAddress?.nif) }} </span>
                         </p>
                         <p class="address__address">
-                          {{ shippingAddress.address }}, {{ shippingAddress.comuna != null ? shippingAddress.comuna.name : shippingAddress.state }}, {{ shippingAddress.countryName }}
+                          {{ shippingAddress.address }},
+                          {{ shippingAddress.comuna != null ? shippingAddress.comuna.name : shippingAddress.state }},
+                          {{ shippingAddress.countryName }}
                         </p>
                       </div>
                       <button
@@ -399,11 +407,8 @@ onMounted(async () => {
                       </button>
                     </div>
                   </div>
-                  <div
-                    v-if="isChangeAddress"
-                    xstyle="display:none;"
-                  >
-                    <AddressForm v-model="shippingAddress" />
+                  <div v-if="isChangeAddress">
+                    <AddressForm v-model="shippingAddress"/>
                     <div class="form-actions align-left">
                       <button
                         class="button"
@@ -466,10 +471,13 @@ onMounted(async () => {
                     <div class="address__info">
                       <div class="address__content">
                         <p class="address__name">
-                          {{ shippingAddress != null ? shippingAddress.name : '' }}<span>, {{ shippingAddress.rut }} </span>
+                          {{ shippingAddress != null ? shippingAddress.name : '' }}<span>, {{
+                            shippingAddress.rut
+                          }} </span>
                         </p>
                         <p class="address__address">
-                          {{ shippingAddress.address }}, {{ shippingAddress.comuna != null ? shippingAddress.comuna.name : '' }}, Chile
+                          {{ shippingAddress.address }},
+                          {{ shippingAddress.comuna != null ? shippingAddress.comuna.name : '' }}, Chile
                         </p>
                       </div>
                       <button class="button button--light button--small address__modify">
@@ -567,14 +575,14 @@ onMounted(async () => {
                                   <span class="vs__selected"><div>
                                     Málaga
                                   </div> </span> <input
-                                    id="address-form__state74"
-                                    aria-autocomplete="list"
-                                    aria-labelledby="vs9__combobox"
-                                    aria-controls="vs9__listbox"
-                                    type="search"
-                                    autocomplete="one-time-code"
-                                    class="vs__search vs__hidden_input"
-                                  >
+                                  id="address-form__state74"
+                                  aria-autocomplete="list"
+                                  aria-labelledby="vs9__combobox"
+                                  aria-controls="vs9__listbox"
+                                  type="search"
+                                  autocomplete="one-time-code"
+                                  class="vs__search vs__hidden_input"
+                                >
                                 </div>
                                 <div class="vs__actions">
                                   <button
@@ -589,7 +597,9 @@ onMounted(async () => {
                                       width="10"
                                       height="10"
                                     >
-                                      <path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z" />
+                                      <path
+                                        d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"
+                                      />
                                     </svg>
                                   </button>
                                   <svg
@@ -599,7 +609,9 @@ onMounted(async () => {
                                     role="presentation"
                                     class="vs__open-indicator"
                                   >
-                                    <path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z" />
+                                    <path
+                                      d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"
+                                    />
                                   </svg>
                                   <div
                                     class="vs__spinner"
@@ -638,16 +650,16 @@ onMounted(async () => {
                                   <span class="vs__selected"><div>
                                     España
                                   </div> </span> <input
-                                    id="address-form__country74"
-                                    disabled="disabled"
-                                    aria-autocomplete="list"
-                                    aria-labelledby="vs3__combobox"
-                                    aria-controls="vs3__listbox"
-                                    type="search"
-                                    autocomplete="one-time-code"
-                                    value=""
-                                    class="vs__search vs__hidden_input"
-                                  >
+                                  id="address-form__country74"
+                                  disabled="disabled"
+                                  aria-autocomplete="list"
+                                  aria-labelledby="vs3__combobox"
+                                  aria-controls="vs3__listbox"
+                                  type="search"
+                                  autocomplete="one-time-code"
+                                  value=""
+                                  class="vs__search vs__hidden_input"
+                                >
                                 </div>
                                 <div class="vs__actions">
                                   <button
@@ -663,7 +675,9 @@ onMounted(async () => {
                                       width="10"
                                       height="10"
                                     >
-                                      <path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z" />
+                                      <path
+                                        d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"
+                                      />
                                     </svg>
                                   </button>
                                   <svg
@@ -673,7 +687,9 @@ onMounted(async () => {
                                     role="presentation"
                                     class="vs__open-indicator"
                                   >
-                                    <path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z" />
+                                    <path
+                                      d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"
+                                    />
                                   </svg>
                                   <div
                                     class="vs__spinner"
@@ -718,7 +734,7 @@ onMounted(async () => {
             <div class="shipping-method__heading">
               <div class="shipping-method__title">
                 <h3>
-                  <VIcon class="tabler-world" />
+                  <VIcon class="tabler-world"/>
                   Envío Internacional
                 </h3>
               </div>
@@ -735,7 +751,7 @@ onMounted(async () => {
             </div>
             <div class="shipping-method__body">
               <div class="shipping-method__description">
-                Recíbelo el <strong>{{ formatDate( shipping.eta.from ) }} al {{ formatDate( shipping.eta.from ) }}</strong>.
+                Recíbelo el <strong>{{ formatDate(shipping.eta.from) }} al {{ formatDate(shipping.eta.from) }}</strong>.
               </div>
               <div class="shipping-method__content">
                 <div class="express-delivery">
@@ -743,10 +759,13 @@ onMounted(async () => {
                     <div class="address__info">
                       <div class="address__content">
                         <p class="address__name">
-                          {{ shippingAddress != null ? shippingAddress.name : '' }}<span>, {{ shippingAddress.rut }} </span>
+                          {{ shippingAddress != null ? shippingAddress.name : '' }}<span>, {{
+                            shippingAddress.rut
+                          }} </span>
                         </p>
                         <p class="address__address">
-                          {{ shippingAddress.address }}, {{shippingAddress.postalCode}} {{ shippingAddress.state }}, {{ shippingAddress.countryName }}
+                          {{ shippingAddress.address }}, {{ shippingAddress.postalCode }} {{ shippingAddress.state }},
+                          {{ shippingAddress.countryName }}
                         </p>
                       </div>
 
@@ -842,14 +861,14 @@ onMounted(async () => {
                                   <span class="vs__selected"><div>
                                     Málaga
                                   </div> </span> <input
-                                    id="address-form__state74"
-                                    aria-autocomplete="list"
-                                    aria-labelledby="vs9__combobox"
-                                    aria-controls="vs9__listbox"
-                                    type="search"
-                                    autocomplete="one-time-code"
-                                    class="vs__search vs__hidden_input"
-                                  >
+                                  id="address-form__state74"
+                                  aria-autocomplete="list"
+                                  aria-labelledby="vs9__combobox"
+                                  aria-controls="vs9__listbox"
+                                  type="search"
+                                  autocomplete="one-time-code"
+                                  class="vs__search vs__hidden_input"
+                                >
                                 </div>
                                 <div class="vs__actions">
                                   <button
@@ -864,7 +883,9 @@ onMounted(async () => {
                                       width="10"
                                       height="10"
                                     >
-                                      <path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z" />
+                                      <path
+                                        d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"
+                                      />
                                     </svg>
                                   </button>
                                   <svg
@@ -874,7 +895,9 @@ onMounted(async () => {
                                     role="presentation"
                                     class="vs__open-indicator"
                                   >
-                                    <path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z" />
+                                    <path
+                                      d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"
+                                    />
                                   </svg>
                                   <div
                                     class="vs__spinner"
@@ -913,16 +936,16 @@ onMounted(async () => {
                                   <span class="vs__selected"><div>
                                     España
                                   </div> </span> <input
-                                    id="address-form__country74"
-                                    disabled="disabled"
-                                    aria-autocomplete="list"
-                                    aria-labelledby="vs3__combobox"
-                                    aria-controls="vs3__listbox"
-                                    type="search"
-                                    autocomplete="one-time-code"
-                                    value=""
-                                    class="vs__search vs__hidden_input"
-                                  >
+                                  id="address-form__country74"
+                                  disabled="disabled"
+                                  aria-autocomplete="list"
+                                  aria-labelledby="vs3__combobox"
+                                  aria-controls="vs3__listbox"
+                                  type="search"
+                                  autocomplete="one-time-code"
+                                  value=""
+                                  class="vs__search vs__hidden_input"
+                                >
                                 </div>
                                 <div class="vs__actions">
                                   <button
@@ -938,7 +961,9 @@ onMounted(async () => {
                                       width="10"
                                       height="10"
                                     >
-                                      <path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z" />
+                                      <path
+                                        d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"
+                                      />
                                     </svg>
                                   </button>
                                   <svg
@@ -948,7 +973,9 @@ onMounted(async () => {
                                     role="presentation"
                                     class="vs__open-indicator"
                                   >
-                                    <path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z" />
+                                    <path
+                                      d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"
+                                    />
                                   </svg>
                                   <div
                                     class="vs__spinner"
@@ -1009,8 +1036,8 @@ onMounted(async () => {
               type="checkbox"
               class="styled-checkbox"
             > <label for="gift-options">
-              Ocultar información de precios en la caja.
-            </label>
+            Ocultar información de precios en la caja.
+          </label>
           </div>
         </div>
       </div>
@@ -1262,5 +1289,23 @@ onMounted(async () => {
 
 textarea {
   border: 1px solid #d8d8d8;
+}
+
+.shipping-promo {
+  font-size: 0.85rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  background-color: #f0fdf4; /* Un verde muy sutil */
+  color: #166534;
+  border: 1px dashed #bbf7d0;
+  margin-bottom: 5px;
+}
+
+.shipping-policy-hint {
+  display: block;
+  font-size: 0.7rem;
+  color: #666;
+  font-weight: normal;
 }
 </style>

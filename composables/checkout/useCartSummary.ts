@@ -18,6 +18,10 @@ export const useCartSummary = () => {
     return getTotalBeforeShipping() + shippingCost.value
   }
 
+  const totalBeforeShipping = computed(() => {
+    return getTotalBeforeShipping()
+  })
+
   const shippingCost = computed (() => {
     console.log("computed shippingcost")
 
@@ -47,6 +51,7 @@ export const useCartSummary = () => {
   return {
     shippingCost,
     subtotal,
+    totalBeforeShipping,
     total,
   }
 }
