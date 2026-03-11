@@ -35,51 +35,12 @@ const events = computed(() => {
 
 <template>
 
-  <div
-    :id="`home-block-${widget.id}`"
-
-    class="block-container events-widget"
-  >
+  <div id="home-latest-events" class="block-container events-widget"  >
     <div class="blog-block alt">
       <div class="container">
         <div class="row">
           <h2>
-            <svg
-              viewBox="0 0 24 24"
-              style="width: 24px; height: 24px; margin-right: 4px;position:relative; top: 2px;"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect
-                x="3"
-                y="4"
-                width="18"
-                height="18"
-                rx="2"
-                ry="2"
-              />
-              <line
-                x1="16"
-                y1="2"
-                x2="16"
-                y2="6"
-              />
-              <line
-                x1="8"
-                y1="2"
-                x2="8"
-                y2="6"
-              />
-              <line
-                x1="3"
-                y1="10"
-                x2="21"
-                y2="10"
-              />
-            </svg>
+            <VIcon class="tabler-calendar" size="28" />
             Próximos eventos
           </h2>
           <div class="gt-columns gt-column-3 gt-column-space-30" v-if="events">
@@ -167,21 +128,7 @@ const events = computed(() => {
                     </div>
                     <div class="gt-details">
                       <div class="gt-location" v-if="e.location">
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                          <circle
-                            cx="12"
-                            cy="10"
-                            r="3"
-                          />
-                        </svg>
+                        <VIcon class="tabler-map-pin" color="primary"/>
                         <ul>
                           <li class="gt-category-111">
                             <a href="/calendario">{{e.location}}</a>
@@ -191,15 +138,8 @@ const events = computed(() => {
 
 
                       <div v-if="e.price && e.price > 0" class="gt-price ng-scope">
-                        <svg
-                          fill="currentColor"
-                          viewBox="0 -98 512 512"
-                        >
-                          <path
-                            d="m492 0h-472c-11.046875 0-20 8.953125-20 20v275.335938c0 11.042968 8.953125 20 20 20h472c11.046875 0 20-8.957032 20-20v-275.335938c0-11.046875-8.953125-20-20-20zm-118.324219 275.335938h-235.351562c-8.453125-50.175782-48.148438-89.871094-98.324219-98.324219v-38.6875c50.175781-8.453125 89.871094-48.148438 98.324219-98.324219h235.351562c8.453125 50.175781 48.148438 89.871094 98.324219 98.324219v38.6875c-50.175781 8.453125-89.871094 48.148437-98.324219 98.324219zm98.324219-177.867188c-28.070312-7.25-50.21875-29.398438-57.46875-57.46875h57.46875zm-374.53125-57.46875c-7.25 28.070312-29.398438 50.21875-57.46875 57.46875v-57.46875zm-57.46875 177.867188c28.070312 7.25 50.21875 29.394531 57.46875 57.46875h-57.46875zm374.53125 57.46875c7.25-28.074219 29.398438-50.21875 57.46875-57.46875v57.46875zm-158.53125-216.335938c-54.40625 0-98.667969 44.261719-98.667969 98.667969 0 54.402343 44.261719 98.667969 98.667969 98.667969s98.667969-44.265626 98.667969-98.667969c0-54.40625-44.261719-98.667969-98.667969-98.667969zm0 157.335938c-32.347656 0-58.667969-26.320313-58.667969-58.667969 0-32.351563 26.320313-58.667969 58.667969-58.667969s58.667969 26.316406 58.667969 58.667969c0 32.347656-26.320313 58.667969-58.667969 58.667969zm0 0"
-                          />
-                        </svg>
-                        <span><span>$</span>{{formatMoney(e.price)}} </span>
+                        <VIcon class="tabler-cash" color="primary"/>
+                        <span>{{formatMoney(e.price)}} </span>
                       </div>
 
                     </div>

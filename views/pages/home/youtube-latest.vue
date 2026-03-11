@@ -38,7 +38,7 @@ register()
 <template>
   <div
     section="home"
-    class="youtube-block"
+    id="youtube-block"
   >
     <div class="containeraa">
       <div
@@ -134,18 +134,18 @@ register()
 
 
 <style scoped>
-.youtube-block {
+#youtube-block {
   padding: 0 40px 20px;
   margin-top: 0;
   background-color: #222222;
 }
 
-.youtube-block li.video > a img {
+#youtube-block li.video > a img {
   width: 95%;
   margin: auto;
 }
 
-.youtube-block__content {
+#youtube-block__content {
   margin: 4px 0 30px;
   padding: 0 0 40px 0;
 }
@@ -186,7 +186,7 @@ swiper-slide {
   flex-direction: column;
 }
 
-.youtube-block h2 {
+#youtube-block h2 {
   padding: 30px 0;
   font-weight: 600;
   margin: 18px auto 18px;
@@ -195,19 +195,19 @@ swiper-slide {
   color: white;
 }
 
-.youtube-block h3 {
+#youtube-block h3 {
   font-size: 18px;
   font-weight: 900;
   line-height: 25px;
   margin: 0 0 3px;
 }
 
-.youtube-block p, .youtube-block small {
+#youtube-block p, #youtube-block small {
   line-height: 21px;
   margin-bottom: 15px;
 }
 
-.youtube-block small {
+#youtube-block small {
   font-size: 10px;
   font-weight: 500;
   display: block;
@@ -215,7 +215,7 @@ swiper-slide {
   color: #acacac;
 }
 
-.youtube-block p {
+#youtube-block p {
   font-size: 12px;
   flex-grow: 1;
 }
@@ -261,7 +261,7 @@ swiper-slide {
   opacity: 1;
 }
 
-.youtube-block__content .view-video-link {
+#youtube-block__content .view-video-link {
   font-size: 10px;
   font-weight: 500;
   line-height: 21px;
@@ -275,7 +275,7 @@ swiper-slide {
   -webkit-tap-highlight-color: transparent;
 }
 
-.youtube-block__content .view-video-link img {
+#youtube-block__content .view-video-link img {
   top: 4px;
   position: absolute;
   margin-left: 4px;
