@@ -189,7 +189,7 @@ const getShippingAddressName = () => {
 const { formatCurrency } = useCurrencyConverter()
 const { convert } = useExchangeRate()
 const { selectedCountryData } = useCountryDetection()
-const iso = computed(() => { return selectedCountryData.value.iso })
+const iso = computed(() => { return selectedCountryData.value.iso?.toLowerCase() })
 
 
 
