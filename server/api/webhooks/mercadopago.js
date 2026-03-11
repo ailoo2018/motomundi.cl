@@ -8,14 +8,16 @@ export default defineEventHandler(async event => {
 
 
     const body = await readBody(event)
-    const authCode = body.data?.id || body.resource?.split('/').pop()
+
+    const resourceId = body.data?.id || query.id || body.resource?.split('/').pop()
     const topic = body.type || query.topic
 
+    console.log(`Other topic received: ${topic}`)
 
     if (topic === 'payment' && authCode) {
     
       try {
-        await confirmPayment(Gateways.MERCADO_PAGO, authCode)
+        await confirmPayment(Gateways.MERCADO_PAGO, resourceId)
       }catch(e){
         console.log(e)
         console.log(e.stack)

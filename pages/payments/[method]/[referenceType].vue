@@ -75,8 +75,13 @@ onMounted(async () => {
 
   let token = ""
   let referenceId = ""
+  let isSuccess = true
+  let justConfirmStatus = false
   if(method === "mercadopago"){
     token = route.query.payment_id
+    // avoid dual payments for invoice
+    if(referenceType === "invoice")
+      justConfirmStatus = true
   }else if(method === "dlocal"){
     referenceId = route.query.referenceId
   }else if(method === "webpay"){
@@ -94,7 +99,7 @@ onMounted(async () => {
   try {
     console.log("this should only be called once:")
     let orderId = null
-    if(token && token.length > 0 ) {
+    if(token && token.length > 0 && !justConfirmStatus) {
       result.value = await $fetch('/api/payments/confirm-payment', {
         method: 'POST',
         key: '' + token,
@@ -106,7 +111,7 @@ onMounted(async () => {
       })
 
       orderId = result.value.referenceId
-
+      isSuccess = result.value?.success || false
     }else{
       result.value = await $fetch('/api/payments/confirm-status', {
         method: 'POST',
@@ -118,10 +123,13 @@ onMounted(async () => {
         },
       })
 
+      isSuccess = result.value?.success || false
+
       orderId = result.value.referenceId
     }
 
     console.log("Result: " + result.value.success)
+    isSuccess = result.value.success
 
     console.log("about to notify tag manager: " + referenceType + " " + orderId)
     if(result.value.success && referenceType === "order" && orderId){
@@ -135,9 +143,12 @@ onMounted(async () => {
   }
 
   try {
-    const cartStore = useCartStore()
 
-    await cartStore.emptyCart()
+    if(isSuccess && referenceType === "order") {
+      const cartStore = useCartStore()
+
+      await cartStore.emptyCart()
+    }
   }finally{
 
   }
