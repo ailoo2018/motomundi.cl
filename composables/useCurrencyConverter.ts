@@ -43,7 +43,7 @@ export function useCurrencyConverter() {
     return selectedCountryData.value?.currency || "CLP"
   }
 
-  const convert = (amount, opts = { decimals: 2 })  => {
+  const convert = (amount, opts = { isNet: false, decimals: 2 })  => {
     const currency = getCurrentCurrency()
 
     let hasDecimals = 0
@@ -56,7 +56,7 @@ export function useCurrencyConverter() {
     if (!currency) return amount // Fallback if data isn't loaded yet
 
     let converted = _convert(Number(amount), LOCAL_CURR, currency)
-    if(currency !== "CLP")
+    if(currency !== "CLP" && !opts.isNet)
       converted = converted / 1.19
 
     return Number(converted).toFixed( hasDecimals ? 2 : 0 )
@@ -71,16 +71,16 @@ export function useCurrencyConverter() {
     }
   }
 
-  const formatCurrency = (amount, currency) => {
+  const formatCurrency = (amount, currency, opts) => {
 
     let amnt = amount
-    if(getCurrentCurrency() !== currency)
-      amnt = convert(amount )
+    if(currency != "CLP")
+      amnt = convert(amount, opts )
 
     return formatMoney(amnt, currency, selectedCountryData.value?.symbol)
   }
 
-  const iso = computed(() => { return selectedCountryData.value.iso })
+  const iso = computed(() => { return selectedCountryData.value.iso?.toLowerCase() })
 
   return {
     convert,

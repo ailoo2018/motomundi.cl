@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue'
 import { useCheckoutStore } from '~/stores/checkout'
 import AddressForm from "~/components/AddressForm.vue"
@@ -7,6 +7,7 @@ import { formatChileanRUT, formatDeliveryDateRange, formatMoney, isEntre } from 
 import { useExchangeRate } from "@/composables/useExchange.js"
 import { useCountryDetection } from "@/composables/useCountryDetection.js"
 import { useShipping } from "@/composables/checkout/useShipping.js"
+import type { ShipmentInformation } from "@/types/checkout.types.js"
 
 const checkoutStore = useCheckoutStore()
 
@@ -94,20 +95,13 @@ const handleClickAndCollect = (store, selPickupOption) => {
 
 }
 
-const setShippingMethod = methodId => {
-  console.log("setShippingMethod:" + methodId)
-  selectedShippingMethod.value = methodId
-  uShipping.setShippingMethodType(methodId)
-  useCartStore().setShippingMethod(uShipping.getShippingMethod())
 
-}
-
-const getShippingInfo = () => {
-
+const saveShippingMethodToCheckoutStore = () => {
   const shipMethod = shippingMethods.value.find(item => item.type === selectedShippingMethod.value)
 
-  const shippingMethod = {
+  const shippingMethod : ShipmentInformation = {
     method: selectedShippingMethod.value,
+    shipmentMethod: shipMethod,
     address: shippingAddress.value,
     store: storeSelected.value,
     pickupOption: pickupOption.value,
@@ -117,11 +111,23 @@ const getShippingInfo = () => {
     remarks: shippingRemarks.value,
   }
 
-
-  console.log("getShippingMethod", shippingMethod)
+  console.log("saving shipmethod", shippingMethod)
   checkoutStore.setShippingInfo(shippingMethod)
+}
 
-  return shippingMethod
+const setShippingMethod = methodId => {
+  console.log("setShippingMethod:" + methodId)
+  selectedShippingMethod.value = methodId
+  uShipping.setShippingMethodType(methodId)
+
+  saveShippingMethodToCheckoutStore()
+}
+
+
+
+const getShippingInfo : ShipmentInformation = () => {
+  saveShippingMethodToCheckoutStore()
+  return checkoutStore.shippingInfo
 }
 
 const validate = async () => {
@@ -148,14 +154,10 @@ const isWithinLast15Minutes = modifiedDate => {
   const threeMinutesInMs = 15 * 60 * 1000
 
   return diffInMs <= threeMinutesInMs
+
 }
 
-
-
-
 const setShippingComuna = async comunaId => {
-
-
 
   const wuid = useGuestUser().value
 
@@ -167,8 +169,6 @@ const setShippingComuna = async comunaId => {
       alert("Error calling SetComuna", response._data)
     },
   })
-
-
 
 }
 
@@ -191,18 +191,9 @@ const { convert } = useExchangeRate()
 const { selectedCountryData } = useCountryDetection()
 const iso = computed(() => { return selectedCountryData.value.iso })
 
-const convertAndFormat = (amount, curr) => {
-  const convertAmount = convert(amount, curr, selectedCountryData.value?.currency)
-
-  return formatCurrency(convertAmount, selectedCountryData.value?.currency)
-
-}
-
 
 
 onMounted(async () => {
-
-
 
   if(checkoutStore.shippingInfo && checkoutStore.shippingInfo.modifiedDate && isWithinLast15Minutes( checkoutStore.shippingInfo.modifiedDate )) {
     selectedShippingMethod.value = checkoutStore.shippingInfo.method
@@ -231,7 +222,7 @@ onMounted(async () => {
   await uShipping.listShippingMethods(shippingAddress.value?.countryCode || null, shippingAddress.value.comuna?.id || 0)
   if(selectedShippingMethod.value > 0 ){
     uShipping.setShippingMethodType(selectedShippingMethod.value)
-    useCartStore().setShippingMethod(uShipping.getShippingMethod())
+    saveShippingMethodToCheckoutStore()
   }
 
   checkoutStore.shippingInfo.modifiedDate = new Date()

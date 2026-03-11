@@ -1,11 +1,24 @@
 import { defineStore } from 'pinia'
+import type {CurrencyAmount} from "@/types/checkout.types";
+
+export interface ShippingCost {
+  cost: CurrencyAmount;
+  freeShipping: CurrencyAmount;
+
+}
+
+export interface CartStoreState{
+  cupon: any;
+  cart: any;
+  shipmentMethodCost: ShippingCost;
+  loading: boolean;
+  isApplyingCoupon: boolean;
+}
 
 export const useCartStore = defineStore('cart', {
-  state: () => ({
+  state: () : CartStoreState => ({
     coupon: null,
     cart: { wuid: null, items: [], total: 0 },
-    shippingMethod: null,
-
     loading: false,
     isApplyingCoupon: false,
   }),
@@ -26,21 +39,6 @@ export const useCartStore = defineStore('cart', {
     iva: state =>{
       return (state.total - state.subtotal) || 0
     },
-    shippingCost: state => {
-      let shippingCost = null
-      if(state.shippingMethod){
-
-        shippingCost = { amount: state.shippingMethod.price, currency: state.shippingMethod.currency }
-        if(state.shippingMethod.freeShipping?.amount > 0){
-          if(state.subtotal > state.shippingMethod.freeShipping.amount)
-            shippingCost = { amount: 0, currency: state.shippingMethod.currency }
-        }
-
-
-      }
-
-      return shippingCost
-    },
   },
   actions: {
 
@@ -48,10 +46,8 @@ export const useCartStore = defineStore('cart', {
       await this.reapplyCoupon()
     },
 
-    async setShippingMethod(m){
-      this.shippingMethod = m || null
-
-
+    async setShippingCost(m : ShippingCost){
+      this.shipment = m
     },
 
     async reapplyCoupon() {

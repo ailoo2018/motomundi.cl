@@ -1,3 +1,31 @@
+export interface CurrencyAmount {
+  amount: number;
+  currency: string;
+}
+
+export interface DayRange {
+  from: number;
+  to: number;
+}
+
+export interface DateRange {
+  from: string; // ISO Date strings
+  to: string;
+}
+
+export interface ShipmentMethod {
+  id: number;
+  name: string;
+  price: number;
+  currency: string;
+  oldPrice: number;
+  freeShipping: CurrencyAmount;
+  preparationDays: DayRange;
+  estimatedDays: number;
+  eta: DateRange;
+  type: number;
+}
+
 
 export interface Address {
   countryCode: string;
@@ -17,8 +45,14 @@ export interface Address {
   comuna_id: number;
 }
 
+export interface Money {
+  amount: number,
+  currency: string,
+}
+
 export interface ShipmentInformation {
   method: number;
+  cost: number;
   address: Address;
   store: string | null;       // Assuming store is a string or object ID when present
   pickupOption: string;
@@ -26,6 +60,7 @@ export interface ShipmentInformation {
   carrierId: number;
   comments: string;
   remarks: string;
+  shipmentMethod: ShipmentMethod;
 }
 
 export interface CustomerInformation {

@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 /* eslint-disable camelcase */
 import { ref } from "vue"
 import BillingForm from "~/components/Payments/BillingForm.vue"
@@ -7,6 +7,9 @@ import Coupon from "~/components/Cart/Coupon.vue"
 import { useCartStore } from "@/stores/cart.js"
 import { useShipping } from "@/composables/checkout/useShipping.js"
 import { useCountryDetection } from "@/composables/useCountryDetection.js"
+import { useExchangeRate } from "@/composables/useExchange.js"
+import { useCartSummary } from "@/composables/checkout/useCartSummary.js"
+import type { ShipmentInformation } from "@/types/checkout.types.js"
 
 const emit = defineEmits(["acceptPolicy", "paid-with-mp-api"])
 const paymentMethod = ref(0)
@@ -269,7 +272,7 @@ const pay = async (mercadoPagoApiData = null) => {
     const customerInfo = checkoutStore.customerInfo
 
 
-    const shippingInfo = checkoutStore.shippingInfo
+    const shippingInfo : ShipmentInformation = checkoutStore.getShippingInfo()
 
     let country = "CL"
     let currency = "CLP"
@@ -280,14 +283,21 @@ const pay = async (mercadoPagoApiData = null) => {
       currency = countryData.currency
     }
 
+    const subtotal = useCartSummary().subtotal?.value || 0
+    const shipping = useCartSummary().shippingCost?.value || 0
     const exhangeRate = useExchangeRate().convertFromClp(1, currency)
     const paymentInfo = await getPaymentInfo()
 
+    shippingInfo.cost = shipping
 
+    const a  = useExchangeRate().convert(subtotal, "CLP", currency)
+    const b =  useExchangeRate().convert(shipping, "CLP", currency)
+    const totalInPaymentCurr = a + b
 
     console.log("paymentInfo", paymentInfo)
     console.log("shippingInfo", shippingInfo)
     console.log("customerInfo", customerInfo)
+
 
     if(!shippingInfo.address.phone)
       shippingInfo.address.phone = customerInfo.phone
@@ -297,11 +307,16 @@ const pay = async (mercadoPagoApiData = null) => {
     checkoutService.setLoading(true)
 
 
-
     var rq = {
       wuid: wuid,
       country: country,
+      total: totalInPaymentCurr,
+      shippingCost: shipping,
       currency: currency,
+      clp: {
+        total: subtotal,
+        shipping: shipping,
+      },
       exhangeRate: exhangeRate,
       coupon: cartStore.coupon || null,
       addresses: {

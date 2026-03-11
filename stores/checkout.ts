@@ -27,12 +27,19 @@ export const useCheckoutStore = defineStore('checkout', {
       this.customerInfo = info
       this.saveToLocalStorage()
     },
-    setCountryData(countryData) {
+    setCountryData(countryData : Country) {
       this.countryData = countryData
+      this.saveToLocalStorage()
+    },
+    getCountryData() : Countrty {
+      return this.countryData
     },
     setShippingInfo(info : ShipmentInformation) {
       this.shippingInfo = info
       this.saveToLocalStorage()
+    },
+    getShippingInfo() : ShipmentInformation{
+      return this.shippingInfo
     },
     setPaymentInfo(info) {
       this.paymentInfo = info
@@ -43,7 +50,6 @@ export const useCheckoutStore = defineStore('checkout', {
       this.user = user
       this.saveToLocalStorage()
     },
-
     saveToLocalStorage() {
       const checkoutCookie = useCookie('checkout-data', {
         maxAge: 24 * 60 * 60, // 24 hours
@@ -53,6 +59,7 @@ export const useCheckoutStore = defineStore('checkout', {
       checkoutCookie.value = {
         step: this.step,
         customerInfo: this.customerInfo,
+        countryData: this.countryData,
         shippingInfo: this.shippingInfo,
         paymentInfo: this.paymentInfo,
       }
@@ -67,6 +74,7 @@ export const useCheckoutStore = defineStore('checkout', {
 
         this.step = data.step
         this.customerInfo = data.customerInfo
+        this.countryData = data.countryData
         this.shippingInfo = data.shippingInfo
         this.paymentInfo = data.paymentInfo
       }

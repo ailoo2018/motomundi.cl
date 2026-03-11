@@ -77,11 +77,9 @@ const nextStep = async () => {
       return
     }
 
-    console.log("save to storage: customerInformation.value.getCustomerInfo()")
-    // save
     customerInformation.value.getCustomerInfo()
-
   }
+
   if (currentStep.value === 2) {
 
     const errMsg = await shipping.value.validate()
@@ -234,7 +232,10 @@ const wuid = useGuestUser().value
 
 
 onMounted(async () => {
-  cartStore.fetchCart(wuid)
+  await cartStore.fetchCart(wuid)
+
+  
+
 
 })
 </script>
@@ -250,12 +251,6 @@ onMounted(async () => {
         class="mt-1"
       />
 
-<!--
-      <VAlert style="max-height: 300px; overflow: auto;">
-          code: {{checkoutStore.countryData}} <br/>
-          currency: {{checkoutStore.countryData?.currency}}
-      </VAlert>
--->
 
       <div class="d-flex align-center ga-0 checkout-stepper ">
         <h1
@@ -322,7 +317,7 @@ onMounted(async () => {
 
             <StepActions
               class="hide-when-med mt-8"
-              :is-desktop="true"
+              is-desktop
               :current-step="currentStep"
               :error="error"
               @next="nextStep"
@@ -334,7 +329,7 @@ onMounted(async () => {
               <a
                 href="https://www.motomundi.cl/terminos-y-condiciones?open=purchase-terms"
                 data-dr="false"
-                target="_blank"
+                target="_blank" rel="noopener noreferrer"
                 class="mtc-link"
               >
                 Condiciones de la compra

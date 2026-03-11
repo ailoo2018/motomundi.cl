@@ -17,11 +17,13 @@ export async function processDLocal(rq : ProcessPaymentRq) {
     returnUrl = returnUrl.replace("http://localhost:3000", baseUrl)
   }
 
-  let amount = rq.amount / 1.19
+  let amount = rq.amount // / 1.19
+/*
   if(rq.currency !== "CLP"){
     let exchangeRate = await currencyClient.exchangeRate("CLP", rq.currency);
     amount = amount * exchangeRate;
   }
+*/
 
   let order_id = `${rq.referenceId}-${Date.now()}`
   if(rq.referenceType === "invoice"){

@@ -1,8 +1,9 @@
-<script setup>
+<script lang="ts" setup>
 import Coupon from "~/components/Cart/Coupon.vue"
 import { useGuestUser } from "@/composables/useGuestUser.js"
 import CartContent from "@/components/Cart/CartContent.vue"
 import { useShipping } from "@/composables/checkout/useShipping.js"
+import {useCartSummary} from "@/composables/checkout/useCartSummary";
 
 const props = defineProps({
   isCollapsed: {
@@ -23,8 +24,9 @@ const { cart, coupon } = inject('checkoutService')
 const config = useRuntimeConfig()
 const isCollapsed = ref(false)
 
+const checkoutStore = useCheckoutStore()
 
-const {  selectedShippingMethod } = useShipping()
+const { shippingCost, subtotal, total } = useCartSummary()
 
 
 const baseUrl = config.public.LEGACY_URL
@@ -51,7 +53,7 @@ watch(() => coupon, newValue => {
 })
 
 
-const updateQuanity = async item => {
+const updateQuantity = async item => {
   try {
     const { data, error: fetchError } = await useFetch(config.public.LEGACY_URL + '/Cart/ChangeQuantity.rails', {
       credentials: 'include',
@@ -78,16 +80,20 @@ const updateQuanity = async item => {
 const increase = async item => {
   console.log("increase", item)
   item.quantity++
-  await updateQuanity(item)
+  await updateQuantity(item)
 }
 
 const decrease = async item => {
   if (item.quantity > 1) {
     item.quantity--
-    await updateQuanity(item)
+    await updateQuantity(item)
   }
 
 }
+
+const isShipmentSelected = computed(() => {
+  return true
+})
 
 
 const quantityChanged = async (item, qty) => {
@@ -95,7 +101,7 @@ const quantityChanged = async (item, qty) => {
   var quantity = parseInt(qty)
   if (item.quantity !== quantity) {
     item.quantity = quantity
-    await updateQuanity(item)
+    await updateQuantity(item)
   }
 }
 
@@ -103,23 +109,6 @@ const cartStore = useCartStore()
 const wuid = useGuestUser().value
 
 
-const itemsTotal = computed(() => {
-  let total = 0
-  for(var item of cartStore.cart.items){
-    total = total + (item.quantity*item.price)
-  }
-
-  return total
-})
-
-const total = computed(() => {
-  let total = 0
-  for(var item of cartStore.cart.items){
-    total = total + (item.quantity*item.price)
-  }
-
-  return total
-})
 </script>
 
 <template>
@@ -163,13 +152,9 @@ const total = computed(() => {
           <VCardText>
 
             <div class="cart-summary__totals">
-              <div v-if="iso === 'cl'" class="totals__item" >
-                <span class="item__label">Subtotal</span>
-                <span class="item__price">{{ formatCurrency(cartStore.subtotal) }}</span>
-              </div>
-              <div v-else class="totals__item">
-                <span class="item__label">Subtotal</span>
-                <span class="item__price">{{ formatCurrency(cartStore.total) }}</span>
+              <div class="totals__item" >
+                <span class="item__label">Subtotal </span>
+                <span class="item__price">{{ formatCurrency(cartStore.subtotal, cartStore.currency, { isNet: iso !== 'CL' }) }}</span>
               </div>
               <div class="totals__item" v-if="iso === 'cl'">
                 <span class="item__label">Impuestos (I.V.A.) </span>
@@ -178,8 +163,8 @@ const total = computed(() => {
               <div class="totals__item">
                 <span class="item__label">Envío</span>
 
-                <span v-if="cartStore.shippingCost" class="item__price">
-                  {{ formatCurrency(cartStore.shippingCost.amount)  }}
+                <span v-if="isShipmentSelected" class="item__price">
+                  {{ formatCurrency(shippingCost, cartStore.currency, { isNet: iso !== 'CL' })  }}
                 </span>
                 <span v-else>(seleccione un método de envío) </span>
               </div>
@@ -188,7 +173,7 @@ const total = computed(() => {
                 <span class="item__price">
 
                   <span v-if="!cartStore.isApplyingCoupon" id="cart-total" style="color: #f44a4a">
-                    ({{ formatCurrency(cartStore.coupon.discount) }})
+                    ({{ formatCurrency(cartStore.coupon.discount,cartStore.currency, { isNet: iso !== 'CL'}) }})
                   </span>
                   <span v-else>
                     <VProgressCircular size="20" width="2" indeterminate color="primary"/>
@@ -197,9 +182,14 @@ const total = computed(() => {
                 </span>
               </div>
               <div class="totals__item totals__item--total">
-                <span class="item__label">Total</span>
-                <span class="item__price">
-                  <span id="cart-total">{{ formatCurrency((cartStore.shippingCost?.amount || 0) + cartStore.total) }}</span>
+                <span class="item__label">
+                  Total
+                </span>
+                <span v-if="cartStore.currency === 'CLP'" class="item__price">
+                  <span id="cart-total"> {{ formatCurrency(total) }}</span>
+                </span>
+                <span v-else class="item__price">
+                  <span id="cart-total">{{ formatCurrency(subtotal + shippingCost, cartStore.currency, { isNet: iso !== 'CL'}) }}</span>
                 </span>
               </div>
             </div>

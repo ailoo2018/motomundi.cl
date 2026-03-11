@@ -24,8 +24,9 @@ export default defineEventHandler(async event => {
 
     const paymentMethodTypeId = body.paymentMethod.gateway
     const referenceId = order.id
-    const amount = order.total
     const currency = body.currency || "CLP"
+
+    const amount = currency === "CLP" ? order.total : body.total
 
     const returnUrl = getReturnUrl(paymentMethodTypeId, "order")
 
