@@ -25,7 +25,7 @@ export const useCartSummary = () => {
     if(shippingInfo && shippingInfo.shipmentMethod){
 
       if(shippingInfo.shipmentMethod.freeShipping?.amount > 0){
-        const freeShippingAmount : number = hippingInfo.shipmentMethod.freeShipping.amount
+        const freeShippingAmount : number = shippingInfo.shipmentMethod.freeShipping.amount
         if(getTotalBeforeShipping() >= freeShippingAmount)
           return 0
       }
