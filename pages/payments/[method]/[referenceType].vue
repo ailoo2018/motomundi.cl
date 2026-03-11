@@ -81,9 +81,10 @@ onMounted(async () => {
     referenceId = route.query.referenceId
   }else if(method === "webpay"){
     token = route.query.token_ws
+    referenceId = route.query.TBK_ORDEN_COMPRA
   }
 
-  if(!token){
+  if(!token && !referenceId ){
     referenceId = route.query.referenceId
   }
 

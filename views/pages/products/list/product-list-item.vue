@@ -5,7 +5,7 @@ import {useCurrencyConverter} from "@/composables/useCurrencyConverter";
 import {computed} from "vue";
 
 const { formatCurrency, selectedCountryData } = useCurrencyConverter()
-const iso = computed (() => selectedCountryData.value?.iso )
+const iso = computed (() => selectedCountryData.value?.iso?.toLowerCase() )
 const props = defineProps(
   {
     product: {
