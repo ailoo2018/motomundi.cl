@@ -12,6 +12,14 @@ const methdodMap = {
 }
 
 
+const maxRetries = 3
+const delayMs = 2000 // 2 seconds between retries
+let isSuccess = false
+
+// Helper to wait between retries
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+
 const method = route.params.method
 const referenceType = route.params.referenceType
 
@@ -60,11 +68,11 @@ const notifyTagManager = async orderId => {
     }
 
     // To this:
-    window.dataLayer = window.dataLayer || [];
+    window.dataLayer = window.dataLayer || []
     window.dataLayer.push({
       event: 'purchase',
-      ecommerce: purchase // GTM usually expects 'ecommerce' key for purchase events
-    });
+      ecommerce: purchase, // GTM usually expects 'ecommerce' key for purchase events
+    })
     console.log("Notified google: " + JSON.stringify(purchase))
   }catch(e){
     console.error("error trying to notify tagmanager", e)
@@ -79,6 +87,7 @@ onMounted(async () => {
   let justConfirmStatus = false
   if(method === "mercadopago"){
     token = route.query.payment_id
+
     // avoid dual payments for invoice
     if(referenceType === "invoice")
       justConfirmStatus = true
@@ -113,6 +122,40 @@ onMounted(async () => {
       orderId = result.value.referenceId
       isSuccess = result.value?.success || false
     }else{
+
+
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          const response = await $fetch('/api/payments/confirm-status', {
+            method: 'POST',
+            key: `${token}-${attempt}`, // Unique key per attempt if using useFetch
+            body: {
+              referenceId: referenceId,
+              referenceType: referenceType,
+              paymentMethodId: methdodMap[method],
+            },
+          })
+
+          if (response?.success) {
+            result.value = response
+            isSuccess = true
+            orderId = result.value.referenceId
+
+            break // Exit loop on success
+          }
+
+          console.warn(`Attempt ${attempt} failed. Retrying...`)
+        } catch (error) {
+          console.error(`Attempt ${attempt} error:`, error)
+        }
+
+        // If we haven't succeeded and have retries left, wait before next try
+        if (!isSuccess && attempt < maxRetries) {
+          await sleep(delayMs)
+        }
+      }
+
+      /*
       result.value = await $fetch('/api/payments/confirm-status', {
         method: 'POST',
         key: '' + token,
@@ -122,10 +165,9 @@ onMounted(async () => {
           paymentMethodId: methdodMap[method],
         },
       })
+*/
 
-      isSuccess = result.value?.success || false
 
-      orderId = result.value.referenceId
     }
 
     console.log("Result: " + result.value.success)
