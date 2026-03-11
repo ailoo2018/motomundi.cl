@@ -370,17 +370,18 @@ onMounted(async () => {
               </div>
             </div>
             <div class="shipping-method__body">
+
+              <div class="shipping-method__description">
+                Recíbelo {{ isEntre(shipping.eta) }} <strong>{{ formatDeliveryDateRange(shipping.eta) }}</strong>.
+              </div>
               <div v-if="totalBeforeShipping  < 150000" aaclass="shipping-promo shipping-promo--pending">
-                <VAlert color="info my-2" variant="tonal">
+                <VAlert :color="selectedShippingMethod === ShippingMethods.HomeDelivery ? 'success' : 'secondary'" class="ma-4" variant="tonal">
                   <VIcon class="tabler-alert-circle"/>
-                Agrega <strong>{{ formatMoney(150000 - totalBeforeShipping ) }}</strong> más y tu envío será <strong>¡GRATIS!</strong>
+                  Agrega <strong>{{ formatMoney(150000 - totalBeforeShipping ) }}</strong> más y tu envío será <strong>¡GRATIS!</strong>
                 </VAlert>
               </div>
               <div v-else-if="selectedShippingMethod === ShippingMethods.HomeDelivery" class="shipping-promo shipping-promo--success">
                 ¡Felicidades! Tu compra califica para <strong>Envío Gratis</strong>.
-              </div>
-              <div class="shipping-method__description">
-                Recíbelo {{ isEntre(shipping.eta) }} <strong>{{ formatDeliveryDateRange(shipping.eta) }}</strong>.
               </div>
               <div
                 v-if="selectedShippingMethod === ShippingMethods.HomeDelivery"
