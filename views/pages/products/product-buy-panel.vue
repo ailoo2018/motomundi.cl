@@ -23,7 +23,7 @@ const emit = defineEmits(['update:size', 'update:color', 'add-to-cart'])
 
 const { formatCurrency, selectedCountryData } = useCurrencyConverter()
 
-const iso = computed(() => { return selectedCountryData.value.iso })
+const iso = computed(() => { return selectedCountryData.value.iso?.toLowerCase() })
 
 const loading = toRef(props, 'loading')
 
