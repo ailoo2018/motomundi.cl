@@ -1,7 +1,7 @@
 // composables/useProductList.ts
 
 const ARRAY_FACETS = ['brands', 'categories', 'tags', 'sizes', 'models', 'colors'] as const
-const SCALAR_FACETS = ['bike', 'collection', 'sword'] as const
+const SCALAR_FACETS = ['bike', 'collection', 'sword', 'orderBy'] as const
 
 
 
@@ -17,6 +17,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   const queryDesc = ref()
   const filters = ref()
   const ignoreNextPageWatch = ref(true)
+  const orderBy = ref()
   // ─── URL helpers ──────────────────────────────────────────────
 
   /** Deserialise ?brands=nike,adidas&page=2 → internal query array */
@@ -43,6 +44,11 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
       if (facet.values?.length) params[facet.type] = facet.values.join(',')
       else if (facet.value != null) params[facet.type] = String(facet.value)
     }
+
+    if(orderBy.value?.id){
+      params["orderBy"] = orderBy.value.id
+    }
+
     return params
   }
 
@@ -85,6 +91,10 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
       else if (facet.type === 'colors')     facet.values.forEach((t: any) => body.colors.push(t))
       else if (facet.type === 'bike')       body.bike        = facet.value
       else body[facet.type] = facet.value
+    }
+
+    if(orderBy.value){
+      body.orderBy = orderBy.value.id
     }
 
     return body
@@ -211,6 +221,12 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     await router.push({ query: filtersToUrlQuery(newQuery, 1) })
   }
 
+
+  watch(orderBy, async (newVal) => {
+    console.log("orderBy changed: " + newVal)
+    await router.push({ query: filtersToUrlQuery(currentQuery.value, orderBy.value?.id) })
+  })
+
   /**
    * Called by the pagination component.  Pushes a new history entry
    * so the user can navigate back to the previous page.
@@ -228,6 +244,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     filters,
     applyFilters,
     setPage,
+    orderBy,
     loading:     computed(() => pending.value || loading.value),
   }
 }

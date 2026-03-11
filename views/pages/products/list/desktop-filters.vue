@@ -12,7 +12,7 @@ const props = defineProps({
 const filters = computed(() => {
   return props.filters ?? []
 })
-const emit = defineEmits(["on-filter"])
+const emit = defineEmits(["on-filter", "on-order-by"])
 
 const orderBy = ref()
 
@@ -37,6 +37,9 @@ const onFilterChanged = filters => {
   emit("on-filter",filters )
 }
 
+watch( orderBy, (newVal) => {
+  emit("on-order-by", newVal )
+})
 
 const removeAllFilters = () => {
 

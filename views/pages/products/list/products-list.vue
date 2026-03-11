@@ -48,7 +48,7 @@ if(query.sword){
 console.log("baseQuery: " + JSON.stringify(baseQuery))
 
 
-const { products, currentPage, totalPages, applyFilters, filters } = useProductList({ baseQuery: baseQuery })
+const { products, currentPage, totalPages, applyFilters, filters, orderBy } = useProductList({ baseQuery: baseQuery })
 
 
 useSeoMeta({
@@ -58,6 +58,10 @@ useSeoMeta({
   ogDescription: () => title.value,
 })
 
+
+const onOrderBy = ob => {
+  orderBy.value = ob
+}
 
 
 
@@ -84,6 +88,7 @@ const onFilter = filters => {
         <!-- / page title -->
         <DesktopFilters
           :filters="filters"
+          @on-order-by="onOrderBy"
           @on-filter="onFilter"
         />
       </div>
