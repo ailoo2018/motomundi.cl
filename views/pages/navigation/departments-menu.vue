@@ -47,8 +47,8 @@ onMounted(() => {
       :class="{ open: currDept === Departments.Road}"
       style="background-color: transparent;"
     >
-      <a
-        href="/"
+      <NuxtLink
+        to="/"
         title="Motomundi"
         @click="goTo($event,'/', Departments.Road) "
       >
@@ -58,15 +58,15 @@ onMounted(() => {
             style="padding: 0 10px;"
           >Calle </span>
         </span>
-      </a>
+      </NuxtLink>
     </li>
     <li
       class="c1 "
       :class="{ open: currDept === Departments.CafeRacer}"
       style="background-color: transparent;"
     >
-      <a
-        href="/cafe-racer"
+      <NuxtLink
+        to="/cafe-racer"
         title="Ropa Café Racer en Motomundi"
         @click="goTo($event,'/cafe-racer', Departments.CafeRacer) "
       >
@@ -74,15 +74,15 @@ onMounted(() => {
           <span class="r">Café Racer</span>
           <i style=" font-size: 12px;font-weight: normal;text-transform: lowercase" />
         </span>
-      </a>
+      </NuxtLink>
     </li>
     <li
       class="c2 "
       :class="{ open: currDept === Departments.Mx}"
       style="background-color: transparent;"
     >
-      <a
-        href="/motocross-enduro-trial"
+      <NuxtLink
+        to="/motocross-enduro-trial"
         title="Off-Road en Motomundi"
         @click="goTo($event, '/motocross-enduro-trial', Departments.Mx) "
       >
@@ -90,15 +90,15 @@ onMounted(() => {
           <span class="r">Off-Road </span>
           <i style=" font-size: 12px;font-weight: normal;text-transform: lowercase" />
         </span>
-      </a>
+      </NuxtLink>
     </li>
     <li
       class="c3 "
       :class="{ open: currDept === Departments.LifeStyle}"
       style="background-color: transparent;"
     >
-      <a
-        href="/ropa-casual"
+      <NuxtLink
+        to="/ropa-casual"
         title="Ropa Casual en Motomundi"
         @click="goTo($event, '/ropa-casual', Departments.LifeStyle) "
       >
@@ -106,37 +106,37 @@ onMounted(() => {
           <span class="r">Ropa Casual</span>
           <i style=" font-size: 12px;font-weight: normal;text-transform: lowercase" />
         </span>
-      </a>
+      </NuxtLink>
     </li>
     <li class="c4 segment-float-right hide-on-med-and-down">
-      <a
-        href="/moto-blog"
+      <NuxtLink
+        to="/moto-blog"
         title="Blog de motos Motomundi"
       >
         <span class="l">
           <span class="r">Blog</span>
         </span>
-      </a>
+      </NuxtLink>
     </li>
     <li class="c5 segment-float-right  hide-on-med-and-down">
-      <a
-        href="/novedades"
+      <NuxtLink
+        to="/novedades"
         title="Novedades en equipamiento para moto"
       >
         <span class="l">
           <span class="r">Novedades</span>
         </span>
-      </a>
+      </NuxtLink>
     </li>
     <li class="c6 segment-float-right  hide-on-med-and-down">
-      <a
-        href="/outlet"
+      <NuxtLink
+        to="/outlet"
         title="Ofertas de equipamiento de moto"
       >
         <span class="l">
           <span class="r">Ofertas</span>
         </span>
-      </a>
+      </NuxtLink>
     </li>
   </ul>
   <!-- /#segements -->
