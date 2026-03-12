@@ -1,9 +1,41 @@
+<script setup>
+import { useCountryDetection, COUNTRY_DATA } from '~/composables/useCountryDetection'
+
+const { selectedCountry, selectedCountryData, changeCountry } = useCountryDetection()
+
+const menuOpen = ref(false)
+const wrapRef  = ref(null)
+
+function toggleMenu() {
+  menuOpen.value = !menuOpen.value
+}
+
+function select(code) {
+  changeCountry(code)
+  menuOpen.value = false
+}
+
+// Proper click-outside using a template ref
+function onClickOutside(e) {
+  if (wrapRef.value && !wrapRef.value.contains(e.target)) {
+    menuOpen.value = false
+  }
+}
+
+const iso = computed(() => {
+  return selectedCountryData.iso?.toLowerCase()
+})
+
+onMounted(()  => document.addEventListener('mousedown', onClickOutside))
+onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
+</script>
+
 <template>
   <div ref="wrapRef" class="cs-wrap">
 
     <!-- Trigger button -->
     <button class="cs-trigger" :class="{ 'is-open': menuOpen }" @click="toggleMenu">
-      <span class="cs-flag"><img :src="`/content/images/flags/${selectedCountryData.iso?.toLowerCase()}.png`" /></span>
+      <span class="cs-flag"><img :src="`/content/images/flags/${iso}.png`" /></span>
       <span class="cs-name">{{ selectedCountryData.name }}</span>
       <span class="cs-sep">·</span>
       <span class="cs-symbol">{{ selectedCountryData.symbol }}</span>
@@ -57,34 +89,6 @@
     </Transition>
   </div>
 </template>
-
-<script setup>
-import { useCountryDetection, COUNTRY_DATA } from '~/composables/useCountryDetection'
-
-const { selectedCountry, selectedCountryData, changeCountry } = useCountryDetection()
-
-const menuOpen = ref(false)
-const wrapRef  = ref(null)
-
-function toggleMenu() {
-  menuOpen.value = !menuOpen.value
-}
-
-function select(code) {
-  changeCountry(code)
-  menuOpen.value = false
-}
-
-// Proper click-outside using a template ref
-function onClickOutside(e) {
-  if (wrapRef.value && !wrapRef.value.contains(e.target)) {
-    menuOpen.value = false
-  }
-}
-
-onMounted(()  => document.addEventListener('mousedown', onClickOutside))
-onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
-</script>
 
 <style scoped>
 /* ── Wrapper ──────────────────────────────────────────── */
