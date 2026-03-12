@@ -123,8 +123,8 @@ onMounted(() => {
           :items="clickAndCollectStores"
           item-value="id"
           item-title="title"
+          style="font-size:16px !important;"
 
-          class="custom-select"
 
           return-object
         >
@@ -197,6 +197,14 @@ onMounted(() => {
 .custom-select{
   background-color: white;
   margin-bottom: 25px;
+}
+
+.motomundi-select input {
+  font-size: 16px !important;
+}
+
+.v-select .v-field .v-field__input > input {
+  font-size: 16px !important;
 }
 
 .v-field--variant-filled.v-field--focused .v-field__overlay {
