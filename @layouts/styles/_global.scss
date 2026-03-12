@@ -5,6 +5,14 @@
   background-repeat: no-repeat;
 }
 
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select,
+  textarea,
+  input,
+  .v-field__input {
+    font-size: 16px !important;
+  }
+}
 
 html {
   box-sizing: border-box;
