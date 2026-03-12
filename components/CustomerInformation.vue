@@ -11,6 +11,7 @@ const { validatePhone, formatPhone } = usePhoneValidation()
 
 const showLogin = ref(false)
 const isLoading = ref(false)
+
 // const isLoading = ref(true)
 const error = ref('')
 
@@ -25,9 +26,8 @@ const contactEmail = ref('')
 const contactPhone = ref('')
 const disableEmail = ref(true)
 
-console.log("CustomerInfo.vue")
+const form = ref(null)
 
-// const { getAddresses, selectedAddress, isLoading } = useAddressForm()
 
 
 const handleUserLoggedIn = async loginData => {
@@ -113,14 +113,25 @@ const getCustomerInfo = async () => {
   return custInfo
 }
 
+
 const validate = async () => {
-  var errMsg = await addressForm.value.validate()
-  if (errMsg) {
-    return errMsg
+
+
+  const { valid, errors } = await form.value.validate()
+
+  if (!valid) {
+    // Focus the first field with an error
+    await nextTick()
+
+    const firstError = document.querySelector('.v-field--error')
+    firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+    return 'Hay errores en el formulario. Por favor, revisa los campos e inténtalo de nuevo.'
   }
 
-  if (!contactPhone.value || !contactEmail.value)
-    return "Hay errores en el formulario. Ingresar teléfono y email.  Por favor, revisa los campos e inténtalo de nuevo."
+
+  const addrErr = await addressForm.value.validate()
+  if (addrErr) return addrErr
 
   return null
 }
@@ -151,7 +162,8 @@ onMounted(async () => {
     user.value = checkoutStore.user
     contactEmail.value = checkoutStore.customerInfo.email
     contactPhone.value = checkoutStore.customerInfo.phone
-   // selectedAddress.value = checkoutStore.customerInfo.address
+
+    // selectedAddress.value = checkoutStore.customerInfo.address
 
   } else {
     console.log("Loading address data")
@@ -173,6 +185,11 @@ const reqPhoneRules = [
 
     return null
   },
+]
+
+const emailRules = [
+  v => !!v || 'El campo es requerido',
+  v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Email no válido',
 ]
 
 
@@ -233,40 +250,42 @@ const handlePhoneInput = event => {
             </p>
 
 
-            <VRow class="ma-0 pa-0  ">
-              <VCol
-                cols="12"
-                md="6"
-                lg="6"
-                xl="6"
-                class="pa-0 pr-2 mt-4"
-              >
-                <VTextField
-                  v-model="contactEmail"
-                  label="Email *"
-                  variant="solo"
-                  :disabled="disableEmail"
-                  :rules="reqRules"
-                  required
-                />
-              </VCol>
-              <VCol
-                cols="12"
-                md="6"
-                lg="6"
-                xl="6"
-                class="pa-0 mt-4"
-              >
-                <VTextField
-                  v-model="contactPhone"
-                  label="Teléfono Movil *"
-                  required
-                  variant="solo"
-                  :rules="reqPhoneRules"
-                  @input="handlePhoneInput"
-                />
-              </VCol>
-            </VRow>
+            <VForm ref="form">
+              <VRow class="ma-0 pa-0  ">
+                <VCol
+                  cols="12"
+                  md="6"
+                  lg="6"
+                  xl="6"
+                  class="pa-0 pr-2 mt-4"
+                >
+                  <VTextField
+                    v-model="contactEmail"
+                    label="Email *"
+                    variant="solo"
+                    :disabled="disableEmail"
+                    :rules="emailRules"
+                    required
+                  />
+                </VCol>
+                <VCol
+                  cols="12"
+                  md="6"
+                  lg="6"
+                  xl="6"
+                  class="pa-0 mt-4"
+                >
+                  <VTextField
+                    v-model="contactPhone"
+                    label="Teléfono Movil *"
+                    variant="solo"
+                    :rules="reqPhoneRules"
+                    @input="handlePhoneInput"
+                    required
+                  />
+                </VCol>
+              </VRow>
+            </VForm>
           </div>
         </VCardText>
       </VCard>
@@ -280,7 +299,7 @@ const handlePhoneInput = event => {
           <VCardText class="pa-1 ma-1 pa-md-2 ma-md-2">
             <h2>Tus datos</h2>
 
-            <AddressForm ref="addressForm"/>
+            <AddressForm ref="addressForm" />
           </VCardText>
         </VCard>
       </div>
@@ -329,6 +348,4 @@ const handlePhoneInput = event => {
 .custom-text-field:focus-within :deep(.v-field__input) {
   background-color: white !important;
 }
-
-
 </style>

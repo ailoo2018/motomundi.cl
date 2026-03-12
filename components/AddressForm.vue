@@ -68,6 +68,7 @@ const idNumberRules = [
     if (!isChile.value) return true
 
     const isValid = validateRut(v)
+    
     return isValid || "El RUT no es valido"
   },
 ]
@@ -101,7 +102,9 @@ const validate = async () => {
     // Scroll the first error into view so the user notices it immediately
     console.log("not valid")
     await nextTick()
+
     const firstError = document.querySelector('.v-field--error')
+
     firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
     return 'Hay campos con errores. Por favor revísalos antes de continuar.'
@@ -129,6 +132,7 @@ const handleRutInput = event => {
 
 onMounted(async () => {
   console.log("AddressForm::onMounted")
+
   const addresses = await getAddresses()
 
   if (checkoutStore.customerInfo?.address) {
@@ -142,7 +146,9 @@ onMounted(async () => {
 
 const getCustomerAddress = () => {
   console.log("getCustomerData")
+
   const countryData = useCountryDetection().getCountryData(country.value.code)
+
   checkoutStore.setCountryData(countryData)
   checkoutStore.saveToLocalStorage()
 
@@ -154,12 +160,19 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
 
 <template>
   <!-- VForm wrapper: required for form.validate() to reach all child fields -->
-  <VForm ref="form" class="address-form" validate-on="submit">
+  <VForm
+    ref="form"
+    class="address-form"
+    validate-on="submit"
+  >
     {{ isChile }}
 
     <!-- ── Country ──────────────────────────────────────────── -->
     <VRow class="ma-0 pa-0 mt-4">
-      <VCol cols="12" class="pa-0">
+      <VCol
+        cols="12"
+        class="pa-0"
+      >
         <VSelect
           v-model="selectedCountry"
           :items="countryItems"
@@ -178,7 +191,7 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
                 <img
                   class="mr-2"
                   :src="`/content/images/flags/${item.raw.value?.toLowerCase()}.png`"
-                />
+                >
               </template>
               <VListItemSubtitle>Code: {{ item.raw.value }}</VListItemSubtitle>
             </VListItem>
@@ -189,7 +202,11 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
 
     <!-- ── Full name ─────────────────────────────────────────── -->
     <VRow class="ma-0 pa-0">
-      <VCol cols="12" md="6" class="pa-0 pr-md-4">
+      <VCol
+        cols="12"
+        md="6"
+        class="pa-0 pr-md-4"
+      >
         <VTextField
           v-model="name"
           label="Nombre *"
@@ -199,7 +216,11 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
           autocomplete="name"
         />
       </VCol>
-      <VCol cols="12" md="6" class="pa-0 mt-2 mt-md-0">
+      <VCol
+        cols="12"
+        md="6"
+        class="pa-0 mt-2 mt-md-0"
+      >
         <VTextField
           v-model="surname"
           label="Apellido *"
@@ -212,7 +233,11 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
 
     <!-- ── ID type + number ──────────────────────────────────── -->
     <VRow class="ma-0 pa-0 mt-4">
-      <VCol cols="12" md="4" class="pa-0 pr-md-2">
+      <VCol
+        cols="12"
+        md="4"
+        class="pa-0 pr-md-2"
+      >
         <VSelect
           v-model="selectedIdType"
           :items="idTypeItems"
@@ -223,7 +248,11 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
           required
         />
       </VCol>
-      <VCol cols="12" md="8" class="pa-0 mt-2 mt-md-0">
+      <VCol
+        cols="12"
+        md="8"
+        class="pa-0 mt-2 mt-md-0"
+      >
         <VTextField
           v-model="idNumber"
           :label="`N° de ${selectedIdType || 'documento'} *`"
@@ -231,15 +260,18 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
           variant="solo"
           :rules="idNumberRules"
           required
-          @input="handleRutInput"
           autocomplete="off"
+          @input="handleRutInput"
         />
       </VCol>
     </VRow>
 
     <!-- ── Address line 1 ────────────────────────────────────── -->
     <VRow class="ma-0 pa-0 mt-4">
-      <VCol cols="12" class="pa-0">
+      <VCol
+        cols="12"
+        class="pa-0"
+      >
         <VTextField
           v-model="addressLine1"
           label="Dirección *"
@@ -254,7 +286,10 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
 
     <!-- ── Address line 2 (optional) ─────────────────────────── -->
     <VRow class="ma-0 pa-0">
-      <VCol cols="12" class="pa-0">
+      <VCol
+        cols="12"
+        class="pa-0"
+      >
         <VTextField
           v-model="addressLine2"
           :label="country.addressLine2Label"
@@ -265,8 +300,15 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
     </VRow>
 
     <!-- ── Chile: ComunaAutocomplete + optional postal code ──── -->
-    <VRow v-if="isChile" class="ma-0 pa-0">
-      <VCol cols="12" md="12" class="pa-0 pr-md-2">
+    <VRow
+      v-if="isChile"
+      class="ma-0 pa-0"
+    >
+      <VCol
+        cols="12"
+        md="12"
+        class="pa-0 pr-md-2"
+      >
         <ComunaAutocomplete
           v-model="comuna"
           :items="stateItems"
@@ -277,12 +319,18 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
           autocomplete="address-level1"
         />
       </VCol>
-
     </VRow>
 
     <!-- ── Other countries: state + city ─────────────────────── -->
-    <VRow v-else class="ma-0 pa-0">
-      <VCol cols="12" md="6" class="pa-0 pr-md-2">
+    <VRow
+      v-else
+      class="ma-0 pa-0"
+    >
+      <VCol
+        cols="12"
+        md="6"
+        class="pa-0 pr-md-2"
+      >
         <VAutocomplete
           v-model="state"
           :items="stateItems"
@@ -293,7 +341,11 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
           autocomplete="address-level1"
         />
       </VCol>
-      <VCol cols="12" md="6" class="pa-0 mt-2 mt-md-0">
+      <VCol
+        cols="12"
+        md="6"
+        class="pa-0 mt-2 mt-md-0"
+      >
         <VTextField
           v-model="city"
           :label="`${country.cityLabel} *`"
@@ -306,8 +358,14 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
     </VRow>
 
     <!-- ── Postal code for non-CL countries that require it ──── -->
-    <VRow v-if="country.hasPostalCode && !isChile" class="ma-0 pa-0 mt-4">
-      <VCol cols="12" class="pa-0">
+    <VRow
+      v-if="country.hasPostalCode && !isChile"
+      class="ma-0 pa-0 mt-4"
+    >
+      <VCol
+        cols="12"
+        class="pa-0"
+      >
         <VTextField
           v-model="postalCode"
           :label="`${country.postalCodeLabel} *`"
@@ -318,7 +376,6 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
         />
       </VCol>
     </VRow>
-
   </VForm>
 </template>
 
