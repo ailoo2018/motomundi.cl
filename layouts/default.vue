@@ -40,7 +40,7 @@ injectSkinClasses()
     <div class="landing-page-wrapper desktop-only-container">
       <MotomundiHeaderbar/>
       <MotomundiHeaderlogo/>
-      <MotomundiNavigation/>
+      <MotomundiNavigation />
       <main class="main-content">
         <slot/>
         <MotomundiFooter/>

@@ -32,15 +32,12 @@ const goTo = (event, url, departmentId) => {
   window.location = url
 }
 
-onMounted(() => {
-
-})
 </script>
 <template>
   <!-- #segments -->
   <ul id="segments">
     <li
-      class="c0  "
+      class="c0"
       :class=" Number(currDept) === Departments.Road ? 'open' : ''"
       style="background-color: transparent;"
     >
@@ -53,7 +50,7 @@ onMounted(() => {
           <span
             class="r"
             style="padding: 0 10px;"
-          >Calle</span>
+          > Calle</span>
         </span>
       </NuxtLink>
     </li>
