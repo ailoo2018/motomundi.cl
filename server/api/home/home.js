@@ -8,7 +8,7 @@ export default defineEventHandler(async event => {
     const baseUrl = config.public.w3BaseUrl
     const { id } = getQuery(event)
 
-    url = `${baseUrl}/${getDomainId()}/wcc/${id}`
+    url = `${baseUrl}/${getDomainId()}/wcc/${parseInt(id)}`
 
 
 
