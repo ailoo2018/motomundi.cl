@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const id = getRouterParam(event, 'id')
 
 
-    if(!id || Number.isNaN(id))
+    if(!(parseInt(id) > 0))
       return null
 
     url = `${baseUrl}/${getDomainId()}/products/${parseInt(id)}`;
