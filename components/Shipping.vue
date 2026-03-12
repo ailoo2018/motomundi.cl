@@ -1101,13 +1101,7 @@ onMounted(async () => {
 
 <style scoped>
 
-.v-list-item-title {
-  font-size: 16px;
-}
 
-.v-select .v-field {
-  font-size: 16px !important;
-}
 .shipping-method__category .shipping-method__content {
   font-size: 14px;
   padding: 15px 0 5px;

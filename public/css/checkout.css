@@ -28,46 +28,6 @@ input[type=radio]{
     top: 4px;
 }
 
-/*
-
-button, input, optgroup, select, textarea {
-    border-radius: 0;
-    box-sizing: border-box!important;
-    color: #000;
-    font-family: system,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-    font-weight: 500;
-    outline: none;
-}
-*/
-
-
-/*
-.checkout input[type=checkbox]:not(.toggle-checkbox):before, .checkout input[type=radio]:before {
-    box-shadow: inset 13px 13px #000;
-}
-.checkout input[type=checkbox]:not(.toggle-checkbox):checked:after, .checkout input[type=checkbox]:not(.toggle-checkbox):checked:before {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-}
-
-
-.checkout input[type=checkbox]:not(.toggle-checkbox):after {
-    box-shadow: inset 13px 13px #fff;
-    -webkit-clip-path: polygon(20% 51%,41% 70%,83% 31%,75% 22%,41% 54%,28% 42%);
-    clip-path: polygon(20% 51%,41% 70%,83% 31%,75% 22%,41% 54%,28% 42%);
-    -webkit-transform-origin: bottom left;
-    transform-origin: bottom left;
-}
-
-.input__group {
-    margin: 5px 0;
-    position: relative;
-}
-
-.input__group label strong {
-    font-weight: 700;
-}
-*/
 
 .form-fieldset .input__group {
     padding: 0;
@@ -83,72 +43,6 @@ button, input, optgroup, select, textarea {
     cursor: pointer;
     position: relative;
     width: 100%;
-}
-
-/*
-input:not([type]), input[type=date]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=email]:not(.browser-default), input[type=number]:not(.browser-default), input[type=password]:not(.browser-default), input[type=search]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=text]:not(.browser-default), input[type=time]:not(.browser-default), input[type=url]:not(.browser-default), textarea.materialize-textarea {
-    background-color: transparent;
-    border: 1px solid #000;
-    border-radius: 0;
-    box-shadow: none;
-    box-sizing: content-box;
-    font-size: 15px;
-    height: 3rem;
-    margin: 0 0 8px;
-    outline: none;
-    padding: 15px;
-    width: 100%;
-}
-*/
-
-/*
-.input__group input:not([type]), .input__group input[type=date]:not(.browser-default), .input__group input[type=datetime-local]:not(.browser-default), .input__group input[type=datetime]:not(.browser-default), .input__group input[type=email]:not(.browser-default), .input__group input[type=number]:not(.browser-default), .input__group input[type=password]:not(.browser-default), .input__group input[type=search]:not(.browser-default), .input__group input[type=tel]:not(.browser-default), .input__group input[type=text]:not(.browser-default), .input__group input[type=time]:not(.browser-default), .input__group input[type=url]:not(.browser-default), .input__group textarea {
-    background-color: #fff;
-    border-color: #d8d8d8;
-}
-*/
-
-
-
-.input__group input:not([type]):focus+label, .input__group input:not([type]):not(:placeholder-shown)+label, .input__group input[type=date]:not(.browser-default):focus+label, .input__group input[type=date]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=datetime-local]:not(.browser-default):focus+label, .input__group input[type=datetime-local]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=datetime]:not(.browser-default):focus+label, .input__group input[type=datetime]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=email]:not(.browser-default):focus+label, .input__group input[type=email]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=number]:not(.browser-default):focus+label, .input__group input[type=number]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=password]:not(.browser-default):focus+label, .input__group input[type=password]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=search]:not(.browser-default):focus+label, .input__group input[type=search]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=tel]:not(.browser-default):focus+label, .input__group input[type=tel]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=text]:not(.browser-default):focus+label, .input__group input[type=text]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=time]:not(.browser-default):focus+label, .input__group input[type=time]:not(.browser-default):not(:placeholder-shown)+label, .input__group input[type=url]:not(.browser-default):focus+label, .input__group input[type=url]:not(.browser-default):not(:placeholder-shown)+label, .input__group textarea:focus+label, .input__group textarea:not(:placeholder-shown)+label {
-    font-size: 12px;
-    left: 7px;
-    padding: 0 5px;
-    top: 1px;
-    -webkit-transform: translate(0);
-    transform: translate(0);
-}
-
-.input__group input:not([type])+label, .input__group input[type=date]:not(.browser-default)+label, .input__group input[type=datetime-local]:not(.browser-default)+label, .input__group input[type=datetime]:not(.browser-default)+label, .input__group input[type=email]:not(.browser-default)+label, .input__group input[type=number]:not(.browser-default)+label, .input__group input[type=password]:not(.browser-default)+label, .input__group input[type=search]:not(.browser-default)+label, .input__group input[type=tel]:not(.browser-default)+label, .input__group input[type=text]:not(.browser-default)+label, .input__group input[type=time]:not(.browser-default)+label, .input__group input[type=url]:not(.browser-default)+label, .input__group textarea+label {
-    left: 15px;
-    pointer-events: none;
-    position: absolute;
-    top: 34px;
-    -webkit-transform: translateY(-21px);
-    transform: translateY(-21px);
-    transition: all .3s cubic-bezier(.3,0,0,1);
-    width: auto!important;
-}
-
-input:not([type])+label:after, input[type=date]:not(.browser-default)+label:after, input[type=datetime-local]:not(.browser-default)+label:after, input[type=datetime]:not(.browser-default)+label:after, input[type=email]:not(.browser-default)+label:after, input[type=number]:not(.browser-default)+label:after, input[type=password]:not(.browser-default)+label:after, input[type=search]:not(.browser-default)+label:after, input[type=tel]:not(.browser-default)+label:after, input[type=text]:not(.browser-default)+label:after, input[type=time]:not(.browser-default)+label:after, input[type=url]:not(.browser-default)+label:after, textarea.materialize-textarea+label:after {
-    content: "";
-    display: block;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 100%;
-    transition: opacity .2s ease-out,color .2s ease-out;
-}
-
-
-.input__group {
-    margin: 5px 0;
-    position: relative;
-}
-.input__group label {
-    color: #747474!important;
-    font-size: 16px;
-    margin-bottom: 0;
 }
 
 
@@ -1016,6 +910,7 @@ form span.h2{
 
 .v-select .v-field .v-field__input > input{
     border: 0;
+    font-size: 16px !important;
 }
 
 
@@ -1046,13 +941,13 @@ form span.h2{
 
 /********************** shipping ****************************/
 .click-and-collect {
-    font-size: 14px;
+    font-size: 16px;
     padding: 15px 0 5px;
 }
 
 .shipping-method__category .shipping-method__description {
     color: #666;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .address__info {
@@ -1178,39 +1073,6 @@ form span.h2{
 
 
 
-/*** vuetify corrections **/
-/*
-
-.v-select .v-select__selection:first-child {
-    margin-inline-start: 0;
-    font-size: 0.8rem;
-}
-
-.v-list-item-title{
-    font-size: 0.8rem !important;
-    font-weight: 700 !important;
-}
-
-.v-list-item-subtitle{
-    font-size: 0.7rem !important;
-}
-
-.v-list-item--density-default.v-list-item--one-line{
-    min-height: 42px;
-}
-*/
-
-/*
-.v-select .v-field .v-field__input > input{
-    top: -2px;
-    left: 6px;
-}
-*/
-/*
-.v-selection-control__input:hover::before {
-    opacity: 0;
-}
-*/
 
 .checkout .v-input--density-default .v-field--variant-solo .v-label.v-field-label--floating, .v-input--density-default .v-field--variant-solo-inverted .v-label.v-field-label--floating, .v-input--density-default .v-field--variant-filled .v-label.v-field-label--floating, .v-input--density-default .v-field--variant-solo-filled .v-label.v-field-label--floating {
     top: 2px;

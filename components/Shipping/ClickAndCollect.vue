@@ -123,8 +123,8 @@ onMounted(() => {
           :items="clickAndCollectStores"
           item-value="id"
           item-title="title"
-          style="font-size:16px !important;"
 
+          class="custom-select"
 
           return-object
         >
