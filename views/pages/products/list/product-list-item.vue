@@ -143,7 +143,7 @@ const formatName = name => {
             :src="getImageUrl( product.image, 300, getDomainId())"
             :alt="product.name"
             class="cdn-img mb-1 mx-auto"
-            @error="handleImageError"
+            @error="handleImageError(product.image)"
           >
             <template #error>
               <VImg
