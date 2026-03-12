@@ -2,7 +2,7 @@ import { getDomainId } from "../../ailoo-domain.js"
 
 export default defineEventHandler(async (event) => {
 
-  let url = "";
+  let url = ""
   try {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
@@ -11,8 +11,6 @@ export default defineEventHandler(async (event) => {
 
     if(!id || Number.isNaN(id))
       return null
-
-
 
     url = `${baseUrl}/${getDomainId()}/products/${parseInt(id)}`;
 
@@ -28,8 +26,12 @@ export default defineEventHandler(async (event) => {
 
     return res
   }catch(error) {
-    console.error('Error in products/[id] lookup: ' + url, error)
-    console.error('Stack trace:', error.stack)
+    const msg = error.data?.message || error.data?.error || error.message || 'Failed to lookup friendly URL'
+
+    if(error.statusCode !== 404) {
+      console.error('Error in products/[id] lookup: ' + url + " " + msg)
+      console.error('Stack trace:', error.stack)
+    }
     throw createError({
       statusCode: error.statusCode || 500,
       message: error.data?.message || error.data?.error || error.message || 'Failed to lookup friendly URL',

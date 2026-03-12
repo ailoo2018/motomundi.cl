@@ -191,6 +191,21 @@ onMounted(() => {
 </script>
 
 <template>
+
+
+  <div v-if="error || !product" class="container" style="padding: 60px 20px; text-align: center;">
+    <VIcon icon="tabler-package-off" size="64" color="grey" />
+    <h2 style="margin-top: 16px; color: #555;">Producto no encontrado</h2>
+    <p style="color: #888;">El producto que buscas no existe o ya no está disponible.</p>
+    <VBtn
+      color="primary"
+      style="margin-top: 20px;"
+      @click="router.push('/')"
+    >
+      Volver al inicio
+    </VBtn>
+  </div>
+
   <article v-if="product">
     <div class="container product">
       <section class="row product-main ">
