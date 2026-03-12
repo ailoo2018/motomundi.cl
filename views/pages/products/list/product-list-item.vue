@@ -114,9 +114,9 @@ const formatName = name => {
     <section>
       <AddToFavsBtn :is-wished="localIsWished" @toggle-wishlist="onToggleWishlist" />
 
-      <a
+      <NuxtLink
         class="mtc-link product-link"
-        :href="product.url"
+        :to="product.url"
       >
         <div class="product-tags">
           <span
@@ -162,7 +162,7 @@ const formatName = name => {
           />
         </span>
         <!-- /product-image -->
-      </a>
+      </NuxtLink>
 
       <!-- miniatures -->
       <section v-if="showMiniatures">
@@ -187,9 +187,9 @@ const formatName = name => {
       <!-- /miniatures -->
 
       <section class="item__info">
-        <a
+        <NuxtLink
           class="mtc-linkaa"
-          :href="props.product.url"
+          :to="props.product.url"
         >
           <div class="item__name">
             <span class="item__sizes">
@@ -209,11 +209,11 @@ const formatName = name => {
               <strong>{{ formatName( product.name ) }}</strong>
             </h3>
           </div>
-        </a>
+        </NuxtLink>
 
-        <a
+        <NuxtLink
           class="item__price-info mtc-linkaa"
-          :href="props.product.url"
+          :to="props.product.url"
         >
           <span class="item__bottom">
 
@@ -240,7 +240,7 @@ const formatName = name => {
               <img src="/content/images/youtube_icon.svg">
             </span>
           </span>
-        </a>
+        </NuxtLink>
       </section>
     </section>
   </article>

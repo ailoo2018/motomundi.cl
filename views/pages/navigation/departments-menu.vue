@@ -2,8 +2,12 @@
 import { Departments } from "@/models/index.js"
 
 const route = useRoute()
+const cookie = useCookie('user-department', {
+  decode: val => Number(val),
+  encode: val => String(val),
+})
 
-const getDeptFromPath = (path) => {
+const getDeptFromPath = path => {
   if (path === '/') return Departments.Road
   if (path.startsWith('/cafe-racer')) return Departments.CafeRacer
   if (path.startsWith('/motocross-enduro-trial')) return Departments.Mx
@@ -11,28 +15,33 @@ const getDeptFromPath = (path) => {
   return null
 }
 
-const currDept = ref(getDeptFromPath(route.path))
+// ✅ Derived purely from route — identical on server and client, no mismatch
+const currDept = ref(10018) // computed(() => getDeptFromPath(route.path) ?? Departments.Road)
 
-// 👇 Reacts to every navigation, including client-side NuxtLink clicks
-watch(() => route.path, (newPath) => {
-  const dept = getDeptFromPath(newPath)
-  if (dept !== null) {
-    currDept.value = dept
-    useCookie('user-department').value = dept
-  }
-}, { immediate: true }) // immediate: true replaces your onMounted logic
+
+
+// Cookie is only for other consumers (e.g. API calls), not for active state
+watch(currDept, (dept, oldDept) => {
+  console.log("currDept changed! " + dept + " old dept: " + oldDept)
+  cookie.value = dept
+}, { immediate: true })
 
 const goTo = (event, url, departmentId) => {
-  useCookie('user-department').value = departmentId
+  event.preventDefault()
+  cookie.value = departmentId
+  window.location = url
 }
-</script>
 
+onMounted(() => {
+
+})
+</script>
 <template>
   <!-- #segments -->
   <ul id="segments">
     <li
       class="c0  "
-      :class="{ open: currDept === Departments.Road}"
+      :class=" Number(currDept) === Departments.Road ? 'open' : ''"
       style="background-color: transparent;"
     >
       <NuxtLink
@@ -44,7 +53,7 @@ const goTo = (event, url, departmentId) => {
           <span
             class="r"
             style="padding: 0 10px;"
-          >Calle </span>
+          >Calle</span>
         </span>
       </NuxtLink>
     </li>

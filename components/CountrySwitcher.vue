@@ -26,6 +26,7 @@ const iso = computed(() => {
   return selectedCountryData.value.iso?.toLowerCase()
 })
 
+
 onMounted(()  => document.addEventListener('mousedown', onClickOutside))
 onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
 </script>
