@@ -26,7 +26,7 @@ export default defineEventHandler(async event => {
     const referenceId = order.id
     const currency = body.currency || "CLP"
 
-    const amount = currency === "CLP" ? order.total : body.total
+    const amount = currency === "CLP" ? Math.round(order.total) : body.total
 
     const returnUrl = getReturnUrl(paymentMethodTypeId, "order")
 

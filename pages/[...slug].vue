@@ -13,6 +13,10 @@ const queryParams = route.query
 const config = ref()
 const type = ref("products")
 
+
+
+
+
 const slugArray = Array.isArray(route.params.slug)
   ? route.params.slug
   : [route.params.slug].filter(Boolean)
