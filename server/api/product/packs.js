@@ -8,7 +8,7 @@ export default defineEventHandler(async event => {
     const baseUrl = config.public.w3BaseUrl
     const { productId } = getQuery(event)
 
-    return await $fetch(`${baseUrl}/${getDomainId()}/products/packs/${productId}`, {
+    return await $fetch(`${baseUrl}/${getDomainId()}/products/packs/${parseInt(productId)}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
