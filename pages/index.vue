@@ -11,7 +11,7 @@ definePageMeta({
 </script>
 
 <template>
-  <Department :wcc-id="Departments.Road" />
+  <Department :wcc-id="Departments.Road" :key="Departments.Road" />
 </template>
 
 

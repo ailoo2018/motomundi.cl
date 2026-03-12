@@ -4,5 +4,5 @@ import { Departments } from "@/models/index.js"
 
 </script>
 <template>
-  <Department :wcc-id="Departments.Mx" />
+  <Department :wcc-id="Departments.Mx" :key="Departments.Mx" />
 </template>

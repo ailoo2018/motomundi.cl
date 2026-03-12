@@ -1,42 +1,30 @@
 <script setup>
 import { Departments } from "@/models/index.js"
 
-
 const route = useRoute()
 
-
-const currDept = ref()
-
-if (route.path === ( '/' ) ) {
-  currDept.value =Departments.Road
-}else if (route.path.startsWith( '/cafe-racer' ) ) {
-  currDept.value =Departments.CafeRacer
-}else if(route.path.startsWith("/motocross-enduro-trial")){
-  currDept.value =Departments.Mx
-}else if(route.path.startsWith("/ropa-casual")){
-  currDept.value =Departments.LifeStyle
+const getDeptFromPath = (path) => {
+  if (path === '/') return Departments.Road
+  if (path.startsWith('/cafe-racer')) return Departments.CafeRacer
+  if (path.startsWith('/motocross-enduro-trial')) return Departments.Mx
+  if (path.startsWith('/ropa-casual')) return Departments.LifeStyle
+  return null
 }
 
-const goTo = async ( event, url, departmentId) => {
-  event.preventDefault()
-  useCookie('user-department').value = departmentId
-  console.log("set cookie: " + useCookie('user-department').value + " : " + departmentId)
-  window.location = url
-}
+const currDept = ref(getDeptFromPath(route.path))
 
-
-
-onMounted(() => {
-
-
-  if(!useCookie('user-department').value){
-    useCookie('user-department').value = Departments.Road
+// 👇 Reacts to every navigation, including client-side NuxtLink clicks
+watch(() => route.path, (newPath) => {
+  const dept = getDeptFromPath(newPath)
+  if (dept !== null) {
+    currDept.value = dept
+    useCookie('user-department').value = dept
   }
+}, { immediate: true }) // immediate: true replaces your onMounted logic
 
-
-  currDept.value = useCookie('user-department').value
-  console.log("currDept:" + currDept.value)
-})
+const goTo = (event, url, departmentId) => {
+  useCookie('user-department').value = departmentId
+}
 </script>
 
 <template>

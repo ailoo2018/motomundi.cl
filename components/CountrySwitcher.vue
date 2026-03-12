@@ -23,7 +23,7 @@ function onClickOutside(e) {
 }
 
 const iso = computed(() => {
-  return selectedCountryData.iso?.toLowerCase()
+  return selectedCountryData.value.iso?.toLowerCase()
 })
 
 onMounted(()  => document.addEventListener('mousedown', onClickOutside))
