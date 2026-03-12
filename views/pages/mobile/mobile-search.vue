@@ -158,13 +158,14 @@ const search = async (isNextPage = false) => {
 
     }
 
-
+    console.log("do mobile search")
     const rs = await $fetch(`/api/product/search`, {
       key: "product-search-" + sword.value,
       method: "POST",
       body: body,
     })
 
+    console.log("search returned")
 
     if (rs && rs.products) {
 
@@ -176,11 +177,9 @@ const search = async (isNextPage = false) => {
           filters.value = rs.filters
       }
 
+      total.value = rs.totalHits
 
-      total.value = rs.products.length
-      showSearchWindow.value = true
-
-      if (total.value < limit) {
+      if (products.value.length >= rs.totalHits) {
         hasMore.value = false
       }
     }
