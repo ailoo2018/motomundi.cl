@@ -17,12 +17,12 @@ const href = props.href
     class="l0 c1 main-nav"
     v-bind="props"
   >
-    <a
-      :href="href"
+    <NuxtLink
+      :to="href"
       title="Motorcycle Jackets"
     >
       <span>Ropa Calle</span>
-    </a>
+    </NuxtLink>
     <ul class="u1">
       <li class="l1 c0 primary subCategories">
         <div class="submenu">

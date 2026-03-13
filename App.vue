@@ -37,10 +37,11 @@ if (process.client) {
   <VLocaleProvider >
     <!-- ℹ️ This is required to set the background color of active nav link based on currently active global theme's primary -->
     <VApp >
-      <!-- Add this debug line -->
+<!--
       <div style="position:fixed;top:0;right:0;z-index:99999;background:red;color:white;padding:4px">
         {{ $route.path }}
       </div>
+-->
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>

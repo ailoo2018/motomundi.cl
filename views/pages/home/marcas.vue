@@ -1,11 +1,11 @@
 <script setup>
-
 const { data } = await useFetch("/api/product/brands", { key: "brands-all" })
 
 const brands = computed(() => {
   return data.value?.brands || []
 })
 </script>
+
 <template>
   <!-- marcas -->
   <li
@@ -32,65 +32,63 @@ const brands = computed(() => {
                   </div>
                   <div class="submenu__content submenu__outstanding">
                     <div class="submenu__outstanding-showcase brands">
-                      <a
-                        href="/agv"
+                      <NuxtLink
+                        to="/agv"
                         class="mtc-link"
                         title="AGV"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-82.png"
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="AGV"
-                        width="80"
-                        height="41"
-                      > </span>
-                        <div class="submenu__outstanding-icon"/>
-                      </a>
-                      <a
-                        href="/alpinestars"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-82.png"
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="AGV"
+                         width="80"
+                         height="41"
+                       > </span>
+                        <div class="submenu__outstanding-icon" />
+                      </NuxtLink>
+                      <NuxtLink
+                        to="/alpinestars"
                         class="mtc-link"
                         title="ALPINESTARS"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-77.png"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-77.png"
 
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="ALPINESTARS"
-                        width="80"
-                        height="41"
-                      > </span>
-                        <div class="submenu__outstanding-icon"/>
-                      </a>
-                      <a
-                        href="/arai"
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="ALPINESTARS"
+                         width="80"
+                         height="41"
+                       > </span>
+                        <div class="submenu__outstanding-icon" />
+                      </NuxtLink>
+                      <NuxtLink
+                        to="/arai"
                         class="mtc-link"
                         title="ARAI"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-83.png"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-83.png"
 
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="ARAI"
-                        width="80"
-                        height="41"
-                      > </span>
-                        <div class="submenu__outstanding-icon"/>
-                      </a>
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="ARAI"
+                         width="80"
+                         height="41"
+                       > </span>
+                        <div class="submenu__outstanding-icon" />
+                      </NuxtLink>
 
-                      <a
-
-                        href="/dainese"
+                      <NuxtLink
+                        to="/dainese"
                         class="mtc-link"
                         title="DAINESE"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-79.png"
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="DAINESE"
-                        width="80"
-                        height="41"
-                      > </span>
-                        <div class="submenu__outstanding-icon"/>
-                      </a>
-                      <a
-
-                        href="/givi"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-79.png"
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="DAINESE"
+                         width="80"
+                         height="41"
+                       > </span>
+                        <div class="submenu__outstanding-icon" />
+                      </NuxtLink>
+                      <NuxtLink
+                        to="/givi"
                         class="mtc-link"
                         title="GIVI"
                       >
@@ -102,75 +100,75 @@ const brands = computed(() => {
                           height="41"
                         >
                         </span>
-                        <div class="submenu__outstanding-icon"/>
-                      </a>
-                      <a
-                        href="/hjc"
+                        <div class="submenu__outstanding-icon" />
+                      </NuxtLink>
+                      <NuxtLink
+                        to="/hjc"
                         class="mtc-link"
                         title="HJC"
                       ><span lazy="true"><img
-                        src="/content/assets/brands/brand-293.png"
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="HJC"
-                        width="80"
-                        height="41"
-                      > </span>
-                        <div class="submenu__outstanding-icon"/>
-                      </a>
+                         src="/content/assets/brands/brand-293.png"
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="HJC"
+                         width="80"
+                         height="41"
+                       > </span>
+                        <div class="submenu__outstanding-icon" />
+                      </NuxtLink>
 
-                      <a
-                        href="/shark"
+                      <NuxtLink
+                        to="/shark"
                         class="mtc-link"
                         title="SHARK"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-106.png"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-106.png"
 
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="SHARK"
-                        width="80"
-                        height="41"
-                      > </span>
-                        <div class="submenu__outstanding-icon"/>
-                      </a>
-                      <a
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="SHARK"
+                         width="80"
+                         height="41"
+                       > </span>
+                        <div class="submenu__outstanding-icon" />
+                      </NuxtLink>
+                      <NuxtLink
                         href="/shoei"
                         class="mtc-link"
                         title="SHOEI"
                       ><span lazy="true"><img
-                        src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-78.png"
+                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-78.png"
 
-                        class="cdn-img v-lazy-image v-lazy-image-loaded"
-                        alt="SHOEI"
-                        width="80"
-                        height="41"
-                      > </span>
-                        <div class="submenu__outstanding-icon"/>
-                      </a>
+                         class="cdn-img v-lazy-image v-lazy-image-loaded"
+                         alt="SHOEI"
+                         width="80"
+                         height="41"
+                       > </span>
+                        <div class="submenu__outstanding-icon" />
+                      </NuxtLink>
                     </div>
                     <div class="submenu__divider">
                       Otras marcas
                     </div>
                     <div class="submenu__outstanding-list">
-
                       <ul class="">
-                        <li v-for="brand in brands" :key="brand.id">
-                          <a
+                        <li
+                          v-for="brand in brands"
+                          :key="brand.id"
+                        >
+                          <NuxtLink
                             :href="getBrandUrl(brand)"
                             class="mtc-link"
                             title="brand.name"
                           >
                             {{ brand.name }}
-                          </a>
-
+                          </NuxtLink>
                         </li>
                       </ul>
-
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col s12 submenu__extra-nav">
-                <div class="extra__container"/>
+                <div class="extra__container" />
               </div>
             </div>
           </div>

@@ -18,9 +18,9 @@ const href = props.href
     v-bind="props"
     class="l0 c0 main-nav"
   >
-    <a :href="href">
+    <NuxtLink :to="href">
       <span>Cascos</span>
-    </a>
+    </NuxtLink>
     <ul class="u1">
       <li
         id="ni_3853"

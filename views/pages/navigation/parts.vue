@@ -18,9 +18,9 @@ const href = props.href
     class="l0 c3 main-nav"
     v-bind="props"
   >
-    <a :href="href">
+    <NuxtLink :to="href">
       <span>Accesorios</span>
-    </a>
+    </NuxtLink>
     <PartsMegaMenuContent/>
   </li>
 
