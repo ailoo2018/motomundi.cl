@@ -15,6 +15,7 @@ import DataSheet from "@/views/pages/products/detail/data-sheet.vue"
 import Packs from "@/views/pages/products/detail/packs.vue"
 import { ProductType } from "@/models/products.js"
 import ProductRating from "@/views/pages/products/detail/product-rating.vue"
+import ProductComplements from "@/views/pages/products/product-complements.vue"
 
 definePageMeta({
   public: true,
@@ -272,6 +273,8 @@ onMounted(() => {
       </section>
 
       <Packs :product="product" />
+
+      <ProductComplements :product-id="product.id" />
 
       <!-- product-description-container -->
       <VRow class=" product-description-container mt-10">
