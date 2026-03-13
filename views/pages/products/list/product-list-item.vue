@@ -189,7 +189,7 @@ const formatName = name => {
       <section class="item__info">
         <NuxtLink
           class="mtc-linkaa"
-          :to="props.product.url"
+          :to="product.url"
         >
           <div class="item__name">
             <span class="item__sizes">
@@ -213,7 +213,7 @@ const formatName = name => {
 
         <NuxtLink
           class="item__price-info mtc-linkaa"
-          :to="props.product.url"
+          :to="product.url"
         >
           <span class="item__bottom">
 
