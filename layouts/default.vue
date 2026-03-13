@@ -7,6 +7,7 @@ import MotomundiHeaderlogo from "@/views/pages/motomundi-headerlogo.vue"
 import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
+import AppLoader from "@/components/AppLoader.vue"
 
 
 const deviceType = useState('device-type', () => {
@@ -23,6 +24,7 @@ injectSkinClasses()
 
 <template>
 
+  <AppLoader />
   <!-- mobile -->
   <div v-if="isMobile" class="mobile-layout">
     <main class="main-content">
@@ -52,28 +54,7 @@ injectSkinClasses()
 </template>
 
 <style>
-/* Mobile layout: show on small screens, hide on large */
-/*
-.mobile-layout {
-  display: block;
-}
 
-.desktop-layout {
-  display: none;
-}
-*/
-
-/*
-@media (min-width: 961px) {
-  .mobile-layout {
-    display: none;
-  }
-
-  .desktop-layout {
-    display: block;
-  }
-}
-*/
 
 /* Background for Desktop */
 @media (min-width: 961px) {

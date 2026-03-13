@@ -14,10 +14,6 @@ const { global } = useTheme()
 initCore()
 initConfigStore()
 
-const configStore = useConfigStore()
-const { isMobile } = useDevice()
-if (isMobile)
-  configStore.appContentLayoutNav = 'vertical'
 
 
 if (process.client) {
@@ -38,9 +34,13 @@ if (process.client) {
 </script>
 
 <template>
-  <VLocaleProvider :rtl="configStore.isAppRTL">
+  <VLocaleProvider >
     <!-- ℹ️ This is required to set the background color of active nav link based on currently active global theme's primary -->
-    <VApp :style="`--v-global-theme-primary: ${hexToRgb(global.current.value.colors.primary)}`">
+    <VApp >
+      <!-- Add this debug line -->
+      <div style="position:fixed;top:0;right:0;z-index:99999;background:red;color:white;padding:4px">
+        {{ $route.path }}
+      </div>
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>

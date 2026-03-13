@@ -88,12 +88,6 @@ const selectDepartment = () => {
   text-transform: uppercase;
 }
 
-#nav #segments li.open a {
-  padding: 14px 14px 8px 15px;
-  margin-top: -3px;
-  font-weight: 700;
-  background-color: #b21a15;
-}
 
 #nav ul.u0 {
   background-color: #b21a15;

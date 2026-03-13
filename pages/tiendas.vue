@@ -3,7 +3,6 @@ import StoreCalendar from "@/views/pages/stores/store-calendar.vue"
 import { getBaseCDN } from "@core/utils/formatters.js"
 
 
-
 const { data } = await useFetch("/api/stores/list", {
   key: 'stores',
 })
@@ -40,23 +39,31 @@ if (data.value) {
               class="row"
               @click="store.expanded = !store.expanded"
             >
-              <DIV class="l6 m12 s12 col">
-                <DIV class="shop-name">
+              <DIV class="">
+                <div class="shop-name">
                   <h1>Motomundi {{ store.name }}</h1>
-                  <SPAN>
-                    <VIcon
-                      class="tabler-phone-filled mr-1"
-                      size="xs"
-                    />{{ store.phone }}
-                    <VIcon
-                      class="tabler-map-pin-filled ml-2 mr-1"
-                      size="xs"
-                    />{{ store.postalAddress?.address }}
-                  </SPAN>
-                </DIV>
+
+                  <div class="d-flex flex-column flex-sm-row">
+  <span class="d-flex">
+    <VIcon
+      class="tabler-phone-filled mr-1"
+      size="xs"
+    />
+    {{ store.phone }}
+  </span>
+
+                    <span class="d-flex mt-1 mt-sm-0 ml-sm-2">
+    <VIcon
+      class="tabler-map-pin-filled mr-1"
+      size="xs"
+    />
+    {{ store.postalAddress?.address }}, {{ store.postalAddress?.comuna?.name }}
+  </span>
+                  </div>
+                </div>
               </DIV>
-              <DIV class="l6 m6 col">
-                <SPAN class="department-container hide-for-small-only" />
+              <DIV aaclass="d-none d-md-block">
+                <SPAN class="department-container " />
                 <A
                   class="toggle-collapse"
                   @click="store.expanded = !store.expanded"
@@ -82,14 +89,18 @@ if (data.value) {
                   <VIcon
                     class="tabler-home-filled mr-1"
                     size="xs"
-                  /> Direcci&oacute;n y tel&eacute;fono
+                  />
+                  Direcci&oacute;n y tel&eacute;fono
                 </h2>
-                <p>{{ store.postalAddress?.address }}</p>
+                <p>{{ store.postalAddress?.address }},</p>
                 <p>{{ store.postalAddress?.comuna?.name }}</p>
                 <p>{{ store.phone }}</p>
               </DIV>
 
-              <StoreCalendar v-if="store.expanded" :store="store"/>
+              <StoreCalendar
+                v-if="store.expanded"
+                :store="store"
+              />
 
 
               <DIV
@@ -118,7 +129,8 @@ if (data.value) {
                 <VIcon
                   class="tabler-map-pin-filled mr-1"
                   size="sm"
-                /> Localizaci&oacute;n
+                />
+                Localizaci&oacute;n
               </h2>
               <DIV class="map-wrapper">
                 <iframe
@@ -157,7 +169,8 @@ if (data.value) {
   margin-bottom: 20px;
   font-weight: 600;
 }
- .cms-content h1 {
+
+.cms-content h1 {
   font-weight: 800;
   line-height: 1.2em;
   margin-bottom: 40px;

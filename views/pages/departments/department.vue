@@ -54,18 +54,12 @@ const componentMap = {
 const { isMobile } = useDevice()
 const store = useConfigStore()
 
-if(isMobile)
+if(isMobile.value)
   componentMap.Seo2 = Seo2
 
 store.skin = 'default'
 
-
-
-const activeSectionId = ref()
-
 const config = useRuntimeConfig()
-
-
 
 const { data: homeRs, pending } = await useFetch(`/api/home/home?id=` + props.wccId, {
   key: `home-data-unique-key-` + props.wccId,
@@ -89,7 +83,6 @@ const widgets = computed( () => {
     </ul>
   </VAlert>
 
-  <div style="background-color: rgb(245, 245, 245)">
     <Component
       :is="componentMap[widget.component]"
 
@@ -97,7 +90,6 @@ const widgets = computed( () => {
       :key="widget.id"
       :widget="widget"
     />
-  </div>
 </template>
 
 <style lang="scss">

@@ -14,7 +14,7 @@ const totalPages = ref(10)
   <div class="grid grid-container previous-posts-container">
     <VRow class="row flex">
       <VCol
-        v-for="entry in rs.entries"
+        v-for="entry in rs?.entries"
         :key="entry.id"
         cols="12"
         sm="6"

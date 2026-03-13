@@ -36,6 +36,7 @@ register()
 </script>
 
 <template>
+  <ClientOnly>
   <div
     section="home"
     id="youtube-block"
@@ -129,6 +130,7 @@ register()
       </div>
     </div>
   </div>
+  </ClientOnly>
 </template>
 
 
