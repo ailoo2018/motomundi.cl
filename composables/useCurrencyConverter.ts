@@ -4,7 +4,7 @@ import { computed } from "vue"
 
 const LOCAL_CURR = "CLP"
 
-function formatMoney(number, currency, symbol){
+function formatMoney(number, currency, symbol, showDecimals){
   if(!number)
     return ""
   if (number === 0 )
@@ -13,7 +13,7 @@ function formatMoney(number, currency, symbol){
   // Convert to thousands
   const inThousands = number
   let decimals = 0
-  if (currency === "USD")
+  if (showDecimals)
     decimals = 2
 
   // Create a formatter for Chilean Peso with 3 decimal places
@@ -77,7 +77,14 @@ export function useCurrencyConverter() {
     if(currency != "CLP")
       amnt = convert(amount, opts )
 
-    return formatMoney(amnt, currency, selectedCountryData.value?.symbol)
+    if(!currency)
+      currency = selectedCountryData.value?.currency
+
+    let formatDecimals = selectedCountryData.value?.hasDecimals || false
+
+
+
+    return formatMoney(amnt, currency, selectedCountryData.value?.symbol, formatDecimals)
   }
 
   const iso = computed(() => { return selectedCountryData.value.iso?.toLowerCase() })
