@@ -140,7 +140,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
       if (!filters.value) filters.value = dataResult.filters
     }
 
-    console.log("products.value: " +products.value?.length)
+
   }
 
   // Hydrate from SSR data on first render
@@ -243,6 +243,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     currentPage,
     filters,
     applyFilters,
+    title,
     setPage,
     orderBy,
     loading:     computed(() => pending.value || loading.value),

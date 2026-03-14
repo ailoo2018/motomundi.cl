@@ -127,24 +127,6 @@ else{
 }
 
 
-
-/*
-const { data: config, error } = await useAsyncData(
-  `redirect-lookup:${path}`,
-  async () => {
-
-    const config = useRuntimeConfig()
-    const baseUrl = config.public.cmsBaseUrl
-
-
-    return await $fetch(baseUrl + `/${getDomainId()}/friendly-url/lookup`, {
-      method: 'POST',
-      body: { url: path },
-    })
-
-  },
-)
-*/
 </script>
 
 <template>

@@ -17,11 +17,7 @@ if (!props.injectedQuery) {
   query = props.injectedQuery
 }
 
-const total = ref(0)
-const title = ref()
-const queryDesc = ref()
 const loading = ref(false)
-let rs = {}
 
 
 
@@ -48,14 +44,14 @@ if(query.sword){
 console.log("baseQuery: " + JSON.stringify(baseQuery))
 
 
-const { products, currentPage, totalPages, applyFilters, filters, orderBy } = useProductList({ baseQuery: baseQuery })
+const { products, title, queryDesc, currentPage, totalPages, applyFilters, filters, orderBy } = useProductList({ baseQuery: baseQuery })
 
 
 useSeoMeta({
-  title: () =>  title.value || 'Loading Product...',
-  ogTitle: () => title.value,
-  description: () => title.value,
-  ogDescription: () => title.value,
+  title: () =>  title || 'Loading Product...',
+  ogTitle: () => title,
+  description: () => title,
+  ogDescription: () => title,
 })
 
 
