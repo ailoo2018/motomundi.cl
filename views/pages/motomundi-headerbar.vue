@@ -4,6 +4,7 @@ import AccountMenu from "@/views/pages/account/account-menu.vue";
 
 const serverTimestamp = useState('cache-timestamp', () => new Date().toISOString())
 
+const { logout } = useUser()
 
 const userId = computed(() => {
   return useUser().getUserId() || 0

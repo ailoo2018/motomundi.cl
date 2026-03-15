@@ -7,6 +7,7 @@ import MobileMenuOffroad from "@/views/pages/mobile/menu/mobile-menu-offroad.vue
 import MobileMenuAccesorios from "@/views/pages/mobile/menu/mobile-menu-accesorios.vue";
 import MobileMenuLifestyle from "@/views/pages/mobile/menu/mobile-menu-lifestyle.vue";
 import MobileMenuBrands from "@/views/pages/mobile/menu/mobile-menu-brands.vue";
+import CountrySwitcherMobile from "@/components/CountrySwitcherMobile.vue";
 
 const { logout } = useUser()
 
@@ -202,46 +203,7 @@ const toggleMenu = () => {
             </a>
           </li>
           <li>
-            <span class="mtc-link">
-              <img
-                src="/content/images/flags/bandera_cl.png"
-                alt="cl"
-                class="mobile-menu__sec-locale"
-              >
-              <span>País/Idioma</span>
-            </span>
-            <div
-              class="modal-wrapper"
-              style="display: none;"
-            >
-              <div class="modal-backdrop"/>
-              <div
-                role="dialog"
-                class="modal mobile-locale__modal"
-              >
-                <div class="modal__close-cont">
-                  <button class="modal__close">
-                    <svg
-                      width="9"
-                      height="9"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="icon sprite-line-icons"
-                    >
-                      <use
-                        href="/content/svg/motomundi.svg#i-icon-cross"
-                        xlink:href="/content/svg/motomundi.svg#i-icon-cross"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <header class="modal-header"/>
-                <section class="modal-body">
-                  <div>
-                    <div class="change-local-form"/>
-                  </div>
-                </section>
-              </div>
-            </div>
+            <CountrySwitcherMobile />
           </li>
         </ul>
       </nav>
