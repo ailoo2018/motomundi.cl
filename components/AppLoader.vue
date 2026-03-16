@@ -5,96 +5,65 @@ const { isLoading, progress } = useLoadingIndicator()
 
 <template>
   <Transition name="fade">
-    <div v-if="isLoading" class="loading-fullscreen">
-
-      <!-- Optional thin bar at the top still showing progress -->
+    <div v-if="isLoading">
+      <!-- Progress bar -->
       <div class="loading-bar" :style="{ width: progress + '%' }" />
 
-      <!-- Centered content -->
-      <div class="loading-content">
-        <div class="loading-ring">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <!-- Background track -->
-            <circle
-              cx="50" cy="50" r="40"
-              fill="none"
-              stroke="rgba(255,255,255,0.15)"
-              stroke-width="6"
-            />
-            <!-- Spinning arc -->
-            <circle
-              cx="50" cy="50" r="40"
-              fill="none"
-              stroke="#b21a15"
-              stroke-width="6"
-              stroke-linecap="round"
-              stroke-dasharray="180 300"
-              stroke-dashoffset="0"
-            />
-          </svg>
-        </div>
-
-        <p class="loading-label">Cargando...</p>
+      <!-- Corner spinner -->
+      <div class="loading-spinner">
+        <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="25" cy="25" r="20" fill="none" stroke="#b21a15" stroke-width="5"
+                  stroke-linecap="round" stroke-dasharray="90 150" stroke-dashoffset="0" />
+        </svg>
       </div>
 
+      <!-- Page dimmer -->
+      <div class="loading-overlay" />
     </div>
   </Transition>
 </template>
 
 <style scoped>
-.loading-fullscreen {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Thin progress bar still visible at the very top */
+/* Bar */
 .loading-bar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  height: 3px;
+  height: 4px;
   background: #b21a15;
-  box-shadow: 0 0 8px #b21a15;
+  box-shadow: 0 0 10px #b21a15, 0 0 5px #ff4444;
   transition: width 0.3s ease;
+  z-index: 99999;
 }
 
-.loading-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+/* Spinning circle bottom-right */
+.loading-spinner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  z-index: 99999;
+  animation: rotate 0.8s linear infinite;
 }
 
-.loading-ring {
-  width: 80px;
-  height: 80px;
-  animation: rotate 0.9s linear infinite;
-  filter: drop-shadow(0 0 8px rgba(178, 26, 21, 0.8));
-}
-
-.loading-label {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin: 0;
+/* Page dim */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 99998;
+  pointer-events: none; /* so user can still interact if needed */
 }
 
 @keyframes rotate {
   100% { transform: rotate(360deg); }
 }
 
+/* Smooth appear/disappear */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.25s ease;
+  transition: opacity 0.2s ease;
 }
 .fade-enter-from,
 .fade-leave-to {
