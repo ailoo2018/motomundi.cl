@@ -74,6 +74,7 @@ const onFilter = filters => {
         <div class="row">
           <div class="container">
             <div class="filters__header-title">
+              <span style="display:none">{{queryDesc}}</span>
               <h1
                 class="header-title mb-4"
                 v-html="queryDesc"

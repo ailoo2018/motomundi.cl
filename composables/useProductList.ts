@@ -123,6 +123,7 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   }
 
   const getQueryDescription = (rs: any) => {
+    console.log("getQueryDescription", rs.query)
     if (rs.query?.description?.length > 0)
       return `<span class="total-results">${rs?.totalHits}</span> ` + rs.query?.description
     return 'Resultado'
