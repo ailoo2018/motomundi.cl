@@ -35,6 +35,12 @@ const onChange = val => {
   console.log("Features selected changed!", val)
 }
 
+const router = useRouter()
+router.afterEach(() => {
+  sword.value = ''
+  showSearchWindow.value = false
+})
+
 const redirectToSearch = async () => {
   if (useRoute().path === '/products/list') {
     await navigateTo("/products/list?sword=" + sword.value, { replace: true })
@@ -185,44 +191,6 @@ const onFilter = filters => {
     search()
   }
 }
-
-/*
-watch(filters, () => {
-
-  if (!sword.value || sword.value.trim().length === 0) {
-    return
-  }
-  if(!filters || !filters.value) {
-    return
-  }
-
-  const map = new Map()
-  for (const f of filters.value) {
-    for (const b of f.buckets) {
-      if (b.checked) {
-        if (!map.has(f.type))
-          map.set(f.type, { type: f.type, values: [] })
-        map.get(f.type).values.push(b.id)
-      }
-    }
-  }
-
-  const newQuery = [...map.values()]
-  if (currentQuery.value.length === 0 && newQuery.length === 0) {
-    return
-  }
-
-  if (JSON.stringify(currentQuery.value) !== JSON.stringify(newQuery)) {
-    console.log("NEW QUERY!" + JSON.stringify(newQuery))
-    console.log("OLD QUERY!" + JSON.stringify(currentQuery.value))
-    currentQuery.value = newQuery
-    search()
-
-  }
-
-
-}, { deep: true })
-*/
 
 
 const closeSearch = () => {
