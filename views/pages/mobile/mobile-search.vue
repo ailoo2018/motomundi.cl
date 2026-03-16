@@ -19,6 +19,14 @@ const limit = 20
 const hasMore = ref(true)
 const showFilters = ref(false)
 
+const router = useRouter()
+
+router.afterEach(() => {
+  sword.value = ''
+  isSearchOpen.value = false
+})
+
+
 const toggleSearch = () => {
   isSearchOpen.value = false
 }
@@ -72,7 +80,7 @@ watch(filters, () => {
   if (!sword.value || sword.value.trim().length === 0) {
     return
   }
-  if(!filters || !filters.value) {
+  if(!filters.value || !filters.value) {
     return
   }
 
@@ -159,6 +167,7 @@ const search = async (isNextPage = false) => {
     }
 
     console.log("do mobile search")
+
     const rs = await $fetch(`/api/product/search`, {
       key: "product-search-" + sword.value,
       method: "POST",
@@ -231,7 +240,7 @@ const search = async (isNextPage = false) => {
           </button>
         </div>
         <div class="search-mobile__filters-content">
-          <SearchFilters v-model="filters"/>
+          <SearchFilters v-model="filters" />
         </div>
         <div class="search-mobile__buttons">
           <button
@@ -300,7 +309,7 @@ const search = async (isNextPage = false) => {
         class="search__results-summary"
       >
         <p>
-          <strong>{{total}}</strong> resultados {{ loading }}
+          <strong>{{ total }}</strong> resultados {{ loading }}
         </p>
         <a @click="toggleSearchFilter">Filtrar
           <svg
@@ -319,7 +328,10 @@ const search = async (isNextPage = false) => {
 
 
       <!-- search results -->
-      <SearchResults :products="products" @next-page="nextPage"/> />
+      <SearchResults
+        :products="products"
+        @next-page="nextPage"
+      /> />
       <!-- /search results -->
     </section>
   </article>
