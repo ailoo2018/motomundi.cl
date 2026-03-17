@@ -25,73 +25,73 @@ interface Ambassador {
   }
 }
 
-const disciplines = ['Todos', 'Enduro', 'Motocross', 'Trial', 'Track Day', 'Adventure', 'Supermoto']
+const disciplines = ['Todos', 'Motoviajero', 'Eventos', 'Documentalista', 'Motovlog',]
 const activeFilter = ref('Todos')
 
 const ambassadors: Ambassador[] = [
   {
     id: 1,
-    name: 'Rodrigo Castillo',
-    country: 'Chile',
-    discipline: 'Enduro',
-    bio: 'Campeón Nacional de Enduro 2022 y 2023. Rodrigo ha conquistado los terrenos más exigentes de la Patagonia y el Atacama, representando a Motomundi en competencias internacionales.',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80&auto=format&fit=crop',
+    name: 'Javier Valenzuela',
+    country: 'Valparaíso, Chile', // Corregido: Es de la V Región/España según contexto
+    discipline: 'Motoviajero & Documentalista',
+    bio: 'Javier Valenzuela es un viajero y documentalista español, creador de "Donde termine el asfalto". Explora el mundo en moto buscando autenticidad humana y rutas remotas.',
+    image: '/embajadores/javier-valenzuela.webp',
     featured: true,
-    social: { instagram: '@r.castillo', youtube: 'YouTube' },
+    social: { instagram: '@dondetermineelasfalto' },
   },
   {
     id: 2,
-    name: 'Valentina Rojas',
-    country: 'Colombia',
-    discipline: 'Motocross',
-    bio: 'Primera mujer en el programa de embajadores de Motomundi. Valentina compite en el circuito latinoamericano de MX y es una voz activa en el crecimiento del motocrós femenino.',
-    image: 'https://images.unsplash.com/photo-1547887538-047f4e969ec4?w=600&q=80&auto=format&fit=crop',
-    social: { instagram: '@vale.mx' },
+    name: 'Anonimoto',
+    country: 'Santiago, Chile',
+    discipline: 'Reviewer & Educación Vial',
+    bio: 'Anonimoto es un influyente creador de contenido chileno que, bajo el anonimato de su casco, educa sobre seguridad vial, realiza reseñas técnicas y promueve la cultura motera.',
+    image: '/embajadores/anonimoto.jpg',
+    social: { instagram: '@anonimotocl' },
   },
   {
     id: 3,
-    name: 'Marcos Ibáñez',
-    country: 'Argentina',
-    discipline: 'Adventure',
-    bio: 'Más de 80.000 km recorridos a través de América del Sur, África y Asia. Marcos documenta cada aventura con una autenticidad que ha conquistado a miles de seguidores.',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop',
-    social: { instagram: '@moto.marcos', youtube: 'YouTube' },
+    name: 'George Marchant',
+    country: 'Santiago, Chile',
+    discipline: 'Motoviajero',
+    bio: 'George Marchant es el director y camarógrafo del programa chileno Mototemáticos. Documentó rutas globales junto a Ricky Godoy, siendo un pilar de la cultura motera audiovisual.',
+    image: '/embajadores/george.jpg',
+    social: { instagram: '@mototematicos' },
   },
   {
     id: 4,
-    name: 'Felipe Arce',
-    country: 'Chile',
-    discipline: 'Track Day',
-    bio: 'Instructor certificado de Track Day y piloto de Superbike amateur. Felipe lleva cinco años colaborando con Motomundi y es mentor de nuevos pilotos en el circuito de La Serena.',
-    image: 'https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=600&q=80&auto=format&fit=crop',
-    social: { instagram: '@felarce' },
+    name: 'Ayleen Martínez',
+    country: 'Santiago, Chile',
+    discipline: 'Motoviajera',
+    bio: 'Ayleen Martínez es una destacada motoviajera chilena que documenta rutas épicas. Promueve el empoderamiento femenino y la libertad, inspirando a más mujeres a recorrer el mundo.',
+    image: '/embajadores/ayleen.webp',
+    social: { instagram: '@ayleen_martinezp' },
   },
   {
     id: 5,
-    name: 'Camila Torres',
-    country: 'México',
-    discipline: 'Trial',
-    bio: 'Camila lleva el trial al siguiente nivel con una precisión y equilibrio asombrosos. Sus videos de pruebas de habilidad han viralizado la disciplina en todo el continente.',
-    image: 'https://images.unsplash.com/photo-1568772585407-9f40120eab65?w=600&q=80&auto=format&fit=crop',
-    social: { instagram: '@cami.trial' },
+    name: 'Natalia Muñoz',
+    country: 'Valparaíso, Chile',
+    discipline: 'Motoviajera',
+    bio: 'Natalia Muñoz es una aventurera chilena que ha recorrido más de 70 países en solitario. A través de Natalia Overlands, inspira con sus viajes minimalistas por rutas remotas.',
+    image: '/embajadores/natalia.jpg',
+    social: { instagram: '@nataliaoverlands' },
   },
   {
     id: 6,
-    name: 'Diego Fuentes',
-    country: 'Perú',
-    discipline: 'Supermoto',
-    bio: 'El rey del derrape controlado. Diego compite en el campeonato sudamericano de Supermoto y es un apasionado divulgador de la cultura moto urbana en Lima.',
-    image: 'https://images.unsplash.com/photo-1591154669695-5f2a8d20c089?w=600&q=80&auto=format&fit=crop',
-    social: { instagram: '@diegosupermoto' },
+    name: 'Nivem',
+    country: 'Santiago, Chile',
+    discipline: 'Motovlog Urbano',
+    bio: 'Nivem es un destacado motovlogger chileno que documenta la vida sobre dos ruedas haciendo delivery. Con humor y honestidad, comparte la realidad del tráfico urbano.',
+    image: '/embajadores/nivem.jpeg',
+    social: { instagram: '@nivem_motovlogs' },
   },
   {
     id: 7,
-    name: 'Sebastián Morales',
-    country: 'Brasil',
-    discipline: 'Enduro',
-    bio: 'Veterano del Rally dos Sertões y finalista en el Dakar 2024. Sebastián aporta una perspectiva única de la resistencia y la preparación mental en las competencias de larga distancia.',
-    image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80&auto=format&fit=crop',
-    social: { instagram: '@sebmorales', youtube: 'YouTube' },
+    name: 'Lucho MotoK',
+    country: 'Santiago, Chile',
+    discipline: 'Eventos',
+    bio: 'Lucho MotoK es un comunicador y organizador chileno. Destaca por sus reseñas técnicas y por crear el Trail Trophy, evento clave para la comunidad trail en Chile.',
+    image: '/embajadores/motok.webp',
+    social: { instagram: '@luchomotok' },
   },
 ]
 
@@ -102,9 +102,6 @@ const filteredAmbassadors = computed(() =>
 )
 
 const stats = [
-  { value: '18', label: 'Embajadores', icon: IconUsers },
-  { value: '9', label: 'Disciplinas', icon: IconMotorbike },
-  { value: '12', label: 'Países', icon: IconWorld },
 ]
 </script>
 
@@ -309,7 +306,7 @@ const stats = [
 /* ── HERO ── */
 .amb-hero {
   position: relative;
-  padding: 80px 56px 72px;
+  padding: 30px 56px 32px;
   border-bottom: 2px solid var(--black);
   overflow: hidden;
 }
