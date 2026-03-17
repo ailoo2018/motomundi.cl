@@ -12,6 +12,7 @@ import FeaturedProductsWithBanner from "@/views/pages/home/featured-products-wit
 import Community from "@/views/pages/home/community.vue"
 import LatestEvents from "@/views/pages/home/latest-events.vue"
 import Seo2 from "@/views/pages/home/seo2.vue"
+import EmbajadoresHome from "@/views/pages/home/embajadores-home.vue"
 import BikeSearch from "@/views/pages/home/bike-search.vue"
 import YoutubeLatest from "@/views/pages/home/youtube-latest.vue"
 import CafeRacerCategories from "@/views/pages/home/cafe-racer-categories.vue"
@@ -40,6 +41,7 @@ const componentMap = {
   Community,
   FeaturedProductsWithBanner,
   LatestEvents,
+  EmbajadoresHome,
 
   //  Seo2,
   BikeSearch,
@@ -90,6 +92,7 @@ const widgets = computed( () => {
       :key="widget.id"
       :widget="widget"
     />
+
 </template>
 
 <style lang="scss">
