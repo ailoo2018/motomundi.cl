@@ -44,23 +44,35 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
       <!-- Left: all the copy -->
       <div class="outlet-promo__content">
 
+        <!-- "First ever" milestone ribbon -->
+        <div class="outlet-promo__milestone">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 1L10 6H15L11 9.5L12.5 14.5L8 11.5L3.5 14.5L5 9.5L1 6H6L8 1Z" fill="#d6001c"/>
+          </svg>
+          <span>El primer outlet de Motomundi de nuestra historia</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 1L10 6H15L11 9.5L12.5 14.5L8 11.5L3.5 14.5L5 9.5L1 6H6L8 1Z" fill="#d6001c"/>
+          </svg>
+        </div>
+
         <div class="outlet-promo__eyebrow">
           <span class="tag tag--red">NUEVA APERTURA</span>
           <span class="tag">18 · MARZO · 2026</span>
         </div>
 
         <h2 class="outlet-promo__heading">
-          El precio que<br>
-          <em>siempre quisiste.</em><br>
-          <span class="outlet-promo__heading-brand">La marca que<br>ya conoces.</span>
+          Por primera vez,<br>
+          <em>Motomundi Outlet.</em><br>
+
         </h2>
 
         <p class="outlet-promo__body">
-          Abrimos nuestra primera tienda outlet en <strong>Arauco Premium Buenaventura</strong>.
-          200 m² cargados con los mejores equipos para moto —
-          cascos, ropa, calzado y accesorios de las marcas top del mundo —
-          con descuentos de hasta <strong>60%</strong> y una exclusiva sección de segunda selección.
-          Porque equiparse bien no debería costar una fortuna.
+          Después de años equipando a los mejores riders de Chile, inauguramos
+          <strong>nuestro primer outlet</strong> en <strong>Arauco Premium Buenaventura</strong>.
+          Un hito histórico para Motomundi: 200 m² con descuentos de hasta <strong>60%</strong>
+          en cascos, ropa, calzado y accesorios de las marcas top del mundo,
+          más una exclusiva sección de segunda selección.
+          El equipo que siempre quisiste, al precio que nunca imaginaste.
         </p>
 
         <div class="outlet-promo__stats">
@@ -118,6 +130,25 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 :root {
   --red: #d6001c;
   --red-dark: #a5001a;
+}
+
+/* ── MILESTONE RIBBON ──────────────────────────────────────────── */
+.outlet-promo__milestone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(214, 0, 28, 0.12);
+  border: 1px solid rgba(214, 0, 28, 0.35);
+  border-radius: 4px;
+  padding: 0.45rem 1rem;
+  margin-bottom: 1.25rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+  backdrop-filter: blur(4px);
 }
 
 /* ── SECTION ───────────────────────────────────────────────────── */
