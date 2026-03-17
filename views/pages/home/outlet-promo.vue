@@ -62,18 +62,10 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
         <h2 class="outlet-promo__heading">
           Por primera vez,<br>
-          <em>Motomundi Outlet.</em><br>
-
+          <em>Tienda Outlet Motomundi.</em><br>
+          <span class="outlet-promo__heading-brand">Las marcas que amas.<br>A precios que no creerás.</span>
         </h2>
 
-        <p class="outlet-promo__body">
-          Después de años equipando a los mejores riders de Chile, inauguramos
-          <strong>nuestro primer outlet</strong> en <strong>Arauco Premium Buenaventura</strong>.
-          Un hito histórico para Motomundi: 200 m² con descuentos de hasta <strong>60%</strong>
-          en cascos, ropa, calzado y accesorios de las marcas top del mundo,
-          más una exclusiva sección de segunda selección.
-          El equipo que siempre quisiste, al precio que nunca imaginaste.
-        </p>
 
         <div class="outlet-promo__stats">
           <div class="stat">
@@ -165,7 +157,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .outlet-promo__bg {
   position: absolute;
   inset: -80px 0;          /* extra height for parallax travel */
-  background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80');
+  background-image: url('/cms/outlet-6.jpeg');
   background-size: cover;
   background-position: center;
   will-change: transform;
@@ -244,8 +236,8 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
 /* Heading */
 .outlet-promo__heading {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(2.4rem, 5vw, 4rem);
+
+  font-size: 58px;
   font-weight: 900;
   line-height: 1.0;
   color: #fff;
@@ -258,7 +250,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   color: #d6001c;
 }
 .outlet-promo__heading-brand {
-  font-size: 0.72em;
+  font-size: 0.62em;
   color: rgba(255,255,255,0.6);
   display: block;
   margin-top: 0.2rem;
