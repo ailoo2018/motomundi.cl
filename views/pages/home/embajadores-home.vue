@@ -22,20 +22,20 @@ const next = () => swiperRef.value?.slideNext()
     <!-- ── HEADER ── -->
     <div class="ambswipe__header">
       <div class="ambswipe__header-left">
-        <span class="ambswipe__eyebrow">Embajadores</span>
-        <h2 class="ambswipe__heading">La comunidad <em>Motomundi</em></h2>
+<!--        <span class="ambswipe__eyebrow">Embajadores</span>-->
+        <h2 class="ambswipe__heading">Embajadores <em>Motomundi</em></h2>
       </div>
 
       <div class="ambswipe__header-right">
-        <div class="ambswipe__nav">
+<!--        <div class="ambswipe__nav">
           <button class="ambswipe__nav-btn" aria-label="Anterior" @click="prev">
             <IconArrowNarrowLeft :size="20" stroke-width="2" />
           </button>
           <button class="ambswipe__nav-btn" aria-label="Siguiente" @click="next">
             <IconArrowNarrowRight :size="20" stroke-width="2" />
           </button>
-        </div>
-        <NuxtLink to="/embajadores" class="ambswipe__view-all">
+        </div>-->
+        <NuxtLink to="/embajadores" class="button button--primary d-none d-md-block mtc-link">
           Ver todos <IconArrowRight :size="14" stroke-width="2.2" />
         </NuxtLink>
       </div>
@@ -48,7 +48,7 @@ const next = () => swiperRef.value?.slideNext()
         :slides-per-view="'auto'"
         :space-between="2"
         :free-mode="{ enabled: true, momentum: true }"
-        :autoplay="{ delay: 3500, disableOnInteraction: true, pauseOnMouseEnter: true }"
+        :autoplay="{ delay: 4500, disableOnInteraction: true, pauseOnMouseEnter: true }"
         :loop="true"
         :grab-cursor="true"
         class="ambswipe__swiper"
@@ -110,9 +110,8 @@ const next = () => swiperRef.value?.slideNext()
   --border: #e8e8e8;
   --card-w: 240px;
 
-  background: var(--white);
+  background: #f5f5f5;
   padding: 48px 0;
-  border-top: 1px solid var(--border);
   overflow: hidden;
 }
 
@@ -121,7 +120,7 @@ const next = () => swiperRef.value?.slideNext()
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 56px;
+  padding: 0 28px;
   margin-bottom: 28px;
 }
 
@@ -142,13 +141,21 @@ const next = () => swiperRef.value?.slideNext()
 }
 
 .ambswipe__heading {
+  font-size: 36px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0px;
+
+
+  /*
   font-size: 26px;
   font-weight: 900;
   text-transform: uppercase;
+  */
   letter-spacing: -0.01em;
   line-height: 1;
   color: var(--black);
-  margin: 0;
+
 }
 .ambswipe__heading em { font-style: italic; color: var(--red); }
 
@@ -194,7 +201,7 @@ const next = () => swiperRef.value?.slideNext()
 .ambswipe__view-all:hover { gap: 12px; }
 
 /* ── TRACK ── */
-.ambswipe__track { padding-left: 56px; }
+.ambswipe__track { padding-left: 4px; }
 
 .ambswipe__swiper { overflow: visible !important; }
 
