@@ -12,6 +12,7 @@ export interface Ambassador {
   }
 }
 
+
 const embajadores = [
   {
     id: 1,
