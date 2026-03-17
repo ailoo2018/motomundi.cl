@@ -51,8 +51,8 @@ const { isLoading, progress } = useLoadingIndicator()
 .loading-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.25);
-  z-index: 99998;
+
+  z-index: 100000000;
   pointer-events: none; /* so user can still interact if needed */
 }
 
