@@ -18,7 +18,7 @@ const embajadores = [
     id: 1,
     name: 'Javier Valenzuela',
     country: 'Valdivia, Chile', // Corregido: Es de la V Región/España según contexto
-    discipline: 'Motoviajero & Documentalista',
+    discipline: 'Motoviajero',
     bio: 'Javier Valenzuela es un viajero y documentalista español, creador de "Donde termine el asfalto". Explora el mundo en moto buscando autenticidad humana y rutas remotas.',
     image: '/embajadores/javier-valenzuela.webp',
     featured: true,
@@ -82,7 +82,7 @@ const embajadores = [
     id: 8,
     name: 'Poli on the Bike',
     country: 'Valdivia, Chile',
-    discipline: 'Eventos',
+    discipline: 'Motoviajero',
     bio: 'Poli on the Bike es una motociclista y creadora de contenido chilena. Referente del mundo trail, inspira a través de sus rutas, consejos de conducción y el empoderamiento femenino en moto.',
     image: '/embajadores/poli.jpg',
     social: { instagram: '@poli.on.the.bike' },
