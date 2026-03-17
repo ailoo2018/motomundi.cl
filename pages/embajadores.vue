@@ -23,6 +23,10 @@ const filteredAmbassadors = computed<Ambassador[]>(() => {
 })
 
 const stats: { icon: unknown; value: string; label: string }[] = []
+
+const getIgUrl = (ig) => {
+  return `https://instagram.com/${ig.replace('@', '')}`
+}
 </script>
 <template>
   <div class="ambassadors-section">
@@ -119,7 +123,8 @@ const stats: { icon: unknown; value: string; label: string }[] = []
               <div class="amb-card__social">
                 <a
                   v-if="amb.social.instagram"
-                  href="#"
+                  target="_blank"
+                  :href="getIgUrl(amb.social.instagram)"
                   class="amb-social-link"
                   :title="amb.social.instagram"
                 >
@@ -180,8 +185,6 @@ const stats: { icon: unknown; value: string; label: string }[] = []
 </template>
 
 <style scoped>
-/* ── FONTS ── */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,600;0,700;0,900;1,700&family=Barlow:wght@300;400;500&display=swap');
 
 /* ── TOKENS ── */
 .ambassadors-section {

@@ -17,7 +17,7 @@ const embajadores = [
   {
     id: 1,
     name: 'Javier Valenzuela',
-    country: 'Valparaíso, Chile', // Corregido: Es de la V Región/España según contexto
+    country: 'Valdivia, Chile', // Corregido: Es de la V Región/España según contexto
     discipline: 'Motoviajero & Documentalista',
     bio: 'Javier Valenzuela es un viajero y documentalista español, creador de "Donde termine el asfalto". Explora el mundo en moto buscando autenticidad humana y rutas remotas.',
     image: '/embajadores/javier-valenzuela.webp',
@@ -77,6 +77,15 @@ const embajadores = [
     bio: 'Lucho MotoK es un comunicador y organizador chileno. Destaca por sus reseñas técnicas y por crear el Trail Trophy, evento clave para la comunidad trail en Chile.',
     image: '/embajadores/motok.webp',
     social: { instagram: '@luchomotok' },
+  },
+  {
+    id: 8,
+    name: 'Poli on the Bike',
+    country: 'Valdivia, Chile',
+    discipline: 'Eventos',
+    bio: 'Poli on the Bike es una motociclista y creadora de contenido chilena. Referente del mundo trail, inspira a través de sus rutas, consejos de conducción y el empoderamiento femenino en moto.',
+    image: '/embajadores/poli.jpg',
+    social: { instagram: '@poli.on.the.bike' },
   },
 ]
 
