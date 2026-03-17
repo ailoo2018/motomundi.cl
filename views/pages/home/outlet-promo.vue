@@ -164,6 +164,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   transition: transform 0.05s linear;
 }
 
+
 /* ── OVERLAY ───────────────────────────────────────────────────── */
 .outlet-promo__overlay {
   position: absolute; inset: 0;
