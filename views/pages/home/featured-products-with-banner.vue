@@ -161,7 +161,7 @@ const products = computed(() => {
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin: 70px 0px 50px;
+  margin: 50px 0px 50px;
 }
 
 .product-list__title h2 {
