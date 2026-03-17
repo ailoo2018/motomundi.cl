@@ -3,6 +3,7 @@ import { SwiperSlide } from "swiper/vue"
 import { register } from "swiper/element"
 import { getImageUrl, getDomainId, getYouTubeThumbnail } from "@core/utils/formatters"
 import ProductThumbs from "@/pages/products/detail/product-thumbs.vue"
+import emptyImage from "@images/empty-image.avif"
 
 const props = defineProps(
   {
@@ -14,6 +15,23 @@ const props = defineProps(
 )
 
 const emit = defineEmits(['onShowVideo'])
+
+const handleImageError = imageId => {
+
+  $fetch("/api/images/sizes", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: {
+      imageId: imageId,
+      maintainAspectRatio: true,
+      sizes: [150, 300, 600, 800],
+    },
+  })
+
+}
+
 
 const product = ref(props.product)
 const mainSwiperRef = ref(null) // Ref for the main swiper element
@@ -166,11 +184,13 @@ register()
                   ng-click="showImageZoom($index, $event);"
                 >
 
-                  <img
+                  <VImg
                     style="width:100%;"
                     :alt="product.brand.name + product.name"
                     :src="getImageUrl(image.image, 800, getDomainId())"
-                  >
+                    @error="handleImageError(image.image)"
+                  />
+
 
                 </a>
 
@@ -178,7 +198,6 @@ register()
                   <img
                     v-if="image.type === 'video'"
                     style="width: 100%"
-
                     :alt="product.brand.name + product.name"
                     :src="image.url"
                   >
@@ -189,9 +208,7 @@ register()
         </ClientOnly>
 
         <ul class="product-media-nav">
-          <li
-            v-for="(img, index) in images"
-          >
+          <li v-for="(img, index) in images">
             <button
               v-if="img.type === 'image'"
               :id="`carousel-nav-dot-${img.id}`"
@@ -226,7 +243,10 @@ register()
   <!-- /carousel -->
 
   <!-- product-thumbs -->
-  <ProductThumbs @on-click="onClickThumb" :product="product"/>
+  <ProductThumbs
+    :product="product"
+    @on-click="onClickThumb"
+  />
 
   <!-- /product-thumbs -->
 </template>
@@ -372,7 +392,4 @@ swiper-container::part(button-next)::after {
 .product .product-media-dot.current, .product .product-media-dot:active, .product .product-media-dot:hover {
   background-color: #c74044;
 }
-
-
-
 </style>

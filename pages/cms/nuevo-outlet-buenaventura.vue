@@ -59,6 +59,18 @@ const slides = [
   {
     src: '/cms/outlet-8.jpeg',
     alt: ''
+  },
+  {
+    src: '/cms/outlet-9.jpeg',
+    alt: ''
+  },
+  {
+    src: '/cms/outlet-10.jpeg',
+    alt: ''
+  },
+  {
+    src: '/cms/outlet-11.jpeg',
+    alt: ''
   }
 ]
 
@@ -105,7 +117,7 @@ onUnmounted(() => {
         </p>
         <div class="hero-band__discount">
           <span class="discount-badge">HASTA</span>
-          <span class="discount-number">60%</span>
+          <span class="discount-number">50%</span>
           <span class="discount-label">de descuento</span>
         </div>
       </div>
@@ -190,7 +202,7 @@ onUnmounted(() => {
               <path d="M14 20H26M20 14V26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
-          <span class="highlight-card__num">60%</span>
+          <span class="highlight-card__num">50%</span>
           <span class="highlight-card__text">Descuentos<br>increíbles</span>
         </div>
 

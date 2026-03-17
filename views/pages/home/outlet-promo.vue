@@ -69,7 +69,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
         <div class="outlet-promo__stats">
           <div class="stat">
-            <span class="stat__num">60%</span>
+            <span class="stat__num">50%</span>
             <span class="stat__label">Dcto. máximo</span>
           </div>
           <div class="stat__divider"></div>
@@ -102,7 +102,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
       <div class="outlet-promo__badge-wrap" aria-hidden="true">
         <div class="outlet-promo__badge">
           <span class="badge__up-to">hasta</span>
-          <span class="badge__pct">60%</span>
+          <span class="badge__pct">50%</span>
           <span class="badge__off">descuento</span>
           <span class="badge__sub">en toda la tienda</span>
         </div>
