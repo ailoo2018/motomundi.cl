@@ -44,7 +44,7 @@ if(query.sword){
 console.log("baseQuery: " + JSON.stringify(baseQuery))
 
 
-const { products, title, queryDesc, currentPage, totalPages, applyFilters, filters, orderBy } = useProductList({ baseQuery: baseQuery })
+const { products, title, total, queryDesc, currentPage, totalPages, applyFilters, filters, orderBy } = useProductList({ baseQuery: baseQuery })
 
 
 useSeoMeta({
@@ -74,11 +74,13 @@ const onFilter = filters => {
         <div class="row">
           <div class="container">
             <div class="filters__header-title">
-              <span style="display:none">{{queryDesc}}</span>
+
               <h1
                 class="header-title mb-4"
-                v-html="queryDesc"
-              />
+
+              >
+                <span class="total-results">{{total}}</span>
+                {{title}}</h1>
             </div>
           </div>
         </div>

@@ -167,9 +167,9 @@ register()
                 >
 
                   <img
-
+                    style="width:100%;"
                     :alt="product.brand.name + product.name"
-                    :src="getImageUrl(image.image, 600, getDomainId())"
+                    :src="getImageUrl(image.image, 800, getDomainId())"
                   >
 
                 </a>
@@ -231,7 +231,7 @@ register()
   <!-- /product-thumbs -->
 </template>
 
-<style  lang="scss">
+<style scoped lang="scss">
 swiper-slide {
   margin: auto 0
 }
@@ -247,7 +247,7 @@ swiper-slide {
   fill: #c74044 !important;
 }
 
-.video-thumb > img{
+.product  .video-thumb > img{
   width: 108px; height: 108px; display: inline-block; opacity: 1;
   border-radius: 7px;
 }

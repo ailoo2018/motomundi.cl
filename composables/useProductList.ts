@@ -14,10 +14,18 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   const title = ref()
   const totalPages = ref(0)
   const pageSize = ref(60)
-  const queryDesc = ref()
+//  const queryDesc = ref()
   const filters = ref()
   const ignoreNextPageWatch = ref(true)
   const orderBy = ref()
+
+  const _queryDescOverride = ref<string | undefined>()
+
+  const queryDesc = computed(() =>
+    _queryDescOverride.value ??
+    (initialData.value ? getQueryDescription(initialData.value) : undefined)
+  )
+
   // ─── URL helpers ──────────────────────────────────────────────
 
   /** Deserialise ?brands=nike,adidas&page=2 → internal query array */
@@ -135,9 +143,12 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
       total.value       = dataResult.totalHits
       totalPages.value  = Math.ceil(dataResult.totalHits / pageSize.value)
       title.value       = dataResult.query.description
-      queryDesc.value   = getQueryDescription(dataResult)
+     // queryDesc.value   = getQueryDescription(dataResult)
       dataResult.products.forEach((p: any) => (p.isWished = false))
       products.value    = dataResult.products
+
+      _queryDescOverride.value = getQueryDescription(dataResult)
+
       if (!filters.value) filters.value = dataResult.filters
     }
 

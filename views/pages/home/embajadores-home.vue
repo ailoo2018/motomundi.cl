@@ -5,15 +5,41 @@ import {
   IconMapPin,
 } from '@tabler/icons-vue'
 
-import type { Ambassador } from "@/server/api/home/embajadores"
-
-const { data } = await useFetch<Ambassador[]>('/api/home/embajadores', { key: 'embajadores' })
-
-const ambassadors = computed<Ambassador[]>(() => {
-  return [...(data.value ?? [])]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 4)
-})</script>
+const ambassadors = [
+  {
+    id: 1,
+    name: 'Javier Valenzuela',
+    country: 'Valparaíso, Chile',
+    discipline: 'Motoviajero',
+    image: '/embajadores/javier-valenzuela.webp',
+    instagram: '@dondetermineelasfalto',
+  },
+  {
+    id: 2,
+    name: 'Anonimoto',
+    country: 'Santiago, Chile',
+    discipline: 'Educación Vial',
+    image: '/embajadores/anonimoto.jpg',
+    instagram: '@anonimotocl',
+  },
+  {
+    id: 3,
+    name: 'Ayleen Martínez',
+    country: 'Santiago, Chile',
+    discipline: 'Motoviajera',
+    image: '/embajadores/ayleen.webp',
+    instagram: '@ayleen_martinezp',
+  },
+  {
+    id: 4,
+    name: 'Natalia Muñoz',
+    country: 'Valparaíso, Chile',
+    discipline: 'Motoviajera',
+    image: '/embajadores/natalia.jpg',
+    instagram: '@nataliaoverlands',
+  },
+]
+</script>
 
 <template>
   <section class="ambrow">
@@ -21,10 +47,8 @@ const ambassadors = computed<Ambassador[]>(() => {
     <!-- ── TOP BAR ── -->
     <div class="ambrow__topbar">
       <div class="ambrow__topbar-left">
-<!--
         <span class="ambrow__label">Embajadores</span>
--->
-        <h2 class="ambrow__heading">La comunidad <em>Embajadores</em> </h2>
+        <h2 class="ambrow__heading">La comunidad <em>Motomundi</em></h2>
       </div>
       <NuxtLink to="/embajadores" class="ambrow__view-all">
         Ver todos
@@ -54,7 +78,7 @@ const ambassadors = computed<Ambassador[]>(() => {
           </div>
           <div class="ambrow__social">
             <IconBrandInstagram :size="13" stroke-width="1.8" />
-            {{ amb.social.instagram }}
+            {{ amb.instagram }}
           </div>
         </div>
       </NuxtLink>
@@ -78,7 +102,7 @@ const ambassadors = computed<Ambassador[]>(() => {
 
 .ambrow {
   --red: #d6001c;
-  --black: #222;
+  --black: #0e0e0e;
   --gray: #6b6b6b;
   --light: #f5f5f5;
   --white: #ffffff;
@@ -86,8 +110,9 @@ const ambassadors = computed<Ambassador[]>(() => {
   --font-display: 'Barlow Condensed', sans-serif;
   --font-body: 'Barlow', sans-serif;
 
+
   background: var(--white);
-  padding: 48px 26px 70px;
+  padding: 48px 56px 0;
   border-top: 1px solid var(--border);
 }
 
@@ -106,6 +131,7 @@ const ambassadors = computed<Ambassador[]>(() => {
 }
 
 .ambrow__label {
+  font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -115,8 +141,8 @@ const ambassadors = computed<Ambassador[]>(() => {
   border-bottom: 2px solid var(--red);
 }
 
-/*
 .ambrow__heading {
+
   font-size: 28px;
   font-weight: 900;
   text-transform: uppercase;
@@ -125,23 +151,13 @@ const ambassadors = computed<Ambassador[]>(() => {
   color: var(--black);
   margin: 0;
 }
-*/
-
-h2.ambrow__heading  {
-  font-size: 36px;
-  font-weight: 900;
-  text-transform: uppercase;
-  margin: 0px;
-  line-height: 26.2px;
-  margin-bottom: 30px;
-}
-
-.ambrow__heading em { font-style: italic; color: var(--red);   }
+.ambrow__heading em { font-style: italic; color: var(--red); }
 
 .ambrow__view-all {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -149,7 +165,6 @@ h2.ambrow__heading  {
   color: var(--red);
   text-decoration: none;
   transition: gap 0.2s;
-  margin-bottom: 30px;
 }
 .ambrow__view-all:hover { gap: 12px; }
 
@@ -158,14 +173,12 @@ h2.ambrow__heading  {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 2px;
-  border: 1px solid var(--border);
   background: var(--border);
 }
 
 /* ── CARD ── */
 .ambrow__card {
   background: var(--white);
-  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   text-decoration: none;
@@ -217,6 +230,7 @@ h2.ambrow__heading  {
   z-index: 2;
   background: var(--red);
   color: var(--white);
+  font-family: var(--font-display);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -237,6 +251,7 @@ h2.ambrow__heading  {
 .ambrow__card:hover .ambrow__info { border-color: var(--red); }
 
 .ambrow__name {
+
   font-size: 20px;
   font-weight: 900;
   text-transform: uppercase;
@@ -288,6 +303,7 @@ h2.ambrow__heading  {
 }
 
 .ambrow__more-count {
+
   font-size: 56px;
   font-weight: 900;
   color: var(--white);
@@ -295,6 +311,7 @@ h2.ambrow__heading  {
 }
 
 .ambrow__more-label {
+  font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -306,6 +323,7 @@ h2.ambrow__heading  {
   display: flex;
   align-items: center;
   gap: 5px;
+  font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
