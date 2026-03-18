@@ -44,26 +44,26 @@ if (data.value) {
                   <h1>Motomundi {{ store.name }}</h1>
 
                   <div class="d-flex flex-column flex-sm-row">
-  <span class="d-flex">
-    <VIcon
-      class="tabler-phone-filled mr-1"
-      size="xs"
-    />
-    {{ store.phone }}
-  </span>
+                    <span class="d-flex">
+                      <VIcon
+                        class="tabler-phone-filled mr-1"
+                        size="xs"
+                      />
+                      {{ store.phone }}
+                    </span>
 
                     <span class="d-flex mt-1 mt-sm-0 ml-sm-2">
-    <VIcon
-      class="tabler-map-pin-filled mr-1"
-      size="xs"
-    />
-    {{ store.postalAddress?.address }}, {{ store.postalAddress?.comuna?.name }}
-  </span>
+                      <VIcon
+                        class="tabler-map-pin-filled mr-1"
+                        size="xs"
+                      />
+                      {{ store.postalAddress?.address }}, {{ store.postalAddress?.comuna?.name }}
+                    </span>
                   </div>
                 </div>
               </DIV>
               <DIV aaclass="d-none d-md-block">
-                <SPAN class="department-container " />
+                <SPAN class="department-container "/>
                 <A
                   class="toggle-collapse"
                   @click="store.expanded = !store.expanded"
@@ -78,11 +78,11 @@ if (data.value) {
           </div>
           <VRow class="shop-body">
             <VCol
-              cols="6"
+              cols="12"
               sm="12"
               lg="7"
               md="6"
-              class="shop-info l7 m6 col"
+              class="shop-info"
             >
               <DIV class="shop-address">
                 <h2>
@@ -107,16 +107,16 @@ if (data.value) {
                 v-if="store.postalAddress?.comment"
                 class="shop-access"
               >
-                <H2><I class="icon-split" /> Accesos</H2>
+                <H2><I class="icon-split"/> Accesos</H2>
                 {{ store.postalAddress?.comment }}
               </DIV>
             </VCol>
             <VCol
-              cols="6"
+              cols="12"
               sm="12"
               md="6"
               lg="5"
-              class="shop-map l5 m6 s12 col"
+              class="shop-map"
             >
               <div class="shop-photos">
                 <img
@@ -142,12 +142,12 @@ if (data.value) {
                   allowfullscreen
                 />
               </DIV>
-              <ul class="shop-features lblock-grid-3 small-up-3" />
+              <ul class="shop-features lblock-grid-3 small-up-3"/>
             </VCol>
           </VRow>
         </div>
       </div>
-      <div />
+      <div/>
     </div>
   </section>
 </template>
