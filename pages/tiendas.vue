@@ -385,7 +385,7 @@ if (data.value) {
 }
 
 #shop .shop-map {
-  float: right;
+  /*float: right;*/
   padding-top: 14px
 }
 
@@ -405,7 +405,7 @@ if (data.value) {
 }
 
 .department-container {
-  float: right;
+  /*float: right;*/
   margin-top: .7rem;
   margin-right: 2.5rem
 }
@@ -422,7 +422,7 @@ if (data.value) {
   color: #222;
   font-size: 13px;
   width: 280px;
-  float: left;
+  /*float: left;*/
   /*
   margin-right: 20px;
   margin-left: -20px;
@@ -449,7 +449,7 @@ if (data.value) {
 }
 
 .calendar-info {
-  float: left
+  /*float: left*/
 }
 
 .calendar-info h3 {
