@@ -22,7 +22,7 @@
               <img
                 width="40"
                 height="40"
-                src="/content/images/mobile-menu/categories/140-motos-novedades-cascos.svg"
+                src="/images/mobile-menu/categories/140-motos-novedades-cascos.svg"
                 alt="Novedades"
               > <span>Novedades</span>
             </span>
@@ -100,7 +100,7 @@
           ><img
             width="40"
             height="40"
-            src="/content/images/mobile-menu/categories/packs-casco-intercom.svg"
+            src="/images/mobile-menu/categories/packs-casco-intercom.svg"
             alt=""
           > <span>Casco + intercomunicador</span></NuxtLink>
         </li>
@@ -112,7 +112,7 @@
           ><img
             width="40"
             height="40"
-            src="/content/images/mobile-menu/categories/16-moto-equipacion-carretera-complementos.svg"
+            src="/images/mobile-menu/categories/16-moto-equipacion-carretera-complementos.svg"
             alt="Accesorios de cascos"
           > <span>Accesorios</span></NuxtLink>
         </li>
@@ -128,7 +128,7 @@
             <img
               width="60"
               height="40"
-              src="/content/images/mobile-menu/categories/mobile-menu__seg-racing.svg"
+              src="/images/mobile-menu/categories/mobile-menu__seg-racing.svg"
               alt="Sport / Racing"
             >
             <p >Sport / Racing</p></span>
@@ -138,7 +138,7 @@
             <img
               width="60"
               height="40"
-              src="/content/images/mobile-menu/categories/mobile-menu__seg-touring.svg"
+              src="/images/mobile-menu/categories/mobile-menu__seg-touring.svg"
               alt="Touring"
             > <p >Touring</p></span>
         </li>
@@ -147,7 +147,7 @@
             <img
               width="60"
               height="40"
-              src="/content/images/mobile-menu/categories/mobile-menu__seg-trail.svg"
+              src="/images/mobile-menu/categories/mobile-menu__seg-trail.svg"
               alt="Trail / Adventure"
             > <p >Trail / Adventure</p></span>
         </li>
@@ -156,7 +156,7 @@
             <img
               width="60"
               height="40"
-              src="/content/images/mobile-menu/categories/mobile-menu__seg-urban.svg"
+              src="/images/mobile-menu/categories/mobile-menu__seg-urban.svg"
               alt="Scooter / Urban"
             > <p >Scooter / Urban</p></span>
         </li>
@@ -165,7 +165,7 @@
             <img
               width="60"
               height="40"
-              src="/content/images/mobile-menu/categories/mobile-menu__seg-caferacer.svg"
+              src="/images/mobile-menu/categories/mobile-menu__seg-caferacer.svg"
               alt="Cafe Racer / Vintage"
             > <p >Cafe Racer / Vintage</p></span>
         </li>
@@ -180,11 +180,10 @@
             class="mtc-link"
             title="Cascos ALPINESTARS"
           ><span><img
-            src="/content/assets/brands/brand-77.png"
+            src="/images/brands/brand-77.png"
             class="cdn-img v-lazy-image v-lazy-image-loaded"
             alt="Cascos ALPINESTARS"
-            width="98"
-            height="50"
+
           > <noscript /></span>
           </NuxtLink>
         </li>
@@ -194,11 +193,10 @@
             class="mtc-link"
             title="Cascos SHOEI"
           ><span><img
-            src="/content/assets/brands/brand-78.png"
+            src="/images/brands/brand-78.png"
             class="cdn-img v-lazy-image v-lazy-image-loaded"
             alt="Cascos SHOEI"
-            width="98"
-            height="50"
+
           > <noscript /></span>
           </NuxtLink>
         </li>
@@ -208,11 +206,10 @@
             class="mtc-link"
             title="Cascos AGV"
           ><span><img
-            src="/content/assets/brands/brand-82.png"
+            src="/images/brands/brand-82.png"
             class="cdn-img v-lazy-image v-lazy-image-loaded"
             alt="Cascos AGV"
-            width="98"
-            height="50"
+
           > <noscript /></span>
           </NuxtLink>
         </li>
@@ -222,11 +219,10 @@
             class="mtc-link"
             title="Cascos SCHUBERTH"
           ><span><img
-            src="/content/assets/brands/brand-239.png"
+            src="/images/brands/brand-239.png"
             class="cdn-img v-lazy-image v-lazy-image-loaded"
             alt="Cascos SCHUBERTH"
-            width="98"
-            height="50"
+
           > <noscript /></span>
           </NuxtLink>
         </li>
@@ -236,11 +232,10 @@
             class="mtc-link"
             title="Cascos SHARK"
           ><span><img
-            src="/content/assets/brands/brand-106.png"
+            src="/images/brands/brand-106.png"
             class="cdn-img v-lazy-image v-lazy-image-loaded"
             alt="Cascos SHARK"
-            width="98"
-            height="50"
+
           > <noscript /></span>
           </NuxtLink>
         </li>
@@ -250,11 +245,10 @@
             class="mtc-link"
             title="Cascos ARAI"
           ><span><img
-            src="/content/assets/brands/brand-83.png"
+            src="/images/brands/brand-83.png"
             class="cdn-img v-lazy-image v-lazy-image-loaded"
             alt="Cascos ARAI"
-            width="98"
-            height="50"
+
           > <noscript /></span>
           </NuxtLink>
         </li>
@@ -264,11 +258,10 @@
             class="mtc-link"
             title="Cascos HJC"
           ><span><img
-            src="/content/assets/brands/brand-293.png"
+            src="/images/brands/brand-293.png"
             class="cdn-img v-lazy-image v-lazy-image-loaded"
             alt="Cascos HJC"
-            width="98"
-            height="50"
+
           > <noscript /></span>
           </NuxtLink>
         </li>
