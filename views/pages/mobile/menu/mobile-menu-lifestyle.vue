@@ -1,4 +1,5 @@
-
+<script setup lang="ts">
+</script>
 
 <template>
   <nav id="navSec" class="menu-mobile__nav-sec"  >
@@ -12,7 +13,7 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/43-moto-casual-adhesivos.svg"
+          src="/content/assets/categories/stickers.jpg"
           alt=""
         > <span>Adhesivos</span></a>
       </li>
@@ -25,7 +26,7 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/45-moto-casual-bolsas.svg"
+          src="/content/assets/categories/backpack.jpg"
           alt=""
         > <span>Bolsas</span></a>
       </li>
@@ -38,7 +39,7 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/46-moto-casual-camisetas.svg"
+          src="/content/assets/categories/tshirt.jpg"
           alt=""
         > <span>Poleras</span></a>
       </li>
@@ -51,9 +52,9 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/47-moto-casual-chalecos.svg"
+          src="/content/assets/categories/vest.jpg"
           alt=""
-        > <span>Chalecos</span></a>
+        > <span>Gilet</span></a>
       </li>
       <li>
         <a
@@ -64,7 +65,7 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/48-moto-casual-chaquetas.svg"
+          src="/content/assets/menu/categories/48-moto-casual-chaquetas.svg"
           alt=""
         > <span>Chaquetas</span></a>
       </li>
@@ -77,7 +78,7 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/49-moto-casual-complementos.svg"
+          src="/content/assets/categories/scarf.jpg"
           alt=""
         > <span>Complementos</span></a>
       </li>
@@ -90,9 +91,9 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/50-moto-casual-gafas-sol.svg"
+          src="/content/assets/categories/lentes.jpg"
           alt=""
-        > <span>Gafas de sol</span></a>
+        > <span>Lentes</span></a>
       </li>
       <li>
         <a
@@ -103,9 +104,9 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/51-moto-casual-gorras.svg"
+          src="/content/assets/categories/jockey.jpg"
           alt=""
-        > <span>Gorras</span></a>
+        > <span>Jockeys</span></a>
       </li>
       <li>
         <a
@@ -116,7 +117,7 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/52-moto-casual-gorros.svg"
+          src="/content/assets/categories/gorros.jpg"
           alt=""
         > <span>Gorros</span></a>
       </li>
@@ -129,7 +130,7 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/53-moto-casual-llaveros.svg"
+          src="/content/assets/categories/llavero.jpg"
           alt=""
         > <span>Llaveros</span></a>
       </li>
@@ -142,11 +143,11 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/55-moto-casual-bermudas.svg"
+          src="/content/assets/categories/shorts.jpg"
           alt=""
         > <span>Pantalones</span></a>
       </li>
-      <li>
+<!--      <li>
         <a
           href="/pijamas"
           data-dr="true"
@@ -158,7 +159,7 @@
           src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/56-moto-casual-pijamas.svg"
           alt=""
         > <span>Pijamas</span></a>
-      </li>
+      </li>-->
       <li>
         <a
           href="/sweaters-y-polerones"
@@ -168,9 +169,9 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/57-moto-casual-sudaderas.svg"
+          src="/content/assets/categories/poleron.jpg"
           alt=""
-        > <span>Sudaderas</span></a>
+        > <span>Polerones</span></a>
       </li>
       <li>
         <a
@@ -181,7 +182,7 @@
         ><img
           width="40"
           height="40"
-          src="https://cf-cdn.motocard.com/assets/images/mobile-menu/categories/60-moto-casual-zapatillas.svg"
+          src="/content/assets/categories/sneakers.jpg"
           alt=""
         > <span>Zapatillas</span></a>
       </li>

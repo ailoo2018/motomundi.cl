@@ -2,17 +2,17 @@
 import MobileMenuInicio from "@/views/pages/mobile/menu/mobile-menu-inicio.vue"
 import MobileMenuCascos from "@/views/pages/mobile/menu/mobile-menu-cascos.vue"
 import AccountMenu from "@/views/pages/account/account-menu.vue"
-import MobileMenuCalle from "@/views/pages/mobile/menu/mobile-menu-calle.vue";
-import MobileMenuOffroad from "@/views/pages/mobile/menu/mobile-menu-offroad.vue";
-import MobileMenuAccesorios from "@/views/pages/mobile/menu/mobile-menu-accesorios.vue";
-import MobileMenuLifestyle from "@/views/pages/mobile/menu/mobile-menu-lifestyle.vue";
-import MobileMenuBrands from "@/views/pages/mobile/menu/mobile-menu-brands.vue";
-import CountrySwitcherMobile from "@/components/CountrySwitcherMobile.vue";
+import MobileMenuCalle from "@/views/pages/mobile/menu/mobile-menu-calle.vue"
+import MobileMenuOffroad from "@/views/pages/mobile/menu/mobile-menu-offroad.vue"
+import MobileMenuAccesorios from "@/views/pages/mobile/menu/mobile-menu-accesorios.vue"
+import MobileMenuLifestyle from "@/views/pages/mobile/menu/mobile-menu-lifestyle.vue"
+import MobileMenuBrands from "@/views/pages/mobile/menu/mobile-menu-brands.vue"
+import CountrySwitcherMobile from "@/components/CountrySwitcherMobile.vue"
 
 const { logout } = useUser()
 
 
-const isMenuOpen = defineModel({type: Boolean, default: false})
+const isMenuOpen = defineModel({ type: Boolean, default: false })
 const isShowUserMenuTab = ref(false)
 
 const currentMenu = ref(MobileMenuInicio)
@@ -41,7 +41,7 @@ const menuMap = {
 }
 
 
-const onMenuChange = menu => {
+const onMenuChange = (menu: { name: string | number; title: string; url: string }) => {
   console.log("menu selectd", menu)
   currentMenu.value = menuMap[menu.name]
   menuTitle.value = menu.title
@@ -94,7 +94,7 @@ const toggleMenu = () => {
                 :href="menuTitleUrl"
                 class="mtc-link"
               >{{ menuTitle }}</a>
-              <span style="display: none;"/>
+              <span style="display: none;" />
             </h1>
           </div>
         </div>
@@ -139,8 +139,8 @@ const toggleMenu = () => {
               <span>Mi cuenta</span>
               <AccountMenu
                 v-if="isShowUserMenuTab"
-                @logout="logout"
                 component-class="user-menu__account-content"
+                @logout="logout"
               />
 
             </span>
@@ -164,21 +164,21 @@ const toggleMenu = () => {
                     <li>
                       <label for="order-tracking-input-order-id">Número
                         de Pedido</label> <input
-                      id="order-tracking-input-order-id"
-                      type="text"
-                      required="required"
-                    >
+                        id="order-tracking-input-order-id"
+                        type="text"
+                        required="required"
+                      >
                     </li>
                     <li>
                       <label for="order-tracking-input-email">Correo
                         electrónico</label> <input
-                      id="order-tracking-input-email"
+                        id="order-tracking-input-email"
 
-                      type="email"
-                      required="required"
-                    >
+                        type="email"
+                        required="required"
+                      >
                     </li>
-                    <li class="error"/>
+                    <li class="error" />
                     <li>
                       <button type="submit">
                         <span>Buscar</span>
@@ -216,7 +216,7 @@ const toggleMenu = () => {
 </template>
 
 
-<style >
+<style>
 .menu-mobile > * {
   opacity: 0;
   pointer-events: none

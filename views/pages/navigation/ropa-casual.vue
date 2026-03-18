@@ -49,7 +49,6 @@ const href = props.href
                     class="submenu__content submenu__icon-buttons"
                     parent-menu-title="Ropa casual"
                     template="icons"
-                    icon="/assets/menu/categories/133-moto-ropa-casual.svg"
                     order="3"
                     link="/ropa-casual"
                     identifier="5"
@@ -154,11 +153,10 @@ const href = props.href
                         height="40"
                         alt="Lentes de sol"
                       >
-                      <p>Gafas de sol</p>
+                      <p>Lentes</p>
                     </a>
                     <a
                       href="/jockey-para-moto"
-
                       class="mtc-link"
                       title="Jockeys"
                     >
@@ -200,7 +198,6 @@ const href = props.href
                       <p>Llaveros</p></a>
                     <a
                       href="/pantalones-lifestyle"
-
                       class="mtc-link"
                       title="Pantalones"
                     >
@@ -214,7 +211,6 @@ const href = props.href
                       <p>Pantalones</p></a>
                     <a
                       href="/sweaters-y-polerones"
-
                       class="mtc-link"
                       title="Sudaderas"
                     ><img
@@ -224,7 +220,7 @@ const href = props.href
                        height="40"
                        alt="Sudaderas"
                      >
-                      <p>Sudaderas</p></a>
+                      <p>Polerones</p></a>
                     <a
                       href="/zapatillas-para-moto"
 

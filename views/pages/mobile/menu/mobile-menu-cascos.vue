@@ -1,4 +1,5 @@
-
+<script setup lang="ts">
+</script>
 
 <template>
   <nav id="navSec" class="menu-mobile__nav-sec"  >
@@ -37,7 +38,7 @@
           ><img
              width="40"
              height="40"
-             src="/content/images/mobile-menu/categories/01-moto-equipacion-carretera-cascos-racing.svg"
+             src="/content/assets/menu/categories/full-face.jpg"
              alt="Cascos Integrales"
            >
             <span>Integrales</span></a>
@@ -51,7 +52,7 @@
           ><img
              width="40"
              height="40"
-             src="/content/images/mobile-menu/categories/02-moto-equipacion-carretera-cascos-modulares.svg"
+             src="/content/assets/menu/categories/flip-up.jpg"
              alt="Cascos modulares"
            >
             <span>Abatibles</span></a>
@@ -65,7 +66,7 @@
           ><img
             width="40"
             height="40"
-            src="/content/images/mobile-menu/categories/03-moto-equipacion-carretera-cascos-jet.svg"
+            src="/content/assets/menu/categories/open-face.jpg"
             alt="Cascos jet"
           > <span>Jet</span></a>
         </li>
@@ -78,7 +79,7 @@
           ><img
             width="40"
             height="40"
-            src="/content/images/mobile-menu/categories/21-moto-equipacion-motocross-cascos.svg"
+            src="/content/assets/menu/categories/mx.jpg"
             alt="Cascos motocross"
           > <span>Motocross / Enduro</span></a>
         </li>
@@ -91,7 +92,7 @@
           ><img
             width="40"
             height="40"
-            src="/content/images/mobile-menu/categories/dual-sport.png"
+            src="/content/assets/menu/categories/dual-sport.jpg"
             alt="Cascos doble proposito"
           > <span>Doble Propóstio</span></a>
         </li>
