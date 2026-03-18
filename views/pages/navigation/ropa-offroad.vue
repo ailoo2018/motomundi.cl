@@ -41,22 +41,14 @@ const href = props.href
                       >Ver todos</a>
                     </span>
                   </div>
-                  <div
-                    class="submenu__content submenu__lists"
-                    icon="/assets/menu/categories/130-moto-equipacion-carretera.svg"
-                    link="https://www.motocard.com/equipacion-moto-carretera"
-                    identifier="2"
-                    parent-menu-title="Equipación carretera"
-                  >
+                  <div class="submenu__content submenu__lists">
                     <ul>
                       <li class="double-menu__title">
                         <a
                           title="Cascos"
                           class="mtc-link"
-
                           href="/equipacion-motocross/cascos"
                         >
-
                           <svg
                             class="svg-icon"
                             viewBox="0 0 140 140"
@@ -70,7 +62,6 @@ const href = props.href
                             <a
                               title="Fibra"
                               class="mtc-link"
-
                               href="/equipacion-motocross/cascos/fibra"
                             >Fibra</a>
                           </li>
@@ -107,8 +98,6 @@ const href = props.href
                           class="mtc-link"
                           href="/equipacion-motocross/equipacion-completa"
                         >
-
-
                           <img
                             src="/content/assets/categories/conjuntomx.jpg"
                             title="Limpieza"

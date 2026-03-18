@@ -86,7 +86,6 @@
         <li>
           <a
             href="/cascos-doble-proposito-para-moto"
-            
             class="mtc-link"
             title="Cascos trial"
           ><img

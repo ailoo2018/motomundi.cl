@@ -11,15 +11,8 @@ const isMenuOpen = ref(false)
 const isSearchOpen = ref(false)
 const isCartOpen = ref(false)
 
-const currentUser = ref({
-  avatar: "https://cdn.motomundi.cl/Content/uploads/1/_data/9/47/9476a7923b1c47219b0b9d9b2379cbf6_600_original.jpg",
+const currentUser  = useUserStore().user
 
-})
-
-
-const openLogin = () => {
-  console.log("openLogin")
-}
 
 const isUserLoggedIn = () => {
   const userId = useCookie("user_id").value
@@ -29,9 +22,6 @@ const isUserLoggedIn = () => {
 
 const userStore = useUserStore()
 
-const party = computed(() => {
-  return userStore.user.person
-})
 
 
 const toggleSearch = () => {
@@ -188,8 +178,8 @@ const getCartTotalItems = () => {
                       style="background:linear-gradient(45deg, rgb(120, 168, 188) 0%, rgb(127, 167, 26) 100%);"
                     >
                       <img
-                        V-if="currentUser.avatar"
-                        :src="currentUser.avatar"
+                        v-if="currentUser.avatar"
+                        :src="getImageUrl(currentUser.avatar, 300, getDomainId())"
                         alt="user-avatar"
                       >
                       {{ getInitials() }}

@@ -126,6 +126,6 @@ export const useUser = () => {
     listMotorcycles,
     createAccount,
     addToWishList,
-    onLoggedIn
+    onLoggedIn,
   }
 }

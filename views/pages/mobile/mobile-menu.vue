@@ -8,9 +8,11 @@ import MobileMenuAccesorios from "@/views/pages/mobile/menu/mobile-menu-accesori
 import MobileMenuLifestyle from "@/views/pages/mobile/menu/mobile-menu-lifestyle.vue"
 import MobileMenuBrands from "@/views/pages/mobile/menu/mobile-menu-brands.vue"
 import CountrySwitcherMobile from "@/components/CountrySwitcherMobile.vue"
+import {useUserStore} from "@/stores/user";
 
-const { logout } = useUser()
+const { logout, getInitials } = useUser()
 
+const currentUser  = useUserStore().user
 
 const isMenuOpen = defineModel({ type: Boolean, default: false })
 const isShowUserMenuTab = ref(false)
@@ -27,9 +29,6 @@ const backToHome = () => {
   menuTitle.value = "Inicio"
 }
 
-const getUserInitials = () => {
-  return "JC"
-}
 
 const menuMap = {
   "cascos": MobileMenuCascos,
@@ -130,13 +129,13 @@ const toggleMenu = () => {
                 style="background: linear-gradient(45deg, rgb(120, 168, 188) 0%, rgb(127, 167, 26) 100%);"
               >
                 <img
-                  v-if="currentUser && currentUser.avatar"
-                  :src="currentUser!.avatar"
+                  v-if="currentUser?.avatar"
+                  :src="getImageUrl(currentUser.avatar, 300, getDomainId())"
                   alt="user-avatar"
                 >
-                {{ getUserInitials() }}
+                {{ getInitials() }}
               </div>
-              <span>Mi cuenta</span>
+              <span>Mi cuenta </span>
               <AccountMenu
                 v-if="isShowUserMenuTab"
                 component-class="user-menu__account-content"
