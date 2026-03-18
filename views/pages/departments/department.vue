@@ -21,6 +21,7 @@ import OffRoadCategories from "@/views/pages/home/OffRoadCategories.vue"
 import BrandsBlockMx from "@/views/pages/home/BrandsBlockMx.vue"
 import OutletPromo from "@/views/pages/home/outlet-promo.vue"
 import LifestyleCategories from "@/views/pages/home/lifestyle-categories.vue"
+import NewsletterSignUp from "@/views/pages/home/NewsletterSignUp.vue"
 
 const props = defineProps({
   wccId: {
@@ -89,15 +90,14 @@ const widgets = computed( () => {
 
 
 
-    <Component
-      :is="componentMap[widget.component]"
+  <Component
+    :is="componentMap[widget.component]"
+    v-for="widget in widgets"
+    :key="widget.id"
+    :widget="widget"
+  />
 
-      v-for="widget in widgets"
-      :key="widget.id"
-      :widget="widget"
-    />
-
-
+  <NewsletterSignUp />
 
 </template>
 

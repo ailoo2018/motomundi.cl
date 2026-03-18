@@ -298,7 +298,7 @@ if (data.value) {
 }
 
 #shop .shop-body {
-  display: block;
+  /*display: block;*/
   padding: 0 20px 20px
 }
 
