@@ -4,11 +4,9 @@ import Cascos from "@/views/pages/navigation/cascos.vue"
 import RopaCalle from "@/views/pages/navigation/ropa-calle.vue"
 import RopaOffroad from "@/views/pages/navigation/ropa-offroad.vue"
 import RopaCasual from "@/views/pages/navigation/ropa-casual.vue"
-import Accesorios from "@/views/pages/navigation/accesorios.vue"
 import Neumaticos from "@/views/pages/home/neumaticos.vue"
 import Marcas from "@/views/pages/home/marcas.vue"
 import Parts from "@/views/pages/navigation/parts.vue"
-import PartsMegaMenuContent from "@/views/pages/navigation/parts-mega-menu-content.vue"
 import DepartmentsMenu from "@/views/pages/navigation/departments-menu.vue"
 
 const menuActivator = ref(null)
@@ -22,9 +20,6 @@ const closeMenu = () => {
   isMenuOpen.value = false
 }
 
-const selectDepartment = () => {
-
-}
 
 
 </script>

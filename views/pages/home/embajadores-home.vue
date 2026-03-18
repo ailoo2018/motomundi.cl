@@ -43,6 +43,7 @@ const next = () => swiperRef.value?.slideNext()
 
     <!-- ── SWIPER ── -->
     <div class="ambswipe__track">
+      <ClientOnly>
       <Swiper
         :modules="[Autoplay, FreeMode]"
         :slides-per-view="'auto'"
@@ -94,6 +95,7 @@ const next = () => swiperRef.value?.slideNext()
 
 
       </Swiper>
+      </ClientOnly>
     </div>
 
   </section>

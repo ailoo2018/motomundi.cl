@@ -65,7 +65,7 @@ export const isNavLinkActive = (link, router) => {
 export const isNavGroupActive = (children, router) => children.some(child => {
   // If child have children => It's group => Go deeper(recursive)
   if ('children' in child)
-    return isNavGroupActive(child.children, router)
+    return isNavGroupActive(child?.children, router)
 
   // else it's link => Check for matched Route
   return isNavLinkActive(child, router)

@@ -17,6 +17,12 @@ const currentUser  = useUserStore().user
 const isMenuOpen = defineModel({ type: Boolean, default: false })
 const isShowUserMenuTab = ref(false)
 
+const router = useRouter()
+
+router.afterEach(() => {
+  isMenuOpen.value = false
+})
+
 const currentMenu = ref(MobileMenuInicio)
 const menuTitleUrl = ref('/')
 const menuTitle = ref('Inicio')
