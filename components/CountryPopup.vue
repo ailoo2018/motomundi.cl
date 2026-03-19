@@ -13,7 +13,7 @@ const defaultCountryData = COUNTRY_DATA[DEFAULT_COUNTRY]
 </script>
 
 <template>
-  <h1>Showpopup {{showPopup}}</h1>
+
   <Teleport to="body">
     <Transition name="popup">
       <div

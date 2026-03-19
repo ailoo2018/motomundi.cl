@@ -23,11 +23,23 @@ async function handleSubmit() {
   errorMessage.value = ''
   status.value = 'loading'
 
-  // Replace this with your actual API call / newsletter provider
-  await new Promise((r) => setTimeout(r, 1600))
+  try {
+    // Replace this with your actual API call / newsletter provider
+    const ret = await $fetch("/api/newsletter/subscribe", {
+        method: 'POST',
+        body: {
+          name: firstName.value.trim(),
+          email: email.value.trim(),
+        },
+      }
+    )
 
-  // Simulate success (swap for real endpoint)
-  status.value = 'success'
+    // Simulate success (swap for real endpoint)
+    status.value = 'success'
+  }catch(e){
+    status.value = 'error'
+    alert(e.message)
+  }
 }
 
 function reset() {
@@ -40,16 +52,8 @@ function reset() {
 
 <template>
   <section class="mm-newsletter">
-    <!-- Speed-line background decoration -->
-    <div class="mm-bg" aria-hidden="true">
-      <div class="mm-stripe" v-for="i in 6" :key="i" />
-    </div>
 
     <div class="mm-inner">
-      <!-- Eyebrow -->
-      <p class="mm-eyebrow">
-        <span class="mm-dot" />MOTOMUNDI · NEWSLETTER
-      </p>
 
       <!-- Heading block -->
       <Transition name="fade-up" appear>
@@ -116,20 +120,15 @@ function reset() {
             </p>
           </Transition>
 
-          <button
-            class="mm-cta"
-            :class="{ 'mm-cta--loading': status === 'loading' }"
-            :disabled="status === 'loading'"
-            @click="handleSubmit"
-          >
-            <span v-if="status !== 'loading'" class="mm-cta-text">
-              QUIERO ESTAR AL DÍA
-              <svg class="mm-arrow" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 6H22M17 1L23 6L17 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span v-else class="mm-spinner" aria-label="Enviando…" />
-          </button>
+
+          <VBtn color="#bd0019" rounded="0"
+                :loading="status === 'loading'"
+                :disabled="status === 'loading'"
+                @click="handleSubmit"
+                type="submit" append-icon="tabler-arrow-right">
+            QUIERO ESTAR AL DÍA
+
+          </VBtn>
 
           <p class="mm-disclaimer">
             Sin spam. Sin ventas. Puedes darte de baja cuando quieras.<br />
@@ -148,7 +147,7 @@ function reset() {
   --red: #d6001c;
   --red-dark: #a80016;
   --black: #0a0a0a;
-  --off-black: #111111;
+  --off-black: #222;
   --panel: #161616;
   --border: rgba(255, 255, 255, 0.08);
   --text: #f0ece6;
@@ -184,19 +183,7 @@ function reset() {
 .mm-stripe:nth-child(1) { opacity: 0.15; }
 .mm-stripe:nth-child(6) { opacity: 0.15; }
 
-/* Red accent glow at top */
-.mm-newsletter::before {
-  content: '';
-  position: absolute;
-  top: -120px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 260px;
-  background: radial-gradient(ellipse, rgba(214, 0, 28, 0.22) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
+
 
 /* Diagonal red slash at bottom-right */
 .mm-newsletter::after {
@@ -221,27 +208,7 @@ function reset() {
   margin: 0 auto;
 }
 
-/* ─── Eyebrow ─────────────────────────────────────────────────── */
-.mm-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  color: var(--red);
-  text-transform: uppercase;
-  margin: 0 0 1.5rem;
-}
 
-.mm-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--red);
-  animation: pulse 1.8s ease-in-out infinite;
-}
 
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -253,7 +220,7 @@ function reset() {
 
 .mm-headline {
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 9vw, 6rem);
+  font-size: 60px;
   font-weight: 400;
   line-height: 0.92;
   letter-spacing: -0.01em;
