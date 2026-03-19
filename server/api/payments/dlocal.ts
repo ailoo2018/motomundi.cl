@@ -1,4 +1,6 @@
 // server/api/checkout.post.ts
+import {getBaseUrl} from "@/services/gateways/gateway";
+
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig();
   const body = await readBody(event);
@@ -13,7 +15,7 @@ export default defineEventHandler(async (event) => {
 */
   // In a real app, calculate total price server-side based on product IDs
   // to prevent client-side price tampering.
-  const baseUrl = "https://www.motomundi.cl"// config.public.baseUrl || "localhost:3000"
+  const baseUrl = getBaseUrl() // "https://www.motomundi.cl"// config.public.baseUrl || "localhost:3000"
 
   const orderData = {
     amount: body.amount, // e.g., 100.00

@@ -71,11 +71,11 @@ export function getBaseUrl(){
   const config = useRuntimeConfig();
   let baseUrl = config.public.baseUrl
 
-/*
+
   if(!baseUrl.startsWith("https")){
-    baseUrl = "https://forgotten-sell-spatial-games.trycloudflare.com"
+    baseUrl = "https://appears-chair-cloud-skills.trycloudflare.com"
   }
-*/
+
 
 
   return baseUrl

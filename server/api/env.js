@@ -9,8 +9,13 @@ export default defineEventHandler(async (event) => {
     const userId = getCookie(event, "user_id")
     const wishList = getCookie(event, 'wishlist_items')
 
-    const response = await fetch('https://api.ipify.org?format=json');
+    const response = await fetch('https://api.ipify.org?format=json')
     const myip = await response.json();
+
+    const dlocalApiUrl = config.dlocalApiUrl || process.env.DLOCAL_GO_BASE_URL || process.env.NUXT_DLOCAL_GO_BASE_URL;
+    const dlocalApiKey = config.dlocalApiKey ||  process.env.DLOCK_API_KEY || process.env.NUXT_DLOCAL_GO_API_KEY;
+    const dlocalSecretKey = config.dlocalSecretKey || process.env.DLOCAL_GO_SECRET_KEY || process.env.NUXT_DLOCAL_GO_SECRET_KEY;
+
 
     return {
       myip: myip,
@@ -20,6 +25,8 @@ export default defineEventHandler(async (event) => {
   //    MERCADO_PAGO_ACCESS_TOKEN: process.env.MERCADO_PAGO_ACCESS_TOKEN,
       accessToken: token,
       wishlist: wishList,
+      dlocalApiUrl,
+      dlocalApiKey,
       userId,
       wuid,
     }

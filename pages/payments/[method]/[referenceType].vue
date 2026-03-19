@@ -13,8 +13,8 @@ const methdodMap = {
 }
 
 
-const maxRetries = 1
-const delayMs = 8000 // 2 seconds between retries
+const maxRetries = 20
+const delayMs = 2000 // 2 seconds between retries
 let isSuccess = false
 
 // Helper to wait between retries

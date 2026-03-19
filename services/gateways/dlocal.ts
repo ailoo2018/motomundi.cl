@@ -5,11 +5,11 @@ import {currencyClient} from "@/services/clients/currencyClient";
 export async function processDLocal(rq : ProcessPaymentRq): Promise<ProcessPaymentRs> {
 
   const config = useRuntimeConfig();
+
+  const dlocalApiUrl = config.dlocalApiUrl || process.env.DLOCAL_GO_BASE_URL || process.env.NUXT_DLOCAL_GO_BASE_URL;
   const dlocalApiKey = config.dlocalApiKey ||  process.env.DLOCK_API_KEY || process.env.NUXT_DLOCAL_GO_API_KEY;
   const dlocalSecretKey = config.dlocalSecretKey || process.env.DLOCAL_GO_SECRET_KEY || process.env.NUXT_DLOCAL_GO_SECRET_KEY;
 
-  // In a real app, calculate total price server-side based on product IDs
-  // to prevent client-side price tampering.
   let baseUrl = getBaseUrl();
 
   let returnUrl = rq.returnUrl;
@@ -17,13 +17,8 @@ export async function processDLocal(rq : ProcessPaymentRq): Promise<ProcessPayme
     returnUrl = returnUrl.replace("http://localhost:3000", baseUrl)
   }
 
-  let amount = rq.amount // / 1.19
-/*
-  if(rq.currency !== "CLP"){
-    let exchangeRate = await currencyClient.exchangeRate("CLP", rq.currency);
-    amount = amount * exchangeRate;
-  }
-*/
+  let amount = rq.amount
+
 
   let order_id = `${rq.referenceId}-${Date.now()}`
   if(rq.referenceType === "invoice"){
@@ -48,7 +43,7 @@ export async function processDLocal(rq : ProcessPaymentRq): Promise<ProcessPayme
     notification_url: `${baseUrl}/api/webhooks/dlocal`,
   }
 
-  const dlocalApiUrl = "https://api.dlocalgo.com"
+
 
   const dlocalRs : any = await $fetch(`${dlocalApiUrl}/v1/payments`, {
     method: 'POST',
