@@ -4,6 +4,7 @@ export default defineEventHandler(async (event) => {
 
   try {
 
+    const config = useRuntimeConfig();
     const token = getCookie(event, "accessToken")
     const wuid = getCookie(event, "guest_id")
     const userId = getCookie(event, "user_id")
