@@ -29,10 +29,10 @@ export function useShipping() {
 
 
 
-  const listShippingMethods = async (country, comuna) => {
+  const listShippingMethods = async (country: any, comuna: any) : Promise<any> => {
 
     console.log("listShippingMethods")
-    const data = await $fetch("/api/shipping/methods", {
+    const data : any = await $fetch("/api/shipping/methods", {
       method: "GET",
       headers: { 'Content-Type': 'application/json' },
       query: {

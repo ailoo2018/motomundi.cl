@@ -153,21 +153,6 @@ const getPaymentInfo = async () => {
   return payInfo
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /************************ MERCADO PAGO SCRIPT **********************/
 
 // Function to load MercadoPago SDK
@@ -285,7 +270,7 @@ const pay = async (mercadoPagoApiData = null) => {
 
     const subtotal = useCartSummary().subtotal?.value || 0
     const shipping = useCartSummary().shippingCost?.value || 0
-    const exhangeRate = useExchangeRate().convertFromClp(1, currency)
+    const exchangeRate = useExchangeRate().convertFromClp(1, currency)
     const paymentInfo = await getPaymentInfo()
 
     shippingInfo.cost = shipping
@@ -317,7 +302,7 @@ const pay = async (mercadoPagoApiData = null) => {
         total: subtotal,
         shipping: shipping,
       },
-      exhangeRate: exhangeRate,
+      exchangeRate: exchangeRate,
       coupon: cartStore.coupon || null,
       addresses: {
         selectedShipping: shippingInfo.address,

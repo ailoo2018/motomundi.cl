@@ -185,6 +185,7 @@ const getShippingAddressName = () => {
   return ""
 }
 
+const cartStore = useCartStore()
 const {shippingCost} = useCartSummary()
 const {formatCurrency} = useCurrencyConverter()
 const {convert} = useExchangeRate()
@@ -743,7 +744,7 @@ onMounted(async () => {
 
                 <img :src="`/content/images/flags/${iso}.png`"/>
 
-                {{ shipping.price === 0 ? 'Gratis' : formatCurrency(shipping.price) }}
+                {{ shipping.price === 0 ? 'Gratis' : formatCurrency(shipping.price, cartStore.currency, { isNet: true }) }}
                 <span
                   v-if="shipping.oldPrice !== shipping.price"
                   class="old-price"
