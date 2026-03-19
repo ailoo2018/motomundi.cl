@@ -80,7 +80,7 @@ register()
   </div>
 </template>
 
-<style>
+<style scoped>
 h2 {
   font-size: 24px;
   font-weight: 900;

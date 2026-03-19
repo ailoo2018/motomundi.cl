@@ -1,14 +1,14 @@
 import transbankSdk from 'transbank-sdk'
-import type {ProcessPaymentRq} from "@/services/gateways/gateway";
+import type {ProcessPaymentRq, ProcessPaymentRs} from "@/services/gateways/gateway";
 
 const { WebpayPlus } = transbankSdk
 
 const TEST_COMMERCE_CODE='597055555532'
 
 
-export async function processWebpay(rq : ProcessPaymentRq){
-  const commerceCode = process.env.WEBPAY_COMMERCE_CODE
-  const apiKey = process.env.WEBPAY_API_KEY
+export async function processWebpay(rq : ProcessPaymentRq) : Promise<ProcessPaymentRs>{
+  const commerceCode : string  = process.env.WEBPAY_COMMERCE_CODE || ""
+  const apiKey : string = process.env.WEBPAY_API_KEY || ""
   let tx
 
   if(process.env.NODE_ENV === 'production' && commerceCode !== TEST_COMMERCE_CODE) {

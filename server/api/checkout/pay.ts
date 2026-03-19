@@ -7,7 +7,7 @@ export default defineEventHandler(async event => {
   let url = ""
 
   try {
-    const config = useRuntimeConfig()
+     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
     const body = await readBody(event)
 
@@ -31,6 +31,7 @@ export default defineEventHandler(async event => {
     const returnUrl = getReturnUrl(paymentMethodTypeId, "order")
 
     return await processPayment({
+      referenceType: "order",
       paymentMethodId: paymentMethodTypeId,
       referenceId: referenceId,
       amount: amount,

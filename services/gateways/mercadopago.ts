@@ -1,10 +1,10 @@
 import {MercadoPagoConfig, Preference} from "mercadopago";
-import {getBaseUrl, type ProcessPaymentRq} from "@/services/gateways/gateway";
+import {getBaseUrl, type ProcessPaymentRq, type ProcessPaymentRs} from "@/services/gateways/gateway";
 
-export async function processMercadoPago(rq : ProcessPaymentRq) {
+export async function processMercadoPago(rq : ProcessPaymentRq): Promise<ProcessPaymentRs> {
 
   const client = new MercadoPagoConfig({
-    accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN, // Add this to your runtimeConfig
+    accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN || "", // Add this to your runtimeConfig
     options: { timeout: 5000 },
   })
 

@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-import {getBaseUrl, type ProcessPaymentRq} from "@/services/gateways/gateway";
+import {getBaseUrl, type ProcessPaymentRq, type ProcessPaymentRs} from "@/services/gateways/gateway";
 import {currencyClient} from "@/services/clients/currencyClient";
 
-export async function processDLocal(rq : ProcessPaymentRq) {
+export async function processDLocal(rq : ProcessPaymentRq): Promise<ProcessPaymentRs> {
 
   const config = useRuntimeConfig();
   const dlocalApiKey = config.dlocalApiKey ||  process.env.DLOCK_API_KEY || process.env.NUXT_DLOCAL_GO_API_KEY;
@@ -50,7 +50,7 @@ export async function processDLocal(rq : ProcessPaymentRq) {
 
   const dlocalApiUrl = "https://api.dlocalgo.com"
 
-  const dlocalRs = await $fetch(`${dlocalApiUrl}/v1/payments`, {
+  const dlocalRs : any = await $fetch(`${dlocalApiUrl}/v1/payments`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${dlocalApiKey}:${dlocalSecretKey}`,

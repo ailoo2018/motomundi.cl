@@ -7,12 +7,13 @@ const result = ref(null)
 
 const methdodMap = {
   webpay: 8,
+  paypal: 10,
   mercadopago: 15,
   dlocal: 19,
 }
 
 
-const maxRetries = 3
+const maxRetries = 1
 const delayMs = 8000 // 2 seconds between retries
 let isSuccess = false
 
@@ -80,7 +81,8 @@ const notifyTagManager = async orderId => {
 }
 
 onMounted(async () => {
-  let token = route.query.payment_id || route.query.collection_id || ""
+  // payment_id is mercado pago, token is paypal
+  let token = route.query.payment_id || route.query.collection_id || route.query.token || ""
   let referenceId = route.query.referenceId || route.query.TBK_ORDEN_COMPRA || ""
   const webpayToken = route.query.token_ws
 

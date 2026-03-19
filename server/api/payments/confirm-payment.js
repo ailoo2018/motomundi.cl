@@ -34,7 +34,7 @@ export default defineEventHandler(async event => {
       
       return {
         success: false,
-        message: 'El pago no está aprobado o los datos no coinciden',
+        message: 'El pago no está aprobado o los datos no coinciden: ' + confirmRet?.message,
       }
     }
 
