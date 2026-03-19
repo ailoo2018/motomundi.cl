@@ -191,6 +191,7 @@ swiper-slide {
 #youtube-block h2 {
   padding: 30px 0;
   font-weight: 600;
+  font-size: 1.5em;
   margin: 18px auto 18px;
   text-align: center;
   text-transform: uppercase;

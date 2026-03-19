@@ -1123,8 +1123,8 @@
 
 
 .block-container.seo-footer .container {
-  border-bottom: 1px solid #fff;
-  border-top: 1px solid #fff;
+  border-bottom: 1px solid #5d5959;
+  border-top: 1px solid #5d5959;
   padding: 40px 0;
   width: 93%;
 }
@@ -1339,12 +1339,6 @@ footer.footer nav li > a {
   flex: 0 0 35%;
 }
 
-.block-container.seo-footer .container {
-  border-bottom: 1px solid #fff;
-  border-top: 1px solid #fff;
-  padding: 40px 0;
-  width: 93%;
-}
 
 footer {
   background-color: #f5f5f5;
