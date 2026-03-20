@@ -9,21 +9,21 @@ const props = defineProps(
 
 console.log("in product rating")
 
-const { data: reviewStats } = await useAsyncData(
+const {data: reviewStats} = await useAsyncData(
   `stats-${props.product.id}`,
   () => $fetch("/api/reviews/stats", {
-    query: { productId: props.product.id, modelId: props.product.model?.id },
+    query: {productId: props.product.id, modelId: props.product.model?.id},
   }),
   {
     // Transform data here to keep the component logic clean
     transform: data => {
-      const stats = { ...data, stars: Math.floor(data.avgRating * 2) };
+      const stats = {...data, stars: Math.floor(data.avgRating * 2)};
 
       ['1', '2', '3', '4', '5'].forEach(n => stats[n] = 0)
       data.groups?.forEach(r => {
         stats["" + r.ratingGroup] = (r.totalReviews / data.totalReviews) * 100
       })
-      
+
       return stats
     },
   },
@@ -41,11 +41,12 @@ function formatName(str) {
 
 const reviews = ref([])
 const loading = ref(false)
+const hasNextPage = ref(false)
 
 
 const currentPage = ref(1)
 const pageSize = ref(10)
-const ratingCriteria = ref({ rating: 0, selected: "TODOS", orderBy: "date", orderDir: "desc" })
+const ratingCriteria = ref({rating: 0, selected: "TODOS", orderBy: "date", orderDir: "desc"})
 
 
 const handleImageError = imageId => {
@@ -71,17 +72,17 @@ const nextPage = async () => {
 const showAll = async () => {
   ratingCriteria.value.selected = "TODOS"
   ratingCriteria.value.rating = 0
-  ratingCriteria.value.orderBy= "date"
+  ratingCriteria.value.orderBy = "date"
   ratingCriteria.value.orderDir = "desc"
   reviews.value = []
 
   await listReviews()
 }
 
-const orderBy = async(field, dir, sel) => {
+const orderBy = async (field, dir, sel) => {
   ratingCriteria.value.selected = sel
   ratingCriteria.value.rating = 0
-  ratingCriteria.value.orderBy= field
+  ratingCriteria.value.orderBy = field
   ratingCriteria.value.orderDir = dir
 
   reviews.value = []
@@ -90,11 +91,12 @@ const orderBy = async(field, dir, sel) => {
 }
 
 
-
-
+const getHasNextPage = () => {
+  return false
+}
 
 const getReviewInitial = review => {
-  if(review.party != null && review.party.name != null && review.party.name.length > 0){
+  if (review.party != null && review.party.name != null && review.party.name.length > 0) {
     return review.party.name[0].toUpperCase()
   }
 
@@ -103,10 +105,10 @@ const getReviewInitial = review => {
 }
 
 const getReviewerName = review => {
-  if(review.party != null && review.party.name != null){
+  if (review.party != null && review.party.name != null) {
     var arr = review.party.name.split(' ')
 
-    return formatName( arr[0] )
+    return formatName(arr[0])
   }
 
   return "Anónimo"
@@ -124,6 +126,9 @@ const selectRating = async stars => {
 
 const listReviews = async () => {
 
+  if (!(props.product?.id > 0))
+    return
+
   console.log("LOading products-rating list llll!!!!")
   loading.value = true
 
@@ -131,12 +136,11 @@ const listReviews = async () => {
     const limit = pageSize.value
     const offset = (currentPage.value - 1) * pageSize.value
 
-    var rs = await $fetch("/api/reviews/list", {
-      key: "ratings-" + props.product.id,
+    var rs = await $fetch<any>("/api/reviews/list", {
       method: "GET",
       query: {
-        productId: props.product.id,
-        modelId: props.product.model?.id || 0,
+        productId: props.product?.id,
+        modelId: props.product?.model?.id || 0,
         limit: limit,
         offset: offset,
         rating: ratingCriteria.value?.rating || null,
@@ -146,14 +150,18 @@ const listReviews = async () => {
     })
 
 
-    if (rs.reviews)
+    if (rs.reviews) {
+      hasNextPage.value = (rs.total > (offset + limit))
+
       rs.reviews.forEach(r => {
         reviews.value.push(r)
       })
-    else
-      review.value = []
+    } else {
+      reviews.value = []
+      // review.value = []
+    }
 
-  }finally {
+  } finally {
     loading.value = false
   }
 
@@ -401,7 +409,13 @@ if (import.meta.client) {
                           >
                           {{ getReviewInitial(review) }}
                         </div>
-                        <span>{{ getReviewerName(review) }} • {{ formatDate( review.date, { day: '2-digit', month: '2-digit', year: 'numeric' } ) }}</span>
+                        <span>{{ getReviewerName(review) }} • {{
+                            formatDate(review.date, {
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric'
+                            })
+                          }}</span>
                         <svg
                           width="18"
                           height="18"
@@ -409,7 +423,7 @@ if (import.meta.client) {
                           class="language-icon icon sprite-icons"
                         >
                           <title>Español</title>
-                          <use href="/content/svg/motomundi.svg#i-ratings-es" />
+                          <use href="/content/svg/motomundi.svg#i-ratings-es"/>
                         </svg>
                       </h4>
                       <p>
@@ -465,14 +479,14 @@ if (import.meta.client) {
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon sprite-line-icons"
                   >
-                    <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-thumbs-up" />
+                    <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-thumbs-up"/>
                   </svg>
                   <span>Aún no hay valoraciones</span>
                 </p>
               </div>
               <div
                 class="reviews-load-more"
-                style=""
+                v-if="hasNextPage"
               >
                 <button
                   class="button"
@@ -499,7 +513,7 @@ if (import.meta.client) {
             color="transparent"
             class="lightbox-toolbar"
           >
-            <VSpacer />
+            <VSpacer/>
             <span class="text-caption text-medium-emphasis">
               {{ lightboxIndex + 1 }} / {{ lightboxImages.length }}
             </span>
@@ -519,11 +533,15 @@ if (import.meta.client) {
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                ><path
-                  stroke="none"
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path d="M18 6l-12 12"/>
+                  <path d="M6 6l12 12"/>
+                </svg>
               </VIcon>
             </VBtn>
           </VToolbar>
@@ -547,11 +565,14 @@ if (import.meta.client) {
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                ><path
-                  stroke="none"
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                /><path d="M15 6l-6 6l6 6" /></svg>
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path d="M15 6l-6 6l6 6"/>
+                </svg>
               </VIcon>
             </VBtn>
 
@@ -579,11 +600,14 @@ if (import.meta.client) {
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                ><path
-                  stroke="none"
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                /><path d="M9 6l6 6l-6 6" /></svg>
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path d="M9 6l6 6l-6 6"/>
+                </svg>
               </VIcon>
             </VBtn>
           </VCardText>
@@ -899,7 +923,7 @@ if (import.meta.client) {
 }
 
 .lightbox-toolbar {
-  background: rgba(0,0,0,0.6) !important;
+  background: rgba(0, 0, 0, 0.6) !important;
 }
 
 .lightbox-toolbar .v-btn,
