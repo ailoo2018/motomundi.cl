@@ -1061,6 +1061,11 @@
 </template>
 
 <style scoped>
+
+li .mtc-link, li > a {
+  color: #dfcfcf;
+}
+
 footer {
   background-color: #222;
   padding: 50px 0;
