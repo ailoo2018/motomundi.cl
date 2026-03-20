@@ -36,7 +36,7 @@ onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
 
     <!-- Trigger button -->
     <button class="cs-trigger" :class="{ 'is-open': menuOpen }" @click="toggleMenu">
-      <span class="cs-flag"><img :src="`/content/images/flags/${iso}.png`" /></span>
+      <span class="cs-flag"><img :src="`/content/images/flags/${selectedCountryData.iso?.toLowerCase()}.png`" /></span>
       <span class="cs-name">{{ selectedCountryData.name }}</span>
       <span class="cs-sep">·</span>
       <span class="cs-symbol">{{ selectedCountryData.symbol }}</span>

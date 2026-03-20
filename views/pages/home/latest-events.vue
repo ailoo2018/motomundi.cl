@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {getDataImageUrl} from "@core/utils/formatters"
+import { computed } from 'vue'
+import { getDataImageUrl } from "@core/utils/formatters"
 
 const props = defineProps({
   widget: {
@@ -7,553 +8,286 @@ const props = defineProps({
   }
 })
 
-const {data: rs} = await useFetch(`/api/events/latest-events`, {
-  query: {limit: 3},
-  key: `events-latest-3`, // Explicit key helps hydration
-
+// Using Nuxt 4 useFetch best practices
+const { data: rs } = await useFetch(`/api/events/latest-events`, {
+  query: { limit: 3 },
+  key: `events-latest-3`,
 })
 
+const events = computed(() => rs.value?.events || [])
 
-
-const fmtDate = d => {
+// Improved date formatting for a cleaner look
+const fmtDate = (d: string) => {
   return new Date(d).toLocaleDateString('es-CL', {
-    month: 'long',   // "MMMM" (January)
-    day: '2-digit',  // "dd"     (05)
-    year: 'numeric'  // "yyyy"   (2026)
-  })
+    month: 'short',  // "ene" instead of "enero" saves space
+    day: '2-digit',
+    year: 'numeric'
+  }).toUpperCase()
 }
 
-const truncateText = (text: string, limit: number) => {
+// Reduced limit for better card uniformity
+const truncateText = (text: string, limit: number = 100) => {
   if (!text) return ''
-  return text.length > limit ? text.substring(0, limit) + '...' : text
+  return text.length > limit ? text.substring(0, limit).trim() + '...' : text
 }
 
-const events = computed(() => {
-  return rs.value?.events || []
-})
+// Mock formatMoney if not globally provided
+const formatMoney = (amount: number) => {
+  return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(amount)
+}
 </script>
 
 <template>
+  <section id="home-latest-events" class="events-section">
+    <div class="container">
+      <h2 class="section-title">
+        <VIcon class="tabler-calendar" size="28" />
+        Próximos Eventos
+      </h2>
 
-  <div id="home-latest-events" class="block-container events-widget"  >
-    <div class="blog-block alt">
-      <div class="container">
-        <div class="row">
-          <h2>
-            <VIcon class="tabler-calendar" size="28" />
-            Próximos eventos
-          </h2>
-          <div class="gt-columns gt-column-3 gt-column-space-30" v-if="events">
-            <div
-              v-for="e in events"
-              class="gt-col ng-scope"
+      <div class="events-slider" v-if="events.length">
+        <article
+          v-for="e in events"
+          :key="e.id || e.title"
+          class="event-card"
+        >
+          <a :href="`/calendario/${e.slug || ''}`" class="card-image-link">
+            <img
+              decoding="async"
+              loading="lazy"
+              :src="getDataImageUrl(e.imageId, 600, getDomainId())"
+              :alt="`Imagen del evento ${e.title}`"
+              class="event-image"
             >
-              <div class="gt-inner">
-                <div
-                  class="gt-event-style-3"
-                  data-event-id="262"
-                >
-                  <div class="gt-image">
-                    <a
-                      target="_blank"
-                      href="/calendario"
-                    >
+            <div class="date-badge">
+              <VIcon class="tabler-calendar-event" size="16" />
+              <span>{{ fmtDate(e.startDate) }}</span>
+            </div>
+          </a>
 
-                      <img
-                        decoding="async"
-                        width="952"
-                        height="579"
-                        :src="getDataImageUrl(e.imageId, 600, getDomainId())"
-                        class="attachment-eventchamp-event-list size-eventchamp-event-list wp-post-image"
-                        alt=""
-                        sizes="(max-width: 952px) 100vw, 952px"
-                      ></a>
-                  </div>
-                  <div class="gt-content">
-                    <div class="gt-title">
-                      <a
-                        target="_blank"
-                        href="/calendario"
-                      >{{e.title}}</a>
-                    </div>
-                    <div class="gt-details">
-                      <div class="gt-category">
-                        <ul>
-                          <li class="gt-category-69">
-                            <a href="/event-category/travel/?post_type=event"/>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="gt-date gt-start-date">
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <rect
-                            x="3"
-                            y="4"
-                            width="18"
-                            height="18"
-                            rx="2"
-                            ry="2"
-                          />
-                          <line
-                            x1="16"
-                            y1="2"
-                            x2="16"
-                            y2="6"
-                          />
-                          <line
-                            x1="8"
-                            y1="2"
-                            x2="8"
-                            y2="6"
-                          />
-                          <line
-                            x1="3"
-                            y1="10"
-                            x2="21"
-                            y2="10"
-                          />
-                        </svg>
-                        <span>{{fmtDate(e.startDate)}} </span>
-                      </div>
-                    </div>
-                    <div class="gt-text ">
-                      {{ truncateText( e.summary, 220 )}}
-                    </div>
-                    <div class="gt-details">
-                      <div class="gt-location" v-if="e.location">
-                        <VIcon class="tabler-map-pin" color="primary"/>
-                        <ul>
-                          <li class="gt-category-111">
-                            <a href="/calendario">{{e.location}}</a>
-                          </li>
-                        </ul>
-                      </div>
+          <div class="card-content">
+            <h3 class="event-title">
+              <a :href="`/calendario/${e.slug || ''}`">{{ e.title }}</a>
+            </h3>
 
+            <p class="event-summary">
+              {{ truncateText(e.summary, 90) }}
+            </p>
 
-                      <div v-if="e.price && e.price > 0" class="gt-price ng-scope">
-                        <VIcon class="tabler-cash" color="primary"/>
-                        <span>{{formatMoney(e.price)}} </span>
-                      </div>
+            <div class="card-footer">
+              <div class="event-location" v-if="e.location">
+                <VIcon class="tabler-map-pin accent-icon"/>
+                <span>{{ e.location }}</span>
+              </div>
 
-                    </div>
-                  </div>
-                </div>
+              <div v-if="e.price && e.price > 0" class="event-price">
+                <VIcon class="tabler-cash accent-icon"/>
+                <span>{{ formatMoney(e.price) }}</span>
               </div>
             </div>
           </div>
+        </article>
+      </div>
 
-          <div class="blog-link">
-            <a
-              href="/calendario"
-              class="button button--skewed"
-            >
-              Ver calendario de eventos
-              <svg
-                width="12"
-                height="12"
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon sprite-line-icons"
-              >
-                <use
-                  href="/content/svg/motomundi.svg#i-icon-arrow-right-tail"
-                  xlink:href="/content/svg/motomundi.svg#i-icon-arrow-right-tail"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
+      <div class="cta-container">
+        <a href="/calendario" class="btn-primary">
+          Ver calendario de eventos
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
       </div>
     </div>
-  </div>
+  </section>
 </template>
+
 <style scoped>
-
-.button {
-  background: none;
-  border: 2px solid #000;
-  box-sizing: border-box;
-  color: #000;
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .5px;
-  overflow: hidden;
-  padding: 13px 25px;
-  position: relative;
-  text-align: center;
-  text-transform: uppercase;
-  transition: all .2s ease-in-out;
-  z-index: 1;
-}
-.button:active, .button:focus {
-  background-color: #bd0019;
-  border-color: #bd0019;
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, .3);
-  color: #fff;
-}
-
-.blog-block {
-  background-color: #f5f5f5;
-  margin-top: 70px;
-  padding: 50px 0;
+/* Base Variables & Section Setup */
+.events-section {
+  background-color: #F5F5F5;
+  padding: 60px 0;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
 .container {
-  margin: 0 auto;
   max-width: 1280px;
-  width: 95%;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-h2 {
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   font-weight: 900;
-  margin: 0 0 40px;
-  font-size: 1.5em;
-  text-align: center;
+  font-size: 2rem;
   text-transform: uppercase;
+  color: #1a1a1a;
+  margin-bottom: 40px;
 }
 
-*, ::after, ::before {
-  box-sizing: border-box;
+/* Native CSS Slider / Grid */
+.events-slider {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Firefox */
+  padding-bottom: 20px; /* Space for shadow */
 }
 
-.gt-heading .gt-title {
-  font-size: 3.231rem;
+.events-slider::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Event Card Design */
+.event-card {
+  flex: 0 0 calc(100% - 40px); /* Mobile full width minus padding */
+  scroll-snap-align: center;
+  background: #FFFFFF;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-image-link {
+  position: relative;
+  display: block;
+  height: 220px;
+  overflow: hidden;
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.event-card:hover .event-image {
+  transform: scale(1.05);
+}
+
+.date-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1a1a1a;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.event-title {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+  font-weight: 800;
   line-height: 1.3;
 }
 
+.event-title a {
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
 
-.gt-heading .gt-separate {
+.event-title a:hover {
+  color: #d6001c; /* Accent color on title hover */
+}
+
+.event-summary {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0 0 20px;
+  flex-grow: 1;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  display: flex;
-  margin: 30px auto 0;
+  border-top: 1px solid #eee;
+  padding-top: 16px;
+  font-size: 0.9rem;
+  color: #444;
 }
 
-.gt-heading .gt-text {
-  opacity: .8;
-  font-size: 1.077rem;
-}
-
-.gt-heading .gt-title + .gt-text, .gt-heading .gt-separate + .gt-text {
-  margin-top: 40px;
-}
-
-
-.gt-categorized-contents .gt-nav > li {
-  float: none;
-  margin: 0;
-  padding: 0 7.5px 7.5px;
-  display: inline-block;
-  position: relative;
-}
-
-
-.widget_archive ul li:before, .widget_categories ul li:before, .widget_pages ul li:before, .widget_meta ul li:before, .widget_recent_comments ul li:before, .widget_recent_entries ul li:before, .widget_nav_menu ul li:before, .fancybox-container .fancybox-thumbs__list a:before, .gt-like-box a.gt-liked, .gt-like-box a.gt-liked:visited, .gt-like-box a.gt-favorited, .gt-like-box a.gt-favorited:visited, .gt-like-box a:hover, .gt-like-box a:focus, .gt-countdown.gt-style-3 ul li > .gt-inner, .gt-footer .gt-app-box .gt-item a:hover, .gt-footer .gt-app-box .gt-item a:focus, .gt-footer.gt-style-1 .gt-app-box .gt-item a:hover, .gt-footer.gt-style-1 .gt-app-box .gt-item a:focus, .gt-post-style-1 .gt-bottom .gt-more, .gt-post-style-1 .gt-bottom .gt-more:visited, .gt-post-style-2 .gt-bottom .gt-more, .gt-post-style-2 .gt-bottom .gt-more:visited, .gt-pagination ul li > span, .gt-pagination ul li > a, .gt-pagination ul li > a:visited, .gt-post-pagination ul li a, .gt-post-pagination ul li a:visited, .gt-event-ticket.gt-style-1.gt-active-on, .gt-event-ticket.gt-style-2.gt-active-on, .gt-event-ticket.gt-style-3.gt-active-on, .gt-event-ticket.gt-style-4, .gt-event-ticket.gt-style-5.gt-active-on, .gt-event-ticket.gt-style-6.gt-active-on, .gt-event-ticket.gt-style-7.gt-active-on, .gt-button.gt-style-3 a, .gt-button.gt-style-3 a:visited, .gt-button.gt-style-2 a, .gt-button.gt-style-2 a:visited, .gt-button.gt-style-1 a:hover, .gt-button.gt-style-1 a:focus, .gt-button.gt-style-1 a, .gt-button.gt-style-1 a:visited, .gt-event-buttons ul li a, .gt-event-buttons ul li a:visited, .gt-event-schedule.gt-style-7 .gt-item > ul > li .gt-content > .gt-inner, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a:visited, .gt-organizers.gt-style-2 ul li a:hover, .gt-organizers.gt-style-2 ul li a:focus, .gt-tags.gt-style-2 ul li a:hover, .gt-tags.gt-style-2 ul li a:focus, .gt-categories.gt-style-2 ul li a:hover, .gt-categories.gt-style-2 ul li a:focus, .gt-social-sharing.gt-style-7 ul li a:hover, .gt-social-sharing.gt-style-7 ul li a:focus, .gt-social-links-element.gt-style-7 ul li a:hover, .gt-social-links-element.gt-style-7 ul li a:focus, .gt-app-box .gt-item a:hover, .gt-app-box .gt-item a:focus, .gt-counter > .gt-number, .gt-testimonials-carousel .gt-slider-pagination .swiper-pagination-bullet:hover, .gt-testimonials-carousel .gt-slider-pagination .swiper-pagination-bullet:focus, .gt-testimonials-carousel .gt-slider-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active, .gt-eventchamp-service-box.gt-style-1 .gt-title, .gt-eventchamp-service-box.gt-style-1 .gt-icon, .gt-blog-carousel .gt-slider-prev:hover, .gt-blog-carousel .gt-slider-prev:focus, .gt-blog-carousel .gt-slider-next:hover, .gt-blog-carousel .gt-slider-next:focus, .gt-blog-carousel .gt-all-button:hover, .gt-blog-carousel .gt-all-button:focus, .gt-dark .gt-slider-prev:hover, .gt-dark .gt-slider-prev:focus, .gt-dark .gt-slider-next:hover, .gt-dark .gt-slider-next:focus, .gt-dark .gt-all-button:hover, .gt-dark .gt-all-button:focus, .gt-venues-carousel.gt-white .gt-slider-prev:hover, .gt-venues-carousel.gt-white .gt-slider-prev:focus, .gt-venues-carousel.gt-white .gt-slider-next:hover, .gt-venues-carousel.gt-white .gt-slider-next:focus, .gt-venues-carousel.gt-white .gt-all-button:hover, .gt-venues-carousel.gt-white .gt-all-button:focus, .gt-events-carousel .gt-slider-prev:hover, .gt-events-carousel .gt-slider-prev:focus, .gt-events-carousel .gt-slider-next:hover, .gt-events-carousel .gt-slider-next:focus, .gt-events-carousel .gt-all-button:hover, .gt-events-carousel .gt-all-button:focus, .gt-categorized-contents .gt-all-button:hover, .gt-categorized-contents .gt-all-button:focus, .gt-categorized-contents .gt-nav > li > a.active, .gt-categorized-contents .gt-nav > li > a.active:visited, .gt-categorized-contents .gt-nav > li > a:hover, .gt-categorized-contents .gt-nav > li > a:focus, .gt-categorized-contents .gt-nav > li > a, .gt-categorized-contents .gt-nav > li > a:visited, .gt-eventchamp-slider .gt-slider-content .gt-buttons a:hover, .gt-eventchamp-slider .gt-slider-content .gt-buttons a:focus, .gt-countdown-slider.gt-style-2 > .gt-slider-content .gt-buttons a:hover, .gt-countdown-slider.gt-style-2 > .gt-slider-content .gt-buttons a:focus, .gt-countdown-slider.gt-style-1 > .gt-slider-content .gt-buttons a:hover, .gt-countdown-slider.gt-style-1 > .gt-slider-content .gt-buttons a:focus, .gt-events-slider .gt-slide-inner .gt-content .buttons a:hover, .gt-events-slider .gt-slide-inner .gt-content .buttons a:focus, .fc button, .fc-state-default, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu li .gt-dropdown-menu, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu li .gt-dropdown-menu, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu li .gt-dropdown-menu, button, input[type="submit"], button:hover, input[type="submit"]:hover, button:active, input[type="submit"]:active, button:active:hover, input[type="submit"]:active:hover, button:active:focus, input[type="submit"]:active:focus, button:active:visited, input[type="submit"]:active:visited, button:focus, input[type="submit"]:focus, button, input[type="submit"] {
-  border-color: #d6001c;
-}
-
-.fc-state-default:hover, .fc-state-default:focus, .fc button:hover, .fc button:focus, .gt-post-style-1 .gt-bottom .gt-more:hover, .gt-post-style-1 .gt-bottom .gt-more:focus, .gt-post-style-2 .gt-bottom .gt-more:hover, .gt-post-style-2 .gt-bottom .gt-more:focus, .gt-pagination ul li > span.current, .gt-pagination ul li > a:hover, .gt-pagination ul li > a:focus, .gt-post-pagination ul li a:hover, .gt-post-pagination ul li a:focus, .gt-event-buttons ul li a:hover, .gt-event-buttons ul li a:focus, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a.active, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a.active:visited, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a:hover, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a:focus, .gt-detail-widget > ul > li.button-content a:hover, .gt-detail-widget > ul > li.button-content a:focus, .gt-categorized-contents .gt-nav > li > a.active, .gt-categorized-contents .gt-nav > li > a.active:visited, .gt-categorized-contents .gt-nav > li > a:hover, .gt-categorized-contents .gt-nav > li > a:focus, .gt-button.gt-style-3 a:hover, .gt-button.gt-style-3 a:focus, .gt-button.gt-style-2 a:hover, .gt-button.gt-style-2 a:focus, .gt-button.gt-style-1 a:hover, .gt-button.gt-style-1 a:focus {
-  background: transparent;
-}
-
-
-.gt-event-style-3 .gt-image > a, .gt-event-style-3 .gt-image > a:visited {
-  /*
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: block;
-  */
-
-
-}
-
-.gt-event-style-3 .gt-image img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-height: calc(100% + 20px);
-  width: auto;
-}
-
-.gt-event-style-3 .gt-image {
-  /*
-  position: relative;
-  margin-bottom: 20px;
-  */
-  width: auto;
-  padding: 10px;
-  height: 200px;
-  box-sizing: border-box;
-  overflow: hidden;
-  position: relative;
-
-}
-
-.gt-event-style-3 {
-  width: 100%;
-  position: relative;
-  height: 100%; /* jcf */
-}
-
-.gt-columns.gt-column-space-30 > .gt-col > .gt-inner {
-  padding: 0 15px 30px;
-  height: 100%;
-}
-
-.gt-columns > .gt-col > .gt-inner {
-  padding: 0 15px 30px;
-}
-
-.gt-columns.gt-column-3 > .gt-col {
-  width: 33.33333333333333%;
-}
-
-.gt-columns > .gt-col {
-  width: 100%;
-  position: relative;
-}
-
-.gt-columns {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -15px -30px;
-}
-
-.gt-columns.gt-column-space-30 {
-  margin: 0 -15px -30px;
-}
-
-.irs-from:after, .irs-to:after, .irs-single:after, .gt-event-style-3 .gt-content, .gt-event-ticket.gt-style-4.gt-active-on:before, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu li .gt-dropdown-menu, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu li .gt-dropdown-menu, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu li .gt-dropdown-menu, .gt-flex-menu {
-  border-top-color: #d6001c;
-}
-
-.gt-event-style-3 .gt-title {
-  font-size: 1.462rem;
-  line-height: 1.4;
-  font-weight: 700;
-  margin-bottom: 15px;
-}
-
-.gt-event-style-3 .gt-details {
-  margin: -5px -10px;
-  width: 100%;
+.event-location, .event-price {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 6px;
+  font-weight: 600;
 }
 
-.gt-event-style-3 .gt-details > div {
-  padding: 5px 10px;
+.accent-icon {
+  color: #d6001c; /* Brand accent sparingly applied */
 }
 
-.gt-event-style-3 .gt-price, .gt-event-style-3 .gt-status, .gt-event-style-3 .gt-venue, .gt-event-style-3 .gt-stock, .gt-event-style-3 .gt-location, .gt-event-style-3 .gt-organizer, .gt-event-style-3 .gt-date, .gt-event-style-3 .gt-time {
-  font-size: 0.9231rem;
-  line-height: 0.9231rem;
-  color: #777777;
-  align-items: center;
-  display: flex;
+.event-price {
+  color: #d6001c; /* Highlight price slightly */
 }
 
-.gt-event-style-3 .gt-details + .gt-text {
+/* Call to Action Button */
+.cta-container {
+  text-align: center;
   margin-top: 20px;
 }
 
-.gt-event-style-3 .gt-text {
-  margin: 0 0 15px;
-  font-size: 14px;
-  color: #777777;
-}
-
-.gt-event-style-3 .gt-details > div {
-  padding: 5px 10px;
-}
-
-.gt-footer.gt-style-1 .gt-social-links-element.gt-style-6 ul li a:hover, .gt-footer.gt-style-1 .gt-social-links-element.gt-style-6 ul li a:focus, .gt-footer.gt-style-1 a:hover, .gt-footer.gt-style-1 a:focus, .gt-event-style-2 .gt-information > div a:focus, .gt-event-style-2 .gt-information > div a:hover, .gt-footer.gt-style-1 .post-list-style-3 .title a:hover, .gt-footer.gt-style-1 .post-list-style-3 .title a:focus, .gt-mobile-menu .gt-bottom .gt-social-links li a:hover, .gt-mobile-menu .gt-bottom .gt-social-links li a:focus, .gt-modal .gt-register-content .gt-modal-footer a:hover, .gt-modal .gt-register-content .gt-modal-footer a:focus, .gt-modal .gt-login-content .gt-modal-footer a:hover, .gt-modal .gt-login-content .gt-modal-footer a:focus, .gt-countdown.gt-style-3 ul li > .gt-inner, .gt-footer .post-list-style-3 .title a:hover, .gt-footer .post-list-style-3 .title a:focus, .gt-feature-box .gt-content .gt-title, .gt-feature-box .gt-icon, .gt-map.gt-events-map .gt-map-popup .gt-inner a:hover, .gt-map.gt-events-map .gt-map-popup .gt-inner a:focus, .gt-label.gt-style-4, .gt-post-style-1 .gt-bottom .gt-more:hover, .gt-post-style-1 .gt-bottom .gt-more:focus, .gt-post-style-1 .gt-bottom > ul a:hover, .gt-post-style-1 .gt-bottom > ul a:focus, .gt-post-style-2 .gt-bottom .gt-more:hover, .gt-post-style-2 .gt-bottom .gt-more:focus, .gt-post-style-2 .gt-bottom > ul a:hover, .gt-post-style-2 .gt-bottom > ul a:focus, .gt-page-content .gt-post-meta a:hover, .gt-page-content .gt-post-meta a:focus, .gt-pagination ul li > span.current, .gt-pagination ul li > a:hover, .gt-pagination ul li > a:focus, .gt-post-pagination ul li a:hover, .gt-post-pagination ul li a:focus, .gt-page-content .gt-post-meta ul li svg, .gt-event-ticket.gt-style-1 .gt-ticket-inner > .gt-details .gt-subtitle, .gt-event-ticket.gt-style-1 .gt-ticket-inner > .gt-details > .gt-price, .gt-event-ticket.gt-style-1 .gt-ticket-inner > .gt-ticket-features p > i, .gt-event-ticket.gt-style-2 .gt-ticket-inner .gt-title, .gt-event-ticket.gt-style-2 .gt-price, .gt-event-ticket.gt-style-3 .gt-ticket-inner .gt-title, .gt-event-ticket.gt-style-3 .gt-price, .gt-event-ticket.gt-style-4 .gt-price, .gt-event-ticket.gt-style-5 .gt-price, .gt-event-ticket .gt-ticket-inner .gt-ticket-features p > i, .gt-event-ticket.gt-style-6 .gt-ticket-features p > i, .gt-event-ticket.gt-style-6 .gt-ticket-header .gt-price, .gt-event-ticket.gt-style-7 .gt-ticket-features p > i, .gt-event-ticket.gt-style-7 .gt-ticket-header .gt-price, .gt-event-buttons ul li a:hover, .gt-event-buttons ul li a:focus, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a.active, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a.active:visited, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a:hover, .gt-event-schedule.gt-style-2 .gt-schedule-tabs > li > a:focus, .gt-speaker.gt-style-1 .gt-content .gt-name a:hover, .gt-speaker.gt-style-1 .gt-content .gt-name a:focus, .gt-speaker.gt-style-1 .gt-social-links ul li a:focus, .gt-speaker.gt-style-1 .gt-social-links ul li a:hover, .gt-speaker.gt-style-2 .gt-social-links ul li a:focus, .gt-speaker.gt-style-2 .gt-social-links ul li a:hover, .gt-speaker.gt-style-3 .gt-social-links ul li a:focus, .gt-speaker.gt-style-3 .gt-social-links ul li a:hover, .gt-speaker.gt-style-4 .gt-social-links ul li a:focus, .gt-speaker.gt-style-4 .gt-social-links ul li a:hover, .gt-speaker.gt-style-5 .gt-social-links ul li a:focus, .gt-speaker.gt-style-5 .gt-social-links ul li a:hover, .gt-speaker.gt-style-6 .gt-social-links ul li a:focus, .gt-speaker.gt-style-6 .gt-social-links ul li a:hover, .gt-content-detail-box > ul > li > .gt-content > .gt-inner a:hover, .gt-content-detail-box > ul > li > .gt-content > .gt-inner a:focus, .gt-content-detail-box > ul > li > .gt-icon > i, .gt-icon-list.gt-style-1 ul li i, .gt-icon-list.gt-style-2 ul li i, .gt-icon-list.gt-style-1 ul li svg, .gt-icon-list.gt-style-2 ul li svg, .gt-mailchimp-newsletter .title i, .gt-button.gt-style-6 a:hover, .gt-button.gt-style-6 a:focus, .gt-button.gt-style-5 a, .gt-button.gt-style-5 a:visited, .gt-button.gt-style-3 a:hover, .gt-button.gt-style-3 a:focus, .gt-button.gt-style-2 a:hover, .gt-button.gt-style-2 a:focus, .gt-button.gt-style-1 a:hover, .gt-button.gt-style-1 a:focus, .gt-contact-box svg, .gt-counter > .gt-title, .gt-counter > .gt-number, .gt-eventchamp-service-box.gt-style-1 .gt-title, .gt-eventchamp-service-box.gt-style-1 .gt-icon, .gt-categorized-contents .gt-nav > li > a.active, .gt-categorized-contents .gt-nav > li > a.active:visited, .gt-categorized-contents .gt-nav > li > a:hover, .gt-categorized-contents .gt-nav > li > a:focus, .gt-heading .gt-title span, .gt-eventchamp-slider .gt-slider-content .gt-title .gt-secondary, .gt-countdown-slider.gt-style-1 > .gt-slider-content .gt-title .gt-secondary, .gt-countdown-slider.gt-style-3 > .gt-slider-content > .gt-counter .gt-counter-inner > div, .gt-events-slider .gt-slide-inner .gt-content .gt-information > li i, .select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[data-selected], .select2-container--default .select2-results__option[aria-selected=true], .select2-container--default .select2-results__option[data-selected=true], .plyr__progress--played, .plyr__volume--display, .bootstrap-select.gt-select .dropdown-item:focus, .bootstrap-select.gt-select .dropdown-item:hover, .bootstrap-select.gt-select .dropdown-item.active, .bootstrap-select.gt-select .dropdown-item:active, blockquote:before, button:hover, input[type="submit"]:hover, button:active, input[type="submit"]:active, button:active:hover, input[type="submit"]:active:hover, button:active:focus, input[type="submit"]:active:focus, button:active:visited, input[type="submit"]:active:visited, button:focus, input[type="submit"]:focus, a:hover, a:focus, .gt-header.gt-style-1.gt-style-2 .gt-elements .gt-social-links li a:hover, .gt-header.gt-style-1.gt-style-2 .gt-elements .gt-social-links li a:focus, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu > li a:hover, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu > li a:focus, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu > li:hover > a, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu > li:hover > a:visited, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu > li > a:hover, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu > li > a:focus, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu li .gt-dropdown-menu li a:hover, .gt-header.gt-style-1.gt-style-2 .gt-navbar .gt-menu li .gt-dropdown-menu li a:focus, .gt-header.gt-style-3.gt-style-4 .gt-elements .gt-social-links li a:hover, .gt-header.gt-style-3.gt-style-4 .gt-elements .gt-social-links li a:focus, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu > li a:hover, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu > li a:focus, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu > li:hover > a, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu > li:hover > a:visited, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu > li > a:hover, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu > li > a:focus, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu li .gt-dropdown-menu li a:hover, .gt-header.gt-style-3.gt-style-4 .gt-navbar .gt-menu li .gt-dropdown-menu li a:focus, .gt-header.gt-style-5.gt-style-6 .gt-elements .gt-social-links li a:hover, .gt-header.gt-style-5.gt-style-6 .gt-elements .gt-social-links li a:focus, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu > li a:hover, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu > li a:focus, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu > li:hover > a, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu > li:hover > a:visited, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu > li > a:hover, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu > li > a:focus, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu li .gt-dropdown-menu li a:hover, .gt-header.gt-style-5.gt-style-6 .gt-navbar .gt-menu li .gt-dropdown-menu li a:focus, .gt-footer a:hover, .gt-footer a:focus, .gt-page-title-bar .gt-breadcrumb nav > ol > li a:focus, .gt-page-title-bar .gt-breadcrumb nav > ol > li a:hover, .gt-page-title-bar .gt-breadcrumb nav > ol > li.gt-item-current, .gt-page-title-bar .gt-breadcrumb nav > ol > li.current-item > span, .gt-mobile-menu .gt-top .gt-menu .gt-dropdown-menu > .active > a, .gt-mobile-menu .gt-top .gt-menu .gt-dropdown-menu > .active > a:focus, .gt-mobile-menu .gt-top .gt-menu .gt-dropdown-menu > .active > a:hover, .gt-mobile-menu .gt-top .gt-menu > li a:hover, .gt-mobile-menu .gt-top .gt-menu > li a:focus, .gt-mobile-menu .gt-top .gt-menu li:hover > a, .gt-mobile-menu .gt-top .gt-menu li:focus > a:visited, .gt-mobile-menu .gt-top .gt-menu li:hover > i, .gt-mobile-menu .gt-top .gt-menu li:focus > i, .gt-flex-menu li a:focus, .gt-flex-menu li a:hover, .fc-state-default:hover, .fc-state-default:focus, .fc button:hover, .fc button:focus, .gt-post-style-1 .gt-bottom > ul > li svg, .gt-post-style-1 .gt-bottom .gt-more:hover, .gt-post-style-1 .gt-bottom .gt-more:focus, .gt-post-style-1 .gt-image .gt-category ul a, .gt-post-style-1 .gt-image .gt-category ul a:visited, .gt-post-style-1 .gt-image .gt-category ul, .gt-post-style-2 .gt-bottom > ul > li svg, .gt-post-style-2 .gt-bottom .gt-more:hover, .gt-post-style-2 .gt-bottom .gt-more:focus, .gt-post-style-2 .gt-image .gt-category ul a, .gt-post-style-2 .gt-image .gt-category ul a:visited, .gt-post-style-2 .gt-image .gt-category ul, .gt-post-style-3 .gt-information > div svg, .gt-event-style-1 .gt-venue a:focus, .gt-event-style-1 .gt-venue a:hover, .gt-event-style-1 .gt-location ul li a:focus, .gt-event-style-1 .gt-location ul li a:hover, .gt-event-style-1 .gt-location svg, .gt-event-style-1 .gt-organizer ul li a:focus, .gt-event-style-1 .gt-organizer ul li a:hover, .gt-event-style-1 .gt-organizer svg, .gt-event-style-1 .gt-date svg, .gt-event-style-1 .gt-time svg, .gt-event-style-1 .gt-venue svg, .gt-event-style-1 .gt-stock svg, .gt-event-style-1 .gt-event-status, .gt-event-style-2 .gt-information > div svg, .gt-event-style-3 .gt-venue a:focus, .gt-event-style-3 .gt-venue a:hover, .gt-event-style-3 .gt-location ul li a:focus, .gt-event-style-3 .gt-location ul li a:hover, .gt-event-style-3 .gt-organizer ul li a:focus, .gt-event-style-3 .gt-organizer ul li a:hover, .gt-event-style-3 .gt-price svg, .gt-event-style-3 .gt-status svg, .gt-event-style-3 .gt-location svg, .gt-event-style-3 .gt-organizer svg, .gt-event-style-3 .gt-date svg, .gt-event-style-3 .gt-time svg, .gt-event-style-3 .gt-stock svg, .gt-event-style-3 .gt-venue svg, .gt-event-style-4 .gt-venue a:focus, .gt-event-style-4 .gt-venue a:hover, .gt-event-style-4 .gt-location ul li a:focus, .gt-event-style-4 .gt-location ul li a:hover, .gt-event-style-4 .gt-organizer ul li a:focus, .gt-event-style-4 .gt-organizer ul li a:hover, .gt-event-style-4 .gt-price svg, .gt-event-style-4 .gt-status svg, .gt-event-style-4 .gt-location svg, .gt-event-style-4 .gt-organizer svg, .gt-event-style-4 .gt-date svg, .gt-event-style-4 .gt-time svg, .gt-event-style-4 .gt-venue svg, .gt-event-style-4 .gt-stock svg, .gt-white .gt-venue-style-1 .gt-title a:hover, .gt-white .gt-venue-style-1 .gt-title a:focus, .gt-venue-style-1 .gt-title a:hover, .gt-venue-style-1 .gt-title a:focus, .gt-venue-style-1 .gt-image .gt-location, .gt-venue-style-1 .gt-image .gt-location a, .gt-venue-style-1 .gt-image .gt-location a:visited, .gt-venue-style-1 .gt-image .gt-category, .gt-venue-style-1 .gt-image .gt-category a, .gt-venue-style-1 .gt-image .gt-category a:visited, .gt-venue-style-1 .gt-image .status, .gt-white .gt-venue-style-3 .gt-title a:hover, .gt-white .gt-venue-style-3 .gt-title a:focus, .gt-venue-style-3 .gt-title a:hover, .gt-venue-style-3 .gt-title a:focus, .gt-venue-style-3 .gt-image .status, .gt-venue-style-3 .gt-category svg, .gt-content-favorite-add-popup:before, .gt-content-favorite-remove-popup:before, .gt-content-like-add-popup:before, .gt-content-like-remove-popup:before, .edit-link a:focus, .edit-link a:hover {
-  color: #d6001c;
-}
-
-.gt-event-style-3 .gt-price, .gt-event-style-3 .gt-status, .gt-event-style-3 .gt-venue, .gt-event-style-3 .gt-stock, .gt-event-style-3 .gt-location, .gt-event-style-3 .gt-organizer, .gt-event-style-3 .gt-date, .gt-event-style-3 .gt-time {
-  font-size: 0.9231rem;
-  line-height: 0.9231rem;
-  color: #777777;
+.btn-primary {
+  display: inline-flex;
   align-items: center;
-  display: flex;
-}
-
-.gt-event-style-3 .gt-price svg, .gt-event-style-3 .gt-status svg, .gt-event-style-3 .gt-venue svg, .gt-event-style-3 .gt-stock svg, .gt-event-style-3 .gt-location svg, .gt-event-style-3 .gt-organizer svg, .gt-event-style-3 .gt-date svg, .gt-event-style-3 .gt-time svg {
-  width: 16px;
-  margin-right: 8px;
-}
-
-.gt-event-style-3 .gt-title {
-  font-size: 1.462rem;
-  line-height: 1.4;
+  gap: 8px;
+  background: transparent;
+  color: #1a1a1a;
+  border: 2px solid #1a1a1a;
+  padding: 14px 28px;
+  font-size: 0.9rem;
   font-weight: 700;
-  margin-bottom: 15px;
-}
-
-.gt-date svg {
-  width: 24px;
-  height: 24px;
-  margin-right: 5px;
-}
-
-.gt-event-style-3 .gt-content {
-  background: #FFFFFF;
-  position: relative;
-  z-index: 2;
-  margin: -65px 10px 0;
-  padding: 20px;
-  border-radius: 5px;
-  overflow: hidden;
-  border-top-width: 3px;
-  border-top-style: solid;
-  height: 70%;
-}
-
-a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.b-l.b-2x.b-info.fc-draggable {
-  background: antiquewhite;
-}
-
-.calendar {
-  margin-bottom: 20px;
-}
-
-.fc-day-grid-event .fc-content .fc-time {
-  display: none;
-}
-
-a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-not-end {
-  background-color: aliceblue;
-}
-
-a.fc-day-grid-event.fc-h-event.fc-event.fc-not-start.fc-end {
-  background-color: aliceblue;
-}
-
-@media (max-width: 767px) {
-  .gt-columns.gt-column-10 .gt-col, .gt-columns.gt-column-9 .gt-col, .gt-columns.gt-column-8 .gt-col, .gt-columns.gt-column-7 .gt-col, .gt-columns.gt-column-6 .gt-col, .gt-columns.gt-column-5 .gt-col, .gt-columns.gt-column-4 .gt-col, .gt-columns.gt-column-3 .gt-col, .gt-columns.gt-column-2 .gt-col {
-    width: 100%;
-    padding: 0;
-  }
-}
-
-@media (max-width: 767px) {
-  .gt-event-style-3 .gt-title {
-    font-size: 1.231rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .gt-event-style-3 .gt-content {
-    margin-top: -20px;
-    margin-left: 0;
-    margin-right: 0;
-    border-radius: 0;
-    height: 70%;
-  }
-}
-
-h2 {
-  font-weight: 900;
-  margin: 0 0 40px;
-  font-size: 1.5em;
-  text-align: center;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
-.blog-block {
-  background-color: #f5f5f5;
-  margin-top: 70px;
-  padding: 50px 0;
-}
-
-
-.events-widget .gt-columns {
-  margin: 0 0 40px;
-}
-
-
-.gt-title > a {
-  color: black;
-}
-
-.blog-link {
-  text-align: center;
-  margin-top: 40px;
-}
-
-.gt-category-111 a {
-  padding: 0
-}
-
-.button.button--skewed:hover {
-  background-color: #bd0019;
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #d6001c;
   border-color: #d6001c;
-  color: #fff;
+  color: #FFFFFF;
 }
 
-.button:active, .button:focus {
-  background-color: #bd0019;
-  border-color: #bd0019;
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, .3);
-  color: #fff;
-}
-
-.button .sprite-line-icons use {
-  stroke: #000;
-  stroke-width: 1;
-  transition: all .2s ease-in-out;
-}
-.button.button--skewed:hover use {
-  stroke: #fff;
-}
-
-.gt-columns.gt-column-space-30 > .gt-col > .gt-inner {
-  padding: 0 15px 30px;
-  height: 100%;
-}
-
-@media only screen and (max-width: 767px) {
-  h2 {
-    margin: 0 15px 30px;
+/* Desktop & Tablet Grid */
+@media (min-width: 768px) {
+  .events-slider {
+    overflow-x: visible;
   }
 
-  .gt-columns.gt-column-10 .gt-col, .gt-columns.gt-column-9 .gt-col,
-  .gt-columns.gt-column-8 .gt-col,
-  .gt-columns.gt-column-7 .gt-col, .gt-columns.gt-column-6 .gt-col,
-  .gt-columns.gt-column-5 .gt-col,
-  .gt-columns.gt-column-4 .gt-col, .gt-columns.gt-column-3 .gt-col,
-  .gt-columns.gt-column-2 .gt-col {
-    width: 100%;
-    margin-bottom: 45px;
-  }
-
-  .gt-event-style-3 .gt-image img{
-    width: 100%;
-  }
-
-  .gt-event-style-3 .gt-content {
-    margin-top: -20px;
-    margin-left: 0;
-    margin-right: 0;
-    border-radius: 0;
-    height: 70%;
-  }
-  .gt-event-style-3 .gt-title {
-    font-size: 1.231rem;
+  .event-card {
+    flex: 1 1 calc(33.333% - 20px);
   }
 }
-
 </style>
-
-
-
