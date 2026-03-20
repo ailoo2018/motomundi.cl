@@ -37,99 +37,99 @@ register()
 
 <template>
   <ClientOnly>
-  <div
-    section="home"
-    id="youtube-block"
-  >
-    <div class="containeraa">
-      <div
-        class="row"
-        style="margin-bottom: 0px;"
-      >
-        <div class="col s12 l12">
-          <h2>
-            Motomundi en YouTube
-          </h2>
-          <ClientOnly>
-            <swiper-container
-              :modules="modules"
-              :slides-per-view="1"
-              :space-between="20"
-              :navigation="true"
-              :pagination="{ clickable: true }"
-              :breakpoints="{
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 20,
-                },
-              }"
-              class="youtube-block__content"
-            >
-              <swiper-slide
-                v-for="vitem in videos"
-                :key="vitem.id"
+    <div
+      id="youtube-block"
+      section="home"
+    >
+      <div class="containeraa">
+        <div
+          class="row"
+          style="margin-bottom: 0px;"
+        >
+          <div class="col s12 l12">
+            <h2>
+              Motomundi en YouTube
+            </h2>
+            <ClientOnly>
+              <swiper-container
+                :modules="modules"
+                :slides-per-view="1"
+                :space-between="20"
+                :navigation="true"
+                :pagination="{ clickable: true }"
+                :breakpoints="{
+                  640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                  },
+                }"
+                class="youtube-block__content"
               >
-                <div class="video">
-                  <a
-                    target="_blank"
-                    :href="`https://www.youtube.com/watch?v=${vitem.id.videoId}`"
-                    class="video-thumb"
-                  >
-                    <img
-                      :src="vitem.snippet.thumbnails.high.url"
-                      alt="Video thumbnail"
-                    >
-                  </a>
-
-                  <div class="home-youtube-post__content">
-                    <h3>{{ vitem.snippet.title }}</h3>
-                    <small>{{ formatDate(vitem.snippet.publishedAt) }}</small>
-                    <p>{{ vitem.snippet.description }}</p>
-
+                <swiper-slide
+                  v-for="vitem in videos"
+                  :key="vitem.id"
+                >
+                  <div class="video">
                     <a
                       target="_blank"
                       :href="`https://www.youtube.com/watch?v=${vitem.id.videoId}`"
-                      class="view-video-link"
+                      class="video-thumb"
                     >
-                      Ver vídeo
                       <img
-                        src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjExIiB2aWV3Qm94PSIwIDAgNiAxMSIgd2lkdGg9IjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTk4IDggNSA1IDUtNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWIwMDEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHRyYW5zZm9ybT0ibWF0cml4KDAgLTEgMSAwIC03LjUgMTA4LjUpIi8+PC9zdmc+"
-                        alt="Angle icon"
+                        :src="vitem.snippet.thumbnails.high.url"
+                        alt="Video thumbnail"
                       >
                     </a>
+
+                    <div class="home-youtube-post__content">
+                      <h3>{{ vitem.snippet.title }}</h3>
+                      <small>{{ formatDate(vitem.snippet.publishedAt) }}</small>
+                      <p>{{ vitem.snippet.description }}</p>
+
+                      <a
+                        target="_blank"
+                        :href="`https://www.youtube.com/watch?v=${vitem.id.videoId}`"
+                        class="view-video-link"
+                      >
+                        Ver vídeo
+                        <img
+                          src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjExIiB2aWV3Qm94PSIwIDAgNiAxMSIgd2lkdGg9IjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTk4IDggNSA1IDUtNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWIwMDEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHRyYW5zZm9ybT0ibWF0cml4KDAgLTEgMSAwIC03LjUgMTA4LjUpIi8+PC9zdmc+"
+                          alt="Angle icon"
+                        >
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </swiper-slide>
-            </swiper-container>
-          </ClientOnly>
-          <div class="youtube-link">
-            <a
-              href="https://www.youtube.com/MotoMundiTV"
-              target="_blank"
-              class="button button--skewed"
-            >
-              Visita nuestro canal de YouTube
-              <svg
-                width="12"
-                height="12"
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon sprite-line-icons"
+                </swiper-slide>
+              </swiper-container>
+            </ClientOnly>
+            <div class="youtube-link">
+              <a
+                href="https://www.youtube.com/MotoMundiTV"
+                target="_blank"
+                class="button button--skewed"
               >
-                <use
-                  href="/content/svg/motomundi.svg#i-icon-arrow-right-tail"
-                  style="stroke: white;"
-                />
-              </svg>
-            </a>
+                Visita nuestro canal de YouTube
+                <svg
+                  width="12"
+                  height="12"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon sprite-line-icons"
+                >
+                  <use
+                    href="/content/svg/motomundi.svg#i-icon-arrow-right-tail"
+                    style="stroke: white;"
+                  />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </ClientOnly>
 </template>
 
@@ -140,6 +140,12 @@ register()
   padding: 0 40px 20px;
   margin-top: 0;
   background-color: #222222;
+}
+
+@media (max-width: 600px){
+  #youtube-block {
+    padding: 0 10px 20px;
+  }
 }
 
 #youtube-block li.video > a img {

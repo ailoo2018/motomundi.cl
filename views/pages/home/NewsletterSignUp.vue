@@ -51,7 +51,7 @@ function reset() {
 </script>
 
 <template>
-  <section class="mm-newsletter">
+  <section class="mm-newsletter" >
 
     <div class="mm-inner">
 
@@ -227,6 +227,12 @@ function reset() {
   margin: 0 0 1.25rem;
   text-transform: uppercase;
   color: var(--text);
+}
+
+@media (max-width: 600px){
+  .mm-headline{
+    font-size: 2.2em;
+  }
 }
 
 .mm-headline em {

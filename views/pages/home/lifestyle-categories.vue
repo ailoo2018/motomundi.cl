@@ -67,7 +67,7 @@
     </div>
   </div>
 </template>
-<style>
+<style scoped>
 
 .promo-categories a.mtc-link{
   background-color: darkgrey;

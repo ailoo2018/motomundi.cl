@@ -1,7 +1,18 @@
+<script setup lang="ts">
+</script>
 <template>
+
   <div class="block-container seo-footer">
-    <div class="container">
+    <VDivider
+      length="90%"
+      class="mx-auto "
+      thickness="2"
+    />
+
+    <div class="container pt-8">
+
       <nav class="footer-nav">
+
         <div class="footer-nav__block">
           <div class="footer-nav__menu">
             <span class="h3">CARRETERA</span>
@@ -196,14 +207,14 @@
               <!--
                 <li><a
                 href="#"
-                 class="mtc-link">
+                class="mtc-link">
                 Calcetines
                 </a></li>
               -->
               <!--
                 <li><a
                 href="/equipacion-motocross/recambios?p=1"
-                 class="mtc-link">
+                class="mtc-link">
                 Recambios
                 </a></li>
               -->
@@ -298,7 +309,7 @@
               <!--
                 <li><a
                 href="/accesorios-moto/adhesivos?p=1"
-                 class="mtc-link">
+                class="mtc-link">
                 Adhesivos
                 </a></li>
               -->
@@ -332,39 +343,6 @@
             </ul>
           </div>
         </div>
-        <!--
-          <div class="footer-nav__block">
-          <div class="footer-nav__menu"><span class="h3">TRIAL</span>
-          <ul>
-          <li><a
-          href="/equipacion-moto-trial/cascos?p=1"
-           class="mtc-link">
-          Cascos
-          </a></li>
-          <li><a
-          href="/equipacion-moto-trial/botas?p=1"
-           class="mtc-link">
-          Botas
-          </a></li>
-          <li><a
-          href="/equipacion-moto-trial/pantalones-2?p=1"
-           class="mtc-link">
-          Pantalones
-          </a></li>
-          <li><a
-          href="/equipacion-moto-trial/chaquetas?p=1"
-           class="mtc-link">
-          Chaquetas
-          </a></li>
-          <li><a
-          href="/equipacion-moto-trial/guantes?p=1"
-           class="mtc-link">
-          Guantes
-          </a></li>
-          </ul>
-          </div>
-          </div>
-        -->
         <div class="footer-nav__block">
           <div class="footer-nav__menu">
             <span class="h3">Ropa casual</span>
@@ -417,7 +395,6 @@
             </ul>
           </div>
         </div>
-
       </nav>
     </div>
   </div>
@@ -427,7 +404,6 @@
         <div class="col s12 12 footer-container">
           <aside class="footer-description">
             <div class="motomundi-logo">
-
               <a
                 href="/"
                 class="motocard-logo-link mtc-link"
@@ -607,39 +583,24 @@
                 </li>
               </ul>
             </nav>
-            <div
-              class="footer-lang__block"
-              data-v-da8a6ba4=""
-            >
-              <span
-                class="h3"
-                data-v-da8a6ba4=""
-              >Idioma</span>
-              <div
-                class="footer-lang__block-content"
-                data-v-da8a6ba4=""
-              >
+            <div class="footer-lang__block d-flex mt-10 mb-5 justify-center">
+              <span class="font-weight-bold mr-3 ">Idioma</span>
+              <div class="footer-lang__block-content">
                 <svg
                   width="17"
                   height="17"
                   xmlns="http://www.w3.org/2000/svg"
                   class="lang-icon icon sprite-line-icons"
-                  data-v-da8a6ba4=""
                 >
                   <use
                     href="/content/svg/motomundi.svg?v=1.4#i-icon-globe"
                     xlink:href="/content/svg/motomundi.svg?v=1.4#i-icon-globe"
-                    data-v-da8a6ba4=""
                   />
                 </svg>
-                <select
-                  class="lang-selector"
-                  data-v-da8a6ba4=""
-                >
+                <select class="lang-selector">
                   <option
                     selected="selected"
                     value="es"
-                    data-v-da8a6ba4=""
                   >
                     Español
                   </option>
@@ -649,12 +610,10 @@
                   height="5"
                   xmlns="http://www.w3.org/2000/svg"
                   class="chevron icon sprite-icons"
-                  data-v-da8a6ba4=""
                 >
                   <use
                     href="/content/svg/motomundi.svg?v=1.4#i-select-arrow"
                     xlink:href="/content/svg/motomundi.svg?v=1.4#i-select-arrow"
-                    data-v-da8a6ba4=""
                   />
                 </svg>
               </div>
@@ -717,7 +676,7 @@
                   <!--
                     <li><a
                     href="/seguimiento-de-pedidos.html"
-                     rel="nofollow" class="mtc-link">
+                    rel="nofollow" class="mtc-link">
                     Seguimiento de pedidos
                     </a></li>
                   -->
@@ -743,7 +702,7 @@
                   <!--
                     <li><a
                     href="/codigos-promocionales-descuentos-y-cupones.html"
-                     class="mtc-link">
+                    class="mtc-link">
                     Códigos promocionales
                     </a></li>
                   -->
@@ -898,8 +857,16 @@
             </div>
           </nav>
         </div>
-        <aside class="col s12 l12 footer-secondary">
+
+        <aside class=" footer-secondary">
+
+
           <div class="footer-secondary__block">
+            <VDivider
+              length="90%"
+              class="mx-auto my-6"
+              thickness="2"
+            />
             <ul class="legal-menu">
               <li>
                 <a
@@ -932,20 +899,13 @@
                 </a>
               </li>
             </ul>
-            <div
-              class="change-locale-desktop-container show-on-medium-and-up"
-              data-v-12a116bb=""
-            >
-              <ul
-                class="lang-currency"
-                data-v-12a116bb=""
-              >
-                <li data-v-12a116bb="">
+            <div class="change-locale-desktop-container show-on-medium-and-up">
+              <ul class="lang-currency">
+                <li>
                   <svg
                     height="11"
                     width="11"
                     xmlns="http://www.w3.org/2000/svg"
-                    data-v-12a116bb=""
                   >
                     <g
                       fill="none"
@@ -954,24 +914,16 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width=".72"
-                      data-v-12a116bb=""
                     >
-                      <path
-                        d="M8.682 2.318a4.5 4.5 0 11-6.364 6.364 4.5 4.5 0 016.364-6.364M1 5.5h9"
-                        data-v-12a116bb=""
-                      />
-                      <path
-                        d="M5.5 1h0a6.885 6.885 0 011.8 4.5A6.885 6.885 0 015.5 10h0a6.885 6.885 0 01-1.8-4.5A6.885 6.885 0 015.5 1z"
-                        data-v-12a116bb=""
-                      />
+                      <path d="M8.682 2.318a4.5 4.5 0 11-6.364 6.364 4.5 4.5 0 016.364-6.364M1 5.5h9" />
+                      <path d="M5.5 1h0a6.885 6.885 0 011.8 4.5A6.885 6.885 0 015.5 10h0a6.885 6.885 0 01-1.8-4.5A6.885 6.885 0 015.5 1z" />
                     </g>
                   </svg>
-                  <strong data-v-12a116bb="">Chile</strong>
+                  <strong>Chile</strong>
                   <svg
                     height="11"
                     width="9"
                     xmlns="http://www.w3.org/2000/svg"
-                    data-v-12a116bb=""
                   >
                     <g
                       fill="none"
@@ -980,20 +932,15 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width=".8"
-                      data-v-12a116bb=""
                     >
-                      <path
-                        d="M.45 6.85s.45-.45 1.8-.45 2.25.9 3.6.9 1.8-.45 1.8-.45v-5.4s-.45.45-1.8.45S3.6 1 2.25 1s-1.8.45-1.8.45zM.45 10V6.85"
-                        data-v-12a116bb=""
-                      />
+                      <path d="M.45 6.85s.45-.45 1.8-.45 2.25.9 3.6.9 1.8-.45 1.8-.45v-5.4s-.45.45-1.8.45S3.6 1 2.25 1s-1.8.45-1.8.45zM.45 10V6.85" />
                     </g>
                   </svg>
-                  <strong data-v-12a116bb="">Español</strong>
+                  <strong>Español</strong>
                   <svg
                     height="11"
                     width="11"
                     xmlns="http://www.w3.org/2000/svg"
-                    data-v-12a116bb=""
                   >
                     <g
                       fill="none"
@@ -1002,15 +949,11 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width=".8"
-                      data-v-12a116bb=""
                     >
-                      <path
-                        d="M10.032 8.682a4.5 4.5 0 110-6.364M1 4.6h7.65M1 6.4h7.65"
-                        data-v-12a116bb=""
-                      />
+                      <path d="M10.032 8.682a4.5 4.5 0 110-6.364M1 4.6h7.65M1 6.4h7.65" />
                     </g>
                   </svg>
-                  <strong data-v-12a116bb="">Peso chileno</strong>
+                  <strong>Peso chileno</strong>
                 </li>
               </ul>
             </div>
@@ -1095,7 +1038,7 @@
 
 
         <aside
-          class="col s12 l12"
+          class=""
           style="text-align: center;margin-top:20px;"
         >
           <a
@@ -1105,27 +1048,28 @@
           >
             <div class="footer-secondary__block">
               <img
-                src="https://www.ailoo.cl/Templates/AilooWeb/content/img/logo.png"
+                src="https://www.ailoo.cl/Images/logo.png"
                 style="width: 100px;"
               >
             </div>
             <span style="font-size: 12px;">Empresa empoderada con Ailoo</span>
           </a>
         </aside>
-
       </div>
     </div>
   </footer>
 </template>
 
 <style scoped>
-
 footer {
-  background-color: #f5f5f5;
+  background-color: #222;
   padding: 50px 0;
+  color: #a3a3a3;
 }
+
 .block-container {
-  background-color: #f5f5f5;
+  background-color: #222;
+  color: #a3a3a3;
 }
 
 .footer-nav {
@@ -1169,13 +1113,12 @@ footer {
 }
 
 .footer-nav .mtc-link {
-  color: #000;
+  color: #a3a3a3;
   font-size: 12px;
   line-height: unset;
   text-transform: unset;
   font-weight: normal;
 }
-
 
 
 .motomundi-logo {
@@ -1187,6 +1130,8 @@ footer {
   font-size: 13px;
   line-height: 18px;
   margin: 15px 0;
+  padding: 4px 20px;
+
 }
 
 footer ul {
@@ -1227,6 +1172,7 @@ footer span.h3 {
 
 .footer-lang__block select {
   background: transparent;
+  color: #a3a3a3;
   border: none;
   cursor: pointer;
   font-size: 13px;
@@ -1262,7 +1208,7 @@ footer span.h3 {
 }
 
 .footer-secondary {
-  border-top: 1px solid #d8d8d8;
+
   display: flex;
   justify-content: space-between;
   margin-top: 20px !important;
@@ -1271,17 +1217,20 @@ footer span.h3 {
 .footer-secondary__block {
   padding-top: 30px !important;
 }
+
 .legal-menu {
   font-size: 11px;
   line-height: 1.2;
+
 }
 
 .legal-menu li {
-  border-right: 1px solid #000;
+  border-right: 1px solid #fff;
   display: inline-block;
   margin-right: 8px;
   padding: 0 8px 0 0;
 }
+
 .footer-secondary__block:first-child li {
   display: inline;
   margin-right: 8px;
@@ -1290,13 +1239,22 @@ footer span.h3 {
 .lang-currency {
   position: relative;
 }
+
 .lang-currency > li {
   display: inline-block;
   padding-bottom: 2px;
 }
-.lang-currency > li svg {
-  vertical-align: -2px;
+
+.lang-currency > li svg g {
+  stroke: #a3a3a3;
+
 }
+
+.sprite-line-icons use {
+  stroke: #a3a3a3;
+
+}
+
 .lang-currency > li strong {
   background-color: transparent;
   background-image: none;
@@ -1316,17 +1274,19 @@ footer span.h3 {
   min-width: 239px;
   padding: 0;
 }
+
 .footer-secondary__block:first-child li {
   display: inline;
   margin-right: 8px;
 }
 
 .footer-secondary__block:first-child p {
-  color: #484848;
+
   font-size: 11px;
   line-height: 13px;
   margin: 0;
 }
+
 .footer-secondary__block:last-child {
   display: flex;
   flex: 0 0 60%;
@@ -1361,31 +1321,40 @@ div.change-locale-desktop-container {
 .footer-secondary__block:last-child > span.cc-cod svg, .footer-secondary__block:last-child > span.cc-transfer svg {
   margin-right: 5px;
 }
+
 .footer-secondary__block:last-child > span.cc-cod use, .footer-secondary__block:last-child > span.cc-transfer use {
   stroke: #fff;
   stroke-width: 1;
 }
+
 .footer-secondary__block:last-child > span.cc-visa {
   background-color: #26337a;
 }
+
 .footer-secondary__block:last-child > span.cc-maestro, .footer-secondary__block:last-child > span.cc-mastercard {
   background-color: #006;
 }
+
 .footer-secondary__block:last-child > span.cc-maestro, .footer-secondary__block:last-child > span.cc-mastercard {
   background-color: #006;
 }
+
 .footer-secondary__block:last-child > span.cc-amex {
   background-color: #0072ce;
 }
+
 .footer-secondary__block:last-child > span.cc-paypal {
   background-color: #00457c;
 }
+
 .footer-secondary__block:last-child > span.cc-apple-pay, .footer-secondary__block:last-child > span.cc-google-pay {
   background-color: #000;
 }
+
 .footer-secondary__block:last-child > span.cc-apple-pay, .footer-secondary__block:last-child > span.cc-google-pay {
   background-color: #000;
 }
+
 .footer-secondary__block:last-child > span.cc-cod, .footer-secondary__block:last-child > span.cc-transfer {
   color: #fff;
   font-size: 8px;
@@ -1404,6 +1373,7 @@ div.change-locale-desktop-container {
     text-align: center;
   }
 }
+
 @media only screen and (max-width: 600px) {
   .footer-secondary__block:last-child > span {
     margin-bottom: 3px;
@@ -1424,31 +1394,37 @@ div.change-locale-desktop-container {
     margin-top: 30px;
   }
 }
+
 @media only screen and (max-width: 600px) {
   .footer-secondary__block {
     text-align: center;
   }
 }
+
 @media only screen and (max-width: 600px) {
   .footer-secondary__block {
     text-align: center;
   }
 }
+
 @media only screen and (max-width: 600px) {
   .footer-secondary {
     flex-wrap: wrap;
   }
 }
+
 @media only screen and (max-width: 600px) {
   .footer-nav {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 }
+
 @media only screen and (max-width: 600px) {
   .footer-nav__block {
     flex: 0 0 100%;
   }
 }
+
 @media only screen and (max-width: 992px) {
   .footer-lang__block .footer-lang__block-content {
     justify-content: center;
@@ -1538,25 +1514,32 @@ div.change-locale-desktop-container {
   stroke: #fff;
   stroke-width: 1;
 }
+
 .footer-description nav ul .mtc-link.sm-blog, .footer-description nav ul a.sm-blog, .footer-description nav ul span.sm-blog {
   background-color: #d6001c;
 }
+
 .footer-description nav ul .mtc-link.sm-fb, .footer-description nav ul a.sm-fb, .footer-description nav ul span.sm-fb {
   background-color: #3b5997;
 }
+
 .footer-description nav ul .mtc-link.sm-tw, .footer-description nav ul a.sm-tw, .footer-description nav ul span.sm-tw {
   background-color: #1ea0f3;
 }
+
 .footer-description nav ul .mtc-link.sm-yt, .footer-description nav ul a.sm-yt, .footer-description nav ul span.sm-yt {
   background-color: #e40303;
 }
+
 .footer-description nav ul .mtc-link.sm-ig, .footer-description nav ul a.sm-ig, .footer-description nav ul span.sm-ig {
   background: linear-gradient(45deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f09433", endColorstr="#bc1888", GradientType=1);
 }
+
 .footer-description nav ul .mtc-link.sm-tt, .footer-description nav ul a.sm-tt, .footer-description nav ul span.sm-tt {
   background-color: #000;
 }
+
 .footer-description nav ul .mtc-link.sm-nl, .footer-description nav ul a.sm-nl, .footer-description nav ul span.sm-nl {
   background-color: #e40303;
   color: #fff;
@@ -1575,8 +1558,6 @@ div.change-locale-desktop-container {
     margin-bottom: 3px;
   }
 }
-
-
 
 
 @media (max-width: 1399px) {
