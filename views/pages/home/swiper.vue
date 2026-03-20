@@ -75,6 +75,7 @@ register()
     <section class="carousel-block">
       <!-- 👇 Static first-image placeholder shown before Swiper is ready -->
 
+
       <div
         v-if="!swiperReady && firstImage"
         class="swiper-placeholder"

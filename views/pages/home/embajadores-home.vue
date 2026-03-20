@@ -287,6 +287,13 @@ const next = () => swiperRef.value?.slideNext()
   color: var(--black);
 }
 
+@medi(max-width: 900px)
+{
+  .ambswipe__name {
+    font-size: 16px;
+  }
+}
+
 .ambswipe__meta {
   display: flex;
   align-items: center;
