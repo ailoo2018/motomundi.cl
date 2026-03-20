@@ -10,6 +10,15 @@ const props = defineProps({
 })
 
 const { isMobile, isTablet, isDesktop } = useDevice()
+/*
+const deviceType = useState('device-type', () => {
+  const event = useRequestEvent()
+  return event?.context.deviceType || 'desktop'
+})
+const isMobile = computed(() => deviceType.value === 'mobile')
+*/
+
+
 
 const swiperEl = ref(null)
 const activeIndex = ref(0)
@@ -17,20 +26,21 @@ const swiperReady = ref(false) // 👈 new
 
 const firstImage = computed(() => props.widget.configuration.images?.[0])
 
-const goToSlide = (index) => {
+const goToSlide = index => {
   if (swiperEl.value && swiperEl.value.swiper) {
     swiperEl.value.swiper.slideTo(index)
     activeIndex.value = index
   }
 }
 
-const getBgImg = img => {
+const getBgImg = (img, origin) => {
   if (isMobile && img.imagePathSmall && img.imagePathSmall.length > 0) {
     return {
       backgroundImage: `url('${getBaseCDN()}${img.imagePathSmall}')`,
       backgroundSize: "auto 500px",
     }
   }
+
   return {
     backgroundImage: `url('${getBaseCDN()}${img.imagePath}')`,
   }
@@ -39,7 +49,7 @@ const getBgImg = img => {
 onMounted(async () => {
   await nextTick()
   if (swiperEl.value) {
-    swiperEl.value.addEventListener('swiper-slidechange', (e) => {
+    swiperEl.value.addEventListener('swiper-slidechange', e => {
       activeIndex.value = e.detail[0].activeIndex
     })
 
@@ -57,11 +67,17 @@ register()
 </script>
 
 <template>
-  <div id="home-block-0" class="block-container">
+  <div
+    id="home-block-0"
+    class="block-container"
+  >
     <section class="carousel-block">
-
       <!-- 👇 Static first-image placeholder shown before Swiper is ready -->
-      <div v-if="!swiperReady && firstImage" class="swiper-placeholder">
+
+      <div
+        v-if="!swiperReady && firstImage"
+        class="swiper-placeholder"
+      >
         <a :href="firstImage.link">
           <div
             class="slide slide__theme--dark slide__layout--single-image slide__layout--right"
@@ -69,10 +85,13 @@ register()
           >
             <div class="container">
               <div class="slide__content">
-                <div v-if="firstImage.slideImage" class="slide__single-image">
+                <div
+                  v-if="firstImage.slideImage"
+                  class="slide__single-image"
+                >
                   <span>
                     <img
-                      v-if="!isMobile || firstImage.showForegroundMobile"
+                      v-if="firstImage.showForegroundMobile"
                       :src="getBaseCDN() + firstImage.slideImage"
                       class="cdn-img carrusel-fg-image"
                     >
@@ -108,15 +127,17 @@ register()
           >
             <div class="swiper-slide">
               <a :href="img.link">
-                <span data-dr="true" class="mtc-link">
+                <span class="mtc-link">
                   <div
-                    data-promotion-position="idx"
                     class="slide slide__theme--dark slide__layou--single-image slide__layout--right"
                     :style="getBgImg(img)"
                   >
                     <div class="container">
                       <div class="slide__content">
-                        <div v-if="img.slideImage" class="slide__single-image">
+                        <div
+                          v-if="img.slideImage"
+                          class="slide__single-image"
+                        >
                           <span>
                             <img
                               v-if="!isMobile || img.showForegroundMobile"
@@ -140,9 +161,17 @@ register()
                               class="slide__button button--skewed"
                             >
                               {{ img.buttonTitle }}
-                              <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" class="icon sprite-line-icons">
+                              <svg
+                                width="12"
+                                height="12"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon sprite-line-icons"
+                              >
                                 <title>Right arrow</title>
-                                <use href="/content/svg/motomundi.svg#i-icon-arrow-right-tail" xlink:href="/content/svg/motomundi.svg#i-icon-arrow-right-tail" />
+                                <use
+                                  href="/content/svg/motomundi.svg#i-icon-arrow-right-tail"
+                                  xlink:href="/content/svg/motomundi.svg#i-icon-arrow-right-tail"
+                                />
                               </svg>
                             </span>
                           </div>
@@ -168,11 +197,18 @@ register()
           <span :title="img.sliderButtonTitle">{{ img.sliderButtonTitle }}</span>
         </div>
       </div>
-
     </section>
   </div>
 </template>
+
 <style scoped>
+
+
+@media(max-width: 900px) {
+  .swiper-placeholder {
+    max-height: 400px;
+  }
+}
 .swiper-slide {
   flex-shrink: 0;
   height: 100%;
@@ -352,15 +388,14 @@ register()
 }
 
 .carousel-block .swiper-slide-selector:hover {
-  background-color: #d6001c;
+  background-color: #B21915;
 }
 
 .carousel-block .swiper-slide-selector.active {
-  background-color: #d6001c
+  background-color: #B21915
 }
 
 .carousel-block .swiper-pagination {
   bottom: 10px
 }
-
 </style>
