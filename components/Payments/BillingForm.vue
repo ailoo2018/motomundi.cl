@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {useCheckoutStore} from '~/stores/checkout'
+import { useCheckoutStore } from '~/stores/checkout'
 
 const props = defineProps({
   modelValue: {
     type: Object,
     required: true,
-  }
-});
+  },
+})
 
 const emit = defineEmits(["updatedAddress"])
 
@@ -27,13 +27,13 @@ const billingAddress = ref({
 const billingAddress = ref(structuredClone(toRaw(props.modelValue)))
 const addressForm = ref(null)
 
-watch(() => props.modelValue, (newValue) => {
-  Object.assign(billingAddress.value, newValue);
-}, { deep: true });
+watch(() => props.modelValue, newValue => {
+  Object.assign(billingAddress.value, newValue)
+}, { deep: true })
 
 const updateModelValue = () => {
-  emit('update:modelValue', { ...billingAddress.value });
-};
+  emit('update:modelValue', { ...billingAddress.value })
+}
 
 
 
@@ -42,18 +42,18 @@ const showBillingForm = ref(false)
 
 
 if (!billingAddress.value) {
-  billingAddress.value = checkoutStore.customerInfo.address;
+  billingAddress.value = checkoutStore.customerInfo.address
 }
 
 const saveBillingAddress = async () => {
 
   const err = await addressForm.value.validate()
   if(err) {
-//    alert(err)
+    //    alert(err)
     return
   }
 
-  showBillingForm.value = false;
+  showBillingForm.value = false
   emit("updatedAddress", billingAddress.value)
 }
 
@@ -62,22 +62,30 @@ const getBillingAddress = () => {
 }
 
 const addressFormConfig = {
-  type: "organization"
+  type: "organization",
 }
-
 </script>
 
 <template>
-
-
-  <div class="payment__billing-info" >
+  <div class="payment__billing-info">
     <h3>Datos de facturación </h3>
-    <div class="billing-info__content padding-md mt-3" v-if="!billingAddress.rut">
-      <VBtn class="full-width" @click="showBillingForm = true" style="width:100%">Solicitar Factura</VBtn>
+    <div
+      v-if="!billingAddress.rut"
+      class="billing-info__content padding-md mt-3"
+    >
+      <VBtn
+        class="w-100"
+        style="width:100%"
+        @click="showBillingForm = true"
+      >
+        Solicitar Factura
+      </VBtn>
     </div>
 
-    <div class="billing-info__content" v-if="billingAddress.rut">
-
+    <div
+      v-if="billingAddress.rut"
+      class="billing-info__content"
+    >
       <div>
         <div class="address__info">
           <div class="address__content">
@@ -90,32 +98,44 @@ const addressFormConfig = {
           </div>
 
 
-          <button class="button button--light button--small address__modify" @click="showBillingForm = true">
+          <button
+            class="button button--light button--small address__modify"
+            @click="showBillingForm = true"
+          >
             Cambiar
           </button>
         </div>
-
-
-
       </div>
     </div>
   </div>
-  <div class="payment__billing-form " v-if="showBillingForm" :class="{ 'collapsed' : !showBillingForm }">
-
+  <div
+    v-if="showBillingForm"
+    class="payment__billing-form "
+    :class="{ 'collapsed' : !showBillingForm }"
+  >
     <div class="billing-form__content">
-      <AddressForm ref="addressForm" :is-company="true"  v-model="billingAddress" ></AddressForm>
+      <FacturacionForm
+        ref="addressForm"
+        v-model="billingAddress"
+        is-company
+      />
       <div class="form-actions">
-        <button class="button button--outline" @click="showBillingForm = false">
+        <button
+          class="button button--outline"
+          @click="showBillingForm = false"
+        >
           Cancelar
         </button>
-        <button class="button button--filled" @click="saveBillingAddress">
+        <button
+          class="button button--filled"
+          @click="saveBillingAddress"
+        >
           Guardar
         </button>
       </div>
     </div>
-    <div class="payment__overlay"></div>
+    <div class="payment__overlay" />
   </div>
-
 </template>
 
 <style scoped>

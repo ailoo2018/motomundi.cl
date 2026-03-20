@@ -384,13 +384,14 @@ register()
   font-size: 17px;
   font-weight: 800;
   line-height: 1.25;
-  color: var(--yt-white);
+  color: #EFC2C7;
   margin: 0;
   letter-spacing: 0.3px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
 }
 
 .yt-card__desc {

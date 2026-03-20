@@ -165,7 +165,6 @@ defineExpose({ getAddresses, getCustomerAddress, validate })
     class="address-form"
     validate-on="submit"
   >
-    {{ isChile }}
 
     <!-- ── Country ──────────────────────────────────────────── -->
     <VRow class="ma-0 pa-0 mt-4">
