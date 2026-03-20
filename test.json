@@ -1,188 +1,51 @@
 {
-  "wuid": "81ad5708-c676-47a7-807e-45334081b6a6",
-  "country": "CL",
-  "total": 8420.16806722689,
-  "shippingCost": 0,
-  "currency": "CLP",
-  "clp": {
-    "total": 8420.16806722689,
-    "shipping": 0
-  },
-  "exchangeRate": 1,
-  "coupon": null,
-  "addresses": {
-    "selectedShipping": {
-      "countryCode": "CL",
-      "countryName": "Chile",
-      "idType": "RUT",
-      "nif": "15.320.300-8",
-      "name": "Juan",
-      "surnames": "Carlos",
-      "address": "Av Las Condes 123",
-      "address2": null,
-      "state": "Albacete",
-      "city": "caba",
-      "comuna": {
-        "id": 316,
-        "name": "LAS CONDES",
-        "region": "XIII Metropolitana",
-        "geocoding": null,
-        "lat": -33.4079424,
-        "lng": -70.5451063,
-        "parent": {
-          "id": 15,
-          "name": "XIII Metropolitana",
-          "type": "COMUNA"
-        }
+  "id": 114930,
+  "name": "Html_CarruselMotocard",
+  "configuration": {
+    "conditionsUrl": "#",
+    "title": "Carrusel Home",
+    "images": [
+      {
+        "link": "/cms/nuevo-outlet-buenaventura",
+        "countdownDate": null,
+        "buttonColor": null,
+        "buttonTitle": "Conocer más",
+        "align": "center",
+        "alignMobile": "center",
+        "imagePathSmall": "/Content/uploads/1/_data/a/cd/acd59b5bca474e02b30c4c570cdc8fea.jpg",
+        "showForegroundMobile": null,
+        "imagePath": "/Content/uploads/1/_data/3/06/306c0d2d2cf74c4496d91de20138a046.jpg",
+        "slideImage": "/Content/uploads/1/_data/4/53/4534ca3fe1f640a68ce51afdc35fdb29.png",
+        "sliderButtonTitle": "GRAN APERTURA OUTLET"
       },
-      "postalCode": "10019",
-      "dialCode": "+56",
-      "phone": "56984851765",
-      "comuna_id": 316
-    },
-    "askForInvoice": true,
-    "shipping": {
-      "countryCode": "CL",
-      "countryName": "Chile",
-      "idType": "RUT",
-      "nif": "15.320.300-8",
-      "name": "Juan",
-      "surnames": "Carlos",
-      "address": "Av Las Condes 123",
-      "address2": null,
-      "state": "Albacete",
-      "city": "caba",
-      "comuna": {
-        "id": 316,
-        "name": "LAS CONDES",
-        "region": "XIII Metropolitana",
-        "geocoding": null,
-        "lat": -33.4079424,
-        "lng": -70.5451063,
-        "parent": {
-          "id": 15,
-          "name": "XIII Metropolitana",
-          "type": "COMUNA"
-        }
+      {
+        "link": "https://www.motomundi.cl/equipacion-moto-carretera?orderBy=bestseller",
+        "countdownDate": null,
+        "buttonColor": null,
+        "buttonTitle": "EQUIPA TU RUTA",
+        "align": "center",
+        "alignMobile": "center",
+        "imagePathSmall": "/Content/uploads/1/_data/5/a3/5a36293bde444771bcd04e18ac210bfa.jpg",
+        "showForegroundMobile": null,
+        "imagePath": "/Content/uploads/1/_data/b/09/b096d1013bb0404185146c4b30c4d885.jpg",
+        "slideImage": "/Content/uploads/1/_data/4/53/4534a2f426784e639617803aeebd0570.png",
+        "sliderButtonTitle": "ACCESORIOS Y COMPLEMENTOS"
       },
-      "postalCode": "10019",
-      "dialCode": "+56",
-      "phone": "56984851765",
-      "comuna_id": 316
-    },
-    "billing": {
-      "name": "",
-      "surnames": "",
-      "rut": "15.320.300-8",
-      "address": "LAS TRANQUERAS 56",
-      "address2": "PISO 1",
-      "legalName": "AUTOVIA CHILE LIMITADA",
-      "type": "",
-      "comuna": {
-        "id": 316,
-        "name": "LAS CONDES",
-        "region": "XIII Metropolitana",
-        "geocoding": null,
-        "lat": -33.4079424,
-        "lng": -70.5451063,
-        "parent": {
-          "id": 15,
-          "name": "XIII Metropolitana",
-          "type": "COMUNA"
-        }
-      },
-      "postal_code": "70019"
-    }
-  },
-  "customerInformation": {
-    "phone": "56984851765",
-    "email": "jcfuentes@motomundi.cl",
-    "address": {
-      "countryCode": "CL",
-      "countryName": "Chile",
-      "idType": "RUT",
-      "nif": "15.320.300-8",
-      "name": "Juan",
-      "surnames": "Carlos",
-      "address": "Av Las Condes 123",
-      "address2": null,
-      "state": "Albacete",
-      "city": "caba",
-      "comuna": {
-        "id": 316,
-        "name": "LAS CONDES",
-        "region": "XIII Metropolitana",
-        "geocoding": null,
-        "lat": -33.4079424,
-        "lng": -70.5451063,
-        "parent": {
-          "id": 15,
-          "name": "XIII Metropolitana",
-          "type": "COMUNA"
-        }
-      },
-      "postalCode": "10019",
-      "dialCode": "+56",
-      "phone": "56984851765",
-      "comuna_id": 316
-    }
-  },
-  "shipmentInformation": {
-    "method": 1,
-    "shipmentMethod": {
-      "id": 9,
-      "price": 0,
-      "oldPrice": 0,
-      "preparationDays": {
-        "from": 3,
-        "to": 4
-      },
-      "estimatedDays": 2,
-      "eta": {
-        "from": "2026-03-25T13:29:01.997Z",
-        "to": "2026-03-26T13:29:01.997Z"
-      },
-      "type": 1
-    },
-    "address": {
-      "countryCode": "CL",
-      "countryName": "Chile",
-      "idType": "RUT",
-      "nif": "15.320.300-8",
-      "name": "Juan",
-      "surnames": "Carlos",
-      "address": "Av Las Condes 123",
-      "address2": null,
-      "state": "Albacete",
-      "city": "caba",
-      "comuna": {
-        "id": 316,
-        "name": "LAS CONDES",
-        "region": "XIII Metropolitana",
-        "geocoding": null,
-        "lat": -33.4079424,
-        "lng": -70.5451063,
-        "parent": {
-          "id": 15,
-          "name": "XIII Metropolitana",
-          "type": "COMUNA"
-        }
-      },
-      "postalCode": "10019",
-      "dialCode": "+56",
-      "phone": "56984851765",
-      "comuna_id": 316
-    },
-    "store": {
-      "id": 1,
-      "title": "LAS TRANQUERAS (LAS CONDES)",
-      "name": "LAS TRANQUERAS",
-      "address": "LAS TRANQUERAS 56",
-      "latitude": -33400898749676830,
-      "longitude": -7055551688038699,
-      "comuna": {
-        "id": 316,
-        "name": "LAS CONDES"
+      {
+        "link": "https://www.motomundi.cl/products/list?sword=accesorios+cascos",
+        "countdownDate": null,
+        "buttonColor": null,
+        "buttonTitle": "VER ACCESORIOS",
+        "align": "center",
+        "alignMobile": "center",
+        "imagePathSmall": "/Content/uploads/1/_data/6/06/606162a5414a43fb9b36623680d7fc23.jpg",
+        "showForegroundMobile": null,
+        "imagePath": "/Content/uploads/1/_data/4/6b/46be740672c2450491cf9ca3f85e6320.jpg",
+        "slideImage": "/Content/uploads/1/_data/5/1e/51e74495190a4ea5b88a522094e75cea.png",
+        "sliderButtonTitle": "EQUIPA TU CASCO"
       }
-    },
-    "pickupOption": "pickup_in_2_houShow more,
+    ],
+    "cache-enabled": false
+  },
+  "component": "Swiper"
+}

@@ -67,6 +67,7 @@ register()
 </script>
 
 <template>
+
   <div
     id="home-block-0"
     class="block-container"
@@ -91,7 +92,7 @@ register()
                 >
                   <span>
                     <img
-                      v-if="firstImage.showForegroundMobile"
+                      v-if="!isMobile || firstImage.showForegroundMobile"
                       :src="getBaseCDN() + firstImage.slideImage"
                       class="cdn-img carrusel-fg-image"
                     >
