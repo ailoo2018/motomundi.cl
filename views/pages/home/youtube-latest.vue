@@ -148,7 +148,6 @@ register()
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap');
 
 /* ── Variables ─────────────────────────────────────────────── */
 :root {
@@ -168,7 +167,6 @@ register()
   background-color: #bd0019;
   overflow: hidden;
   padding: 60px 0 50px;
-  font-family: 'Barlow', sans-serif;
 }
 
 /* Diagonal texture overlay */
@@ -233,7 +231,7 @@ register()
 }
 
 .yt-header__label {
-  font-family: 'Barlow Condensed', sans-serif;
+
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 3px;
@@ -242,7 +240,6 @@ register()
 }
 
 .yt-header__title {
-  font-family: 'Barlow Condensed', sans-serif;
   line-height: 0.92;
   margin: 0 0 10px;
   display: flex;
@@ -375,7 +372,6 @@ register()
 }
 
 .yt-card__date {
-  font-family: 'Barlow Condensed', sans-serif;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -385,7 +381,6 @@ register()
 }
 
 .yt-card__title {
-  font-family: 'Barlow Condensed', sans-serif;
   font-size: 17px;
   font-weight: 800;
   line-height: 1.25;
@@ -415,7 +410,6 @@ register()
   align-items: center;
   gap: 6px;
   margin-top: 6px;
-  font-family: 'Barlow Condensed', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -475,7 +469,6 @@ swiper-container::part(button-next) { right: -8px; }
   color: #ffffff;
   text-decoration: none;
   padding: 13px 28px;
-  font-family: 'Barlow Condensed', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
