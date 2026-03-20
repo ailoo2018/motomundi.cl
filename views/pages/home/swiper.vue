@@ -46,24 +46,26 @@ const getBgImg = (img, origin) => {
   }
 }
 
-onMounted(async () => {
-  await nextTick()
-  if (swiperEl.value) {
-    swiperEl.value.addEventListener('swiper-slidechange', e => {
-      activeIndex.value = e.detail[0].activeIndex
-    })
+onMounted(() => {
+  if (!swiperEl.value) return
 
-    // Hide placeholder once swiper reports it's ready
+  // 1. Listen for slide changes
+  swiperEl.value.addEventListener('swiper-slidechange', (e) => {
+    activeIndex.value = e.detail[0].activeIndex
+  })
+
+  // 2. Check if Swiper is already initialized (Common with Web Components)
+  if (swiperEl.value.swiper) {
+    swiperReady.value = true
+  } else {
     swiperEl.value.addEventListener('swiper-init', () => {
       swiperReady.value = true
     })
-
-    // Fallback: if swiper-init never fires, reveal after short delay
-    setTimeout(() => { swiperReady.value = true }, 800)
   }
-})
 
-register()
+  // 3. Shorter safety fallback
+  setTimeout(() => { swiperReady.value = true }, 400)
+})
 </script>
 
 <template>
