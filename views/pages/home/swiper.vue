@@ -9,13 +9,15 @@ const props = defineProps({
   },
 })
 
-// const { isMobile, isTablet, isDesktop } = useDevice()
+const { isMobile, isTablet, isDesktop } = useDevice()
 
+/*
 const deviceType = useState('device-type', () => {
   const event = useRequestEvent()
   return event?.context.deviceType || 'desktop'
 })
 const isMobile = computed(() => deviceType.value === 'mobile')
+*/
 
 
 
