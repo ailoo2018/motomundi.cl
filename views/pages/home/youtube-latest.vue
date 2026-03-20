@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { register } from "swiper/element/bundle"
-import { ref } from 'vue'
-
-// Import Swiper Vue.js components
-
+import { ref, computed } from 'vue'
 
 const props = defineProps({
   widget: {
@@ -14,12 +11,19 @@ const props = defineProps({
 const youtubeResponse = ref()
 
 const videos = computed(() => {
-  if (!youtubeResponse.value) {
-    return []
-  }
-
+  if (!youtubeResponse.value) return []
   return youtubeResponse.value?.items?.slice(0, 5) || []
 })
+
+const formatDate = (dateStr: string) => {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('es-CL', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).toUpperCase()
+}
 
 const getLatestVideos = async () => {
   try {
@@ -29,7 +33,6 @@ const getLatestVideos = async () => {
   }
 }
 
-
 await getLatestVideos()
 
 register()
@@ -37,286 +40,470 @@ register()
 
 <template>
   <ClientOnly>
-    <div
-      id="youtube-block"
-      section="home"
-    >
-      <div class="containeraa">
-        <div
-          class="row"
-          style="margin-bottom: 0px;"
-        >
-          <div class="col s12 l12">
-            <h2>
-              Motomundi en YouTube
-            </h2>
-            <ClientOnly>
-              <swiper-container
-                :modules="modules"
-                :slides-per-view="1"
-                :space-between="20"
-                :navigation="true"
-                :pagination="{ clickable: true }"
-                :breakpoints="{
-                  640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
-                  },
-                  1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 20,
-                  },
-                }"
-                class="youtube-block__content"
-              >
-                <swiper-slide
-                  v-for="vitem in videos"
-                  :key="vitem.id"
-                >
-                  <div class="video">
-                    <a
-                      target="_blank"
-                      :href="`https://www.youtube.com/watch?v=${vitem.id.videoId}`"
-                      class="video-thumb"
-                    >
-                      <img
-                        :src="vitem.snippet.thumbnails.high.url"
-                        alt="Video thumbnail"
-                      >
-                    </a>
+    <section id="youtube-block">
+      <!-- Background texture overlay -->
+      <div class="bg-texture" />
 
-                    <div class="home-youtube-post__content">
-                      <h3>{{ vitem.snippet.title }}</h3>
-                      <small>{{ formatDate(vitem.snippet.publishedAt) }}</small>
-                      <p>{{ vitem.snippet.description }}</p>
+      <div class="yt-inner">
 
-                      <a
-                        target="_blank"
-                        :href="`https://www.youtube.com/watch?v=${vitem.id.videoId}`"
-                        class="view-video-link"
-                      >
-                        Ver vídeo
-                        <img
-                          src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjExIiB2aWV3Qm94PSIwIDAgNiAxMSIgd2lkdGg9IjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTk4IDggNSA1IDUtNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWIwMDEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHRyYW5zZm9ybT0ibWF0cml4KDAgLTEgMSAwIC03LjUgMTA4LjUpIi8+PC9zdmc+"
-                          alt="Angle icon"
-                        >
-                      </a>
-                    </div>
-                  </div>
-                </swiper-slide>
-              </swiper-container>
-            </ClientOnly>
-            <div class="youtube-link">
-              <a
-                href="https://www.youtube.com/MotoMundiTV"
-                target="_blank"
-                class="button button--skewed"
-              >
-                Visita nuestro canal de YouTube
-                <svg
-                  width="12"
-                  height="12"
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon sprite-line-icons"
-                >
-                  <use
-                    href="/content/svg/motomundi.svg#i-icon-arrow-right-tail"
-                    style="stroke: white;"
-                  />
-                </svg>
-              </a>
-            </div>
+        <!-- Header -->
+        <header class="yt-header">
+          <div class="yt-header__eyebrow">
+            <span class="yt-header__line" />
+            <span class="yt-header__label">Canal oficial</span>
+            <span class="yt-header__line" />
           </div>
+          <h2 class="yt-header__title">
+            <span class="yt-header__title--light">MOTOMUNDI</span>
+            <span class="yt-header__title--bold">EN YOUTUBE</span>
+          </h2>
+          <p class="yt-header__sub">Los últimos videos de nuestro canal</p>
+        </header>
+
+        <!-- Slider -->
+        <ClientOnly>
+          <swiper-container
+            :slides-per-view="1"
+            :space-between="24"
+            :navigation="true"
+            :pagination="{ clickable: true }"
+            :breakpoints="{
+              640: { slidesPerView: 2, spaceBetween: 24 },
+              1024: { slidesPerView: 3, spaceBetween: 24 },
+            }"
+            class="yt-swiper"
+          >
+            <swiper-slide
+              v-for="vitem in videos"
+              :key="vitem.id"
+              class="yt-slide"
+            >
+              <article class="yt-card">
+                <!-- Thumbnail -->
+                <a
+                  :href="`https://www.youtube.com/watch?v=${vitem.id.videoId}`"
+                  target="_blank"
+                  rel="noopener"
+                  class="yt-card__thumb"
+                  aria-label="Ver video en YouTube"
+                >
+                  <img
+                    :src="vitem.snippet.thumbnails.high.url"
+                    :alt="vitem.snippet.title"
+                    loading="lazy"
+                  >
+                  <div class="yt-card__play">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="12" fill="white" fill-opacity="0.15" />
+                      <circle cx="12" cy="12" r="11" stroke="white" stroke-opacity="0.6" stroke-width="1" />
+                      <path d="M10 8.5L16 12L10 15.5V8.5Z" fill="white" />
+                    </svg>
+                  </div>
+                  <div class="yt-card__thumb-overlay" />
+                </a>
+
+                <!-- Content -->
+                <div class="yt-card__body">
+                  <time class="yt-card__date">{{ formatDate(vitem.snippet.publishedAt) }}</time>
+                  <h3 class="yt-card__title">{{ vitem.snippet.title }}</h3>
+                  <p class="yt-card__desc">{{ vitem.snippet.description }}</p>
+                  <a
+                    :href="`https://www.youtube.com/watch?v=${vitem.id.videoId}`"
+                    target="_blank"
+                    rel="noopener"
+                    class="yt-card__cta"
+                  >
+                    <span>Ver video</span>
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2 7H12M12 7L7.5 2.5M12 7L7.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </div>
+              </article>
+            </swiper-slide>
+          </swiper-container>
+        </ClientOnly>
+
+        <!-- Footer CTA -->
+        <div class="yt-footer">
+          <a
+            href="https://www.youtube.com/MotoMundiTV"
+            target="_blank"
+            rel="noopener"
+            class="yt-footer__btn"
+          >
+            <svg class="yt-footer__yt-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+            Visita nuestro canal de YouTube
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="yt-footer__arrow">
+              <path d="M2 7H12M12 7L7.5 2.5M12 7L7.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
         </div>
+
       </div>
-    </div>
+    </section>
   </ClientOnly>
 </template>
 
-
-
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap');
+
+/* ── Variables ─────────────────────────────────────────────── */
+:root {
+  --yt-red:      #bd0019;
+  --yt-red-dark: #9a0014;
+  --yt-black:    #0f0f0f;
+  --yt-card-bg:  #1a1a1a;
+  --yt-white:    #ffffff;
+  --yt-muted:    rgba(255,255,255,0.5);
+  --yt-border:   rgba(255,255,255,0.08);
+  --yt-radius:   4px;
+}
+
+/* ── Section shell ──────────────────────────────────────────── */
 #youtube-block {
-  padding: 0 40px 20px;
-  margin-top: 0;
-  background-color: #222222;
+  position: relative;
+  background-color: #bd0019;
+  overflow: hidden;
+  padding: 60px 0 50px;
+  font-family: 'Barlow', sans-serif;
 }
 
-@media (max-width: 600px){
-  #youtube-block {
-    padding: 0 10px 20px;
-  }
+/* Diagonal texture overlay */
+.bg-texture {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      -55deg,
+      rgba(0,0,0,0.06) 0px,
+      rgba(0,0,0,0.06) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+  pointer-events: none;
+  z-index: 0;
 }
 
-#youtube-block li.video > a img {
-  width: 95%;
-  margin: auto;
+/* Subtle noise grain via pseudo */
+#youtube-block::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
 }
 
-#youtube-block__content {
-  margin: 4px 0 30px;
-  padding: 0 0 40px 0;
+.yt-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
 }
 
-/* Make swiper-slide stretch to full height */
-swiper-slide {
+@media (max-width: 600px) {
+  .yt-inner { padding: 0 16px; }
+  #youtube-block { padding: 40px 0 36px; }
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.yt-header {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
+.yt-header__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.yt-header__line {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: rgba(255,255,255,0.45);
+}
+
+.yt-header__label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+}
+
+.yt-header__title {
+  font-family: 'Barlow Condensed', sans-serif;
+  line-height: 0.92;
+  margin: 0 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.yt-header__title--light {
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+
+.yt-header__title--bold {
+  font-size: clamp(44px, 7vw, 80px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+}
+
+.yt-header__sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* ── Swiper ─────────────────────────────────────────────────── */
+.yt-swiper {
+  width: 100%;
+  padding-bottom: 48px !important;
+}
+
+.yt-slide {
   height: auto;
   display: flex;
 }
 
-.video {
-  position: relative;
-  background-color: #f5f5f5;
-  border-radius: 3px;
-  width: 100%;
+/* ── Card ───────────────────────────────────────────────────── */
+.yt-card {
+  background: var(--yt-card-bg);
+  border-radius: var(--yt-radius);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--yt-border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.video-thumb {
+.yt-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+}
+
+/* Thumbnail */
+.yt-card__thumb {
   position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16/9;
   flex-shrink: 0;
 }
 
-.video-thumb, .video-thumb img {
-  display: block;
-}
-
-.video-thumb img {
-  width: 100%;
-  height: auto;
-}
-
-.home-youtube-post__content {
-  padding: 20px 20px 60px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-#youtube-block h2 {
-  padding: 30px 0;
-  font-weight: 600;
-  font-size: 1.5em;
-  margin: 18px auto 18px;
-  text-align: center;
-  text-transform: uppercase;
-  color: white;
-}
-
-#youtube-block h3 {
-  font-size: 18px;
-  font-weight: 900;
-  line-height: 25px;
-  margin: 0 0 3px;
-}
-
-#youtube-block p, #youtube-block small {
-  line-height: 21px;
-  margin-bottom: 15px;
-}
-
-#youtube-block small {
-  font-size: 10px;
-  font-weight: 500;
-  display: block;
-  text-transform: uppercase;
-  color: #acacac;
-}
-
-#youtube-block p {
-  font-size: 12px;
-  flex-grow: 1;
-}
-
-.youtube-link {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.youtube-link .button {
-  font-size: 10px;
-  font-weight: 700;
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  overflow: hidden;
-  box-sizing: border-box;
-  padding: 13px 25px;
-  transition: all .2s ease-in-out;
-  text-align: center;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-  color: #fff;
-  background: #bd0019;
-}
-
-.video-thumb:before {
-  content: "";
-  display: block;
+.yt-card__thumb img {
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0NSI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTUuMzcxIDQ0LjA3YTYuNDMgNi40MyAwIDAgMCAxLjc0NC0uMjU4Yy41ODgtLjE4IDEuMjc1LS40ODkgMi4wNjItLjk0N2wyNi42NjEtMTUuNTAyYzEuMDc2LS42MzggMS45NTMtMS4zNDUgMi42MS0yLjE0Mi42NDgtLjgwNy45NzctMS43NzQuOTc3LTIuOTIgMC0xLjE0NS0uMzI5LTIuMTEyLS45ODYtMi45MDktLjY1OC0uNzk3LTEuNTM1LTEuNTA0LTIuNjItMi4xMzJMOS4xNDYgMS43MzhDOC4zNiAxLjI4OSA3LjY3My45OCA3LjA3NS44QTYuMDUxIDYuMDUxIDAgMCAwIDUuMzIyLjUzMmMtMS4yNjYgMC0yLjM5MS40NTktMy40MDggMS4zODVDLjg5OCAyLjg0NC4zOSA0LjE1LjM5IDUuODMzVjM4LjcxYzAgMS42OTQuNDk4IDMgMS41MTQgMy45MjYgMS4wMDcuOTE2IDIuMTQyIDEuMzc1IDMuMzk4IDEuMzc1bC4wNy4wNnoiLz48L3N2Zz4=) 50% no-repeat;
-  transition: all .35s ease-out;
-  opacity: .8;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
-.video-thumb:hover:before {
-  background-color: rgba(0, 0, 0, .25);
+.yt-card:hover .yt-card__thumb img {
+  transform: scale(1.05);
+}
+
+.yt-card__thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0,0,0,0.55) 100%
+  );
+  transition: opacity 0.3s ease;
+}
+
+.yt-card:hover .yt-card__thumb-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15) 0%,
+    rgba(0,0,0,0.6) 100%
+  );
+}
+
+/* Play button */
+.yt-card__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.yt-card__play svg {
+  width: 52px;
+  height: 52px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0.85;
+}
+
+.yt-card:hover .yt-card__play svg {
+  transform: scale(1.12);
   opacity: 1;
 }
 
-#youtube-block__content .view-video-link {
+/* Body */
+.yt-card__body {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 8px;
+}
+
+.yt-card__date {
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 10px;
-  font-weight: 500;
-  line-height: 21px;
-  position: absolute;
-  bottom: 15px;
-  left: 30px;
+  font-weight: 600;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  cursor: pointer;
-  text-decoration: none;
-  color: #d6001c;
-  -webkit-tap-highlight-color: transparent;
-}
-
-#youtube-block__content .view-video-link img {
-  top: 4px;
-  position: absolute;
-  margin-left: 4px;
-}
-
-/* Swiper navigation customization */
-:deep(.swiper-button-next),
-:deep(.swiper-button-prev) {
   color: #bd0019;
+  display: block;
 }
 
-:deep(.swiper-pagination-bullet-active) {
-  background: #bd0019;
+.yt-card__title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--yt-white);
+  margin: 0;
+  letter-spacing: 0.3px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
+.yt-card__desc {
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.45);
+  margin: 0;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.yt-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #bd0019;
+  text-decoration: none;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.yt-card__cta:hover {
+  gap: 10px;
+  color: #e0001f;
+}
+
+/* ── Swiper nav overrides ────────────────────────────────────── */
 swiper-container {
-  --swiper-navigation-color: #ff0000;
-  --swiper-navigation-size: 10px;
-  --swiper-navigation-color: rgba(0, 0, 0, .6);
+  --swiper-pagination-bullet-inactive-color: rgba(255,255,255,0.3);
+  --swiper-pagination-bullet-inactive-opacity: 1;
+  --swiper-pagination-color: #ffffff;
+  --swiper-pagination-bullet-size: 6px;
+  --swiper-pagination-bullet-horizontal-gap: 4px;
 }
 
-swiper-container::part(button-prev) {
-  background-color: rgb(0, 0, 0, .6);
-  color: white;
-  padding: 12px;
-  left: 5px;
-}
-
+swiper-container::part(button-prev),
 swiper-container::part(button-next) {
-  background-color: rgb(0, 0, 0, .55);
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 2px;
   color: white;
-  padding: 12px;
-  right: 5px;
+  --swiper-navigation-size: 16px;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s ease;
+}
+
+swiper-container::part(button-prev):hover,
+swiper-container::part(button-next):hover {
+  background: rgba(0,0,0,0.8);
+}
+
+swiper-container::part(button-prev) { left: -8px; }
+swiper-container::part(button-next) { right: -8px; }
+
+/* ── Footer CTA ─────────────────────────────────────────────── */
+.yt-footer {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.yt-footer__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 13px 28px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: var(--yt-radius);
+  backdrop-filter: blur(4px);
+  transition: background 0.25s ease, border-color 0.25s ease, gap 0.2s ease;
+}
+
+.yt-footer__btn:hover {
+  background: rgba(0,0,0,0.6);
+  border-color: rgba(255,255,255,0.4);
+  gap: 14px;
+}
+
+.yt-footer__yt-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.yt-footer__arrow {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.yt-footer__btn:hover .yt-footer__arrow {
+  transform: translateX(3px);
 }
 </style>
