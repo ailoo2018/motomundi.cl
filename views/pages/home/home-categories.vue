@@ -115,13 +115,15 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
-.container {
+.promo-categories__container .container {
   margin: 0 auto;
   max-width: 1280px;
   width: 95%;
 }
 
-
+.promo-categories__container use {
+  stroke: white;
+}
 
 .block-container {
   background-color: #f5f5f5;

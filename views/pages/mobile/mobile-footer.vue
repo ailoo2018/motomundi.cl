@@ -401,7 +401,7 @@
   <footer class="footer">
     <div class="container">
       <div class="row">
-        <div class="col s12 12 footer-container">
+        <div class="footer-container">
           <aside class="footer-description">
             <div class="motomundi-logo">
               <a
