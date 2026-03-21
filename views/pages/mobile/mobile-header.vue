@@ -82,8 +82,8 @@ const getCartTotalItems = () => {
                 <span>Menú </span>
               </button>
               <div class="motomundi-logo">
-                <a
-                  href="/"
+                <NuxtLink
+                  to="/"
                   class="motomundi-logo-link mtc-link"
                 >
                   <span>
@@ -93,7 +93,7 @@ const getCartTotalItems = () => {
                       class="cdn-img"
                     >
                   </span>
-                </a>
+                </NuxtLink>
               </div>
               <!-- /logo -->
 
@@ -127,9 +127,8 @@ const getCartTotalItems = () => {
 
                 <!-- favoritos -->
                 <li class="user-menu__item">
-                  <a
-                    href="/cuenta/favoritos"
-
+                  <NuxtLink
+                    to="/cuenta/favoritos"
                     rel="nofollow"
                     class="mtc-link"
                   >
@@ -144,7 +143,7 @@ const getCartTotalItems = () => {
                         xlink:href="/content/svg/motomundi.svg?v=1.4#i-menu-favorites"
                       />
                     </svg>
-                    <span class="user-menu__title">Favs</span></a>
+                    <span class="user-menu__title">Favs</span></NuxtLink>
                 </li>
                 <!-- /favoritos -->
 

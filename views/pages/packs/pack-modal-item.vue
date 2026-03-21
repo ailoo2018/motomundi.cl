@@ -107,7 +107,6 @@ register()
             class="cdn-img"
             width="150"
             height="150"
-
             style="width: 150px;height:150px;"
             :src="getImageUrl(img.image, 300, getDomainId())"
           >
@@ -140,7 +139,7 @@ register()
       </div>
       <div class="pack-item__description">
         <p>
-          {{ product.fullName }}…
+          &nbsp;
         </p>
         <a
           class="mtc-link nuxt-link-active nuxt-link-exact-active"
@@ -219,8 +218,8 @@ register()
   display: flex;
   flex-direction: column;
   font-weight: 500;
-  height: 515px;
-  max-height: 515px;
+  height: 500px;
+  max-height: 500px;
   max-width: 265px;
   position: relative;
   scroll-snap-align: center;

@@ -2,6 +2,7 @@
 import DesktopFilters from "@/views/pages/products/list/desktop-filters.vue"
 import ProductListItem from "@/views/pages/products/list/product-list-item.vue"
 import { useProductList } from "@/composables/useProductList.js"
+import MobileFilterDrawer from "@/views/pages/products/list/mobile-filter-drawer.vue"
 
 const props = defineProps({
   injectedQuery: {
@@ -18,7 +19,7 @@ if (!props.injectedQuery) {
 }
 
 const loading = ref(false)
-
+const isFilterDrawerOpen = ref(false)
 
 
 const baseQuery = []
@@ -31,24 +32,37 @@ if (query.brandId) {
 if (query.collection) {
   baseQuery.push({ type: "collection", value: query.collection })
 }
-if(query.bikeManufacturer){
-  baseQuery.push({ type: "bike", value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear } })
+if (query.bikeManufacturer) {
+  baseQuery.push({
+    type: "bike",
+    value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear },
+  })
 }
-if(query.minDiscount){
+if (query.minDiscount) {
   baseQuery.push({ type: "minDiscount", value: query.minDiscount })
 }
-if(query.sword){
+if (query.sword) {
   baseQuery.push({ type: "sword", value: query.sword })
 }
 
 console.log("baseQuery: " + JSON.stringify(baseQuery))
 
 
-const { products, title, total, queryDesc, currentPage, totalPages, applyFilters, filters, orderBy } = useProductList({ baseQuery: baseQuery })
+const {
+  products,
+  title,
+  total,
+  queryDesc,
+  currentPage,
+  totalPages,
+  applyFilters,
+  filters,
+  orderBy,
+} = useProductList({ baseQuery: baseQuery })
 
 
 useSeoMeta({
-  title: () =>  title || 'Loading Product...',
+  title: () => title || 'Loading Product...',
   ogTitle: () => title,
   description: () => title,
   ogDescription: () => title,
@@ -60,38 +74,40 @@ const onOrderBy = ob => {
 }
 
 
-
 const onFilter = filters => {
   applyFilters(filters)
 }
 </script>
 
 <template>
-
-  <div class="list-continer pt-6">
+  <div class="list-continer pt-6 pb-10">
     <section>
       <div class="filters__header">
+
+        <!-- page title -->
         <div class="row">
           <div class="container">
             <div class="filters__header-title">
-
               <h1
                 v-if="title"
                 class="header-title mb-4"
               >
-                <span class="total-results">{{total}}</span>
-                {{title}}</h1>
+                <span class="total-results">{{ total }}</span>
+                {{ title }}
+              </h1>
             </div>
           </div>
         </div>
         <!-- / page title -->
+
+        <!-- filters (really is mobile and desktop -->
         <DesktopFilters
           :filters="filters"
           @on-order-by="onOrderBy"
           @on-filter="onFilter"
         />
       </div>
-      <section class="pa-1 results-list">
+      <section class="pa-1 results-list ">
         <div
           v-if="loading"
           class="d-flex justify-center align-center py-12"
@@ -102,7 +118,7 @@ const onFilter = filters => {
             size="64"
           />
         </div>
-        <div class="product-list">
+        <div class="product-list ">
           <div>
             <div
               id="resultscontainer"

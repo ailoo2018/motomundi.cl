@@ -65,7 +65,7 @@ onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
       @click="toggleMenu"
     >
       <img
-        :src="`/content/images/flags/${iso}.png`  "
+        :src="`/content/images/flags/${selectedCountryData.iso?.toLowerCase() || 'cl'}.png`"
         alt="cl"
         class="mobile-menu__sec-locale"
       >

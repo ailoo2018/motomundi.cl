@@ -9,13 +9,7 @@ const { isLoading, progress } = useLoadingIndicator()
       <!-- Progress bar -->
       <div class="loading-bar" :style="{ width: progress + '%' }" />
 
-      <!-- Corner spinner -->
-      <div class="loading-spinner">
-        <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="25" cy="25" r="20" fill="none" stroke="#b21a15" stroke-width="5"
-                  stroke-linecap="round" stroke-dasharray="90 150" stroke-dashoffset="0" />
-        </svg>
-      </div>
+
 
       <!-- Page dimmer -->
       <div class="loading-overlay" />

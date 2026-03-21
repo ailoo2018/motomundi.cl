@@ -1,23 +1,35 @@
 <script setup lang="ts">
-import FacetGroup from "@/views/pages/products/filter/facet-group.vue"
-import SearchFilters from "@/views/pages/products/filter/search-filters.vue";
+import SearchFilters from "@/views/pages/products/filter/search-filters.vue"
+import MobileFilterDrawer from "@/views/pages/products/list/mobile-filter-drawer.vue"
+
 
 const props = defineProps({
-  filters : {
+  filters: {
     type: Array,
     default: () => [],
   },
 })
 
+const emit = defineEmits(["on-filter", "on-order-by"])
+
+const deviceType = useState('device-type', () => {
+  // This function only runs on the SERVER during the first request
+  const event = useRequestEvent()
+  
+  return event?.context.deviceType || 'desktop'
+})
+
+const isMobile = computed(() => deviceType.value === 'mobile')
+
 const filters = computed(() => {
   return props.filters ?? []
 })
-const emit = defineEmits(["on-filter", "on-order-by"])
 
 const orderBy = ref()
+const isFilterDrawerOpen = ref(false)
 
 watch(props.filters, (value, oldValue) => {
-  emit("on-filter",filters.value )
+  emit("on-filter", filters.value)
 })
 
 
@@ -34,18 +46,19 @@ orderBy.value = sorts[0]
 const isShowFilters = ref(false)
 
 const onFilterChanged = filters => {
-  emit("on-filter",filters )
+  emit("on-filter", filters)
 }
 
-watch( orderBy, (newVal) => {
-  emit("on-order-by", newVal )
+watch(orderBy, newVal => {
+  emit("on-order-by", newVal)
 })
 
 const removeAllFilters = () => {
 
 }
 
-const showFilters  = () => {
+
+const showFilters = () => {
   isShowFilters.value = !isShowFilters.value
 }
 </script>
@@ -53,9 +66,11 @@ const showFilters  = () => {
 <template>
   <div class="container desktop__filters mb-7">
     <div class="desktop__filters-main">
-      <div class="facets-desktop__main">
+      <div
+        v-if="!isMobile"
+        class="facets-desktop__main"
+      >
         <div class="facets-bar-desktop">
-
           <VBtn
             :rounded="0"
             color="#c74044"
@@ -73,14 +88,14 @@ const showFilters  = () => {
               />
             </svg>
             Filtrar
-            <VMenu 
+            <VMenu
               activator="parent"
               :close-on-content-click="false"
             >
               <div class="facets-desktop__container fade ">
                 <div class="facets-desktop__container-content">
                   <nav class="facets-desktop">
-                    <ul >
+                    <ul>
                       <li class="facets__in-use">
                         <div class="in-use__header">
                           <strong>Tus filtros</strong>
@@ -93,14 +108,47 @@ const showFilters  = () => {
                         </div>
                       </li>
 
-                      <SearchFilters @filters-changed="onFilterChanged" :filters="filters" />
-
+                      <SearchFilters
+                        :filters="filters"
+                        @filters-changed="onFilterChanged"
+                      />
                     </ul>
                   </nav>
                 </div>
               </div>
             </VMenu>
           </VBtn>
+        </div>
+      </div>
+      <div
+        v-if="isMobile"
+        class="w-100 d-flex justify-space-between"
+      >
+        <div>
+          <VSelect
+            v-model="orderBy"
+            rounded="0"
+            :items="sorts"
+            return-object
+            item-value="id"
+            item-title="name"
+          />
+        </div>
+        <div>
+          <VBtn
+            color="primary"
+            prepend-icon="tabler-filter"
+            rounded="0"
+            @click="isFilterDrawerOpen = true"
+          >
+            Filtrar
+          </VBtn>
+          <MobileFilterDrawer
+            v-model="isFilterDrawerOpen"
+            :filters="filters"
+            @filters-changed="onFilterChanged"
+          />
+
         </div>
       </div>
 
@@ -183,13 +231,23 @@ const showFilters  = () => {
         </nav>
       </div>
     </div>
-    <div class="desktop__sort">
-      <VSelect v-model="orderBy" :items="sorts" return-object item-value="id" item-title="name"></VSelect>
+    <div
+      v-if="!isMobile"
+      class="desktop__sort"
+    >
+      <VSelect
+        v-model="orderBy"
+        rounded="0"
+        :items="sorts"
+        return-object
+        item-value="id"
+        item-title="name"
+      />
     </div>
   </div>
 </template>
 
-<style  lang="scss">
+<style lang="scss">
 .desktop__filters {
   display: flex;
   justify-content: space-between;

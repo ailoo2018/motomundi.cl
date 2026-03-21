@@ -2,6 +2,7 @@
 import SearchFilters from "@/views/pages/products/filter/search-filters.vue"
 import { watchDebounced } from "@vueuse/core"
 import SearchResults from "@/views/search/search-results.vue"
+import MobileFilterDrawer from "@/views/pages/products/list/mobile-filter-drawer.vue"
 
 const isSearchOpen = defineModel({ type: Boolean, default: false })
 
@@ -27,22 +28,18 @@ router.afterEach(() => {
 })
 
 
+const toggleSearchFilter = () => {
+  showFilters.value = !showFilters.value
+}
+
 const toggleSearch = () => {
   isSearchOpen.value = false
 }
 
-const resetFilters = () => {
 
-}
 
 const redirectToSearch = () => {
 
-}
-
-const toggleSearchFilter = () => {
-
-  showFilters.value = !showFilters.value
-  console.log("toggle search filter: " + showFilters.value)
 }
 
 const nextPage = () => {
@@ -80,7 +77,7 @@ watch(filters, () => {
   if (!sword.value || sword.value.trim().length === 0) {
     return
   }
-  if(!filters.value || !filters.value) {
+  if(!filters.value || filters.value.length === 0) {
     return
   }
 
@@ -206,55 +203,10 @@ const search = async (isNextPage = false) => {
     class="search__panel search__panel-results--empty ng-cloak"
   >
     <!-- filter container -->
-    <nav
-      class="search-mobile__filters"
-      :class="showFilters ? 'show' : ''"
-    >
-      <div
-        class="search-mobile__filters-container"
-
-      >
-        <div class="search-mobile__filters-header">
-          <button
-            class="clear-filters"
-            @click="resetFilters"
-          >
-            Borrar filtros
-          </button>
-          <button
-            class="close-filters"
-            @click="toggleSearchFilter"
-          >
-            <svg
-              height="10"
-              width="10"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 15 15"
-              class="icon sprite-icons"
-            >
-              <use
-                href="/content/svg/motomundi.svg#i-close"
-                xlink:href="/content/svg/motomundi.svg#i-close"
-              />
-            </svg>
-          </button>
-        </div>
-        <div class="search-mobile__filters-content" >
-          <SearchFilters :filters="filters" is-mobile />
-        </div>
-        <div class="search-mobile__buttons">
-          <VBtn
-            class="apply-filters w-100 mt-4"
-            rounded="0"
-            @click="toggleSearchFilter"
-          >
-            Aplicar
-          </VBtn>
-        </div>
-      </div>
-    </nav>
+    <MobileFilterDrawer v-model="showFilters" :filters="filters" />
     <!-- /filter container -->
 
+    <!-- search sword and  result container -->
     <section
       onmouseover="document.body.style.overflow='hidden';"
       onmouseout="document.body.style.overflow='auto';"
@@ -308,8 +260,8 @@ const search = async (isNextPage = false) => {
         v-if="products.length > 0"
         class="search__results-summary"
       >
-        <p>
-          <strong>{{ total }}</strong> resultados {{ loading }}
+        <p style="color: #000">
+          <strong>{{ total }}</strong> resultados
         </p>
         <a @click="toggleSearchFilter">Filtrar
           <svg
@@ -334,6 +286,7 @@ const search = async (isNextPage = false) => {
       /> />
       <!-- /search results -->
     </section>
+    <!-- /search sword and  result container -->
   </article>
 </template>
 

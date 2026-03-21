@@ -423,4 +423,17 @@ const products = computed(() => {
   text-transform: uppercase;
   padding: 2px 0px;
 }
+
+@media(max-width: 900px) {
+  #packmodal .packs-modal-full__title{
+    padding: 4px
+  }
+  #packmodal .packs-modal-full__title h2{
+    font-size: 18px;
+  }
+  #packmodal .pack-grid__item, #packmodal .pack-item {
+    height: 65dvh;
+  }
+}
+
 </style>

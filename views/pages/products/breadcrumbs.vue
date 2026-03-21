@@ -33,20 +33,20 @@ const brandCategoryUrl = computed(() => {
   <div class="breadcrumb-container">
     <ul class="breadcrumb">
       <li v-if="category" >
-        <a
-          :href="categoryUrl"
+        <NuxtLink
+          :to="categoryUrl"
           class="mtc-link"
         >
          {{ category.name }}
-        </a>
+        </NuxtLink>
       </li>
       <li>
-        <a
-          :href="brandCategoryUrl"
+        <NuxtLink
+          :to="brandCategoryUrl"
           class="mtc-link"
         >
           {{ product.brand.name }}
-        </a>
+        </NuxtLink>
       </li>
       <li><span class="breadcrumb-current">{{ product.name }}</span></li>
     </ul>
