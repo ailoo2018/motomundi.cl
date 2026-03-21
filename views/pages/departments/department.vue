@@ -97,8 +97,7 @@ const widgets = computed( () => {
     :widget="widget"
   />
 
-  <NewsletterSignUp />
-  <YoutubeLatest />
+
 
 </template>
 

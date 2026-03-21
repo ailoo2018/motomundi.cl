@@ -8,6 +8,8 @@ import MotomundiFooter from "@/views/pages/motomundi-footer.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
 import AppLoader from "@/components/AppLoader.vue"
+import YoutubeLatest from "@/views/pages/home/youtube-latest.vue"
+import NewsletterSignUp from "@/views/pages/home/NewsletterSignUp.vue"
 
 
 const deviceType = useState('device-type', () => {
@@ -32,6 +34,8 @@ injectSkinClasses()
       <div class="home-container">
         <slot/>
       </div>
+      <NewsletterSignUp />
+      <YoutubeLatest />
       <MobileFooter/>
     </main>
   </div>
@@ -45,6 +49,8 @@ injectSkinClasses()
       <MotomundiNavigation />
       <main class="main-content">
         <slot/>
+        <NewsletterSignUp />
+        <YoutubeLatest />
         <MotomundiFooter/>
       </main>
     </div>

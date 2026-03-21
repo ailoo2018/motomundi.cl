@@ -211,7 +211,7 @@ if (import.meta.client) {
 
 <template>
   <ClientOnly>
-    <VContainer>
+    <VContainer class="pb-10">
       <VRow
         v-if="product.totalReviews > 0"
         id="reviews"
