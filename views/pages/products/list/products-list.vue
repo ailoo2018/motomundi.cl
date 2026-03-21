@@ -76,8 +76,8 @@ const onFilter = filters => {
             <div class="filters__header-title">
 
               <h1
+                v-if="title"
                 class="header-title mb-4"
-
               >
                 <span class="total-results">{{total}}</span>
                 {{title}}</h1>

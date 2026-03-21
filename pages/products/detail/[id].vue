@@ -1,4 +1,5 @@
 <script setup>
+
 /* eslint-disable camelcase */
 import { useConfigStore } from "@core/stores/config"
 

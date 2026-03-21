@@ -25,8 +25,8 @@ const props = defineProps({
             <div class="promo-categories__countdown" />
           </div>
           <div class="promo-categories">
-            <a
-              href="/cascos-para-moto"
+            <NuxtLink
+              to="/cascos-para-moto"
               class="mtc-link"
               style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
             >
@@ -38,9 +38,9 @@ const props = defineProps({
                 <use xlink:href="/content/assets/menu/categories/blouz.svg#img-casque-integral" />
               </svg>
               <h2 style="color:#fff;">Cascos</h2>
-            </a>
-            <a
-              href="/chaquetas-para-moto"
+            </NuxtLink>
+            <NuxtLink
+              to="/chaquetas-para-moto"
               class="mtc-link"
               style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
             >
@@ -51,9 +51,9 @@ const props = defineProps({
               >
                 <use xlink:href="/content/assets/menu/categories/blouz.svg#img-blouson-et-veste" />
               </svg>
-              <h2 style="color:#fff;">Chaquetas</h2></a>
-            <a
-              href="/guantes-para-moto"
+              <h2 style="color:#fff;">Chaquetas</h2></NuxtLink>
+            <NuxtLink
+              to="/guantes-para-moto"
               class="mtc-link"
               style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
             >
@@ -65,9 +65,9 @@ const props = defineProps({
                 <use xlink:href="/content/assets/menu/categories/blouz.svg#img-gants-moto" />
               </svg>
               <h2 style="color:#fff;">Guantes</h2>
-            </a>
-            <a
-              href="/botas-para-moto"
+            </NuxtLink>
+            <NuxtLink
+              to="/botas-para-moto"
               class="mtc-link"
               style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
             >
@@ -79,9 +79,9 @@ const props = defineProps({
                 <use xlink:href="/content/assets/menu/categories/blouz.svg#img-bottes-et-chaussures-moto-femme" />
               </svg>
               <h2 style="color:#fff;">Botas</h2>
-            </a>
-            <a
-              href="/Pantalones-para-moto"
+            </NuxtLink>
+            <NuxtLink
+              to="/Pantalones-para-moto"
               class="mtc-link"
               style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
             >
@@ -92,9 +92,9 @@ const props = defineProps({
               >
                 <use xlink:href="/content/assets/menu/categories/blouz.svg#img-pantalon-moto" />
               </svg>
-              <h2 style="color:#fff;">Pantalones</h2></a>
-            <a
-              href="/motocross-enduro-trial"
+              <h2 style="color:#fff;">Pantalones</h2></NuxtLink>
+            <NuxtLink
+              to="/motocross-enduro-trial"
               class="mtc-link"
               style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
             >
@@ -106,7 +106,7 @@ const props = defineProps({
                 <use xlink:href="/content/assets/menu/categories/blouz.svg#img-casque-cross" />
               </svg>
               <h2 style="color:#fff;">Off-Road</h2>
-            </a>
+            </NuxtLink>
           </div>
         </div>
       </div>

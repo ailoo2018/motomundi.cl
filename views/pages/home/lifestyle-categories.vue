@@ -12,54 +12,69 @@
         <div class="row">
           <div class="col s12 m12 l12">
             <div class="promo-categories__header">
-              <div class="promo-categories__countdown" />
+              <div class="promo-categories__countdown"/>
             </div>
             <div class="promo-categories">
-              <a
-                href="/jockey-para-moto"
+              <NuxtLink
+                to="/jockey-para-moto"
                 class="mtc-link"
-              ><img
-                 src="/content/assets/menu/categories/51-moto-casual-gorras.svg"
-                 alt="Cascos"
-               >
-                <h2 style="color:#fff;">Jockeys</h2></a><a
-                href="/poleras-para-moto"
+              >
+                <img
+                  src="/content/assets/menu/categories/51-moto-casual-gorras.svg"
+                  alt="Cascos"
+                >
+                <h2 style="color:#fff;">Jockeys</h2></NuxtLink>
+              <NuxtLink
+                to="/poleras-para-moto"
+                class="mtc-link"
+              >
+                <img
+                  src="/content/assets/menu/categories/46-moto-casual-camisetas.svg"
+                  alt="Chaquetas"
+                >
+                <h2 style="color:#fff;">Poleras</h2></NuxtLink>
+              <NuxtLink
+                to="/sweaters-y-polerones"
+                class="mtc-link"
+              >
+                <img
+                  src="/content/assets/menu/categories/57-moto-casual-sudaderas.svg"
+                  alt="Guantes"
+                >
+                <h2 style="color:#fff;">Polerones</h2>
+              </NuxtLink>
+              <NuxtLink
+                to="/mochilas"
+                class="mtc-link"
+              >
+                <img
+                  src="/content/assets/menu/categories/45-moto-casual-bolsas.svg"
+                  alt="Botas"
+                >
+                <h2 style="color:#fff;">Mochilas</h2>
+              </NuxtLink>
+              <NuxtLink
+                to="/chaquetas-casual"
+                class="mtc-link"
+              >
+                <img
+                  src="/content/assets/menu/categories/48-moto-casual-chaquetas.svg"
+                  alt="Pantalones"
+                >
+                <h2 style="color:#fff;">Chaquetas</h2>
+              </NuxtLink>
+
+              <NuxtLink
+                to="/gorros"
 
                 class="mtc-link"
-              ><img
-                 src="/content/assets/menu/categories/46-moto-casual-camisetas.svg"
-                 alt="Chaquetas"
-               >
-                <h2 style="color:#fff;">Poleras</h2></a><a
-                href="/sweaters-y-polerones"
-                class="mtc-link"
-              ><img
-                 src="/content/assets/menu/categories/57-moto-casual-sudaderas.svg"
-                 alt="Guantes"
-               >
-                <h2 style="color:#fff;">Polerones</h2></a><a
-                href="/mochilas"
-                class="mtc-link"
-              ><img
-                 src="/content/assets/menu/categories/45-moto-casual-bolsas.svg"
-                 alt="Botas"
-               >
-                <h2 style="color:#fff;">Mochilas</h2></a><a
-                href="/chaquetas-casual"
-                class="mtc-link"
-              ><img
-                 src="/content/assets/menu/categories/48-moto-casual-chaquetas.svg"
-                 alt="Pantalones"
-               >
-                <h2 style="color:#fff;">Chaquetas</h2></a><a
-                href="/gorros"
-
-                class="mtc-link"
-              ><img
-                 src="/content/assets/menu/categories/52-moto-casual-gorros.svg"
-                 alt="Off-Road"
-               >
-                <h2 style="color:#fff;">Gorros</h2></a>
+              >
+                <img
+                  src="/content/assets/menu/categories/52-moto-casual-gorros.svg"
+                  alt="Off-Road"
+                >
+                <h2 style="color:#fff;">Gorros</h2>
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -69,7 +84,7 @@
 </template>
 <style scoped>
 
-.promo-categories a.mtc-link{
+.promo-categories a.mtc-link {
   background-color: darkgrey;
   background-image: none;
   box-shadow: 0 0 0 #000;
@@ -102,6 +117,7 @@
   background-size: cover;
   padding: 45px 0 40px;
 }
+
 .promo-categories__header {
   align-items: center;
   display: flex;
@@ -163,6 +179,7 @@
     padding: 20px 0;
   }
 }
+
 @media only screen and (max-width: 600px) {
   .promo-categories {
     flex-wrap: wrap;

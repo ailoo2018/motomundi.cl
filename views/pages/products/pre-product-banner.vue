@@ -22,13 +22,13 @@
             href="https://www.youtube.com/MotoMundiTv"
             target="_blank"
           >
-            <img
-                      
-              src="/content/images/banners/mm.png"
+            <VImg
+              src="/images/cms/mmtv.png"
               alt="Promo banner"
               loading="lazy"
               class="banner__background"
-            >
+
+            />
           </a>
         </div>
 
