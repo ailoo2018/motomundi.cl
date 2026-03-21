@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const isCartOpen = defineModel({type: Boolean, default: false})
+const isCartOpen = defineModel({type: Boolean, default: () => false})
 
 const getCartTotal = () => {
   return 1000

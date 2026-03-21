@@ -2,7 +2,11 @@
 const props = defineProps({
   filters: {
     type: Array,
-    default: () => []
+    default: () => [],
+  },
+  isMobile: {
+    type: Boolean,
+    default: () => false,
   }
 })
 
@@ -12,7 +16,11 @@ const MAX_SHOW = 5
 const sliderValues = ref([10, 60])
 
 const filters = computed(() => {
-  return props.filters || []
+
+  if(Array.isArray(props.filters)) {
+    return props.filters
+  }
+  return []
 })
 
 const activeFilters = computed(() => {
@@ -29,7 +37,7 @@ watch(
 </script>
 
 <template>
-  <ul style="overflow-y: auto;max-height: 60vh;">
+  <ul style="overflow-y: auto;" :style="{ 'max-height' : isMobile ? '100dvh' : '60vh' }">
 
     <li
       v-for="facetGroup in activeFilters"

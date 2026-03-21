@@ -59,7 +59,7 @@ const addRemoveToWishList = async event => {
   top: 15px;
   cursor: pointer;
   border: none;
-  z-index: 20; /* High z-index to ensure it's clickable over the product link */
+  z-index: 2; /* High z-index to ensure it's clickable over the product link */
 
   /* On mobile, we want it visible immediately */
   opacity: 1;

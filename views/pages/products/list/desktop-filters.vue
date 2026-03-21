@@ -93,9 +93,7 @@ const showFilters  = () => {
                         </div>
                       </li>
 
-
                       <SearchFilters @filters-changed="onFilterChanged" :filters="filters" />
-
 
                     </ul>
                   </nav>

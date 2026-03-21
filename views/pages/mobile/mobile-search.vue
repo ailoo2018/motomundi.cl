@@ -212,7 +212,7 @@ const search = async (isNextPage = false) => {
     >
       <div
         class="search-mobile__filters-container"
-        style="height:100%;"
+
       >
         <div class="search-mobile__filters-header">
           <button
@@ -239,17 +239,17 @@ const search = async (isNextPage = false) => {
             </svg>
           </button>
         </div>
-        <div class="search-mobile__filters-content">
-          <SearchFilters v-model="filters" />
+        <div class="search-mobile__filters-content" >
+          <SearchFilters :filters="filters" is-mobile />
         </div>
         <div class="search-mobile__buttons">
-          <button
-            type="button"
-            class="apply-filters"
+          <VBtn
+            class="apply-filters w-100 mt-4"
+            rounded="0"
             @click="toggleSearchFilter"
           >
             Aplicar
-          </button>
+          </VBtn>
         </div>
       </div>
     </nav>
@@ -465,6 +465,7 @@ const search = async (isNextPage = false) => {
 .search-mobile__filters.show .search-mobile__filters-container {
   opacity: 1;
   pointer-events: auto;
+
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
@@ -473,10 +474,10 @@ const search = async (isNextPage = false) => {
   bottom: 0;
   display: flex;
   flex-direction: column;
-  height: calc(var(--vh) * 100);
-  /*justify-content: space-between;*/
+  height: 100dvh;
+  justify-content: space-between;
   opacity: 0;
-  overflow: hidden;
+  overflow: auto;
   pointer-events: none;
   position: fixed;
   right: 0;
@@ -485,7 +486,7 @@ const search = async (isNextPage = false) => {
   transform: translateX(1000px);
   transition: all .3s ease-in;
   width: 100vw;
-  z-index: 2;
+  z-index: 3;
 }
 .search-mobile__filters.show .search-mobile__filters-container {
   opacity: 1;
@@ -528,5 +529,12 @@ const search = async (isNextPage = false) => {
 
 .search-mobile__filters .search-mobile__filters-header button.close-filters {
   padding: 9px 10px 9px 30px;
+}
+
+.search-mobile__buttons{
+  margin-top: auto;
+}
+.search-mobile__filters-content{
+  overflow: hidden;
 }
 </style>

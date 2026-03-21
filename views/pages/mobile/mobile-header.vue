@@ -54,7 +54,9 @@ const getCartTotalItems = () => {
 </script>
 
 <template>
-  <CartDrawer v-model="isCartOpen" />
+  <ClientOnly>
+  <CartDrawer  v-model="isCartOpen" />
+  </ClientOnly>
   <MobileMenu v-model="isMenuOpen" />
   <header class="header-container">
     <div class="header">
