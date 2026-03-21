@@ -34,37 +34,39 @@ const goToSlide = index => {
 }
 
 const getBgImg = (img, origin) => {
-  if (isMobile && img.imagePathSmall && img.imagePathSmall.length > 0) {
+
+  if (isMobile.value && img.imagePathSmall && img.imagePathSmall.length > 0) {
     return {
       backgroundImage: `url('${getBaseCDN()}${img.imagePathSmall}')`,
       backgroundSize: "auto 500px",
     }
   }
 
+
   return {
     backgroundImage: `url('${getBaseCDN()}${img.imagePath}')`,
   }
 }
 
-onMounted(() => {
-  if (!swiperEl.value) return
+watch(swiperEl, async (el) => {
+  if (!el) return
 
-  // 1. Listen for slide changes
-  swiperEl.value.addEventListener('swiper-slidechange', (e) => {
+  el.addEventListener('swiper-slidechange', (e) => {
     activeIndex.value = e.detail[0].activeIndex
   })
 
-  // 2. Check if Swiper is already initialized (Common with Web Components)
-  if (swiperEl.value.swiper) {
+  if (el.swiper) {
     swiperReady.value = true
-  } else {
-    swiperEl.value.addEventListener('swiper-init', () => {
-      swiperReady.value = true
-    })
+    return
   }
 
-  // 3. Shorter safety fallback
-  setTimeout(() => { swiperReady.value = true }, 400)
+  el.addEventListener('swiper-init', () => {
+    swiperReady.value = true
+  })
+
+  // Safety net: swiper-init may have already fired before listener was added
+  await nextTick()
+  if (el.swiper) swiperReady.value = true
 })
 </script>
 
@@ -77,7 +79,7 @@ onMounted(() => {
     <section class="carousel-block">
       <!-- 👇 Static first-image placeholder shown before Swiper is ready -->
 
-      <span style="display: none;">is mobile: {{isMobile}}</span>
+      <span style="display: none;">swiperReady: {{swiperReady}} </span>
 
       <div
         v-if="!swiperReady && firstImage"
