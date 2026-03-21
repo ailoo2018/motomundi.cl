@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { ProductFeatureType } from "@/models/products"
 
-const selectedPits = defineModel({
-  type: Array,
-  default: () => []
-})
-
-const selectedVariants = ref([])
-
 const props = defineProps(
   {
     product: {
@@ -17,13 +10,20 @@ const props = defineProps(
   },
 )
 
+const selectedPits = defineModel({
+  type: Array,
+  default: () => [],
+})
+
+const selectedVariants = ref([])
+
 console.log("composite: ", props.product.composite)
 
 for(var cmpProd of props.product.composite){
   selectedVariants.value.push({
     product: cmpProd.product,
     size: null,
-    color: cmpProd.colors && cmpProd.colors.length === 1 ? cmpProd.colors[0] : null ,
+    color: cmpProd.colors && cmpProd.colors.length === 1 ? cmpProd.colors[0] : null,
   })
 }
 
@@ -33,11 +33,11 @@ const prodUtils = useProductsUtils()
 
 watch( () => selectedVariants.value, () => {
 
-  const updatedPits = [];
+  const updatedPits = []
 
   for(var variant of selectedVariants.value){
-    var colorId = 0;
-    var sizeId = 0;
+    var colorId = 0
+    var sizeId = 0
 
     if(variant.color){
       colorId = variant.color.id
@@ -59,16 +59,36 @@ watch( () => selectedVariants.value, () => {
     }
   }
 
-  selectedPits.value = updatedPits;
+  selectedPits.value = updatedPits
 
 
 }, { deep: true, immediate: true })
 
-const getAvlSizes = product => {
+const getAvlSizes = (assoc) => {
+
+  const product = assoc.product
+
+  let colorId = assoc.color.id || 0
+
+/*  if(assoc.colors?.length ===1){
+    colorId = assoc.colors[0].id
+  }*/
+
   if(!product || !product.features)
     return []
 
-  return product.features.filter(f => f.type === ProductFeatureType.Size)
+  var sizes =  product.features.filter(f => f.type === ProductFeatureType.Size)
+
+  const avlSizes = []
+
+  for(var s of sizes){
+    const sizeId = s.id
+    if(product.productItems.some((pit: { sizeId: any; colorId: number; quantityInStock: number }) => pit.sizeId === sizeId && pit.colorId === colorId && pit.quantityInStock > 0)) {
+      avlSizes.push(s)
+    }
+  }
+
+  return avlSizes
 }
 
 const getAvlColors = product => {
@@ -80,7 +100,6 @@ const getAvlColors = product => {
 </script>
 
 <template>
-
   <span
     v-if="product.type === 1"
     id="composite-product"
@@ -107,7 +126,10 @@ const getAvlColors = product => {
 
             <div class="product-size__body">
               <div class="product-size__select d-flex gap-1">
-                <div class="size-guide-wrapper" style="flex:0;">
+                <div
+                  class="size-guide-wrapper"
+                  style="flex:0;"
+                >
                   <div>
                     <button
                       id="size-guide-button"
@@ -130,7 +152,7 @@ const getAvlColors = product => {
                 </div>
                 <VSelect
                   v-model="assoc.size"
-                  :items="getAvlSizes(assoc.product)"
+                  :items="getAvlSizes(assoc)"
                   item-title="name"
                   item-id="id"
                   placeholder="Tallas"
@@ -139,12 +161,6 @@ const getAvlColors = product => {
                 />
 
               </div>
-              <div
-                class="cart-product__error"
-                ng-if="assoc.selectedSizeError && assoc.selectedSizeError.length > 0"
-              >
-                {{ assoc.selectedSizeError }}
-              </div>
             </div>
           </div>
         </div>
@@ -152,8 +168,8 @@ const getAvlColors = product => {
     </div>
   </span>
 </template>
-<style >
 
+<style>
 #composite-product .product-sizes .item .product-sizes__header {
   align-items: center;
   display: flex;
