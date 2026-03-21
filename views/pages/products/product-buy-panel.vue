@@ -251,10 +251,7 @@ const localIsWished = computed(() => {
     <!-- /composite product -->
 
     <!-- shipping-options -->
-    <div
-      class="row"
-      ng-if="page.showShippingOptions"
-    >
+    <div class="row">
       <div class="col s12">
         <div class="product-buy-panel__shipping-options">
           <div

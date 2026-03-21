@@ -899,7 +899,7 @@
                 </a>
               </li>
             </ul>
-            <div class="change-locale-desktop-container show-on-medium-and-up">
+            <div class="d-none d-md-block change-locale-desktop-container show-on-medium-and-up">
               <ul class="lang-currency">
                 <li>
                   <svg

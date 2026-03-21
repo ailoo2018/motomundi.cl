@@ -14,7 +14,19 @@ export const useProductsUtils = () => {
   }
 
   const isInStock = product => {
-    return product.productItems?.some(f => f.quantityInStock > 0) || false
+
+    if(product.type === 0)
+      return product.productItems?.some(f => f.quantityInStock > 0) || false
+
+    if(!(product.composite?.length > 0))
+      return false
+
+    for(var p of product.composite){
+      if(p.product.productItems?.some(pit => pit.quantityInStock >0))
+        return true
+    }
+
+    return false
   }
 
   return {
