@@ -9,7 +9,7 @@ export interface Country {
   hasDecimals: boolean;
 }
 
-export const COUNTRY_DATA = {
+export const COUNTRY_DATA : any = {
   AR: { name: 'Argentina',      currency: 'ARS', symbol: '$',   flag: '🇦🇷', iso: "AR", hasDecimals: false },
   BO: { name: 'Bolivia',        currency: 'BOB', symbol: 'Bs.', flag: '🇧🇴', iso: "BO", hasDecimals: true },
   BR: { name: 'Brasil',         currency: 'BRL', symbol: 'R$',  flag: '🇧🇷', iso: "BR", hasDecimals: true },
@@ -73,17 +73,11 @@ export function useCountryDetection() {
     () => COUNTRY_DATA[detectedCountry.value] ?? null,
   )
 
-  /** Fetch visitor country via ipapi.co (free, no key needed) */
   async function detectCountry() {
-    // Only run on the client
     if (!import.meta.client) return
-
-    // Already has a saved preference → respect it, no popup
     if (countryCookie.value) return
-
-    // Don't fetch again if already running / already ran
-    if (detectionRan) return
-    detectionRan = true
+    if (detectionRan.value) return  // ✅ .value added
+    detectionRan.value = true
 
     isLoading.value = true
     try {
@@ -93,24 +87,20 @@ export function useCountryDetection() {
 
       if (code && code !== DEFAULT_COUNTRY && COUNTRY_DATA[code]) {
         detectedCountry.value = code
-
-        // Show popup after 3 seconds
-        setTimeout(() => {
-          showPopup.value = true
-        }, 3000)
+        setTimeout(() => { showPopup.value = true }, 3000)
       }
     } catch (e) {
-      // Silently fail — no popup on network error
       console.warn('[CountryDetection] Could not detect country:', e)
     } finally {
       isLoading.value = false
     }
   }
 
+
   function acceptDetectedCountry() {
     if (!detectedCountry.value) return
-    changeCountr(detectedCountry.value)
-    showPopup.value     = false
+    changeCountry(detectedCountry.value)  // ✅ typo fixed
+    showPopup.value = false
   }
 
   function keepDefaultCountry() {
@@ -118,14 +108,14 @@ export function useCountryDetection() {
     showPopup.value     = false
   }
 
-  function getCountryCurrency(code){
+  function getCountryCurrency(code: string){
     return COUNTRY_DATA[code]?.currency || "CLP"
   }
-  function getCountryData(code) : Country {
+  function getCountryData(code: string) : Country {
     return COUNTRY_DATA[code] || null
   }
 
-  function changeCountry(code) {
+  function changeCountry(code: string) {
     if (COUNTRY_DATA[code]) {
       countryCookie.value = code
       currencyCookie.value = getCountryCurrency(code)

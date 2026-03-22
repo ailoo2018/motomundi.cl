@@ -18,7 +18,7 @@ const goTo = async (event, url, departmentId) => {
 
 <template>
   <!-- #segments -->
-  <ClientOnly>
+
     <ul id="segments">
       <li
         class="c0"
@@ -117,7 +117,7 @@ const goTo = async (event, url, departmentId) => {
         </NuxtLink>
       </li>
     </ul>
-  </ClientOnly>
+
   <!-- /#segements -->
 </template>
 
