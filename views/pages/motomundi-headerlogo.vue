@@ -1,26 +1,40 @@
 <script setup lang="ts">
 import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-search.vue"
+import { Departments } from "@/models"
 
+const currDept = useCookie('user-department', {
+  decode: val => Number(val),
+  encode: val => String(val),
+  default: () => Departments.Road,
+})
+
+const deptPath = computed(() => {
+  switch (currDept.value) {
+  case Departments.CafeRacer:  return '/cafe-racer'
+  case Departments.Mx:  return '/motocross-enduro-trial'
+  case Departments.LifeStyle:     return '/ropa-casual'
+  default:                     return '/'
+  }
+})
 </script>
-<template>
 
-  <div class="main-container my-4" style="color:white">
+<template>
+  <div
+    class="main-container my-4"
+    style="color:white"
+  >
     <div class="d-flex justify-space-between">
       <div>
-        <NuxtLink to="/">
+        <NuxtLink :to="deptPath">
           <img
             src="/logo-motomundi.png"
             width="400"
-          />
+          >
         </NuxtLink>
       </div>
       <div>
-
-        <MotomundiHeaderSearch/>
-
+        <MotomundiHeaderSearch />
       </div>
-
-
     </div>
   </div>
 </template>
@@ -49,8 +63,4 @@ import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-
   transform: translateY(-50%);
   width: 10px;
 }
-
-
-
-
 </style>
