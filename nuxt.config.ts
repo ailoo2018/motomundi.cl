@@ -71,6 +71,7 @@ export default defineNuxtConfig({
 
 
 
+
     '/!**': createCachedRoute('all'),
     '/': createCachedRoute('homepage'),
     '/cafe-racer': createCachedRoute('cafe-racer'),
@@ -79,6 +80,7 @@ export default defineNuxtConfig({
     '/moto-blog': createCachedRoute('blog'),
     '/motocicleta/!**': createCachedRoute('product'),
     '/cascos-para-moto': createCachedRoute('cascos-para-moto'),
+
 
 
 
