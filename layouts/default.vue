@@ -22,6 +22,14 @@ const isMobile = computed(() => deviceType.value === 'mobile')
 
 const { injectSkinClasses } = useSkins()
 injectSkinClasses()
+
+const { setDepartment} = useDepartment()
+
+onMounted(() => {
+  const stored = localStorage.getItem('mm-user-department')
+  if (stored) setDepartment(Number(stored))
+})
+
 </script>
 
 <template>
