@@ -11,27 +11,30 @@ const DEPT_PATHS = {
 }
 
 export function useDepartment() {
-  const currDept = useCookie(DEPT_COOKIE, {
+  const deptCookie = useCookie(DEPT_COOKIE, {
     decode: val => Number(val),
     encode: val => String(val),
     default: () => Departments.Road,
   })
 
-  // On client mount, localStorage overrides the SSR cookie value
-  if (import.meta.client) {
-    const stored = localStorage.getItem(DEPT_STORAGE)
-    if (stored !== null) {
-      currDept.value = Number(stored)
+  // Source of truth:
+  // - Client → localStorage (bypasses SSR cache)
+  // - Server → cookie (best effort)
+  const currDept = useState('department', () => {
+    if (import.meta.client) {
+      const stored = localStorage.getItem(DEPT_STORAGE)
+      return stored !== null ? Number(stored) : (deptCookie.value ?? Departments.Road)
     }
-  }
+    return deptCookie.value ?? Departments.Road
+  })
 
   const deptPath = computed(() => DEPT_PATHS[currDept.value] ?? '/')
 
   function setDepartment(deptId) {
-    console.log("set department to: " + deptId)
     currDept.value = deptId
 
-    // Persist to both
+    // Keep both in sync as side effects
+    deptCookie.value = deptId
     if (import.meta.client) {
       localStorage.setItem(DEPT_STORAGE, String(deptId))
     }
