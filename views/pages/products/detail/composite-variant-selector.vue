@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup >
 import { ProductFeatureType } from "@/models/products"
 
 const props = defineProps(
@@ -65,30 +65,22 @@ watch( () => selectedVariants.value, () => {
 }, { deep: true, immediate: true })
 
 const getAvlSizes = (assoc) => {
-
   const product = assoc.product
 
-  let colorId = assoc.color.id || 0
+  // ✅ Safe fallback if color not yet selected
+  const colorId = assoc.color?.id ?? 0
 
-/*  if(assoc.colors?.length ===1){
-    colorId = assoc.colors[0].id
-  }*/
+  if (!product?.features) return []
 
-  if(!product || !product.features)
-    return []
+  const sizes = product.features.filter(f => f.type === ProductFeatureType.Size)
 
-  var sizes =  product.features.filter(f => f.type === ProductFeatureType.Size)
-
-  const avlSizes = []
-
-  for(var s of sizes){
-    const sizeId = s.id
-    if(product.productItems.some((pit: { sizeId: any; colorId: number; quantityInStock: number }) => pit.sizeId === sizeId && pit.colorId === colorId && pit.quantityInStock > 0)) {
-      avlSizes.push(s)
-    }
-  }
-
-  return avlSizes
+  // ✅ Return new objects instead of mutating originals
+  return sizes.map(s => ({
+    ...s,
+    disabled: !product.productItems.some(
+      pit => pit.sizeId === s.id && pit.colorId === colorId && pit.quantityInStock > 0
+    ),
+  }))
 }
 
 const getAvlColors = product => {
@@ -150,15 +142,32 @@ const getAvlColors = product => {
                     </button>
                   </div>
                 </div>
-                <VSelect
-                  v-model="assoc.size"
-                  :items="getAvlSizes(assoc)"
-                  item-title="name"
-                  item-id="id"
-                  placeholder="Tallas"
-                  :rounded="0"
-                  return-object
-                />
+<VSelect
+  v-model="assoc.size"
+  :items="getAvlSizes(assoc)"
+  item-title="name"
+  item-value="id"
+  :item-props="(item) => ({ disabled: item.disabled })"
+  placeholder="Tallas"
+  :rounded="0"
+  return-object
+>
+  <template #item="{ props, item }">
+    <v-list-item v-bind="props">
+      <template #append>
+        <v-chip
+          v-if="item.raw.disabled"
+          color="error"
+          size="x-small"
+          variant="tonal"
+          class="ml-2"
+        >
+          Sin Stock
+        </v-chip>
+      </template>
+    </v-list-item>
+  </template>
+</VSelect>
 
               </div>
             </div>
