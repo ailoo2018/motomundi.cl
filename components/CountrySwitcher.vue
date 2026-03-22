@@ -22,41 +22,76 @@ function onClickOutside(e) {
   }
 }
 
-const iso = computed(() => {
-  return selectedCountryData.value.iso?.toLowerCase()
-})
 
+const getCountryFlag = () =>
+{
+  return `/content/images/flags/${selectedCountryData.value.iso?.toLowerCase()}.png`
+}
 
 onMounted(()  => document.addEventListener('mousedown', onClickOutside))
 onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
 </script>
 
 <template>
-  <div ref="wrapRef" class="cs-wrap">
-
+  <div
+    ref="wrapRef"
+    class="cs-wrap"
+  >
     <!-- Trigger button -->
-    <button class="cs-trigger" :class="{ 'is-open': menuOpen }" @click="toggleMenu">
-      <span class="cs-flag"><img :src="`/content/images/flags/${selectedCountryData.iso?.toLowerCase()}.png`" /></span>
+    <button
+      class="cs-trigger"
+      :class="{ 'is-open': menuOpen }"
+      @click="toggleMenu"
+    >
+      <span class="cs-flag"><img :src="getCountryFlag()"></span>
       <span class="cs-name">{{ selectedCountryData.name }}</span>
       <span class="cs-sep">·</span>
       <span class="cs-symbol">{{ selectedCountryData.symbol }}</span>
-      <svg class="cs-chevron" :class="{ 'is-open': menuOpen }"
-           width="12" height="12" viewBox="0 0 12 12" fill="none">
-        <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor"
-              stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg
+        class="cs-chevron"
+        :class="{ 'is-open': menuOpen }"
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="none"
+      >
+        <path
+          d="M2.5 4.5L6 8l3.5-3.5"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
     </button>
 
     <!-- Dropdown panel -->
     <Transition name="cs-drop">
-      <div v-if="menuOpen" class="cs-panel">
-
+      <div
+        v-if="menuOpen"
+        class="cs-panel"
+      >
         <div class="cs-panel-header">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" stroke="#c74044" stroke-width="1.8"/>
-            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="#c74044"
+              stroke-width="1.8"
+            />
+            <path
+              d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10
                      15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                  stroke="#c74044" stroke-width="1.8" stroke-linecap="round"/>
+              stroke="#c74044"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
           </svg>
           <span>Selecciona tu región</span>
         </div>
@@ -70,22 +105,34 @@ onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
             @click="select(code)"
           >
             <span class="cs-item-flag">
-              <img :src="`/content/images/flags/${data.iso?.toLowerCase()}.png`" />
+              <img :src="`/content/images/flags/${data.iso?.toLowerCase()}.png`">
             </span>
             <span class="cs-item-info">
               <span class="cs-item-name">{{ data.name }}</span>
               <span class="cs-item-currency">{{ data.currency }}</span>
             </span>
             <span class="cs-item-symbol">{{ data.symbol }}</span>
-            <span v-if="code === selectedCountry" class="cs-item-check">
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                <path d="M1.5 5.5l3 3 5-5" stroke="#c74044"
-                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <span
+              v-if="code === selectedCountry"
+              class="cs-item-check"
+            >
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 11 11"
+                fill="none"
+              >
+                <path
+                  d="M1.5 5.5l3 3 5-5"
+                  stroke="#c74044"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </span>
           </button>
         </div>
-
       </div>
     </Transition>
   </div>

@@ -35,7 +35,7 @@ const href = props.href
                     <span class="h2">
                       <span>Cascos</span>
                       <a
-                        href="/cascos-para-moto"
+                        to="/cascos-para-moto"
                         class="mtc-link"
                       >
                         Ver todos
@@ -45,7 +45,7 @@ const href = props.href
 
                   <div class="submenu__content submenu__icon-buttons">
                     <!--
-                      <a href="/cascos/novedades"
+                      <a to="/cascos/novedades"
                       class="mtc-link"
                       title="Novedades">
                       <img src="/Templates/MotoMundiDesktop/content/assets/categories/140-motos-novedades-cascos.svg"
@@ -56,57 +56,57 @@ const href = props.href
                       </a>
                     -->
 
-                    <a
-                      href="/cascos-integrales-para-moto"
+                    <NuxtLink
+                      to="/cascos-integrales-para-moto"
                       class="mtc-link"
                       title="Integrales"
                     >
                       <img src="/content/assets/menu/categories/full-face.jpg">
 
                       <p>Integrales</p>
-                    </a>
+                    </NuxtLink>
 
-                    <a
-                      href="/cascos-abatibles-para-moto"
+                    <NuxtLink
+                      to="/cascos-abatibles-para-moto"
                       class="mtc-link"
                       title="Modulares"
                     >
                       <img src="/content/assets/menu/categories/flip-up.jpg">
                       <p>Modulares</p>
-                    </a>
+                    </NuxtLink>
 
 
-                    <a
-                      href="/cascos-abiertos-para-moto"
+                    <NuxtLink
+                      to="/cascos-abiertos-para-moto"
                       class="mtc-link"
                       title="Jet"
                     >
 
                       <img src="/content/assets/menu/categories/open-face.jpg">
                       <p>Abierto</p>
-                    </a>
+                    </NuxtLink>
 
-                    <a
-                      href="/cascos-doble-proposito"
+                    <NuxtLink
+                      to="/cascos-doble-proposito"
                       class="mtc-link"
                       title="Motocross / Enduro"
                     >
                       <img src="/content/assets/menu/categories/dual-sport.jpg">
                       <p>Adventure</p>
-                    </a>
-                    <a
-                      href="/cascos-motocross"
+                    </NuxtLink>
+                    <NuxtLink
+                      to="/cascos-motocross"
                       class="mtc-link"
                       title="Motocross / Enduro"
                     >
 
                       <img src="/content/assets/menu/categories/mx.jpg">
                       <p>MX / Enduro</p>
-                    </a>
+                    </NuxtLink>
 
 
-                    <a
-                      href="/intercomunicadores"
+                    <NuxtLink
+                      to="/intercomunicadores"
                       class="mtc-link"
                       title="Casco + intercomunicador"
                     >
@@ -116,21 +116,21 @@ const href = props.href
                         viewBox="0 0 300 200"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <use xlink:href="/content/assets/menu/categories/blouz.svg#img-intercom-et-kit-main-libre" />
+                        <use xlink:to="/content/assets/menu/categories/blouz.svg#img-intercom-et-kit-main-libre" />
                       </svg>
                       <p>Comunicación</p>
-                    </a>
+                    </NuxtLink>
 
 
-                    <a
-                      href="/accesorios-para-cascos"
+                    <NuxtLink
+                      to="/accesorios-para-cascos"
                       class="mtc-link"
                       title="Accesorios"
                     >
 
                       <img src="/content/assets/menu/categories/visor.jpg">
                       <p>Accesorios</p>
-                    </a>
+                    </NuxtLink>
                   </div>
                 </div>
               </div>
@@ -143,8 +143,8 @@ const href = props.href
                       <span class="h3">Marcas destacadas</span>
                       <ul>
                         <li>
-                          <a
-                            href="/cascos-alpinestars"
+                          <NuxtLink
+                            to="/cascos-alpinestars"
                             class="mtc-link"
                           ><span lazy="true"><img
                             src="/content/assets/brands/brand-77.png"
@@ -153,11 +153,11 @@ const href = props.href
                             width="59"
                             height="30"
                           >
-                          </span></a>
+                          </span></NuxtLink>
                         </li>
                         <li>
-                          <a
-                            href="/shoei"
+                          <NuxtLink
+                            to="/shoei"
                             class="mtc-link"
                           ><span lazy="true"><img
                             src="/content/assets/brands/brand-78.png"
@@ -165,11 +165,11 @@ const href = props.href
                             alt="Cascos SHOEI"
                             width="59"
                             height="30"
-                          ></span></a>
+                          ></span></NuxtLink>
                         </li>
                         <li>
-                          <a
-                            href="/cascos-agv"
+                          <NuxtLink
+                            to="/cascos-agv"
                             class="mtc-link"
                           ><span lazy="true"><img
                             src="/content/assets/brands/brand-82.png"
@@ -177,11 +177,11 @@ const href = props.href
                             alt="Cascos AGV"
                             width="59"
                             height="30"
-                          ></span></a>
+                          ></span></NuxtLink>
                         </li>
                         <li>
-                          <a
-                            href="/scorpion"
+                          <NuxtLink
+                            to="/scorpion"
                             class="mtc-link"
                           ><span lazy="true"><img
                             src="/content/assets/brands/brand-277.png"
@@ -189,11 +189,11 @@ const href = props.href
                             alt="Cascos Scorpion"
                             width="59"
                             height="30"
-                          > </span></a>
+                          > </span></NuxtLink>
                         </li>
                         <li>
-                          <a
-                            href="/schuberth"
+                          <NuxtLink
+                            to="/schuberth"
                             class="mtc-link"
                           ><span lazy="true"><img
                             src="/content/assets/brands/brand-239.png"
@@ -201,11 +201,11 @@ const href = props.href
                             alt="Cascos SCHUBERTH"
                             width="59"
                             height="30"
-                          > </span></a>
+                          > </span></NuxtLink>
                         </li>
                         <!--
                           <li><a
-                          href="/shark"
+                          to="/shark"
                           class="mtc-link"><span
                           lazy="true"><img
                           src="/content/assets/brands/brand-106.png"
@@ -215,8 +215,8 @@ const href = props.href
                           </li>
                         -->
                         <li>
-                          <a
-                            href="/cascos-arai"
+                          <NuxtLink
+                            to="/cascos-arai"
                             class="mtc-link"
                           ><span lazy="true"><img
                             src="/content/assets/brands/brand-83.png"
@@ -224,11 +224,11 @@ const href = props.href
                             alt="Cascos ARAI"
                             width="59"
                             height="30"
-                          > </span></a>
+                          > </span></NuxtLink>
                         </li>
                         <li>
-                          <a
-                            href="/hjc"
+                          <NuxtLink
+                            to="/hjc"
                             class="mtc-link"
                           ><span lazy="true"><img
                             src="/content/assets/brands/brand-293.png"
@@ -236,7 +236,7 @@ const href = props.href
                             alt="Cascos HJC"
                             width="59"
                             height="30"
-                          > </span></a>
+                          > </span></NuxtLink>
                         </li>
                       </ul>
                     </div>

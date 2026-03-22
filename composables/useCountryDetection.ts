@@ -37,16 +37,18 @@ export const COOKIE_NAME     = 'mm_country'
 export const CURRENCY_COOKIE_NAME     = 'mm_currency'
 export const COOKIE_DAYS     = 365
 
-// ── Singleton state (shared across all calls to useCountryDetection) ──────────
-// Defined outside the function so every component reads the SAME refs,
-// not isolated copies. This is what fixes the "showPopup is always false" bug.
-const showPopup       = ref(false)
-const detectedCountry = ref(null)
-const isLoading       = ref(false)
-let   detectionRan    = false   // prevents duplicate fetch on hot-reload
-// ─────────────────────────────────────────────────────────────────────────────
 
 export function useCountryDetection() {
+
+  // These will now persist from Server to Client correctly
+  const showPopup = useState('country_show_popup', () => false)
+  const detectedCountry = useState('country_detected', () => null)
+  const isLoading = useState('country_is_loading', () => false)
+
+  // For non-reactive flags that don't affect UI, a simple variable is fine
+  // but keep it inside or use a state if it affects logic flow
+  const detectionRan = useState('country_detection_ran', () => false)
+
   // Nuxt's useCookie — reactive & SSR-safe
   const countryCookie = useCookie(COOKIE_NAME, {
     maxAge: COOKIE_DAYS * 24 * 60 * 60,
