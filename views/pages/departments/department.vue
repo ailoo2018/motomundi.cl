@@ -22,6 +22,7 @@ import BrandsBlockMx from "@/views/pages/home/BrandsBlockMx.vue"
 import OutletPromo from "@/views/pages/home/outlet-promo.vue"
 import LifestyleCategories from "@/views/pages/home/lifestyle-categories.vue"
 import NewsletterSignUp from "@/views/pages/home/NewsletterSignUp.vue"
+import { Departments } from "@/models/index.js"
 
 const props = defineProps({
   wccId: {
@@ -64,7 +65,11 @@ if(isMobile.value)
 
 store.skin = 'default'
 
-const config = useRuntimeConfig()
+
+
+const { setDepartment } = useDepartment()
+
+setDepartment(props.wccId)
 
 const { data: homeRs, pending } = await useFetch(`/api/home/home?id=` + props.wccId, {
   key: `home-data-unique-key-` + props.wccId,

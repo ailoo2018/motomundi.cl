@@ -1,21 +1,11 @@
 <script setup lang="ts">
 import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-search.vue"
-import { Departments } from "@/models"
 
-const currDept = useCookie('user-department', {
-  decode: val => Number(val),
-  encode: val => String(val),
-  default: () => Departments.Road,
-})
 
-const deptPath = computed(() => {
-  switch (currDept.value) {
-  case Departments.CafeRacer:  return '/cafe-racer'
-  case Departments.Mx:  return '/motocross-enduro-trial'
-  case Departments.LifeStyle:     return '/ropa-casual'
-  default:                     return '/'
-  }
-})
+const { currDept, deptPath } = useDepartment()
+
+
+
 </script>
 
 <template>

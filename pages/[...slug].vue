@@ -23,9 +23,6 @@ const slugArray = Array.isArray(route.params.slug)
 
 const path = `/${slugArray.join('/')}`
 
-console.log("original path: " + path)
-
-console.log("!!!!chabna!!!!!!!!" + path.includes('sitemap'))
 
 
 if (path.includes('sitemap') || path.includes('__sitemap__')) {

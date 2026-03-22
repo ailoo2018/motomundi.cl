@@ -1,57 +1,98 @@
 <script setup lang="ts">
-
 const props = defineProps({
   widget: {
     type: Object,
     required: true,
   },
 })
-
 </script>
 
 <template>
-  <div id="home-block-2" class="block-container">
-    <div class="custom-block" block-id="1055"
-         section="offroad"
-         style="background-image: url('/content/assets/images/cat_offroad.jpg');background-repeat: repeat;background-size:unset;"
-         content="">
-
+  <div
+    id="home-block-2"
+    class="block-container"
+  >
+    <div
+      class="custom-block"
+      block-id="1055"
+      section="offroad"
+      style="background-image: url('/content/assets/images/cat_offroad.jpg');background-repeat: repeat;background-size:unset;"
+      content=""
+    >
       <div>
-        <section class="offroad-categories" style="background: transparent;">
+        <section
+          class="offroad-categories"
+          style="background: transparent;"
+        >
           <div class="offroad-categories__container container px-6">
-            <a href="/cascos-motocross" class="offroad-categories__item">
-              <img src="/content/assets/images/offroad/offroad-cascos.svg" alt="Cascos">
-              <small>Cascos</small></a>
-            <a href="/protecciones-mx-para-moto" class="offroad-categories__item">
-              <img src="/content/assets/images/offroad/offroad-protecciones.svg"
-                   alt="Protecciones">
-              <small>Protecciones</small></a>
-            <a href="/botas-mx-enduro-para-moto" class="offroad-categories__item">
-              <img src="/content/assets/images/offroad/offroad-botas.svg" alt="Botas">
-              <small>Botas</small></a>
-            <a href="/jerseys-para-moto"
-               class="offroad-categories__item">
-              <img src="/content/assets/images/offroad/offroad-camisetas.svg"
-                   alt="Camisetas">
-              <small>Camisetas</small></a>
-            <a href="/Pantalones-para-moto" class="offroad-categories__item">
-              <img src="/content/assets/images/offroad/offroad-pantalones.svg"
-                   alt="Pantalones">
-              <small>Pantalones</small></a>
-            <a href="/guantes-offroad-para-moto" class="offroad-categories__item">
-              <img src="/content/assets/images/offroad/offroad-guantes.svg" alt="Guantes">
-              <small>Guantes</small></a>
+            <NuxtLink
+              to="/cascos-motocross"
+              class="offroad-categories__item"
+            >
+              <img
+                src="/content/assets/images/offroad/offroad-cascos.svg"
+                alt="Cascos"
+              >
+              <small>Cascos</small>
+            </NuxtLink>
+            <NuxtLink
+              to="/protecciones-mx-para-moto"
+              class="offroad-categories__item"
+            >
+              <img
+                src="/content/assets/images/offroad/offroad-protecciones.svg"
+                alt="Protecciones"
+              >
+              <small>Protecciones</small>
+            </NuxtLink>
+            <NuxtLink
+              to="/botas-mx-enduro-para-moto"
+              class="offroad-categories__item"
+            >
+              <img
+                src="/content/assets/images/offroad/offroad-botas.svg"
+                alt="Botas"
+              >
+              <small>Botas</small>
+            </NuxtLink>
+            <NuxtLink
+              to="/jerseys-para-moto"
+              class="offroad-categories__item"
+            >
+              <img
+                src="/content/assets/images/offroad/offroad-camisetas.svg"
+                alt="Camisetas"
+              >
+              <small>Camisetas</small>
+            </NuxtLink>
+            <NuxtLink
+              to="/Pantalones-para-moto"
+              class="offroad-categories__item"
+            >
+              <img
+                src="/content/assets/images/offroad/offroad-pantalones.svg"
+                alt="Pantalones"
+              >
+              <small>Pantalones</small>
+            </NuxtLink>
+            <NuxtLink
+              to="/guantes-offroad-para-moto"
+              class="offroad-categories__item"
+            >
+              <img
+                src="/content/assets/images/offroad/offroad-guantes.svg"
+                alt="Guantes"
+              >
+              <small>Guantes</small>
+            </NuxtLink>
           </div>
         </section>
       </div>
     </div>
   </div>
-
-
 </template>
 
 <style scoped lang="scss">
-
 .offroad-categories {
   background: #fff;
 }
@@ -110,4 +151,5 @@ const props = defineProps({
   .offroad-categories__item strong {
     font-size: 28px;
   }
-}</style>
+}
+</style>

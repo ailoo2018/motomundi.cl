@@ -1,20 +1,13 @@
 <script setup>
 import { Departments } from "@/models/index"
 
-const router = useRouter()
-
-const currDept = useCookie('user-department', {
-  decode: val => Number(val),
-  encode: val => String(val),
-  default: () => Departments.Road,
-})
-
-
+const { setDepartment, currDept } = useDepartment()
 
 const goTo = async (event, url, departmentId) => {
-//  event.preventDefault()
-  currDept.value = departmentId  // sets cookie immediately
-  // await router.push(url)
+  event.preventDefault()
+
+  setDepartment( departmentId )
+  await router.push(url)
 }
 </script>
 
@@ -117,6 +110,9 @@ const goTo = async (event, url, departmentId) => {
             <span class="r">Ofertas</span>
           </span>
         </NuxtLink>
+      </li>
+      <li style="color: #fff">
+        {{currDept}}
       </li>
     </ul>
   </ClientOnly>
