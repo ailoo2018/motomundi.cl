@@ -66,7 +66,7 @@ const props = defineProps({
               <small>Camisetas</small>
             </NuxtLink>
             <NuxtLink
-              to="/Pantalones-para-moto"
+              to="/equipacion-motocross/pantalones"
               class="offroad-categories__item"
             >
               <img

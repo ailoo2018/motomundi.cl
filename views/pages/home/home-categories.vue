@@ -81,7 +81,7 @@ const props = defineProps({
               <h2 style="color:#fff;">Botas</h2>
             </NuxtLink>
             <NuxtLink
-              to="/Pantalones-para-moto"
+              to="/pantalones-para-moto"
               class="mtc-link"
               style="background-color:#333;background-image:none;box-shadow:0 0 0 #000;border:1px solid #fff;"
             >
