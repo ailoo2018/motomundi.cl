@@ -122,6 +122,11 @@ export function useCountryDetection() {
     }
   }
 
+  function getCountryFlag () : string
+  {
+    return `/content/images/flags/${selectedCountryData.value.iso?.toLowerCase()}.png`
+  }
+
   function dismissPopup() {
     showPopup.value = false
   }
@@ -139,6 +144,7 @@ export function useCountryDetection() {
     changeCountry,
     dismissPopup,
     getCountryData,
+    getCountryFlag,
     COUNTRY_DATA,
     DEFAULT_COUNTRY,
   }

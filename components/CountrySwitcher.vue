@@ -1,7 +1,7 @@
 <script setup>
 import { useCountryDetection, COUNTRY_DATA } from '~/composables/useCountryDetection'
 
-const { selectedCountry, selectedCountryData, changeCountry } = useCountryDetection()
+const { selectedCountry, selectedCountryData, changeCountry, getCountryFlag } = useCountryDetection()
 
 const menuOpen = ref(false)
 const wrapRef  = ref(null)
@@ -23,10 +23,7 @@ function onClickOutside(e) {
 }
 
 
-const getCountryFlag = () =>
-{
-  return `/content/images/flags/${selectedCountryData.value.iso?.toLowerCase()}.png`
-}
+const flag = computed(() => `/content/images/flags/${selectedCountryData.value?.iso?.toLowerCase()}.png`)
 
 onMounted(()  => document.addEventListener('mousedown', onClickOutside))
 onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
@@ -43,10 +40,15 @@ onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
       :class="{ 'is-open': menuOpen }"
       @click="toggleMenu"
     >
-      <span class="cs-flag"><img :src="getCountryFlag()"></span>
+      <span class="cs-flag" >
+        <ClientOnly>
+          <img :key="selectedCountry"  :src="`/content/images/flags/${selectedCountryData.iso?.toLowerCase()}.png`"/>
+        </ClientOnly>
+      </span>
+
       <span class="cs-name">{{ selectedCountryData.name }}</span>
       <span class="cs-sep">·</span>
-      <span class="cs-symbol">{{ selectedCountryData.symbol }}</span>
+      <span class="cs-symbol">{{ selectedCountryData.symbol }} </span>
       <svg
         class="cs-chevron"
         :class="{ 'is-open': menuOpen }"

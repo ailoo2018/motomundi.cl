@@ -6,8 +6,8 @@ import svgLoader from 'vite-svg-loader'
 
 
 // nuxt.config.ts
-const createCachedRoute = (tag: string) => ({
-  swr: (60 * 60) * 2,
+const createCachedRoute = (tag: string, ttl: number) => ({
+  swr:  ttl || (60 * 60) * 2,
   cache: {
     tags: [tag],
     varies: ['accept-language', 'x-device-type'],
@@ -73,14 +73,14 @@ export default defineNuxtConfig({
 
 
    /* '/!**': createCachedRoute('all'),*/
-    '/': createCachedRoute('homepage'),
-    '/cafe-racer': createCachedRoute('cafe-racer'),
-    '/motocross-enduro-trial': createCachedRoute('motocross'),
-    '/ropa-casual': createCachedRoute('ropa-casual'),
-    '/moto-blog': createCachedRoute('blog'),
-    '/moto-blog/**': createCachedRoute('blog'),
-    '/motocicleta/**': createCachedRoute('product'),
-    '/cascos-para-moto': createCachedRoute('cascos-para-moto'),
+    '/': createCachedRoute('homepage', (60 * 60) * 2),
+    '/cafe-racer': createCachedRoute('cafe-racer', (60 * 60) * 2),
+    '/motocross-enduro-trial': createCachedRoute('motocross', (60 * 60) * 2 ),
+    '/ropa-casual': createCachedRoute('ropa-casual', (60 * 60) * 2),
+    '/moto-blog': createCachedRoute('blog', (60 * 60) * 2),
+    '/moto-blog/**': createCachedRoute('blog', (60 * 60) * 24),
+    '/motocicleta/**': createCachedRoute('product', (60 * 60) * 4),
+    '/cascos-para-moto': createCachedRoute('cascos-para-moto', (60 * 60) * 3),
 
 
 
