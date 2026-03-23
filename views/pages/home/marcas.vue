@@ -33,6 +33,7 @@ function handleSubmenuClick(event) {
     <a>
       <span>Marcas </span>
     </a>
+
     <Transition name="megamenu">
       <ul
         v-show="isOpen"
