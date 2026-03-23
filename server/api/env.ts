@@ -17,11 +17,13 @@ export default defineEventHandler(async event => {
     const dlocalApiUrl = config.dlocalApiUrl || process.env.DLOCAL_GO_BASE_URL || process.env.NUXT_DLOCAL_GO_BASE_URL
     const dlocalApiKey = config.dlocalApiKey ||  process.env.DLOCK_API_KEY || process.env.NUXT_DLOCAL_GO_API_KEY
     const dlocalSecretKey = config.dlocalSecretKey || process.env.DLOCAL_GO_SECRET_KEY || process.env.NUXT_DLOCAL_GO_SECRET_KEY
-
+    const commerceCode   = process.env.WEBPAY_COMMERCE_CODE || ""
 
     return {
       myip: myip,
       NODE_ENV: process.env.NODE_ENV,
+      WEBPAY_COMMERCE_CODE: process.env.WEBPAY_COMMERCE_CODE,
+      MERCADO_PAGO_ACCESS_TOKEN: process.env.MERCADO_PAGO_ACCESS_TOKEN,
 
       //      REDIS_URL: process.env.REDIS_URL,
       //      WEBPAY_COMMERCE_CODE: process.env.WEBPAY_COMMERCE_CODE,

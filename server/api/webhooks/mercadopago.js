@@ -14,7 +14,7 @@ export default defineEventHandler(async event => {
 
     console.log(`Other topic received: ${topic}`)
 
-    if (topic === 'payment' && authCode) {
+    if (topic === 'payment' && resourceId) {
     
       try {
         await confirmPayment(Gateways.MERCADO_PAGO, resourceId)

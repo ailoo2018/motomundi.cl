@@ -67,6 +67,9 @@ function getMethodType(typeId : any) : string | undefined {
   return methodTypeMap.get(`${typeId}`)
 }
 
+
+
+
 export function getBaseUrl(){
   const config = useRuntimeConfig();
   let baseUrl: string = config.public.baseUrl
