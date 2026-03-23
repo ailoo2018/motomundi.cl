@@ -13,6 +13,7 @@ export default defineEventHandler(async event => {
     const response = await fetch('https://api.ipify.org?format=json')
     const myip = await response.json()
 
+    const baseUrl = config.public.baseUrl
     const dlocalApiUrl = config.dlocalApiUrl || process.env.DLOCAL_GO_BASE_URL || process.env.NUXT_DLOCAL_GO_BASE_URL
     const dlocalApiKey = config.dlocalApiKey ||  process.env.DLOCK_API_KEY || process.env.NUXT_DLOCAL_GO_API_KEY
     const dlocalSecretKey = config.dlocalSecretKey || process.env.DLOCAL_GO_SECRET_KEY || process.env.NUXT_DLOCAL_GO_SECRET_KEY
@@ -31,6 +32,7 @@ export default defineEventHandler(async event => {
       dlocalApiKey,
       userId,
       wuid,
+      baseUrl,
     }
   }catch(error){
     console.error('Error in friendly-url lookup:', error)

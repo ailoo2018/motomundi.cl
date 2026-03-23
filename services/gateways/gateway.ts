@@ -69,11 +69,11 @@ function getMethodType(typeId : any) : string | undefined {
 
 export function getBaseUrl(){
   const config = useRuntimeConfig();
-  let baseUrl = config.public.baseUrl
+  let baseUrl: string = config.public.baseUrl
 
 
-  if(!baseUrl.startsWith("https")){
-    baseUrl = "https://appears-chair-cloud-skills.trycloudflare.com"
+  if(!baseUrl.startsWith("https") || baseUrl.includes("localhost") || baseUrl.includes("cloudflare")){
+    baseUrl = "https://city-variations-courtesy-insulation.trycloudflare.com/"
   }
 
 

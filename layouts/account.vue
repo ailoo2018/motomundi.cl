@@ -11,6 +11,7 @@ import HomeCategories from "@/views/pages/home/home-categories.vue"
 import AccountMenu from "@/views/pages/account/account-menu.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import { getHeader } from "h3"
+import AppLoader from "@/components/AppLoader.vue"
 
 
 const { injectSkinClasses } = useSkins()
@@ -50,9 +51,17 @@ const logout = async () => {
 
 // ℹ️ This will inject classes in body tag for accurate styling
 injectSkinClasses()
+
+const { setDepartment} = useDepartment()
+
+onMounted(() => {
+  const stored = localStorage.getItem('mm-user-department')
+  if (stored) setDepartment(Number(stored))
+})
 </script>
 
 <template>
+  <AppLoader />
   <!-- mobile -->
   <div v-if="deviceType === 'mobile'">
     <main class="main-content">
