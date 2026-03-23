@@ -7,112 +7,100 @@
             <span class="h3">CARRETERA</span>
             <ul>
               <li>
-                <a
-                  href="/cascos-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/cascos-para-moto"
                   class="mtc-link"
                 >
                   Cascos
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/chaquetas-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/chaquetas-para-moto"
                   class="mtc-link"
                 >
                   Chaquetas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/botas-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/botas-para-moto"
                   class="mtc-link"
                 >
                   Botas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/guantes-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/guantes-para-moto"
                   class="mtc-link"
                 >
                   Guantes
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/pantalones-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/pantalones-para-moto"
                   class="mtc-link"
                 >
                   Pantalones
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/trajes-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/trajes-para-moto"
                   class="mtc-link"
                 >
                   Trajes / monos
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/accesorios-para-cascos"
-                  data-dr="true"
+                <NuxtLink
+                  to="/accesorios-para-cascos"
                   class="mtc-link"
                 >
                   Accesorios casco
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/intercomunicadores-gps-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/intercomunicadores-gps-para-moto"
                   class="mtc-link"
                 >
                   Electrónica
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/termicos-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/termicos-para-moto"
                   class="mtc-link"
                 >
                   Térmicos
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/ropa-lluvia"
-                  data-dr="true"
+                <NuxtLink
+                  to="/ropa-lluvia"
                   class="mtc-link"
                 >
                   Impermeables
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/protecciones-para-motociclistas"
-                  data-dr="true"
+                <NuxtLink
+                  to="/protecciones-para-motociclistas"
                   class="mtc-link"
                 >
                   Protecciones
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/bolsos-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/bolsos-para-moto"
                   class="mtc-link"
                 >
                   Bolsas
-                </a>
+                </NuxtLink>
               </li>
             </ul>
           </div>
@@ -122,108 +110,84 @@
             <span class="h3">MOTOCROSS</span>
             <ul>
               <li>
-                <a
-                  href="/cascos-mx-enduro-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/cascos-mx-enduro-para-moto"
                   class="mtc-link"
                 >
                   Cascos
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/botas-mx-enduro-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/botas-mx-enduro-para-moto"
                   class="mtc-link"
                 >
                   Botas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/pantalones-motocross"
-                  data-dr="true"
+                <NuxtLink
+                  to="/pantalones-motocross"
                   class="mtc-link"
                 >
                   Pantalones
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/antiparras-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/antiparras-para-moto"
                   class="mtc-link"
                 >
                   Antiparras
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/jerseys-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/jerseys-para-moto"
                   class="mtc-link"
                 >
                   Jerseys
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/guantes-offroad-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/guantes-offroad-para-moto"
                   class="mtc-link"
                 >
                   Guantes
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/chaquetas-mx-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/chaquetas-mx-para-moto"
                   class="mtc-link"
                 >
                   Chaquetas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/protecciones-mx-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/protecciones-mx-para-moto"
                   class="mtc-link"
                 >
                   Protecciones
-                </a>
+                </NuxtLink>
               </li>
-              <!--
-                <li><a
-                href="#"
-                data-dr="true" class="mtc-link">
-                Calcetines
-                </a></li>
-              -->
-              <!--
-                <li><a
-                href="/equipacion-motocross/recambios?p=1"
-                data-dr="true" class="mtc-link">
-                Recambios
-                </a></li>
-              -->
               <li>
-                <a
-                  href="/mochilas-y-bolsos-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/mochilas-y-bolsos-para-moto"
                   class="mtc-link"
                 >
                   Bolsas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/ropa-lluvia"
-                  data-dr="true"
+                <NuxtLink
+                  to="/ropa-lluvia"
                   class="mtc-link"
                 >
                   Impermeables
-                </a>
+                </NuxtLink>
               </li>
             </ul>
           </div>
@@ -233,186 +197,131 @@
             <span class="h3">ACCESORIOS</span>
             <ul>
               <li>
-                <a
-                  href="/maletas-para-motos"
-                  data-dr="true"
+                <NuxtLink
+                  to="/maletas-para-motos"
                   class="mtc-link"
                 >
                   Maletas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/seguridad"
-                  data-dr="true"
+                <NuxtLink
+                  to="/seguridad"
                   class="mtc-link"
                 >
                   Antirrobos
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/intercomunicadores-gps-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/intercomunicadores-gps-para-moto"
                   class="mtc-link"
                 >
                   Electrónica
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/bolsos-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/bolsos-para-moto"
                   class="mtc-link"
                 >
                   Bolsas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/lubricantes-y-fluidos-para-motos"
-                  data-dr="true"
+                <NuxtLink
+                  to="/lubricantes-y-fluidos-para-motos"
                   class="mtc-link"
                 >
                   Aceites y sprays
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/caballetes"
-                  data-dr="true"
+                <NuxtLink
+                  to="/caballetes"
                   class="mtc-link"
                 >
                   Caballetes
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/carpas-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/carpas-para-moto"
                   class="mtc-link"
                 >
                   Fundas
-                </a>
+                </NuxtLink>
               </li>
-              <!--
-                <li><a
-                href="/accesorios-moto/adhesivos?p=1"
-                data-dr="true" class="mtc-link">
-                Adhesivos
-                </a></li>
-              -->
               <li>
-                <a
-                  href="/anclajes"
-                  data-dr="true"
+                <NuxtLink
+                  to="/anclajes"
                   class="mtc-link"
                 >
                   Kits de fijación
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/protector-de-punos"
-                  data-dr="true"
+                <NuxtLink
+                  to="/protector-de-punos"
                   class="mtc-link"
                 >
                   Paramanos
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/accesorios-de-top-case"
-                  data-dr="true"
+                <NuxtLink
+                  to="/accesorios-de-top-case"
                   class="mtc-link"
                 >
                   Respaldos
-                </a>
+                </NuxtLink>
               </li>
             </ul>
           </div>
         </div>
-        <!--
-          <div class="footer-nav__block">
-          <div class="footer-nav__menu"><span class="h3">TRIAL</span>
-          <ul>
-          <li><a
-          href="/equipacion-moto-trial/cascos?p=1"
-          data-dr="true" class="mtc-link">
-          Cascos
-          </a></li>
-          <li><a
-          href="/equipacion-moto-trial/botas?p=1"
-          data-dr="true" class="mtc-link">
-          Botas
-          </a></li>
-          <li><a
-          href="/equipacion-moto-trial/pantalones-2?p=1"
-          data-dr="true" class="mtc-link">
-          Pantalones
-          </a></li>
-          <li><a
-          href="/equipacion-moto-trial/chaquetas?p=1"
-          data-dr="true" class="mtc-link">
-          Chaquetas
-          </a></li>
-          <li><a
-          href="/equipacion-moto-trial/guantes?p=1"
-          data-dr="true" class="mtc-link">
-          Guantes
-          </a></li>
-          </ul>
-          </div>
-          </div>
-        -->
         <div class="footer-nav__block">
           <div class="footer-nav__menu">
             <span class="h3">Ropa casual</span>
             <ul>
               <li>
-                <a
-                  href="/zapatillas-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/zapatillas-para-moto"
                   class="mtc-link"
                 >
                   Zapatillas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/chaquetas-casual"
-                  data-dr="true"
+                <NuxtLink
+                  to="/chaquetas-casual"
                   class="mtc-link"
                 >
                   Chaquetas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/poleras-para-moto"
-                  data-dr="true"
+                <NuxtLink
+                  to="/poleras-para-moto"
                   class="mtc-link"
                 >
                   Camisetas
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/llaveros"
-                  data-dr="true"
+                <NuxtLink
+                  to="/llaveros"
                   class="mtc-link"
                 >
                   Llaveros
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/mochilas"
-                  data-dr="true"
+                <NuxtLink
+                  to="/mochilas"
                   class="mtc-link"
                 >
                   Bolsas
-                </a>
+                </NuxtLink>
               </li>
             </ul>
           </div>
@@ -427,18 +336,19 @@
         <div class="col s12 12 footer-container">
           <aside class="footer-description">
             <div class="motomundi-logo">
-
-              <a
-                href="/"
-                data-dr="true"
+              <NuxtLink
+                to="/"
                 class="motomundi-logo-link mtc-link"
-              ><span><img
-                src="/logo-motomundi.png"
-                alt="Motomundi"
-                width="190"
-                class="cdn-img"
-              > </span>
-              </a>
+              >
+                <span>
+                  <img
+                    src="/logo-motomundi.png"
+                    alt="Motomundi"
+                    width="190"
+                    class="cdn-img"
+                  >
+                </span>
+              </NuxtLink>
             </div>
             <p>
               En la nueva web Motomundi.cl encontrarás el mayor stock en
@@ -450,8 +360,8 @@
             <nav>
               <ul>
                 <li>
-                  <a
-                    href="/blog"
+                  <NuxtLink
+                    to="/blog"
                     target="_blank"
                     class="sm-blog"
                   >
@@ -460,17 +370,18 @@
                       height="12"
                       xmlns="http://www.w3.org/2000/svg"
                       class="icon sprite-icons"
-                    ><title>Blog</title>
+                    >
+                      <title>Blog</title>
                       <use
                         href="/content/svg/motomundi.svg?v=1.4#i-sm-blog"
                         xlink:href="/content/svg/motomundi.svg?v=1.4#i-sm-blog"
                       />
                     </svg>
-                  </a>
+                  </NuxtLink>
                 </li>
                 <li>
-                  <a
-                    href="https://facebook.com/motomundi"
+                  <NuxtLink
+                    to="https://facebook.com/motomundi"
                     target="_blank"
                     rel="noopener"
                     class="sm-fb"
@@ -487,11 +398,11 @@
                         xlink:href="/content/svg/motomundi.svg?v=1.4#i-sm-fb"
                       />
                     </svg>
-                  </a>
+                  </NuxtLink>
                 </li>
                 <li>
-                  <a
-                    href="https://twitter.com/motomundi?"
+                  <NuxtLink
+                    to="https://twitter.com/motomundi?"
                     target="_blank"
                     rel="noopener"
                     class="sm-tw"
@@ -508,11 +419,11 @@
                         xlink:href="/content/svg/motomundi.svg?v=1.4#i-sm-twitter"
                       />
                     </svg>
-                  </a>
+                  </NuxtLink>
                 </li>
                 <li>
-                  <a
-                    href="https://www.youtube.com/MotoMundiTv"
+                  <NuxtLink
+                    to="https://www.youtube.com/MotoMundiTv"
                     target="_blank"
                     rel="noopener"
                     class="sm-yt"
@@ -529,11 +440,11 @@
                         xlink:href="/content/svg/motomundi.svg?v=1.4#i-sm-youtube"
                       />
                     </svg>
-                  </a>
+                  </NuxtLink>
                 </li>
                 <li>
-                  <a
-                    href="https://www.instagram.com/motomundi/"
+                  <NuxtLink
+                    to="https://www.instagram.com/motomundi/"
                     target="_blank"
                     rel="noopener"
                     class="sm-ig"
@@ -543,17 +454,18 @@
                       height="17"
                       xmlns="http://www.w3.org/2000/svg"
                       class="icon sprite-icons"
-                    ><title>Instagram</title>
+                    >
+                      <title>Instagram</title>
                       <use
                         href="/content/svg/motomundi.svg?v=1.4#i-sm-instagram"
                         xlink:href="/content/svg/motomundi.svg?v=1.4#i-sm-instagram"
                       />
                     </svg>
-                  </a>
+                  </NuxtLink>
                 </li>
                 <li>
-                  <a
-                    href="https://www.tiktok.com/@motomundicl?"
+                  <NuxtLink
+                    to="https://www.tiktok.com/@motomundicl?"
                     target="_blank"
                     rel="noopener"
                     class="sm-tt"
@@ -570,24 +482,11 @@
                         xlink:href="/content/svg/motomundi.svg?v=1.4#i-sm-tiktok"
                       />
                     </svg>
-                  </a>
+                  </NuxtLink>
                 </li>
-                <!--
-                  <li><a href="https://www.twitch.tv/motomundi"
-                  target="_blank" rel="noopener" class="sm-twitch">
-                  <svg width="16" height="17" xmlns="http://www.w3.org/2000/svg"
-                  class="icon sprite-icons"><title
-                  >Twitch</title>
-                  <use href="/content/svg/motomundi.svg?v=1.4#i-sm-twitch"
-                  xlink:href="/content/svg/motomundi.svg?v=1.4#i-sm-twitch"
-                  ></use>
-                  </svg>
-                  </a></li>
-                -->
                 <li>
-                  <a
-                    href="/newsletter.html"
-                    data-dr="true"
+                  <NuxtLink
+                    to="/newsletter.html"
                     rel="nofollow"
                     class="sm-nl mtc-link"
                   >
@@ -604,22 +503,13 @@
                       />
                     </svg>
                     Newsletter
-                  </a>
+                  </NuxtLink>
                 </li>
               </ul>
             </nav>
-            <div
-              class="footer-lang__block"
-
-            >
-              <span
-                class="h3"
-
-              >Idioma</span>
-              <div
-                class="footer-lang__block-content"
-
-              >
+            <div class="footer-lang__block">
+              <span class="h3">Idioma</span>
+              <div class="footer-lang__block-content">
                 <svg
                   width="17"
                   height="17"
@@ -630,17 +520,12 @@
                   <use
                     href="/content/svg/motomundi.svg?v=1.4#i-icon-globe"
                     xlink:href="/content/svg/motomundi.svg?v=1.4#i-icon-globe"
-
                   />
                 </svg>
-                <select
-                  class="lang-selector"
-
-                >
+                <select class="lang-selector">
                   <option
                     selected="selected"
                     value="es"
-
                   >
                     Español
                   </option>
@@ -650,12 +535,10 @@
                   height="5"
                   xmlns="http://www.w3.org/2000/svg"
                   class="chevron icon sprite-icons"
-
                 >
                   <use
                     href="/content/svg/motomundi.svg?v=1.4#i-select-arrow"
                     xlink:href="/content/svg/motomundi.svg?v=1.4#i-select-arrow"
-
                   />
                 </svg>
               </div>
@@ -667,95 +550,73 @@
                 <span class="h3">INFORMACIÓN DE PEDIDOS</span>
                 <ul>
                   <li>
-                    <a
-                      href="/gastos-de-envio"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/gastos-de-envio"
                       rel="nofollow"
                       class="mtc-link"
                     >
                       Gastos de envío
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/10228-plazos-de-entrega"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/10228-plazos-de-entrega"
                       rel="nofollow"
                       class="mtc-link"
                     >
                       Plazos de entrega
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/formas-de-pago"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/formas-de-pago"
                       rel="nofollow"
                       class="mtc-link"
                     >
                       Formas de pago
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/devoluciones"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/devoluciones"
                       class="mtc-link"
                     >
                       Cambios, devoluciones y garantías
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/14963-politicas-comerciales-de-cambio-y-devoluciones"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/14963-politicas-comerciales-de-cambio-y-devoluciones"
                       rel="nofollow"
                       class="mtc-link"
                     >
                       Anulaciones de pedido
-                    </a>
+                    </NuxtLink>
                   </li>
-                  <!--
-                    <li><a
-                    href="/seguimiento-de-pedidos.html"
-                    data-dr="true" rel="nofollow" class="mtc-link">
-                    Seguimiento de pedidos
-                    </a></li>
-                  -->
                   <li>
-                    <a
-                      href="/politica-de-precios"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/politica-de-precios"
                       rel="nofollow"
                       class="mtc-link"
                     >
                       Política de precios
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/guias-de-tallas"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/guias-de-tallas"
                       class="mtc-link"
                     >
                       Guías de tallas
-                    </a>
+                    </NuxtLink>
                   </li>
-                  <!--
-                    <li><a
-                    href="/codigos-promocionales-descuentos-y-cupones.html"
-                    data-dr="true" class="mtc-link">
-                    Códigos promocionales
-                    </a></li>
-                  -->
                   <li>
-                    <a
-                      href="#"
-                      data-dr="true"
+                    <NuxtLink
+                      to="#"
                       class="mtc-link"
                     >
                       Equipación moto mujer
-                    </a>
+                    </NuxtLink>
                   </li>
                 </ul>
               </div>
@@ -765,89 +626,79 @@
                 <span class="h3">ACERCA DE Motomundi</span>
                 <ul>
                   <li>
-                    <a
-                      href="/quienes-somos"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/quienes-somos"
                       class="mtc-link"
                     >
                       Quiénes somos
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/calendario"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/calendario"
                       class="mtc-link"
                     >
                       Eventos
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/tiendas"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/tiendas"
                       class="mtc-link"
                     >
                       Tiendas
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/10757-contactenos"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/10757-contactenos"
                       class="mtc-link"
                     >
                       Contáctanos
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="https://afiliados.motomundi.cl"
+                    <NuxtLink
+                      to="https://afiliados.motomundi.cl"
                       target="_blank"
-                      data-dr="true"
                       class="mtc-link"
                     >
                       Programa de Afiliados
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/trabaja-con-nosotros"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/trabaja-con-nosotros"
                       class="mtc-link"
                     >
                       Trabaja con nosotros
-                    </a>
+                    </NuxtLink>
                   </li>
-
                   <li>
-                    <a
-                      href="/114700-embajadores"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/114700-embajadores"
                       rel="nofollow"
                       class="mtc-link"
                     >
                       Ambassadors
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/cuenta/club-mi-motomundi"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/cuenta/club-mi-motomundi"
                       rel="nofollow"
                       class="mtc-link"
                     >
                       Club MyMotomundi
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/cuenta/invita-tus-amigxs"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/cuenta/invita-tus-amigxs"
                       class="mtc-link"
                     >
                       Invita a tus amigxs
-                    </a>
+                    </NuxtLink>
                   </li>
                 </ul>
               </div>
@@ -857,42 +708,38 @@
                 <span class="h3">SERVICIOS</span>
                 <ul>
                   <li>
-                    <a
-                      href="/precio-minimo-garantizado"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/precio-minimo-garantizado"
                       rel="nofollow"
                       class="mtc-link"
                     >
                       Precio mínimo garantizado
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/login"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/login"
                       rel="nofollow"
                       class="mtc-link"
                     >
                       Registro de usuarios
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/tarjeta-regalo"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/tarjeta-regalo"
                       class="mtc-link"
                     >
                       Tarjeta regalo
-                    </a>
+                    </NuxtLink>
                   </li>
                   <li>
-                    <a
-                      href="/ayuda"
-                      data-dr="true"
+                    <NuxtLink
+                      to="/ayuda"
                       class="mtc-link"
                     >
                       Ayuda
-                    </a>
+                    </NuxtLink>
                   </li>
                 </ul>
               </div>
@@ -903,34 +750,31 @@
           <div class="footer-secondary__block">
             <ul class="legal-menu">
               <li>
-                <a
-                  href="https://www.motomundi.cl/terminos-y-condiciones"
-                  data-dr="true"
+                <NuxtLink
+                  to="https://www.motomundi.cl/terminos-y-condiciones"
                   rel="nofollow"
                   class="mtc-link"
                 >
                   Términos y condiciones
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/terminos-y-condiciones.html?open=privacy-policy"
-                  data-dr="true"
+                <NuxtLink
+                  to="/terminos-y-condiciones.html?open=privacy-policy"
                   rel="nofollow"
                   class="mtc-link"
                 >
                   Política de privacidad
-                </a>
+                </NuxtLink>
               </li>
               <li>
-                <a
-                  href="/terminos-y-condiciones.html?open=cookies-policy"
-                  data-dr="true"
+                <NuxtLink
+                  to="/terminos-y-condiciones.html?open=cookies-policy"
                   rel="nofollow"
                   class="mtc-link"
                 >
                   Política de cookies
-                </a>
+                </NuxtLink>
               </li>
             </ul>
             <div
@@ -1091,16 +935,14 @@
               xlink:href="/content/svg/motomundi.svg?v=1.4#i-cc-transfer"
             /></svg><span>Transferencia<br> bancaria</span></span>
           </div>
-          <!-- /medio-pagos -->
         </aside>
-
 
         <aside
           class="col s12 l12"
           style="text-align: right;"
         >
-          <a
-            href="https://www.ailoo.cl"
+          <NuxtLink
+            to="https://www.ailoo.cl"
             target="_blank"
             style="color: unset;"
           >
@@ -1111,17 +953,14 @@
               >
             </div>
             <span style="font-size: 12px;">Empresa empoderada con Ailoo</span>
-          </a>
+          </NuxtLink>
         </aside>
       </div>
     </div>
   </footer>
 </template>
 
-
 <style scoped>
-
-
 .block-container.seo-footer .container {
   border-bottom: 1px solid #5d5959;
   border-top: 1px solid #5d5959;
@@ -1593,5 +1432,4 @@ div.change-locale-desktop-container {
     padding: 6px 10px;
   }
 }
-
 </style>
