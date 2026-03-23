@@ -1,9 +1,25 @@
 <script setup>
+const props = defineProps({
+  href: {
+    type: String,
+    required: true,
+  },
+})
+
 const { data } = await useFetch("/api/product/brands", { key: "brands-all" })
 
 const brands = computed(() => {
   return data.value?.brands || []
 })
+
+const isOpen = ref(false)
+
+function handleSubmenuClick(event) {
+  // NuxtLink renders as <NuxtLink>, so close when any link is clicked
+  if (event.target.closest("a")) {
+    isOpen.value = false
+  }
+}
 </script>
 
 <template>
@@ -11,170 +27,186 @@ const brands = computed(() => {
   <li
     class="l0 c3 main-nav"
     v-bind="props"
+    @mouseenter="isOpen = true"
+    @mouseleave="isOpen = false"
   >
     <a>
       <span>Marcas </span>
     </a>
-    <ul class="u1 main-nav">
-      <li class="l1 c0 primary subCategories">
-        <div
-          class="submenu"
-          style="padding:20px 0;"
-        >
-          <div class="container">
-            <div class="row">
-              <div class="col s12 submenu__container">
-                <div class="submenu__main-content submenu__no-border">
-                  <div class="submenu__header">
-                    <span class="h2">
-                      <span>Marcas</span>
-                    </span>
-                  </div>
-                  <div class="submenu__content submenu__outstanding">
-                    <div class="submenu__outstanding-showcase brands">
-                      <NuxtLink
-                        to="/agv"
-                        class="mtc-link"
-                        title="AGV"
-                      ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-82.png"
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="AGV"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
-                      </NuxtLink>
-                      <NuxtLink
-                        to="/alpinestars"
-                        class="mtc-link"
-                        title="ALPINESTARS"
-                      ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-77.png"
-
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="ALPINESTARS"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
-                      </NuxtLink>
-                      <NuxtLink
-                        to="/arai"
-                        class="mtc-link"
-                        title="ARAI"
-                      ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-83.png"
-
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="ARAI"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
-                      </NuxtLink>
-
-                      <NuxtLink
-                        to="/dainese"
-                        class="mtc-link"
-                        title="DAINESE"
-                      ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-79.png"
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="DAINESE"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
-                      </NuxtLink>
-                      <NuxtLink
-                        to="/givi"
-                        class="mtc-link"
-                        title="GIVI"
-                      >
-                        <span lazy="true"><img
-                          src="https://www.motomundi.cl/content/assets/brands/brand-86.png"
-                          class="cdn-img v-lazy-image v-lazy-image-loaded"
-                          alt="GIVI"
-                          width="80"
-                          height="41"
-                        >
-                        </span>
-                        <div class="submenu__outstanding-icon" />
-                      </NuxtLink>
-                      <NuxtLink
-                        to="/hjc"
-                        class="mtc-link"
-                        title="HJC"
-                      ><span lazy="true"><img
-                         src="/content/assets/brands/brand-293.png"
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="HJC"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
-                      </NuxtLink>
-
-                      <NuxtLink
-                        to="/shark"
-                        class="mtc-link"
-                        title="SHARK"
-                      ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-106.png"
-
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="SHARK"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
-                      </NuxtLink>
-                      <NuxtLink
-                        href="/shoei"
-                        class="mtc-link"
-                        title="SHOEI"
-                      ><span lazy="true"><img
-                         src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-78.png"
-
-                         class="cdn-img v-lazy-image v-lazy-image-loaded"
-                         alt="SHOEI"
-                         width="80"
-                         height="41"
-                       > </span>
-                        <div class="submenu__outstanding-icon" />
-                      </NuxtLink>
+    <Transition name="megamenu">
+      <ul
+        v-show="isOpen"
+        class="u1"
+        style="background-color: white;"
+        @click="handleSubmenuClick"
+      >
+        <li class="l1 c0 primary subCategories">
+          <div
+            class="submenu"
+            style="padding:20px 0;"
+          >
+            <div class="container">
+              <div class="row">
+                <div class="col s12 submenu__container">
+                  <div class="submenu__main-content submenu__no-border">
+                    <div class="submenu__header">
+                      <span class="h2">
+                        <span>Marcas</span>
+                      </span>
                     </div>
-                    <div class="submenu__divider">
-                      Otras marcas
-                    </div>
-                    <div class="submenu__outstanding-list">
-                      <ul class="">
-                        <li
-                          v-for="brand in brands"
-                          :key="brand.id"
+                    <div class="submenu__content submenu__outstanding">
+                      <div class="submenu__outstanding-showcase brands">
+                        <NuxtLink
+                          to="/agv"
+                          class="mtc-link"
+                          title="AGV"
                         >
-                          <NuxtLink
-                            :href="getBrandUrl(brand)"
-                            class="mtc-link"
-                            title="brand.name"
+                          <span lazy="true"><img
+                            src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-82.png"
+                            class="cdn-img v-lazy-image v-lazy-image-loaded"
+                            alt="AGV"
+                            width="80"
+                            height="41"
+                          > </span>
+                          <div class="submenu__outstanding-icon" />
+                        </NuxtLink>
+                        <NuxtLink
+                          to="/alpinestars"
+                          class="mtc-link"
+                          title="ALPINESTARS"
+                        >
+                          <span lazy="true"><img
+                            src="https://cf-cdn.motocard.com/cdn-cgi/image/w=80,h=41,q=91,fit=cover,f=auto/brands/outstanding/brand-77.png"
+
+                            class="cdn-img v-lazy-image v-lazy-image-loaded"
+                            alt="ALPINESTARS"
+                            width="80"
+                            height="41"
+                          > </span>
+                          <div class="submenu__outstanding-icon" />
+                        </NuxtLink>
+                        <NuxtLink
+                          to="/arai"
+                          class="mtc-link"
+                          title="ARAI"
+                        >
+                          <span lazy="true"><img
+                            src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-83.png"
+
+                            class="cdn-img v-lazy-image v-lazy-image-loaded"
+                            alt="ARAI"
+                            width="80"
+                            height="41"
+                          > </span>
+                          <div class="submenu__outstanding-icon" />
+                        </NuxtLink>
+
+                        <NuxtLink
+                          to="/dainese"
+                          class="mtc-link"
+                          title="DAINESE"
+                        >
+                          <span lazy="true"><img
+                            src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-79.png"
+                            class="cdn-img v-lazy-image v-lazy-image-loaded"
+                            alt="DAINESE"
+                            width="80"
+                            height="41"
+                          > </span>
+                          <div class="submenu__outstanding-icon" />
+                        </NuxtLink>
+                        <NuxtLink
+                          to="/givi"
+                          class="mtc-link"
+                          title="GIVI"
+                        >
+                          <span lazy="true"><img
+                            src="https://www.motomundi.cl/content/assets/brands/brand-86.png"
+                            class="cdn-img v-lazy-image v-lazy-image-loaded"
+                            alt="GIVI"
+                            width="80"
+                            height="41"
                           >
-                            {{ brand.name }}
-                          </NuxtLink>
-                        </li>
-                      </ul>
+                          </span>
+                          <div class="submenu__outstanding-icon" />
+                        </NuxtLink>
+                        <NuxtLink
+                          to="/hjc"
+                          class="mtc-link"
+                          title="HJC"
+                        >
+                          <span lazy="true"><img
+                            src="/content/assets/brands/brand-293.png"
+                            class="cdn-img v-lazy-image v-lazy-image-loaded"
+                            alt="HJC"
+                            width="80"
+                            height="41"
+                          > </span>
+                          <div class="submenu__outstanding-icon" />
+                        </NuxtLink>
+
+                        <NuxtLink
+                          to="/shark"
+                          class="mtc-link"
+                          title="SHARK"
+                        >
+                          <span lazy="true"><img
+                            src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-106.png"
+
+                            class="cdn-img v-lazy-image v-lazy-image-loaded"
+                            alt="SHARK"
+                            width="80"
+                            height="41"
+                          > </span>
+                          <div class="submenu__outstanding-icon" />
+                        </NuxtLink>
+                        <NuxtLink
+                          href="/shoei"
+                          class="mtc-link"
+                          title="SHOEI"
+                        >
+                          <span lazy="true"><img
+                            src="https://cf-cdn.motocard.com/cdn-cgi/image/w=160,h=82,q=91,fit=cover,f=auto/brands/outstanding/brand-78.png"
+
+                            class="cdn-img v-lazy-image v-lazy-image-loaded"
+                            alt="SHOEI"
+                            width="80"
+                            height="41"
+                          > </span>
+                          <div class="submenu__outstanding-icon" />
+                        </NuxtLink>
+                      </div>
+                      <div class="submenu__divider">
+                        Otras marcas
+                      </div>
+                      <div class="submenu__outstanding-list">
+                        <ul class="">
+                          <li
+                            v-for="brand in brands"
+                            :key="brand.id"
+                          >
+                            <NuxtLink
+                              :href="getBrandUrl(brand)"
+                              class="mtc-link"
+                              title="brand.name"
+                            >
+                              {{ brand.name }}
+                            </NuxtLink>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col s12 submenu__extra-nav">
-                <div class="extra__container" />
+                <div class="col s12 submenu__extra-nav">
+                  <div class="extra__container" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </Transition>
   </li>
 
 

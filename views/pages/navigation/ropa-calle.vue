@@ -9,975 +9,1115 @@ const props = defineProps({
 })
 
 const href = props.href
+
+const isOpen = ref(false)
+
+function handleSubmenuClick(event) {
+  // NuxtLink renders as <a>, so close when any link is clicked
+  if (event.target.closest("a")) {
+    isOpen.value = false
+  }
+}
 </script>
 
 
 <template>
   <li
-    class="l0 c1 main-nav"
+    class="l0  main-nav"
     v-bind="props"
+    @mouseenter="isOpen = true"
+    @mouseleave="isOpen = false"
   >
     <NuxtLink
       :to="href"
-      title="Motorcycle Jackets"
+      title="Ropa de calle para moto"
     >
       <span>Ropa Calle</span>
     </NuxtLink>
-    <ul class="u1">
-      <li class="l1 c0 primary subCategories">
-        <div class="submenu">
-          <div class="container">
-            <div class="rowaa">
-              <div class="col s12 submenu__container">
-                <div class="submenu__main-content">
-                  <div class="submenu__header">
-                    <span class="h2">
-                      <span>Equipación carretera</span>
-                      <a
-                        class="mtc-link nuxt-link-active nuxt-link-exact-active"
-                        href="/equipacion-moto-carretera"
-                      >Ver todos</a>
-                    </span>
-                  </div>
-                  <div class="submenu__content submenu__lists">
-                    <ul>
-                      <li>
-                        <a
-                          title="Chaquetas"
-                          class="mtc-link"
-                          href="/chaquetas-para-moto"
-                        >
-                          <svg
-                            class="svg-icon"
-                            viewBox="-10 0 120 100"
-                            xmlns="http://www.w3.org/2000/svg"
+    <Transition name="megamenu">
+      <ul
+        v-show="isOpen"
+        class="u1"
+        @click="handleSubmenuClick"
+      >
+        <li class="l1 c0 primary subCategories">
+          <div class="submenu">
+            <div class="container">
+              <div class="rowaa">
+                <div class="col s12 submenu__container">
+                  <div class="submenu__main-content">
+                    <div class="submenu__header">
+                      <span class="h2">
+                        <span>Equipación carretera</span>
+                        <NuxtLink
+                          class="mtc-link nuxt-link-active nuxt-link-exact-active"
+                          to="/equipacion-moto-carretera"
+                        >Ver todos</NuxtLink>
+                      </span>
+                    </div>
+                    <div class="submenu__content submenu__lists">
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Chaquetas"
+                            class="mtc-link"
+                            to="/chaquetas-para-moto"
                           >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-blouson-et-veste" />
-                          </svg>
-
-                          Chaquetas</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Airbag"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/chaquetas/airbag-incorporado"
-                            >Airbag</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Forro desmontable"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/chaquetas/forro-termico-desmontable"
+                            <svg
+                              class="svg-icon"
+                              viewBox="-10 0 120 100"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              Forro desmontable</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Cuero"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/chaquetas/cuero"
-                            >Cuero</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Impermeables"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/chaquetas/impermeables"
-                            >Impermeables</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Mujer"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/chaquetas/mujer"
-                            >Mujer</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Outlet"
-                              class="mtc-link"
-                              href="/chaquetas/outlet"
-                            >Outlet</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Chaquetas"
-                              class="mtc-link"
-                              href="/chaquetas-para-moto"
-                            >Ver todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Pantalones"
-                          class="mtc-link"
-                          href="/pantalones-para-moto"
-                        >
-                          <svg
-                            class="svg-icon"
-                            viewBox="-10 0 120 110"
-                            xmlns="http://www.w3.org/2000/svg"
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-blouson-et-veste" />
+                            </svg>
+
+                            Chaquetas
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Airbag"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/chaquetas/airbag-incorporado"
+                              >
+                                Airbag
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Forro desmontable"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/chaquetas/forro-termico-desmontable"
+                              >
+                                Forro desmontable
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Cuero"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/chaquetas/cuero"
+                              >
+                                Cuero
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Impermeables"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/chaquetas/impermeables"
+                              >
+                                Impermeables
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Mujer"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/chaquetas/mujer"
+                              >
+                                Mujer
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Outlet"
+                                class="mtc-link"
+                                to="/chaquetas/outlet"
+                              >
+                                Outlet
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Chaquetas"
+                                class="mtc-link"
+                                to="/chaquetas-para-moto"
+                              >
+                                Ver todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Pantalones"
+                            class="mtc-link"
+                            to="/pantalones-para-moto"
                           >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-pantalon-moto" />
-                          </svg>
+                            <svg
+                              class="svg-icon"
+                              viewBox="-10 0 120 110"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-pantalon-moto" />
+                            </svg>
 
-                          Pantalones</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Forro desmontable"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/pantalones/forro-termico-desmontable"
-                            >Forro
-                              desmontable</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Jeans"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/pantalones/jeans"
-                            >Jeans</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Cuero"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/pantalones/cuero"
-                            >Cuero</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Impermeables"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/pantalones/impermeables"
-                            >Impermeables</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Mujer"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/pantalones/mujer"
-                            >Mujer</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Outlet"
-                              class="mtc-link"
-                              href="/pantalones/outlet"
-                            >Outlet</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Pantalones"
-                              class="mtc-link"
-                              href="/pantalones-para-moto"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Guantes"
-                          class="mtc-link"
-                          href="/guantes-para-moto"
-                        >
-
-
-                          <svg
-                            class="svg-icon"
-                            viewBox="-10 0 120 110"
-                            xmlns="http://www.w3.org/2000/svg"
+                            Pantalones
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Forro desmontable"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/pantalones/forro-termico-desmontable"
+                              >
+                                Forro
+                                desmontable
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Jeans"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/pantalones/jeans"
+                              >
+                                Jeans
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Cuero"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/pantalones/cuero"
+                              >
+                                Cuero
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Impermeables"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/pantalones/impermeables"
+                              >
+                                Impermeables
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Mujer"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/pantalones/mujer"
+                              >
+                                Mujer
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Outlet"
+                                class="mtc-link"
+                                to="/pantalones/outlet"
+                              >
+                                Outlet
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Pantalones"
+                                class="mtc-link"
+                                to="/pantalones-para-moto"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Guantes"
+                            class="mtc-link"
+                            to="/guantes-para-moto"
                           >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-gants-moto" />
-                          </svg>
-                          Guantes</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Impermeables"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/guantes/impermeables"
-                            >Impermeables</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Para Verano"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/guantes/solo-verano"
-                            >Para
-                              Verano</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Calefactables"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/guantes/calefactables"
-                            >Calefactables</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Sport / Racing"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/guantes/sport-racing"
-                            >Sport
-                              / Racing</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Mujer"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/guantes/mujer"
-                            >Mujer</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Outlet"
-                              class="mtc-link"
-                              href="/guantes/outlet"
-                            >Outlet</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Guantes"
-                              class="mtc-link"
-                              href="/guantes-para-moto"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Equipación completa"
-                          class="mtc-link"
-                          href="/equipacion-moto-carretera/equipacion-completa"
-                        >
-                          <img
-                            src="/content/assets/categories/packs-chaqueta-pantalon.svg"
+                            <svg
+                              class="svg-icon"
+                              viewBox="-10 0 120 110"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-gants-moto" />
+                            </svg>
+                            Guantes
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Impermeables"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/guantes/impermeables"
+                              >
+                                Impermeables
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Para Verano"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/guantes/solo-verano"
+                              >
+                                Para
+                                Verano
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Calefactables"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/guantes/calefactables"
+                              >
+                                Calefactables
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Sport / Racing"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/guantes/sport-racing"
+                              >
+                                Sport
+                                / Racing
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Mujer"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/guantes/mujer"
+                              >
+                                Mujer
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Outlet"
+                                class="mtc-link"
+                                to="/guantes/outlet"
+                              >
+                                Outlet
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Guantes"
+                                class="mtc-link"
+                                to="/guantes-para-moto"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
                             title="Equipación completa"
-                            alt="Equipación completa"
+                            class="mtc-link"
+                            to="/equipacion-moto-carretera/equipacion-completa"
                           >
-                          Equipación completa</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
+                            <img
+                              src="/content/assets/categories/packs-chaqueta-pantalon.svg"
                               title="Equipación completa"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/equipacion-completa"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Botas"
-                          class="mtc-link"
-                          href="/botas-para-moto"
-                        >
-
-
-                          <svg
-                            class="svg-icon"
-                            viewBox="-10 0 120 110"
-                            xmlns="http://www.w3.org/2000/svg"
+                              alt="Equipación completa"
+                            >
+                            Equipación completa
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Equipación completa"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/equipacion-completa"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Botas"
+                            class="mtc-link"
+                            to="/botas-para-moto"
                           >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-bottes-et-chaussures" />
-                          </svg>
-                          Botas</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Touring"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/botas/touring"
-                            >Touring</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Scooter / Urbanas"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/botas/scooter-urban"
-                            >Scooter
-                              / Urbanas</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Sport / Racing"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/botas/sport-racing"
-                            >Sport
-                              / Racing</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Mujer"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/botas/mujer"
-                            >Mujer</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Outlet"
-                              class="mtc-link"
-                              href="/botas/outlet"
-                            >Outlet</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Botas"
-                              class="mtc-link"
-                              href="/botas-para-moto"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Trajes / Monos"
-                          class="mtc-link"
-                          href="/trajes-para-moto"
-                        >
-
-
-                          <svg
-                            class="svg-icon"
-                            viewBox="-10 0 120 110"
-                            xmlns="http://www.w3.org/2000/svg"
+                            <svg
+                              class="svg-icon"
+                              viewBox="-10 0 120 110"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-bottes-et-chaussures" />
+                            </svg>
+                            Botas
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Touring"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/botas/touring"
+                              >
+                                Touring
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Scooter / Urbanas"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/botas/scooter-urban"
+                              >
+                                Scooter
+                                / Urbanas
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Sport / Racing"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/botas/sport-racing"
+                              >
+                                Sport
+                                / Racing
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Mujer"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/botas/mujer"
+                              >
+                                Mujer
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Outlet"
+                                class="mtc-link"
+                                to="/botas/outlet"
+                              >
+                                Outlet
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Botas"
+                                class="mtc-link"
+                                to="/botas-para-moto"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Trajes / Monos"
+                            class="mtc-link"
+                            to="/trajes-para-moto"
                           >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-combinaison-de-piste" />
-                          </svg>
+                            <svg
+                              class="svg-icon"
+                              viewBox="-10 0 120 110"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-combinaison-de-piste" />
+                            </svg>
 
-                          Trajes / Monos</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="1 Pieza"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/trajes-y-monos/1-pieza"
-                            >1
-                              Pieza</a>
-                          </li>
-                          <li>
-                            <a
-                              title="2 Piezas"
-                              class="mtc-link"
+                            Trajes / Monos
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="1 Pieza"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/trajes-y-monos/1-pieza"
+                              >
+                                1
+                                Pieza
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="2 Piezas"
+                                class="mtc-link"
 
-                              href="/equipacion-moto-carretera/trajes-y-monos/2-piezas"
-                            >2
-                              Piezas</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Mujer"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/trajes-y-monos/mujer"
-                            >Mujer</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Outlet"
-                              class="mtc-link"
-                              href="/trajes-y-monos/outlet"
-                            >Outlet</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Trajes / Monos"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/trajes-y-monos"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Electrónica"
-                          class="mtc-link"
-                          href="/equipacion-moto-carretera/electronica"
-                        >
-
-
-                          <svg
-                            class="svg-icon"
-                            viewBox="0 0 410 410"
-                            xmlns="http://www.w3.org/2000/svg"
+                                to="/equipacion-moto-carretera/trajes-y-monos/2-piezas"
+                              >
+                                2
+                                Piezas
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Mujer"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/trajes-y-monos/mujer"
+                              >
+                                Mujer
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Outlet"
+                                class="mtc-link"
+                                to="/trajes-y-monos/outlet"
+                              >
+                                Outlet
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Trajes / Monos"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/trajes-y-monos"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Electrónica"
+                            class="mtc-link"
+                            to="/equipacion-moto-carretera/electronica"
                           >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-gps-et-traceur-gps " />
-                          </svg>
+                            <svg
+                              class="svg-icon"
+                              viewBox="0 0 410 410"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-gps-et-traceur-gps " />
+                            </svg>
 
-                          Electrónica
-
-
-                        </a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Intercomunicadores"
-                              class="mtc-link"
-                              href="/intercomunicadores"
-                            >Intercomunicadores</a>
-                          </li>
-                          <li>
-                            <a
-                              title="GPS"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/electronica/gps"
-                            >GPS</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Electrónica"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/electronica"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Motoescuela"
-                          class="mtc-link"
-                          href="/pack-motoescuela"
-                        ><img
-                          src="/content/assets/categories/packs-motoescuela.svg"
-                          title="Motoescuela"
-                          alt="Motoescuela"
-                        > Motoescuela</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
+                            Electrónica
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Intercomunicadores"
+                                class="mtc-link"
+                                to="/intercomunicadores"
+                              >
+                                Intercomunicadores
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="GPS"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/electronica/gps"
+                              >
+                                GPS
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Electrónica"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/electronica"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Motoescuela"
+                            class="mtc-link"
+                            to="/pack-motoescuela"
+                          >
+                            <img
+                              src="/content/assets/categories/packs-motoescuela.svg"
                               title="Motoescuela"
-                              class="mtc-link"
-                              href="/pack-motoescuela.html"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Protecciones"
-                          class="mtc-link"
-                          href="/protecciones-para-motociclistas"
-                        >
-
-                          <svg
-                            class="svg-icon"
-                            viewBox="-10 0 120 110"
-                            xmlns="http://www.w3.org/2000/svg"
+                              alt="Motoescuela"
+                            > Motoescuela
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Motoescuela"
+                                class="mtc-link"
+                                to="/pack-motoescuela.html"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Protecciones"
+                            class="mtc-link"
+                            to="/protecciones-para-motociclistas"
                           >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-protections-cross" />
-                          </svg>
-
-                          Protecciones</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Espalderas"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/protecciones/espalderas"
-                            >Espalderas</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Airbags"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/protecciones/airbags"
-                            >Airbags</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Fajas"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/protecciones/fajas"
-                            >Fajas</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Protecciones"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/protecciones"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Impermeables"
-                          class="mtc-link"
-                          href="/ropa-lluvia"
-                        >
-
-                          <svg
-                            class="svg-icon"
-                            viewBox="0 0 210 210"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
-                          </svg>
-
-                          Impermeables</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Chaquetas"
-                              class="mtc-link"
-
-                              href="/equipacion-moto-carretera/impermeables/chaquetas"
-                            >Chaquetas</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Pantalones"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/impermeables/pantalones"
-                            >Pantalones</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Cubreguantes"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/impermeables/cubreguantes"
-                            >Cubreguantes</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Cubrebotas"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/impermeables/cubrebotas"
-                            >Cubrebotas</a>
-                          </li>
-                          <li>
-                            <a
-                              href="/equipacion-moto-carretera/impermeables/conjuntos"
-                              title="Conjuntos"
-                              class="mtc-link"
+                            <svg
+                              class="svg-icon"
+                              viewBox="-10 0 120 110"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              Conjuntos
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              title="Impermeables"
-                              class="mtc-link"
-                              href="/ropa-lluvia"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Airbags"
-                          class="mtc-link"
-                          href="/airbags"
-                        >
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-protections-cross" />
+                            </svg>
 
-                          <svg
-                            class="svg-icon"
-                            viewBox="0 0 420 420"
-                            xmlns="http://www.w3.org/2000/svg"
+                            Protecciones
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Espalderas"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/protecciones/espalderas"
+                              >
+                                Espalderas
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Airbags"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/protecciones/airbags"
+                              >
+                                Airbags
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Fajas"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/protecciones/fajas"
+                              >
+                                Fajas
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Protecciones"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/protecciones"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Impermeables"
+                            class="mtc-link"
+                            to="/ropa-lluvia"
                           >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-airbag" />
-                          </svg>
-                          Airbags
-                        </a>
-                      </li>
+                            <svg
+                              class="svg-icon"
+                              viewBox="0 0 210 210"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
+                            </svg>
 
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              href="/equipacion-moto-carretera/airbags/chaquetas"
-                              title="Chaquetas"
-                              class="mtc-link"
-                            >
-                              Chaquetas</a>
-                          </li>
-                          <li>
-                            <a
-                              href="/equipacion-moto-carretera/airbags/trajes-monos"
-                              title="Trajes / Monos"
-                              class="mtc-link"
-                            >
-                              Trajes / Monos</a>
-                          </li>
-                          <li>
-                            <a
-                              href="/equipacion-moto-carretera/airbags/chalecos"
-                              title="Chalecos"
-                              class="mtc-link"
-                            >Chalecos</a>
-                          </li>
-                          <li>
-                            <a
-                              href="/airbags"
-                              title="Airbags"
-                              class="mtc-link"
-                            >Ver todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Térmicos"
-                          class="mtc-link"
-                          href="/equipacion-moto-carretera/primeras-capas"
-                        >
-                          <svg
-                            class="svg-icon"
-                            viewBox="-0 0 210 210"
-                            xmlns="http://www.w3.org/2000/svg"
+                            Impermeables
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Chaquetas"
+                                class="mtc-link"
+
+                                to="/equipacion-moto-carretera/impermeables/chaquetas"
+                              >
+                                Chaquetas
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Pantalones"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/impermeables/pantalones"
+                              >
+                                Pantalones
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Cubreguantes"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/impermeables/cubreguantes"
+                              >
+                                Cubreguantes
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Cubrebotas"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/impermeables/cubrebotas"
+                              >
+                                Cubrebotas
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                to="/equipacion-moto-carretera/impermeables/conjuntos"
+                                title="Conjuntos"
+                                class="mtc-link"
+                              >
+                                Conjuntos
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Impermeables"
+                                class="mtc-link"
+                                to="/ropa-lluvia"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Airbags"
+                            class="mtc-link"
+                            to="/airbags"
                           >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
-                          </svg>
-                          Primeras Capas</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Cubrecuellos"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/primeras-capas/cubrecuellos"
-                            >Cubrecuellos</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Sotomonos"
-                              class="mtc-link"
-
-                              href="/equipacion-moto-carretera/primeras-capas/sotomono"
-                            >Sotomonos</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Sotocascos"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/primeras-capas/sotocascos"
-                            >Sotocascos</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Camisetas"
-                              class="mtc-link"
-
-                              href="/equipacion-moto-carretera/primeras-capas/camisetas"
-                            >Camisetas</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Térmicos"
-                              class="mtc-link"
-
-                              href="/equipacion-moto-carretera/primeras-capas"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Bolsas"
-                          class="mtc-link"
-                          href="/equipacion-moto-carretera/bolsas"
-                        >
-
-                          <svg
-                            class="svg-icon"
-                            viewBox="0 0 120 120"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <use xlink:href="/content/assets/menu/categories/blouz.svg#img-sac-moto" />
-                          </svg>
-                          Bolsas</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Mochilas"
-                              class="mtc-link"
-
-                              href="/equipacion-moto-carretera/bolsas/mochilas"
-                            >Mochilas</a>
-                          </li>
-                          <li>
-                            <span
-                              title="Otras"
-                              class="mtc-link"
+                            <svg
+                              class="svg-icon"
+                              viewBox="0 0 420 420"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              Otras</span>
-                          </li>
-                          <li>
-                            <a
-                              title="Bolsas"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/bolsas"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Complementos"
-                          class="mtc-link"
-                          href="/equipacion-moto-carretera/complementos"
-                        ><img
-                          src="/content/assets/categories/16-moto-equipacion-carretera-complementos.svg"
-                          title="Complementos"
-                          alt="Complementos de moto"
-                        >
-                          Complementos</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <span
-                              title="Alta visibilidad"
-                              class="mtc-link"
-                            >Alta visibilidad</span>
-                          </li>
-                          <li>
-                            <a
-                              title="Calcetines"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/calcetines"
-                            >Calcetines</a>
-                          </li>
-                          <li>
-                            <a
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-airbag" />
+                            </svg>
+                            Airbags
+                          </NuxtLink>
+                        </li>
+
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                to="/equipacion-moto-carretera/airbags/chaquetas"
+                                title="Chaquetas"
+                                class="mtc-link"
+                              >
+                                Chaquetas
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                to="/equipacion-moto-carretera/airbags/trajes-monos"
+                                title="Trajes / Monos"
+                                class="mtc-link"
+                              >
+                                Trajes / Monos
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                to="/equipacion-moto-carretera/airbags/chalecos"
+                                title="Chalecos"
+                                class="mtc-link"
+                              >
+                                Chalecos
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                to="/airbags"
+                                title="Airbags"
+                                class="mtc-link"
+                              >
+                                Ver todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Térmicos"
+                            class="mtc-link"
+                            to="/equipacion-moto-carretera/primeras-capas"
+                          >
+                            <svg
+                              class="svg-icon"
+                              viewBox="-0 0 210 210"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
+                            </svg>
+                            Primeras Capas
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Cubrecuellos"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/primeras-capas/cubrecuellos"
+                              >
+                                Cubrecuellos
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Sotomonos"
+                                class="mtc-link"
+
+                                to="/equipacion-moto-carretera/primeras-capas/sotomono"
+                              >
+                                Sotomonos
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Sotocascos"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/primeras-capas/sotocascos"
+                              >
+                                Sotocascos
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Camisetas"
+                                class="mtc-link"
+
+                                to="/equipacion-moto-carretera/primeras-capas/camisetas"
+                              >
+                                Camisetas
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Térmicos"
+                                class="mtc-link"
+
+                                to="/equipacion-moto-carretera/primeras-capas"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Bolsas"
+                            class="mtc-link"
+                            to="/equipacion-moto-carretera/bolsas"
+                          >
+                            <svg
+                              class="svg-icon"
+                              viewBox="0 0 120 120"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-sac-moto" />
+                            </svg>
+                            Bolsas
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Mochilas"
+                                class="mtc-link"
+
+                                to="/equipacion-moto-carretera/bolsas/mochilas"
+                              >
+                                Mochilas
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <span
+                                title="Otras"
+                                class="mtc-link"
+                              >
+                                Otras</span>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Bolsas"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/bolsas"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Complementos"
+                            class="mtc-link"
+                            to="/equipacion-moto-carretera/complementos"
+                          >
+                            <img
+                              src="/content/assets/categories/16-moto-equipacion-carretera-complementos.svg"
                               title="Complementos"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/complementos"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Deslizaderas"
-                          class="mtc-link"
-                          href="/equipacion-moto-carretera/deslizaderas"
-                        >
-                          <img
-                            src="/content/assets/categories/sliders.jpg"
-                            title="Deslizadores"
-                            alt="Deslizadores"
-                          >
-
-
-                          Deslizaderas</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <span
-                              title="Botas"
-                              class="mtc-link"
+                              alt="Complementos de moto"
                             >
-                              Botas
+                            Complementos
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <span
+                                title="Alta visibilidad"
+                                class="mtc-link"
+                              >Alta visibilidad</span>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Calcetines"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/calcetines"
+                              >
+                                Calcetines
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Complementos"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/complementos"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Deslizaderas"
+                            class="mtc-link"
+                            to="/equipacion-moto-carretera/deslizaderas"
+                          >
+                            <img
+                              src="/content/assets/categories/sliders.jpg"
+                              title="Deslizadores"
+                              alt="Deslizadores"
+                            >
+
+
+                            Deslizaderas
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <span
+                                title="Botas"
+                                class="mtc-link"
+                              >
+                                Botas
+                              </span>
+                            </li>
+                            <li>
+                              <span
+                                title="Trajes / Monos"
+                                class="mtc-link"
+                              >Trajes / Monos</span>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Deslizaderas"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/deslizaderas"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <NuxtLink
+                            title="Limpieza"
+                            class="mtc-link"
+                            to="/equipacion-moto-carretera/limpieza"
+                          >
+                            <img
+                              src="/content/assets/categories/limpieza.jpg"
+                              title="Limpieza"
+                              alt="Limpieza"
+                            >
+
+                            Limpieza
+                          </NuxtLink>
+                        </li>
+                        <li>
+                          <ul>
+                            <li>
+                              <NuxtLink
+                                title="Para cascos"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/limpieza/para-cascos"
+                              >
+                                Para
+                                cascos
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Para ropa"
+                                class="mtc-link"
+                                to="/equipacion-moto-carretera/limpieza/para-ropa"
+                              >
+                                Para ropa
+                              </NuxtLink>
+                            </li>
+                            <li>
+                              <NuxtLink
+                                title="Limpieza"
+                                class="mtc-link"
+
+                                to="/equipacion-moto-carretera/limpieza"
+                              >
+                                Ver
+                                todos
+                              </NuxtLink>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s12 submenu__extra-nav">
+                  <div class="extra__container">
+                    <div class="submenu__riding-styles">
+                      <div class="container">
+                        <span class="h3">por estilo moto</span>
+                        <ul class="desktop">
+                          <li>
+                            <span class="mtc-link">
+                              <svg
+                                class="svg-icon"
+                                viewBox="0 0 190 110"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <use xlink:to="/content/assets/menu/categories/blouz.svg#img-roadster-sportif" />
+                              </svg>
+                              <p>Sport / Racing</p>
                             </span>
                           </li>
                           <li>
-                            <span
-                              title="Trajes / Monos"
-                              class="mtc-link"
-                            >Trajes / Monos</span>
+                            <span class="mtc-link">
+                              <svg
+                                class="svg-icon"
+                                viewBox="0 0 190 110"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <use xlink:to="/content/assets/menu/categories/blouz.svg#img-vintage-classic" />
+                              </svg>
+                              <p>Touring</p></span>
                           </li>
                           <li>
-                            <a
-                              title="Deslizaderas"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/deslizaderas"
-                            >Ver
-                              todos</a>
+                            <span class="mtc-link">
+                              <svg
+                                class="svg-icon"
+                                viewBox="0 0 190 110"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <use xlink:to="/content/assets/menu/categories/blouz.svg#img-touring-adventure" />
+                              </svg>
+                              <p>Trail / Adventure</p>
+                            </span>
+                          </li>
+                          <li>
+                            <span class="mtc-link">
+                              <svg
+                                class="svg-icon"
+                                viewBox="0 0 190 110"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <use xlink:to="/content/assets/menu/categories/blouz.svg#img-urbain-scooter" />
+                              </svg>
+                              <p>Scooter / Urban</p>
+                            </span>
+                          </li>
+                          <li>
+                            <span class="mtc-link">
+                              <svg
+                                class="svg-icon"
+                                viewBox="0 0 190 110"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <use xlink:to="/content/assets/menu/categories/blouz.svg#img-vintage-classic" />
+                              </svg>
+                              <p>Cafe Racer / Vintage</p>
+                            </span>
                           </li>
                         </ul>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          title="Limpieza"
-                          class="mtc-link"
-                          href="/equipacion-moto-carretera/limpieza"
-                        >
-                          <img
-                            src="/content/assets/categories/limpieza.jpg"
-                            title="Limpieza"
-                            alt="Limpieza"
-                          >
-
-                          Limpieza</a>
-                      </li>
-                      <li>
-                        <ul>
-                          <li>
-                            <a
-                              title="Para cascos"
-                              class="mtc-link"
-                              href="/equipacion-moto-carretera/limpieza/para-cascos"
-                            >Para
-                              cascos</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Para ropa"
-                              class="mtc-link"
-
-                              href="/equipacion-moto-carretera/limpieza/para-ropa"
-                            >Para
-                              ropa</a>
-                          </li>
-                          <li>
-                            <a
-                              title="Limpieza"
-                              class="mtc-link"
-
-                              href="/equipacion-moto-carretera/limpieza"
-                            >Ver
-                              todos</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 submenu__extra-nav">
-                <div class="extra__container">
-                  <div class="submenu__riding-styles">
-                    <div class="container">
-                      <span class="h3">por estilo moto</span>
-                      <ul class="desktop">
-                        <li>
-                          <span class="mtc-link">
-                            <svg
-                              class="svg-icon"
-                              viewBox="0 0 190 110"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-roadster-sportif" />
-                            </svg>
-                            <p>Sport / Racing</p>
-                          </span>
-                        </li>
-                        <li>
-                          <span class="mtc-link">
-                            <svg
-                              class="svg-icon"
-                              viewBox="0 0 190 110"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-vintage-classic" />
-                            </svg>
-                            <p>Touring</p></span>
-                        </li>
-                        <li>
-                          <span class="mtc-link">
-                            <svg
-                              class="svg-icon"
-                              viewBox="0 0 190 110"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-touring-adventure" />
-                            </svg>
-                            <p>Trail / Adventure</p>
-                          </span>
-                        </li>
-                        <li>
-                          <span class="mtc-link">
-                            <svg
-                              class="svg-icon"
-                              viewBox="0 0 190 110"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-urbain-scooter" />
-                            </svg>
-                            <p>Scooter / Urban</p>
-                          </span>
-                        </li>
-                        <li>
-                          <span class="mtc-link">
-                            <svg
-                              class="svg-icon"
-                              viewBox="0 0 190 110"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <use xlink:href="/content/assets/menu/categories/blouz.svg#img-vintage-classic" />
-                            </svg>
-                            <p>Cafe Racer / Vintage</p>
-                          </span>
-                        </li>
-                      </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </Transition>
   </li>
 
   <!-- ropa calle -->

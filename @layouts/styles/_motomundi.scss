@@ -1082,10 +1082,11 @@ span.h2 {
   padding-left: 15px;
 }
 
+/*
 #nav ul.u0 ul.u1 {
-  /*visibility: hidden;*/
   transition-delay: 300ms;
 }
+*/
 
 #nav ul.u0 li:hover ul.u1 {
   visibility: visible;
@@ -1795,3 +1796,22 @@ article.item {
 }
 
 /************** end product list litem *************************/
+
+/*************** main menu transitions ******************************/
+.megamenu-enter-active,
+.megamenu-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.megamenu-enter-from,
+.megamenu-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.megamenu-enter-to,
+.megamenu-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+/*************** /main menu transitions ******************************/

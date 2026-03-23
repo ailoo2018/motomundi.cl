@@ -19,9 +19,6 @@ const toggleMenu = () => {
 const closeMenu = () => {
   isMenuOpen.value = false
 }
-
-
-
 </script>
 
 <template>
