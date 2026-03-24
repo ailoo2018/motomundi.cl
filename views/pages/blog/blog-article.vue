@@ -56,7 +56,7 @@ if(blogStore.article){
           <BlogArticleShare :entry="blogStore.article" />
         </div>
       </header>
-      <div class="post-content-container">
+      <div id="blog-wrapper" class="post-content-container">
         <main
           id="main"
           role="main"
@@ -67,7 +67,7 @@ if(blogStore.article){
             role="article"
           >
             <section
-              class="entry-content"
+              class="entry-content px-2"
               itemprop="articleBody"
             >
               <div
@@ -120,6 +120,54 @@ if(blogStore.article){
   padding: 0 25px;
   font-size: 15px;
   line-height: 1.8;
+}
+
+
+#blog-wrapper h1 {
+  font-size: 2em;
+  margin-bottom: 0.2em;
+  color: #111;
+}
+#blog-wrapper h2 {
+  font-size: 1.1em;
+  font-weight: normal;
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 2em;
+  font-style: italic;
+}
+#blog-wrapper p {
+  margin-bottom: 1.3em;
+}
+#blog-wrapper .highlight {
+  background-color: #f0ede6;
+  border-left: 4px solid #b5883a;
+  padding: 14px 20px;
+  margin: 2em 0;
+  font-style: italic;
+  color: #333;
+}
+#blog-wrapper  .cta {
+  background-color: #1a1a1a;
+  color: #f5f0e8;
+  padding: 28px 32px;
+  border-radius: 6px;
+  margin-top: 2.5em;
+}
+#blog-wrapper .cta p {
+  color: #f5f0e8;
+  margin-bottom: 0.8em;
+}
+#blog-wrapper .cta b {
+  color: #e8c97a;
+}
+#blog-wrapper .closing {
+  text-align: center;
+  margin-top: 2.5em;
+  font-size: 1.05em;
+}
+#blog-wrapper .closing p {
+  margin-bottom: 0.4em;
 }
 
 
