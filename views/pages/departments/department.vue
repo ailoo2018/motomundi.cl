@@ -103,7 +103,7 @@ const widgets = computed( () => {
     :widget="widget"
   />
 
-  <Himalaya />
+
 
 </template>
 
