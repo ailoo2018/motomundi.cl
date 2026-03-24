@@ -353,6 +353,21 @@ onMounted(() => {
 .product-wrapper.product-detail .swatch.color-value.unavailable {
   cursor: not-allowed;
   opacity: 0.7;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 141%;
+    height: 2px;
+    background-color: #CCCCCC;
+    transform-origin: bottom left;
+    transform: rotate(-45deg);
+    pointer-events: none;
+  }
 }
 
 .sizes-form {
