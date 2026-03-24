@@ -25,7 +25,7 @@ function handleSubmenuClick(event) {
 <template>
   <!-- marcas -->
   <li
-    class="l0 c3 main-nav"
+    class="l0 c3 main-nav marcas-nav"
     v-bind="props"
     @mouseenter="isOpen = true"
     @mouseleave="isOpen = false"
@@ -235,7 +235,7 @@ function handleSubmenuClick(event) {
 }
 */
 
-#nav .submenu__content li .mtc-link, .submenu__content li > a {
+#nav .marcas-nav .submenu__content li .mtc-link, .marcas-nav .submenu__content li > a {
   display: flex;
   flex-wrap: wrap;
   font-size: 10px;
@@ -319,7 +319,7 @@ ul.u0 #ni_2529_marcas ul.u1 a {
   white-space: nowrap;
 }
 
-.submenu__content li .mtc-link, .submenu__content li > a {
+.marcas-nav .submenu__content li .mtc-link, .marcas-nav  .submenu__content li > a {
   display: flex;
   flex-wrap: wrap;
   font-size: 10px;

@@ -1201,4 +1201,15 @@ function handleSubmenuClick(event) {
   </li>
 </template>
 
+<style scoped>
 
+#nav .submenu__content li .mtc-link, .submenu__content li > a {
+  display: flex;
+  padding: 5px 3px;
+  flex-wrap: wrap;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 16px;
+  text-transform: none;
+}
+</style>

@@ -18,6 +18,7 @@ function handleSubmenuClick(event) {
     isOpen.value = false
   }
 }
+
 </script>
 
 
@@ -26,13 +27,13 @@ function handleSubmenuClick(event) {
     class="l0  main-nav"
     v-bind="props"
     @mouseenter="isOpen = true"
-    @mouseleave="isOpen = false"
+
   >
     <NuxtLink
       :to="href"
       title="Ropa de calle para moto"
     >
-      <span>Ropa Calle</span>
+      <span>Ropa Calle </span>
     </NuxtLink>
     <Transition name="megamenu">
       <ul
@@ -68,7 +69,10 @@ function handleSubmenuClick(event) {
                               viewBox="-10 0 120 100"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-blouson-et-veste" />
+                              <use
+                                href="/content/assets/menu/categories/blouz.svg#img-blouson-et-veste"
+                                xlink:href="/content/assets/menu/categories/blouz.svg#img-blouson-et-veste"
+                              />
                             </svg>
 
                             Chaquetas
@@ -154,7 +158,7 @@ function handleSubmenuClick(event) {
                               viewBox="-10 0 120 110"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-pantalon-moto" />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-pantalon-moto" />
                             </svg>
 
                             Pantalones
@@ -242,7 +246,7 @@ function handleSubmenuClick(event) {
                               viewBox="-10 0 120 110"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-gants-moto" />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-gants-moto" />
                             </svg>
                             Guantes
                           </NuxtLink>
@@ -360,7 +364,7 @@ function handleSubmenuClick(event) {
                               viewBox="-10 0 120 110"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-bottes-et-chaussures" />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-bottes-et-chaussures" />
                             </svg>
                             Botas
                           </NuxtLink>
@@ -439,7 +443,7 @@ function handleSubmenuClick(event) {
                               viewBox="-10 0 120 110"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-combinaison-de-piste" />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-combinaison-de-piste" />
                             </svg>
 
                             Trajes / Monos
@@ -511,7 +515,7 @@ function handleSubmenuClick(event) {
                               viewBox="0 0 410 410"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-gps-et-traceur-gps " />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-gps-et-traceur-gps " />
                             </svg>
 
                             Electrónica
@@ -591,7 +595,7 @@ function handleSubmenuClick(event) {
                               viewBox="-10 0 120 110"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-protections-cross" />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-protections-cross" />
                             </svg>
 
                             Protecciones
@@ -651,7 +655,7 @@ function handleSubmenuClick(event) {
                               viewBox="0 0 210 210"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
                             </svg>
 
                             Impermeables
@@ -730,7 +734,7 @@ function handleSubmenuClick(event) {
                               viewBox="0 0 420 420"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-airbag" />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-airbag" />
                             </svg>
                             Airbags
                           </NuxtLink>
@@ -789,7 +793,7 @@ function handleSubmenuClick(event) {
                               viewBox="-0 0 210 210"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-protection-froid-et-pluie" />
                             </svg>
                             Primeras Capas
                           </NuxtLink>
@@ -860,7 +864,7 @@ function handleSubmenuClick(event) {
                               viewBox="0 0 120 120"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <use xlink:to="/content/assets/menu/categories/blouz.svg#img-sac-moto" />
+                              <use href="/content/assets/menu/categories/blouz.svg#img-sac-moto" />
                             </svg>
                             Bolsas
                           </NuxtLink>
