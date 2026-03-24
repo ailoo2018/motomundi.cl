@@ -56,7 +56,7 @@ if(blogStore.article){
           <BlogArticleShare :entry="blogStore.article" />
         </div>
       </header>
-      <div id="blog-wrapper" class="post-content-container">
+      <div id="blog-article-wrapper" class="post-content-container">
         <main
           id="main"
           role="main"
@@ -110,25 +110,25 @@ if(blogStore.article){
 </template>
 
 <style>
-#blog-wrapper .entry-content p {
+#blog-article-wrapper .entry-content p {
   margin: 20px 0px;
 }
-#blog-wrapper .entry-content  p {
+#blog-article-wrapper .entry-content  p {
   color: #000;
 }
-#blog-wrapper .entry-content  p {
+#blog-article-wrapper .entry-content  p {
   padding: 0 25px;
   font-size: 15px;
   line-height: 1.8;
 }
 
 
-#blog-wrapper h1 {
+#blog-article-wrapper h1 {
   font-size: 2em;
   margin-bottom: 0.2em;
   color: #111;
 }
-#blog-wrapper h2 {
+#blog-article-wrapper h2 {
   font-size: 1.1em;
   font-weight: normal;
   color: #555;
@@ -136,10 +136,10 @@ if(blogStore.article){
   margin-bottom: 2em;
   font-style: italic;
 }
-#blog-wrapper p {
+#blog-article-wrapper p {
   margin-bottom: 1.3em;
 }
-#blog-wrapper .highlight {
+#blog-article-wrapper .highlight {
   background-color: #f0ede6;
   border-left: 4px solid #b5883a;
   padding: 14px 20px;
@@ -147,26 +147,26 @@ if(blogStore.article){
   font-style: italic;
   color: #333;
 }
-#blog-wrapper  .cta {
+#blog-article-wrapper  .cta {
   background-color: #1a1a1a;
   color: #f5f0e8;
   padding: 28px 32px;
   border-radius: 6px;
   margin-top: 2.5em;
 }
-#blog-wrapper .cta p {
+#blog-article-wrapper .cta p {
   color: #f5f0e8;
   margin-bottom: 0.8em;
 }
-#blog-wrapper .cta b {
+#blog-article-wrapper .cta b {
   color: #e8c97a;
 }
-#blog-wrapper .closing {
+#blog-article-wrapper .closing {
   text-align: center;
   margin-top: 2.5em;
   font-size: 1.05em;
 }
-#blog-wrapper .closing p {
+#blog-article-wrapper .closing p {
   margin-bottom: 0.4em;
 }
 
