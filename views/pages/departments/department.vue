@@ -21,8 +21,8 @@ import OffRoadCategories from "@/views/pages/home/OffRoadCategories.vue"
 import BrandsBlockMx from "@/views/pages/home/BrandsBlockMx.vue"
 import OutletPromo from "@/views/pages/home/outlet-promo.vue"
 import LifestyleCategories from "@/views/pages/home/lifestyle-categories.vue"
-import NewsletterSignUp from "@/views/pages/home/NewsletterSignUp.vue"
-import { Departments } from "@/models/index.js"
+
+import Himalaya from "@/views/pages/home/himalaya.vue"
 
 const props = defineProps({
   wccId: {
@@ -46,6 +46,7 @@ const componentMap = {
   LatestEvents,
   EmbajadoresHome,
   OutletPromo,
+  Kidult: Himalaya,
 
   //  Seo2,
   BikeSearch,
@@ -102,7 +103,7 @@ const widgets = computed( () => {
     :widget="widget"
   />
 
-
+  <Himalaya />
 
 </template>
 

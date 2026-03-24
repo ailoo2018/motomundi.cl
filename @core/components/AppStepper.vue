@@ -145,7 +145,6 @@ watchEffect(() => {
                   rounded
                 >
                   <VIcon
-
                     icon="tabler-alert-circle"
                     size="22"
                   />
