@@ -19,7 +19,7 @@ const embajadores = [
     name: 'Javier Valenzuela',
     country: 'Valdivia, Chile', // Corregido: Es de la V Región/España según contexto
     discipline: 'Motoviajero',
-    bio: 'Javier Valenzuela es un viajero y documentalista español, creador de "Donde termine el asfalto". Explora el mundo en moto buscando autenticidad humana y rutas remotas.',
+    bio: 'Javier Valenzuela viaja por todo el mundo  creando contenido y compartiendo sus rutas en moto. En Chile ha sido un pionero en desarrollar series de viajes en moto para Youtube. En 2014 inició su proyecto de viaje llamado @idayvueltaenmoto que lo llevó a conectar Tierra del Fuego con Alaska. A la fecha lleva 20 países recorridos y contando.',
     image: '/embajadores/javier-valenzuela.webp',
     featured: true,
     social: { instagram: '@idayvueltaenmoto' },
