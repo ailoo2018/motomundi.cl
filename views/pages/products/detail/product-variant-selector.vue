@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ProductHelper } from "@/models/products"
 import { useProductsUtils } from "@/composables/useProductsUtils.js"
+import NotifyWhenAvailable from "@/views/pages/products/detail/notify-when-available.vue";
 
 
 const props = defineProps(
@@ -37,6 +38,12 @@ const selectedProductItem = defineModel({
 
 const selectedSize = ref({ id: 0 })
 const selectedColor = ref({ id: 0 })
+const showNotifyWhenAvailable = ref(false)
+
+const openNotifyWhenAvailable = () => {
+  showNotifyWhenAvailable.value = true
+  showNotifyWhenAvailable.value = true
+}
 
 
 
@@ -91,6 +98,7 @@ const selectColor = color => {
 }
 
 const onSelectSize = size => {
+  showNotifyWhenAvailable.value = false
   selectedSize.value = size
 
   /**
@@ -173,8 +181,6 @@ const sizes = ref([])
 
 
 const hasColors = props.product.features.filter(f => f.type === 1).length > 1
-
-console.log("hasColrs" + hasColors)
 
 
 for (var f of props.product.features) {
@@ -284,25 +290,26 @@ onMounted(() => {
           <div class="sizes-form">
             <div
               v-if="!useComboForSize"
-              class="default-selector-container ng-scope"
+              class="default-selector-container"
             >
               <div
                 v-for="size in sizes"
-                class="radio ng-scope"
+                class="radio"
+                @click="isSizeAvailable(size) || openNotifyWhenAvailable(size)"
               >
                 <div
                   class="paack-2h-label"
-                  style="display: none;"
-                >2H</div>
+                  style="display: none;">2H</div>
                 <input
                   :id="'size-' + size.id"
                   v-model="selectedSize"
                   :class="{ 'oosk': !isSizeAvailable(size)}"
                   :value="size"
+
                   :checked="selectedSize.id === size.id"
                   type="radio"
                 >
-                <label @click="isSizeAvailable(size) && onSelectSize(size)">
+                <label @click="onSelectSize(size)">
                   {{ size.name }}
                   <span
                     v-if="!isSizeAvailable(size)"
@@ -324,109 +331,7 @@ onMounted(() => {
             </div>
           </div>
 
-
-          <!-- oosk -->
-          <div
-            id="soofs"
-
-            class="size-oosk"
-            style="display: none;"
-          >
-            <button
-              class="oosk__close"
-              ng-click="hideOoskDialog()"
-            >
-              <svg
-
-                width="9"
-                height="9"
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon sprite-line-icons"
-              >
-                <use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-cross" />
-              </svg>
-            </button>
-            <div
-              class="size-oosk__success"
-              style="display: none;"
-            >
-              <img
-                src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gQ3JlYXRlZCB3aXRoIEtleXNoYXBlIC0tPgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIiB3aWR0aD0iMjAiPgogICAgPHN0eWxlPgpAa2V5ZnJhbWVzIGEwX2RvIHsgMCUgeyBzdHJva2UtZGFzaG9mZnNldDogNDdweDsgYW5pbWF0aW9uLXRpbWluZy1mdW5jdGlvbjogY3ViaWMtYmV6aWVyKDAuNiwwLjA0LDAuOTgsMC4zMzUpOyB9IDc3Ljc3NzglIHsgc3Ryb2tlLWRhc2hvZmZzZXQ6IDBweDsgfSAxMDAlIHsgc3Ryb2tlLWRhc2hvZmZzZXQ6IDBweDsgfSB9CkBrZXlmcmFtZXMgYTFfZG8geyAwJSB7IHN0cm9rZS1kYXNob2Zmc2V0OiAxMnB4OyB9IDIyLjIyMjIlIHsgc3Ryb2tlLWRhc2hvZmZzZXQ6IDEycHg7IGFuaW1hdGlvbi10aW1pbmctZnVuY3Rpb246IGN1YmljLWJlemllcigwLjc4NSwwLjEzNSwwLjE1LDAuODYpOyB9IDEwMCUgeyBzdHJva2UtZGFzaG9mZnNldDogMHB4OyB9IH0KICAgIDwvc3R5bGU+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiM0MWEzMzUiIHN0cm9rZS1kYXNoYXJyYXk9IjQ3IDQ3IiBzdHJva2UtZGFzaG9mZnNldD0iNDciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTAsLTcuNUM0LjE0MjE0LC03LjUsNy41LC00LjE0MjE0LDcuNSwwQzcuNSw0LjE0MjE0LDQuMTQyMTQsNy41LDAsNy41Qy00LjE0MjE0LDcuNSwtNy41LDQuMTQyMTQsLTcuNSwwQy03LjUsLTQuMTQyMTQsLTQuMTQyMTQsLTcuNSwwLC03LjVaIiBzdHJva2Utd2lkdGg9IjEuMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAsMTApIHJvdGF0ZSg1Mi42KSIgc3R5bGU9ImFuaW1hdGlvbjogMC45cyBsaW5lYXIgYm90aCBhMF9kbzsiLz4KICAgIDxwYXRoIGQ9Ik0wLDNMMi41LDUuNUw4LDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQxYTMzNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtZGFzaGFycmF5PSIxMiAxMiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjEyIiBzdHJva2Utd2lkdGg9IjEuMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNiw3LjI1KSIgc3R5bGU9ImFuaW1hdGlvbjogMC45cyBsaW5lYXIgYm90aCBhMV9kbzsiLz4KPC9zdmc+Cg=="
-                alt="Success"
-              > <span class="h3">Hemos recibido tu correo correctamente.</span>
-              <p>Te avisaremos en cuanto la talla vuelva a estar
-                disponible.</p>
-              <button class="button button--secondary button--tiny">
-                Aceptar
-              </button>
-            </div>
-            <div>
-              <form class="ng-pristine ng-valid">
-                <span class="h3 ng-binding">
-                  <svg
-                    width="30"
-                    height="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon sprite-line-icons"
-                  ><title>Alert icon</title><use href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-alert" /></svg> Vaya, la  <span>talla </span>  se ha agotado. <br> ¿Te avisamos cuando esté disponible?</span>
-                <div class="size-oosk__email-form-fields">
-                  <div class="input-field"><input
-                    id="email"
-
-                    type="email"
-                    placeholder="Email"
-                    class="validate"
-                  >
-                  </div>
-                  <div class="input-field">
-                    <button class="submit validate">
-                      ¡Avisame!
-                    </button>
-                  </div>
-                </div>
-                <label style="display: none;">
-                  <input
-                    id="stock-subscribe-newsletter-check"
-                    type="checkbox"
-                  >
-                  <span>
-                    Autorizas a Motomundi SPA, para el tratamiento de tus datos personales y aceptas recibir comunicaciones comerciales vía email.
-                    <a
-
-                      href="/terminos-y-condiciones.html?open=privacy-policy"
-                      data-dr="true"
-                      class="mtc-link"
-                      rel="nofollow"
-                    >
-                      Más información…
-                    </a>
-                  </span>
-                </label>
-                <div
-                  class="size-oosk__similar"
-                  style="display:none;"
-                >
-                  <span class="h3">Disponible en la talla </span>
-                  <div class="similar-products">
-                    <div class="skeleton"><a />
-                    </div>
-                    <div class="skeleton"><a />
-                    </div>
-                    <div class="skeleton"><a />
-                    </div>
-                    <div class="skeleton"><a />
-                    </div>
-                  </div>
-                  <div
-
-                    class="similar-products"
-                    style="display: none;"
-                  />
-                </div>
-              </form>
-            </div>
-          </div>
-          <!-- /size-oosk -->
+          <NotifyWhenAvailable v-model="showNotifyWhenAvailable" :product-item="selectedProductItem" />
         </div>
       </div>
     </div>
@@ -435,6 +340,21 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+
+.radio input:checked.oosk + label:after {
+  background-color: #ffae02 !important;
+  border-color: #ffae02 !important;
+  z-index: -1;
+}
+.radio input[type=radio]:checked.oosk + label .oosk__badge {
+  background-color: #ffae02 !important;
+}
+
+.product-wrapper.product-detail .swatch.color-value.unavailable {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .sizes-form {
 
 
