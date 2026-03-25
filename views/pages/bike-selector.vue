@@ -84,6 +84,9 @@ watch(selectedYear, () => {
 
 const { data: marcas, refresh } = await useFetch("/api/motorcycles/manufacturers?filterBikeWithProducts=" + props.filterBikesWithProducts, {
   key: 'motorcycles-manufacturers',
+  server: false,
+  lazy: true,
+  default: () => [],
 })
 
 const onAddBike = () => {

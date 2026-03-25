@@ -6,7 +6,13 @@ const props = defineProps({
   },
 })
 
-const { data } = await useFetch("/api/product/brands", { key: "brands-all" })
+const { data } = await useFetch("/api/product/brands", {
+  key: "brands-all",
+  server: false,
+  lazy: true,
+  default: () => [],
+
+})
 
 const brands = computed(() => {
   return data.value?.brands || []

@@ -117,7 +117,7 @@ const formatName = name => {
       <AddToFavsBtn :is-wished="localIsWished" @toggle-wishlist="onToggleWishlist" />
 
       <NuxtLink
-        prefetch-on="interaction"
+        :prefetch="false"
         class="mtc-link product-link"
         :to="product.url"
       >
@@ -191,7 +191,7 @@ const formatName = name => {
 
       <section class="item__info">
         <NuxtLink
-          prefetch-on="interaction"
+          :prefetch="false"
           class="mtc-linkaa"
           :to="product.url"
         >
@@ -216,7 +216,7 @@ const formatName = name => {
         </NuxtLink>
 
         <NuxtLink
-          prefetch-on="interaction"
+          :prefetch="false"
           class="item__price-info mtc-linkaa"
           :to="product.url"
         >
