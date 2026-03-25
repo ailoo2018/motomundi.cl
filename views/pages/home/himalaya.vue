@@ -63,7 +63,7 @@
         <div class="himalaya-stats">
           <div class="stat-item">
             <VIcon
-              icon="ti-calendar-event"
+              icon="tabler-calendar-event"
               size="18"
               class="stat-icon"
             />
@@ -75,7 +75,7 @@
           <div class="stat-divider" />
           <div class="stat-item">
             <VIcon
-              icon="ti-mountain"
+              icon="tabler-mountain"
               size="18"
               class="stat-icon"
             />
@@ -87,7 +87,7 @@
           <div class="stat-divider" />
           <div class="stat-item">
             <VIcon
-              icon="ti-flag-2"
+              icon="tabler-flag-2"
               size="18"
               class="stat-icon"
             />
@@ -105,7 +105,7 @@
             size="large"
             rounded="0"
             elevation="0"
-            href="https://www.kidult.cl"
+            href="/moto-blog/expedicion-2026-rodando-en-territorio-extremo"
             target="_blank"
             rel="noopener"
           >
@@ -123,7 +123,7 @@
             variant="outlined"
             rounded="0"
             elevation="0"
-            href="https://www.motomundi.cl"
+            href="#"
           >
             <VIcon
               icon="ti-helmet"
@@ -141,7 +141,7 @@
         <div class="date-card">
           <div class="date-card__header">
             <VIcon
-              icon="ti-calendar-stats"
+              icon="tabler-calendar-stats"
               size="16"
               class="mr-2"
             />
@@ -429,6 +429,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  height: 80px;
   padding: 10px 20px;
   background: rgba(200, 169, 110, 0.08);
   border: 1px solid var(--hm-border);
