@@ -104,6 +104,10 @@ else if(path.toLowerCase() === "/product/reviewproduct.rails"){
   || path.toLowerCase().includes(".webp")
   || path.toLowerCase().includes(".gif")
   || path.toLowerCase().includes(".rails")
+  || path.toLowerCase().includes(".php")
+  || path.toLowerCase().includes(".js")
+  || path.toLowerCase().includes(".xml")
+  || path.toLowerCase().includes(".txt")
   || path.toLowerCase().includes("/product/listbycategory.rails")
 
 ){
