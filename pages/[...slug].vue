@@ -97,6 +97,14 @@ else if(path.toLowerCase() === "/product/reviewproduct.rails"){
   // navigateTo("/account/reviews/review?productId=" + queryParams.prodId + "&invoiceId=" + queryParams.invoiceId)
   navigateTo("/account/reviews")
 
+}else if(
+  path.toLowerCase().includes(".jpg")
+  || path.toLowerCase().includes(".jpeg")
+  || path.toLowerCase().includes(".png")
+  || path.toLowerCase().includes(".webp")
+  || path.toLowerCase().includes(".gif")
+){
+  // do nothing
 }
 else{
   console.log("path received", path)
