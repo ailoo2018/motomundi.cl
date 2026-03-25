@@ -43,7 +43,9 @@ const onClickMiniture = img => {
 
 const imageError = ref(false)
 
-const handleImageError = (imageId) => {
+const handleImageError = (imageId, origin, product) => {
+
+  console.log(`handleImageError: ${imageId}, origin: ${origin}, product: ${product?.name}`)
 
   $fetch("/api/images/sizes", {
     method: "POST",
@@ -143,7 +145,7 @@ const formatName = name => {
             :src="getImageUrl( product.image, 300, getDomainId())"
             :alt="product.name"
             class="cdn-img mb-1 mx-auto"
-            @error="handleImageError(product.image)"
+            @error="handleImageError(product.image, 'product-image', product)"
           >
             <template #error>
               <VImg
@@ -178,7 +180,7 @@ const formatName = name => {
               :title="img.colorName"
               :src="getImageUrl(img.image, 50, getDomainId())"
               :alt="img.colorName"
-              @error="handleImageError"
+              @error="handleImageError(img.image, 'miniture', product)"
               @click="onClickMiniture(img)"
             />
           </div>
