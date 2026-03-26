@@ -181,10 +181,10 @@ async function sendSeenCheaper() {
       </div>
 
       <form novalidate @submit.prevent="sendSeenCheaper" class="">
-        <div v-if="!submitSuccess">
+        <VContainer v-if="!submitSuccess">
           <!-- Block 1: Product features -->
           <div class="form-block v-row pb-8 ">
-          <span class="h4 v-col v-col-sm-12">
+          <span class="h4 v-col v-col-12 v-col-sm-12">
             {{ product.brand.name }} <strong>{{ product.name }}</strong>
             <small>Selecciona la talla que has visto más barata.</small>
           </span>
@@ -202,7 +202,7 @@ async function sendSeenCheaper() {
               />
             </div>
 
-            <div v-if="colors.length > 0" class="input-field v-col v-col-sm-12 ">
+            <div v-if="colors.length > 0" class="input-field v-col-12 v-col v-col-sm-12 ">
               <VSelect
                 v-model="form.cheaperColor"
                 name="cheaperColor"
@@ -223,7 +223,7 @@ async function sendSeenCheaper() {
           </span>
 
             <div class="v-row mb-2">
-              <div class="input-field v-col v-col-sm-12 v-col-md-8 v-col-lg-8">
+              <div class="input-field v-col v-col-12 v-col-sm-12 v-col-md-8 v-col-lg-8">
                 <VTextField
                   id="urlInput"
                   v-model="form.url"
@@ -239,7 +239,7 @@ async function sendSeenCheaper() {
                 <span v-if="errors.url" class="helper-text error-text">{{ errors.url }}</span>
               </div>
 
-              <div class="input-field v-col v-col-sm12 v-col-md-4 v-col-lg-4">
+              <div class="input-field v-col v-col-12 v-col-sm12 v-col-md-4 v-col-lg-4">
                 <VTextField
                   id="price"
                   v-model="form.price"
@@ -269,7 +269,7 @@ async function sendSeenCheaper() {
               </span>
               </div>
 
-              <div class="input-field v-col v-col-sm-12">
+              <div class="input-field v-col v-col-12 v-col-sm-12">
                 <AppTextField
                   id="name"
                   v-model="form.name"
@@ -284,7 +284,7 @@ async function sendSeenCheaper() {
                 <span v-if="errors.name" class="helper-text error-text">{{ errors.name }}</span>
               </div>
 
-              <div class="input-field v-col v-col-sm-12 v-col-md-6 v-col-lg-6">
+              <div class="input-field v-col v-col-12 v-col-sm-12 v-col-md-6 v-col-lg-6">
                 <AppTextField
                   id="telephone"
                   v-model="form.telephone"
@@ -300,7 +300,7 @@ async function sendSeenCheaper() {
                 <span v-if="errors.telephone" class="helper-text error-text">{{ errors.telephone }}</span>
               </div>
 
-              <div class="input-field v-col v-col-sm-12 v-col-md-6 v-col-lg-6">
+              <div class="input-field v-col v-col-12 v-col-sm-12 v-col-md-6 v-col-lg-6">
                 <AppTextField
                   id="noticeemail"
                   v-model="form.email"
@@ -319,7 +319,7 @@ async function sendSeenCheaper() {
 
             <!-- GDPR -->
             <div class="row gdpr-row">
-              <div class="v-col v-col-sm-12 no-padding-bottom">
+              <div class="v-col v-col-12 v-col-sm-12 no-padding-bottom">
                 <div class="gdpr-legal-text mt-4">
                   <label for="gdpr-legal-accept-minimum-price" class="mc-checkbox-label d-flex gap-3">
                     <VCheckbox
@@ -366,7 +366,7 @@ async function sendSeenCheaper() {
             </small>
           </div>
 
-        </div>
+        </VContainer>
       </form>
     </div>
   </div>
@@ -398,29 +398,6 @@ async function sendSeenCheaper() {
   font-weight: 600;
 }
 
-@media only screen and (max-width: 600px) {
-  .seen-cheaper-form {
-    background-color: transparent;
-    box-shadow: none;
-    position: static;
-  }
-
-  .seen-cheaper-form .close-button {
-    display: none;
-  }
-
-  .seen-cheaper-form h3 {
-    margin: 0 0 15px;
-  }
-
-  .seen-cheaper-form h4 {
-    margin-top: 0;
-  }
-
-  .seen-cheaper-form .form-block {
-    padding: 20px 15px 0;
-  }
-}
 
 .seen-cheaper-form > .col.s12 {
   padding: 0;
@@ -560,4 +537,33 @@ async function sendSeenCheaper() {
   color: #b3000f;
   border: 1px solid #f5a3aa;
 }
+
+@media only screen and (max-width: 600px) {
+  .seen-cheaper-form {
+    /*    background-color: transparent;*/
+    /*box-shadow: none;*/
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+  }
+
+  .seen-cheaper-form .close-button {
+    /*display: none;*/
+  }
+
+  .seen-cheaper-form h3 {
+    margin: 0 0 15px;
+  }
+
+  .seen-cheaper-form h4 {
+    margin-top: 0;
+  }
+
+  .seen-cheaper-form .form-block {
+    padding: 10px 5px 0;
+  }
+}
+
 </style>
+

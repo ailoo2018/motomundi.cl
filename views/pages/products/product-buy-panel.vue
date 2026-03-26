@@ -204,7 +204,7 @@ const localIsWished = computed(() => {
             class="seen-cheaper-button"
             @click="showSeenCheaperForm = true"
           >
-            ¿Lo has visto más barato? {{ showSeenCheaperForm}}
+            ¿Lo has visto más barato?
           </button>
 
           <ClientOnly>
