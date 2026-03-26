@@ -56,7 +56,7 @@ export default defineEventHandler(async event => {
 
     throw createError({
       statusCode: statusCode ?? 500,
-      message: tbkData?.error || tbkData?.message || error.message || 'Transbank Connection Failed',
+      message: "mmerr:" + ( tbkData?.error || tbkData?.message || error.message || 'Transbank Connection Failed' ),
       // no stack here
     })
 

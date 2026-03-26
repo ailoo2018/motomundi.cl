@@ -109,6 +109,8 @@ else if(path.toLowerCase() === "/product/reviewproduct.rails"){
   || path.toLowerCase().includes(".xml")
   || path.toLowerCase().includes(".txt")
   || path.toLowerCase().includes("/product/listbycategory.rails")
+  || path.toLowerCase().includes(".git")
+  || path.toLowerCase().includes(".")
 
 ){
   // do nothing
