@@ -160,10 +160,10 @@ async function sendSeenCheaper() {
         ⚠️ {{ submitError }}
       </div>
 
-      <form novalidate @submit.prevent="sendSeenCheaper">
+      <form novalidate @submit.prevent="sendSeenCheaper" class="">
 
         <!-- Block 1: Product features -->
-        <div class="form-block v-row">
+        <div class="form-block v-row pb-8 ">
           <span class="h4 v-col v-col-sm-12">
             {{ product.brand.name }} <strong>{{ product.name }}</strong>
             <small>Selecciona la talla que has visto más barata.</small>
@@ -182,7 +182,7 @@ async function sendSeenCheaper() {
             />
           </div>
 
-          <div v-if="colors.length > 0" class="input-field v-col v-col-sm-12 my-3">
+          <div v-if="colors.length > 0" class="input-field v-col v-col-sm-12 ">
             <VSelect
               v-model="form.cheaperColor"
               name="cheaperColor"
@@ -196,7 +196,7 @@ async function sendSeenCheaper() {
         </div>
 
         <!-- Block 2: URL & price -->
-        <div class="form-block">
+        <div class="form-block pb-5">
           <span class="h4">
             ¿Dónde lo has visto más barato?
             <small>Pega aquí el enlace a la página del producto.</small>
@@ -393,7 +393,7 @@ async function sendSeenCheaper() {
 
 .seen-cheaper-form .form-block {
   border-top: 1px solid #e6e6e6;
-  padding: 10px 20px 0;
+  padding: 10px 30px 0;
 }
 
 .seen-cheaper-form .form-block .input-field > label:not(.label-icon).active {

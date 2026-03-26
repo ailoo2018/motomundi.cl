@@ -189,7 +189,10 @@ const showStockDialog = () => {
                     >
                       1 en stock
                     </p>
-                    <p v-if="store.stock > 0" class="shop__available-2h">
+                    <p v-if="store.allowPickup && store.stock > 0" class="shop__available-2h">
+                      Recógelo en 2 horas
+                    </p>
+                    <p v-else class="shop__no-stock">
                       Recógelo en 2 horas
                     </p>
                   </div>
