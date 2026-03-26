@@ -7,6 +7,7 @@ import { ProductType } from "@/models/products"
 import StorePickup from "@/views/pages/products/detail/store-pickup.vue"
 import { useWishlistStore } from "@/stores/wishlist.js"
 import ProductPriceGuarantee from "@/views/pages/products/ProductPriceGuarantee.vue"
+import SeenCheaperForm from "@/views/pages/products/detail/seen-cheaper-form.vue"
 
 const props = defineProps({
   product: {
@@ -48,9 +49,7 @@ const onShowSizeChart = sizeChart => {
 }
 
 
-const showSeenCheaperForm = () => {
-
-}
+const showSeenCheaperForm = ref(false)
 
 const selectedProductItem = ref()
 const selectedProductItems = ref([])
@@ -203,10 +202,14 @@ const localIsWished = computed(() => {
           <!-- /price -->
           <button
             class="seen-cheaper-button"
-            @click="showSeenCheaperForm"
+            @click="showSeenCheaperForm = true"
           >
-            ¿Lo has visto más barato?
+            ¿Lo has visto más barato? {{ showSeenCheaperForm}}
           </button>
+
+          <ClientOnly>
+          <SeenCheaperForm v-model="showSeenCheaperForm" :product="product" />
+          </ClientOnly>
 
           <Financing />
         </div>
