@@ -540,12 +540,14 @@ async function sendSeenCheaper() {
 
 @media only screen and (max-width: 600px) {
   .seen-cheaper-form {
-    /*    background-color: transparent;*/
-    /*box-shadow: none;*/
-    position: absolute;
+    position: fixed;
     right: 0;
     left: 0;
     top: 0;
+    bottom: 0;              /* stretch to fill the full viewport height */
+    overflow-y: auto;       /* allow scrolling inside the fixed container */
+    max-height: 100dvh;     /* dvh accounts for mobile browser chrome (address bar, etc.) */
+    -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
   }
 
   .seen-cheaper-form .close-button {
