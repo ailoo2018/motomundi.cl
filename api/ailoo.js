@@ -5,7 +5,7 @@ export const fetchRecommendProducts = async (productId, count)    => {
   const config = useRuntimeConfig()
   const baseUrl = config.public.w3BaseUrl
 
-  const res = await fetch(`${baseUrl}/${getDomainId()}/recommend?productId=${productId}&count=${count}`, {
+  return await $fetch(`${baseUrl}/${getDomainId()}/recommend?productId=${productId}&count=${count}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -14,7 +14,6 @@ export const fetchRecommendProducts = async (productId, count)    => {
 
   })
 
-  return await res.json()
 }
 
 

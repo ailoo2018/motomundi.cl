@@ -80,6 +80,8 @@ export default defineNuxtConfig({
     '/moto-blog': createCachedRoute('blog', (60 * 60) * 2),
     '/moto-blog/**': createCachedRoute('blog', (60 * 60) * 24),
     '/motocicleta/**': createCachedRoute('product', (60 * 60) * 4),
+    '/products/detail/**': createCachedRoute('product', (60 * 60) * 4),
+    '/product/**': createCachedRoute('product', (60 * 60) * 4),
     '/cascos-para-moto': createCachedRoute('cascos-para-moto', (60 * 60) * 3),
 
 

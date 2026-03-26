@@ -14,9 +14,12 @@ const props = defineProps({
 
 const { data } = useFetch("/api/product/complements", {
   key: "product-complements-" + props.productId,
+  lazy: true,
+  server: false,
   query: {
     productId: props.productId,
   },
+  default: () => [],
 })
 
 

@@ -50,6 +50,7 @@ const cartStore = useCartStore()
 const { data: product, pending } = await useFetch(`/api/product/${productId.value}`, {
   // Use a unique key based on the STABLE computed value
   key: `product-data-${productId.value}`,
+  lazy: true,
 
 })
 
