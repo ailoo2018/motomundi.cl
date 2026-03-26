@@ -102,8 +102,8 @@ async function sendSeenCheaper() {
         telephone: form.telephone,
         email: form.email,
         productId: props.product.id,
-        size: form.cheaperSize,
-        color: form.cheaperColor,
+        size: form.cheaperSize || 0,
+        color: form.cheaperColor || 0,
       }
     })
 
