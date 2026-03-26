@@ -40,14 +40,25 @@ export default defineEventHandler(async event => {
       country: body.country || "CL",
     })
 
-  } catch (error) {
-    // If TBK returns an error, it's often in error.data
-    console.error('Payment Error:', error)
-    console.error('Payment Error Payload:', error.data)
+  } catch (err) {
+    // Safely narrow the type
+    const error = err instanceof Error ? err : new Error(String(err))
+    const tbkData = (err as any)?.data
+    const statusCode = (err as any)?.statusCode
+
+    // Keep full details server-side only
+    console.error('Payment Error:', {
+      message: error.message,
+      tbkData,
+      statusCode,
+      stack: error.stack,
+    })
 
     throw createError({
-      statusCode: error.statusCode || 500,
-      message: error.data?.error || error.data?.message || error.message || 'Transbank Connection Failed',
+      statusCode: statusCode ?? 500,
+      message: tbkData?.error || tbkData?.message || error.message || 'Transbank Connection Failed',
+      // no stack here
     })
+
   }
 })
