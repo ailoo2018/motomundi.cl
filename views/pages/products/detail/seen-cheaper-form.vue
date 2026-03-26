@@ -181,7 +181,8 @@ async function sendSeenCheaper() {
       </div>
 
       <form novalidate @submit.prevent="sendSeenCheaper" class="">
-        <VContainer v-if="!submitSuccess">
+        <div v-if="!submitSuccess">
+
           <!-- Block 1: Product features -->
           <div class="form-block v-row pb-8 ">
           <span class="h4 v-col v-col-12 v-col-sm-12">
@@ -366,7 +367,7 @@ async function sendSeenCheaper() {
             </small>
           </div>
 
-        </VContainer>
+        </div>
       </form>
     </div>
   </div>
@@ -563,7 +564,7 @@ async function sendSeenCheaper() {
   }
 
   .seen-cheaper-form .form-block {
-    padding: 10px 5px 0;
+    padding: 10px 30px 0;
   }
 }
 
