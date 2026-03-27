@@ -19,7 +19,6 @@ import AccountProfileHeader from "@/pages/account/AccountProfileHeader.vue"
 
 
 definePageMeta({
-  alias: '/cuenta/perfil',
   layout: 'account',
   middleware: 'auth', // Must match the filename (auth.ts)
 })

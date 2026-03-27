@@ -43,6 +43,7 @@ const emit = defineEmits(['logout'])
         Mi perfil
       </NuxtLink>
     </li>
+
     <li>
       <NuxtLink
         :class="route.path.includes('account/garage') ? 'nuxt-link-exact-active nuxt-link-active' : ''"

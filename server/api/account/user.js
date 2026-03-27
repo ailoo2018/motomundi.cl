@@ -20,7 +20,7 @@ export default defineEventHandler(async event => {
     return data
   }catch(error){
     console.error('Error', error)
-    console.error('Stack trace:', error.stack)
+   console.error('Stack trace:', error.stack)
     throw createError({
       statusCode: error.statusCode || 500,
       message: error.message || 'Failed to list addreses',

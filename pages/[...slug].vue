@@ -42,7 +42,7 @@ else if(path.toLowerCase().startsWith("/product/view.rails")) {
 else if(path === "/Product/Search.rails"){
   navigateTo("/products/list?sword=" + queryParams.w)
 }else if(path === "/Login/Index.rails"){
-  navigateTo("/cuenta/perfil" + queryParams.w)
+  navigateTo("/login" + queryParams.w)
 }
 
 else if(path === "/Account/OrderDetail.rails"){

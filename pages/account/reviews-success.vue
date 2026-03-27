@@ -25,7 +25,7 @@ const goToProducts = () => {
 }
 
 const goToAccount = () => {
-  router.push('/cuenta/perfil')
+  router.push('/account/profile')
 }
 
 const viewMyReviews = () => {

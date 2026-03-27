@@ -153,7 +153,7 @@ const getCartTotalItems = () => {
                     v-if="!isUserLoggedIn()"
                     style="transition: none;"
                     class=""
-                    href="/cuenta/perfil"
+                    href="/login"
                   >
                     <svg
                       width="26"

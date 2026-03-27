@@ -26,7 +26,7 @@ export default defineEventHandler(async event => {
     console.error('Stack trace:', error.stack)
     throw createError({
       statusCode: error.statusCode || 500,
-      message: error.date?.message || 'Error cart set user: ' + e.message,
+      message: error.date?.message || 'Error cart set user: ' + error.message,
     })
   }
 })

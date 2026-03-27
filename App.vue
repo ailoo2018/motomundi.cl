@@ -14,7 +14,15 @@ const { global } = useTheme()
 initCore()
 initConfigStore()
 
+const router = useRouter()
 
+router.beforeEach((to, from) => {
+  console.log('[Router] beforeEach', from.fullPath, '→', to.fullPath)
+})
+
+router.afterEach((to, from, failure) => {
+  console.log('[Router] afterEach', to.fullPath, '| failure:', failure)
+})
 
 if (process.client) {
   const originalSetAttribute = Element.prototype.setAttribute
@@ -37,11 +45,7 @@ if (process.client) {
   <VLocaleProvider >
     <!-- ℹ️ This is required to set the background color of active nav link based on currently active global theme's primary -->
     <VApp >
-<!--
-      <div style="position:fixed;top:0;right:0;z-index:99999;background:red;color:white;padding:4px">
-        {{ $route.path }}
-      </div>
--->
+
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>

@@ -32,7 +32,7 @@ const userId = computed(() => {
           <a href="/contactenos">Contáctenos</a>
         </div>
         <div class="hmnuentry">
-          <a v-if="userId > 0" href="/cuenta/perfil"> Su cuenta </a>
+          <a v-if="userId > 0" href="/account/profile"> Su cuenta </a>
           <VMenu
             v-if="userId > 0"
             open-on-hover
@@ -45,7 +45,7 @@ const userId = computed(() => {
             <AccountMenu class="user-menu__account-content" @logout="logout" />
 
           </VMenu>
-          <a v-if="userId === 0" href="/cuenta/perfil"> Ingresar </a>
+          <a v-if="userId === 0" href="/login"> Ingresar </a>
         </div>
         <div class="hmnuentry">
           <CountrySwitcher />

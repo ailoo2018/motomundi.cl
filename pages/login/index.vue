@@ -9,7 +9,7 @@ definePageMeta({
 
 const onLoggedIn = async () => {
   console.log("index.vue::onLoggedIn")
-  await navigateTo("/cuenta/perfil")
+  await navigateTo("/account/profile")
 }
 </script>
 

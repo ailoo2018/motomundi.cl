@@ -1,6 +1,10 @@
 <!-- components/AppLoader.vue -->
 <script setup>
-const { isLoading, progress } = useLoadingIndicator()
+const { isLoading, progress, finish } = useLoadingIndicator()
+
+watch(isLoading, (val) => {
+  console.log('[Loader] isLoading changed →', val, '| progress:', progress.value)
+})
 </script>
 
 <template>

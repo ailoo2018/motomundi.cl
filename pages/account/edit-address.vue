@@ -1,6 +1,5 @@
 <script setup lang="ts">
 definePageMeta({
-  alias: '/cuenta/perfil',
   layout: 'account',
   middleware: 'auth', // Must match the filename (auth.ts)
 })
