@@ -182,6 +182,11 @@ export default defineNuxtConfig({
   },
   experimental: {
     typedPages: true,
+    defaults: {
+      nuxtLink: {
+        prefetch: false
+      }
+    },
   },
 
   typescript: {

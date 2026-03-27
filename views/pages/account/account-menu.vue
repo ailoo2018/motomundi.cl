@@ -24,6 +24,7 @@ const emit = defineEmits(['logout'])
     <li>
       <NuxtLink
         to="/account/profile"
+        :prefetch="false"
         class="mtc-link"
         :class="route.path.includes('account/profile') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         rel="nofollow"
@@ -46,6 +47,7 @@ const emit = defineEmits(['logout'])
       <NuxtLink
         :class="route.path.includes('account/garage') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         to="/account/garage"
+        :prefetch="false"
         class="mtc-link"
         rel="nofollow"
       >
@@ -56,6 +58,7 @@ const emit = defineEmits(['logout'])
     <li>
       <NuxtLink
         to="/account/gear"
+        :prefetch="false"
         class="mtc-link"
         :class="route.path.includes('account/gear') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         rel="nofollow"
@@ -67,6 +70,7 @@ const emit = defineEmits(['logout'])
     <li>
       <NuxtLink
         to="/account/addresses"
+        :prefetch="false"
         class="mtc-link"
         :class="route.path.includes('account/addresses') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         rel="nofollow"
@@ -89,6 +93,7 @@ const emit = defineEmits(['logout'])
       <NuxtLink
         :class="route.path.includes('account/orders') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         to="/account/orders"
+        :prefetch="false"
         class="mtc-link"
         rel="nofollow"
       >
@@ -110,6 +115,7 @@ const emit = defineEmits(['logout'])
       <NuxtLink
         :class="route.path.includes('account/invoices') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         to="/account/invoices"
+        :prefetch="false"
         class="mtc-link"
         rel="nofollow"
       >
@@ -121,6 +127,7 @@ const emit = defineEmits(['logout'])
       <NuxtLink
         :class="route.path.includes('account/wishlist') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         to="/account/wishlist"
+        :prefetch="false"
         class="mtc-link"
         rel="nofollow"
       >
@@ -132,6 +139,7 @@ const emit = defineEmits(['logout'])
       <NuxtLink
         :class="route.path.includes('account/club') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         to="/account/club"
+        :prefetch="false"
         class="mtc-link"
         rel="nofollow"
       >
@@ -148,6 +156,7 @@ const emit = defineEmits(['logout'])
       <NuxtLink
         :class="route.path.includes('account/invita') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         to="/account/invita-tus-amigxs"
+        :prefetch="false"
         class="mtc-link"
         rel="nofollow"
       >
@@ -159,6 +168,7 @@ const emit = defineEmits(['logout'])
       <NuxtLink
         :class="route.path.includes('account/reviews') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         to="/account/reviews"
+        :prefetch="false"
         class="mtc-link"
         rel="nofollow"
       >
@@ -181,6 +191,7 @@ const emit = defineEmits(['logout'])
       <NuxtLink
         :class="route.path.includes('account/configuration') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         to="/account/configuration"
+        :prefetch="false"
         class="mtc-link"
         rel="nofollow"
       >
