@@ -50,17 +50,7 @@ const emit = defineEmits(['logout'])
         class="mtc-link"
         rel="nofollow"
       >
-        <svg
-          width="19"
-          height="19"
-          xmlns="http://www.w3.org/2000/svg"
-          class="icon sprite-line-icons"
-        >
-          <use
-            href="/content/svg/motomundi.svg#i-account-garage"
-            xlink:href="/content/svg/motomundi.svg#i-account-garage"
-          />
-        </svg>
+        <VIcon icon="tabler-motorbike"/>
         Mi garaje
       </a>
     </li>
@@ -71,17 +61,7 @@ const emit = defineEmits(['logout'])
         :class="route.path.includes('account/gear') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         rel="nofollow"
       >
-        <svg
-          width="19"
-          height="19"
-          xmlns="http://www.w3.org/2000/svg"
-          class="icon sprite-line-icons"
-        >
-          <use
-            href="/content/svg/motomundi.svg#i-account-equipment"
-            xlink:href="/content/svg/motomundi.svg#i-account-equipment"
-          />
-        </svg>
+        <VIcon icon="tabler-helmet"/>
         Mi equipamiento
       </a>
     </li>
@@ -113,18 +93,8 @@ const emit = defineEmits(['logout'])
         class="mtc-link"
         rel="nofollow"
       >
-        <svg
-          width="19"
-          height="19"
-          xmlns="http://www.w3.org/2000/svg"
-          class="icon sprite-line-icons"
-        >
-          <use
-            href="/content/svg/motomundi.svg#i-account-orders"
-            xlink:href="/content/svg/motomundi.svg#i-account-orders"
-          />
-        </svg>
-        Pedidos
+        <VIcon icon="tabler-file-dollar"/>
+        Facturación
 
       </a>
     </li>
@@ -135,17 +105,7 @@ const emit = defineEmits(['logout'])
         class="mtc-link"
         rel="nofollow"
       >
-        <svg
-          width="19"
-          height="19"
-          xmlns="http://www.w3.org/2000/svg"
-          class="icon sprite-line-icons"
-        >
-          <use
-            href="/content/svg/motomundi.svg#i-account-favorites"
-            xlink:href="/content/svg/motomundi.svg#i-account-favorites"
-          />
-        </svg>
+        <VIcon icon="tabler-heart"/>
         Mis favoritos
       </a>
     </li>
@@ -172,18 +132,7 @@ const emit = defineEmits(['logout'])
         class="mtc-link"
         rel="nofollow"
       >
-        <svg
-          width="19"
-          height="19"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 -3 19 19"
-          class="icon sprite-line-icons"
-        >
-          <use
-            href="/content/svg/motomundi.svg#i-account-friend"
-            xlink:href="/content/svg/motomundi.svg#i-account-friend"
-          />
-        </svg>
+        <VIcon icon="tabler-heart-handshake"/>
         Invita a tus amigxs
       </a>
     </li>
