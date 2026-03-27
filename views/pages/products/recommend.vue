@@ -15,10 +15,19 @@ const props = defineProps(
 const product = ref(props.product)
 
 
-const rs = await fetchRecommendProducts(props.product.id, 10)
-const products = ref([])
+const { data } = await useFetch("/api/product/recommend", {
+  method: "POST",
+  body: {
+    productId: props.product.id,
+    count: 10,
+  },
+})
 
-products.value = rs
+
+//  await fetchRecommendProducts(props.product.id, 10)
+const products = computed(() => data?.value || [])
+
+
 </script>
 
 <template>

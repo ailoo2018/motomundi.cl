@@ -1,6 +1,6 @@
 import { getDomainId } from "../../ailoo-domain"
 
-export default defineEventHandler(async event => {
+export default defineCachedEventHandler(async event => {
 
   let url = ""
   try {
@@ -22,4 +22,13 @@ export default defineEventHandler(async event => {
       message: error.message || 'Failed remove cart',
     })
   }
+}, {
+  maxAge: 60 * 60 * 24, // 24 hours
+  name: 'packs',
+  getKey: async event => {
+    const { productId } = getQuery(event)
+
+    return `packs-${productId}`
+  },
+  swr: true, // serve stale while revalidating in background
 })
