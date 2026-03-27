@@ -16,6 +16,7 @@ const {data: reviewStats} = await useAsyncData(
   }),
   {
     // Transform data here to keep the component logic clean
+    server: false,
     transform: data => {
       const stats = {...data, stars: Math.floor(data.avgRating * 2)};
 
