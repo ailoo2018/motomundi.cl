@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="category-title-container">
+  <div v-if="category" class="category-title-container">
     <div class="title-container">
       <h1 class="page-title">
         <img src="/content/images/assets/icons/review.svg" >
@@ -34,7 +34,7 @@ const props = defineProps({
   </div>
 
   <div class="section-separator-title under-categories">
-    <p>Destacado  <span>{{category.name}}</span></p>
+    <p>Destacado  <span>{{category?.name}}</span></p>
   </div>
 
 </template>

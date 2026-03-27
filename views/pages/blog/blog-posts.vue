@@ -34,11 +34,12 @@ useSeoMeta({
 
 const offset = computed(() => (currentPage.value - 1) * limit)
 
-const { data: rs, pending } = useFetch(() =>
+const { data: rs, pending } = await useFetch(() =>
   `/api/blog/search?offset=${offset.value}&limit=${limit}&categoryId=${props.query?.categoryId || ''}&sword=${props.query?.sword || ''}`,
 {
   key: "blog-category-" + JSON.stringify(props.query || {}),
   watch: [currentPage], // Explicitly watch currentPage
+
 },
 )
 
@@ -84,6 +85,7 @@ const totalPages = computed(() => {
         </h2>
       </div>
     </div>
+
     <BlogCategoryHeader v-else :category="category"/>
 
     <VRow
