@@ -134,6 +134,11 @@ const isInStock = computed(() => {
 })
 
 
+const onSelectedColor = color => {
+  console.log("ProductsBuyPanel::onSelectedColor: " + color)
+  emit('update:color', color)
+}
+
 const localIsWished = computed(() => {
   // Assuming your store has a state or getter named 'items' or 'wishlist'
   // logic: return true if the current product.id is in the store's list
@@ -240,6 +245,7 @@ const localIsWished = computed(() => {
       :product="product"
       @show-size-chart="onShowSizeChart"
       @selected-variant="onSelectedVariant"
+      @update:color="onSelectedColor"
     />
     <!-- normal product -->
 

@@ -86,6 +86,7 @@ const isColorAvailable = color => {
 }
 
 const selectColor = color => {
+  console.log("ProductVariantSelector::selectColor " + color)
   selectedColor.value = color
 
   if(sizes.value?.length > 0 && !isSizeAvailable(selectedSize.value)){
@@ -131,6 +132,13 @@ const updateModel = () => {
     const sizeId = selectedSize.value.id
     const colorId = selectedColor.value.id
 
+
+/*
+    if(colorId > 0){
+      console.log("Emit update:color")
+      emit('update:color', selectedColor.value)
+    }
+*/
 
 
     let productItem
