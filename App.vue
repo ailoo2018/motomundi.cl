@@ -14,15 +14,7 @@ const { global } = useTheme()
 initCore()
 initConfigStore()
 
-const router = useRouter()
 
-router.beforeEach((to, from) => {
-  console.log('[Router] beforeEach', from.fullPath, '→', to.fullPath)
-})
-
-router.afterEach((to, from, failure) => {
-  console.log('[Router] afterEach', to.fullPath, '| failure:', failure)
-})
 
 if (process.client) {
   const originalSetAttribute = Element.prototype.setAttribute

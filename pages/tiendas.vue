@@ -64,10 +64,7 @@ if (data.value) {
               </DIV>
               <DIV aaclass="d-none d-md-block">
                 <SPAN class="department-container "/>
-                <A
-                  class="toggle-collapse"
-                  @click="store.expanded = !store.expanded"
-                >
+                <A class="toggle-collapse">
                   <VIcon
                     :class="store.expanded ? 'tabler-chevron-up' : 'tabler-chevron-down'"
                     size="sm"

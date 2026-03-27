@@ -22,17 +22,21 @@ const userId = computed(() => {
         </div>
 
         <div class="hmnuentry">
-          <i class="fa fa-home" /> <a href="/tiendas">Tiendas y
-            horarios</a>
+          <i class="fa fa-home" />
+          <NuxtLink to="/tiendas">Tiendas y
+            horarios
+          </NuxtLink>
         </div>
         <div class="hmnuentry">
-          <i class="fa fa-shopping-cart" /> <a href="/cart">Carro de compra</a>
+          <i class="fa fa-shopping-cart" /> <NuxtLink to="/cart">Carro de compra</NuxtLink>
         </div>
         <div class="hmnuentry">
-          <a href="/contactenos">Contáctenos</a>
+          <NuxtLink to="/contactenos">
+            Contáctenos
+          </NuxtLink>
         </div>
         <div class="hmnuentry">
-          <a v-if="userId > 0" href="/account/profile"> Su cuenta </a>
+          <NuxtLink v-if="userId > 0" to="/account/profile"> Su cuenta </NuxtLink>
           <VMenu
             v-if="userId > 0"
             open-on-hover
@@ -45,7 +49,7 @@ const userId = computed(() => {
             <AccountMenu class="user-menu__account-content" @logout="logout" />
 
           </VMenu>
-          <a v-if="userId === 0" href="/login"> Ingresar </a>
+          <NuxtLink v-if="userId === 0" to="/login"> Ingresar </NuxtLink>
         </div>
         <div class="hmnuentry">
           <CountrySwitcher />
