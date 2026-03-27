@@ -17,6 +17,9 @@ const product = ref(props.product)
 
 const { data } = await useFetch("/api/product/recommend", {
   method: "POST",
+  key: "product-recommend-" + props.product.id,
+  lazy: true,
+  server: true,
   body: {
     productId: props.product.id,
     count: 10,
