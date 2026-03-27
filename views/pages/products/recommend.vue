@@ -19,7 +19,7 @@ const { data } = await useFetch("/api/product/recommend", {
   method: "POST",
   key: "product-recommend-" + props.product.id,
   lazy: true,
-  server: true,
+  server: false,
   body: {
     productId: props.product.id,
     count: 10,

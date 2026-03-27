@@ -22,11 +22,10 @@ const emit = defineEmits(['logout'])
 <template>
   <ul class="account__nav" :class="componentClass">
     <li>
-      <a
-        href="/account/profile"
+      <NuxtLink
+        to="/account/profile"
         class="mtc-link"
         :class="route.path.includes('account/profile') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-
         rel="nofollow"
       >
         <svg
@@ -41,33 +40,33 @@ const emit = defineEmits(['logout'])
           />
         </svg>
         Mi perfil
-      </a>
+      </NuxtLink>
     </li>
     <li>
-      <a
+      <NuxtLink
         :class="route.path.includes('account/garage') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/account/garage"
+        to="/account/garage"
         class="mtc-link"
         rel="nofollow"
       >
         <VIcon icon="tabler-motorbike"/>
         Mi garaje
-      </a>
+      </NuxtLink>
     </li>
     <li>
-      <a
-        href="/account/gear"
+      <NuxtLink
+        to="/account/gear"
         class="mtc-link"
         :class="route.path.includes('account/gear') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         rel="nofollow"
       >
         <VIcon icon="tabler-helmet"/>
         Mi equipamiento
-      </a>
+      </NuxtLink>
     </li>
     <li>
-      <a
-        href="/account/addresses"
+      <NuxtLink
+        to="/account/addresses"
         class="mtc-link"
         :class="route.path.includes('account/addresses') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         rel="nofollow"
@@ -84,35 +83,55 @@ const emit = defineEmits(['logout'])
           />
         </svg>
         Mis direcciones
-      </a>
+      </NuxtLink>
     </li>
     <li>
-      <a
+      <NuxtLink
         :class="route.path.includes('account/orders') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/account/orders"
+        to="/account/orders"
+        class="mtc-link"
+        rel="nofollow"
+      >
+        <svg
+          width="19"
+          height="19"
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon sprite-line-icons"
+        >
+          <use
+            href="/content/svg/motomundi.svg#i-account-orders"
+            xlink:href="/content/svg/motomundi.svg#i-account-orders"
+          />
+        </svg>
+        Pedidos
+      </NuxtLink>
+    </li>
+    <li>
+      <NuxtLink
+        :class="route.path.includes('account/invoices') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
+        to="/account/invoices"
         class="mtc-link"
         rel="nofollow"
       >
         <VIcon icon="tabler-file-dollar"/>
         Facturación
-
-      </a>
+      </NuxtLink>
     </li>
     <li>
-      <a
+      <NuxtLink
         :class="route.path.includes('account/wishlist') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/account/wishlist"
+        to="/account/wishlist"
         class="mtc-link"
         rel="nofollow"
       >
         <VIcon icon="tabler-heart"/>
         Mis favoritos
-      </a>
+      </NuxtLink>
     </li>
     <li>
-      <a
+      <NuxtLink
         :class="route.path.includes('account/club') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/account/club"
+        to="/account/club"
         class="mtc-link"
         rel="nofollow"
       >
@@ -123,23 +142,23 @@ const emit = defineEmits(['logout'])
           alt="Club Motomundi"
         >
         Club Motomundi
-      </a>
+      </NuxtLink>
     </li>
     <li>
-      <a
+      <NuxtLink
         :class="route.path.includes('account/invita') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/account/invita-tus-amigxs"
+        to="/account/invita-tus-amigxs"
         class="mtc-link"
         rel="nofollow"
       >
         <VIcon icon="tabler-heart-handshake"/>
         Invita a tus amigxs
-      </a>
+      </NuxtLink>
     </li>
     <li>
-      <a
+      <NuxtLink
         :class="route.path.includes('account/reviews') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/account/reviews"
+        to="/account/reviews"
         class="mtc-link"
         rel="nofollow"
       >
@@ -156,13 +175,12 @@ const emit = defineEmits(['logout'])
           />
         </svg>
         Reviews
-      </a>
+      </NuxtLink>
     </li>
     <li>
-      <a
+      <NuxtLink
         :class="route.path.includes('account/configuration') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        href="/account/configuration"
-        
+        to="/account/configuration"
         class="mtc-link"
         rel="nofollow"
       >
@@ -178,12 +196,13 @@ const emit = defineEmits(['logout'])
           />
         </svg>
         Configuración
-      </a>
+      </NuxtLink>
     </li>
     <li class="account-menu__logout">
       <a
+        href="#"
         rel="nofollow"
-        @click="logout"
+        @click.prevent="logout"
       >
         <svg
           width="19"
@@ -201,7 +220,6 @@ const emit = defineEmits(['logout'])
     </li>
   </ul>
 </template>
-
 <style  lang="scss">
 .account__nav a {
   border-left: 3px solid transparent;
