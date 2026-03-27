@@ -1,6 +1,4 @@
 <script setup>
-import RidingStylesMenu from "@/views/pages/navigation/riding-styles-menu.vue"
-
 const props = defineProps({
   href: {
     type: String,
@@ -9,16 +7,25 @@ const props = defineProps({
 })
 
 const href = props.href
-
 const isOpen = ref(false)
+let hoverTimeout = null
+
+function openMenu() {
+  hoverTimeout = setTimeout(() => {
+    isOpen.value = true
+  }, 150) // adjust delay in ms to taste
+}
+
+function closeMenu() {
+  clearTimeout(hoverTimeout)
+  isOpen.value = false
+}
 
 function handleSubmenuClick(event) {
-  // NuxtLink renders as <a>, so close when any link is clicked
   if (event.target.closest("a")) {
     isOpen.value = false
   }
 }
-
 </script>
 
 
@@ -26,8 +33,8 @@ function handleSubmenuClick(event) {
   <li
     class="l0  main-nav"
     v-bind="props"
-    @mouseenter="isOpen = true"
-
+    @mouseenter="openMenu"
+    @mouseleave="closeMenu"
   >
     <NuxtLink
       :to="href"

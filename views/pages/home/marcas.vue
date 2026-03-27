@@ -6,22 +6,22 @@ const props = defineProps({
   },
 })
 
-const { data } = await useFetch("/api/product/brands", {
-  key: "brands-all",
-  server: false,
-  lazy: true,
-  default: () => [],
-
-})
-
-const brands = computed(() => {
-  return data.value?.brands || []
-})
-
+const href = props.href
 const isOpen = ref(false)
+let hoverTimeout = null
+
+function openMenu() {
+  hoverTimeout = setTimeout(() => {
+    isOpen.value = true
+  }, 150) // adjust delay in ms to taste
+}
+
+function closeMenu() {
+  clearTimeout(hoverTimeout)
+  isOpen.value = false
+}
 
 function handleSubmenuClick(event) {
-  // NuxtLink renders as <NuxtLink>, so close when any link is clicked
   if (event.target.closest("a")) {
     isOpen.value = false
   }
@@ -33,8 +33,8 @@ function handleSubmenuClick(event) {
   <li
     class="l0 c3 main-nav marcas-nav"
     v-bind="props"
-    @mouseenter="isOpen = true"
-    @mouseleave="isOpen = false"
+    @mouseenter="openMenu"
+    @mouseleave="closeMenu"
   >
     <a>
       <span>Marcas </span>

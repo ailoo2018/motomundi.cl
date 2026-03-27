@@ -7,11 +7,21 @@ const props = defineProps({
 })
 
 const href = props.href
-
 const isOpen = ref(false)
+let hoverTimeout = null
+
+function openMenu() {
+  hoverTimeout = setTimeout(() => {
+    isOpen.value = true
+  }, 150) // adjust delay in ms to taste
+}
+
+function closeMenu() {
+  clearTimeout(hoverTimeout)
+  isOpen.value = false
+}
 
 function handleSubmenuClick(event) {
-  // NuxtLink renders as <NuxtLink>, so close when any link is clicked
   if (event.target.closest("a")) {
     isOpen.value = false
   }
@@ -20,11 +30,10 @@ function handleSubmenuClick(event) {
 
 <template>
   <li
-    id="ni_1562"
-    class="l0 c2 main-nav"
+    class="l0 main-nav"
     v-bind="props"
-    @mouseenter="isOpen = true"
-    @mouseleave="isOpen = false"
+    @mouseenter="openMenu"
+    @mouseleave="closeMenu"
   >
     <NuxtLink
       :to="href"
