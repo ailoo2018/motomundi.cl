@@ -128,6 +128,8 @@ export const useCartStore = defineStore('cart', {
 
     async setUser(wuid, userId) {
 
+      console.log("calling setUser " + userId)
+
       this.loading = true
       try {
         const data = await $fetch('/api/cart/set-user', {

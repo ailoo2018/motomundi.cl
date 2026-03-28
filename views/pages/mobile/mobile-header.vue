@@ -16,10 +16,12 @@ const isCartOpen = ref(false)
 const currentUser = computed(() => useUserStore().user)
 
 const isUserLoggedIn = computed(() => {
-  const userId = useCookie("user_id").value
-  return !!(userId && userId > 0)
-})
+  if (userStore.user?.id) return true
 
+  const userId = useCookie("user_id").value
+
+  return !!(userId && Number(userId) > 0)
+})
 const userId = computed(() => {
   return useUser().getUserId() || 0
 })
@@ -49,7 +51,7 @@ const toggleUserMenu = () => {
 }
 
 if ((!userStore.user || !userStore.user.id) && useCookie("user_id").value) {
-  userStore.fetchUser()
+  await userStore.fetchUser()
 }
 
 
@@ -172,7 +174,7 @@ const getCartTotalItems = () => {
                           xlink:href="/content/svg/motomundi.svg?v=1.4#i-menu-account"
                         />
                       </svg>
-                      <span class="user-menu__title">{{userId}} Cuenta</span>
+                      <span class="user-menu__title">Cuenta</span>
                     </NuxtLink>
                     <a
                       v-else

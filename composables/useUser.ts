@@ -29,6 +29,7 @@ export const useUser = () => {
   const getInitials = () => {
     const userStore = useUserStore()
 
+    console.log("getInitials: " + userStore.user?.id)
     if (!userStore.user || !userStore.user.id)
       return ""
 
