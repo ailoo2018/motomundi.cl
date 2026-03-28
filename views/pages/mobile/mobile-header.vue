@@ -179,8 +179,8 @@ const getCartTotalItems = () => {
                       style="background:linear-gradient(45deg, rgb(120, 168, 188) 0%, rgb(127, 167, 26) 100%);"
                     >
                       <img
-                        v-if="currentUser.avatar"
-                        :src="getImageUrl(currentUser.avatar, 300, getDomainId())"
+                        v-if="currentUser?.avatar"
+                        :src="getImageUrl(currentUser?.avatar || '', 300, getDomainId())"
                         alt="user-avatar"
                       >
                       {{ getInitials() }}
