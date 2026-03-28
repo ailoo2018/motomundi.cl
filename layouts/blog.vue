@@ -58,9 +58,8 @@ injectSkinClasses()
                   <span class="tcon-visuallyhidden">toggle menu</span>
 
                 </button>
-                <div v-if="showBlogMenu">
-                  <BlogMenu/>
-                </div>
+                <BlogMenu v-model="showBlogMenu"/>
+
               </div>
               <slot name="blog-top"/>
               <div
@@ -75,7 +74,7 @@ injectSkinClasses()
                     <slot/>
                   </div>
                   <div class="d-none d-lg-block">
-                  <BlogRightContent/>
+                    <BlogRightContent/>
                   </div>
                 </div>
               </div>

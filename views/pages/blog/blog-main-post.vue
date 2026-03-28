@@ -1,44 +1,54 @@
+<script setup>
 
+const post = ref({
+  id: 121743,
+  url: "/moto-blog/honda-xr190l-a-prueba-la-ruta-off-road-que-sorprendio-a-javier",
+  image: "32373d2783dc48c0846100bc929f5554.png",
+  imageUrl: "https://cdn.motomundi.cl/Content/uploads/1/_data/3/23/32373d2783dc48c0846100bc929f5554.png",
+  title: "Honda XR190L a prueba: la ruta off-road que sorprendió a Javier",
+})
+</script>
 
 <template>
   <div class="main-post-container">
     <div class="main-post">
-      <a href="/Blog/View.rails?id=121743">
+      <NuxtLink :to="post.url">
         <div
           class="comparison type-comparison status-publish has-post-thumbnail hentry "
           role="article"
         >
-          <div
-            class="image rocket-lazyload lazyloaded"
-            style="background-image: url(https://cdn.motomundi.cl/Content/uploads/1/_data/3/23/32373d2783dc48c0846100bc929f5554.png);"
-            data-ll-status="loaded"
+          <VImg
+            src="https://cdn.motomundi.cl/Content/uploads/1/_data/3/23/32373d2783dc48c0846100bc929f5554.png"
+            class="image"
+            cover
           />
+
         </div>
-      </a>
+      </NuxtLink>
       <div class="title-container">
-        <a href="/Blog/View.rails?id=121743">
+        <NuxtLink :to="post.url">
           <!--
             <img src="/Content/images/assets/icons/comparison-w.svg"
             class="lazyloaded" data-ll-status="loaded"> 
           -->
-          <h1 class="page-title">Honda XR190L a prueba: la ruta off-road que sorprendió a Javier</h1>
-        </a>
+          <h1 class="page-title">{{post.title}}</h1>
+        </NuxtLink>
         <p class="posts-date-category white">
           27 octubre, 2025 ●
           <span>
-            <a
+            <NuxtLink
               class="parent-category"
-              href="/Blog/View.rails?id=121743"
+              :to="post.url"
             >
               Comparativas y rankings
-            </a>
-            <a
+            </NuxtLink>
+            <NuxtLink
               class="child-category"
-              href="/Blog/View.rails?id=121743"
+              :to="post.url"
             >
               <span class="category-slash"> &gt; </span>
               Guantes
-            </a>
+            </NuxtLink>
           </span>
         </p>
       </div>

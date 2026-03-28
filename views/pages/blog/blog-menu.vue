@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import { defineComponent } from "vue"
 import BlogSearch from "@/views/pages/blog/blog-search.vue"
 import BlogNavigation from "@/layouts/blog/blog-navigation.vue"
@@ -6,13 +6,17 @@ import BlogNavigation from "@/layouts/blog/blog-navigation.vue"
 const entry = ref()
 const searchSelector = ref({ isShow: false })
 
-export default defineComponent({
-  components: { BlogNavigation, BlogSearch },
-})
+const showBlogMenu = defineModel({ type: Boolean, default: false })
+
+const hideMenu = () => {
+  showBlogMenu.value = false
+}
+
 </script>
 
 <template>
-  <BlogNavigation />
+  <div v-if="showBlogMenu">
+  <BlogNavigation @click="hideMenu" />
   <div class="subscribe-rss-container">
     <div class="newsletter-container">
       <p class="sidebar-title">
@@ -125,6 +129,7 @@ export default defineComponent({
         </li>
       </ul>
     </div>
+  </div>
   </div>
 </template>
 
