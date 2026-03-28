@@ -891,7 +891,7 @@ const toggleMenu = () => {
 
   .user-menu__account-content a {
     font-size: 10px;
-    padding: 5px 0;
+    padding: 8px 0;
   }
 
   .menu-mobile__tab-bar > ul .menu-mobile__account span .account__user-avatar img {

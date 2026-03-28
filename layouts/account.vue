@@ -64,7 +64,7 @@ onMounted(() => {
   <div v-if="isMobile">
     <main class="main-content">
       <MobileHeader />
-      <section class="account container col-sm-12 pa-3">
+      <section class="account container col-sm-12 pa-2">
         <div class="home-container account__content">
           <slot />
         </div>

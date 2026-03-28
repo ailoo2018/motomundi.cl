@@ -186,6 +186,13 @@ img {
   margin-top: 15px;
 }
 
+@media(max-width: 900px) {
+  .container.account {
+    margin-top: 8px;
+  }
+}
+
+
 .big {
   font-size: 45px;
   height: 110px;

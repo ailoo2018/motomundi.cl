@@ -668,11 +668,11 @@ const deleteReview = async id => {
   display: flex;
   align-items: center;
   background: #ffffff;
-  border: 1px solid #E2E8F0;
+/*  border: 1px solid #E2E8F0;*/
   border-radius: 4px;
   padding: 20px 32px;
   gap: 0;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+/*  box-shadow: 0 1px 4px rgba(0,0,0,0.05);*/
 }
 .stat-item {
   flex: 1;
@@ -699,6 +699,14 @@ const deleteReview = async id => {
   height: 40px;
   background: #E2E8F0;
   margin: 0 8px;
+}
+
+@media(max-width: 900px)
+{
+  .stat-divider {
+    margin: 0 4px;
+  }
+
 }
 
 /* ─── Section Header ───────────────────────────────── */
@@ -1079,7 +1087,7 @@ const deleteReview = async id => {
   .quick-tags { flex-direction: column; }
   .card-top { flex-wrap: wrap; }
   .review-toggle-btn { width: 100%; justify-content: center; }
-  .stats-bar { padding: 16px; }
+  .stats-bar { padding: 1px; }
 }
 
 
