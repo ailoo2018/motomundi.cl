@@ -6,6 +6,12 @@ const props = defineProps({
   },
 })
 
+const { data } = await useFetch("/api/product/brands", { key: "brands-all" })
+
+const brands = computed(() => {
+  return data.value?.brands || []
+})
+
 const href = props.href
 const isOpen = ref(false)
 let hoverTimeout = null

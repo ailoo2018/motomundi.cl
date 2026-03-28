@@ -1,4 +1,6 @@
 <script setup>
+import BikeSelector from "@/views/pages/bike-selector.vue"
+
 const props = defineProps({
   href: {
     type: String,
@@ -30,7 +32,6 @@ function handleSubmenuClick(event) {
 
 <template>
   <li
-    id="ni_1985_accesorios"
     class="l0 c3 main-nav"
     v-bind="props"
     @mouseenter="openMenu"
