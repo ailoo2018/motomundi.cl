@@ -37,7 +37,7 @@ injectSkinClasses()
 
 <template>
   <!-- mobile -->
-  <div  v-if="isMobile">
+  <div v-if="isMobile">
     <main class="main-content">
       <MobileHeader/>
       <div class="home-container">
@@ -58,9 +58,7 @@ injectSkinClasses()
                   <span class="tcon-visuallyhidden">toggle menu</span>
 
                 </button>
-                <div v-if="showBlogMenu">
-                  <BlogMenu/>
-                </div>
+                <BlogMenu v-model="showBlogMenu"/>
               </div>
               <slot name="blog-top"/>
               <div

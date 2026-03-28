@@ -8,7 +8,7 @@ import BlogRightContent from "@/layouts/blog/blog-right-content.vue"
 import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
 import BlogMenu from "@/views/pages/blog/blog-menu.vue"
 
-const { injectSkinClasses } = useSkins()
+
 
 const showBlogMenu = ref(false)
 
@@ -31,7 +31,7 @@ const onShowBlogMenu = () => {
   showBlogMenu.value = !showBlogMenu.value
 }
 
-
+const { injectSkinClasses } = useSkins()
 injectSkinClasses()
 </script>
 
@@ -58,6 +58,7 @@ injectSkinClasses()
                   <span class="tcon-visuallyhidden">toggle menu</span>
 
                 </button>
+
                 <BlogMenu v-model="showBlogMenu"/>
 
               </div>

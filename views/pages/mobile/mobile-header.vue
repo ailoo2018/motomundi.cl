@@ -2,26 +2,31 @@
 import MobileSearch from "@/views/pages/mobile/mobile-search.vue"
 import MobileMenu from "@/views/pages/mobile/mobile-menu.vue"
 import CartDrawer from "@/views/pages/mobile/cart-drawer.vue"
-import { useUserStore } from "@/stores/user"
+import {useUserStore} from "@/stores/user"
 import AccountMenu from "@/views/pages/account/account-menu.vue";
-const { logout, getInitials } = useUser()
 
-const cart = ref({ items_quantity: 0 })
+const {logout, getInitials} = useUser()
+
+const cart = ref({items_quantity: 0})
 const isMenuOpen = ref(false)
 const isSearchOpen = ref(false)
 const isCartOpen = ref(false)
 
-const currentUser  = useUserStore().user
 
+const currentUser = computed(() => useUserStore().user)
 
-const isUserLoggedIn = () => {
+const isUserLoggedIn = computed(() => {
   const userId = useCookie("user_id").value
+  return !!(userId && userId > 0)
+})
 
-  return (userId && userId > 0)
-}
+const userId = computed(() => {
+  return useUser().getUserId() || 0
+})
 
 const userStore = useUserStore()
 
+const initials = computed(() => getInitials())
 
 
 const toggleSearch = () => {
@@ -43,7 +48,7 @@ const toggleUserMenu = () => {
   console.log("toggle user menu")
 }
 
-if((!userStore.user || !userStore.user.id) && useCookie("user_id").value){
+if ((!userStore.user || !userStore.user.id) && useCookie("user_id").value) {
   userStore.fetchUser()
 }
 
@@ -55,14 +60,14 @@ const getCartTotalItems = () => {
 
 <template>
   <ClientOnly>
-  <CartDrawer  v-model="isCartOpen" />
+    <CartDrawer v-model="isCartOpen"/>
   </ClientOnly>
-  <MobileMenu v-model="isMenuOpen" />
+  <MobileMenu v-model="isMenuOpen"/>
   <header class="header-container">
     <div class="header">
       <div class="container">
         <div class="margin: 0px">
-          <div >
+          <div>
             <div class="header__top">
               <button
                 class="mobile-menu__toggle"
@@ -120,7 +125,7 @@ const getCartTotalItems = () => {
                         <span style="position:relative; top:1px">Buscar</span>
                       </a>
                     </div>
-                    <MobileSearch v-model="isSearchOpen" />
+                    <MobileSearch v-model="isSearchOpen"/>
                   </div>
                 </li>
                 <!-- /buscar -->
@@ -149,53 +154,75 @@ const getCartTotalItems = () => {
 
                 <!-- cuenta -->
                 <li class="user-menu__item user-menu__account">
-                  <a
-                    v-if="!isUserLoggedIn()"
-                    style="transition: none;"
-                    class=""
-                    href="/login"
-                  >
-                    <svg
-                      width="26"
-                      height="26"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="user-menu__icon icon sprite-line-icons"
+                  <ClientOnly>
+                    <NuxtLink
+                      v-if="!isUserLoggedIn"
+                      style="transition: none;"
+                      class=""
+                      href="/login"
                     >
-                      <use
-                        href="/content/svg/motomundi.svg?v=1.4#i-menu-account"
-                        xlink:href="/content/svg/motomundi.svg?v=1.4#i-menu-account"
-                      />
-                    </svg>
-                    <span class="user-menu__title">Cuenta</span>
-                  </a>
-                  <a
-                    v-if="isUserLoggedIn()"
-                    class="logged ng-cloak"
-                    style="transition: none;"
-                    @click="toggleUserMenu"
-                  >
-                    <div
-                      class="account__user-avatar small"
-                      style="background:linear-gradient(45deg, rgb(120, 168, 188) 0%, rgb(127, 167, 26) 100%);"
-                    >
-                      <img
-                        v-if="currentUser?.avatar"
-                        :src="getImageUrl(currentUser?.avatar || '', 300, getDomainId())"
-                        alt="user-avatar"
+                      <svg
+                        width="26"
+                        height="26"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="user-menu__icon icon sprite-line-icons"
                       >
-                      {{ getInitials() }}
-                    </div>
-                    <span class="user-menu__title" style="position:relative; top: 2px;">Cuenta</span>
-                    <VMenu
-                      activator="parent"
-                      rounded="0"
-                      transition="slide-y-transition"
+                        <use
+                          href="/content/svg/motomundi.svg?v=1.4#i-menu-account"
+                          xlink:href="/content/svg/motomundi.svg?v=1.4#i-menu-account"
+                        />
+                      </svg>
+                      <span class="user-menu__title">{{userId}} Cuenta</span>
+                    </NuxtLink>
+                    <a
+                      v-else
+                      class="logged"
+                      style="transition: none;"
+                      @click="toggleUserMenu"
                     >
-                        <AccountMenu class="user-menu__account-content" @logout="logout" />
+                      <div
+                        class="account__user-avatar small"
+                        style="background:linear-gradient(45deg, rgb(120, 168, 188) 0%, rgb(127, 167, 26) 100%);"
+                      >
+                        <img
+                          v-if="currentUser?.avatar"
+                          :src="getImageUrl(currentUser?.avatar || '', 300, getDomainId())"
+                          alt="user-avatar"
+                        >
+                        {{ initials }}
+                      </div>
+                      <span class="user-menu__title" style="position:relative; top: 2px;">Cuenta</span>
+                      <VMenu
+                        activator="parent"
+                        rounded="0"
+                        transition="slide-y-transition"
+                      >
 
-                    </VMenu>
-                  </a>
+                        <AccountMenu class="user-menu__account-content" @logout="logout"/>
 
+                      </VMenu>
+                    </a>
+                    <template #fallback>
+                      <NuxtLink
+                        style="transition: none;"
+                        class=""
+                        href="/login"
+                      >
+                        <svg
+                          width="26"
+                          height="26"
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="user-menu__icon icon sprite-line-icons"
+                        >
+                          <use
+                            href="/content/svg/motomundi.svg?v=1.4#i-menu-account"
+                            xlink:href="/content/svg/motomundi.svg?v=1.4#i-menu-account"
+                          />
+                        </svg>
+                        <span class="user-menu__title">Cuenta</span>
+                      </NuxtLink>
+                    </template>
+                  </ClientOnly>
 
                 </li>
                 <!-- /cuenta -->
@@ -555,13 +582,14 @@ img {
 }
 
 
-
 .user-menu .user-menu__item a .account__user-avatar {
   position: relative;
 }
+
 .user-menu__account div {
   margin: 1px auto 2px;
 }
+
 .user-menu .user-menu__item a .account__user-avatar {
   position: relative;
 }

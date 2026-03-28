@@ -890,7 +890,7 @@ const toggleMenu = () => {
   }
 
   .user-menu__account-content a {
-    font-size: 10px;
+    font-size: 12px;
     padding: 8px 0;
   }
 
