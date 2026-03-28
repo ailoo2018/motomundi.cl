@@ -1,155 +1,77 @@
-<script setup>
+<!-- pages/[...slug].vue -->
+<script setup lang="ts">
 import ProductsList from "@/views/pages/products/list/products-list.vue"
-import { getDomainId } from "@/server/ailoo-domain.js"
 import CmsContent from "@/views/pages/cms/CmsContent.vue"
-import { v4 as uuidv4 } from 'uuid';
 
-definePageMeta({  public: true })
-
-
+definePageMeta({ public: true })
 
 const route = useRoute()
-const queryParams = route.query
-const config = ref()
-const type = ref("products")
-
-
-
-
 
 const slugArray = Array.isArray(route.params.slug)
   ? route.params.slug
   : [route.params.slug].filter(Boolean)
 
-const path = `/${slugArray.join('/')}`
+// ✅ Top-level, always runs on server
+const { data, error } = await useFetch(`/api/resolve/${slugArray.join('/')}`, {
+  server: true,
+  key: `resolve-${slugArray.join('-')}`,
+})
 
-
-
-if (path.includes('sitemap') || path.includes('__sitemap__')) {
-  throw createError({ statusCode: 404 })
-}else if(path.startsWith("/api")){
-  throw createError({ statusCode: 404 })
-}
-else if(path.toLowerCase().startsWith("/payment/quickcheckout.rails")) {
-  // /Payment/QuickCheckout.rails?documentId=27759764&amount=249900&documentType=INVOICE
-  navigateTo("/checkout/" + queryParams.documentId, {external:true})
-}
-else if(path.toLowerCase().startsWith("/product/view.rails")) {
-
-  navigateTo("/products/detail/" + queryParams.productId)
-
-}
-else if(path === "/Product/Search.rails"){
-  navigateTo("/products/list?sword=" + queryParams.w)
-}else if(path === "/Login/Index.rails"){
-  navigateTo("/login" + queryParams.w)
-}
-
-else if(path === "/Account/OrderDetail.rails"){
-  console.log("orderDetail: " + queryParams.hash)
-  // ?orderId=190920&hash=FF4970D2B241BAFFAACE2F654EAE60A8
-  const wuid = useGuestUser().value
-  const config = useRuntimeConfig()
-  const baseUrl = config.public.w3BaseUrl
-
-  const { data } = await useFetch(`${baseUrl}/${getDomainId()}/auth/hash-login`, {
-    method: 'POST',
-    body: {
-      type: "order",
-      hash: queryParams.hash,
-      pid: queryParams.orderId,
-      wuid: wuid,
-    },
+if (error.value || !data.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: `Page not found`,
+    fatal: true,
   })
-
-  console.log("returned hash: " + data.value.userId)
-
-  useCookie('guest_id').value = uuidv4()
-  useCookie('user_id').value = data.value.userId
-  useCookie('accessToken').value = data.value.accessToken
-
-  navigateTo("/account/orders/" + queryParams.orderId)
-
 }
-else if(path.toLowerCase() === "/product/reviewproduct.rails"){
-
-  console.log("/Product/ReviewProduct.rails : ", queryParams )
-  const wuid = useGuestUser().value
-  const config = useRuntimeConfig()
-  const baseUrl = config.public.w3BaseUrl
-
-  const { data } = await useFetch(`${baseUrl}/${getDomainId()}/auth/hash-login`, {
-    method: 'POST',
-    body: {
-      type: "product",
-      hash: queryParams.h,
-      pid: queryParams.pid,
-      wuid: wuid,
-    },
-  })
-
-  console.log("hashlogin rs: " + data.value.userId)
-
-  useCookie('user_id').value = data.value.userId
-  useCookie('accessToken').value = data.value.accessToken
 
 
-  // navigateTo("/account/reviews/review?productId=" + queryParams.prodId + "&invoiceId=" + queryParams.invoiceId)
-  navigateTo("/account/reviews")
+let query = null
 
-}else if(
-  path.toLowerCase().includes(".jpg")
-  || path.toLowerCase().includes(".jpeg")
-  || path.toLowerCase().includes(".png")
-  || path.toLowerCase().includes(".webp")
-  || path.toLowerCase().includes(".gif")
-  || path.toLowerCase().includes(".rails")
-  || path.toLowerCase().includes(".php")
-  || path.toLowerCase().includes(".js")
-  || path.toLowerCase().includes(".xml")
-  || path.toLowerCase().includes(".txt")
-  || path.toLowerCase().includes("/product/listbycategory.rails")
-  || path.toLowerCase().includes(".git")
-  || path.toLowerCase().includes(".")
-
-){
-  // do nothing
+if (!data.value?.query) {
+  query = route.query
+} else {
+  query = data.value?.query
 }
-else{
-  console.log("path received", path)
-  try {
 
-
-    const { data, error } = await useFetch(`/api/friendlyurl?path=${path}`)
-
-    config.value = data.value
-    console.log(`Mapping ${path}:` + JSON.stringify( config.value ))
-    if (error.value || !config.value) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: `Category at ${path} not found ${error.value}`,
-        fatal: true, // Ensures the error page shows during SSR
-      })
-    }
-
-    if(config.value.source && config.value.source.rawUrl && config.value.source.rawUrl.toLowerCase().includes("cms/page")){
-      type.value = "cms"
-    }
-
-
-  }catch(e){
-   // console.error(e)
+const baseQuery = []
+if(data.value?.type === "products") {
+  const query = data.value.query
+  if (query.categoryId) {
+    baseQuery.push({type: "categories", values: [query.categoryId]})
   }
+  if (query.brandId) {
+    baseQuery.push({type: "brands", values: [query.brandId]})
+  }
+  if (query.collection) {
+    baseQuery.push({type: "collection", value: query.collection})
+  }
+  if (query.bikeManufacturer) {
+    baseQuery.push({
+      type: "bike",
+      value: {manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear},
+    })
+  }
+  if (query.minDiscount) {
+    baseQuery.push({type: "minDiscount", value: query.minDiscount})
+  }
+  if (query.sword) {
+    baseQuery.push({type: "sword", value: query.sword})
+  }
+
+  console.log("baseQuery: " + JSON.stringify(baseQuery))
+
 }
-
-
 </script>
 
 <template>
-
-  <CmsContent v-if="type==='cms'" :id="config.query.id" />
+  <CmsContent
+    v-if="data?.type === 'cms'"
+    :id="data.query.id"
+  />
   <ProductsList
-    v-if="config && type==='products'"
-    :injected-query="config.query"
+    v-else-if="data?.type === 'products'"
+    :base-query="baseQuery"
+
   />
 </template>

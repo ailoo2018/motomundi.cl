@@ -3,6 +3,8 @@ import { Departments } from "@/models/index"
 
 const { setDepartment, currDept } = useDepartment()
 
+const router = useRouter()
+
 const goTo = async (event, url, departmentId) => {
   event.preventDefault()
 

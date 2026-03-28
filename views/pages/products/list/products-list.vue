@@ -5,48 +5,15 @@ import { useProductList } from "@/composables/useProductList.js"
 import MobileFilterDrawer from "@/views/pages/products/list/mobile-filter-drawer.vue"
 
 const props = defineProps({
-  injectedQuery: {
-    type: Object,
+
+  baseQuery: {
+    type: Array,
+    default: () => [],
   },
 })
 
-let query = null
-const route = useRoute()
-if (!props.injectedQuery) {
-  query = route.query
-} else {
-  query = props.injectedQuery
-}
-
 const loading = ref(false)
 const isFilterDrawerOpen = ref(false)
-
-
-const baseQuery = []
-if (query.categoryId) {
-  baseQuery.push({ type: "categories", values: [query.categoryId] })
-}
-if (query.brandId) {
-  baseQuery.push({ type: "brands", values: [query.brandId] })
-}
-if (query.collection) {
-  baseQuery.push({ type: "collection", value: query.collection })
-}
-if (query.bikeManufacturer) {
-  baseQuery.push({
-    type: "bike",
-    value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear },
-  })
-}
-if (query.minDiscount) {
-  baseQuery.push({ type: "minDiscount", value: query.minDiscount })
-}
-if (query.sword) {
-  baseQuery.push({ type: "sword", value: query.sword })
-}
-
-console.log("baseQuery: " + JSON.stringify(baseQuery))
-
 
 const {
   products,
@@ -58,7 +25,7 @@ const {
   applyFilters,
   filters,
   orderBy,
-} = useProductList({ baseQuery: baseQuery })
+} = useProductList({ baseQuery: props.baseQuery })
 
 
 useSeoMeta({
@@ -80,6 +47,7 @@ const onFilter = filters => {
 </script>
 
 <template>
+
   <div class="list-continer pt-6 pb-10">
     <section>
       <div class="filters__header">

@@ -196,7 +196,7 @@ onMounted(() => {
 <template>
 
 
-  <div v-if="error || !product" class="container" style="padding: 60px 20px; text-align: center;">
+  <div v-if="error" class="container" style="padding: 60px 20px; text-align: center;">
     <VIcon icon="tabler-package-off" size="64" color="grey" />
     <h2 style="margin-top: 16px; color: #555;">Producto no encontrado</h2>
     <p style="color: #888;">El producto que buscas no existe o ya no está disponible.</p>
@@ -209,9 +209,9 @@ onMounted(() => {
     </VBtn>
   </div>
 
-  <article v-if="product">
-    <div class="container product">
-      <section class="row product-main ">
+  <article style="min-height: 600px" >
+    <div class="container product" v-if="product">
+      <section class="row product-main" >
         <div
           class="col s12 m7 l7"
           style="padding-right: 20px;"
@@ -276,7 +276,7 @@ onMounted(() => {
 
       <Packs :product="product" />
 
-      <ProductComplements :product-id="product.id" />
+      <ProductComplements :product-id="product?.id" />
 
       <!-- product-description-container -->
       <VRow class=" product-description-container mt-10">
@@ -284,7 +284,7 @@ onMounted(() => {
           cols="12"
           md="7"
         >
-          <ProductDescription :description="product.description" />
+          <ProductDescription :description="product?.description" />
         </VCol>
 
 
@@ -294,7 +294,7 @@ onMounted(() => {
           md="5"
         >
           <!-- blog -->
-          <RelatedBlog v-if="product.relatedBlogArticle" :article="product.relatedBlogArticle"/>
+          <RelatedBlog v-if="product?.relatedBlogArticle" :article="product.relatedBlogArticle"/>
           <!-- /blog -->
           <DataSheet :product="product" />
         </VCol>

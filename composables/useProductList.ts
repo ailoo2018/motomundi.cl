@@ -3,48 +3,26 @@
 const ARRAY_FACETS = ['brands', 'categories', 'tags', 'sizes', 'models', 'colors'] as const
 const SCALAR_FACETS = ['bike', 'collection', 'sword', 'orderBy'] as const
 
-
-
 export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   const route = useRoute()
   const router = useRouter()
-  const products = ref(null)
   const loading = ref(false)
-  const total = ref(0)
-  const title = ref()
-  const totalPages = ref(0)
-  const pageSize = ref(60)
-//  const queryDesc = ref()
   const filters = ref()
-  const ignoreNextPageWatch = ref(true)
   const orderBy = ref()
-
-  const _queryDescOverride = ref<string | undefined>()
-
-  const queryDesc = computed(() =>
-    _queryDescOverride.value ??
-    (initialData.value ? getQueryDescription(initialData.value) : undefined)
-  )
 
   // ─── URL helpers ──────────────────────────────────────────────
 
-  /** Deserialise ?brands=nike,adidas&page=2 → internal query array */
   const parseFiltersFromUrl = (query = route.query): any[] => {
     const result: any[] = []
     for (const type of ARRAY_FACETS) {
-      if (query[type]) {
-        result.push({ type, values: (query[type] as string).split(',') })
-      }
+      if (query[type]) result.push({ type, values: (query[type] as string).split(',') })
     }
     for (const type of SCALAR_FACETS) {
-      if (query[type]) {
-        result.push({ type, value: query[type] as string })
-      }
+      if (query[type]) result.push({ type, value: query[type] as string })
     }
     return result
   }
 
-  /** Serialise internal query array + page → plain URL params object */
   const filtersToUrlQuery = (filterQuery: any[], page: number): Record<string, string> => {
     const params: Record<string, string> = {}
     if (page > 1) params.page = String(page)
@@ -52,18 +30,15 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
       if (facet.values?.length) params[facet.type] = facet.values.join(',')
       else if (facet.value != null) params[facet.type] = String(facet.value)
     }
-
-    if(orderBy.value?.id){
-      params["orderBy"] = orderBy.value.id
-    }
-
+    if (orderBy.value?.id) params['orderBy'] = orderBy.value.id
     return params
   }
 
-  // ─── State (initialised from URL so a back-navigation restores it) ──
+  // ─── State ────────────────────────────────────────────────────
 
   const currentPage = ref(parseInt(route.query.page as string) || 1)
   const currentQuery = ref<any[]>(parseFiltersFromUrl())
+  const pageSize = ref(60)
 
   // ─── Body builder ─────────────────────────────────────────────
 
@@ -78,15 +53,10 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
 
     const cQuery = JSON.parse(JSON.stringify(queryOverride))
 
-    console.log(JSON.stringify(queryOverride))
-
     for (const bq of (ops.baseQuery ?? [])) {
       const fg = cQuery.find((cq: any) => cq.type === bq.type)
-      if (!fg || !fg.value) {
-        cQuery.push(bq)
-      } else if (fg && !fg.values && fg.values?.length === 0) {
-        fg.values = bq.values
-      }
+      if (!fg || !fg.value) cQuery.push(bq)
+      else if (fg && !fg.values && fg.values?.length === 0) fg.values = bq.values
     }
 
     for (const facet of cQuery) {
@@ -101,118 +71,66 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
       else body[facet.type] = facet.value
     }
 
-    if(orderBy.value){
-      body.orderBy = orderBy.value.id
-    }
-
+    if (orderBy.value) body.orderBy = orderBy.value.id
     return body
   }
 
-  // ─── SSR / initial load via useAsyncData ──────────────────────
-  // Key includes URL state so SSR and client-side cache are correct
-  // per unique filter+page combination.
+  // ─── Reactive body (drives both the key and the fetch) ────────
+  //
+  // Computed so any change to currentQuery, currentPage, or orderBy
+  // automatically invalidates the cache key and triggers a new fetch.
 
-  const initialBody = buildBody(currentQuery.value)
-  const fetchKey = `products-${JSON.stringify(initialBody)}`
+  const fetchBody = computed(() => buildBody(currentQuery.value, currentPage.value))
 
-  console.log("initialBody: " + JSON.stringify(initialBody))
+  // ─── Single useAsyncData — runs on SERVER and reacts on client ─
+  //
+  // • The key is a function → Nuxt treats it as a computed key and
+  //   re-runs the handler whenever it changes.
+  // • `watch: [fetchBody]` is the explicit trigger on the client side.
+  // • No separate search() / $fetch call needed anywhere.
 
-
-  const { data: initialData, pending } = useAsyncData(
-    fetchKey,
-    () => $fetch('/api/product/search', { method: 'POST', body: initialBody }),
+  const { data: searchData, pending } = useAsyncData(
+    () => `products-${JSON.stringify(fetchBody.value)}`,  // reactive cache key
+    () => $fetch('/api/product/search', { method: 'POST', body: fetchBody.value }),
+    { watch: [fetchBody] },
   )
 
+  // ─── Derived state from searchData ────────────────────────────
 
-  // ─── Helpers ──────────────────────────────────────────────────
+  const products = computed(() => searchData.value?.products ?? [])
+  const total    = computed(() => searchData.value?.totalHits ?? 0)
+  const totalPages = computed(() => Math.ceil(total.value / pageSize.value))
+  const title    = computed(() => searchData.value?.query?.description ?? '')
 
-  const scrollToTop = () => {
-    if (import.meta.client) window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  const getQueryDescription = (rs: any) => {
-    console.log("getQueryDescription", rs.query)
+  const queryDesc = computed(() => {
+    if (!searchData.value) return undefined
+    const rs = searchData.value
     if (rs.query?.description?.length > 0)
-      return `<span class="total-results">${rs?.totalHits}</span> ` + rs.query?.description
+      return `<span class="total-results">${rs.totalHits}</span> ` + rs.query.description
     return 'Resultado'
-  }
-
-  const applyResults = (dataResult: any) => {
-    console.log("initialData: " + dataResult.products?.length)
-    if (dataResult?.products) {
-      total.value       = dataResult.totalHits
-      totalPages.value  = Math.ceil(dataResult.totalHits / pageSize.value)
-      title.value       = dataResult.query.description
-     // queryDesc.value   = getQueryDescription(dataResult)
-      dataResult.products.forEach((p: any) => (p.isWished = false))
-      products.value    = dataResult.products
-
-      _queryDescOverride.value = getQueryDescription(dataResult)
-
-      if (!filters.value) filters.value = dataResult.filters
-    }
-
-
-  }
-
-  // Hydrate from SSR data on first render
-  watch(initialData, (val) => {
-    if (val) applyResults(val)
-  }, { immediate: true })
-  // ─── Core search (always uses current ref state) ──────────────
-
-  const search = async () => {
-     console.log("!!!!!!!!!!!! ecexcuting search")
-    try {
-      products.value = []
-      loading.value  = true
-      scrollToTop()
-
-      const rs = await $fetch('/api/product/search', {
-        method: 'POST',
-        body: buildBody(currentQuery.value, currentPage.value),
-      })
-
-      applyResults(rs)
-    } catch (e: any) {
-      console.error(e.message)
-    } finally {
-      loading.value = false
-    }
-  }
-
-  // ─── URL → state sync (back / forward button) ─────────────────
-  // `immediate: false` (default) means this does NOT fire on mount,
-  // so there is no double-fetch on first load.
-
-  watch(
-    () => route.query,
-    (newRouteQuery) => {
-      currentPage.value  = parseInt(newRouteQuery.page as string) || 1
-      currentQuery.value = parseFiltersFromUrl(newRouteQuery)
-      console.log("watch route.query")
-      search()
-    },
-  )
-
-  watch(currentPage, async () => {
-
-    console.log("pageChanged")
-    if (process.client) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-   // await router.push({ query: filtersToUrlQuery(currentQuery, currentPage) })
-     setPage(currentPage.value)
   })
 
+  // Populate filters only once (first response)
+  watch(searchData, (val) => {
+    if (val && !filters.value) filters.value = val.filters
+  }, { immediate: true })
+
+  // ─── URL → state sync (back/forward) ──────────────────────────
+  //
+  // Only updates the refs — the fetchBody computed reacts automatically.
+
+  watch(() => route.query, (newRouteQuery) => {
+    currentPage.value  = parseInt(newRouteQuery.page as string) || 1
+    currentQuery.value = parseFiltersFromUrl(newRouteQuery)
+  })
+
+  // Scroll to top whenever the data refreshes on the client
+  watch(searchData, () => {
+    if (import.meta.client) window.scrollTo({ top: 0, behavior: 'smooth' })
+  })
 
   // ─── Public API ───────────────────────────────────────────────
 
-  /**
-   * Called by the filter sidebar.  Derives the new query from checked
-   * buckets, resets to page 1, and pushes a new history entry so the
-   * user can navigate back to the unfiltered state.
-   */
   const applyFilters = async (newFilters: any[]) => {
     const map = new Map<string, { type: string; values: any[] }>()
     for (const f of newFilters) {
@@ -223,33 +141,26 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
         }
       }
     }
-
     const newQuery = [...map.values()]
-
-    // Bail out early when nothing changed
     if (JSON.stringify(currentQuery.value) === JSON.stringify(newQuery)) return
-
-    // Push to URL – the route watcher above will call search()
     await router.push({ query: filtersToUrlQuery(newQuery, 1) })
   }
 
-
-  watch(orderBy, async (newVal) => {
-    console.log("orderBy changed: " + newVal)
-    await router.push({ query: filtersToUrlQuery(currentQuery.value, orderBy.value?.id) })
-  })
-
-  /**
-   * Called by the pagination component.  Pushes a new history entry
-   * so the user can navigate back to the previous page.
-   */
   const setPage = async (page: number) => {
     await router.push({ query: filtersToUrlQuery(currentQuery.value, page) })
   }
 
+  watch(orderBy, async () => {
+    await router.push({ query: filtersToUrlQuery(currentQuery.value, 1) })
+  })
+
+  watch(currentPage, async (page) => {
+    await setPage(page)
+  })
+
   return {
-    products:    computed(() => products.value || []),
-    total:       computed(() => total.value    || initialData.value?.totalHits || 0),
+    products,
+    total,
     queryDesc,
     totalPages,
     currentPage,
@@ -258,6 +169,6 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     title,
     setPage,
     orderBy,
-    loading:     computed(() => pending.value || loading.value),
+    loading: computed(() => pending.value || loading.value),
   }
 }
