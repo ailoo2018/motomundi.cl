@@ -393,7 +393,7 @@ function selectStore(store) {
 
 /* ── Reset scope ── */
 .mm-locator * { box-sizing: border-box; margin: 0; padding: 0; }
-.mm-locator { font-family: 'Barlow', 'Roboto Condensed', sans-serif; background: #fff; color: var(--gray-900); }
+.mm-locator {  background: #fff; color: var(--gray-900); }
 
 /* ── Header ── */
 .mm-header {
