@@ -21,15 +21,10 @@ useSeoMeta({
   description: () => title.value?.description,
   ogDescription: () => title.value?.description,
 })
+
 const limit = 10
 const currentPage = ref(1)
 
-useSeoMeta({
-  title: () =>  title.value?.name || 'Loading Product...',
-  ogTitle: () => title.value?.name,
-  description: () => title.value?.description,
-  ogDescription: () => title.value?.description,
-})
 
 
 const offset = computed(() => (currentPage.value - 1) * limit)
@@ -73,6 +68,7 @@ const totalPages = computed(() => {
     />
 
     <BlogBreadcrumbs :category="category" />
+
 
     <div v-if="query?.sword?.length > 0" class="category-title-container">
 

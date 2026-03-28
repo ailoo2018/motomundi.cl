@@ -14,9 +14,9 @@ const props = defineProps({
     v-bind="$attrs"
   >
     <header class="title-container">
-      <a :href="entry.friendlyUrl">
+      <NuxtLink :to="entry.friendlyUrl">
         <h2 style="height: 96px;">{{ entry.title }} </h2>
-      </a>
+      </NuxtLink>
       <p class="posts-date-category">
         <span class="date">
           {{ entry.createDate }}
@@ -36,7 +36,7 @@ const props = defineProps({
         </a>
       </p>
     </header>
-    <a :href="entry.friendlyUrl">
+    <NuxtLink :to="entry.friendlyUrl">
       <div class="img-wrapper">
         <img
           :src="`${getBaseCDN()}${entry.previewImage}`"
@@ -55,7 +55,7 @@ const props = defineProps({
           <img src="/content/assets/icons/read-more.svg">
         </span>
       </div>
-    </a>
+    </NuxtLink>
   </article>
 </template>
 

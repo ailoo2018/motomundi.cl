@@ -10,9 +10,9 @@ import BlogSearch from "@/views/pages/blog/blog-search.vue";
         <BlogSearch />
       </li>
       <li class="submenu-content">
-        <a
+        <NuxtLink
           class="main-category"
-          href="/moto-blog/reviews/"
+          to="/moto-blog/reviews/"
         >
           <div class="icon-container">
             <img src="/content/images/assets/icons/review.svg">
@@ -20,24 +20,24 @@ import BlogSearch from "@/views/pages/blog/blog-search.vue";
           <div class="text-container"><p>Reviews y pruebas</p>
             <span>Conoce al detalle lo que buscas.</span>
           </div>
-        </a>
+        </NuxtLink>
       </li>
       <li class="submenu-content">
-        <a
+        <NuxtLink
           class="main-category"
-          href="/moto-blog/comparativas-y-rankings/"
+          to="/moto-blog/comparativas-y-rankings/"
         >
           <div class="icon-container">
             <img src="/content/images/assets/icons/comparison.svg">
           </div>
           <div class="text-container"><p>Comparativas y rankings</p><span>¿Dudas entre varios productos? Te ayudamos.</span>
           </div>
-        </a>
+        </NuxtLink>
       </li>
       <li class="submenu-content">
-        <a
+        <NuxtLink
           class="main-category"
-          href="/moto-blog/tutoriales/"
+          to="/moto-blog/tutoriales/"
         >
           <div class="icon-container"><img
             src="/content/images/assets/icons/tutorial.svg"
@@ -45,12 +45,12 @@ import BlogSearch from "@/views/pages/blog/blog-search.vue";
           </div>
           <div class="text-container"><p>Tutoriales y tecnología</p><span>Conviértete en un experto de la equipación.</span>
           </div>
-        </a>
+        </NuxtLink>
       </li>
       <li class="submenu-content">
-        <a
+        <NuxtLink
           class="main-category"
-          href="/moto-blog/guias-de-compra/"
+          to="/moto-blog/guias-de-compra/"
         >
           <div class="icon-container"><img
             src="/content/images/assets/icons/shopping-guide.svg"
@@ -59,12 +59,12 @@ import BlogSearch from "@/views/pages/blog/blog-search.vue";
           <div class="text-container"><p>Guías de compra</p>
             <span>Todo lo que debes saber antes de decidirte.</span>
           </div>
-        </a>
+        </NuxtLink>
       </li>
       <li class="submenu-content">
-        <a
+        <NuxtLink
           class="main-category"
-          href="/moto-blog/noticias/"
+          to="/moto-blog/noticias/"
         >
           <div class="icon-container"><img
             src="/content/assets/icons/news.png"
@@ -73,24 +73,24 @@ import BlogSearch from "@/views/pages/blog/blog-search.vue";
           <div class="text-container"><p>Tendencias y novedades</p>
             <span>La evolución del mercado de motocicletas en Chile.</span>
           </div>
-        </a>
+        </NuxtLink>
       </li>
       <li class="submenu-content">
-        <a
+        <NuxtLink
           class="main-category"
-          href="/moto-blog/planeta-motero/"
+          to="/moto-blog/planeta-motero/"
         >
           <div class="icon-container">
             <img src="/content/images/assets/icons/planet-biker.svg">
           </div>
           <div class="text-container"><p>Planeta motero</p><span>Adéntrate en el mundo de la moto.</span>
           </div>
-        </a>
+        </NuxtLink>
       </li>
       <li class="submenu-content">
-        <a
+        <NuxtLink
           class="main-category"
-          href="/moto-blog/videos/"
+          to="/moto-blog/videos/"
         >
           <div class="icon-container">
             <img
@@ -100,7 +100,7 @@ import BlogSearch from "@/views/pages/blog/blog-search.vue";
           <div class="text-container"><p>Nuestros vídeos</p>
             <span>Disfruta de nuestros mejores vídeos.</span>
           </div>
-        </a>
+        </NuxtLink>
       </li>
     </ul>
   </nav>

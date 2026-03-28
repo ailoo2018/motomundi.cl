@@ -7,48 +7,25 @@ definePageMeta({
   public: true,
 })
 
-const query = ref({ id: 0 })
 const route = useRoute()
-
 
 const slugArray = Array.isArray(route.params.slug)
   ? route.params.slug
   : [route.params.slug].filter(Boolean)
 
-const path = `moto-blog/${slugArray.join('/')}`
+// ✅ Top-level useFetch → SSR executes this, Vue renders the right component
+const { data, error } = await useFetch(`/api/blog/${slugArray.join('/')}`, {
+  server: true,
+  key: `moto-blog-${slugArray.join('-')}`,
+})
 
-
-if(path.includes("search")){
-  console.log("Path is search")
-  query.value = {
-    sword: route.query.sword,
-  }
-
-
-}else {
-  const { data: config, error } = await useFetch(`/api/friendlyurl`, {
-    method: "GET",
-    query: { path },
-  })
-
-  console.log(`Mapping ${path}:`, config.value)
-
-  query.value = config.value?.query || {}
+if (error.value) {
+  throw createError({ statusCode: error.value.statusCode ?? 404 })
 }
 </script>
 
 <template>
-  <BlogArticle
-    v-if="query?.id > 0"
-    :id="query?.id"
-  />
-  <BlogPosts
-    v-else
-    :query="query"
-  />
+  <BlogArticle v-if="data?.type === 'article'" :id="data.id" />
+  <BlogPosts v-else-if="data?.type === 'category'" :query="data" />
 </template>
-<style>
-
-
-</style>
 

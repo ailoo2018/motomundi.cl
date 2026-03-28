@@ -1,6 +1,6 @@
 import { getDomainId } from "../ailoo-domain.js"
 
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
 
   let qpath = ""
   try {
@@ -29,4 +29,13 @@ export default defineEventHandler(async (event) => {
     })
 
   }
+}, {
+  maxAge: 60 * 60 * 24, // 24 hours
+  name: 'packs',
+  getKey: async event => {
+    const query = getQuery(event)
+
+    return `friendlyurl-${query.path}`
+  },
+  swr: true, // serve stale while revalidating in background
 })
