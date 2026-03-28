@@ -37,7 +37,7 @@ injectSkinClasses()
 
 <template>
   <!-- mobile -->
-  <div  v-if="isMobile">
+  <div v-if="isMobile">
     <main class="main-content">
       <MobileHeader/>
       <div class="home-container">

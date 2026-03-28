@@ -16,15 +16,13 @@ import AppLoader from "@/components/AppLoader.vue"
 
 const { injectSkinClasses } = useSkins()
 
-const { isMobile, isTablet, isDesktop } = useDevice()
+const deviceType = useState('device-type', () => {
+  // This function only runs on the SERVER during the first request
+  const event = useRequestEvent()
+  return event?.context.deviceType || 'desktop'
+})
 
-// Get user-agent from request event
-const event = useRequestEvent()
-const ua = process.server && event
-  ? (getHeader(event, 'user-agent') || '')
-  : (process.client ? navigator.userAgent : '')
-
-const deviceType = ua.match(/Mobile|Android|iPhone|iPad/) ? 'mobile' : 'desktop'
+const isMobile = computed(() => deviceType.value === 'mobile')
 
 
 
@@ -63,7 +61,7 @@ onMounted(() => {
 <template>
   <AppLoader />
   <!-- mobile -->
-  <div v-if="deviceType === 'mobile'">
+  <div v-if="isMobile">
     <main class="main-content">
       <MobileHeader />
       <section class="account container col-sm-12 pa-3">
