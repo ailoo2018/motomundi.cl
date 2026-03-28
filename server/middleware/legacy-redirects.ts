@@ -7,18 +7,6 @@ export default defineEventHandler(async (event) => {
   const query = Object.fromEntries(url.searchParams)
   const pathLower = path.toLowerCase()
 
-  // Block non-page paths immediately
-  if (
-    pathLower.includes('sitemap') ||
-    pathLower.includes('__sitemap__') ||
-    pathLower.startsWith('/api') ||
-    pathLower.match(/\.(jpg|jpeg|png|webp|gif|rails|php|js|xml|txt|git)$/) ||
-    pathLower.includes('/product/listbycategory.rails') ||
-    pathLower.includes('.')
-  ) {
-    return // let Nuxt handle 404 naturally
-  }
-
   // Legacy .rails redirects
   if (pathLower.startsWith('/payment/quickcheckout.rails')) {
     return sendRedirect(event, `/checkout/${query.documentId}`, 301)
@@ -63,4 +51,17 @@ export default defineEventHandler(async (event) => {
     setCookie(event, 'accessToken', data.accessToken)
     return sendRedirect(event, `/account/reviews`, 302)
   }
+
+  // Block non-page paths immediately
+  if (
+    pathLower.includes('sitemap') ||
+    pathLower.includes('__sitemap__') ||
+    pathLower.startsWith('/api') ||
+    pathLower.match(/\.(jpg|jpeg|png|webp|gif|rails|php|js|xml|txt|git)$/) ||
+    pathLower.includes('/product/listbycategory.rails')
+  ) {
+    return // let Nuxt handle 404 naturally
+  }
+
+
 })
