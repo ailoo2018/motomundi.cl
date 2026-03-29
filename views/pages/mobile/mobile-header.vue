@@ -12,6 +12,9 @@ const isMenuOpen = ref(false)
 const isSearchOpen = ref(false)
 const isCartOpen = ref(false)
 
+// Scroll State
+const isHeaderHidden = ref(false)
+let lastScrollY = 0
 
 const currentUser = computed(() => useUserStore().user)
 
@@ -29,7 +32,6 @@ const userId = computed(() => {
 const userStore = useUserStore()
 
 const initials = computed(() => getInitials())
-
 
 const toggleSearch = () => {
   console.log("toggleSearch")
@@ -50,14 +52,39 @@ const toggleUserMenu = () => {
   console.log("toggle user menu")
 }
 
+const getCartTotalItems = () => {
+  return 1
+}
+
+const handleScroll = () => {
+  const currentScrollY = window.scrollY
+
+  if (currentScrollY < 0) return // Ignore negative scrolling (iOS rubber banding)
+
+  // Hide the header if scrolling down and past 60px threshold
+  if (currentScrollY > lastScrollY && currentScrollY > 60) {
+    isHeaderHidden.value = true
+  } else {
+    // Show the header if scrolling up
+    isHeaderHidden.value = false
+  }
+
+  lastScrollY = currentScrollY
+}
+
+// Attach event listeners for scroll
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
 if ((!userStore.user || !userStore.user.id) && useCookie("user_id").value) {
   await userStore.fetchUser()
 }
 
-
-const getCartTotalItems = () => {
-  return 1
-}
 </script>
 
 <template>
@@ -65,7 +92,10 @@ const getCartTotalItems = () => {
     <CartDrawer v-model="isCartOpen"/>
   </ClientOnly>
   <MobileMenu v-model="isMenuOpen"/>
-  <header class="header-container">
+  <header
+    class="header-container"
+    :class="{ 'is-hidden': isHeaderHidden }"
+  >
     <div class="header">
       <div class="container">
         <div class="margin: 0px">
@@ -293,9 +323,20 @@ img {
   text-transform: uppercase;
 }
 
+/* Updated header-container to be sticky and transition smoothly
+*/
 .header-container {
   border-bottom: 2px solid #efefef;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+}
 
+/* Hidden state class applied via Vue */
+.header-container.is-hidden {
+  transform: translateY(-100%);
 }
 
 .header-container > div {
@@ -596,5 +637,3 @@ img {
   position: relative;
 }
 </style>
-
-
