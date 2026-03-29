@@ -1,12 +1,12 @@
 <template>
-  <v-app>
+
     <!-- Sección Hero / Buscador -->
-    <section class="hero-bg py-10 py-md-16">
+    <section class="mm-header hero-bg py-10 py-md-16">
       <v-container>
-        <v-row justify="center" align="center" class="text-center">
+        <v-row justify="center" align="center" class="mm-header__inner">
           <v-col cols="12" md="8" lg="7">
             <h1
-              class="text-h4 text-md-h3 font-weight-black mb-4 text-grey-darken-4"
+              class="mm-header__title "
               style="letter-spacing: -1px"
             >
               ¿Problemas en la ruta? <br />
@@ -14,7 +14,7 @@
             </h1>
 
             <p
-              class="text-body-1 text-md-h6 text-grey-darken-1 mb-8 font-weight-regular px-md-4"
+              class="mm-header__sub text-body-1 text-md-h6 mb-8 px-md-4"
               style="line-height: 1.6"
             >
               Queremos que tu única preocupación sea disfrutar el viaje.
@@ -22,17 +22,13 @@
               devoluciones y pagos.
             </p>
 
-            <v-text-field
+            <AppTextField
               v-model="searchQuery"
               placeholder="Busca tu duda... ej: ¿Cómo hacer un cambio?"
-              variant="outlined"
-              color="primary"
-              bg-color="white"
-              rounded="lg"
+              rounded="0"
               clearable
-              hide-details
-              class="mx-auto"
-              style="max-width: 600px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05)"
+              class="mx-auto "
+              style="background-color: white; max-width: 600px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05)"
             >
               <template #prepend-inner>
                 <i
@@ -40,9 +36,11 @@
                   style="font-size: 22px"
                 />
               </template>
-            </v-text-field>
+            </AppTextField>
+
           </v-col>
         </v-row>
+        <div class="mm-header__stripe" />
       </v-container>
     </section>
 
@@ -167,7 +165,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-app>
+
 </template>
 
 <script setup lang="ts">
@@ -322,4 +320,45 @@ const filteredCategories = computed<HelpCategory[]>(() => {
   padding-top: 2px;
   padding-bottom: 2px;
 }
+
+
+/* ── Header ── */
+.mm-header {
+  position: relative;
+  padding: 56px 40px 44px;
+  background: var(--gray-900);
+  overflow: hidden;
+}
+.mm-header__inner { position: relative; z-index: 1; }
+.mm-header__eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: 8px;
+}
+.mm-header__title {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.02em;
+  line-height: 1.05;
+}
+.mm-header__sub {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--gray-400);
+  max-width: 480px;
+}
+.mm-header__stripe {
+  position: absolute;
+  right: -40px; top: -40px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: var(--brand);
+  opacity: .08;
+}
+
 </style>
