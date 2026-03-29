@@ -66,13 +66,13 @@ const defaultCountryData = COUNTRY_DATA[DEFAULT_COUNTRY]
           <!-- Actions -->
           <div class="cp-actions">
             <button class="cp-btn cp-btn--primary" @click="acceptDetectedCountry">
-              <span class="cp-btn-flag"><img :src="`/content/images/flags/${detectedCountryData.iso}.png`" /></span>
+              <span class="cp-btn-flag"><img :src="`/content/images/flags/${detectedCountryData.iso?.toLowerCase()}.png`" /></span>
               Cambiar a {{ detectedCountryData.name }}
               <span class="cp-btn-currency">({{ detectedCountryData.symbol }})</span>
             </button>
 
             <button class="cp-btn cp-btn--ghost" @click="keepDefaultCountry">
-              <span class="cp-btn-flag"><img :src="`/content/images/flags/${defaultCountryData.iso}.png`" /></span>
+              <span class="cp-btn-flag"><img :src="`/content/images/flags/${defaultCountryData.iso?.toLowerCase()}.png`" /></span>
               Continuar en {{ defaultCountryData.name }}
               <span class="cp-btn-currency">({{ defaultCountryData.symbol }})</span>
             </button>
