@@ -373,7 +373,7 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/10228-plazos-de-entrega" rel="nofollow" class="mtc-link">
+                    <NuxtLink to="/informacion/plazos-de-entrega" rel="nofollow" class="mtc-link">
                       Plazos de entrega
                     </NuxtLink>
                   </li>

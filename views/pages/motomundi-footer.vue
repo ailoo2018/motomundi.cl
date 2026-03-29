@@ -560,7 +560,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/10228-plazos-de-entrega"
+                      to="/informacion/plazos-de-entrega"
                       rel="nofollow"
                       class="mtc-link"
                     >
