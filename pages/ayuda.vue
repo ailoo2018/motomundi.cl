@@ -1,7 +1,7 @@
 <template>
 
     <!-- Sección Hero / Buscador -->
-    <section class="mm-header hero-bg py-10 py-md-16">
+    <section class="mm-header py-10 py-md-16">
       <v-container>
         <v-row justify="center" align="center" class="mm-header__inner">
           <v-col cols="12" md="8" lg="7">
@@ -32,7 +32,7 @@
             >
               <template #prepend-inner>
                 <i
-                  class="ti ti-search text-grey-darken-1 mr-2"
+                  class="tabler-search text-grey-darken-1 mr-2"
                   style="font-size: 22px"
                 />
               </template>
@@ -258,24 +258,7 @@ const filteredCategories = computed<HelpCategory[]>(() => {
 </script>
 
 <style scoped>
-/* ------------------------------------------------------------------ */
-/* Layout Hero                                                          */
-/* ------------------------------------------------------------------ */
-.hero-bg {
-  background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
-  border-bottom: 3px solid #f0f0f0;
-  position: relative;
-}
 
-.hero-bg::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background-color: #b21915; /* Acento rojo corporativo */
-}
 
 /* ------------------------------------------------------------------ */
 /* Tarjetas de ayuda                                                   */
@@ -283,7 +266,7 @@ const filteredCategories = computed<HelpCategory[]>(() => {
 .help-card {
   transition: all 0.2s ease-in-out;
   height: 100%;
-  border-radius: 12px !important;
+  border-radius: 2px !important;
   border: 1px solid #e0e0e0 !important;
 }
 
@@ -322,43 +305,6 @@ const filteredCategories = computed<HelpCategory[]>(() => {
 }
 
 
-/* ── Header ── */
-.mm-header {
-  position: relative;
-  padding: 56px 40px 44px;
-  background: var(--gray-900);
-  overflow: hidden;
-}
-.mm-header__inner { position: relative; z-index: 1; }
-.mm-header__eyebrow {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--brand);
-  margin-bottom: 8px;
-}
-.mm-header__title {
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: -.02em;
-  line-height: 1.05;
-}
-.mm-header__sub {
-  margin-top: 10px;
-  font-size: 15px;
-  color: var(--gray-400);
-  max-width: 480px;
-}
-.mm-header__stripe {
-  position: absolute;
-  right: -40px; top: -40px;
-  width: 340px; height: 340px;
-  border-radius: 50%;
-  background: var(--brand);
-  opacity: .08;
-}
+
 
 </style>

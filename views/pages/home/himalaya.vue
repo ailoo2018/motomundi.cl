@@ -710,6 +710,12 @@
     gap: 12px;
   }
 
+
+  .stat-item {
+    gap: 0;
+    padding: 5px 5px;
+  }
+
   .date-card {
     flex: 1;
     min-width: 240px;
@@ -731,9 +737,15 @@
   .himalaya-content {
     padding: 0 20px 28px 20px;
   }
+  .stat-item {
+    gap: 0;
+    padding: 5px 5px;
+  }
+
 
   .himalaya-stats {
     overflow-x: auto;
+
     scrollbar-width: none;
   }
 

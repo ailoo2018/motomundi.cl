@@ -376,8 +376,7 @@ function selectStore(store) {
   </div>
 </template>
 
-<style >
-/* ── Tokens ── */
+<style>
 :root {
   --brand:     #B21915;
   --brand-dk:  #8a110e;
@@ -395,6 +394,11 @@ function selectStore(store) {
   --radius:    10px;
   --shadow:    0 2px 16px rgba(0,0,0,.08);
 }
+</style>
+
+<style scoped>
+/* ── Tokens ── */
+
 
 /* ── Reset scope ── */
 .mm-locator * { box-sizing: border-box; margin: 0; padding: 0; }
