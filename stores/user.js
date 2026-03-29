@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', {
       try {
 
         const userId = useCookie("user_id").value
-        if(!userId) return
+        if(!userId || !(userId > 0)) return
 
         this.user = await $fetch(`/api/account/user`)
       }catch(e){

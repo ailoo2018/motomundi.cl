@@ -1,3 +1,4 @@
+// /server/api/cache/list.ts
 export default defineEventHandler(async event => {
   // Access the specific storage mount defined in your plugin
   const storage = useStorage('cache')

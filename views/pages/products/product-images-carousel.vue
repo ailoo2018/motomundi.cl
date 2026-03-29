@@ -132,8 +132,6 @@ const selectSlideByProductColor = colorValue => {
 defineExpose({
   selectSlideByProductColor,
 })
-
-register()
 </script>
 
 <template>

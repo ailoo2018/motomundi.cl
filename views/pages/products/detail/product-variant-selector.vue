@@ -339,7 +339,7 @@ onMounted(() => {
             </div>
           </div>
 
-          <NotifyWhenAvailable v-model="showNotifyWhenAvailable" :product-item="selectedProductItem" />
+          <NotifyWhenAvailable v-model="showNotifyWhenAvailable" :product-item="selectedProductItem || 0" />
         </div>
       </div>
     </div>

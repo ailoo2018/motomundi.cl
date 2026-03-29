@@ -1,3 +1,4 @@
+// /server/plugins/redis-storage.ts
 import redisDriver from 'unstorage/drivers/redis'
 
 export default defineNitroPlugin(async () => {

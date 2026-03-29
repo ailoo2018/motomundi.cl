@@ -53,19 +53,13 @@ export default defineNuxtConfig({
       ],
     },
   },
-
-
   devtools: { enabled: true },
-
 //  debug: true,
-
   sourcemap: {
     server: true,
     client: true,
   },
-
   ssr: true,
-
   routeRules: {
 
 
@@ -83,7 +77,6 @@ export default defineNuxtConfig({
     '/products/detail/**': createCachedRoute('product', (60 * 60) * 4),
     '/product/**': createCachedRoute('product', (60 * 60) * 4),
     '/cascos-para-moto': createCachedRoute('cascos-para-moto', (60 * 60) * 3),
-
 
 
 
