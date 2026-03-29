@@ -90,6 +90,7 @@ export default defineNuxtConfig({
     '/checkout/recover.rails': { redirect: '/checkout/recover' },
 
     // Never cache these
+    '/tiendas': { cache: false, ssr: true },
     '/test': { cache: false, ssr: true },
     '/cart': { cache: false },
     '/env': { cache: false },
