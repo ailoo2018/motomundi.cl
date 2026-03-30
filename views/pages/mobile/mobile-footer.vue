@@ -455,7 +455,7 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/114700-embajadores" rel="nofollow" class="mtc-link">
+                    <NuxtLink to="/embajadores" rel="nofollow" class="mtc-link">
                       Ambassadors
                     </NuxtLink>
                   </li>
