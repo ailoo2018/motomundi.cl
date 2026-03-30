@@ -11,11 +11,11 @@ useHead({
 
 const tiendas = [
   { nombre: 'Las Tranqueras', icon: '📍' },
-  { nombre: 'Mall Sport',     icon: '📍' },
-  { nombre: 'La Reina',       icon: '📍' },
+  { nombre: 'Outler Buenaventura',     icon: '📍' },
+  { nombre: 'Lira',       icon: '📍' },
   { nombre: 'Concepción',     icon: '📍' },
-  { nombre: 'Temuco',         icon: '📍' },
-  { nombre: 'Antofagasta',    icon: '📍' },
+  { nombre: 'La Serena',         icon: '📍' },
+  { nombre: 'Viña del Mar',    icon: '📍' },
 ]
 
 const modalidades = [
