@@ -706,7 +706,7 @@ const conditions = [
                     />
                     {{ loading ? 'Enviando...' : 'Enviar solicitud' }}
                   </button>
-                  errors {{ errors }}
+
                 </VForm>
 
                 <!-- TAB: ALREADY BOUGHT -->
