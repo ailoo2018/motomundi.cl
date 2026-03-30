@@ -401,7 +401,7 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/guias-de-tallas" class="mtc-link">
+                    <NuxtLink to="/informacion/guia-de-tallas" class="mtc-link">
                       Guías de tallas
                     </NuxtLink>
                   </li>

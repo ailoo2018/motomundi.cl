@@ -597,7 +597,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/guias-de-tallas"
+                      to="/informacion/guia-de-tallas"
                       class="mtc-link"
                     >
                       Guías de tallas
