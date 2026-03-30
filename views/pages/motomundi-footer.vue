@@ -644,7 +644,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/10757-contactenos"
+                      to="/contactenos"
                       class="mtc-link"
                     >
                       Contáctanos
@@ -702,7 +702,7 @@
                 <ul>
                   <li>
                     <NuxtLink
-                      to="/precio-minimo-garantizado"
+                      to="/informacion/politica-de-precios"
                       rel="nofollow"
                       class="mtc-link"
                     >
@@ -720,7 +720,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/tarjeta-regalo"
+                      to="/informacion/tarjeta-regalo"
                       class="mtc-link"
                     >
                       Tarjeta regalo

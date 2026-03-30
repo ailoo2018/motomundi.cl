@@ -440,7 +440,7 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/10757-contactenos" class="mtc-link">
+                    <NuxtLink to="/contactenos" class="mtc-link">
                       Contáctanos
                     </NuxtLink>
                   </li>
@@ -477,7 +477,7 @@
                 <span class="h3">SERVICIOS</span>
                 <ul>
                   <li>
-                    <NuxtLink to="/precio-minimo-garantizado" rel="nofollow" class="mtc-link">
+                    <NuxtLink to="/informacion/politica-de-precios" rel="nofollow" class="mtc-link">
                       Precio mínimo garantizado
                     </NuxtLink>
                   </li>
@@ -487,7 +487,7 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/tarjeta-regalo" class="mtc-link">
+                    <NuxtLink to="/informacion/tarjeta-regalo" class="mtc-link">
                       Tarjeta regalo
                     </NuxtLink>
                   </li>

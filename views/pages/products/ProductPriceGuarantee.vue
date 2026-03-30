@@ -13,13 +13,13 @@
         xlink:href="/content/images/svg/0b25363450c5afe3b3f9ba7fe4f4173b.svg#i-icon-check"
       />
     </svg>
-    <a
-      href="/terminos-y-condiciones-precio-minimo-garantizado"
+    <NuxtLink
+      to="/informacion/politica-de-precios"
       class="mtc-link"
       rel="nofollow"
     >
       Precio mínimo garantizado
-    </a>
+    </NuxtLink>
   </span>
 </template>
 
