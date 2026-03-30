@@ -1,12 +1,7 @@
 <script setup lang="ts">
 useHead({
   title: 'Gastos de Envío | Motomundi',
-  link: [
-    {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,600;0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap',
-    },
-  ],
+
 })
 
 const tiendas = [
@@ -238,7 +233,7 @@ const notas = [
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1600&q=80');
+  background-image: url('/cms/envio-mm.jpg');
   background-size: cover;
   background-position: center 35%;
   transform: scale(1.03);
