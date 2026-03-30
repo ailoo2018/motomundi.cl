@@ -383,7 +383,7 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/devoluciones" class="mtc-link">
+                    <NuxtLink to="/informacion/cambios-y-devoluciones" class="mtc-link">
                       Cambios, devoluciones y garantías
                     </NuxtLink>
                   </li>

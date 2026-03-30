@@ -53,7 +53,7 @@ onMounted(() => {
                   <span><strong>Envío gratis </strong><br> a partir de $150.000</span></a>
               </li>
               <li>
-                <a href="/devoluciones" class="mtc-link">
+                <a href="/informacion/cambios-y-devoluciones" class="mtc-link">
                   <svg
                     width="14"
                     height="14"
@@ -89,8 +89,7 @@ onMounted(() => {
               </li>
               <li>
                 <a
-                  href="/devoluciones"
-                  
+                  href="/informacion/cambios-y-devoluciones"
                   rel="nofollow"
                   class="mtc-link"
                 >
@@ -111,8 +110,7 @@ onMounted(() => {
               </li>
               <li>
                 <a
-                  href="/devoluciones"
-                  
+                  href="/informacion/cambios-y-devoluciones"
                   rel="nofollow"
                   class="mtc-link"
                 >

@@ -127,7 +127,9 @@ const dlocalFeatures = [
         <div class="metodo-visual">
           <div class="mp-card">
             <div class="mp-card-header">
-              <span class="mp-logo-icon">🛒</span>
+              <span class="mp-logo-icon">
+                <img src="/gateways/mercado_pago.png" style="max-width: 80px;" />
+              </span>
               <div>
                 <div class="mp-card-title">MercadoPago</div>
                 <div class="mp-card-sub">La plataforma de pagos más usada de Chile</div>

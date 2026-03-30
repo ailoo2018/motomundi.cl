@@ -579,7 +579,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/devoluciones"
+                      to="/informacion/cambios-y-devoluciones"
                       class="mtc-link"
                     >
                       Cambios, devoluciones y garantías
