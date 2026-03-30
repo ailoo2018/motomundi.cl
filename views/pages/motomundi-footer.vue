@@ -585,15 +585,7 @@
                       Cambios, devoluciones y garantías
                     </NuxtLink>
                   </li>
-                  <li>
-                    <NuxtLink
-                      to="/14963-politicas-comerciales-de-cambio-y-devoluciones"
-                      rel="nofollow"
-                      class="mtc-link"
-                    >
-                      Anulaciones de pedido
-                    </NuxtLink>
-                  </li>
+
                   <li>
                     <NuxtLink
                       to="/informacion/politica-de-precios"

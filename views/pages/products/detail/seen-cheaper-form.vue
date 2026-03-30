@@ -359,7 +359,7 @@ async function sendSeenCheaper() {
             </button>
             <small>
               <a
-                href="/terminos-y-condiciones-precio-minimo-garantizado"
+                href="/informacion/politica-de-precios"
                 data-dr="true"
                 class="mtc-link"
                 rel="nofollow"
