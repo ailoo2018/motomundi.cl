@@ -378,7 +378,7 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/formas-de-pago" rel="nofollow" class="mtc-link">
+                    <NuxtLink to="/informacion/formas-de-pago" rel="nofollow" class="mtc-link">
                       Formas de pago
                     </NuxtLink>
                   </li>

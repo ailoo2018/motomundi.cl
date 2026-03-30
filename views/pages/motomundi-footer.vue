@@ -570,7 +570,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/formas-de-pago"
+                      to="/informacion/formas-de-pago"
                       rel="nofollow"
                       class="mtc-link"
                     >
