@@ -450,13 +450,13 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/trabaja-con-nosotros" class="mtc-link">
+                    <NuxtLink to="/informacion/trabaja-con-nosotros" class="mtc-link">
                       Trabaja con nosotros
                     </NuxtLink>
                   </li>
                   <li>
                     <NuxtLink to="/embajadores" rel="nofollow" class="mtc-link">
-                      Ambassadors
+                      Embajadores
                     </NuxtLink>
                   </li>
                   <li>

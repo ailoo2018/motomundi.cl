@@ -661,7 +661,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/trabaja-con-nosotros"
+                      to="/informacion/trabaja-con-nosotros"
                       class="mtc-link"
                     >
                       Trabaja con nosotros
@@ -673,7 +673,7 @@
                       rel="nofollow"
                       class="mtc-link"
                     >
-                      Ambassadors
+                      Embajadores
                     </NuxtLink>
                   </li>
                   <li>
