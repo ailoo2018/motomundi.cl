@@ -596,7 +596,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/politica-de-precios"
+                      to="/informacion/politica-de-precios"
                       rel="nofollow"
                       class="mtc-link"
                     >

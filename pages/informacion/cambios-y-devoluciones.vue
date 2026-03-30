@@ -468,7 +468,7 @@ const videoBullets = [
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=1600&q=80');
+  background-image: url('/cms/devoluciones-mm.jpg');
   background-size: cover;
   background-position: center 45%;
   transform: scale(1.03);

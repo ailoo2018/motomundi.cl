@@ -400,7 +400,7 @@
                     </NuxtLink></li>
                   -->
                   <li>
-                    <NuxtLink to="/politica-de-precios" rel="nofollow" class="mtc-link">
+                    <NuxtLink to="/informacion/politica-de-precios" rel="nofollow" class="mtc-link">
                       Política de precios
                     </NuxtLink>
                   </li>

@@ -229,7 +229,7 @@ const filterMotorbikeProducts = () => {
   gap: 12px;
 }
 
-.responsive-grid-row  .grid-item {
+.bike-selector-wrapper .responsive-grid-row  .grid-item {
   flex: 1; /* Distributes 25% width to each of the 4 items */
   min-width: 0;
 }
@@ -258,7 +258,7 @@ const filterMotorbikeProducts = () => {
 }
 
 /* Styling for the step circle */
-.step-number {
+.bike-selector-wrapper .step-number {
   background-color: #000;
   color: #fff;
   width: 20px;
@@ -273,7 +273,7 @@ const filterMotorbikeProducts = () => {
 }
 
 
-.v-field--has-placeholder .step-number {
+.bike-selector-wrapper .v-field--has-placeholder .step-number {
   background-color: black; /* Vuetify primary blue */
   color: white;
 }
