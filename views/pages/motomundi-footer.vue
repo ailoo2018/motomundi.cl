@@ -551,7 +551,7 @@
                 <ul>
                   <li>
                     <NuxtLink
-                      to="/gastos-de-envio"
+                      to="/informacion/gastos-de-envio"
                       rel="nofollow"
                       class="mtc-link"
                     >

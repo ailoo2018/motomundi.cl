@@ -34,7 +34,7 @@ onMounted(() => {
             <ul class="added-values__container">
               <li>
                 <a
-                  href="/gastos-de-envio"
+                  href="/informacion/gastos-de-envio"
                   rel="nofollow"
                   class="mtc-link"
                 >

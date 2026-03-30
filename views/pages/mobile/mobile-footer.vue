@@ -368,7 +368,7 @@
                 <span class="h3">INFORMACIÓN DE PEDIDOS</span>
                 <ul>
                   <li>
-                    <NuxtLink to="/gastos-de-envio" rel="nofollow" class="mtc-link">
+                    <NuxtLink to="/informacion/gastos-de-envio" rel="nofollow" class="mtc-link">
                       Gastos de envío
                     </NuxtLink>
                   </li>

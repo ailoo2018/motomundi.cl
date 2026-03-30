@@ -193,21 +193,21 @@ const deliveryRegions = [
           <div class="contacto-label">Chat en línea</div>
           <div class="contacto-title">Chat del Sitio Web</div>
           <p class="contacto-desc">Habla directamente con uno de nuestros asesores a través del chat disponible en nuestra tienda online.</p>
-          <a href="#" class="contacto-link">Abrir chat →</a>
+          <a href="https://api.whatsapp.com/send?phone=15558366927&amp;text=¡Hola!" target="_blank" class="contacto-link">Abrir chat →</a>
         </div>
         <div class="contacto-card">
           <span class="contacto-icon">📲</span>
           <div class="contacto-label">Redes sociales</div>
           <div class="contacto-title">Instagram &amp; Facebook</div>
           <p class="contacto-desc">Síguenos y escríbenos por mensaje directo. Revisamos nuestras redes con frecuencia y respondemos a la brevedad.</p>
-          <a href="#" class="contacto-link">Ver redes sociales →</a>
+          <a href="https://www.instagram.com/motomundi/" target="_blank" class="contacto-link">Ver redes sociales →</a>
         </div>
         <div class="contacto-card">
           <span class="contacto-icon">✉️</span>
           <div class="contacto-label">Correo electrónico</div>
           <div class="contacto-title">Atención al Cliente</div>
           <p class="contacto-desc">Escríbenos a nuestro correo de atención al cliente con el número de tu orden y te responderemos a la brevedad.</p>
-          <a href="mailto:contacto@motomundi.cl" class="contacto-link">Enviar correo →</a>
+          <a href="/contactenos" class="contacto-link">Enviar correo →</a>
         </div>
       </div>
     </section>
