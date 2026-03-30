@@ -1,3 +1,305 @@
+<script setup>
+const activeTab = ref('notBought')
+const submitted = ref(false)
+const loading = ref(false)
+const error = ref('')
+
+// ─── FORM STATE ───────────────────────────────────────────────────────────────
+const notBought = reactive({
+  product: '', brand: '', size: '', ourPrice: '', otherPrice: '',
+  link: '', storeName: '', city: '',
+  name: '', email: '', phone: '', notes: '', legal: false,
+})
+
+const bought = reactive({
+  orderNumber: '', purchaseDate: '', product: '', size: '',
+  paidPrice: '', otherPrice: '',
+  link: '', storeName: '', city: '',
+  name: '', email: '', phone: '', notes: '', legal: false,
+})
+
+// ─── ERRORS ───────────────────────────────────────────────────────────────────
+const errors = reactive({
+  nb: {
+    product: '', brand: '', size: '', ourPrice: '', otherPrice: '',
+    link: '', storeName: '', city: '',
+    name: '', email: '', phone: '', legal: '',
+  },
+  b: {
+    orderNumber: '', purchaseDate: '', product: '', size: '',
+    paidPrice: '', otherPrice: '',
+    link: '', storeName: '', city: '',
+    name: '', email: '', phone: '', legal: '',
+  },
+})
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function clearError(form, field) {
+  errors[form][field] = ''
+}
+
+function isValidEmail(val) {
+  return /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/.test(val)
+}
+
+function isValidUrl(val) {
+  try {
+    new URL(val)
+
+    return true
+  } catch {
+    return false
+  }
+}
+
+function isValidPhone(val) {
+  // Chilean mobile / landline — loose check: digits, spaces, +, -, ()
+  return /^[+\d][\d\s\-().]{6,19}$/.test(val.trim())
+}
+
+// ─── VALIDATION ───────────────────────────────────────────────────────────────
+function validateNotBought() {
+  const e = errors.nb
+  const f = notBought
+  let ok = true
+
+  const req = (key, label) => {
+    if (!String(f[key]).trim()) {
+      e[key] = `${label} es obligatorio`
+      ok = false
+    } else e[key] = ''
+  }
+
+  req('product', 'El producto')
+  req('brand', 'La marca')
+  req('size', 'La talla / color')
+  req('storeName', 'El nombre de la tienda')
+  req('city', 'La ciudad')
+  req('name', 'El nombre')
+
+  // Numeric prices
+  if (!String(f.ourPrice).trim()) {
+    e.ourPrice = 'El precio en Motomundi es obligatorio'
+    ok = false
+  } else if (Number(f.ourPrice) <= 0) {
+    e.ourPrice = 'Ingresa un precio válido'
+    ok = false
+  } else e.ourPrice = ''
+
+  if (!String(f.otherPrice).trim()) {
+    e.otherPrice = 'El precio de la otra tienda es obligatorio'
+    ok = false
+  } else if (Number(f.otherPrice) <= 0) {
+    e.otherPrice = 'Ingresa un precio válido'
+    ok = false
+  } else if (Number(f.otherPrice) >= Number(f.ourPrice)) {
+    e.otherPrice = 'El precio de la otra tienda debe ser menor al nuestro'
+    ok = false
+  } else e.otherPrice = ''
+
+  // URL
+  if (!f.link.trim()) {
+    e.link = 'El enlace es obligatorio'
+    ok = false
+  } else if (!isValidUrl(f.link)) {
+    e.link = 'Ingresa una URL válida (ej: https://...)'
+    ok = false
+  } else e.link = ''
+
+  // Email
+  if (!f.email.trim()) {
+    e.email = 'El correo es obligatorio'
+    ok = false
+  } else if (!isValidEmail(f.email)) {
+    e.email = 'Ingresa un correo electrónico válido'
+    ok = false
+  } else e.email = ''
+
+  // Phone
+  if (!f.phone.trim()) {
+    e.phone = 'El teléfono es obligatorio'
+    ok = false
+  } else if (!isValidPhone(f.phone)) {
+    e.phone = 'Ingresa un número de teléfono válido'
+    ok = false
+  } else e.phone = ''
+
+  // Legal
+  if (!f.legal) {
+    e.legal = 'Debes aceptar para continuar'
+    ok = false
+  } else e.legal = ''
+
+  return ok
+}
+
+function validateBought() {
+  const e = errors.b
+  const f = bought
+  let ok = true
+
+  const req = (key, label) => {
+    if (!String(f[key]).trim()) {
+      e[key] = `${label} es obligatorio`
+      ok = false
+    } else e[key] = ''
+  }
+
+  req('orderNumber', 'El número de pedido')
+  req('product', 'El producto')
+  req('size', 'La talla / color')
+  req('storeName', 'El nombre de la tienda')
+  req('city', 'La ciudad')
+  req('name', 'El nombre')
+
+  // Purchase date
+  if (!f.purchaseDate) {
+    e.purchaseDate = 'La fecha de compra es obligatoria'
+    ok = false
+  } else {
+    const diff = (Date.now() - new Date(f.purchaseDate)) / 86_400_000
+    if (diff < 0) {
+      e.purchaseDate = 'La fecha no puede ser futura'
+      ok = false
+    } else if (diff > 30) {
+      e.purchaseDate = 'Han pasado más de 30 días desde la compra'
+      ok = false
+    } else e.purchaseDate = ''
+  }
+
+  // Numeric prices
+  if (!String(f.paidPrice).trim()) {
+    e.paidPrice = 'El precio pagado es obligatorio'
+    ok = false
+  } else if (Number(f.paidPrice) <= 0) {
+    e.paidPrice = 'Ingresa un precio válido'
+    ok = false
+  } else e.paidPrice = ''
+
+  if (!String(f.otherPrice).trim()) {
+    e.otherPrice = 'El precio de la otra tienda es obligatorio'
+    ok = false
+  } else if (Number(f.otherPrice) <= 0) {
+    e.otherPrice = 'Ingresa un precio válido'
+    ok = false
+  } else if (Number(f.otherPrice) >= Number(f.paidPrice)) {
+    e.otherPrice = 'El precio de la otra tienda debe ser menor al que pagaste'
+    ok = false
+  } else e.otherPrice = ''
+
+  // URL
+  if (!f.link.trim()) {
+    e.link = 'El enlace es obligatorio'
+    ok = false
+  } else if (!isValidUrl(f.link)) {
+    e.link = 'Ingresa una URL válida (ej: https://...)'
+    ok = false
+  } else e.link = ''
+
+  // Email
+  if (!f.email.trim()) {
+    e.email = 'El correo es obligatorio'
+    ok = false
+  } else if (!isValidEmail(f.email)) {
+    e.email = 'Ingresa un correo electrónico válido'
+    ok = false
+  } else e.email = ''
+
+  // Phone
+  if (!f.phone.trim()) {
+    e.phone = 'El teléfono es obligatorio'
+    ok = false
+  } else if (!isValidPhone(f.phone)) {
+    e.phone = 'Ingresa un número de teléfono válido'
+    ok = false
+  } else e.phone = ''
+
+  // Legal
+  if (!f.legal) {
+    e.legal = 'Debes aceptar para continuar'
+    ok = false
+  } else e.legal = ''
+
+  return ok
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+async function submitForm(type) {
+  error.value = ''
+
+  const valid = type === 'notBought' ? validateNotBought() : validateBought()
+  if (!valid) {
+    // Scroll to first error
+    await nextTick()
+    document.querySelector('.pmg-field__error')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+    return
+  }
+
+  loading.value = true
+
+  const payload = { type, ...(type === 'notBought' ? notBought : bought) }
+
+  try {
+    await $fetch('/api/contact/price-match', { method: 'POST', body: payload })
+    submitted.value = true
+  } catch {
+    error.value = 'Ocurrió un error al enviar tu solicitud. Por favor inténtalo de nuevo o contáctanos directamente.'
+  } finally {
+    loading.value = false
+  }
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetForm() {
+  submitted.value = false
+  error.value = ''
+  Object.assign(notBought, {
+    product: '', brand: '', size: '', ourPrice: '', otherPrice: '',
+    link: '', storeName: '', city: '',
+    name: '', email: '', phone: '', notes: '', legal: false,
+  })
+  Object.assign(bought, {
+    orderNumber: '', purchaseDate: '', product: '', size: '',
+    paidPrice: '', otherPrice: '',
+    link: '', storeName: '', city: '',
+    name: '', email: '', phone: '', notes: '', legal: false,
+  })
+
+  // Clear all errors
+  Object.keys(errors.nb).forEach(k => errors.nb[k] = '')
+  Object.keys(errors.b).forEach(k => errors.b[k] = '')
+}
+
+// ─── STATIC DATA ──────────────────────────────────────────────────────────────
+const steps = [
+  {
+    icon: 'tabler-zoom-money',
+    title: 'Encuentra el precio',
+    desc: 'Localiza el mismo producto en otra tienda chilena a un precio inferior al nuestro.',
+  },
+  {
+    icon: 'tabler-clipboard-text',
+    title: 'Completa el formulario',
+    desc: 'Ingresa los datos del producto y la tienda donde encontraste el mejor precio.',
+  },
+  {
+    icon: 'tabler-checks',
+    title: 'Validamos y te igualamos',
+    desc: 'Verificamos la información y ajustamos el precio en un plazo máximo de 24 horas hábiles.',
+  },
+]
+
+const conditions = [
+  'Válido únicamente para compras realizadas en Chile (tienda online y física).',
+  'El producto debe ser idéntico: misma marca, modelo, color y talla.',
+  'La tienda comparada debe tener el producto en stock al momento de la solicitud.',
+  'La tienda comparada debe ofrecer condiciones equivalentes de envío, cambio y devolución.',
+  'Si ya compraste el producto, tienes hasta 30 días desde la fecha de compra para solicitar la igualación.',
+  'No aplica para productos vendidos como parte de un pack o combo.',
+  'Una vez aceptada la solicitud, no se admiten solicitudes posteriores sobre el mismo producto.',
+]
+</script>
 <template>
   <div class="price-match-page">
     <!-- ─── HERO BANNER ─── -->
@@ -83,8 +385,9 @@
         >
           <div class="pmg-form-card">
             <div class="pmg-form-card__header">
-
-              <h2 style="color:white;">Solicitar igualación de precio</h2>
+              <h2 style="color:white;">
+                Solicitar igualación de precio
+              </h2>
               <p>Completa el formulario y nos pondremos en contacto contigo a la brevedad.</p>
             </div>
 
@@ -133,7 +436,7 @@
             <Transition name="fade">
               <div v-if="!submitted">
                 <!-- TAB: NOT BOUGHT -->
-                <form
+                <VForm
                   v-if="activeTab === 'notBought'"
                   class="pmg-form"
                   novalidate
@@ -155,6 +458,12 @@
                           placeholder="Ej: Casco AGV K6 S, Guantes Alpinestars SP-8..."
                           required
                         >
+                        <span
+                          v-if="errors.nb.product"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.product }}
+                        </span>
                       </div>
                       <div class="pmg-field">
                         <label for="nb-brand">Marca <span class="req">*</span></label>
@@ -165,6 +474,12 @@
                           placeholder="Ej: AGV, Alpinestars..."
                           required
                         >
+                        <span
+                          v-if="errors.nb.brand"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.brand }}
+                        </span>
                       </div>
                       <div class="pmg-field">
                         <label for="nb-size">Talla / Color <span class="req">*</span></label>
@@ -175,6 +490,12 @@
                           placeholder="Ej: L, Negro / Rojo..."
                           required
                         >
+                        <span
+                          v-if="errors.nb.size"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.size }}
+                        </span>
                       </div>
                       <div class="pmg-field">
                         <label for="nb-price">Precio en Motomundi (CLP) <span class="req">*</span></label>
@@ -186,6 +507,12 @@
                           min="0"
                           required
                         >
+                        <span
+                          v-if="errors.nb.ourPrice"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.ourPrice }}
+                        </span>
                       </div>
                       <div class="pmg-field">
                         <label for="nb-other-price">Precio de la otra tienda (CLP) <span class="req">*</span></label>
@@ -197,6 +524,12 @@
                           min="0"
                           required
                         >
+                        <span
+                          v-if="errors.nb.otherPrice"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.otherPrice }}
+                        </span>
                       </div>
                     </div>
                   </fieldset>
@@ -217,6 +550,13 @@
                           placeholder="https://..."
                           required
                         >
+                        <span
+                          v-if="errors.nb.link"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.link }}
+                        </span>
+
                       </div>
                       <div class="pmg-field">
                         <label for="nb-store">Nombre de la tienda <span class="req">*</span></label>
@@ -226,6 +566,13 @@
                           type="text"
                           required
                         >
+                        <span
+                          v-if="errors.nb.storeName"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.storeName }}
+                        </span>
+
                       </div>
                       <div class="pmg-field">
                         <label for="nb-city">Ciudad <span class="req">*</span></label>
@@ -235,6 +582,13 @@
                           type="text"
                           required
                         >
+                        <span
+                          v-if="errors.nb.city"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.city }}
+                        </span>
+
                       </div>
                     </div>
                   </fieldset>
@@ -254,6 +608,13 @@
                           type="text"
                           required
                         >
+                        <span
+                          v-if="errors.nb.name"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.name }}
+                        </span>
+
                       </div>
                       <div class="pmg-field">
                         <label for="nb-email">Correo electrónico <span class="req">*</span></label>
@@ -263,6 +624,13 @@
                           type="email"
                           required
                         >
+                        <span
+                          v-if="errors.nb.email"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.email }}
+                        </span>
+
                       </div>
                       <div class="pmg-field">
                         <label for="nb-phone">Teléfono <span class="req">*</span></label>
@@ -273,6 +641,13 @@
                           placeholder="+56 9 XXXX XXXX"
                           required
                         >
+                        <span
+                          v-if="errors.nb.phone"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.nb.phone }}
+                        </span>
+
                       </div>
                       <div class="pmg-field pmg-grid--full">
                         <label for="nb-notes">Comentarios adicionales</label>
@@ -293,12 +668,20 @@
                         type="checkbox"
                         required
                       >
+
                       <span class="pmg-checkbox__mark" />
                       <span>
                         Acepto recibir comunicaciones por email y teléfono para que Motomundi
                         pueda gestionar mi solicitud de igualación de precio.
                       </span>
                     </label>
+                    <span
+                      v-if="errors.nb.legal"
+                      class="pmg-field__error"
+                    >
+                          <i class="tabler-alert-circle" />{{ errors.nb.legal }}
+                        </span>
+
                     <p class="pmg-legal__text">
                       Tus datos serán tratados por Motomundi S.A. exclusivamente para atender
                       esta consulta y mejorar nuestro servicio. No serán cedidos a terceros
@@ -323,10 +706,11 @@
                     />
                     {{ loading ? 'Enviando...' : 'Enviar solicitud' }}
                   </button>
-                </form>
+                  errors {{ errors }}
+                </VForm>
 
                 <!-- TAB: ALREADY BOUGHT -->
-                <form
+                <VForm
                   v-if="activeTab === 'bought'"
                   class="pmg-form"
                   novalidate
@@ -348,6 +732,13 @@
                           placeholder="Ej: 00123456"
                           required
                         >
+                        <span
+                          v-if="errors.b.orderNumber"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.orderNumber }}
+                        </span>
+
                       </div>
                       <div class="pmg-field">
                         <label for="b-purchase-date">Fecha de compra <span class="req">*</span></label>
@@ -357,6 +748,12 @@
                           type="date"
                           required
                         >
+                        <span
+                          v-if="errors.b.purchaseDate"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.purchaseDate }}
+                        </span>
                       </div>
                       <div class="pmg-field pmg-grid--full">
                         <label for="b-product">Producto <span class="req">*</span></label>
@@ -367,6 +764,12 @@
                           placeholder="Nombre exacto del producto comprado"
                           required
                         >
+                        <span
+                          v-if="errors.b.product"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.product }}
+                        </span>
                       </div>
                       <div class="pmg-field">
                         <label for="b-size">Talla / Color <span class="req">*</span></label>
@@ -376,6 +779,12 @@
                           type="text"
                           required
                         >
+                        <span
+                          v-if="errors.b.size"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.size }}
+                        </span>
                       </div>
                       <div class="pmg-field">
                         <label for="b-paid">Precio pagado (CLP) <span class="req">*</span></label>
@@ -386,6 +795,12 @@
                           min="0"
                           required
                         >
+                        <span
+                          v-if="errors.b.paidPrice"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.paidPrice }}
+                        </span>
                       </div>
                       <div class="pmg-field">
                         <label for="b-other-price">Precio de la otra tienda (CLP) <span class="req">*</span></label>
@@ -396,6 +811,12 @@
                           min="0"
                           required
                         >
+                        <span
+                          v-if="errors.b.otherPrice"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.otherPrice }}
+                        </span>
                       </div>
                     </div>
                   </fieldset>
@@ -416,6 +837,12 @@
                           placeholder="https://..."
                           required
                         >
+                        <span
+                          v-if="errors.b.link"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.link }}
+                        </span>
                       </div>
                       <div class="pmg-field">
                         <label for="b-store">Nombre de la tienda <span class="req">*</span></label>
@@ -425,6 +852,12 @@
                           type="text"
                           required
                         >
+                        <span
+                          v-if="errors.b.storeName"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.storeName }}
+                        </span>
                       </div>
                       <div class="pmg-field">
                         <label for="b-city">Ciudad <span class="req">*</span></label>
@@ -453,6 +886,13 @@
                           type="text"
                           required
                         >
+                        <span
+                          v-if="errors.b.name"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.name }}
+                        </span>
+
                       </div>
                       <div class="pmg-field">
                         <label for="b-email">Correo electrónico <span class="req">*</span></label>
@@ -462,6 +902,13 @@
                           type="email"
                           required
                         >
+                        <span
+                          v-if="errors.b.email"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.email }}
+                        </span>
+
                       </div>
                       <div class="pmg-field">
                         <label for="b-phone">Teléfono <span class="req">*</span></label>
@@ -472,6 +919,12 @@
                           placeholder="+56 9 XXXX XXXX"
                           required
                         >
+                        <span
+                          v-if="errors.b.phone"
+                          class="pmg-field__error"
+                        >
+                          <i class="tabler-alert-circle" />{{ errors.b.phone }}
+                        </span>
                       </div>
                       <div class="pmg-field pmg-grid--full">
                         <label for="b-notes">Comentarios adicionales</label>
@@ -498,6 +951,12 @@
                         pueda gestionar mi solicitud de igualación de precio.
                       </span>
                     </label>
+                    <span
+                      v-if="errors.b.legal"
+                      class="pmg-field__error"
+                    >
+                          <i class="tabler-alert-circle" />{{ errors.b.legal }}
+                        </span>
                     <p class="pmg-legal__text">
                       Tus datos serán tratados por Motomundi S.A. exclusivamente para atender
                       esta consulta y mejorar nuestro servicio. No serán cedidos a terceros
@@ -522,7 +981,7 @@
                     />
                     {{ loading ? 'Enviando...' : 'Enviar solicitud' }}
                   </button>
-                </form>
+                </VForm>
               </div>
             </Transition>
 
@@ -532,7 +991,7 @@
                 v-if="error"
                 class="pmg-error"
               >
-                <i class="ti ti-alert-circle" />
+                <VIcon class="tabler-alert-circle" />
                 {{ error }}
               </div>
             </Transition>
@@ -543,93 +1002,6 @@
   </div>
 </template>
 
-<script setup>
-const activeTab = ref('notBought')
-const submitted = ref(false)
-const loading = ref(false)
-const error = ref('')
-
-const notBought = reactive({
-  product: '', brand: '', size: '', ourPrice: '', otherPrice: '',
-  link: '', storeName: '', city: '',
-  name: '', email: '', phone: '', notes: '', legal: false,
-})
-
-const bought = reactive({
-  orderNumber: '', purchaseDate: '', product: '', size: '',
-  paidPrice: '', otherPrice: '',
-  link: '', storeName: '', city: '',
-  name: '', email: '', phone: '', notes: '', legal: false,
-})
-
-const steps = [
-  {
-    icon: 'tabler-zoom-money',
-    title: 'Encuentra el precio',
-    desc: 'Localiza el mismo producto en otra tienda chilena a un precio inferior al nuestro.',
-  },
-  {
-    icon: 'tabler-clipboard-text',
-    title: 'Completa el formulario',
-    desc: 'Ingresa los datos del producto y la tienda donde encontraste el mejor precio.',
-  },
-  {
-    icon: 'tabler-checks',
-    title: 'Validamos y te igualamos',
-    desc: 'Verificamos la información y ajustamos el precio en un plazo máximo de 24 horas hábiles.',
-  },
-]
-
-const conditions = [
-  'Válido únicamente para compras realizadas en Chile (tienda online y física).',
-  'El producto debe ser idéntico: misma marca, modelo, color y talla.',
-  'La tienda comparada debe tener el producto en stock al momento de la solicitud.',
-  'La tienda comparada debe ofrecer condiciones equivalentes de envío, cambio y devolución.',
-  'Si ya compraste el producto, tienes hasta 30 días desde la fecha de compra para solicitar la igualación.',
-  'No aplica para productos vendidos como parte de un pack o combo.',
-  'Una vez aceptada la solicitud, no se admiten solicitudes posteriores sobre el mismo producto.',
-]
-
-async function submitForm(type) {
-  error.value = ''
-  loading.value = true
-
-  const payload = {
-    type,
-    ...(type === 'notBought' ? notBought : bought),
-  }
-
-  try {
-    const res = await $fetch('/api/price-match-guarantee', {
-      method: 'POST',
-      body: payload,
-    })
-
-    submitted.value = true
-  } catch (e) {
-    error.value =
-      'Ocurrió un error al enviar tu solicitud. Por favor inténtalo de nuevo o contáctanos directamente.'
-  } finally {
-    loading.value = false
-  }
-}
-
-function resetForm() {
-  submitted.value = false
-  error.value = ''
-  Object.assign(notBought, {
-    product: '', brand: '', size: '', ourPrice: '', otherPrice: '',
-    link: '', storeName: '', city: '',
-    name: '', email: '', phone: '', notes: '', legal: false,
-  })
-  Object.assign(bought, {
-    orderNumber: '', purchaseDate: '', product: '', size: '',
-    paidPrice: '', otherPrice: '',
-    link: '', storeName: '', city: '',
-    name: '', email: '', phone: '', notes: '', legal: false,
-  })
-}
-</script>
 
 <style>
 /* ── Variables ── */
@@ -1158,10 +1530,24 @@ function resetForm() {
 
 /* ── SPIN ── */
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spin {
   animation: spin 0.8s linear infinite;
+}
+
+.pmg-field__error{
+  color: #991b1b !important;
+  font-weight: 400;
+  background-color: #F9E8E8;
+  padding: 2px;
+}
+
+.pmg-field__error i {
+  margin: 0 3px;
+
 }
 </style>
