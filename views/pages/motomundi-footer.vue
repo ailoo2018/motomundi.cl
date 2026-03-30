@@ -550,6 +550,7 @@
                 <span class="h3">INFORMACIÓN DE PEDIDOS</span>
                 <ul>
                   <li>
+
                     <NuxtLink
                       to="/informacion/gastos-de-envio"
                       rel="nofollow"
