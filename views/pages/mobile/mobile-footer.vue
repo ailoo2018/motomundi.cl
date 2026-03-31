@@ -412,11 +412,7 @@
                     Códigos promocionales
                     </NuxtLink></li>
                   -->
-                  <li>
-                    <NuxtLink to="#" class="mtc-link">
-                      Equipación moto mujer
-                    </NuxtLink>
-                  </li>
+
                 </ul>
               </div>
             </div>
@@ -445,7 +441,7 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="https://afiliados.motomundi.cl" target="_blank" class="mtc-link">
+                    <NuxtLink to="/informacion/afiliados"  class="mtc-link">
                       Programa de Afiliados
                     </NuxtLink>
                   </li>

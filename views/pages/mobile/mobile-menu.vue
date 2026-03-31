@@ -152,7 +152,7 @@ const toggleMenu = () => {
           </li>
           <li class="menu-mobile__my-orders">
             <a
-              href="/cuenta/pedidos"
+              href="/account/orders"
               class="mtc-link"
             >
               <img

@@ -603,14 +603,7 @@
                       Guías de tallas
                     </NuxtLink>
                   </li>
-                  <li>
-                    <NuxtLink
-                      to="#"
-                      class="mtc-link"
-                    >
-                      Equipación moto mujer
-                    </NuxtLink>
-                  </li>
+
                 </ul>
               </div>
             </div>
@@ -652,8 +645,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="https://afiliados.motomundi.cl"
-                      target="_blank"
+                      to="/informacion/afiliados"
                       class="mtc-link"
                     >
                       Programa de Afiliados
