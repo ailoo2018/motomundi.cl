@@ -149,11 +149,11 @@ const galleryImages = [
           >
             <div class="chapter-image-wrap">
               <VImg
-                src="/cms/about-us/tienda-laura-de-noves.jpg"
+                src="/cms/about-us/eicma-2010.png"
                 cover
               />
               <div class="chapter-image-badge">
-                2018
+                EICMA 2019
               </div>
             </div>
           </VCol>
@@ -169,24 +169,24 @@ const galleryImages = [
                 <span class="act-title">El Inicio</span>
               </div>
               <h2 class="chapter-heading">
-                Un motociclista buscaba<br>
-                <span class="text-brand">lo mejor.</span><br>
-                No lo encontró.
+                Cuando una puerta<br />
+                se cierra,
+                <span class="text-brand">comienza la ruta.</span>
               </h2>
+
               <p class="chapter-body">
-                En 2018, <strong>Juan Carlos Fuentes</strong> compró su primera moto. Con ella llegó la pasión — y también la frustración. Al recorrer el mercado chileno en busca de equipamiento premium de marcas internacionales reconocidas, descubrió que simplemente no existía un solo lugar donde encontrarlo todo.
+                En 2018, Juan Carlos Fuentes perseguía una meta en Redmond: trabajar para Microsoft. Cuando la respuesta fue "no", volvió a Chile enfrentando un punto de inflexión personal.
+
               </p>
               <p class="chapter-body">
-                En lugar de resignarse, Juan Carlos tomó una decisión junto a <strong>Paulina Silva</strong>: si nadie lo estaba haciendo bien, lo harían ellos. Así abrieron las puertas de su pequeña tienda en la <strong>calle Bocaccio, en Las Condes</strong> — con un sueño claro: que ningún rider chileno tuviera que sacrificar calidad o seguridad.
+                Para despejar la mente, compró una motocicleta. No fue solo un pasatiempo; fue su terapia. Pero al buscar equipamiento de calidad, descubrió un vacío enorme en el mercado chileno.
+              </p>
+              <p class="chapter-body">
+                Inspirado por el éxito digital de Revzilla en Estados Unidos, Juan Carlos encontró su camino: si no podía escribir código para Microsoft, construiría el mejor e-commerce de motociclismo en América Latina.
               </p>
               <div class="quote-block">
-                <VIcon
-                  icon="mdi-format-quote-open"
-                  color="#B21915"
-                  size="32"
-                />
                 <p class="quote-text">
-                  "Si Chile no tenía el mejor equipamiento, lo traíamos nosotros."
+                  "Inspirar a la comunidad motociclista con productos excepcionales y un servicio que va más allá de la venta."
                 </p>
                 <p class="quote-attribution">
                   — Juan Carlos Fuentes, Co-fundador
@@ -215,11 +215,11 @@ const galleryImages = [
           >
             <div class="chapter-image-wrap">
               <VImg
-                src="/cms/about-us/eicma-2010.png"
+                src="/cms/about-us/tienda-laura-de-noves.jpg"
                 cover
               />
               <div class="chapter-image-badge">
-                EICMA 2019
+                PRIMERA TIENDA
               </div>
             </div>
           </VCol>
@@ -238,10 +238,13 @@ const galleryImages = [
                 <span class="text-brand">casi todo se terminó.</span>
               </h2>
               <p class="chapter-body chapter-body--light">
-                Los primeros meses fueron un torbellino. Motomundi intentó abarcarlo todo: motos, ropa, accesorios. Pero la carretera real del emprendimiento rara vez se parece al mapa. A los seis meses de abrir, el negocio llegó a un punto de quiebre. Las puertas estaban a punto de cerrarse para siempre.
+                Junto a Paulina Silva, Juan Carlos lanzó www.motomundi.cl y abrió una pequeña tienda física en la calle Bocaccio, en Las Condes. Vendían motos, ropa y accesorios: intentaban hacerlo todo.
               </p>
               <p class="chapter-body chapter-body--light">
-                Ese momento de quiebre pudo haber sido el final. En cambio, fue la lección más importante que hemos recibido como empresa.
+                Seis meses después, Motomundi estaba al borde de desaparecer. Entonces llegó el punto de quiebre: la empresa Motolife los contactó para compartir su espacio de retail. Ese fue el "milagro" que necesitaban.
+              </p>
+              <p class="chapter-body chapter-body--light">
+                Juan Carlos y Paulina tomaron la decisión estratégica de dejar de vender motos y enfocarse en lo que hacían mejor: equipamiento y accesorios de clase mundial, cuidadosamente seleccionados.
               </p>
               <div class="crisis-callout">
                 <VIcon
@@ -492,7 +495,7 @@ const galleryImages = [
               ></iframe>
             </div>
             <p class="video-caption text-center mt-4">
-              🎉 Celebrando 100.000 suscriptores — ¡Gracias por ser parte de la ruta!
+              🎉 Celebrando 500.000 suscriptores — ¡Gracias por ser parte de la ruta!
             </p>
           </v-col>
         </v-row>
