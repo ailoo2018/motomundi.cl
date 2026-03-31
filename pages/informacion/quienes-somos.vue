@@ -55,7 +55,8 @@ const galleryImages = [
   { cols: 12, md: 4, size: 'medium', year: '2018', caption: 'Mega tienda de 350 mt2 en Las Condes', image: '/cms/about-us/nueva-tienda.png' },
   { cols: 12, md: 4, size: 'medium', year: '2020', caption: 'Auspicio WSBK de Maxi Scheib', image: '/cms/about-us/maxi.jpg' },
   { cols: 12, md: 4, size: 'medium', year: '2023', caption: 'Evento Moto Viajeros en Motomundi', image: '/cms/about-us/evento-influencers.jpg' },
-  { cols: 12, md: 4, size: 'medium', year: '2026', caption: 'Primera tienda outlet Motomundi' },
+  { cols: 12, md: 4, size: 'medium', year: '2024', caption: '100K suscriptores Youtube', image: '/cms/about-us/youtube-100k.png' },
+  { cols: 12, md: 4, size: 'medium', year: '2026', caption: 'Primera tienda outlet Motomundi', image: 'https://cdn.motomundi.cl/Content/products/1/7/51/75190f7ffdcc4a599eb968b18636c9c3_org.jpeg' },
 ]
 </script>
 
