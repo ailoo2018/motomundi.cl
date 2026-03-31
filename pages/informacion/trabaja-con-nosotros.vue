@@ -1,336 +1,3 @@
-<template>
-  <div class="trabaja-page">
-
-    <!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
-    <section class="hero">
-      <div class="hero-bg" />
-      <div class="hero-overlay" />
-      <v-container class="hero__inner">
-        <v-row align="center">
-          <v-col cols="12" md="7">
-            <p class="hero__eyebrow">Únete al equipo</p>
-            <h1 class="hero__title">
-              Trabaja con<br>
-              <span class="hero__title--highlight">Motomundi</span>
-            </h1>
-            <p class="hero__subtitle">
-              Somos la comunidad motera más grande de Chile y buscamos personas apasionadas
-              que quieran hacer historia junto a nosotros. Si vives y respiras el mundo de
-              las motos, este es tu lugar.
-            </p>
-            <div class="hero__stats">
-              <div class="stat">
-                <span class="stat__number">+17</span>
-                <span class="stat__label">Años de trayectoria</span>
-              </div>
-              <div class="stat__divider" />
-              <div class="stat">
-                <span class="stat__number">8</span>
-                <span class="stat__label">Tiendas en Chile</span>
-              </div>
-              <div class="stat__divider" />
-              <div class="stat">
-                <span class="stat__number">+80</span>
-                <span class="stat__label">Personas en el equipo</span>
-              </div>
-            </div>
-          </v-col>
-
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ══════════════════════════════════ POR QUÉ MOTOMUNDI ═══════════════════════════════ -->
-    <section class="why-us">
-      <v-container>
-        <div class="section-header">
-          <span class="section-header__tag">¿Por qué elegirnos?</span>
-          <h2 class="section-header__title">Más que un trabajo,<br>una forma de vida</h2>
-        </div>
-
-        <v-row class="mt-10" :gutter="0">
-          <v-col
-              v-for="(benefit, i) in benefits"
-              :key="i"
-              cols="12"
-              sm="6"
-              lg="3"
-          >
-            <div class="benefit-card" :class="{ 'benefit-card--featured': benefit.featured }">
-              <div class="benefit-card__icon-wrap">
-                <component :is="benefit.icon" :size="28" stroke-width="1.5" />
-              </div>
-              <h3 class="benefit-card__title">{{ benefit.title }}</h3>
-              <p class="benefit-card__desc">{{ benefit.desc }}</p>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ════════════════════════════════════ VALORES ══════════════════════════════════════ -->
-    <section class="values">
-      <v-container>
-        <v-row align="center" :gutter="0">
-          <v-col cols="12" md="5">
-            <div class="values__visual">
-              <div class="values__ring values__ring--1" />
-              <div class="values__ring values__ring--2" />
-              <IconHelmet :size="80" stroke-width="0.8" class="values__icon" />
-            </div>
-          </v-col>
-          <v-col cols="12" md="7">
-            <span class="section-header__tag">Nuestros valores</span>
-            <h2 class="values__title">Lo que nos mueve<br>como equipo</h2>
-            <div class="value-list">
-              <div v-for="(value, i) in values" :key="i" class="value-item">
-                <div class="value-item__number">0{{ i + 1 }}</div>
-                <div>
-                  <h4 class="value-item__title">{{ value.title }}</h4>
-                  <p class="value-item__desc">{{ value.desc }}</p>
-                </div>
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ════════════════════════════════════ FORMULARIO ══════════════════════════════════ -->
-    <section class="form-section" id="postula">
-      <v-container>
-        <div class="form-wrapper">
-
-          <!-- Éxito -->
-          <Transition name="fade">
-            <div v-if="submitted" class="success-state">
-              <div class="success-state__icon-wrap">
-                <IconCircleCheck :size="56" stroke-width="1.5" />
-              </div>
-              <h3 class="success-state__title">¡Postulación enviada!</h3>
-              <p class="success-state__desc">
-                Gracias por tu interés en unirte a Motomundi. Revisaremos tu información
-                y nos pondremos en contacto contigo a la brevedad.
-              </p>
-              <v-btn
-                  variant="outlined"
-                  class="btn-secondary mt-4"
-                  @click="submitted = false"
-              >
-                <IconRefresh :size="18" class="mr-2" /> Enviar otra postulación
-              </v-btn>
-            </div>
-          </Transition>
-
-          <template v-if="!submitted">
-            <div class="form-wrapper__header">
-              <span class="section-header__tag">Postula ahora</span>
-              <h2 class="form-wrapper__title">Cuéntanos sobre ti</h2>
-              <p class="form-wrapper__subtitle">
-                Completa el formulario y adjunta tu CV. Revisamos todas las postulaciones
-                con el cuidado que merece cada candidato.
-              </p>
-            </div>
-
-            <v-form ref="formRef" v-model="formValid" @submit.prevent="submitForm">
-              <v-row>
-                <!-- Nombre -->
-                <v-col cols="12" sm="6">
-                  <label class="field-label">Nombre y Apellidos <span class="required">*</span></label>
-                  <v-text-field
-                      v-model="form.name"
-                      :rules="[rules.required]"
-                      placeholder="¿Cómo te llamas?"
-                      variant="outlined"
-                      density="comfortable"
-                      class="custom-field"
-                      hide-details="auto"
-                      :prepend-inner-icon="IconUser"
-                  />
-                </v-col>
-
-                <!-- Email -->
-                <v-col cols="12" sm="6">
-                  <label class="field-label">Correo electrónico <span class="required">*</span></label>
-                  <v-text-field
-                      v-model="form.email"
-                      :rules="[rules.required, rules.email]"
-                      placeholder="tu@correo.com"
-                      type="email"
-                      variant="outlined"
-                      density="comfortable"
-                      class="custom-field"
-                      hide-details="auto"
-                      :prepend-inner-icon="IconMail"
-                  />
-                </v-col>
-
-                <!-- Teléfono -->
-                <v-col cols="12" sm="6">
-                  <label class="field-label">Teléfono <span class="required">*</span></label>
-                  <v-text-field
-                      v-model="form.phone"
-                      :rules="[rules.required]"
-                      placeholder="+56 9 XXXX XXXX"
-                      type="tel"
-                      variant="outlined"
-                      density="comfortable"
-                      class="custom-field"
-                      hide-details="auto"
-                      :prepend-inner-icon="IconPhone"
-                  />
-                </v-col>
-
-                <!-- Comuna -->
-                <v-col cols="12" sm="6">
-                  <label class="field-label">Comuna <span class="required">*</span></label>
-                  <v-text-field
-                      v-model="form.comuna"
-                      :rules="[rules.required]"
-                      placeholder="¿En qué comuna vives?"
-                      variant="outlined"
-                      density="comfortable"
-                      class="custom-field"
-                      hide-details="auto"
-                      :prepend-inner-icon="IconMapPin"
-                  />
-                </v-col>
-
-                <!-- Área de interés -->
-                <v-col cols="12" sm="6">
-                  <label class="field-label">Área de interés <span class="required">*</span></label>
-                  <v-select
-                      v-model="form.area"
-                      :rules="[rules.required]"
-                      :items="areas"
-                      placeholder="Selecciona un área"
-                      variant="outlined"
-                      density="comfortable"
-                      class="custom-field"
-                      hide-details="auto"
-                      :prepend-inner-icon="IconBriefcase"
-                  />
-                </v-col>
-
-                <!-- Ubicación -->
-                <v-col cols="12" sm="6">
-                  <label class="field-label">Ubicación preferida <span class="required">*</span></label>
-                  <v-select
-                      v-model="form.location"
-                      :rules="[rules.required]"
-                      :items="locations"
-                      placeholder="Selecciona una ubicación"
-                      variant="outlined"
-                      density="comfortable"
-                      class="custom-field"
-                      hide-details="auto"
-                      :prepend-inner-icon="IconBuilding"
-                  />
-                </v-col>
-
-                <!-- CV Upload -->
-                <v-col cols="12">
-                  <label class="field-label">Currículum Vitae <span class="required">*</span></label>
-                  <div
-                      class="file-drop"
-                      :class="{ 'file-drop--active': dragOver, 'file-drop--filled': form.file }"
-                      @dragover.prevent="dragOver = true"
-                      @dragleave="dragOver = false"
-                      @drop.prevent="handleDrop"
-                      @click="$refs.fileInput.click()"
-                  >
-                    <input
-                        ref="fileInput"
-                        type="file"
-                        accept=".pdf,.doc,.docx,.odt"
-                        class="file-drop__input"
-                        @change="handleFileChange"
-                    >
-                    <div v-if="!form.file" class="file-drop__content">
-                      <IconUpload :size="32" stroke-width="1.5" class="file-drop__icon" />
-                      <p class="file-drop__title">Arrastra tu CV aquí</p>
-                      <p class="file-drop__hint">o haz clic para buscar — PDF, DOC, DOCX (máx. 10 MB)</p>
-                    </div>
-                    <div v-else class="file-drop__content">
-                      <IconFileCheck :size="32" stroke-width="1.5" class="file-drop__icon file-drop__icon--success" />
-                      <p class="file-drop__title">{{ form.file.name }}</p>
-                      <p class="file-drop__hint">
-                        {{ formatSize(form.file.size) }} —
-                        <span class="file-drop__remove" @click.stop="removeFile">Eliminar</span>
-                      </p>
-                    </div>
-                  </div>
-                </v-col>
-
-                <!-- Mensaje adicional -->
-                <v-col cols="12">
-                  <label class="field-label">Cuéntanos algo más <span class="optional">(opcional)</span></label>
-                  <v-textarea
-                      v-model="form.message"
-                      placeholder="¿Por qué quieres unirte a Motomundi? Cuéntanos lo que quieras..."
-                      variant="outlined"
-                      density="comfortable"
-                      class="custom-field"
-                      hide-details="auto"
-                      rows="4"
-                      no-resize
-                  />
-                </v-col>
-
-                <!-- RGPD / Aceptación -->
-                <v-col cols="12">
-                  <div class="gdpr-block">
-                    <v-checkbox
-                        v-model="form.gdpr"
-                        :rules="[rules.required]"
-                        hide-details="auto"
-                        density="compact"
-                        class="gdpr-checkbox"
-                    >
-                      <template #label>
-                        <span class="gdpr-block__check-label">
-                          Acepto que Motomundi contacte conmigo vía email y/o teléfono
-                          para gestionar mi postulación.
-                        </span>
-                      </template>
-                    </v-checkbox>
-
-                    <div class="gdpr-block__legal">
-                      <IconShieldLock :size="14" class="gdpr-block__legal-icon" />
-                      Tus datos serán tratados por <strong>Motomundi SpA</strong> con el único fin de
-                      participar en nuestros procesos de selección vigentes o futuros. No serán
-                      compartidos con terceros salvo obligación legal. Puedes ejercer tus derechos de
-                      acceso, rectificación y supresión escribiéndonos en cualquier momento.
-                      Consulta nuestra
-                      <a href="/politica-de-privacidad" class="gdpr-block__link">política de privacidad</a>.
-                    </div>
-                  </div>
-                </v-col>
-
-                <!-- Submit -->
-                <v-col cols="12">
-                  <v-btn
-                      type="submit"
-                      :loading="loading"
-                      :disabled="!formValid || !form.file || !form.gdpr"
-                      class="btn-primary"
-                      size="large"
-                      block
-                  >
-                    <IconSend :size="20" class="mr-2" />
-                    Enviar postulación
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-form>
-          </template>
-        </div>
-      </v-container>
-    </section>
-
-  </div>
-</template>
-
 <script setup>
 import {
   IconMotorbike,
@@ -421,6 +88,7 @@ const loading = ref(false)
 const submitted = ref(false)
 const dragOver = ref(false)
 const fileInput = ref(null)
+const successRef = ref(null)
 
 const form = reactive({
   name: '',
@@ -435,8 +103,8 @@ const form = reactive({
 })
 
 const rules = {
-  required: (v) => !!v || 'Este campo es obligatorio',
-  email: (v) => /.+@.+\..+/.test(v) || 'Ingresa un correo válido',
+  required: v => !!v || 'Este campo es obligatorio',
+  email: v => /.[^\n\r@\u2028\u2029]*@.+\..+/.test(v) || 'Ingresa un correo válido',
 }
 
 // ─── File helpers ─────────────────────────────────────────────────────────────
@@ -447,6 +115,7 @@ function handleFileChange(e) {
 
 function handleDrop(e) {
   dragOver.value = false
+
   const file = e.dataTransfer.files?.[0]
   if (file) form.file = file
 }
@@ -458,6 +127,7 @@ function removeFile() {
 
 function formatSize(bytes) {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`
+  
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
 }
 
@@ -467,12 +137,493 @@ async function submitForm() {
   if (!valid || !form.file || !form.gdpr) return
 
   loading.value = true
-  // Simulate API call — replace with your actual endpoint
-  await new Promise((r) => setTimeout(r, 1800))
-  loading.value = false
-  submitted.value = true
+
+  try {
+    const payload = new FormData()
+
+    payload.append('name',     form.name)
+    payload.append('email',    form.email)
+    payload.append('phone',    form.phone)
+    payload.append('comuna',   form.comuna)
+    payload.append('area',     form.area)
+    payload.append('location', form.location)
+    payload.append('message',  form.message)
+    payload.append('gdpr',     String(form.gdpr))
+    payload.append('cv',       form.file, form.file.name)
+
+    const res = await fetch('/api/contact/work-with-us', {
+      method: 'POST',
+      body: payload,
+
+      // Do NOT set Content-Type — the browser sets it automatically
+      // with the correct multipart boundary when using FormData
+    })
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}))
+      throw new Error(errorData.message ?? `Error ${res.status}`)
+    }
+
+    submitted.value = true
+
+    await nextTick() // wait for the success element to mount
+    successRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  } catch (err) {
+    console.error('[work-with-us]', err)
+
+    // Surface the error however your app handles it, e.g.:
+    // toast.error('Hubo un problema al enviar tu postulación. Inténtalo de nuevo.')
+  } finally {
+    loading.value = false
+  }
 }
 </script>
+
+<template>
+  <div class="trabaja-page">
+    <!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
+    <section class="hero">
+      <div class="hero-bg" />
+      <div class="hero-overlay" />
+      <VContainer class="hero__inner">
+        <VRow align="center">
+          <VCol
+            cols="12"
+            md="7"
+          >
+            <p class="hero__eyebrow">
+              Únete al equipo
+            </p>
+            <h1 class="hero__title">
+              Trabaja con<br>
+              <span class="hero__title--highlight">Motomundi</span>
+            </h1>
+            <p class="hero__subtitle">
+              Somos la comunidad motera más grande de Chile y buscamos personas apasionadas
+              que quieran hacer historia junto a nosotros. Si vives y respiras el mundo de
+              las motos, este es tu lugar.
+            </p>
+            <div class="hero__stats">
+              <div class="stat">
+                <span class="stat__number">+17</span>
+                <span class="stat__label">Años de trayectoria</span>
+              </div>
+              <div class="stat__divider" />
+              <div class="stat">
+                <span class="stat__number">8</span>
+                <span class="stat__label">Tiendas en Chile</span>
+              </div>
+              <div class="stat__divider" />
+              <div class="stat">
+                <span class="stat__number">+80</span>
+                <span class="stat__label">Personas en el equipo</span>
+              </div>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!-- ══════════════════════════════════ POR QUÉ MOTOMUNDI ═══════════════════════════════ -->
+    <section class="why-us">
+      <VContainer>
+        <div class="section-header">
+          <span class="section-header__tag">¿Por qué elegirnos?</span>
+          <h2 class="section-header__title">
+            Más que un trabajo,<br>una forma de vida
+          </h2>
+        </div>
+
+        <VRow
+          class="mt-10"
+          :gutter="0"
+        >
+          <VCol
+            v-for="(benefit, i) in benefits"
+            :key="i"
+            cols="12"
+            sm="6"
+            lg="3"
+          >
+            <div
+              class="benefit-card"
+              :class="{ 'benefit-card--featured': benefit.featured }"
+            >
+              <div class="benefit-card__icon-wrap">
+                <component
+                  :is="benefit.icon"
+                  :size="28"
+                  stroke-width="1.5"
+                />
+              </div>
+              <h3 class="benefit-card__title">
+                {{ benefit.title }}
+              </h3>
+              <p class="benefit-card__desc">
+                {{ benefit.desc }}
+              </p>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!-- ════════════════════════════════════ VALORES ══════════════════════════════════════ -->
+    <section class="values">
+      <VContainer>
+        <VRow
+          align="center"
+          :gutter="0"
+        >
+          <VCol
+            cols="12"
+            md="5"
+          >
+            <div class="values__visual">
+              <div class="values__ring values__ring--1" />
+              <div class="values__ring values__ring--2" />
+              <IconHelmet
+                :size="80"
+                stroke-width="0.8"
+                class="values__icon"
+              />
+            </div>
+          </VCol>
+          <VCol
+            cols="12"
+            md="7"
+          >
+            <span class="section-header__tag">Nuestros valores</span>
+            <h2 class="values__title">
+              Lo que nos mueve<br>como equipo
+            </h2>
+            <div class="value-list">
+              <div
+                v-for="(value, i) in values"
+                :key="i"
+                class="value-item"
+              >
+                <div class="value-item__number">
+                  0{{ i + 1 }}
+                </div>
+                <div>
+                  <h4 class="value-item__title">
+                    {{ value.title }}
+                  </h4>
+                  <p class="value-item__desc">
+                    {{ value.desc }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!-- ════════════════════════════════════ FORMULARIO ══════════════════════════════════ -->
+    <section
+      id="postula"
+      class="form-section"
+    >
+      <VContainer>
+        <div class="form-wrapper">
+          <!-- Éxito -->
+          <Transition name="fade">
+            <div
+              v-if="submitted"
+              class="success-state"
+              ref="successRef"
+            >
+              <div class="success-state__icon-wrap">
+                <IconCircleCheck
+                  :size="56"
+                  stroke-width="1.5"
+                />
+              </div>
+              <h3 class="success-state__title">
+                ¡Postulación enviada!
+              </h3>
+              <p class="success-state__desc">
+                Gracias por tu interés en unirte a Motomundi. Revisaremos tu información
+                y nos pondremos en contacto contigo a la brevedad.
+              </p>
+              <VBtn
+                variant="outlined"
+                class="btn-secondary mt-4"
+                @click="submitted = false"
+              >
+                <IconRefresh
+                  :size="18"
+                  class="mr-2"
+                /> Enviar otra postulación
+              </VBtn>
+            </div>
+          </Transition>
+
+          <template v-if="!submitted">
+            <div class="form-wrapper__header">
+              <span class="section-header__tag">Postula ahora</span>
+              <h2 class="form-wrapper__title">
+                Cuéntanos sobre ti
+              </h2>
+              <p class="form-wrapper__subtitle">
+                Completa el formulario y adjunta tu CV. Revisamos todas las postulaciones
+                con el cuidado que merece cada candidato.
+              </p>
+            </div>
+
+            <VForm
+              ref="formRef"
+              v-model="formValid"
+              @submit.prevent="submitForm"
+            >
+              <VRow>
+                <!-- Nombre -->
+                <VCol
+                  cols="12"
+                  sm="6"
+                >
+                  <label class="field-label">Nombre y Apellidos <span class="required">*</span></label>
+                  <VTextField
+                    v-model="form.name"
+                    :rules="[rules.required]"
+                    placeholder="¿Cómo te llamas?"
+                    variant="outlined"
+                    density="comfortable"
+                    class="custom-field"
+                    hide-details="auto"
+                    :prepend-inner-icon="IconUser"
+                  />
+                </VCol>
+
+                <!-- Email -->
+                <VCol
+                  cols="12"
+                  sm="6"
+                >
+                  <label class="field-label">Correo electrónico <span class="required">*</span></label>
+                  <VTextField
+                    v-model="form.email"
+                    :rules="[rules.required, rules.email]"
+                    placeholder="tu@correo.com"
+                    type="email"
+                    variant="outlined"
+                    density="comfortable"
+                    class="custom-field"
+                    hide-details="auto"
+                    :prepend-inner-icon="IconMail"
+                  />
+                </VCol>
+
+                <!-- Teléfono -->
+                <VCol
+                  cols="12"
+                  sm="6"
+                >
+                  <label class="field-label">Teléfono <span class="required">*</span></label>
+                  <VTextField
+                    v-model="form.phone"
+                    :rules="[rules.required]"
+                    placeholder="+56 9 XXXX XXXX"
+                    type="tel"
+                    variant="outlined"
+                    density="comfortable"
+                    class="custom-field"
+                    hide-details="auto"
+                    :prepend-inner-icon="IconPhone"
+                  />
+                </VCol>
+
+                <!-- Comuna -->
+                <VCol
+                  cols="12"
+                  sm="6"
+                >
+                  <label class="field-label">Comuna <span class="required">*</span></label>
+                  <VTextField
+                    v-model="form.comuna"
+                    :rules="[rules.required]"
+                    placeholder="¿En qué comuna vives?"
+                    variant="outlined"
+                    density="comfortable"
+                    class="custom-field"
+                    hide-details="auto"
+                    :prepend-inner-icon="IconMapPin"
+                  />
+                </VCol>
+
+                <!-- Área de interés -->
+                <VCol
+                  cols="12"
+                  sm="6"
+                >
+                  <label class="field-label">Área de interés <span class="required">*</span></label>
+                  <VSelect
+                    v-model="form.area"
+                    :rules="[rules.required]"
+                    :items="areas"
+                    placeholder="Selecciona un área"
+                    variant="outlined"
+                    density="comfortable"
+                    class="custom-field"
+                    hide-details="auto"
+                    :prepend-inner-icon="IconBriefcase"
+                  />
+                </VCol>
+
+                <!-- Ubicación -->
+                <VCol
+                  cols="12"
+                  sm="6"
+                >
+                  <label class="field-label">Ubicación preferida <span class="required">*</span></label>
+                  <VSelect
+                    v-model="form.location"
+                    :rules="[rules.required]"
+                    :items="locations"
+                    placeholder="Selecciona una ubicación"
+                    variant="outlined"
+                    density="comfortable"
+                    class="custom-field"
+                    hide-details="auto"
+                    :prepend-inner-icon="IconBuilding"
+                  />
+                </VCol>
+
+                <!-- CV Upload -->
+                <VCol cols="12">
+                  <label class="field-label">Currículum Vitae <span class="required">*</span></label>
+                  <div
+                    class="file-drop"
+                    :class="{ 'file-drop--active': dragOver, 'file-drop--filled': form.file }"
+                    @dragover.prevent="dragOver = true"
+                    @dragleave="dragOver = false"
+                    @drop.prevent="handleDrop"
+                    @click="$refs.fileInput.click()"
+                  >
+                    <input
+                      ref="fileInput"
+                      type="file"
+                      accept=".pdf,.doc,.docx,.odt"
+                      class="file-drop__input"
+                      @change="handleFileChange"
+                    >
+                    <div
+                      v-if="!form.file"
+                      class="file-drop__content"
+                    >
+                      <IconUpload
+                        :size="32"
+                        stroke-width="1.5"
+                        class="file-drop__icon"
+                      />
+                      <p class="file-drop__title">
+                        Arrastra tu CV aquí
+                      </p>
+                      <p class="file-drop__hint">
+                        o haz clic para buscar — PDF, DOC, DOCX (máx. 10 MB)
+                      </p>
+                    </div>
+                    <div
+                      v-else
+                      class="file-drop__content"
+                    >
+                      <IconFileCheck
+                        :size="32"
+                        stroke-width="1.5"
+                        class="file-drop__icon file-drop__icon--success"
+                      />
+                      <p class="file-drop__title">
+                        {{ form.file.name }}
+                      </p>
+                      <p class="file-drop__hint">
+                        {{ formatSize(form.file.size) }} —
+                        <span
+                          class="file-drop__remove"
+                          @click.stop="removeFile"
+                        >Eliminar</span>
+                      </p>
+                    </div>
+                  </div>
+                </VCol>
+
+                <!-- Mensaje adicional -->
+                <VCol cols="12">
+                  <label class="field-label">Cuéntanos algo más <span class="optional">(opcional)</span></label>
+                  <VTextarea
+                    v-model="form.message"
+                    placeholder="¿Por qué quieres unirte a Motomundi? Cuéntanos lo que quieras..."
+                    variant="outlined"
+                    density="comfortable"
+                    class="custom-field"
+                    hide-details="auto"
+                    rows="4"
+                    no-resize
+                  />
+                </VCol>
+
+                <!-- RGPD / Aceptación -->
+                <VCol cols="12">
+                  <div class="gdpr-block">
+                    <VCheckbox
+                      v-model="form.gdpr"
+                      :rules="[rules.required]"
+                      hide-details="auto"
+                      density="compact"
+                      class="gdpr-checkbox"
+                    >
+                      <template #label>
+                        <span class="gdpr-block__check-label">
+                          Acepto que Motomundi contacte conmigo vía email y/o teléfono
+                          para gestionar mi postulación.
+                        </span>
+                      </template>
+                    </VCheckbox>
+
+                    <div class="gdpr-block__legal">
+                      <IconShieldLock
+                        :size="14"
+                        class="gdpr-block__legal-icon"
+                      />
+                      Tus datos serán tratados por <strong>Motomundi SpA</strong> con el único fin de
+                      participar en nuestros procesos de selección vigentes o futuros. No serán
+                      compartidos con terceros salvo obligación legal. Puedes ejercer tus derechos de
+                      acceso, rectificación y supresión escribiéndonos en cualquier momento.
+                      Consulta nuestra
+                      <a
+                        href="/politica-de-privacidad"
+                        class="gdpr-block__link"
+                      >política de privacidad</a>.
+                    </div>
+                  </div>
+                </VCol>
+
+                <!-- Submit -->
+                <VCol cols="12">
+                  <VBtn
+                    type="submit"
+                    :loading="loading"
+                    :disabled="!formValid || !form.file || !form.gdpr"
+                    class="btn-primary"
+                    size="large"
+                    block
+                  >
+                    <IconSend
+                      :size="20"
+                      class="mr-2"
+                    />
+                    Enviar postulación
+                  </VBtn>
+                </VCol>
+              </VRow>
+            </VForm>
+          </template>
+        </div>
+      </VContainer>
+    </section>
+  </div>
+</template>
 
 <style scoped>
 /* ═══════════════════════════════════ TOKENS ════════════════════════════════ */
@@ -700,20 +851,6 @@ async function submitForm() {
   border-color: transparent;
 }
 
-.benefit-card--featured {
-  background: var(--ink);
-  border-color: transparent;
-  color: #fff;
-}
-
-.benefit-card--featured .benefit-card__desc {
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.benefit-card--featured .benefit-card__icon-wrap {
-  background: rgba(178, 25, 21, 0.2);
-  color: var(--brand);
-}
 
 .benefit-card__icon-wrap {
   width: 52px;

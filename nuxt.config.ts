@@ -124,7 +124,7 @@ export default defineNuxtConfig({
     nuxtdlocalApiUrl: process.env.DLOCAL_GO_BASE_URL,
     test: process.env.TEST,
     test2: process.env.NUXT_TEST,
-
+    sendgridApiKey: process.env.SENDGRID_API_KEY,
 
     public: {
       baseUrl: process.env.NODE_ENV === 'production' ? "https://www.motomundi.cl" : "http://localhost:3000",
