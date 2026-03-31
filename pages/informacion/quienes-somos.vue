@@ -1,400 +1,19 @@
-<template>
-  <div class="about-page">
-
-    <!-- ═══════════════════════════════════════════════
-         HERO — Headline cinematic con overlay rojo
-    ═══════════════════════════════════════════════ -->
-    <section class="hero-section">
-      <div class="hero-image-placeholder">
-        <span class="placeholder-label">IMAGEN PRINCIPAL — Tienda o riders en acción</span>
-      </div>
-      <div class="hero-overlay" />
-      <div class="hero-content">
-        <p class="hero-eyebrow">Nuestra Historia</p>
-        <h1 class="hero-headline">
-          Nacimos de la<br />
-          <em>carretera,</em><br />
-          no de un escritorio.
-        </h1>
-        <div class="hero-rule" />
-        <p class="hero-sub">
-          La historia de cómo una frustración personal se convirtió<br class="d-none d-md-block" />
-          en la tienda de equipamiento premium más grande de Chile.
-        </p>
-      </div>
-      <div class="hero-scroll-hint">
-        <v-icon icon="mdi-chevron-down" size="28" color="white" class="bounce" />
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         STAT BAR
-    ═══════════════════════════════════════════════ -->
-    <section class="stat-bar">
-      <v-container fluid class="pa-0">
-        <v-row no-gutters>
-          <v-col
-            v-for="(stat, i) in stats"
-            :key="i"
-            cols="6"
-            md="3"
-            class="stat-item"
-            :class="{ 'stat-item--red': i % 2 === 0 }"
-          >
-            <div class="stat-number">{{ stat.number }}</div>
-            <div class="stat-label">{{ stat.label }}</div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         ACTO I — El Inicio
-    ═══════════════════════════════════════════════ -->
-    <section class="chapter-section chapter-section--light">
-      <v-container>
-        <v-row align="center" class="chapter-row">
-          <v-col cols="12" md="6" order-md="2">
-            <div class="chapter-image-wrap">
-              <div class="chapter-image-placeholder">
-                <span class="placeholder-label">FOTO — Primera tienda en calle Bocaccio, Las Condes (2018)</span>
-              </div>
-              <div class="chapter-image-badge">2018</div>
-            </div>
-          </v-col>
-          <v-col cols="12" md="6" order-md="1">
-            <div class="chapter-content">
-              <div class="chapter-act-label">
-                <span class="act-number">01</span>
-                <span class="act-divider" />
-                <span class="act-title">El Inicio</span>
-              </div>
-              <h2 class="chapter-heading">
-                Un motociclista buscaba<br />
-                <span class="text-brand">lo mejor.</span><br />
-                No lo encontró.
-              </h2>
-              <p class="chapter-body">
-                En 2018, <strong>Juan Carlos Fuentes</strong> compró su primera moto. Con ella llegó la pasión — y también la frustración. Al recorrer el mercado chileno en busca de equipamiento premium de marcas internacionales reconocidas, descubrió que simplemente no existía un solo lugar donde encontrarlo todo.
-              </p>
-              <p class="chapter-body">
-                En lugar de resignarse, Juan Carlos tomó una decisión junto a <strong>Paulina Silva</strong>: si nadie lo estaba haciendo bien, lo harían ellos. Así abrieron las puertas de su pequeña tienda en la <strong>calle Bocaccio, en Las Condes</strong> — con un sueño claro: que ningún rider chileno tuviera que sacrificar calidad o seguridad.
-              </p>
-              <div class="quote-block">
-                <v-icon icon="mdi-format-quote-open" color="#B21915" size="32" />
-                <p class="quote-text">
-                  "Si Chile no tenía el mejor equipamiento, lo traíamos nosotros."
-                </p>
-                <p class="quote-attribution">— Juan Carlos Fuentes, Co-fundador</p>
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         ACTO II — El Golpe de Realidad
-    ═══════════════════════════════════════════════ -->
-    <section class="chapter-section chapter-section--dark">
-      <v-container>
-        <v-row align="center" class="chapter-row">
-          <v-col cols="12" md="6">
-            <div class="chapter-image-wrap">
-              <div class="chapter-image-placeholder chapter-image-placeholder--dark">
-                <span class="placeholder-label">FOTO — Los primeros meses, el equipo fundador o la tienda en sus inicios</span>
-              </div>
-            </div>
-          </v-col>
-          <v-col cols="12" md="6">
-            <div class="chapter-content">
-              <div class="chapter-act-label chapter-act-label--light">
-                <span class="act-number">02</span>
-                <span class="act-divider act-divider--light" />
-                <span class="act-title">La Prueba de Fuego</span>
-              </div>
-              <h2 class="chapter-heading chapter-heading--light">
-                Seis meses después,<br />
-                <span class="text-brand">casi todo se terminó.</span>
-              </h2>
-              <p class="chapter-body chapter-body--light">
-                Los primeros meses fueron un torbellino. Motomundi intentó abarcarlo todo: motos, ropa, accesorios. Pero la carretera real del emprendimiento rara vez se parece al mapa. A los seis meses de abrir, el negocio llegó a un punto de quiebre. Las puertas estaban a punto de cerrarse para siempre.
-              </p>
-              <p class="chapter-body chapter-body--light">
-                Ese momento de quiebre pudo haber sido el final. En cambio, fue la lección más importante que hemos recibido como empresa.
-              </p>
-              <div class="crisis-callout">
-                <v-icon icon="mdi-alert-circle-outline" size="20" color="#B21915" />
-                <span>6 meses de apertura. 1 decisión que lo cambió todo.</span>
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         TIMELINE PIVOT
-    ═══════════════════════════════════════════════ -->
-    <section class="pivot-section">
-      <v-container>
-        <div class="pivot-header">
-          <div class="pivot-eyebrow">El Giro que lo Cambió Todo</div>
-          <h2 class="pivot-heading">Dos decisiones.<br /><span class="text-brand">Un nuevo camino.</span></h2>
-        </div>
-        <div class="pivot-timeline">
-          <div v-for="(step, i) in pivotSteps" :key="i" class="pivot-step">
-            <div class="pivot-step-icon-wrap">
-              <v-icon :icon="step.icon" size="28" color="white" />
-            </div>
-            <div class="pivot-step-content">
-              <div class="pivot-step-number">Decisión {{ i + 1 }}</div>
-              <h3 class="pivot-step-title">{{ step.title }}</h3>
-              <p class="pivot-step-body">{{ step.body }}</p>
-            </div>
-            <div v-if="i < pivotSteps.length - 1" class="pivot-connector" />
-          </div>
-        </div>
-      </v-container>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         ACTO III — La Transformación
-    ═══════════════════════════════════════════════ -->
-    <section class="chapter-section chapter-section--light">
-      <v-container>
-        <v-row align="center" class="chapter-row">
-          <v-col cols="12" md="6" order-md="2">
-            <div class="chapter-image-wrap">
-              <div class="chapter-image-placeholder">
-                <span class="placeholder-label">FOTO — Tienda actual o showroom con productos premium</span>
-              </div>
-              <div class="chapter-image-badge chapter-image-badge--alt">Hoy</div>
-            </div>
-          </v-col>
-          <v-col cols="12" md="6" order-md="1">
-            <div class="chapter-content">
-              <div class="chapter-act-label">
-                <span class="act-number">03</span>
-                <span class="act-divider" />
-                <span class="act-title">La Transformación</span>
-              </div>
-              <h2 class="chapter-heading">
-                Menos, pero<br />
-                <span class="text-brand">mucho mejor.</span>
-              </h2>
-              <p class="chapter-body">
-                Dejar de vender motos fue una decisión difícil. Pero fue la correcta. Al concentrar toda nuestra energía y expertise en <strong>ropa y accesorios premium</strong>, Motomundi dejó de ser una tienda generalista para convertirse en el <strong>destino especializado</strong> de los riders chilenos que no transan en calidad.
-              </p>
-              <p class="chapter-body">
-                La alianza estratégica con <strong>Motolife</strong> nos dio la fortaleza para seguir en carrera, y el enfoque nos dio la identidad. Hoy somos el retailer de equipamiento de motociclismo más grande de Chile — con las marcas más reconocidas del mundo bajo un mismo techo.
-              </p>
-              <div class="brand-badges">
-                <div v-for="badge in brandBadges" :key="badge" class="brand-badge">
-                  <v-icon icon="mdi-check-circle" size="16" color="#B21915" />
-                  <span>{{ badge }}</span>
-                </div>
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         FOUNDERS SECTION
-    ═══════════════════════════════════════════════ -->
-    <section class="founders-section">
-      <v-container>
-        <div class="section-label">Las Personas Detrás de Motomundi</div>
-        <h2 class="section-heading">Riders que entienden<br />a los riders.</h2>
-        <v-row justify="center" class="mt-10">
-          <v-col cols="12" sm="10" md="5" class="founder-col">
-            <div class="founder-card">
-              <div class="founder-avatar-placeholder">
-                <v-icon icon="mdi-account" size="56" color="#B21915" />
-                <span class="placeholder-label">FOTO — Juan Carlos Fuentes</span>
-              </div>
-              <div class="founder-info">
-                <h3 class="founder-name">Juan Carlos Fuentes</h3>
-                <p class="founder-role">Co-fundador & CEO</p>
-                <p class="founder-bio">
-                  Motociclista por pasión, emprendedor por convicción. Juan Carlos transformó su frustración como consumidor en el negocio que ningún rider chileno sabía que necesitaba. Su filosofía: si no existe, créalo.
-                </p>
-              </div>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="10" md="5" class="founder-col">
-            <div class="founder-card">
-              <div class="founder-avatar-placeholder">
-                <v-icon icon="mdi-account" size="56" color="#B21915" />
-                <span class="placeholder-label">FOTO — Paulina Silva</span>
-              </div>
-              <div class="founder-info">
-                <h3 class="founder-name">Paulina Silva</h3>
-                <p class="founder-role">Co-fundadora & Directora de Operaciones</p>
-                <p class="founder-bio">
-                  La fortaleza operacional detrás de Motomundi. Paulina construyó los cimientos que permitieron que el sueño se convirtiera en la empresa líder que es hoy, navegando cada desafío con resiliencia y visión.
-                </p>
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         VALORES
-    ═══════════════════════════════════════════════ -->
-    <section class="values-section">
-      <v-container>
-        <div class="section-label section-label--light">Lo Que Nos Mueve</div>
-        <h2 class="section-heading section-heading--light">Nuestros valores<br />no son decoración.</h2>
-        <v-row class="mt-10">
-          <v-col
-            v-for="(value, i) in values"
-            :key="i"
-            cols="12"
-            sm="6"
-            lg="3"
-          >
-            <div class="value-card">
-              <div class="value-icon-wrap">
-                <v-icon :icon="value.icon" size="32" color="#B21915" />
-              </div>
-              <h3 class="value-title">{{ value.title }}</h3>
-              <p class="value-body">{{ value.body }}</p>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         MANIFESTO / CIERRE
-    ═══════════════════════════════════════════════ -->
-    <section class="manifesto-section">
-      <div class="manifesto-image-placeholder">
-        <span class="placeholder-label">IMAGEN FONDO — Rider en carretera o vista panorámica de ruta chilena</span>
-      </div>
-      <div class="manifesto-overlay" />
-      <div class="manifesto-content">
-        <v-container>
-          <p class="manifesto-eyebrow">Por Qué Existimos</p>
-          <h2 class="manifesto-heading">
-            No vendemos ropa.<br />
-            Vendemos la confianza<br />
-            de <em>salir a rodar.</em>
-          </h2>
-          <p class="manifesto-body">
-            Aprendimos temprano que para ser los mejores, hay que enfocarse. Somos riders que atienden riders. Hemos vivido los baches y las curvas de la carretera — igual que tú. Y por eso sabemos exactamente qué necesitas cuando subes a tu moto.
-          </p>
-          <v-btn
-            color="#B21915"
-            size="large"
-            class="manifesto-cta"
-            elevation="0"
-            rounded="0"
-            href="/tienda"
-          >
-            <v-icon icon="mdi-store-outline" class="mr-2" />
-            Conoce Nuestros Productos
-          </v-btn>
-        </v-container>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         GALERÍA DE HISTORIA
-    ═══════════════════════════════════════════════ -->
-    <section class="gallery-section">
-      <v-container>
-        <div class="section-label">Nuestra Trayectoria en Imágenes</div>
-        <h2 class="section-heading">Desde Bocaccio<br />al liderazgo nacional.</h2>
-        <v-row class="mt-8 gallery-grid">
-          <v-col
-            v-for="(img, i) in galleryImages"
-            :key="i"
-            :cols="img.cols"
-            :md="img.md"
-          >
-            <div
-              class="gallery-item"
-              :class="`gallery-item--${img.size}`"
-            >
-              <div class="gallery-placeholder">
-                <span class="placeholder-label">{{ img.caption }}</span>
-              </div>
-              <div class="gallery-caption">{{ img.year }} — {{ img.caption }}</div>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-         CTA FINAL
-    ═══════════════════════════════════════════════ -->
-    <section class="cta-section">
-      <v-container>
-        <v-row align="center" justify="space-between">
-          <v-col cols="12" md="7">
-            <p class="cta-eyebrow">Únete a la Comunidad</p>
-            <h2 class="cta-heading">¿Eres rider?<br /><span class="text-brand">Este es tu lugar.</span></h2>
-            <p class="cta-body">
-              Más de 6 años llevamos equipando a la comunidad motociclista de Chile con los mejores productos del mundo. Tu próxima aventura merece el mejor equipamiento.
-            </p>
-          </v-col>
-          <v-col cols="12" md="4" class="text-center text-md-right">
-            <v-btn
-              color="#B21915"
-              size="x-large"
-              class="cta-btn"
-              elevation="0"
-              rounded="0"
-              block
-              href="/tienda"
-            >
-              <v-icon icon="mdi-helmet" class="mr-2" />
-              Ver Catálogo Completo
-            </v-btn>
-            <v-btn
-              variant="outlined"
-              color="#B21915"
-              size="x-large"
-              class="cta-btn mt-3"
-              elevation="0"
-              rounded="0"
-              block
-              href="/contacto"
-            >
-              <v-icon icon="mdi-phone-outline" class="mr-2" />
-              Contáctanos
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-  </div>
-</template>
-
 <script setup>
 const stats = [
   { number: '2018', label: 'Año de fundación' },
   { number: '#1', label: 'Retailer de equipamiento en Chile' },
   { number: '100+', label: 'Marcas premium disponibles' },
-  { number: '6+', label: 'Años equipando riders' },
+  { number: '18+', label: 'Años equipando riders' },
 ]
 
 const pivotSteps = [
   {
-    icon: 'mdi-handshake-outline',
+    icon: 'tabler-heart-handshake',
     title: 'Alianza estratégica con Motolife',
     body: 'Reconocer que necesitábamos socios fuertes fue una señal de madurez, no de debilidad. La alianza con Motolife nos dio la base para seguir adelante cuando más lo necesitábamos.',
   },
   {
-    icon: 'mdi-target',
+    icon: 'tabler-target',
     title: 'Foco total en ropa y accesorios premium',
     body: 'Dejar de vender motos fue difícil, pero fue liberador. Al especializarnos completamente en equipamiento, dejamos de ser una tienda más para convertirnos en el referente indiscutido del sector.',
   },
@@ -409,38 +28,607 @@ const brandBadges = [
 
 const values = [
   {
-    icon: 'mdi-shield-check-outline',
+    icon: 'tabler-shield-check',
     title: 'Seguridad primero',
     body: 'El equipamiento correcto salva vidas. No comercializamos productos que no cumplen los más altos estándares internacionales.',
   },
   {
-    icon: 'mdi-star-outline',
+    icon: 'tabler-star',
     title: 'Sin compromiso en calidad',
     body: 'Solo trabajamos con las marcas más reconocidas del mundo. Si no es lo mejor disponible, no está en nuestro catálogo.',
   },
   {
-    icon: 'mdi-account-group-outline',
+    icon: 'tabler-users',
     title: 'Riders que atienden riders',
     body: 'Nuestro equipo vive la moto. Conocemos los productos que vendemos porque los usamos nosotros mismos.',
   },
   {
-    icon: 'mdi-map-marker-path',
+    icon: 'tabler-map-pin',
     title: 'Comunidad en la ruta',
     body: 'Motomundi es más que una tienda. Somos parte del ecosistema motociclista chileno, su crecimiento es el nuestro.',
   },
 ]
 
 const galleryImages = [
-  { cols: 12, md: 7, size: 'tall', year: '2018', caption: 'La primera tienda en calle Bocaccio, Las Condes' },
-  { cols: 12, md: 5, size: 'medium', year: '2019', caption: 'Primeras marcas internacionales en llegar a Chile' },
-  { cols: 12, md: 4, size: 'medium', year: '2020', caption: 'El giro estratégico: foco en ropa y accesorios' },
-  { cols: 12, md: 4, size: 'medium', year: '2021', caption: 'Alianza con Motolife consolida el crecimiento' },
-  { cols: 12, md: 4, size: 'medium', year: '2024', caption: 'Líder nacional del equipamiento motociclista' },
+  { cols: 12, md: 6, size: 'medium', year: '2008', caption: 'La primera tienda en calle Bocaccio, Las Condes', image: "/cms/about-us/tienda-laura-de-noves.jpg" },
+  { cols: 12, md: 6, size: 'medium', year: '2011', caption: 'Representantes oficiales de AGV en Chile', image: '/cms/about-us/agv.jpg' },
+  { cols: 12, md: 4, size: 'medium', year: '2018', caption: 'Mega tienda de 350 mt2 en Las Condes', image: '/cms/about-us/nueva-tienda.png' },
+  { cols: 12, md: 4, size: 'medium', year: '2020', caption: 'Auspicio WSBK de Maxi Scheib', image: '/cms/about-us/maxi.jpg' },
+  { cols: 12, md: 4, size: 'medium', year: '2023', caption: 'Evento Moto Viajeros en Motomundi', image: '/cms/about-us/evento-influencers.jpg' },
+  { cols: 12, md: 4, size: 'medium', year: '2026', caption: 'Primera tienda outlet Motomundi' },
 ]
 </script>
 
-<style >
-/* ─── Design Tokens ─────────────────────────────── */
+
+<template>
+  <div class="about-page">
+    <!--
+      ═══════════════════════════════════════════════
+      HERO — Headline cinematic con overlay rojo
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="hero-section">
+      <div class="hero-image-placeholder">
+        <VImg
+          src="/cms/about-us/nueva-tienda.png"
+          cover
+        />
+      </div>
+      <div class="hero-overlay" />
+      <div class="hero-content">
+        <p class="hero-eyebrow">
+          Nuestra Historia
+        </p>
+        <h1 class="hero-headline">
+          Nacimos de la<br>
+          <em>carretera,</em><br>
+          no de un escritorio.
+        </h1>
+        <div class="hero-rule" />
+        <p class="hero-sub">
+          La historia de cómo una frustración personal se convirtió<br class="d-none d-md-block">
+          en la tienda de equipamiento premium más grande de Chile.
+        </p>
+      </div>
+      <div class="hero-scroll-hint">
+        <VIcon
+          icon="mdi-chevron-down"
+          size="28"
+          color="white"
+          class="bounce"
+        />
+      </div>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      STAT BAR
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="stat-bar">
+      <VContainer
+        fluid
+        class="pa-0"
+      >
+        <VRow no-gutters>
+          <VCol
+            v-for="(stat, i) in stats"
+            :key="i"
+            cols="6"
+            md="3"
+            class="stat-item"
+            :class="{ 'stat-item--red': i % 2 === 0 }"
+          >
+            <div class="stat-number">
+              {{ stat.number }}
+            </div>
+            <div class="stat-label">
+              {{ stat.label }}
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      ACTO I — El Inicio
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="chapter-section chapter-section--light">
+      <VContainer>
+        <VRow
+          align="center"
+          class="chapter-row"
+        >
+          <VCol
+            cols="12"
+            md="6"
+            order-md="2"
+          >
+            <div class="chapter-image-wrap">
+              <VImg
+                src="/cms/about-us/tienda-laura-de-noves.jpg"
+                cover
+              />
+              <div class="chapter-image-badge">
+                2018
+              </div>
+            </div>
+          </VCol>
+          <VCol
+            cols="12"
+            md="6"
+            order-md="1"
+          >
+            <div class="chapter-content">
+              <div class="chapter-act-label">
+                <span class="act-number">01</span>
+                <span class="act-divider" />
+                <span class="act-title">El Inicio</span>
+              </div>
+              <h2 class="chapter-heading">
+                Un motociclista buscaba<br>
+                <span class="text-brand">lo mejor.</span><br>
+                No lo encontró.
+              </h2>
+              <p class="chapter-body">
+                En 2018, <strong>Juan Carlos Fuentes</strong> compró su primera moto. Con ella llegó la pasión — y también la frustración. Al recorrer el mercado chileno en busca de equipamiento premium de marcas internacionales reconocidas, descubrió que simplemente no existía un solo lugar donde encontrarlo todo.
+              </p>
+              <p class="chapter-body">
+                En lugar de resignarse, Juan Carlos tomó una decisión junto a <strong>Paulina Silva</strong>: si nadie lo estaba haciendo bien, lo harían ellos. Así abrieron las puertas de su pequeña tienda en la <strong>calle Bocaccio, en Las Condes</strong> — con un sueño claro: que ningún rider chileno tuviera que sacrificar calidad o seguridad.
+              </p>
+              <div class="quote-block">
+                <VIcon
+                  icon="mdi-format-quote-open"
+                  color="#B21915"
+                  size="32"
+                />
+                <p class="quote-text">
+                  "Si Chile no tenía el mejor equipamiento, lo traíamos nosotros."
+                </p>
+                <p class="quote-attribution">
+                  — Juan Carlos Fuentes, Co-fundador
+                </p>
+              </div>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      ACTO II — El Golpe de Realidad
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="chapter-section chapter-section--dark">
+      <VContainer>
+        <VRow
+          align="center"
+          class="chapter-row"
+        >
+          <VCol
+            cols="12"
+            md="6"
+          >
+            <div class="chapter-image-wrap">
+              <VImg
+                src="/cms/about-us/eicma-2010.png"
+                cover
+              />
+            </div>
+          </VCol>
+          <VCol
+            cols="12"
+            md="6"
+          >
+            <div class="chapter-content">
+              <div class="chapter-act-label chapter-act-label--light">
+                <span class="act-number">02</span>
+                <span class="act-divider act-divider--light" />
+                <span class="act-title">La Prueba de Fuego</span>
+              </div>
+              <h2 class="chapter-heading chapter-heading--light">
+                Seis meses después,<br>
+                <span class="text-brand">casi todo se terminó.</span>
+              </h2>
+              <p class="chapter-body chapter-body--light">
+                Los primeros meses fueron un torbellino. Motomundi intentó abarcarlo todo: motos, ropa, accesorios. Pero la carretera real del emprendimiento rara vez se parece al mapa. A los seis meses de abrir, el negocio llegó a un punto de quiebre. Las puertas estaban a punto de cerrarse para siempre.
+              </p>
+              <p class="chapter-body chapter-body--light">
+                Ese momento de quiebre pudo haber sido el final. En cambio, fue la lección más importante que hemos recibido como empresa.
+              </p>
+              <div class="crisis-callout">
+                <VIcon
+                  icon="tabler-alert-circle-outline"
+                  size="20"
+                  color="#B21915"
+                />
+                <span>6 meses de apertura. 1 decisión que lo cambió todo.</span>
+              </div>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      TIMELINE PIVOT
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="pivot-section">
+      <VContainer>
+        <div class="pivot-header">
+          <div class="pivot-eyebrow">
+            El Giro que lo Cambió Todo
+          </div>
+          <h2 class="pivot-heading">
+            DOS decisiones.<br><span class="text-brand">Un nuevo camino.</span>
+          </h2>
+        </div>
+        <div class="pivot-timeline">
+          <div
+            v-for="(step, i) in pivotSteps"
+            :key="i"
+            class="pivot-step"
+          >
+            <div class="pivot-step-icon-wrap">
+              <VIcon
+                :icon="step.icon"
+                size="28"
+                color="white"
+              />
+            </div>
+            <div class="pivot-step-content">
+              <div class="pivot-step-number">
+                Decisión {{ i + 1 }}
+              </div>
+              <h3 class="pivot-step-title">
+                {{ step.title }}
+              </h3>
+              <p class="pivot-step-body">
+                {{ step.body }}
+              </p>
+            </div>
+            <div
+              v-if="i < pivotSteps.length - 1"
+              class="pivot-connector"
+            />
+          </div>
+        </div>
+      </VContainer>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      ACTO III — La Transformación
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="chapter-section chapter-section--light">
+      <VContainer>
+        <VRow
+          align="center"
+          class="chapter-row"
+        >
+          <VCol
+            cols="12"
+            md="6"
+            order-md="2"
+          >
+            <div class="chapter-image-wrap">
+              <VImg src="/cms/about-us/nueva-tienda.png" />
+
+              <div class="chapter-image-badge chapter-image-badge--alt">
+                Hoy
+              </div>
+            </div>
+          </VCol>
+          <VCol
+            cols="12"
+            md="6"
+            order-md="1"
+          >
+            <div class="chapter-content">
+              <div class="chapter-act-label">
+                <span class="act-number">03</span>
+                <span class="act-divider" />
+                <span class="act-title">La Transformación</span>
+              </div>
+              <h2 class="chapter-heading">
+                Menos, pero<br>
+                <span class="text-brand">mucho mejor.</span>
+              </h2>
+              <p class="chapter-body">
+                Dejar de vender motos fue una decisión difícil. Pero fue la correcta. Al concentrar toda nuestra energía y expertise en <strong>ropa y accesorios premium</strong>, Motomundi dejó de ser una tienda generalista para convertirse en el <strong>destino especializado</strong> de los riders chilenos que no transan en calidad.
+              </p>
+              <p class="chapter-body">
+                La alianza estratégica con <strong>Motolife</strong> nos dio la fortaleza para seguir en carrera, y el enfoque nos dio la identidad. Hoy somos el retailer de equipamiento de motociclismo más grande de Chile — con las marcas más reconocidas del mundo bajo un mismo techo.
+              </p>
+              <div class="brand-badges">
+                <div
+                  v-for="badge in brandBadges"
+                  :key="badge"
+                  class="brand-badge"
+                >
+                  <VIcon
+                    icon="tabler-check-circle"
+                    size="16"
+                    color="#B21915"
+                  />
+                  <span>{{ badge }}</span>
+                </div>
+              </div>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      FOUNDERS SECTION
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="founders-section">
+      <VContainer>
+        <div class="section-label">
+          Las Personas Detrás de Motomundi
+        </div>
+        <h2 class="section-heading">
+          Riders que entienden<br>a los riders.
+        </h2>
+        <VRow
+          justify="center"
+          class="mt-10"
+        >
+          <VCol
+            cols="12"
+            sm="10"
+            md="5"
+            class="founder-col"
+          >
+            <div class="founder-card">
+              <div class="founder-avatar-placeholder">
+                <VImg
+                  src="/cms/about-us/jcf.png"
+                  style="width: 100%;"
+                />
+              </div>
+              <div class="founder-info">
+                <h3 class="founder-name">
+                  Juan Carlos Fuentes
+                </h3>
+                <p class="founder-role">
+                  Co-fundador & CEO
+                </p>
+                <p class="founder-bio">
+                  Motociclista por pasión, emprendedor por convicción. Juan Carlos transformó su frustración como consumidor en el negocio que ningún rider chileno sabía que necesitaba. Su filosofía: si no existe, créalo.
+                </p>
+              </div>
+            </div>
+          </VCol>
+          <VCol
+            cols="12"
+            sm="10"
+            md="5"
+            class="founder-col"
+          >
+            <div class="founder-card">
+              <div class="founder-avatar-placeholder">
+                <VImg
+                  src="/cms/about-us/paulina.jpeg"
+                  style="width: 100%;"
+                />
+              </div>
+              <div class="founder-info">
+                <h3 class="founder-name">
+                  Paulina Silva
+                </h3>
+                <p class="founder-role">
+                  Co-fundadora & Directora de Operaciones
+                </p>
+                <p class="founder-bio">
+                  La fortaleza operacional detrás de Motomundi. Paulina construyó los cimientos que permitieron que el sueño se convirtiera en la empresa líder que es hoy, navegando cada desafío con resiliencia y visión.
+                </p>
+              </div>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      VALORES
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="values-section">
+      <VContainer>
+        <div class="section-label section-label--light">
+          Lo Que Nos Mueve
+        </div>
+        <h2 class="section-heading section-heading--light">
+          Nuestros valores<br>no son decoración.
+        </h2>
+        <VRow class="mt-10">
+          <VCol
+            v-for="(value, i) in values"
+            :key="i"
+            cols="12"
+            sm="6"
+            lg="3"
+          >
+            <div class="value-card">
+              <div class="value-icon-wrap">
+                <VIcon
+                  :icon="value.icon"
+                  size="32"
+                  color="#B21915"
+                />
+              </div>
+              <h3 class="value-title">
+                {{ value.title }}
+              </h3>
+              <p class="value-body">
+                {{ value.body }}
+              </p>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      MANIFESTO / CIERRE
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="manifesto-section">
+      <div class="manifesto-image-placeholder" style="background-image: url('/cms/about-us/bg.jpg'); top: -100px;">
+      </div>
+
+      <div class="manifesto-overlay" />
+      <div class="manifesto-content" astyle="background-image: url('/cms/about-us/bg.jpg');">
+        <VContainer>
+          <p class="manifesto-eyebrow">
+            Por Qué Existimos
+          </p>
+          <h2 class="manifesto-heading">
+            No vendemos ropa.<br>
+            Vendemos la confianza<br>
+            de <em>salir a rodar.</em>
+          </h2>
+          <p class="manifesto-body">
+            Aprendimos temprano que para ser los mejores, hay que enfocarse. Somos riders que atienden riders. Hemos vivido los baches y las curvas de la carretera — igual que tú. Y por eso sabemos exactamente qué necesitas cuando subes a tu moto.
+          </p>
+          <VBtn
+            color="#B21915"
+            size="large"
+            class="manifesto-cta"
+            elevation="0"
+            rounded="0"
+            href="/tienda"
+          >
+            <VIcon
+              icon="mdi-store-outline"
+              class="mr-2"
+            />
+            Conoce Nuestros Productos
+          </VBtn>
+        </VContainer>
+      </div>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      GALERÍA DE HISTORIA
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="gallery-section">
+      <VContainer>
+        <div class="section-label">
+          Nuestra Trayectoria en Imágenes
+        </div>
+        <h2 class="section-heading">
+          Desde Bocaccio<br>al liderazgo nacional.
+        </h2>
+        <VRow class="mt-8 gallery-grid">
+          <VCol
+            v-for="(img, i) in galleryImages"
+            :key="i"
+            :cols="img.cols"
+            :md="img.md"
+          >
+            <div
+              class="gallery-item"
+              :class="`gallery-item--${img.size}`"
+            >
+              <VImg
+                :src="img.image"
+                style="width: 100%"
+                cover
+              />
+              <div class="gallery-caption">
+                {{ img.year }} — {{ img.caption }}
+              </div>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════
+      CTA FINAL
+      ═══════════════════════════════════════════════ 
+    -->
+    <section class="cta-section">
+      <VContainer>
+        <VRow
+          align="center"
+          justify="space-between"
+        >
+          <VCol
+            cols="12"
+            md="7"
+          >
+            <p class="cta-eyebrow">
+              Únete a la Comunidad
+            </p>
+            <h2 class="cta-heading">
+              ¿Eres rider?<br><span class="text-brand">Este es tu lugar.</span>
+            </h2>
+            <p class="cta-body">
+              Más de 6 años llevamos equipando a la comunidad motociclista de Chile con los mejores productos del mundo. Tu próxima aventura merece el mejor equipamiento.
+            </p>
+          </VCol>
+          <VCol
+            cols="12"
+            md="4"
+            class="text-center text-md-right"
+          >
+            <VBtn
+              color="#B21915"
+              size="x-large"
+              class="cta-btn"
+              elevation="0"
+              rounded="0"
+              block
+              href="/tienda"
+            >
+              <VIcon
+                icon="tabler-helmet"
+                class="mr-2"
+              />
+              Ver Catálogo Completo
+            </VBtn>
+            <VBtn
+              variant="outlined"
+              color="#B21915"
+              size="x-large"
+              class="cta-btn mt-3"
+              elevation="0"
+              rounded="0"
+              block
+              href="/contacto"
+            >
+              <VIcon
+                icon="tabler-phone"
+                class="mr-2"
+              />
+              Contáctanos
+            </VBtn>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+  </div>
+</template>
+
+
+<style>
 :root {
   --brand: #B21915;
   --brand-dark: #8a120e;
@@ -452,6 +640,10 @@ const galleryImages = [
   --white: #ffffff;
   --radius: 0px;
 }
+
+</style>
+<style scoped>
+/* ─── Design Tokens ─────────────────────────────── */
 
 /* ─── Global ─────────────────────────────────────── */
 .about-page {
@@ -478,7 +670,7 @@ const galleryImages = [
   background: #1c1c1c;
   display: flex;
   align-items: flex-end;
-  padding: 16px;
+
 }
 .hero-overlay {
   position: absolute;
