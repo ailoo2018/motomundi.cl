@@ -21,8 +21,8 @@ const pivotSteps = [
 
 const brandBadges = [
   'Marcas líderes mundiales',
-  'Productos certificados',
   'Asesoría especializada',
+  'Comunidad de riders',
   'Envío a todo Chile',
 ]
 
@@ -218,6 +218,9 @@ const galleryImages = [
                 src="/cms/about-us/eicma-2010.png"
                 cover
               />
+              <div class="chapter-image-badge">
+                EICMA 2019
+              </div>
             </div>
           </VCol>
           <VCol
