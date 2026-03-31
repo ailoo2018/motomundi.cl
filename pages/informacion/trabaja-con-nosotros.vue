@@ -280,14 +280,19 @@ async function submitForm() {
             cols="12"
             md="5"
           >
-            <div class="values__visual">
-              <div class="values__ring values__ring--1" />
-              <div class="values__ring values__ring--2" />
-              <IconHelmet
-                :size="80"
-                stroke-width="0.8"
-                class="values__icon"
-              />
+            <div
+              class="values__visual"
+            >
+              <div style="height:800px;">
+                <iframe
+                  class="video-iframe"
+                  src="https://www.youtube.com/embed/9bxuxHH6n-E"
+                  title="Motomundi celebra 100.000 suscriptores en YouTube"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                />
+              </div>
             </div>
           </VCol>
           <VCol
@@ -333,8 +338,8 @@ async function submitForm() {
           <Transition name="fade">
             <div
               v-if="submitted"
-              class="success-state"
               ref="successRef"
+              class="success-state"
             >
               <div class="success-state__icon-wrap">
                 <IconCircleCheck
@@ -886,8 +891,8 @@ async function submitForm() {
 
 .values__visual {
   position: relative;
-  width: 260px;
-  height: 260px;
+  width: 460px;
+  height: 500px;
   margin: 0 auto 40px;
   display: flex;
   align-items: center;
@@ -1190,5 +1195,13 @@ async function submitForm() {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.video-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
