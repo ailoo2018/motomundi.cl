@@ -269,10 +269,11 @@ const galleryImages = [
             order-md="2"
           >
             <div class="chapter-image-wrap">
+
               <div style="width: 170px; height: 700px;">
                 <iframe
                   class="video-iframe"
-                  src="https://www.youtube.com/embed/gpicwQMKRD0"
+                  src="https://www.youtube.com/embed/9bxuxHH6n-E"
                   title="Motomundi celebra 100.000 suscriptores en YouTube"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
