@@ -55,7 +55,7 @@ const galleryImages = [
   { cols: 12, md: 4, size: 'medium', year: '2018', caption: 'Mega tienda de 350 mt2 en Las Condes', image: '/cms/about-us/nueva-tienda.png' },
   { cols: 12, md: 4, size: 'medium', year: '2020', caption: 'Auspicio WSBK de Maxi Scheib', image: '/cms/about-us/maxi.jpg' },
   { cols: 12, md: 4, size: 'medium', year: '2023', caption: 'Evento Moto Viajeros en Motomundi', image: '/cms/about-us/evento-influencers.jpg' },
-  { cols: 12, md: 4, size: 'medium', year: '2024', caption: '100K suscriptores Youtube', image: '/cms/about-us/youtube-100k.png' },
+  { cols: 12, md: 4, size: 'medium', year: '2024', caption: '100K suscriptores YouTube', image: '/cms/about-us/youtube-100k.png' },
   { cols: 12, md: 4, size: 'medium', year: '2026', caption: 'Primera tienda outlet Motomundi', image: 'https://cdn.motomundi.cl/Content/products/1/7/51/75190f7ffdcc4a599eb968b18636c9c3_org.jpeg' },
 ]
 </script>
@@ -169,14 +169,13 @@ const galleryImages = [
                 <span class="act-title">El Inicio</span>
               </div>
               <h2 class="chapter-heading">
-                Cuando una puerta<br />
+                Cuando una puerta<br>
                 se cierra,
                 <span class="text-brand">comienza la ruta.</span>
               </h2>
 
               <p class="chapter-body">
                 En 2018, Juan Carlos Fuentes perseguía una meta en Redmond: trabajar para Microsoft. Cuando la respuesta fue "no", volvió a Chile enfrentando un punto de inflexión personal.
-
               </p>
               <p class="chapter-body">
                 Para despejar la mente, compró una motocicleta. No fue solo un pasatiempo; fue su terapia. Pero al buscar equipamiento de calidad, descubrió un vacío enorme en el mercado chileno.
@@ -184,14 +183,6 @@ const galleryImages = [
               <p class="chapter-body">
                 Inspirado por el éxito digital de Revzilla en Estados Unidos, Juan Carlos encontró su camino: si no podía escribir código para Microsoft, construiría el mejor e-commerce de motociclismo en América Latina.
               </p>
-              <div class="quote-block">
-                <p class="quote-text">
-                  "Inspirar a la comunidad motociclista con productos excepcionales y un servicio que va más allá de la venta."
-                </p>
-                <p class="quote-attribution">
-                  — Juan Carlos Fuentes, Co-fundador
-                </p>
-              </div>
             </div>
           </VCol>
         </VRow>
@@ -260,58 +251,11 @@ const galleryImages = [
       </VContainer>
     </section>
 
-    <!--
-      ═══════════════════════════════════════════════
-      TIMELINE PIVOT
-      ═══════════════════════════════════════════════ 
-    -->
-    <section class="pivot-section">
-      <VContainer>
-        <div class="pivot-header">
-          <div class="pivot-eyebrow">
-            El Giro que lo Cambió Todo
-          </div>
-          <h2 class="pivot-heading">
-            DOS decisiones.<br><span class="text-brand">Un nuevo camino.</span>
-          </h2>
-        </div>
-        <div class="pivot-timeline">
-          <div
-            v-for="(step, i) in pivotSteps"
-            :key="i"
-            class="pivot-step"
-          >
-            <div class="pivot-step-icon-wrap">
-              <VIcon
-                :icon="step.icon"
-                size="28"
-                color="white"
-              />
-            </div>
-            <div class="pivot-step-content">
-              <div class="pivot-step-number">
-                Decisión {{ i + 1 }}
-              </div>
-              <h3 class="pivot-step-title">
-                {{ step.title }}
-              </h3>
-              <p class="pivot-step-body">
-                {{ step.body }}
-              </p>
-            </div>
-            <div
-              v-if="i < pivotSteps.length - 1"
-              class="pivot-connector"
-            />
-          </div>
-        </div>
-      </VContainer>
-    </section>
 
     <!--
       ═══════════════════════════════════════════════
-      ACTO III — La Transformación
-      ═══════════════════════════════════════════════ 
+      ACTO I — El Inicio
+      ═══════════════════════════════════════════════
     -->
     <section class="chapter-section chapter-section--light">
       <VContainer>
@@ -325,10 +269,18 @@ const galleryImages = [
             order-md="2"
           >
             <div class="chapter-image-wrap">
-              <VImg src="/cms/about-us/nueva-tienda.png" />
-
-              <div class="chapter-image-badge chapter-image-badge--alt">
-                Hoy
+              <div style="width: 170px; height: 700px;">
+                <iframe
+                  class="video-iframe"
+                  src="https://www.youtube.com/embed/gpicwQMKRD0"
+                  title="Motomundi celebra 100.000 suscriptores en YouTube"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                />
+              </div>
+              <div class="chapter-image-badge">
+                100K YouTube
               </div>
             </div>
           </VCol>
@@ -341,37 +293,32 @@ const galleryImages = [
               <div class="chapter-act-label">
                 <span class="act-number">03</span>
                 <span class="act-divider" />
-                <span class="act-title">La Transformación</span>
+                <span class="act-title">Construyendo una Comunidad</span>
               </div>
               <h2 class="chapter-heading">
-                Menos, pero<br>
-                <span class="text-brand">mucho mejor.</span>
+                No vendemos productos. Compartimos la ruta.
               </h2>
+
               <p class="chapter-body">
-                Dejar de vender motos fue una decisión difícil. Pero fue la correcta. Al concentrar toda nuestra energía y expertise en <strong>ropa y accesorios premium</strong>, Motomundi dejó de ser una tienda generalista para convertirse en el <strong>destino especializado</strong> de los riders chilenos que no transan en calidad.
+                Aprovechando el background tecnológico de Juan Carlos y una profunda pasión por contar historias, Motomundi apostó al contenido. Reviews honestas, bitácoras de viaje y guías técnicas convirtieron una tienda en una comunidad.
               </p>
               <p class="chapter-body">
-                La alianza estratégica con <strong>Motolife</strong> nos dio la fortaleza para seguir en carrera, y el enfoque nos dio la identidad. Hoy somos el retailer de equipamiento de motociclismo más grande de Chile — con las marcas más reconocidas del mundo bajo un mismo techo.
+                Hoy esa comunidad supera los 500.000 suscriptores en YouTube, siendo el corazón latente de la marca y la voz más influyente del motociclismo en América Latina.
               </p>
-              <div class="brand-badges">
-                <div
-                  v-for="badge in brandBadges"
-                  :key="badge"
-                  class="brand-badge"
-                >
-                  <VIcon
-                    icon="tabler-check-circle"
-                    size="16"
-                    color="#B21915"
-                  />
-                  <span>{{ badge }}</span>
-                </div>
+              <div class="quote-block">
+                <p class="quote-text">
+                  "Inspirar a la comunidad motociclista con productos excepcionales y un servicio que va más allá de la venta."
+                </p>
+                <p class="quote-attribution">
+                  — Juan Carlos Fuentes, Co-fundador
+                </p>
               </div>
             </div>
           </VCol>
         </VRow>
       </VContainer>
     </section>
+
 
     <!--
       ═══════════════════════════════════════════════
@@ -452,19 +399,28 @@ const galleryImages = [
       </VContainer>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-     YOUTUBE / COMUNIDAD
-═══════════════════════════════════════════ -->
+    <!--
+      ═══════════════════════════════════════════
+      YOUTUBE / COMUNIDAD
+      ═══════════════════════════════════════════ 
+    -->
     <section class="youtube-section py-16 py-md-20">
-      <v-container>
-        <v-row justify="center" class="mb-10">
-          <v-col cols="12" md="8" class="text-center">
+      <VContainer>
+        <VRow
+          justify="center"
+          class="mb-10"
+        >
+          <VCol
+            cols="12"
+            md="8"
+            class="text-center"
+          >
             <div class="yt-eyebrow mb-4">
-              <i class="ti ti-brand-youtube yt-icon"></i>
+              <i class="ti ti-brand-youtube yt-icon" />
               <span>MotomundiTV</span>
             </div>
             <h2 class="section-heading section-heading--light">
-              Medio millón de<br />razones para seguirnos.
+              Medio millón de<br>razones para seguirnos.
             </h2>
             <p class="yt-description mt-5">
               Nuestro canal de YouTube es el espacio donde la comunidad
@@ -472,12 +428,19 @@ const galleryImages = [
               guías técnicas y la voz más influyente del motociclismo en
               habla hispana.
             </p>
-          </v-col>
-        </v-row>
+          </VCol>
+        </VRow>
 
         <!-- Video embed -->
-        <v-row justify="center" class="mb-10">
-          <v-col cols="12" md="10" lg="8">
+        <VRow
+          justify="center"
+          class="mb-10"
+        >
+          <VCol
+            cols="12"
+            md="10"
+            lg="8"
+          >
             <div class="video-wrapper">
               <!--
                 REEMPLAZA "YOUTUBE_VIDEO_ID" con el ID real del video
@@ -492,28 +455,31 @@ const galleryImages = [
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
-              ></iframe>
+              />
             </div>
             <p class="video-caption text-center mt-4">
               🎉 Celebrando 500.000 suscriptores — ¡Gracias por ser parte de la ruta!
             </p>
-          </v-col>
-        </v-row>
+          </VCol>
+        </VRow>
 
         <!-- CTA YouTube -->
-        <v-row justify="center">
-          <v-col cols="12" class="text-center">
+        <VRow justify="center">
+          <VCol
+            cols="12"
+            class="text-center"
+          >
             <a
               href="https://www.youtube.com/@MotomundiTV"
               target="_blank"
               class="yt-cta-btn"
             >
-              <i class="ti ti-brand-youtube mr-2"></i>
+              <i class="ti ti-brand-youtube mr-2" />
               Suscríbete a MotomundiTV
             </a>
-          </v-col>
-        </v-row>
-      </v-container>
+          </VCol>
+        </VRow>
+      </VContainer>
     </section>
 
 
@@ -522,7 +488,10 @@ const galleryImages = [
       VALORES
       ═══════════════════════════════════════════════ 
     -->
-    <section class="values-section" style="display:none;">
+    <section
+      class="values-section"
+      style="display:none;"
+    >
       <VContainer>
         <div class="section-label section-label--light">
           Lo Que Nos Mueve
@@ -564,11 +533,16 @@ const galleryImages = [
       ═══════════════════════════════════════════════ 
     -->
     <section class="manifesto-section">
-      <div class="manifesto-image-placeholder" style="background-image: url('/cms/about-us/bg.jpg'); top: -100px;">
-      </div>
+      <div
+        class="manifesto-image-placeholder"
+        style="background-image: url('/cms/about-us/bg.jpg'); top: -100px;"
+      />
 
       <div class="manifesto-overlay" />
-      <div class="manifesto-content" astyle="background-image: url('/cms/about-us/bg.jpg');">
+      <div
+        class="manifesto-content"
+        astyle="background-image: url('/cms/about-us/bg.jpg');"
+      >
         <VContainer>
           <p class="manifesto-eyebrow">
             Por Qué Existimos
@@ -719,8 +693,8 @@ const galleryImages = [
   --radius: 0px;
   --surface-dark: #0f0f0f;
 }
-
 </style>
+
 <style scoped>
 /* ─── Design Tokens ─────────────────────────────── */
 
@@ -1400,6 +1374,4 @@ const galleryImages = [
   background: transparent;
   color: var(--brand);
 }
-
-
 </style>
