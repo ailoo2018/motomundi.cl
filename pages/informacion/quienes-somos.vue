@@ -449,14 +449,16 @@ const galleryImages = [
                 Ejemplo: si la URL es https://www.youtube.com/watch?v=abc123
                 reemplaza por: src="https://www.youtube.com/embed/abc123"
               -->
-              <iframe
+
+              <iframe src="https://drive.google.com/file/d/1AQEyjiADscoi-d-MlzzO5Xxu6I0hdelB/preview" class="video-iframe" allow="autoplay" allowfullscreen></iframe>
+<!--              <iframe
                 class="video-iframe"
                 src="https://www.youtube.com/embed/gpicwQMKRD0"
                 title="Motomundi celebra 100.000 suscriptores en YouTube"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
-              />
+              />-->
             </div>
             <p class="video-caption text-center mt-4">
               🎉 Celebrando 500.000 suscriptores — ¡Gracias por ser parte de la ruta!
@@ -634,7 +636,7 @@ const galleryImages = [
               ¿Eres rider?<br><span class="text-brand">Este es tu lugar.</span>
             </h2>
             <p class="cta-body">
-              Más de 6 años llevamos equipando a la comunidad motociclista de Chile con los mejores productos del mundo. Tu próxima aventura merece el mejor equipamiento.
+              Más de 18 años llevamos equipando a la comunidad motociclista de Chile con los mejores productos del mundo. Tu próxima aventura merece el mejor equipamiento.
             </p>
           </VCol>
           <VCol
