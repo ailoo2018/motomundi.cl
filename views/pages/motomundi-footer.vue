@@ -670,7 +670,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/cuenta/club-mi-motomundi"
+                      to="/account/club-mi-motomundi"
                       rel="nofollow"
                       class="mtc-link"
                     >
@@ -679,7 +679,7 @@
                   </li>
                   <li>
                     <NuxtLink
-                      to="/cuenta/invita-tus-amigxs"
+                      to="/account/invita-tus-amigxs"
                       class="mtc-link"
                     >
                       Invita a tus amigxs

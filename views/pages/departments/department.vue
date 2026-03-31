@@ -23,12 +23,40 @@ import OutletPromo from "@/views/pages/home/outlet-promo.vue"
 import LifestyleCategories from "@/views/pages/home/lifestyle-categories.vue"
 
 import Himalaya from "@/views/pages/home/himalaya.vue"
+import { Departments } from "@/models/index.js"
 
 const props = defineProps({
   wccId: {
     type: Number,
   },
 })
+
+
+let title = "Motomundi"
+if(props.wccId === Departments.Road){
+  title = "Motomundi | Calle"
+}
+if(props.wccId === Departments.CafeRacer){
+  title = "Motomundi | Café Racer"
+}
+if(props.wccId === Departments.LifestyleCategories){
+  title = "Motomundi | Lifestyle"
+}
+if(props.wccId === Departments.Mx){
+  title = "Motomundi | Motocross - Enduro"
+}
+
+
+useHead({
+  title: title,
+  meta: [
+    {
+      name: 'description',
+      content: 'Conoce la historia de cómo una frustración personal se convirtió en la tienda de equipamiento premium más grande de Chile.',
+    },
+  ],
+})
+
 
 
 

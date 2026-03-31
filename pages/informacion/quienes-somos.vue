@@ -1,4 +1,30 @@
 <script setup>
+useHead({
+  title: 'Nuestra Historia | Motomundi',
+  meta: [
+    {
+      name: 'description',
+      content: 'Conoce la historia de cómo una frustración personal se convirtió en la tienda de equipamiento premium más grande de Chile.',
+    },
+  ],
+})
+
+useSeoMeta({
+  title: 'Nuestra Historia | Motomundi',
+  description: 'Conoce la historia de cómo una frustración personal se convirtió en la tienda de equipamiento premium más grande de Chile.',
+
+  // Open Graph (Used by Facebook, WhatsApp, LinkedIn, etc.)
+  ogTitle: 'Nuestra Historia | Motomundi',
+  ogDescription: 'Conoce la historia de cómo una frustración personal se convirtió en la tienda de equipamiento premium más grande de Chile.',
+  ogImage: 'https://www.motomundi.cl/cms/about-us/nueva-tienda.png',
+
+  // Twitter / X
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Nuestra Historia | Motomundi',
+  twitterDescription: 'La historia de cómo una frustración personal se convirtió en la tienda de equipamiento premium más grande de Chile.',
+  twitterImage: 'https://www.motomundi.cl/cms/about-us/nueva-tienda.png',
+})
+
 const stats = [
   { number: '2018', label: 'Año de fundación' },
   { number: '#1', label: 'Retailer de equipamiento en Chile' },
@@ -269,7 +295,6 @@ const galleryImages = [
             order-md="2"
           >
             <div class="chapter-image-wrap">
-
               <div style="width: 170px; height: 700px;">
                 <iframe
                   class="video-iframe"
@@ -450,15 +475,22 @@ const galleryImages = [
                 reemplaza por: src="https://www.youtube.com/embed/abc123"
               -->
 
-              <iframe src="https://drive.google.com/file/d/1AQEyjiADscoi-d-MlzzO5Xxu6I0hdelB/preview" class="video-iframe" allow="autoplay" allowfullscreen></iframe>
-<!--              <iframe
+              <iframe
+                src="https://drive.google.com/file/d/1AQEyjiADscoi-d-MlzzO5Xxu6I0hdelB/preview"
+                class="video-iframe"
+                allow="autoplay"
+                allowfullscreen
+              />
+              <!--
+                <iframe
                 class="video-iframe"
                 src="https://www.youtube.com/embed/gpicwQMKRD0"
                 title="Motomundi celebra 100.000 suscriptores en YouTube"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
-              />-->
+                />
+              -->
             </div>
             <p class="video-caption text-center mt-4">
               🎉 Celebrando 500.000 suscriptores — ¡Gracias por ser parte de la ruta!
@@ -699,7 +731,6 @@ const galleryImages = [
 </style>
 
 <style scoped>
-
 .v-container {
   margin: 0 auto;
   width: 100%;

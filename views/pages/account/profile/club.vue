@@ -29,7 +29,7 @@
       </div>
     </div>
     <VBtn
-      @click="navigateTo('/cuenta/club-mi-motomundi')"
+      @click="navigateTo('/account/club-mi-motomundi')"
       rounded="0"
       color="#000"
     >Aprovecha las ventajas</VBtn>

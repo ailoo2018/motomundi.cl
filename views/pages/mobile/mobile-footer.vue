@@ -456,12 +456,12 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/cuenta/club-mi-motomundi" rel="nofollow" class="mtc-link">
+                    <NuxtLink to="/account/club-mi-motomundi" rel="nofollow" class="mtc-link">
                       Club MyMotomundi
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink to="/cuenta/invita-tus-amigxs" class="mtc-link">
+                    <NuxtLink to="/account/invita-tus-amigxs" class="mtc-link">
                       Invita a tus amigxs
                     </NuxtLink>
                   </li>

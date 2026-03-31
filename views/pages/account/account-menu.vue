@@ -139,7 +139,7 @@ const emit = defineEmits(['logout'])
     <li>
       <NuxtLink
         :class="route.path.includes('account/club') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
-        to="/account/club"
+        to="/account/club-mi-motomundi"
         :prefetch="false"
         class="mtc-link"
         rel="nofollow"

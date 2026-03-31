@@ -194,7 +194,7 @@ const loadMenu = (name, title, url) => {
       </li>
       <li>
         <NuxtLink
-          to="/cuenta/club-mi-motomundi"
+          to="/account/club-mi-motomundi"
           data-dr="true"
           class="mtc-link"
           rel="nofollow"
