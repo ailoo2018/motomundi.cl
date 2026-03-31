@@ -78,6 +78,7 @@ const locations = [
   'Tienda Viña del Mar',
   'Tienda La Serena',
   'Tienda Concepción',
+  'Tienda Outlet Quilicura',
   'Bodega Quilicura',
 ]
 

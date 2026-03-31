@@ -36,7 +36,10 @@
                 elevation="0"
                 href="#aplicar"
               >
-                <i class="ti tabler-rocket mr-2" />
+                <VIcon
+                  icon="tabler-rocket"
+                  class="mr-2"
+                />
                 Postular Ahora
               </VBtn>
               <VBtn
@@ -108,7 +111,7 @@
                 {{ String(i + 1).padStart(2, '0') }}
               </div>
               <div class="step-icon-wrap">
-                <i :class="`ti ${step.icon}`" />
+                <VIcon :icon="step.icon" />
               </div>
               <h3 class="step-title">
                 {{ step.title }}
@@ -122,7 +125,7 @@
               class="step-arrow"
               aria-hidden="true"
             >
-              <i class="ti tabler-chevron-right" />
+              <VIcon icon="tabler-chevron-right" />
             </div>
           </VCol>
         </VRow>
@@ -171,7 +174,7 @@
                 class="benefit-card"
               >
                 <div class="benefit-icon">
-                  <VIcon :icon="`${benefit.icon}`" />
+                  <VIcon :icon="benefit.icon" />
                 </div>
                 <div>
                   <div class="benefit-title">
@@ -193,8 +196,9 @@
       <VContainer>
         <div class="commission-banner">
           <div class="commission-left">
-            <i
-              class="ti tabler-chart-bar commission-icon"
+            <VIcon
+              icon="tabler-chart-bar"
+              class="commission-icon"
               aria-hidden="true"
             />
             <div>
@@ -208,8 +212,9 @@
           </div>
           <div class="commission-divider" />
           <div class="commission-right">
-            <i
-              class="ti tabler-cookie commission-icon"
+            <VIcon
+              icon="tabler-cookie"
+              class="commission-icon"
               aria-hidden="true"
             />
             <div>
@@ -247,7 +252,10 @@
             md="3"
           >
             <div class="profile-card">
-              <i :class="`ti ${profile.icon} profile-icon`" />
+              <VIcon
+                :icon="profile.icon"
+                class="profile-icon"
+              />
               <div class="profile-title">
                 {{ profile.title }}
               </div>
@@ -269,8 +277,9 @@
             md="7"
             class="text-center"
           >
-            <i
-              class="ti tabler-mail-forward contact-icon"
+            <VIcon
+              icon="tabler-mail-forward"
+              class="contact-icon"
               aria-hidden="true"
             />
             <h2 class="section-title">
@@ -287,7 +296,10 @@
               href="mailto:afiliados@motomundi.cl"
               elevation="0"
             >
-              <i class="ti tabler-mail mr-2" />
+              <VIcon
+                icon="tabler-mail"
+                class="mr-2"
+              />
               afiliados@motomundi.cl
             </VBtn>
           </VCol>
@@ -295,43 +307,382 @@
       </VContainer>
     </section>
 
-    <!-- ─── CTA POSTULAR ─────────────────────────────────────────── -->
+    <!-- ─── FORMULARIO DE POSTULACIÓN ────────────────────────────── -->
     <section
       id="aplicar"
       class="section-apply"
     >
       <VContainer>
-        <div class="apply-card">
-          <div class="apply-badge">
-            <i class="ti tabler-discount-check" /> Gratis y sin letra chica
-          </div>
-          <h2 class="apply-title">
-            ¡Únete hoy a la<br>comunidad Motomundi!
-          </h2>
-          <p class="apply-subtitle">
-            Miles de motociclistas confían en Motomundi. Ahora tú puedes ganar mientras
-            compartes esa pasión con tu audiencia.
-          </p>
-          <VBtn
-            size="x-large"
-            class="apply-cta-btn"
-            rounded="pill"
-            elevation="0"
-            href="mailto:afiliados@motomundi.cl?subject=Postulación%20Programa%20Afiliados"
+        <VRow justify="center">
+          <VCol
+            cols="12"
+            md="10"
+            lg="8"
           >
-            <i class="ti tabler-user-plus mr-2" />
-            Postularme como Afiliado
-          </VBtn>
-          <p class="apply-note">
-            <i class="ti tabler-lock" /> Tu información está segura. No compartimos tus datos con terceros.
-          </p>
-        </div>
+            <!-- Header -->
+            <div class="form-header text-center">
+              <div class="apply-badge">
+                <VIcon icon="tabler-discount-check" />
+                Gratis y sin letra chica
+              </div>
+              <h2 class="apply-title">
+                ¡Únete hoy a la<br>comunidad Motomundi!
+              </h2>
+              <p class="apply-subtitle">
+                Completa el formulario y nuestro equipo revisará tu postulación
+                en un plazo de 48–72 horas hábiles.
+              </p>
+            </div>
+
+            <!-- ── SUCCESS STATE ───────────────────────────────── -->
+            <Transition name="fade">
+              <div
+                v-if="formState === 'success'"
+                class="form-success"
+                ref="successRef"
+              >
+                <div class="success-icon-wrap">
+                  <VIcon
+                    icon="tabler-circle-check"
+                    class="success-icon"
+                  />
+                </div>
+                <h3 class="success-title">
+                  ¡Postulación enviada!
+                </h3>
+                <p class="success-text">
+                  Gracias por tu interés en el programa de afiliados de Motomundi.
+                  Revisaremos tu información y te contactaremos a la brevedad.
+                </p>
+                <VBtn
+                  class="success-btn"
+                  rounded="pill"
+                  elevation="0"
+                  @click="resetForm"
+                >
+                  Enviar otra postulación
+                </VBtn>
+              </div>
+            </Transition>
+
+            <!-- ── FORM ────────────────────────────────────────── -->
+            <Transition name="fade">
+              <div
+                v-if="formState !== 'success'"
+                class="form-card"
+              >
+                <!-- Global error alert -->
+                <VAlert
+                  v-if="formState === 'error'"
+                  type="error"
+                  variant="tonal"
+                  class="mb-6"
+                  rounded="lg"
+                  closable
+                  @click:close="formState = 'idle'"
+                >
+                  Ocurrió un error al enviar el formulario. Por favor intenta nuevamente.
+                </VAlert>
+
+                <VForm
+                  ref="formRef"
+                  @submit.prevent="submitForm"
+                >
+                  <!-- Section: Datos personales -->
+                  <div class="form-section-label">
+                    <VIcon icon="tabler-user" />
+                    Datos personales
+                  </div>
+
+                  <VRow>
+                    <VCol
+                      cols="12"
+                      sm="6"
+                    >
+                      <VTextField
+                        v-model="form.firstName"
+                        label="Nombre *"
+                        variant="outlined"
+                        rounded="lg"
+                        :rules="[rules.required]"
+                        :disabled="formState === 'loading'"
+                        class="form-field"
+                      />
+                    </VCol>
+                    <VCol
+                      cols="12"
+                      sm="6"
+                    >
+                      <VTextField
+                        v-model="form.lastName"
+                        label="Apellido *"
+                        variant="outlined"
+                        rounded="lg"
+                        :rules="[rules.required]"
+                        :disabled="formState === 'loading'"
+                        class="form-field"
+                      />
+                    </VCol>
+                    <VCol
+                      cols="12"
+                      sm="6"
+                    >
+                      <VTextField
+                        v-model="form.email"
+                        label="Correo electrónico *"
+                        type="email"
+                        variant="outlined"
+                        rounded="lg"
+                        :rules="[rules.required, rules.email]"
+                        :disabled="formState === 'loading'"
+                        class="form-field"
+                      />
+                    </VCol>
+                    <VCol
+                      cols="12"
+                      sm="6"
+                    >
+                      <VTextField
+                        v-model="form.phone"
+                        label="Teléfono / WhatsApp"
+                        variant="outlined"
+                        rounded="lg"
+                        placeholder="+56 9 XXXX XXXX"
+                        :disabled="formState === 'loading'"
+                        class="form-field"
+                      />
+                    </VCol>
+                  </VRow>
+
+                  <!-- Section: Tu canal / plataforma -->
+                  <div class="form-section-label form-section-label--gap">
+                    <VIcon icon="tabler-world" />
+                    Tu canal o plataforma
+                  </div>
+
+                  <VRow>
+                    <VCol
+                      cols="12"
+                      sm="6"
+                    >
+                      <VSelect
+                        v-model="form.channelType"
+                        label="Tipo de canal *"
+                        :items="channelTypes"
+                        variant="outlined"
+                        rounded="lg"
+                        :rules="[rules.required]"
+                        :disabled="formState === 'loading'"
+                        class="form-field"
+                      />
+                    </VCol>
+                    <VCol
+                      cols="12"
+                      sm="6"
+                    >
+                      <VSelect
+                        v-model="form.audienceSize"
+                        label="Tamaño de audiencia *"
+                        :items="audienceSizes"
+                        variant="outlined"
+                        rounded="lg"
+                        :rules="[rules.required]"
+                        :disabled="formState === 'loading'"
+                        class="form-field"
+                      />
+                    </VCol>
+                    <VCol cols="12">
+                      <VTextField
+                        v-model="form.channelUrl"
+                        label="URL de tu sitio web, canal o perfil principal *"
+                        variant="outlined"
+                        rounded="lg"
+                        placeholder="https://tu-sitio.cl"
+                        :rules="[rules.required, rules.url]"
+                        :disabled="formState === 'loading'"
+                        class="form-field"
+                      >
+                        <template #prepend-inner>
+                          <VIcon
+                            icon="tabler-link"
+                            size="18"
+                            class="mr-1"
+                          />
+                        </template>
+                      </VTextField>
+                    </VCol>
+                  </VRow>
+
+                  <!-- Section: Cuéntanos más -->
+                  <div class="form-section-label form-section-label--gap">
+                    <VIcon icon="tabler-message-2" />
+                    Cuéntanos más
+                  </div>
+
+                  <VRow>
+                    <VCol cols="12">
+                      <VTextarea
+                        v-model="form.message"
+                        label="¿Por qué quieres ser afiliado de Motomundi? *"
+                        variant="outlined"
+                        rounded="lg"
+                        rows="4"
+                        :rules="[rules.required, rules.minLength]"
+                        :disabled="formState === 'loading'"
+                        counter="500"
+                        maxlength="500"
+                        class="form-field"
+                        placeholder="Cuéntanos sobre tu audiencia, el tipo de contenido que produces y cómo planeas promover Motomundi..."
+                      />
+                    </VCol>
+                    <VCol cols="12">
+                      <VCheckbox
+                        v-model="form.acceptTerms"
+                        :rules="[rules.mustAccept]"
+                        :disabled="formState === 'loading'"
+                        color="error"
+                        class="terms-checkbox"
+                      >
+                        <template #label>
+                          <span class="terms-label">
+                            He leído y acepto los
+                            <a
+                              href="/terminos-afiliados"
+                              target="_blank"
+                              class="terms-link"
+                            >términos y condiciones</a>
+                            del Programa de Afiliados de Motomundi *
+                          </span>
+                        </template>
+                      </VCheckbox>
+                    </VCol>
+                  </VRow>
+
+                  <!-- Submit -->
+                  <div class="form-submit-row">
+                    <VBtn
+                      type="submit"
+                      size="x-large"
+                      class="submit-btn"
+                      rounded="pill"
+                      elevation="0"
+                      :loading="formState === 'loading'"
+                      :disabled="formState === 'loading'"
+                    >
+                      <VIcon
+                        icon="tabler-send"
+                        class="mr-2"
+                      />
+                      Enviar Postulación
+                    </VBtn>
+                    <p class="submit-note">
+                      <VIcon
+                        icon="tabler-lock"
+                        size="14"
+                      />
+                      Tu información está segura. No compartimos tus datos con terceros.
+                    </p>
+                  </div>
+                </VForm>
+              </div>
+            </Transition>
+          </VCol>
+        </VRow>
       </VContainer>
     </section>
   </div>
 </template>
 
 <script setup>
+const formRef = ref(null)
+
+const formState = ref('idle') // 'idle' | 'loading' | 'success' | 'error'
+const successRef = ref(null)
+
+const form = reactive({
+  firstName:    '',
+  lastName:     '',
+  email:        '',
+  phone:        '',
+  channelType:  null,
+  audienceSize: null,
+  channelUrl:   '',
+  message:      '',
+  acceptTerms:  false,
+})
+
+const channelTypes = [
+  'Blog / Sitio Web',
+  'YouTube',
+  'Instagram',
+  'TikTok',
+  'Facebook',
+  'Podcast',
+  'Foro / Comunidad',
+  'Otro',
+]
+
+const audienceSizes = [
+  'Menos de 1.000 seguidores',
+  '1.000 – 5.000 seguidores',
+  '5.000 – 20.000 seguidores',
+  '20.000 – 100.000 seguidores',
+  'Más de 100.000 seguidores',
+]
+
+const rules = {
+  required:   v => !!v || 'Este campo es obligatorio.',
+  email:      v => /.+@.+\..+/.test(v) || 'Ingresa un correo válido.',
+  url:        v => /^https?:\/\/.+/.test(v) || 'La URL debe comenzar con http:// o https://',
+  minLength:  v => (v && v.length >= 30) || 'Por favor escribe al menos 30 caracteres.',
+  mustAccept: v => !!v || 'Debes aceptar los términos y condiciones.',
+}
+
+async function submitForm() {
+  const { valid } = await formRef.value.validate()
+  if (!valid) return
+
+  formState.value = 'loading'
+
+  try {
+    const response = await $fetch('/api/contact/affiliate-apply', {
+      method: 'POST',
+      body: {
+        firstName:    form.firstName,
+        lastName:     form.lastName,
+        email:        form.email,
+        phone:        form.phone,
+        channelType:  form.channelType,
+        audienceSize: form.audienceSize,
+        channelUrl:   form.channelUrl,
+        message:      form.message,
+      },
+    })
+
+    if (response?.ok || response?.success || response?.id) {
+      formState.value = 'success'
+    } else {
+      formState.value = 'error'
+    }
+
+    await nextTick() // wait for the success element to mount
+    successRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+  } catch {
+    formState.value = 'error'
+  }
+}
+
+function resetForm() {
+  formRef.value?.reset()
+  Object.assign(form, {
+    firstName: '', lastName: '', email: '', phone: '',
+    channelType: null, audienceSize: null, channelUrl: '', message: '', acceptTerms: false,
+  })
+  formState.value = 'idle'
+}
+
+/* ── static page data ─────────────────────────────────────────── */
 const stats = [
   { number: '+10.000', label: 'Productos disponibles' },
   { number: '7%',      label: 'Comisión máxima' },
@@ -343,20 +694,17 @@ const steps = [
   {
     icon: 'tabler-link',
     title: 'Comparte tu enlace',
-    description:
-      'Coloca tu banner o enlace de afiliado en tu sitio web, blog, redes sociales o canal de YouTube.',
+    description: 'Coloca tu banner o enlace de afiliado en tu sitio web, blog, redes sociales o canal de YouTube.',
   },
   {
     icon: 'tabler-shopping-cart',
     title: 'Tu audiencia compra',
-    description:
-      'Cuando un visitante hace clic en tu enlace y realiza una compra en Motomundi, la venta queda registrada.',
+    description: 'Cuando un visitante hace clic en tu enlace y realiza una compra en Motomundi, la venta queda registrada.',
   },
   {
     icon: 'tabler-cash',
     title: 'Tú recibes tu comisión',
-    description:
-      'Recibes automáticamente una comisión sobre el valor de la venta. Simple, transparente y a tiempo.',
+    description: 'Recibes automáticamente una comisión sobre el valor de la venta. Simple, transparente y a tiempo.',
   },
 ]
 
@@ -420,13 +768,13 @@ const profiles = [
 <style scoped>
 /* ─── TOKENS ─────────────────────────────────────────────────── */
 .affiliate-page {
-  --brand:       #B21915;
-  --brand-dark:  #8a100d;
-  --brand-light: #fdf0ef;
+  --brand:          #B21915;
+  --brand-dark:     #8a100d;
+  --brand-light:    #fdf0ef;
   --text-primary:   #222;
   --text-secondary: #555555;
-  --border:      #e8e8e8;
-  --surface:     #f7f7f7;
+  --border:         #e8e8e8;
+  --surface:        #f7f7f7;
   color: var(--text-primary);
   background: #fff;
   overflow-x: hidden;
@@ -443,18 +791,16 @@ const profiles = [
 .hero-bg-pattern {
   position: absolute;
   inset: 0;
-  background-image:
-    repeating-linear-gradient(
-      45deg,
-      rgba(178,25,21,0.07) 0px,
-      rgba(178,25,21,0.07) 1px,
-      transparent 1px,
-      transparent 40px
-    );
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(178,25,21,0.07) 0px,
+    rgba(178,25,21,0.07) 1px,
+    transparent 1px,
+    transparent 40px
+  );
   pointer-events: none;
 }
 
-/* diagonal red slash */
 .hero-section::after {
   content: '';
   position: absolute;
@@ -493,11 +839,7 @@ const profiles = [
   letter-spacing: -0.03em;
 }
 
-.brand-text {
-  color: var(--brand);
-  display: inline-block;
-  position: relative;
-}
+.brand-text { color: var(--brand); }
 
 .hero-subtitle {
   font-size: 1.1rem;
@@ -531,10 +873,8 @@ const profiles = [
 }
 .learn-btn:hover { border-color: rgba(255,255,255,0.7) !important; }
 
-/* Stats */
 .stats-row { padding-top: 20px; gap: 0; }
-
-.stat-col { padding: 12px 8px; }
+.stat-col  { padding: 12px 8px; }
 
 .stat-number {
   font-size: 2rem;
@@ -591,13 +931,11 @@ const profiles = [
   background: #fff;
 }
 
-.steps-row { align-items: flex-start; position: relative; }
+.steps-row { align-items: flex-start; }
 
 .step-col {
   display: flex;
   align-items: flex-start;
-  gap: 0;
-  position: relative;
 }
 
 .step-card {
@@ -674,9 +1012,7 @@ const profiles = [
   background: var(--surface);
 }
 
-.benefits-left {
-  padding-right: 40px;
-}
+.benefits-left { padding-right: 40px; }
 
 .benefits-left .section-desc {
   margin: 0 0 24px;
@@ -777,8 +1113,10 @@ const profiles = [
 }
 
 .commission-icon {
-  font-size: 2.6rem;
-  color: var(--brand);
+  font-size: 2.6rem !important;
+  width:  2.6rem !important;
+  height: 2.6rem !important;
+  color: var(--brand) !important;
 }
 
 .commission-label {
@@ -796,9 +1134,7 @@ const profiles = [
   letter-spacing: -0.03em;
 }
 
-.commission-value strong {
-  color: var(--brand);
-}
+.commission-value strong { color: var(--brand); }
 
 .commission-divider {
   width: 1px;
@@ -807,7 +1143,7 @@ const profiles = [
 }
 
 @media (max-width: 599px) {
-  .commission-banner { padding: 36px 24px; gap: 32px; }
+  .commission-banner  { padding: 36px 24px; gap: 32px; }
   .commission-divider { width: 80px; height: 1px; }
 }
 
@@ -833,10 +1169,12 @@ const profiles = [
 }
 
 .profile-icon {
-  font-size: 2.2rem;
-  color: var(--brand);
+  font-size: 2.2rem !important;
+  width:  2.2rem !important;
+  height: 2.2rem !important;
+  color: var(--brand) !important;
   display: block;
-  margin-bottom: 16px;
+  margin: 0 auto 16px;
 }
 
 .profile-title {
@@ -859,15 +1197,15 @@ const profiles = [
 }
 
 .section-contact .section-title,
-.section-contact .section-desc {
-  text-align: center;
-}
+.section-contact .section-desc { text-align: center; }
 
 .contact-icon {
-  font-size: 3rem;
-  color: var(--brand);
+  font-size: 3rem !important;
+  width:  3rem !important;
+  height: 3rem !important;
+  color: var(--brand) !important;
   display: block;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
 }
 
 .contact-btn {
@@ -879,113 +1217,207 @@ const profiles = [
 }
 .contact-btn:hover { background: var(--brand-dark) !important; }
 
-/* ─── APPLY CTA ──────────────────────────────────────────────── */
+/* ─── APPLY / FORM SECTION ───────────────────────────────────── */
 .section-apply {
   padding: 80px 0 100px;
   background: #fff;
 }
 
-.apply-card {
-  background: var(--text-primary);
-  border-radius: 28px;
-  padding: 72px 48px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-/* subtle diagonal pattern */
-.apply-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(178,25,21,0.06) 0px,
-    rgba(178,25,21,0.06) 1px,
-    transparent 1px,
-    transparent 36px
-  );
-  pointer-events: none;
-}
-
-/* red accent strip top */
-.apply-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--brand);
-}
+.form-header { margin-bottom: 48px; }
 
 .apply-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(178,25,21,0.2);
-  color: #ff8f8c;
-  border: 1px solid rgba(178,25,21,0.4);
+  background: var(--brand-light);
+  color: var(--brand);
+  border: 1px solid rgba(178,25,21,0.2);
   border-radius: 999px;
   padding: 6px 16px;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 28px;
-  position: relative;
+  margin-bottom: 20px;
 }
 
 .apply-title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
   font-weight: 900;
-  color: #fff;
+  color: var(--text-primary);
   line-height: 1.1;
   letter-spacing: -0.03em;
-  margin-bottom: 20px;
-  position: relative;
+  margin-bottom: 16px;
 }
 
 .apply-subtitle {
   font-size: 1rem;
-  color: rgba(255,255,255,0.6);
+  color: var(--text-secondary);
   line-height: 1.7;
-  max-width: 480px;
-  margin: 0 auto 36px;
-  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
-.apply-cta-btn {
+/* Form card */
+.form-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 48px 44px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 599px) {
+  .form-card { padding: 28px 20px; }
+}
+
+/* Section labels inside form */
+.form-section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-section-label--gap { margin-top: 8px; }
+
+/* Vuetify field focus color override */
+.form-field :deep(.v-field--focused .v-field__outline) {
+  --v-field-border-color: var(--brand);
+}
+
+.form-field :deep(.v-label.v-field-label--floating) {
+  color: var(--brand);
+}
+
+/* Terms */
+.terms-checkbox :deep(.v-selection-control) {
+  align-items: flex-start;
+}
+
+.terms-label {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.terms-link {
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Submit */
+.form-submit-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.submit-btn {
   background: var(--brand) !important;
   color: #fff !important;
   font-weight: 800 !important;
   font-size: 1rem !important;
-  padding: 0 44px !important;
-  letter-spacing: 0.02em;
-  position: relative;
+  padding: 0 48px !important;
+  min-width: 260px;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
 }
-.apply-cta-btn:hover {
+.submit-btn:hover {
   background: var(--brand-dark) !important;
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(178,25,21,0.45) !important;
+  box-shadow: 0 10px 28px rgba(178,25,21,0.35) !important;
 }
 
-.apply-note {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.35);
-  margin-top: 20px;
+.submit-note {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: #aaa;
+  margin: 0;
+}
+
+/* Success state */
+.form-success {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 72px 48px;
+  text-align: center;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 599px) {
+  .form-success { padding: 48px 24px; }
+}
+
+.success-icon-wrap {
+  width: 80px;
+  height: 80px;
+  background: var(--brand-light);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  position: relative;
+  margin: 0 auto 24px;
+}
+
+.success-icon {
+  font-size: 2.4rem !important;
+  width:  2.4rem !important;
+  height: 2.4rem !important;
+  color: var(--brand) !important;
+}
+
+.success-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+}
+
+.success-text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 440px;
+  margin: 0 auto 32px;
+}
+
+.success-btn {
+  background: var(--surface) !important;
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* ─── TRANSITIONS ─────────────────────────────────────────────── */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(12px);
 }
 
 /* ─── UTILITIES ──────────────────────────────────────────────── */
 .mr-2 { margin-right: 6px; }
-
-/* tabler icon sizing */
-.ti { font-size: inherit; line-height: inherit; }
+.mr-1 { margin-right: 4px; }
 </style>
