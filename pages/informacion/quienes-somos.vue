@@ -699,6 +699,11 @@ const galleryImages = [
 </style>
 
 <style scoped>
+
+.v-container {
+  margin: 0 auto;
+  width: 100%;
+}
 /* ─── Design Tokens ─────────────────────────────── */
 
 /* ─── Global ─────────────────────────────────────── */
