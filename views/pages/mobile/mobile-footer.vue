@@ -421,7 +421,7 @@
                 <span class="h3">ACERCA DE Motomundi</span>
                 <ul>
                   <li>
-                    <NuxtLink to="/quienes-somos" class="mtc-link">
+                    <NuxtLink to="/informacion/quienes-somos" class="mtc-link">
                       Quiénes somos
                     </NuxtLink>
                   </li>

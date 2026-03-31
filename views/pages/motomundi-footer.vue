@@ -613,7 +613,7 @@
                 <ul>
                   <li>
                     <NuxtLink
-                      to="/quienes-somos"
+                      to="/informacion/quienes-somos"
                       class="mtc-link"
                     >
                       Quiénes somos
