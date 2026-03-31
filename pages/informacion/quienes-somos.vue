@@ -408,7 +408,10 @@ const galleryImages = [
                   Co-fundador & CEO
                 </p>
                 <p class="founder-bio">
-                  Motociclista por pasión, emprendedor por convicción. Juan Carlos transformó su frustración como consumidor en el negocio que ningún rider chileno sabía que necesitaba. Su filosofía: si no existe, créalo.
+                  Programador de corazón, motociclista por convicción. Después
+                  de un "no" que cambió su vida, construyó el e-commerce de
+                  motociclismo más importante de Chile, combinando tecnología
+                  con una genuina pasión por el motociclismo.
                 </p>
               </div>
             </div>
@@ -434,7 +437,10 @@ const galleryImages = [
                   Co-fundadora & Directora de Operaciones
                 </p>
                 <p class="founder-bio">
-                  La fortaleza operacional detrás de Motomundi. Paulina construyó los cimientos que permitieron que el sueño se convirtiera en la empresa líder que es hoy, navegando cada desafío con resiliencia y visión.
+                  La fuerza operacional detrás de Motomundi. Paulina transformó
+                  una pequeña tienda en Las Condes en una red de 8 puntos de
+                  venta, construyendo el estándar de servicio que hoy define a
+                  la marca en toda América Latina.
                 </p>
               </div>
             </div>
@@ -443,12 +449,77 @@ const galleryImages = [
       </VContainer>
     </section>
 
+    <!-- ═══════════════════════════════════════════
+     YOUTUBE / COMUNIDAD
+═══════════════════════════════════════════ -->
+    <section class="youtube-section py-16 py-md-20">
+      <v-container>
+        <v-row justify="center" class="mb-10">
+          <v-col cols="12" md="8" class="text-center">
+            <div class="yt-eyebrow mb-4">
+              <i class="ti ti-brand-youtube yt-icon"></i>
+              <span>MotomundiTV</span>
+            </div>
+            <h2 class="section-heading section-heading--light">
+              Medio millón de<br />razones para seguirnos.
+            </h2>
+            <p class="yt-description mt-5">
+              Nuestro canal de YouTube es el espacio donde la comunidad
+              Motomundi cobra vida. Reviews honestas, aventuras en ruta,
+              guías técnicas y la voz más influyente del motociclismo en
+              habla hispana.
+            </p>
+          </v-col>
+        </v-row>
+
+        <!-- Video embed -->
+        <v-row justify="center" class="mb-10">
+          <v-col cols="12" md="10" lg="8">
+            <div class="video-wrapper">
+              <!--
+                REEMPLAZA "YOUTUBE_VIDEO_ID" con el ID real del video
+                de celebración 100K suscriptores.
+                Ejemplo: si la URL es https://www.youtube.com/watch?v=abc123
+                reemplaza por: src="https://www.youtube.com/embed/abc123"
+              -->
+              <iframe
+                class="video-iframe"
+                src="https://www.youtube.com/embed/gpicwQMKRD0"
+                title="Motomundi celebra 100.000 suscriptores en YouTube"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <p class="video-caption text-center mt-4">
+              🎉 Celebrando 100.000 suscriptores — ¡Gracias por ser parte de la ruta!
+            </p>
+          </v-col>
+        </v-row>
+
+        <!-- CTA YouTube -->
+        <v-row justify="center">
+          <v-col cols="12" class="text-center">
+            <a
+              href="https://www.youtube.com/@MotomundiTV"
+              target="_blank"
+              class="yt-cta-btn"
+            >
+              <i class="ti ti-brand-youtube mr-2"></i>
+              Suscríbete a MotomundiTV
+            </a>
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
+
+
     <!--
       ═══════════════════════════════════════════════
       VALORES
       ═══════════════════════════════════════════════ 
     -->
-    <section class="values-section">
+    <section class="values-section" style="display:none;">
       <VContainer>
         <div class="section-label section-label--light">
           Lo Que Nos Mueve
@@ -643,6 +714,7 @@ const galleryImages = [
   --grey-border: #e0e0e0;
   --white: #ffffff;
   --radius: 0px;
+  --surface-dark: #0f0f0f;
 }
 
 </style>
@@ -1251,4 +1323,80 @@ const galleryImages = [
   font-size: 0.88rem;
   height: 52px;
 }
+
+
+/* ══════════════════════════════════════
+   YOUTUBE SECTION
+══════════════════════════════════════ */
+.youtube-section {
+  background: var(--surface-dark);
+}
+
+.yt-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.yt-icon {
+  font-size: 1.4rem;
+  color: var(--brand);
+}
+
+.yt-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.65);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  background: #000;
+  border: 2px solid var(--brand);
+}
+
+.video-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-caption {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.yt-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  background: var(--brand);
+  color: var(--white);
+  text-decoration: none;
+  padding: 14px 32px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 2px solid var(--brand);
+  transition: background 0.2s, color 0.2s;
+}
+
+.yt-cta-btn:hover {
+  background: transparent;
+  color: var(--brand);
+}
+
+
 </style>
