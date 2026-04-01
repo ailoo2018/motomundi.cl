@@ -1,261 +1,3 @@
-<template>
-  <div class="invite-page">
-
-    <!-- ── HERO BANNER ── -->
-    <section class="hero-section">
-      <div class="hero-bg-pattern" />
-      <v-container class="hero-content py-10 py-md-16">
-        <v-row align="center" justify="center">
-          <v-col cols="12" md="6" class="text-center text-md-left">
-            <div class="hero-eyebrow mb-3">
-              <i class="ti tabler-motorcycle" style="font-size:1.1rem" />
-              <span class="ms-2">Programa de Referidos</span>
-            </div>
-            <h1 class="hero-title mb-4">
-              Invita a un amigo<br />
-              <span class="hero-title--accent">y ganen juntos</span>
-            </h1>
-            <p class="hero-subtitle mb-0">
-              Comparte tu pasión por las motos y obtén recompensas exclusivas cada vez que
-              un amigo hace su primera compra en Motomundi.
-            </p>
-          </v-col>
-          <v-col cols="12" md="6" class="d-flex justify-center justify-md-end mt-8 mt-md-0">
-            <div class="rewards-cards-stack">
-              <!-- Friend card -->
-              <div class="reward-card reward-card--friend">
-                <div class="reward-card__icon-wrap">
-                  <i class="ti tabler-user-plus" />
-                </div>
-                <div>
-                  <div class="reward-card__label">Tu amigo recibe</div>
-                  <div class="reward-card__amount">$10.000</div>
-                  <div class="reward-card__sub">en su primera compra desde $100.000</div>
-                </div>
-              </div>
-              <!-- You card -->
-              <div class="reward-card reward-card--you">
-                <div class="reward-card__icon-wrap">
-                  <i class="ti tabler-wallet" />
-                </div>
-                <div>
-                  <div class="reward-card__label">Tú recibes</div>
-                  <div class="reward-card__amount">$20.000</div>
-                  <div class="reward-card__sub">cuando tu amigo compra</div>
-                </div>
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
-    <v-container class="mt-n4 pb-16">
-
-      <!-- ── HOW IT WORKS ── -->
-      <v-row justify="center" class="mb-12">
-        <v-col cols="12">
-          <div class="section-label text-center mb-6">
-            <span>¿Cómo funciona?</span>
-          </div>
-          <v-row justify="center" class="steps-row">
-            <v-col cols="12" sm="4" v-for="(step, i) in steps" :key="i" class="text-center">
-              <div class="step-bubble mx-auto mb-4">
-                <i :class="`ti ${step.icon}`" />
-                <span class="step-number">{{ i + 1 }}</span>
-              </div>
-              <h3 class="step-title mb-2">{{ step.title }}</h3>
-              <p class="step-desc">{{ step.desc }}</p>
-              <div v-if="i < steps.length - 1" class="step-connector d-none d-sm-block" />
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-
-      <!-- ── COUPON BOX ── -->
-      <v-row justify="center" class="mb-12">
-        <v-col cols="12" md="8" lg="7">
-          <div class="coupon-box">
-            <div class="coupon-box__header">
-              <i class="ti tabler-ticket me-2" />
-              Tu cupón personal
-            </div>
-
-            <!-- State: no code yet -->
-            <div v-if="!userCode" class="coupon-box__empty">
-              <i class="ti tabler-qrcode coupon-box__empty-icon" />
-              <p class="mb-6">Aún no tienes un cupón generado.<br />Presiona el botón para crear el tuyo.</p>
-              <v-btn
-                color="#B21915"
-                size="large"
-                rounded="lg"
-                :loading="generating"
-                class="generate-btn"
-                @click="generateCode"
-              >
-                <i class="ti tabler-sparkles me-2" />
-                Crear Cupón
-              </v-btn>
-            </div>
-
-            <!-- State: code generated -->
-            <div v-else class="coupon-box__code-wrap">
-              <div class="coupon-dashes">
-                <span v-for="n in 4" :key="n" class="coupon-dash" />
-              </div>
-              <div class="coupon-code-display">
-                <span class="coupon-code-text">{{ userCode }}</span>
-                <v-btn
-                  :icon="copied ? 'mdi-check' : undefined"
-                  variant="text"
-                  size="small"
-                  class="copy-btn"
-                  :color="copied ? 'success' : '#B21915'"
-                  @click="copyCode"
-                >
-                  <i v-if="!copied" class="ti tabler-copy" style="font-size:1.2rem" />
-                  <i v-else class="ti tabler-check" style="font-size:1.2rem" />
-                </v-btn>
-              </div>
-              <div class="coupon-dashes">
-                <span v-for="n in 4" :key="n" class="coupon-dash" />
-              </div>
-
-              <v-slide-y-transition>
-                <div v-if="copied" class="copied-feedback mt-2">
-                  <i class="ti tabler-circle-check me-1" />
-                  ¡Copiado al portapapeles!
-                </div>
-              </v-slide-y-transition>
-
-              <div class="share-section mt-6">
-                <p class="share-label mb-3">Comparte tu cupón</p>
-                <div class="share-buttons">
-                  <v-btn
-                    v-for="channel in shareChannels"
-                    :key="channel.label"
-                    variant="outlined"
-                    rounded="lg"
-                    size="small"
-                    class="share-btn me-2 mb-2"
-                    :style="`--ch-color: ${channel.color}`"
-                    @click="share(channel)"
-                  >
-                    <i :class="`ti ${channel.icon} me-1`" />
-                    {{ channel.label }}
-                  </v-btn>
-                </div>
-              </div>
-            </div>
-          </div>
-        </v-col>
-      </v-row>
-
-      <!-- ── FRIENDS LIST ── -->
-      <v-row justify="center" class="mb-12">
-        <v-col cols="12" md="10" lg="9">
-          <div class="section-label mb-6">
-            <span>Mis amigos referidos</span>
-          </div>
-
-          <div v-if="friends.length === 0" class="empty-friends">
-            <i class="ti tabler-users empty-friends__icon" />
-            <p>Aún ninguno de tus amigos ha usado tu cupón.<br />¡Compártelo y empieza a ganar!</p>
-          </div>
-
-          <div v-else>
-            <div class="friends-summary mb-6">
-              <div class="friends-summary__stat">
-                <i class="ti tabler-users me-2" />
-                <span>{{ friends.length }} amigos referidos</span>
-              </div>
-              <div class="friends-summary__stat friends-summary__stat--earned">
-                <i class="ti tabler-coin me-2" />
-                <span>{{ formatCLP(totalEarned) }} ganados</span>
-              </div>
-            </div>
-
-            <v-table class="friends-table">
-              <thead>
-              <tr>
-                <th>Amigo</th>
-                <th>Fecha de compra</th>
-                <th>Estado</th>
-                <th class="text-right">Crédito obtenido</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="friend in friends" :key="friend.id">
-                <td>
-                  <div class="friend-name-cell">
-                    <div class="friend-avatar">{{ friend.name[0] }}</div>
-                    <span>{{ friend.name }}</span>
-                  </div>
-                </td>
-                <td class="text-medium-emphasis">{{ friend.date }}</td>
-                <td>
-                  <v-chip
-                    size="small"
-                    :color="friend.status === 'Acreditado' ? 'success' : 'warning'"
-                    variant="tonal"
-                    rounded="lg"
-                  >
-                    <i
-                      :class="`ti ${friend.status === 'Acreditado' ? 'tabler-circle-check' : 'tabler-clock'} me-1`"
-                      style="font-size:.85rem"
-                    />
-                    {{ friend.status }}
-                  </v-chip>
-                </td>
-                <td class="text-right">
-                    <span :class="friend.status === 'Acreditado' ? 'earned-amount' : 'text-medium-emphasis'">
-                      {{ friend.status === 'Acreditado' ? formatCLP(friend.earned) : '—' }}
-                    </span>
-                </td>
-              </tr>
-              </tbody>
-            </v-table>
-          </div>
-        </v-col>
-      </v-row>
-
-      <!-- ── FAQ ── -->
-      <v-row justify="center">
-        <v-col cols="12" md="10" lg="8">
-          <div class="section-label mb-6">
-            <span>Preguntas frecuentes</span>
-          </div>
-          <v-expansion-panels variant="accordion" class="faq-panels">
-            <v-expansion-panel
-              v-for="(item, i) in faq"
-              :key="i"
-              class="faq-panel"
-              rounded="lg"
-            >
-              <v-expansion-panel-title class="faq-question">
-                <div class="d-flex align-center">
-                  <span class="faq-q-icon me-3"><i class="ti tabler-help-circle" /></span>
-                  {{ item.q }}
-                </div>
-              </v-expansion-panel-title>
-              <v-expansion-panel-text class="faq-answer">
-                {{ item.a }}
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </v-col>
-      </v-row>
-
-    </v-container>
-
-    <!-- ── SNACKBAR ── -->
-    <v-snackbar v-model="snackbar.show" :color="snackbar.color" rounded="lg" timeout="3000" location="bottom right">
-      <i :class="`ti ${snackbar.icon} me-2`" />
-      {{ snackbar.text }}
-    </v-snackbar>
-  </div>
-</template>
-
 <script setup>
 import { ref, computed } from 'vue'
 
@@ -273,20 +15,22 @@ const snackbar   = ref({ show: false, color: '', text: '', icon: '' })
 
 // ── Mock friends data ──────────────────────────────────────────────────────
 const friends = ref([
-  { id: 1, name: 'Camila Rodríguez', date: '12 Mar 2025', status: 'Acreditado',  earned: 20000 },
+ /* { id: 1, name: 'Camila Rodríguez', date: '12 Mar 2025', status: 'Acreditado',  earned: 20000 },
   { id: 2, name: 'Sebastián Muñoz',  date: '28 Feb 2025', status: 'Acreditado',  earned: 20000 },
-  { id: 3, name: 'Felipe Torres',    date: '05 Abr 2025', status: 'En proceso',  earned: 0     },
+  { id: 3, name: 'Felipe Torres',    date: '05 Abr 2025', status: 'En proceso',  earned: 0     },*/
 ])
 
 const totalEarned = computed(() =>
-  friends.value.filter(f => f.status === 'Acreditado').reduce((s, f) => s + f.earned, 0)
+  friends.value.filter(f => f.status === 'Acreditado').reduce((s, f) => s + f.earned, 0),
 )
 
 // ── Generate code ──────────────────────────────────────────────────────────
 async function generateCode() {
   generating.value = true
   await new Promise(r => setTimeout(r, 1200))
+
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+
   userCode.value = 'MOTO' + Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
   generating.value = false
   showSnack('¡Tu cupón ha sido creado con éxito!', 'success', 'tabler-sparkles')
@@ -306,11 +50,11 @@ async function copyCode() {
 // ── Share ──────────────────────────────────────────────────────────────────
 const shareChannels = [
   { label: 'WhatsApp',  icon: 'tabler-brand-whatsapp', color: '#25D366',
-    url: (c) => `https://wa.me/?text=${encodeURIComponent(`¡Usa mi cupón ${c} en Motomundi y obtén $10.000 de descuento en tu primera compra! 🏍️ www.motomundi.cl`)}` },
+    url: c => `https://wa.me/?text=${encodeURIComponent(`¡Usa mi cupón ${c} en Motomundi y obtén $10.000 de descuento en tu primera compra! 🏍️ www.motomundi.cl`)}` },
   { label: 'Instagram', icon: 'tabler-brand-instagram', color: '#E1306C',
     url: () => null },
   { label: 'Copiar link', icon: 'tabler-link', color: '#B21915',
-    url: (c) => `https://www.motomundi.cl/?coupon=${c}` },
+    url: c => `https://www.motomundi.cl/?coupon=${c}` },
 ]
 
 function share(channel) {
@@ -344,36 +88,406 @@ const steps = [
 const faq = [
   {
     q: '¿Cuándo vence mi cupón personalizado?',
-    a: 'Tu cupón personalizado no tiene fecha de vencimiento; puedes compartirlo cuando quieras. ¡Compártelo y difunde nuestra pasión por las motos!'
+    a: 'Tu cupón personalizado no tiene fecha de vencimiento; puedes compartirlo cuando quieras. ¡Compártelo y difunde nuestra pasión por las motos!',
   },
   {
     q: '¿Con quién puedo compartir mi cupón?',
-    a: 'Puedes compartir tu cupón con cualquier amigo, familiar, compañero de trabajo o seguidor en redes sociales que no haya comprado anteriormente en Motomundi. Si la persona ya ha comprado en Motomundi, no podrá utilizar el cupón.'
+    a: 'Puedes compartir tu cupón con cualquier amigo, familiar, compañero de trabajo o seguidor en redes sociales que no haya comprado anteriormente en Motomundi. Si la persona ya ha comprado en Motomundi, no podrá utilizar el cupón.',
   },
   {
     q: '¿A cuántos amigos puedo enviar mi cupón?',
-    a: 'Comparte tu cupón con todas las personas que quieras. No hay límite.'
+    a: 'Comparte tu cupón con todas las personas que quieras. No hay límite.',
   },
   {
     q: '¿Cuándo recibiré el descuento cuando alguien use mi cupón?',
-    a: 'Recibirás $20.000 de descuento cuando alguien realice su primera compra en Motomundi usando tu cupón. Te enviaremos un correo electrónico con tu cupón de descuento.'
+    a: 'Recibirás $20.000 de descuento cuando alguien realice su primera compra en Motomundi usando tu cupón. Te enviaremos un correo electrónico con tu cupón de descuento.',
   },
   {
     q: '¿Puedo usar varios cupones de descuento a la vez?',
-    a: 'No. Solo puedes aplicar un cupón de descuento en cada compra que realices en Motomundi.'
+    a: 'No. Solo puedes aplicar un cupón de descuento en cada compra que realices en Motomundi.',
   },
   {
     q: '¿Cuándo puedo usar mi cupón de descuento?',
-    a: 'Puedes usarlo en el momento en que recibas el correo electrónico con tu cupón de recompensa. Podrás utilizarlo en tu próxima compra realizada dentro de los 15 días siguientes a partir de que recibas el correo.'
+    a: 'Puedes usarlo en el momento en que recibas el correo electrónico con tu cupón de recompensa. Podrás utilizarlo en tu próxima compra realizada dentro de los 15 días siguientes a partir de que recibas el correo.',
   },
   {
     q: '¿Puedo usar mi cupón en una tienda física de Motomundi?',
-    a: 'Si eres la persona que recibe el cupón para realizar tu primera compra, solo podrás canjearlo en nuestra web. Sin embargo, el cupón que recibes cuando tu amigo se une al club y realiza una compra puede utilizarse tanto en tiendas físicas como en nuestra web.'
+    a: 'Si eres la persona que recibe el cupón para realizar tu primera compra, solo podrás canjearlo en nuestra web. Sin embargo, el cupón que recibes cuando tu amigo se une al club y realiza una compra puede utilizarse tanto en tiendas físicas como en nuestra web.',
   },
 ]
 </script>
 
+<template>
+  <div class="invite-page">
+    <!-- ── HERO BANNER ── -->
+    <section class="hero-section">
+      <div class="hero-bg-pattern" />
+      <VContainer class="hero-content py-10 py-md-16">
+        <VRow
+          align="center"
+          justify="center"
+        >
+          <VCol
+            cols="12"
+            md="6"
+            class="text-center text-md-left"
+          >
+            <div class="hero-eyebrow mb-3">
+              <i
+                class="ti tabler-motorcycle"
+                style="font-size:1.1rem"
+              />
+              <span class="ms-2">Programa de Referidos</span>
+            </div>
+            <h1 class="hero-title mb-4">
+              Invita a un amigo<br>
+              <span class="hero-title--accent">y ganen juntos</span>
+            </h1>
+            <p class="hero-subtitle mb-0">
+              Comparte tu pasión por las motos y obtén recompensas exclusivas cada vez que
+              un amigo hace su primera compra en Motomundi.
+            </p>
+          </VCol>
+          <VCol
+            cols="12"
+            md="6"
+            class="d-flex justify-center justify-md-end mt-8 mt-md-0"
+          >
+            <div class="rewards-cards-stack">
+              <!-- Friend card -->
+              <div class="reward-card reward-card--friend">
+                <div class="reward-card__icon-wrap">
+                  <i class="ti tabler-user-plus" />
+                </div>
+                <div>
+                  <div class="reward-card__label">
+                    Tu amigo recibe
+                  </div>
+                  <div class="reward-card__amount">
+                    $10.000
+                  </div>
+                  <div class="reward-card__sub">
+                    en su primera compra desde $100.000
+                  </div>
+                </div>
+              </div>
+              <!-- You card -->
+              <div class="reward-card reward-card--you">
+                <div class="reward-card__icon-wrap">
+                  <i class="ti tabler-wallet" />
+                </div>
+                <div>
+                  <div class="reward-card__label">
+                    Tú recibes
+                  </div>
+                  <div class="reward-card__amount">
+                    $20.000
+                  </div>
+                  <div class="reward-card__sub">
+                    cuando tu amigo compra
+                  </div>
+                </div>
+              </div>
+            </div>
+          </VCol>
+        </VRow>
+      </VContainer>
+    </section>
+
+    <VContainer class="mt-n4 pb-16">
+      <!-- ── HOW IT WORKS ── -->
+      <VRow
+        justify="center"
+        class="mb-12"
+      >
+        <VCol cols="12">
+          <div class="section-label d-flex justify-center mt-6 mb-8">
+            <span>¿Cómo funciona?</span>
+          </div>
+          <VRow
+            justify="center"
+            class="steps-row"
+          >
+            <VCol
+              v-for="(step, i) in steps"
+              cols="12"
+              :key="i"
+              sm="4"
+              class="text-center"
+            >
+              <div class="step-bubble mx-auto mb-4">
+                <i :class="`ti ${step.icon}`" />
+                <span class="step-number">{{ i + 1 }}</span>
+              </div>
+              <h3 class="step-title mb-2">
+                {{ step.title }}
+              </h3>
+              <p class="step-desc">
+                {{ step.desc }}
+              </p>
+
+            </VCol>
+          </VRow>
+        </VCol>
+      </VRow>
+
+      <!-- ── COUPON BOX ── -->
+      <VRow
+        justify="center"
+        class="mb-12"
+      >
+        <VCol
+          cols="12"
+          md="8"
+          lg="7"
+        >
+          <div class="coupon-box">
+            <div class="coupon-box__header">
+              <i class="ti tabler-ticket me-2" />
+              Tu cupón personal
+            </div>
+
+            <!-- State: no code yet -->
+            <div
+              v-if="!userCode"
+              class="coupon-box__empty"
+            >
+              <i class="ti tabler-qrcode coupon-box__empty-icon" />
+              <p class="mb-6">
+                Aún no tienes un cupón generado.<br>Presiona el botón para crear el tuyo.
+              </p>
+              <VBtn
+                color="#B21915"
+                size="large"
+                rounded="0"
+                :loading="generating"
+                class="generate-btn"
+                @click="generateCode"
+              >
+                <i class="tabler-sparkles me-2" />
+                Crear Cupón
+              </VBtn>
+            </div>
+
+            <!-- State: code generated -->
+            <div
+              v-else
+              class="coupon-box__code-wrap"
+            >
+              <div class="coupon-dashes">
+                <span
+                  v-for="n in 4"
+                  :key="n"
+                  class="coupon-dash"
+                />
+              </div>
+              <div class="coupon-code-display">
+                <span class="coupon-code-text">{{ userCode }}</span>
+                <VBtn
+                  :icon="copied ? 'mdi-check' : undefined"
+                  variant="text"
+                  size="small"
+                  class="copy-btn"
+                  :color="copied ? 'success' : '#B21915'"
+                  @click="copyCode"
+                >
+                  <i
+                    v-if="!copied"
+                    class="ti tabler-copy"
+                    style="font-size:1.2rem"
+                  />
+                  <i
+                    v-else
+                    class="ti tabler-check"
+                    style="font-size:1.2rem"
+                  />
+                </VBtn>
+              </div>
+              <div class="coupon-dashes">
+                <span
+                  v-for="n in 4"
+                  :key="n"
+                  class="coupon-dash"
+                />
+              </div>
+
+              <VSlideYTransition>
+                <div
+                  v-if="copied"
+                  class="copied-feedback mt-2"
+                >
+                  <i class="ti tabler-circle-check me-1" />
+                  ¡Copiado al portapapeles!
+                </div>
+              </VSlideYTransition>
+
+              <div class="share-section mt-6">
+                <p class="share-label mb-3">
+                  Comparte tu cupón
+                </p>
+                <div class="share-buttons">
+                  <VBtn
+                    v-for="channel in shareChannels"
+                    :key="channel.label"
+                    variant="outlined"
+                    rounded="lg"
+                    size="small"
+                    class="share-btn me-2 mb-2"
+                    :style="`--ch-color: ${channel.color}`"
+                    @click="share(channel)"
+                  >
+                    <i :class="`ti ${channel.icon} me-1`" />
+                    {{ channel.label }}
+                  </VBtn>
+                </div>
+              </div>
+            </div>
+          </div>
+        </VCol>
+      </VRow>
+
+      <!-- ── FRIENDS LIST ── -->
+      <VRow
+        justify="center"
+        class="mb-12"
+      >
+        <VCol
+          cols="12"
+          md="10"
+          lg="9"
+        >
+          <div class="section-label mb-6">
+            <span>Mis amigos referidos</span>
+          </div>
+
+          <div
+            v-if="friends.length === 0"
+            class="empty-friends"
+          >
+            <i class="ti tabler-users empty-friends__icon" />
+            <p>Aún ninguno de tus amigos ha usado tu cupón.<br>¡Compártelo y empieza a ganar!</p>
+          </div>
+
+          <div v-else>
+            <div class="friends-summary mb-6">
+              <div class="friends-summary__stat">
+                <i class="ti tabler-users me-2" />
+                <span>{{ friends.length }} amigos referidos</span>
+              </div>
+              <div class="friends-summary__stat friends-summary__stat--earned">
+                <i class="ti tabler-coin me-2" />
+                <span>{{ formatCLP(totalEarned) }} ganados</span>
+              </div>
+            </div>
+
+            <VTable class="friends-table">
+              <thead>
+                <tr>
+                  <th>Amigo</th>
+                  <th>Fecha de compra</th>
+                  <th>Estado</th>
+                  <th class="text-right">
+                    Crédito obtenido
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="friend in friends"
+                  :key="friend.id"
+                >
+                  <td>
+                    <div class="friend-name-cell">
+                      <div class="friend-avatar">
+                        {{ friend.name[0] }}
+                      </div>
+                      <span>{{ friend.name }}</span>
+                    </div>
+                  </td>
+                  <td class="text-medium-emphasis">
+                    {{ friend.date }}
+                  </td>
+                  <td>
+                    <VChip
+                      size="small"
+                      :color="friend.status === 'Acreditado' ? 'success' : 'warning'"
+                      variant="tonal"
+                      rounded="lg"
+                    >
+                      <i
+                        :class="`ti ${friend.status === 'Acreditado' ? 'tabler-circle-check' : 'tabler-clock'} me-1`"
+                        style="font-size:.85rem"
+                      />
+                      {{ friend.status }}
+                    </VChip>
+                  </td>
+                  <td class="text-right">
+                    <span :class="friend.status === 'Acreditado' ? 'earned-amount' : 'text-medium-emphasis'">
+                      {{ friend.status === 'Acreditado' ? formatCLP(friend.earned) : '—' }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </VTable>
+          </div>
+        </VCol>
+      </VRow>
+
+      <!-- ── FAQ ── -->
+      <VRow justify="center">
+        <VCol
+          cols="12"
+          md="10"
+          lg="8"
+        >
+          <div class="section-label mb-6">
+            <span>Preguntas frecuentes</span>
+          </div>
+          <VExpansionPanels
+            variant="accordion"
+            class="faq-panels"
+          >
+            <VExpansionPanel
+              v-for="(item, i) in faq"
+              :key="i"
+              class="faq-panel"
+              rounded="lg"
+            >
+              <VExpansionPanelTitle class="faq-question">
+                <div class="d-flex align-center">
+                  <span class="faq-q-icon me-3"><i class="ti tabler-help-circle" /></span>
+                  {{ item.q }}
+                </div>
+              </VExpansionPanelTitle>
+              <VExpansionPanelText class="faq-answer">
+                {{ item.a }}
+              </VExpansionPanelText>
+            </VExpansionPanel>
+          </VExpansionPanels>
+        </VCol>
+      </VRow>
+    </VContainer>
+
+    <!-- ── SNACKBAR ── -->
+    <VSnackbar
+      v-model="snackbar.show"
+      :color="snackbar.color"
+      rounded="lg"
+      timeout="3000"
+      location="bottom right"
+    >
+      <i :class="`ti ${snackbar.icon} me-2`" />
+      {{ snackbar.text }}
+    </VSnackbar>
+  </div>
+</template>
+
+
 <style scoped>
+
+.v-container {
+  width: 100%;
+}
 /* ── PAGE BASE ─────────────────────────────────────────────────────────── */
 .invite-page {
   --brand:       #B21915;
@@ -617,7 +731,7 @@ const faq = [
 
 /* ── COUPON BOX ─────────────────────────────────────────────────────────── */
 .coupon-box {
-  border-radius: 20px;
+  border-radius: 0px;
   border: 2px solid #ebebeb;
   overflow: hidden;
   background: #fff;
@@ -625,7 +739,7 @@ const faq = [
 }
 
 .coupon-box__header {
-  background: #1a1a1a;
+  background: #222;
   color: #fff;
   padding: 14px 24px;
   font-weight: 700;
