@@ -15,9 +15,9 @@ const snackbar   = ref({ show: false, color: '', text: '', icon: '' })
 
 // ── Mock friends data ──────────────────────────────────────────────────────
 const friends = ref([
- /* { id: 1, name: 'Camila Rodríguez', date: '12 Mar 2025', status: 'Acreditado',  earned: 20000 },
+  { id: 1, name: 'Camila Rodríguez', date: '12 Mar 2025', status: 'Acreditado',  earned: 20000 },
   { id: 2, name: 'Sebastián Muñoz',  date: '28 Feb 2025', status: 'Acreditado',  earned: 20000 },
-  { id: 3, name: 'Felipe Torres',    date: '05 Abr 2025', status: 'En proceso',  earned: 0     },*/
+  { id: 3, name: 'Felipe Torres',    date: '05 Abr 2025', status: 'En proceso',  earned: 0     },
 ])
 
 const totalEarned = computed(() =>
@@ -410,7 +410,7 @@ const faq = [
                   <td>
                     <VChip
                       size="small"
-                      :color="friend.status === 'Acreditado' ? 'success' : 'warning'"
+                      :color="friend.status === 'Acreditado' ? 'success' : '#b2b21f'"
                       variant="tonal"
                       rounded="lg"
                     >
@@ -881,7 +881,7 @@ const faq = [
 }
 
 .friends-table {
-  border-radius: 14px !important;
+  
   overflow: hidden;
   border: 1px solid #ebebeb !important;
 }

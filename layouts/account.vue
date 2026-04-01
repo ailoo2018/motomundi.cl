@@ -12,6 +12,9 @@ import AccountMenu from "@/views/pages/account/account-menu.vue"
 import MobileHeader from "@/views/pages/mobile/mobile-header.vue"
 import { getHeader } from "h3"
 import AppLoader from "@/components/AppLoader.vue"
+import MobileFooter from "@/views/pages/mobile/mobile-footer.vue"
+import NewsletterSignUp from "@/views/pages/home/NewsletterSignUp.vue"
+import YoutubeLatest from "@/views/pages/home/youtube-latest.vue"
 
 
 const { injectSkinClasses } = useSkins()
@@ -68,6 +71,10 @@ onMounted(() => {
         <div class="home-container account__content">
           <slot />
         </div>
+        <NewsletterSignUp />
+        <YoutubeLatest />
+        <MobileFooter/>
+
       </section>
     </main>
   </div>
