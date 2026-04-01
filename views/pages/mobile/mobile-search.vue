@@ -59,7 +59,7 @@ watchDebounced(
           filters.value = null
         }
 
-        search(false)
+        await search(false)
 
       } catch (e) {
         console.error("Search error:", e)
@@ -68,7 +68,7 @@ watchDebounced(
       products.value = []
     }
   },
-  { debounce: 300, maxWait: 1000 }, // Configurable delay
+  { debounce: 300, maxWait: 100 }, // Configurable delay
 )
 
 
