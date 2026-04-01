@@ -745,7 +745,7 @@ const galleryImages = [
 /* ─── Hero ───────────────────────────────────────── */
 .hero-section {
   position: relative;
-  height: min(90vh, 720px);
+  height: min(90vh, 520px);
 
   min-height: 480px;
   display: flex;
