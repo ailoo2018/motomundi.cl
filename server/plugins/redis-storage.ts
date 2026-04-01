@@ -20,6 +20,13 @@ export default defineNitroPlugin(async () => {
       ttl: 600,
       useUnlink: false,
       retryStrategy: (times) => Math.min(times * 50, 2000),
+
+      // Add these:
+      keepAlive: 5000,          // send TCP keepalive every 5s
+      connectTimeout: 3000,     // fail fast instead of hanging 10s+
+      lazyConnect: false,       // connect immediately at startup
+      enableOfflineQueue: true, // queue commands during reconnect
+      maxRetriesPerRequest: 3,  // don't retry forever
     }))
 
     console.log('✅ Redis cache driver mounted')

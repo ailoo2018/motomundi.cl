@@ -12,13 +12,14 @@ const props = defineProps({
   },
 })
 
-const loading = ref(false)
+
 const isFilterDrawerOpen = ref(false)
 
 const {
   products,
   title,
   total,
+  loading,
   queryDesc,
   currentPage,
   totalPages,
