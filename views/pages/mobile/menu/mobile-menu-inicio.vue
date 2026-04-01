@@ -192,6 +192,7 @@ const loadMenu = (name, title, url) => {
           > <span>Tiendas</span>
         </NuxtLink>
       </li>
+<!--
       <li>
         <NuxtLink
           to="/account/club-mi-motomundi"
@@ -207,6 +208,7 @@ const loadMenu = (name, title, url) => {
           <span>MiMotomundi</span>
         </NuxtLink>
       </li>
+-->
 
       <li>
         <NuxtLink

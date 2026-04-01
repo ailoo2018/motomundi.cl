@@ -668,7 +668,7 @@
                       Embajadores
                     </NuxtLink>
                   </li>
-                  <li>
+<!--                  <li>
                     <NuxtLink
                       to="/account/club-mi-motomundi"
                       rel="nofollow"
@@ -676,7 +676,7 @@
                     >
                       Club MyMotomundi
                     </NuxtLink>
-                  </li>
+                  </li>-->
                   <li>
                     <NuxtLink
                       to="/account/invita-tus-amigxs"

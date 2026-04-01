@@ -20,6 +20,15 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: '%s - Tu Mundo Sobre Las DOS Ruedas',
       title: 'Motomundi',
+      htmlAttrs: {
+        lang: 'es-CL' // Or just 'es'
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        // Hint to Chrome and Search Engines
+        { name: 'language', content: 'Spanish' }
+      ],
       link: [{
         rel: 'icon',
         type: 'image/x-icon',
@@ -63,10 +72,6 @@ export default defineNuxtConfig({
   routeRules: {
 
 
-
-
-
-   /* '/!**': createCachedRoute('all'),*/
     '/': createCachedRoute('homepage', (60 * 60) * 2),
     '/cafe-racer': createCachedRoute('cafe-racer', (60 * 60) * 2),
     '/motocross-enduro-trial': createCachedRoute('motocross', (60 * 60) * 2 ),

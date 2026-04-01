@@ -455,11 +455,11 @@
                       Embajadores
                     </NuxtLink>
                   </li>
-                  <li>
+<!--                  <li>
                     <NuxtLink to="/account/club-mi-motomundi" rel="nofollow" class="mtc-link">
                       Club MyMotomundi
                     </NuxtLink>
-                  </li>
+                  </li>-->
                   <li>
                     <NuxtLink to="/account/invita-tus-amigxs" class="mtc-link">
                       Invita a tus amigxs

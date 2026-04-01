@@ -136,7 +136,7 @@ const emit = defineEmits(['logout'])
         Mis favoritos
       </NuxtLink>
     </li>
-    <li>
+<!--    <li>
       <NuxtLink
         :class="route.path.includes('account/club') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
         to="/account/club-mi-motomundi"
@@ -152,7 +152,7 @@ const emit = defineEmits(['logout'])
         >
         Club Motomundi
       </NuxtLink>
-    </li>
+    </li>-->
     <li>
       <NuxtLink
         :class="route.path.includes('account/invita') ? 'nuxt-link-exact-active nuxt-link-active' : ''"
