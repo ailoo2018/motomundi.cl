@@ -96,10 +96,7 @@ const galleryImages = [
     -->
     <section class="hero-section">
       <div class="hero-image-placeholder">
-        <VImg
-          src="/cms/about-us/nueva-tienda.png"
-          cover
-        />
+
       </div>
       <div class="hero-overlay" />
       <div class="hero-content">
@@ -596,7 +593,7 @@ const galleryImages = [
             class="manifesto-cta"
             elevation="0"
             rounded="0"
-            href="/tienda"
+            href="/"
           >
             <VIcon
               icon="mdi-store-outline"
@@ -683,13 +680,13 @@ const galleryImages = [
               elevation="0"
               rounded="0"
               block
-              href="/tienda"
+              href="/tiendas"
             >
               <VIcon
                 icon="tabler-helmet"
                 class="mr-2"
               />
-              Ver Catálogo Completo
+              Ver Tiendas
             </VBtn>
             <VBtn
               variant="outlined"
@@ -715,7 +712,7 @@ const galleryImages = [
 </template>
 
 
-<style>
+<style lang="scss">
 :root {
   --brand: #B21915;
   --brand-dark: #8a120e;
@@ -749,13 +746,22 @@ const galleryImages = [
 .hero-section {
   position: relative;
   height: min(90vh, 720px);
+
   min-height: 480px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
+
+  @media (max-width: 900px){
+    height: 480px;
+  }
+
 }
+
+
+
 .hero-image-placeholder {
   position: absolute;
   inset: 0;
@@ -763,7 +769,17 @@ const galleryImages = [
   display: flex;
   align-items: flex-end;
 
+
+  background-image: url('/cms/about-us/nueva-tienda.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+
 }
+
+
+
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -843,6 +859,7 @@ const galleryImages = [
   background: #B21915;
 }
 .stat-number {
+  margin-left: 4px;
   font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   font-weight: 900;
   color: #ffffff;
