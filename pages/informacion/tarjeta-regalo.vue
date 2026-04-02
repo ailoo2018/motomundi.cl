@@ -179,6 +179,11 @@ import {
   IconChevronDown,
 } from '@tabler/icons-vue'
 
+useHead({
+  title: "Tarjetas de Regalo Motomundi",
+})
+
+
 const ventajas = [
   {
     icon: IconAdjustmentsAlt,

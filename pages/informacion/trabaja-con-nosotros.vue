@@ -20,6 +20,11 @@ import {
   IconCircleCheck,
 } from '@tabler/icons-vue'
 
+useHead({
+  title: "Trabaja con Nostros",
+})
+
+
 // ─── Benefits ───────────────────────────────────────────────────────────────
 const benefits = [
   {

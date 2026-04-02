@@ -29,58 +29,58 @@ onMounted(() => {
                   class="brands-container owl-carousel swiper-wrapper"
                 >
                   <swiper-slide class="brand swiper-slide swiper-slide-prev">
-                    <img src="https://cf-cdn.motocard.com/cdn-cgi/image/w=270,h=340,q=91,fit=cover,f=auto/brands/road/bg-77.jpg" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-77.avif" loading="lazy" class="background">
                     <h3>
-                      <a href="/alpinestars"><img src="https://cf-cdn.motocard.com/brands/logo-77.svg" alt="alpinestars" loading="lazy" class="logo"></a>
+                      <NuxtLink to="/alpinestars"><img src="/cms/brands/logo-77.svg" alt="alpinestars" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="https://cf-cdn.motocard.com/cdn-cgi/image/w=270,h=340,q=91,fit=cover,f=auto/brands/road/bg-78.jpg" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-78.avif" loading="lazy" class="background">
                     <h3>
-                      <a href="/shoei"><img src="https://cf-cdn.motocard.com/brands/logo-78.svg" alt="shoei" loading="lazy" class="logo"></a>
+                      <NuxtLink to="/shoei"><img src="/cms/brands/logo-78.svg" alt="shoei" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="https://cf-cdn.motocard.com/cdn-cgi/image/w=270,h=340,q=91,fit=cover,f=auto/brands/road/bg-79.jpg" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-79.avif" loading="lazy" class="background">
                     <h3>
-                      <a href="/dainese"><img src="https://cf-cdn.motocard.com/brands/logo-79.svg" alt="dainese" loading="lazy" class="logo"></a>
+                      <NuxtLink to="/dainese"><img src="/cms/brands/logo-79.svg" alt="dainese" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="https://cf-cdn.motocard.com/cdn-cgi/image/w=270,h=340,q=91,fit=cover,f=auto/brands/road/bg-82.jpg" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-82.avif" loading="lazy" class="background">
                     <h3>
-                      <a href="/agv"><img src="https://cf-cdn.motocard.com/brands/logo-82.svg" alt="agv" loading="lazy" class="logo"></a>
+                      <NuxtLink to="/agv"><img src="/cms/brands/logo-82.svg" alt="agv" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="https://cf-cdn.motocard.com/cdn-cgi/image/w=270,h=340,q=91,fit=cover,f=auto/brands/road/bg-86.jpg" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-86.avif" loading="lazy" class="background">
                     <h3>
-                      <a href="/kappa"><img src="https://cf-cdn.motocard.com/brands/logo-86.svg" alt="givi" loading="lazy" class="logo"></a>
+                      <NuxtLink to="/givi"><img src="/cms/brands/logo-86.svg" alt="givi" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="https://cf-cdn.motocard.com/cdn-cgi/image/w=270,h=340,q=91,fit=cover,f=auto/brands/road/bg-106.jpg" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-106.avif" loading="lazy" class="background">
                     <h3>
-                      <a href="/shark"><img src="https://cf-cdn.motocard.com/brands/logo-106.svg" alt="shark" loading="lazy" class="logo"></a>
+                      <NuxtLink to="/shark"><img src="/cms/brands/logo-106.svg" alt="shark" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="https://cf-cdn.motocard.com/cdn-cgi/image/w=270,h=340,q=91,fit=cover,f=auto/brands/road/bg-293.jpg" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-293.avif" loading="lazy" class="background">
                     <h3>
-                      <a href="/hjc"><img src="https://cf-cdn.motocard.com/brands/logo-293.svg" alt="hjc" loading="lazy" class="logo"></a>
+                      <NuxtLink to="/hjc"><img src="/cms/brands/logo-293.svg" alt="hjc" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="https://cf-cdn.motocard.com/cdn-cgi/image/w=270,h=340,q=91,fit=cover,f=auto/brands/road/bg-83.jpg" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-83.avif" loading="lazy" class="background">
                     <h3>
-                      <a href="/arai"><img src="https://cf-cdn.motocard.com/brands/logo-83.svg" alt="arai" loading="lazy" class="logo"></a>
+                      <NuxtLink to="/arai"><img src="/cms/brands/logo-83.svg" alt="arai" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
                 </swiper-container>

@@ -217,7 +217,7 @@ const getTotalPoints = () => {
           </div>
           <a
             class="cart-summary__conditions-link mtc-link"
-            href="/terminos-y-condiciones"
+            href="/informacion/terminos-y-condiciones"
           >Condiciones de la compra</a>
         </div>
       </div>

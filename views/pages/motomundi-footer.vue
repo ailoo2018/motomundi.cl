@@ -551,7 +551,7 @@
             <ul class="legal-menu">
               <li>
                 <NuxtLink
-                  to="https://www.motomundi.cl/terminos-y-condiciones"
+                  to="/informacion/terminos-y-condiciones"
                   rel="nofollow"
                   class="mtc-link"
                 >
@@ -560,7 +560,7 @@
               </li>
               <li>
                 <NuxtLink
-                  to="/terminos-y-condiciones.html?open=privacy-policy"
+                  to="/informacion/terminos-y-condiciones?open=privacy-policy"
                   rel="nofollow"
                   class="mtc-link"
                 >
@@ -569,7 +569,7 @@
               </li>
               <li>
                 <NuxtLink
-                  to="/terminos-y-condiciones.html?open=cookies-policy"
+                  to="/informacion/terminos-y-condiciones?open=cookies-policy"
                   rel="nofollow"
                   class="mtc-link"
                 >

@@ -78,7 +78,7 @@ const values = [
 const galleryImages = [
   { cols: 12, md: 6, size: 'medium', year: '2008', caption: 'La primera tienda en calle Bocaccio, Las Condes', image: "/cms/about-us/tienda-laura-de-noves.jpg" },
   { cols: 12, md: 6, size: 'medium', year: '2011', caption: 'Representantes oficiales de AGV en Chile', image: '/cms/about-us/agv.jpg' },
-  { cols: 12, md: 4, size: 'medium', year: '2018', caption: 'Mega tienda de 350 mt2 en Las Condes', image: '/cms/about-us/nueva-tienda.png' },
+  { cols: 12, md: 4, size: 'medium', year: '2018', caption: 'Mega tienda de 350 mt2 en Las Condes', image: '/cms/about-us/nueva-tienda.jpg' },
   { cols: 12, md: 4, size: 'medium', year: '2020', caption: 'Auspicio WSBK de Maxi Scheib', image: '/cms/about-us/maxi.jpg' },
   { cols: 12, md: 4, size: 'medium', year: '2023', caption: 'Evento Moto Viajeros en Motomundi', image: '/cms/about-us/evento-influencers.jpg' },
   { cols: 12, md: 4, size: 'medium', year: '2024', caption: '100K suscriptores YouTube', image: '/cms/about-us/youtube-100k.png' },
@@ -770,7 +770,7 @@ const galleryImages = [
   align-items: flex-end;
 
 
-  background-image: url('/cms/about-us/nueva-tienda.png');
+  background-image: url('/cms/about-us/nueva-tienda.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

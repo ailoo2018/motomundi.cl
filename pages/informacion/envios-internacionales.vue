@@ -251,6 +251,10 @@ import {
   IconClock,
 } from '@tabler/icons-vue'
 
+useHead({
+  title: "Envíos Internacionales | Motomundi",
+})
+
 const deliveryInfo = [
   {
     icon: IconClock,

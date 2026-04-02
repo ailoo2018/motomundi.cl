@@ -594,6 +594,11 @@
 </template>
 
 <script setup>
+
+useHead({
+  title: "Programa de Afiliados | Motomundi",
+})
+
 const formRef = ref(null)
 
 const formState = ref('idle') // 'idle' | 'loading' | 'success' | 'error'

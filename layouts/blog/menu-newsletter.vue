@@ -222,7 +222,7 @@
           Podrás revocar cualquier consentimiento y modificar tus datos cuando
           quieras y con efecto inmediato desde tu panel de usuario. Para más
           información consulta nuestra <a
-            href="/terminos-y-condiciones.html?open=privacy-policy"
+            href="/informacion/terminos-y-condiciones?open=privacy-policy"
             target="_blank"
           >política de privacidad.</a>
         </p>             <a

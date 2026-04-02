@@ -22,7 +22,7 @@ const emailForm = ref({})
         <span>
                 Quiero recibir comunicaciones comerciales por parte de MOTOMUNDI SPA.
                 <a
-                  href="/terminos-y-condiciones.html?open=privacy-policy"
+                  href="/informacion/terminos-y-condiciones"
                   target="_blank"
                   rel="nofollow"
                 ><svg
@@ -40,7 +40,7 @@ const emailForm = ref({})
         type="checkbox"
       > <span>Quiero personalizar mis ofertas en función de mis intereses personales, preferencias y uso de vuestros servicios.
               <a
-                href="/terminos-y-condiciones.html?open=privacy-policy"
+                href="/informacion/terminos-y-condiciones"
                 target="_blank"
                 rel="nofollow"
               ><svg

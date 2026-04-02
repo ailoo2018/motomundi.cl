@@ -475,7 +475,7 @@ defineExpose({ getPaymentInfo, validate, pay })
             >Acepto las
               <a
                 target="_blank"
-                href="https://www.motomundi.cl/terminos-y-condiciones?open=sales-terms"
+                href="/informacion/terminos-y-condiciones?open=sales-terms"
               >condiciones</a>
               de compra de MOTOMUNDI SPA que incluyen el tratamiento de datos personales para ese fin.</label>
           </div>

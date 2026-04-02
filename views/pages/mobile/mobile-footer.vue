@@ -374,17 +374,17 @@
             />
             <ul class="legal-menu">
               <li>
-                <NuxtLink to="https://www.motomundi.cl/terminos-y-condiciones" rel="nofollow" class="mtc-link">
+                <NuxtLink to="/informacion/terminos-y-condiciones" rel="nofollow" class="mtc-link">
                   Términos y condiciones
                 </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="/terminos-y-condiciones.html?open=privacy-policy" rel="nofollow" class="mtc-link">
+                <NuxtLink to="/informacion/terminos-y-condiciones?open=privacy-policy" rel="nofollow" class="mtc-link">
                   Política de privacidad
                 </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="/terminos-y-condiciones.html?open=cookies-policy" rel="nofollow" class="mtc-link">
+                <NuxtLink to="/informacion/terminos-y-condiciones?open=cookies-policy" rel="nofollow" class="mtc-link">
                   Política de cookies
                 </NuxtLink>
               </li>

@@ -327,7 +327,7 @@ onMounted(async () => {
 
             <div class="checkout__terms-and-conditions">
               <a
-                href="https://www.motomundi.cl/terminos-y-condiciones?open=purchase-terms"
+                href="/informacion/terminos-y-condiciones?open=purchase-terms"
                 data-dr="false"
                 target="_blank" rel="noopener noreferrer"
                 class="mtc-link"
@@ -335,7 +335,7 @@ onMounted(async () => {
                 Condiciones de la compra
               </a>
               <a
-                href="/terminos-y-condiciones?open=privacy-policy"
+                href="/informacion/terminos-y-condiciones?open=privacy-policy"
                 data-dr="false"
                 target="_blank"
                 class="mtc-link"

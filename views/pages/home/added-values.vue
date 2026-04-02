@@ -70,7 +70,7 @@ onMounted(() => {
               </li>
               <li>
                 <a
-                  href="/terminos-y-condiciones-precio-minimo-garantizado"
+                  href="/informacion/politica-de-precios"
                   class="mtc-link"
                 >
                   <svg
