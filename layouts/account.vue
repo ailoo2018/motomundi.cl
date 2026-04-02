@@ -71,11 +71,10 @@ onMounted(() => {
         <div class="home-container account__content">
           <slot />
         </div>
-        <NewsletterSignUp />
-        <YoutubeLatest />
-        <MobileFooter/>
-
       </section>
+      <NewsletterSignUp />
+      <YoutubeLatest />
+      <MobileFooter/>
     </main>
   </div>
   <!-- /mobile -->

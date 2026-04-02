@@ -544,192 +544,7 @@
               </div>
             </div>
           </aside>
-          <nav class="footer-nav">
-            <div class="footer-nav__block">
-              <div class="footer-nav__menu">
-                <span class="h3">INFORMACIÓN DE PEDIDOS</span>
-                <ul>
-                  <li>
-
-                    <NuxtLink
-                      to="/informacion/gastos-de-envio"
-                      rel="nofollow"
-                      class="mtc-link"
-                    >
-                      Gastos de envío
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/informacion/plazos-de-entrega"
-                      rel="nofollow"
-                      class="mtc-link"
-                    >
-                      Plazos de entrega
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/informacion/formas-de-pago"
-                      rel="nofollow"
-                      class="mtc-link"
-                    >
-                      Formas de pago
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/informacion/cambios-y-devoluciones"
-                      class="mtc-link"
-                    >
-                      Cambios, devoluciones y garantías
-                    </NuxtLink>
-                  </li>
-
-                  <li>
-                    <NuxtLink
-                      to="/informacion/politica-de-precios"
-                      rel="nofollow"
-                      class="mtc-link"
-                    >
-                      Política de precios
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/informacion/guia-de-tallas"
-                      class="mtc-link"
-                    >
-                      Guías de tallas
-                    </NuxtLink>
-                  </li>
-
-                </ul>
-              </div>
-            </div>
-            <div class="footer-nav__block">
-              <div class="footer-nav__menu">
-                <span class="h3">ACERCA DE Motomundi</span>
-                <ul>
-                  <li>
-                    <NuxtLink
-                      to="/informacion/quienes-somos"
-                      class="mtc-link"
-                    >
-                      Quiénes somos
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/calendario"
-                      class="mtc-link"
-                    >
-                      Eventos
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/tiendas"
-                      class="mtc-link"
-                    >
-                      Tiendas
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/contactenos"
-                      class="mtc-link"
-                    >
-                      Contáctanos
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/informacion/afiliados"
-                      class="mtc-link"
-                    >
-                      Programa de Afiliados
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/informacion/trabaja-con-nosotros"
-                      class="mtc-link"
-                    >
-                      Trabaja con nosotros
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/embajadores"
-                      rel="nofollow"
-                      class="mtc-link"
-                    >
-                      Embajadores
-                    </NuxtLink>
-                  </li>
-<!--                  <li>
-                    <NuxtLink
-                      to="/account/club-mi-motomundi"
-                      rel="nofollow"
-                      class="mtc-link"
-                    >
-                      Club MyMotomundi
-                    </NuxtLink>
-                  </li>-->
-                  <li>
-                    <NuxtLink
-                      to="/account/invita-tus-amigxs"
-                      class="mtc-link"
-                    >
-                      Invita a tus amigxs
-                    </NuxtLink>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="footer-nav__block">
-              <div class="footer-nav__menu">
-                <span class="h3">SERVICIOS</span>
-                <ul>
-                  <li>
-                    <NuxtLink
-                      to="/informacion/politica-de-precios"
-                      rel="nofollow"
-                      class="mtc-link"
-                    >
-                      Precio mínimo garantizado
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/login"
-                      rel="nofollow"
-                      class="mtc-link"
-                    >
-                      Registro de usuarios
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/informacion/tarjeta-regalo"
-                      class="mtc-link"
-                    >
-                      Tarjeta regalo
-                    </NuxtLink>
-                  </li>
-                  <li>
-                    <NuxtLink
-                      to="/ayuda"
-                      class="mtc-link"
-                    >
-                      Ayuda
-                    </NuxtLink>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
+          <FooterNav />
         </div>
         <aside class="col s12 l12 footer-secondary">
           <div class="footer-secondary__block">
@@ -762,20 +577,13 @@
                 </NuxtLink>
               </li>
             </ul>
-            <div
-              class="change-locale-desktop-container show-on-medium-and-up"
-              data-v-12a116bb=""
-            >
-              <ul
-                class="lang-currency"
-                data-v-12a116bb=""
-              >
-                <li data-v-12a116bb="">
+            <div class="change-locale-desktop-container show-on-medium-and-up">
+              <ul class="lang-currency">
+                <li>
                   <svg
                     height="11"
                     width="11"
                     xmlns="http://www.w3.org/2000/svg"
-                    data-v-12a116bb=""
                   >
                     <g
                       fill="none"
@@ -784,24 +592,16 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width=".72"
-                      data-v-12a116bb=""
                     >
-                      <path
-                        d="M8.682 2.318a4.5 4.5 0 11-6.364 6.364 4.5 4.5 0 016.364-6.364M1 5.5h9"
-                        data-v-12a116bb=""
-                      />
-                      <path
-                        d="M5.5 1h0a6.885 6.885 0 011.8 4.5A6.885 6.885 0 015.5 10h0a6.885 6.885 0 01-1.8-4.5A6.885 6.885 0 015.5 1z"
-                        data-v-12a116bb=""
-                      />
+                      <path d="M8.682 2.318a4.5 4.5 0 11-6.364 6.364 4.5 4.5 0 016.364-6.364M1 5.5h9" />
+                      <path d="M5.5 1h0a6.885 6.885 0 011.8 4.5A6.885 6.885 0 015.5 10h0a6.885 6.885 0 01-1.8-4.5A6.885 6.885 0 015.5 1z" />
                     </g>
                   </svg>
-                  <strong data-v-12a116bb="">Chile</strong>
+                  <strong>Chile</strong>
                   <svg
                     height="11"
                     width="9"
                     xmlns="http://www.w3.org/2000/svg"
-                    data-v-12a116bb=""
                   >
                     <g
                       fill="none"
@@ -810,20 +610,15 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width=".8"
-                      data-v-12a116bb=""
                     >
-                      <path
-                        d="M.45 6.85s.45-.45 1.8-.45 2.25.9 3.6.9 1.8-.45 1.8-.45v-5.4s-.45.45-1.8.45S3.6 1 2.25 1s-1.8.45-1.8.45zM.45 10V6.85"
-                        data-v-12a116bb=""
-                      />
+                      <path d="M.45 6.85s.45-.45 1.8-.45 2.25.9 3.6.9 1.8-.45 1.8-.45v-5.4s-.45.45-1.8.45S3.6 1 2.25 1s-1.8.45-1.8.45zM.45 10V6.85" />
                     </g>
                   </svg>
-                  <strong data-v-12a116bb="">Español</strong>
+                  <strong>Español</strong>
                   <svg
                     height="11"
                     width="11"
                     xmlns="http://www.w3.org/2000/svg"
-                    data-v-12a116bb=""
                   >
                     <g
                       fill="none"
@@ -832,15 +627,11 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width=".8"
-                      data-v-12a116bb=""
                     >
-                      <path
-                        d="M10.032 8.682a4.5 4.5 0 110-6.364M1 4.6h7.65M1 6.4h7.65"
-                        data-v-12a116bb=""
-                      />
+                      <path d="M10.032 8.682a4.5 4.5 0 110-6.364M1 4.6h7.65M1 6.4h7.65" />
                     </g>
                   </svg>
-                  <strong data-v-12a116bb="">Peso chileno</strong>
+                  <strong>Peso chileno</strong>
                 </li>
               </ul>
             </div>
@@ -944,6 +735,10 @@
     </div>
   </footer>
 </template>
+
+<script setup lang="ts">
+import FooterNav from "@/views/pages/navigation/footer-nav.vue"
+</script>
 
 <style scoped>
 .block-container.seo-footer .container {
