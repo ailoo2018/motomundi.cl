@@ -29,56 +29,56 @@ onMounted(() => {
                   class="brands-container owl-carousel swiper-wrapper"
                 >
                   <swiper-slide class="brand swiper-slide swiper-slide-prev">
-                    <img src="/cms/brands/bg-77.avif" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-77.jpg" loading="lazy" class="background">
                     <h3>
                       <NuxtLink to="/alpinestars"><img src="/cms/brands/logo-77.svg" alt="alpinestars" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="/cms/brands/bg-78.avif" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-78.jpg" loading="lazy" class="background">
                     <h3>
                       <NuxtLink to="/shoei"><img src="/cms/brands/logo-78.svg" alt="shoei" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="/cms/brands/bg-79.avif" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-79.jpg" loading="lazy" class="background">
                     <h3>
                       <NuxtLink to="/dainese"><img src="/cms/brands/logo-79.svg" alt="dainese" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="/cms/brands/bg-82.avif" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-82.jpg" loading="lazy" class="background">
                     <h3>
                       <NuxtLink to="/agv"><img src="/cms/brands/logo-82.svg" alt="agv" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="/cms/brands/bg-86.avif" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-86.jpg" loading="lazy" class="background">
                     <h3>
                       <NuxtLink to="/givi"><img src="/cms/brands/logo-86.svg" alt="givi" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="/cms/brands/bg-106.avif" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-106.jpg" loading="lazy" class="background">
                     <h3>
                       <NuxtLink to="/shark"><img src="/cms/brands/logo-106.svg" alt="shark" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="/cms/brands/bg-293.avif" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-293.jpg" loading="lazy" class="background">
                     <h3>
                       <NuxtLink to="/hjc"><img src="/cms/brands/logo-293.svg" alt="hjc" loading="lazy" class="logo"></NuxtLink>
                     </h3>
                   </swiper-slide>
 
                   <swiper-slide class="brand">
-                    <img src="/cms/brands/bg-83.avif" loading="lazy" class="background">
+                    <img src="/cms/brands/bg-83.jpg" loading="lazy" class="background">
                     <h3>
                       <NuxtLink to="/arai"><img src="/cms/brands/logo-83.svg" alt="arai" loading="lazy" class="logo"></NuxtLink>
                     </h3>
