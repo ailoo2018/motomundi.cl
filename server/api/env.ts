@@ -25,9 +25,19 @@ export default defineEventHandler(async event => {
       WEBPAY_COMMERCE_CODE: process.env.WEBPAY_COMMERCE_CODE,
       MERCADO_PAGO_ACCESS_TOKEN: process.env.MERCADO_PAGO_ACCESS_TOKEN,
 
-      //      REDIS_URL: process.env.REDIS_URL,
+
+      nodeEnv: process.env.NODE_ENV,
+      containerName: process.env.CONTAINER_APP_NAME || 'Local',
+      revision: process.env.CONTAINER_APP_REVISION || 'N/A',
+
+      apiEndpoint: process.env.ECOMMERCE_API_URL,
+      region: process.env.AZURE_REGION || 'Unknown',
+
+      REDIS_URL: process.env.REDIS_URL,
+
       //      WEBPAY_COMMERCE_CODE: process.env.WEBPAY_COMMERCE_CODE,
       //    MERCADO_PAGO_ACCESS_TOKEN: process.env.MERCADO_PAGO_ACCESS_TOKEN,
+
       accessToken: token,
       wishlist: wishList,
       dlocalApiUrl,
