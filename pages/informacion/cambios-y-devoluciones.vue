@@ -42,12 +42,6 @@ import {
 
 useHead({
   title: 'Cambios y Devoluciones | Motomundi',
-  link: [
-    {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,600;0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap',
-    },
-  ],
 })
 
 const resumenItems = [

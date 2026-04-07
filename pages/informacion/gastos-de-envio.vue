@@ -187,7 +187,7 @@ const notas = [
             <div class="contacto-label">Correo electrónico</div>
             <div class="contacto-value">ventas@motomundi.cl</div>
           </a>
-          <a href="#" class="contacto-card whatsapp">
+          <a href="https://api.whatsapp.com/send?phone=15558366927&amp;text=¡Hola!" target="_blank" class="contacto-card whatsapp">
             <span class="contacto-icon">📲</span>
             <div class="contacto-label">WhatsApp oficial</div>
             <div class="contacto-value">Escríbenos ahora →</div>

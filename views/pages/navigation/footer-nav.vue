@@ -68,6 +68,14 @@
               Envíos Internacionales
             </NuxtLink>
           </li>
+          <li>
+            <NuxtLink
+              to="/contactenos"
+              class="mtc-link"
+            >
+              Contacto
+            </NuxtLink>
+          </li>
 
         </ul>
       </div>
