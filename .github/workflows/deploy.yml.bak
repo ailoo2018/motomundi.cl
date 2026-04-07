@@ -36,3 +36,27 @@ jobs:
           imageToDeploy: ${{ secrets.ACR_LOGIN_SERVER }}/motomundi-www:${{ github.sha }}
           containerAppName: motomundi-www
           resourceGroup: motomundi-rg
+
+
+####################################################################################################
+local server
+####################################################################################################
+name: Remote Deploy
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: self-hosted # This targets your Windows 2012 server
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Project
+        run: |
+          pnpm install
+          pnpm run build
+          cp ..\web.config .
+          touch web.config
+

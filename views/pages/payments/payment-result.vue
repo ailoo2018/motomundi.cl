@@ -9,13 +9,25 @@ const props = defineProps({
   },
 })
 
-const cardData = computed( () => {
-  if(props.result && props.result.responseData && props.result.responseData.card_detail){
+const downloadReceipt = () => {}
+
+const isPending = computed(() => props.result?.status === 'PENDING')
+
+const cardData = computed(() => {
+  if (props.result?.responseData?.card_detail) {
     return props.result.responseData.card_detail.card_number
   }
-  return ""
+  
+  return null
 })
 
+const bankTransferData = computed(() => {
+  if (props.result?.responseData?.bank_transfer) {
+    return props.result.responseData.bank_transfer
+  }
+  
+  return null
+})
 </script>
 
 <template>
@@ -27,6 +39,7 @@ const cardData = computed( () => {
         md="8"
         lg="8"
       >
+        <!-- Loading -->
         <VCard
           v-if="loading"
           class="text-center pa-10"
@@ -48,9 +61,11 @@ const cardData = computed( () => {
           </p>
         </VCard>
 
+        <!-- Success (PAID) -->
         <VCard
-          v-else-if="result?.success"
-          class=" overflow-hidden"
+          v-else-if="result?.success && !isPending"
+          class="overflow-hidden"
+
           rounded="0"
           elevation="4"
         >
@@ -61,7 +76,7 @@ const cardData = computed( () => {
               class="mb-4 shadow-sm"
             >
               <VIcon
-                class="tabler-circle-check text-white "
+                class="tabler-circle-check text-white"
                 size="48"
               />
             </VAvatar>
@@ -86,7 +101,7 @@ const cardData = computed( () => {
             >
               <VListItem class="px-0 py-2">
                 <template #prepend>
-                  <i class="ti ti-hash mr-4 text-grey" />
+                  <VIcon icon="tabler-hash" class="mr-4 text-grey" />
                 </template>
                 <VListItemTitle class="text-grey-darken-1">
                   Orden de Compra
@@ -95,26 +110,29 @@ const cardData = computed( () => {
                   <span class="font-weight-bold text-uppercase">{{ result.referenceId }}</span>
                 </template>
               </VListItem>
-
               <VDivider />
 
               <VListItem class="px-0 py-2">
                 <template #prepend>
-                  <i class="ti ti-currency-dollar mr-4 text-grey" />
+                  <i class="tabler-currency-dollar mr-4 text-grey" />
                 </template>
                 <VListItemTitle class="text-grey-darken-1">
                   Monto Total
                 </VListItemTitle>
                 <template #append>
-                  <span class="text-h6 font-weight-black text-primary">{{ formatMoney(result.transactionAmount, result.currency) }}</span>
+                  <span class="text-h6 font-weight-black text-primary">
+                    {{ formatMoney(result.transactionAmount, result.currency) }}
+                  </span>
                 </template>
               </VListItem>
-
               <VDivider />
 
-              <VListItem class="px-0 py-2">
+              <VListItem
+                v-if="cardData"
+                class="px-0 py-2"
+              >
                 <template #prepend>
-                  <i class="ti ti-credit-card mr-4 text-grey" />
+                  <i class="tabler-credit-card mr-4 text-grey" />
                 </template>
                 <VListItemTitle class="text-grey-darken-1">
                   Tarjeta
@@ -123,12 +141,11 @@ const cardData = computed( () => {
                   <span class="font-weight-medium">•••• {{ cardData }}</span>
                 </template>
               </VListItem>
-
-              <VDivider />
+              <VDivider v-if="cardData" />
 
               <VListItem class="px-0 py-2">
                 <template #prepend>
-                  <i class="ti ti-calendar-event mr-4 text-grey" />
+                  <i class="tabler-calendar-event mr-4 text-grey" />
                 </template>
                 <VListItemTitle class="text-grey-darken-1">
                   Fecha
@@ -137,7 +154,6 @@ const cardData = computed( () => {
                   <span class="text-body-2">{{ formatDate(result.transactionDate) }}</span>
                 </template>
               </VListItem>
-
               <VDivider />
 
               <VListItem class="px-0 py-2">
@@ -183,13 +199,170 @@ const cardData = computed( () => {
           </VCardText>
         </VCard>
 
+        <!-- Pending (BANK TRANSFER awaiting confirmation) -->
+        <VCard
+          v-else-if="isPending"
+          class="overflow-hidden"
+
+          rounded="0"
+          elevation="4"
+        >
+          <div class="bg-warning pa-8 text-center ">
+            <VAvatar
+              color="white"
+              size="70"
+              class="mb-4 shadow-sm"
+            >
+              <VIcon
+                class="tabler-clock text-warning"
+                size="48"
+              />
+            </VAvatar>
+            <h1
+              class="text-h4 font-weight-black"
+              style="color: white"
+            >
+              Pago en Proceso
+            </h1>
+            <p
+              class="text-subtitle-1 opacity-90"
+              style="color: white"
+            >
+              Esperando confirmación de tu transferencia
+            </p>
+          </div>
+
+          <VCardText class="pa-8">
+            <VAlert
+              type="warning"
+              variant="tonal"
+              class="mb-6 rounded-lg"
+              border="start"
+            >
+              Tu transferencia bancaria está pendiente de confirmación. Te notificaremos por correo
+              una vez que sea procesada. Esto puede tomar hasta 24 horas hábiles.
+            </VAlert>
+
+            <VList
+              lines="one"
+              class="bg-transparent"
+            >
+              <VListItem class="px-0 py-2">
+                <template #prepend>
+                  <i class="tabler-hash mr-4 text-grey" />
+                </template>
+                <VListItemTitle class="text-grey-darken-1">
+                  Orden de Compra
+                </VListItemTitle>
+                <template #append>
+                  <span class="font-weight-bold text-uppercase">{{ result.referenceId }}</span>
+                </template>
+              </VListItem>
+              <VDivider />
+
+              <VListItem class="px-0 py-2">
+                <template #prepend>
+                  <i class="tabler-currency-dollar mr-4 text-grey" />
+                </template>
+                <VListItemTitle class="text-grey-darken-1">
+                  Monto Total
+                </VListItemTitle>
+                <template #append>
+                  <span class="text-h6 font-weight-black text-warning">
+                    {{ formatMoney(result.transactionAmount, result.currency) }}
+                  </span>
+                </template>
+              </VListItem>
+              <VDivider />
+
+              <!-- Bank transfer details if available -->
+              <template v-if="bankTransferData">
+                <VListItem
+                  v-if="bankTransferData.bank_name"
+                  class="px-0 py-2"
+                >
+                  <template #prepend>
+                    <i class="tabler-building-bank mr-4 text-grey" />
+                  </template>
+                  <VListItemTitle class="text-grey-darken-1">
+                    Banco Destino
+                  </VListItemTitle>
+                  <template #append>
+                    <span class="font-weight-medium">{{ bankTransferData.bank_name }}</span>
+                  </template>
+                </VListItem>
+                <VDivider v-if="bankTransferData.bank_name" />
+
+                <VListItem
+                  v-if="bankTransferData.bank_account"
+                  class="px-0 py-2"
+                >
+                  <template #prepend>
+                    <i class="tabler-credit-card mr-4 text-grey" />
+                  </template>
+                  <VListItemTitle class="text-grey-darken-1">
+                    {{ bankTransferData.bank_account_label || 'Cuenta' }}
+                  </VListItemTitle>
+                  <template #append>
+                    <span class="font-weight-medium font-mono">{{ bankTransferData.bank_account }}</span>
+                  </template>
+                </VListItem>
+                <VDivider v-if="bankTransferData.bank_account" />
+
+                <VListItem
+                  v-if="bankTransferData.reference"
+                  class="px-0 py-2"
+                >
+                  <template #prepend>
+                    <i class="tabler-receipt mr-4 text-grey" />
+                  </template>
+                  <VListItemTitle class="text-grey-darken-1">
+                    Referencia
+                  </VListItemTitle>
+                  <template #append>
+                    <span class="font-weight-bold font-mono text-warning">{{ bankTransferData.reference }}</span>
+                  </template>
+                </VListItem>
+                <VDivider v-if="bankTransferData.reference" />
+              </template>
+
+              <VListItem class="px-0 py-2">
+                <template #prepend>
+                  <i class="tabler-calendar-event mr-4 text-grey" />
+                </template>
+                <VListItemTitle class="text-grey-darken-1">
+                  Fecha
+                </VListItemTitle>
+                <template #append>
+                  <span class="text-body-2">{{ formatDate(result.transactionDate) }}</span>
+                </template>
+              </VListItem>
+            </VList>
+
+            <div class="mt-8 d-flex flex-column ga-3">
+              <VBtn
+                color="primary"
+                block
+                size="large"
+                rounded="0"
+                variant="flat"
+                to="/"
+                class="text-none"
+              >
+                Volver al inicio
+              </VBtn>
+            </div>
+          </VCardText>
+        </VCard>
+
+        <!-- Failed -->
         <VCard
           v-else
           class="overflow-hidden"
           rounded="0"
           elevation="4"
         >
-          <div class="bg-primary    pa-8 text-center text-white">
+          <div class="bg-primary pa-8 text-center text-white">
             <VAvatar
               color="white"
               size="70"
@@ -203,13 +376,13 @@ const cardData = computed( () => {
             </VAvatar>
             <h1
               class="text-h4 font-weight-black"
-              style="color: white;"
+              style="color: white"
             >
               Pago Fallido
             </h1>
             <p
               class="text-subtitle-1 opacity-90"
-              style="color: white;"
+              style="color: white"
             >
               La transacción no pudo completarse
             </p>
@@ -224,7 +397,6 @@ const cardData = computed( () => {
             >
               Hubo un problema con tu medio de pago. Por favor intenta nuevamente o usa una tarjeta distinta.
             </VAlert>
-
             <div class="d-flex flex-column ga-3">
               <VBtn
                 color="primary"
@@ -259,12 +431,9 @@ const cardData = computed( () => {
 </template>
 
 <style scoped>
-/* Styling for Monospaced font in Auth Code */
 .font-mono {
   font-family: 'Courier New', Courier, monospace;
 }
-
-/* Ensure icons align well with Vuetify list items */
 .ti {
   display: inline-flex;
   align-items: center;
@@ -272,4 +441,3 @@ const cardData = computed( () => {
   vertical-align: middle;
 }
 </style>
-

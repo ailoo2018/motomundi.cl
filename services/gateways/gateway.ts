@@ -76,7 +76,7 @@ export function getBaseUrl(){
 
 
   if(!baseUrl.startsWith("https") || baseUrl.includes("localhost") || baseUrl.includes("cloudflare")){
-    baseUrl = "https://city-variations-courtesy-insulation.trycloudflare.com/"
+    baseUrl = "https://manchester-capture-gdp-cleared.trycloudflare.com"
   }
 
 
