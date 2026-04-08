@@ -67,6 +67,7 @@ const embajadores = [
     discipline: 'Motovlog Urbano',
     bio: 'Nivem es un destacado motovlogger chileno que documenta la vida sobre dos ruedas haciendo delivery. Con humor y honestidad, comparte la realidad del tráfico urbano.',
     image: '/embajadores/nivem.jpeg',
+    featured: true,
     social: { instagram: '@nicolas_nivem' },
   },
   {
@@ -94,6 +95,7 @@ const embajadores = [
     discipline: 'Motoviajero',
     bio: 'Juan Pablo Silva es fundador de MotoTravel, empresa chilena de turismo en moto creada en 2007 tras dejar el automovilismo profesional. Junto a Ghislaine Schmidt, impulsa viajes por rutas poco exploradas en Chile y Sudamérica. Su propuesta se centra en experiencias de aventura, descubrimiento cultural y alto nivel de servicio orientado al cliente.',
     image: '/embajadores/mototravel.jpg',
+    featured: true,
     social: { instagram: '@mototravel.cl' },
   },
 ]

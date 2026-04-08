@@ -85,7 +85,7 @@ const getIgUrl = (ig) => {
         <article
           v-for="(amb, index) in filteredAmbassadors"
           :key="amb.id"
-          :class="['amb-card', { 'amb-card--featured': amb.featured && index === 0 }]"
+          :class="['amb-card', { 'amb-card--featured': amb.featured  }]"
           :style="{ animationDelay: `${index * 60}ms` }"
         >
           <!-- Photo -->
@@ -97,7 +97,7 @@ const getIgUrl = (ig) => {
               rounded="0"
               label
             >
-              {{ amb.featured && index === 0 ? 'Destacado' : amb.discipline }}
+              {{ amb.featured  ? 'Destacado' : amb.discipline }}
             </v-chip>
             <span class="amb-card__num">#{{ String(amb.id).padStart(2, '0') }}</span>
             <v-img
@@ -141,7 +141,7 @@ const getIgUrl = (ig) => {
                 </a>
               </div>
               <a class="amb-card__cta" href="#">
-                Ver perfil
+                Ver perfil {{amb.featured}}
                 <IconArrowRight :size="15" stroke-width="2.2" />
               </a>
             </div>
