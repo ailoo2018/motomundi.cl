@@ -87,6 +87,15 @@ const embajadores = [
     image: '/embajadores/poli.jpg',
     social: { instagram: '@poli.on.the.bike' },
   },
+  {
+    id: 9,
+    name: 'Juan Pablo Silva',
+    country: 'Vitacura, Chile',
+    discipline: 'Motoviajero',
+    bio: 'Juan Pablo Silva es fundador de MotoTravel, empresa chilena de turismo en moto creada en 2007 tras dejar el automovilismo profesional. Junto a Ghislaine Schmidt, impulsa viajes por rutas poco exploradas en Chile y Sudamérica. Su propuesta se centra en experiencias de aventura, descubrimiento cultural y alto nivel de servicio orientado al cliente.',
+    image: '/embajadores/mototravel.jpg',
+    social: { instagram: '@mototravel.cl' },
+  },
 ]
 
 export default defineEventHandler(async (event) => {
