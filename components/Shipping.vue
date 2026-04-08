@@ -753,7 +753,7 @@ onMounted(async () => {
             </div>
             <div class="shipping-method__body">
               <div class="shipping-method__description">
-                Recíbelo el <strong>{{ formatDate(shipping.eta.from) }} al {{ formatDate(shipping.eta.from) }}</strong>.
+                Recíbelo el <strong>{{ formatDate(shipping.eta.from) }} al {{ formatDate(shipping.eta.to ) }}</strong>.
               </div>
               <div class="shipping-method__content">
                 <div class="express-delivery">
