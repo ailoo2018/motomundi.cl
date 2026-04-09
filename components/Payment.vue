@@ -291,12 +291,14 @@ const pay = async (mercadoPagoApiData = null) => {
 
     checkoutService.setLoading(true)
 
+    const kommoId = Math.max(0, Number(useCookie('kommo_lead_id').value))
 
     var rq = {
       wuid: wuid,
       country: country,
       total: totalInPaymentCurr,
       shippingCost: shipping,
+      kommoId: kommoId,
       currency: currency,
       clp: {
         total: subtotal,

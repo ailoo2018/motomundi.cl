@@ -9,6 +9,10 @@ import {
   IconChevronRight,
 } from '@tabler/icons-vue'
 
+useHead({
+  title: "Embajadores | Motomundi",
+})
+
 
 const disciplines = ['Todos', 'Motoviajero', 'Eventos', 'Documentalista', 'Motovlog']
 const activeFilter = ref('Todos')
