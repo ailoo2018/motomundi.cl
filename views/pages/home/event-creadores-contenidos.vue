@@ -74,7 +74,14 @@
         <ul class="hero__speakers">
           <li v-for="(speaker, i) in speakers" :key="speaker.name" class="hero__speaker" :style="`--i: ${i}`">
             <div class="hero__speaker-avatar">
-              <span>{{ speaker.initials }}</span>
+              <img
+                v-if="speaker.image"
+                :src="speaker.image"
+                :alt="speaker.name"
+                class="hero__speaker-avatar-img"
+                @error="e => e.target.style.display = 'none'"
+              />
+              <span class="hero__speaker-avatar-fallback">{{ speaker.initials }}</span>
             </div>
             <span class="hero__speaker-name">{{ speaker.name }}</span>
           </li>
@@ -96,10 +103,10 @@
 
 <script setup>
 const speakers = [
-  { name: 'Javier Valenzuela', initials: 'JV' },
-  { name: 'Anonimoto',         initials: 'AN' },
-  { name: 'Nivem',             initials: 'NV' },
-  { name: 'Ayleen Martínez',   initials: 'AM' },
+  { name: 'Javier Valenzuela', initials: 'JV', image: '/embajadores/javier-valenzuela.webp' },
+  { name: 'Anonimoto',         initials: 'AN', image: '/embajadores/anonimoto.jpg' },
+  { name: 'Nivem',             initials: 'NV', image: '/embajadores/nivem.jpeg'  },
+  { name: 'Ayleen Martínez',   initials: 'AM', image: '/embajadores/ayleen.webp'  },
 ]
 </script>
 
@@ -208,7 +215,7 @@ const speakers = [
 
 /* ── Title ──────────────────────────────────────── */
 .hero__title {
-  font-size: clamp(4rem, 10vw, 8.5rem);
+  font-size: 5rem;
   line-height: 0.92;
   letter-spacing: 0.01em;
   margin: 0;
@@ -291,10 +298,11 @@ const speakers = [
 }
 
 /* ── Participants ────────────────────────────────── */
+/* ── Participants ────────────────────────────────── */
 .hero__participants {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 .hero__participants-title {
   font-size: 0.72rem;
@@ -310,46 +318,71 @@ const speakers = [
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 1rem;
 }
+
+/* ── Each speaker card ───────────────────────────── */
 .hero__speaker {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.55rem;
-  background: var(--smoke);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 0.35rem 0.9rem 0.35rem 0.35rem;
-  backdrop-filter: blur(6px);
   opacity: 0;
   animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: calc(420ms + 2 * 70ms);
-  transition: border-color 0.2s, background 0.2s;
+  animation-delay: calc(420ms + var(--i) * 70ms);
+  cursor: default;
 }
-.hero__speaker:hover {
-  border-color: rgba(244,166,27,0.45);
-  background: rgba(244,166,27,0.08);
-}
+
+/* ── Avatar ring + image ─────────────────────────── */
 .hero__speaker-avatar {
-  width: 30px;
-  height: 30px;
+  width: 122px;
+  height: 122px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--amber-d), var(--amber));
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.62rem;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+  transition: outline-color 0.2s;
+}
+.hero__speaker:hover .hero__speaker-avatar {
+  outline-color: var(--amber);
+}
+.hero__speaker-avatar-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--amber);
+}
+.hero__speaker-avatar-fallback {
+  font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   color: #000;
-  flex-shrink: 0;
-}
-.hero__speaker-name {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.88);
+  z-index: 1;
 }
 
+/* ── Name below avatar ───────────────────────────── */
+.hero__speaker-name {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.80);
+  text-align: center;
+  max-width: 100%;
+  line-height: 1.3;
+}
+
+@media (max-width: 640px) {
+  .hero__speaker-avatar { width: 58px; height: 58px; }
+  .hero__speaker-name   { font-size: 0.7rem; max-width: 66px; }
+}
 /* ── CTA button ─────────────────────────────────── */
 .hero__cta {
   display: inline-flex;
