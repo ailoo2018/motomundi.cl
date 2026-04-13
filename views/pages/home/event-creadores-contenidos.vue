@@ -170,7 +170,7 @@
                   @error="e => e.target.style.display = 'none'"
                 >
 
-                <span class="hero__speaker-avatar-fallback">{{ speaker.initials }}</span>
+
               </div>
             </a>
             <a
@@ -219,22 +219,25 @@ const speakers = [
   {
     name: 'Javier Valenzuela',
     initials: 'JV',
-    image: '/embajadores/javier-valenzuela.webp',
+    image: '/cms/home/javier-valenzuela.png',
     link: 'https://www.instagram.com/idayvueltaenmoto/',
   },
   {
     name: 'Anonimoto',
     initials: 'AN',
-    image: '/embajadores/anonimoto.jpg',
+    image: '/cms/home/anonimoto.jpg',
     link: 'https://www.instagram.com/anonimotojorge/',
   },
-  { name: 'Nivem', initials: 'NV', image: '/embajadores/nivem.jpeg', link: 'https://www.instagram.com/nicolas_nivem/' },
   {
     name: 'Ayleen Martínez',
     initials: 'AM',
-    image: '/embajadores/ayleen.webp',
+    image: '/cms/home/ayleen.png',
     link: 'https://www.instagram.com/ayleen_al_limite/',
   },
+  { name: 'Nivem',
+    initials: 'NV',
+    image: '/cms/home/nivem.png',
+    link: 'https://www.instagram.com/nicolas_nivem/' },
 ]
 </script>
 
