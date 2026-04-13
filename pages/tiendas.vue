@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import StoreLocator from "@/views/pages/stores/store-locator.vue"
 
+
+useHead({
+  title: 'Nuestras Tiendas | Motomundi',
+})
+
+
+
 const { data } = await useFetch("/api/stores/list", {
   key: 'stores',
 })
