@@ -248,8 +248,13 @@ onMounted(fetchInvoices)
             <div class="card-date-pay">
               <span class="card-date">{{ formatDate(invoice.documentDate) }}</span>
               <span class="card-payment">
-                <VIcon class="tabler-cube-send"/>
+                <VIcon class="tabler-cube-send" />
                 {{ invoice.shipmentMethodType }}
+
+              </span>
+              <span class="card-payment">
+                <VIcon class="tabler-calendar" />
+                Entrega prevista: xx/xx/25 a xx/xx/26
               </span>
             </div>
 
@@ -278,7 +283,6 @@ onMounted(fetchInvoices)
               </div>
               <div class="card-total-block">
                 <span class="card-total">{{ formatCLP(invoice.total) }}</span>
-
               </div>
               <button
                 class="card-chevron"
@@ -304,6 +308,12 @@ onMounted(fetchInvoices)
               class="card-detail"
             >
               <div class="detail-divider" />
+              <div class="detail-info">
+                <div class="summary-row">
+                  <span class="summary-label">Entrega prevista</span>
+                  <span class="summary-value">10/12/26 a 16/19/23</span>
+                </div>
+              </div>
 
               <!-- Products grid -->
               <div class="detail-products">
