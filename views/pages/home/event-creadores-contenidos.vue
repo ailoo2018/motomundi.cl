@@ -7,7 +7,7 @@
         alt="Crónicas a Dos Ruedas background"
         class="hero__bg-img"
       >
-      <div class="hero__overlay"/>
+      <div class="hero__overlay" />
     </div>
 
     <div class="hero__content">
@@ -17,7 +17,7 @@
         data-animate="fade-up"
         style="--delay: 0ms"
       >
-        <span class="hero__label-dot"/>
+        <span class="hero__label-dot" />
         Motomundi presenta
       </p>
 
@@ -93,7 +93,7 @@
           </div>
         </div>
 
-        <div class="hero__meta-sep"/>
+        <div class="hero__meta-sep" />
 
         <div class="hero__meta-item">
           <svg
@@ -108,7 +108,7 @@
               cy="12"
               r="9"
             />
-            <polyline points="12 7 12 12 15.5 14"/>
+            <polyline points="12 7 12 12 15.5 14" />
           </svg>
           <div>
             <span class="hero__meta-label">Horario</span>
@@ -116,7 +116,7 @@
           </div>
         </div>
 
-        <div class="hero__meta-sep"/>
+        <div class="hero__meta-sep" />
 
         <div class="hero__meta-item">
           <svg
@@ -126,7 +126,7 @@
             stroke="currentColor"
             stroke-width="1.8"
           >
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
             <circle
               cx="12"
               cy="9"
@@ -150,6 +150,29 @@
           Con la participación de
         </p>
         <ul class="hero__speakers ">
+          <li class="hero__speaker  hero__speaker--host">
+            <a
+              href="https://www.instagram.com/mototrainer.jorge.villegas/"
+              target="_blank" rel="noopener noreferrer"
+            >
+              <div class="hero__speaker-avatar ">
+
+                <img
+
+                  src="/cms/home/jorge-villegas.png"
+                  alt="Jorge Villegas"
+                  class="hero__speaker-avatar-img"
+                >
+
+              </div>
+            </a>
+            <a
+              href="https://www.instagram.com/mototrainer.jorge.villegas/"
+              target="_blank" rel="noopener noreferrer"
+            >
+              <span class="hero__speaker-name"><em style="color: #F4A61B;">Animador</em> <br> Jorge Villegas</span>
+            </a>
+          </li>
           <li
             v-for="(speaker, i) in speakers"
             :key="speaker.name"
@@ -175,11 +198,12 @@
             </a>
             <a
               :href="speaker.link"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
             >
-            <span class="hero__speaker-name">{{ speaker.name }}</span>
+              <span class="hero__speaker-name">{{ speaker.name }}</span>
             </a>
           </li>
+
         </ul>
       </div>
 
@@ -206,7 +230,7 @@
               x2="19"
               y2="12"
             />
-            <polyline points="13 6 19 12 13 18"/>
+            <polyline points="13 6 19 12 13 18" />
           </svg>
         </a>
       </div>
@@ -478,7 +502,7 @@ const speakers = [
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, auto); /* 4 in a row on desktop */
+  grid-template-columns: repeat(5, auto); /* 4 in a row on desktop */
   justify-content: start;
   gap: 1rem;
 }
@@ -542,6 +566,7 @@ const speakers = [
   color: rgba(255, 255, 255, 0.80);
   text-align: center;
   max-width: 100%;
+  height: 20px;
   line-height: 1.3;
 }
 
@@ -620,6 +645,46 @@ const speakers = [
 
   .hero__meta-item {
     min-width: unset;
+  }
+}
+
+/********** host ************/
+
+/* ── Animador / Host ─────────────────────────────── */
+.hero__speaker--host .hero__speaker-avatar {
+  width: 140px;
+  height: 140px;
+  outline: 2px solid var(--amber);        /* siempre visible */
+  box-shadow: 0 0 20px rgba(244, 166, 27, 0.35);
+}
+
+.hero__speaker--host .hero__speaker-avatar::after {
+  content: "Animador";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--amber);
+  color: #000;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 0 0 50px 50px;
+  white-space: nowrap;
+}
+
+.hero__speaker--host .hero__speaker-name {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* móvil */
+@media (max-width: 900px) {
+  .hero__speaker--host .hero__speaker-avatar {
+    width: 122px;
+    height: 122px;
   }
 }
 </style>
