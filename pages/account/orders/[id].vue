@@ -61,7 +61,8 @@ const getDescription = state => {
                   </div>
                   <div class="order-detail__estimated-date">
                     Fecha de entrega prevista:
-                    <strong class="">{{ formatDate(order.eta) }}</strong>
+                    <strong class="">{{ formatDate( order.eta?.from, { month: 'numeric', day: 'numeric', year: '2-digit' }) }}
+                      a {{ formatDate(order.eta?.to, { month: 'numeric', day: 'numeric', year: '2-digit' })}}</strong>
                   </div>
                   <VCard
                     variant="plain"

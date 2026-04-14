@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-
+import { formatDate as fmtDate } from '@core/utils/formatters.js'
 
 // ─── Props / Emits ────────────────────────────────────────────────────────────
 const props = defineProps({
@@ -254,7 +254,8 @@ onMounted(fetchInvoices)
               </span>
               <span class="card-payment">
                 <VIcon class="tabler-calendar" />
-                Entrega prevista: xx/xx/25 a xx/xx/26
+                Entrega prevista: {{fmtDate(invoice.eta.from, { month: 'numeric', day: 'numeric', year: '2-digit' })}}
+                a {{fmtDate(invoice.eta.to, { month: 'numeric', day: 'numeric', year: '2-digit' })}}
               </span>
             </div>
 
@@ -388,37 +389,19 @@ onMounted(fetchInvoices)
               <!-- Actions -->
               <div class="detail-actions">
                 <button
-                  class="btn-action btn-secondary"
-                  @click.stop
+                  class="btn-action btn-primary"
+                  @click="() => navigateTo('/account/orders/' + invoice.id)"
                 >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  ><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line
-                    x1="12"
-                    y1="15"
-                    x2="12"
-                    y2="3"
-                  /></svg>
-                  Descargar PDF
+                  <VIcon class="tabler-eye"/>
+
+                  Ver Detalle
                 </button>
                 <button
                   v-if="invoice.isDigital"
                   class="btn-action btn-primary"
                   @click.stop
                 >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  ><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
+                  <VIcon class="tabler-mail"/>
                   Enviar por email
                 </button>
               </div>
