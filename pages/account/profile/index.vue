@@ -61,7 +61,7 @@ await userStore.fetchUser()
 
       <Club />
 
-      <Orders />
+
 
       <section class="profile__last-seen">
         <aside class="seen-lately">
@@ -87,6 +87,7 @@ await userStore.fetchUser()
 
     </div>
 
+    <Orders />
   </div>
 </template>
 <style >
