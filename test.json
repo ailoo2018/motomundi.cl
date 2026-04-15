@@ -1,1 +1,29 @@
- {"accounts_info":null,"additional_info":{"items":[{"id":"193921","quantity":"1","title":"Orden #193921","unit_price":"31800.0"}],"tracking_id":"platform:v1-whitelabel,so:ALL,type:N/A,security:2fa"},"authorization_code":null,"binary_mode":false,"brand_id":null,"build_version":"3.147.1-hotfix-27","call_for_authorize_id":null,"captured":true,"card":{},"charges_details":[{"accounts":{"from":"collector","to":"mp"},"amounts":{"original":681,"refunded":0},"client_id":0,"date_created":"2026-03-23T13:48:47.000-04:00","external_charge_id":"01KMDX0H6CMST759ZEYTPARC23","id":"150875043343-001","last_updated":"2026-03-23T13:48:47.000-04:00","metadata":{"reason":"","source":"proc-svc-charges","source_detail":"processing_fee_charge"},"name":"mercadopago_fee","refund_charges":[],"reserve_id":null,"type":"fee","update_charges":[]}],"charges_execution_info":{"internal_execution":{"date":"2026-03-23T13:48:47.190-04:00","execution_id":"01KMDX0H5N1JX3NWWJCK4QVNHA"}},"collector_id":447840101,"corporation_id":null,"counter_currency":null,"coupon_amount":0,"currency_id":"CLP","date_approved":"2026-03-23T13:48:48.000-04:00","date_created":"2026-03-23T13:48:47.000-04:00","date_last_updated":"2026-03-23T13:48:52.000-04:00","date_of_expiration":null,"deduction_schema":null,"description":"Orden #193921","differential_pricing_id":null,"external_reference":"193921","fee_details":[{"amount":681,"fee_payer":"collector","type":"mercadopago_fee"}],"financing_group":null,"id":150875043343,"installments":3,"integrator_id":null,"issuer_id":"12788","live_mode":true,"marketplace_owner":447840101,"merchant_account_id":null,"merchant_number":null,"metadata":{},"money_release_date":"2026-04-02T13:48:48.000-04:00","money_release_schema":null,"money_release_status":"pending","notification_url":"https://www.motomundi.cl/api/webhooks/mercadopago","operation_type":"regular_payment","order":{"id":"39320305426","type":"mercadopago"},"payer":{"email":"jcampusano.espinoza@gmail.com","entity_type":null,"first_name":null,"id":"115738311","identification":{"number":"156950750","type":"RUT"},"last_name":null,"operator_id":null,"phone":{"number":null,"extension":null,"area_code":null},"type":null},"payment_method":{"data":{"lender_id":1285098217},"forward_data":{"credits_pricing_id":"115738311-20260323174823283-QvU2RGp"},"id":"consumer_credits","issuer_id":"12788","type":"digital_currency"},"payment_method_id":"consumer_credits","payment_type_id":"digital_currency","platform_id":null,"point_of_interaction":{"application_data":{"name":null,"operating_system":null,"version":null},"business_info":{"branch":"PX","sub_unit":"checkout_pro","unit":"online_payments"},"location":{"source":"Collector","state_id":"CL-RM"},"transaction_data":{"e2e_id":null},"type":"CHECKOUT"},"pos_id":null,"processing_mode":"aggregator","refunds":[],"release_info":null,"shipping_amount":0,"sponsor_id":null,"statement_descriptor":null,"status":"approved","status_detail":"accredited","store_id":null,"tags":null,"taxes_amount":0,"transaction_amount":31800,"transaction_amount_refunded":0,"transaction_details":{"acquirer_reference":null,"external_resource_url":null,"financial_institution":null,"installment_amount":0,"net_received_amount":31119,"overpaid_amount":0,"payable_deferral_period":null,"payment_method_reference_id":"1335579235","total_paid_amount":31800},"api_response":{"status":200,"headers":{"date":["Mon, 23 Mar 2026 17:49:03 GMT"],"content-type":["application/json;charset=UTF-8"],"transfer-encoding":["chunked"],"connection":["keep-alive"],"vary":["Accept-Encoding, Accept,Accept-Encoding"],"cache-control":["max-age=0"],"x-api-server-segment":["legacy"],"x-content-type-options":["nosniff"],"x-request-id":["4e0496d4-b389-4873-8701-9ebff0c3438c"],"x-xss-protection":["1; mode=block"],"strict-transport-security":["max-age=16070400; includeSubDomains; preload, max-age=31536000; includeSubDomains"],"access-control-allow-origin":["*"],"access-control-allow-headers":["Content-Type"],"access-control-allow-methods":["PUT, GET, POST, DELETE, OPTIONS"],"access-control-max-age":["86400"],"timing-allow-origin":["*"],"content-encoding":["gzip"]}}}
+[
+  {
+    "id": 459061,
+    "description": "Pago exitoso. Código de autorización: 154768434406",
+    "userId": null,
+    "state": 2,
+    "orderId": 195620,
+    "creationDate": "2026-04-14T19:43:02.000Z",
+    "imageId": null
+  },
+  {
+    "id": 459149,
+    "description": "null",
+    "userId": 7391,
+    "state": 14,
+    "orderId": 195620,
+    "creationDate": "2026-04-15T10:24:45.000Z",
+    "imageId": null
+  },
+  {
+    "id": 459161,
+    "description": "Pago exitoso. Código de autorización: 154768434406",
+    "userId": null,
+    "state": 2,
+    "orderId": 195620,
+    "creationDate": "2026-04-15T15:02:44.000Z",
+    "imageId": null
+  }
+]
