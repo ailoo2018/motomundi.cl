@@ -1,31 +1,56 @@
 <script setup lang="ts">
-
 const props = defineProps({
   order: {
-    type: Object
-  }
+    type: Object,
+  },
 })
 
 const order = computed(() => props.order)
 
-const steps = [
-  { icon: 'tabler-circle-check',     label: 'Confirmado'     },
-  { icon: 'tabler-package',          label: 'En preparación' },
-  { icon: 'tabler-truck-delivery',   label: 'En camino'      },
-  { icon: 'tabler-home-check',       label: 'Entregado'      },
-]
+
+const steps = computed(() => {
+
+  if(order.value?.shipmentMethodTypeId === 9){
+    return  [
+      { icon: 'tabler-circle-check',     label: 'Confirmado'     },
+      { icon: 'tabler-package',          label: 'En preparación' },
+      { icon: 'tabler-building-store',   label: 'Listo para retiro'      },
+      { icon: 'tabler-home-check',       label: 'Entregado'      },
+    ]
+
+  }
+
+  return  [
+    { icon: 'tabler-circle-check',     label: 'Confirmado'     },
+    { icon: 'tabler-package',          label: 'En preparación' },
+    { icon: 'tabler-truck-delivery',   label: 'En camino'      },
+    { icon: 'tabler-home-check',       label: 'Entregado'      },
+  ]
+})
 
 /** Maps a status ID to the stepper step index (0-based) */
 const currentStep = computed(() => {
-  const id = order.value?.state
-  if (!id) return 0
-  if (id <= 1)  return 0  // Confirmado
-  if (id <= 3)  return 1  // En preparación
-  if (id <= 5)  return 2  // En camino
-  return 3                  // Entregado
+  // 1. Extract the state, defaulting to a safe value if order is null
+  const id =  order.value?.state
+
+  // 2. Use a switch that actually maps different states to different steps
+  switch (id) {
+  case 0:
+  case 1:
+    return 0
+  case 2:
+    return 1 // Assuming state 2 is actually the second step
+  case 3:
+    return 2
+  case 8:
+    return 3
+  case 9:
+  case 10:
+    return 4
+  default:
+    return 0 // Fallback for undefined or unknown states
+  }
 })
-
-
 </script>
 
 <template>
@@ -36,16 +61,23 @@ const currentStep = computed(() => {
       :key="i"
       class="mm-step"
       :class="{
-                  'mm-step--done':    i < currentStep,
-                  'mm-step--active':  i === currentStep,
-                  'mm-step--pending': i > currentStep,
-                }"
+        'mm-step--done': i < currentStep,
+        'mm-step--active': i === currentStep,
+        'mm-step--pending': i > currentStep,
+      }"
     >
       <!-- connector line -->
-      <div v-if="i < steps.length - 1" class="mm-step__line" :class="{ 'mm-step__line--done': i < currentStep }" />
+      <div
+        v-if="i < steps.length - 1"
+        class="mm-step__line"
+        :class="{ 'mm-step__line--done': i < currentStep }"
+      />
 
       <div class="mm-step__icon-wrap">
-        <VIcon :icon="step.icon" size="18" />
+        <VIcon
+          :icon="step.icon"
+          size="18"
+        />
       </div>
       <span class="mm-step__label">{{ step.label }}</span>
     </div>
@@ -126,6 +158,4 @@ const currentStep = computed(() => {
 .mm-step--active .mm-step__label {
   color: #B21915;
 }
-
-
 </style>

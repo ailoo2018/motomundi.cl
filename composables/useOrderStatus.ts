@@ -15,15 +15,15 @@ export const useOrderStatus = () => {
     15: { id: 15, color: "text-info", icon: "tabler-circle-x", title: "En proceso" },
   }
 
-  const getOrderStatusDescription = status => {
+  const getOrderStatusDescription = (status: any): string => {
     return OrderStatus[status]?.title || "Desconocido " + status
   }
 
   return {
     OrderStatus,
     getOrderStatusDescription,
-    getColor(state) {
-      return OrderStatus[state]?.color?.replace("text-","") || "secondary";
+    getColor(state: any): string {
+      return OrderStatus[state]?.color?.replace("text-", "") || "secondary"
     },
   }
 

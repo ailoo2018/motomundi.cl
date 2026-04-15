@@ -127,6 +127,8 @@ function goToPage(page) {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
+const { getColor } = useOrderStatus()
+
 // ─── Lifecycle ────────────────────────────────────────────────────────────────
 onMounted(fetchInvoices)
 </script>
@@ -234,12 +236,14 @@ onMounted(fetchInvoices)
               <div class="doc-info">
                 <span class="doc-number">#{{ invoice.number }}</span>
                 <span class="doc-channel mt-2">
-                  <span
-                    class="card-status "
-                    :class="invoice.isPaid ? 'status-paid' : 'status-pending'"
+                  <VChip
+                    size="x-small"
+                    style="font-size:9px;"
+                    :color="getColor(invoice.statusId)"
+                    rounded="0"
                   >
                     {{ invoice.status }}
-                  </span>
+                  </VChip>
                 </span>
               </div>
             </div>
