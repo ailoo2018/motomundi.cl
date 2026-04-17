@@ -100,9 +100,9 @@
           ><img
             width="40"
             height="40"
-            src="/images/mobile-menu/categories/packs-casco-intercom.svg"
+            src="/content/assets/menu/categories/intercom.jpg"
             alt=""
-          > <span>Casco + intercomunicador</span></NuxtLink>
+          > <span>Intercom</span></NuxtLink>
         </li>
         <li>
           <NuxtLink
