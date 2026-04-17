@@ -132,17 +132,9 @@ function handleSubmenuClick(event) {
                         class="mtc-link"
                         title="Casco + intercomunicador"
                       >
-                        <svg
-                          class="svg-icon"
-                          viewBox="0 0 300 200"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <use xlink:to="/content/assets/menu/categories/blouz.svg#img-intercom-et-kit-main-libre" />
-                        </svg>
+                        <img src="/content/assets/menu/categories/intercom.jpg">
                         <p>Comunicación</p>
                       </NuxtLink>
-
-
                       <NuxtLink
                         to="/accesorios-para-cascos"
                         class="mtc-link"
