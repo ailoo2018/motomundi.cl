@@ -18,6 +18,16 @@ const category = computed( () => {
   return { id: 0, name: "" }
 })
 
+
+const deviceType = useState('device-type', () => {
+  // This function only runs on the SERVER during the first request
+  const event = useRequestEvent()
+  return event?.context.deviceType || 'desktop'
+})
+
+const isMobile = computed(() => deviceType.value === 'mobile')
+
+
 const categoryUrl = computed(() => {
   return getCategoryUrl(category.value)
 })
@@ -48,7 +58,7 @@ const brandCategoryUrl = computed(() => {
           {{ product.brand.name }}
         </NuxtLink>
       </li>
-      <li><span class="breadcrumb-current">{{ product.name }}</span></li>
+      <li v-if="!isMobile"  class="d-none d-md-block"><span class="breadcrumb-current">{{ product.name }}</span></li>
     </ul>
 
     <span class="desktop-reference">

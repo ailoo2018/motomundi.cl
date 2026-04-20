@@ -1,5 +1,4 @@
 <script setup>
-
 /* eslint-disable camelcase */
 import { useConfigStore } from "@core/stores/config"
 
@@ -24,7 +23,6 @@ definePageMeta({
 })
 
 
-
 const { isMobile, isTablet, isDesktop } = useDevice()
 const store = useConfigStore()
 const showVideoDialog = ref(false)
@@ -38,6 +36,7 @@ console.log("router: " + route.params.id)
 const productId = computed(() => {
   if (route.params.id) return route.params.id
   const slugValue = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
+
   return slugValue ? slugValue.split('-')[0] : null
 })
 
@@ -55,7 +54,7 @@ const { data: product, pending } = await useFetch(`/api/product/${productId.valu
 })
 
 useSeoMeta({
-  title: () =>  product.value?.name || 'Loading Product...',
+  title: () => product.value?.name || 'Loading Product...',
   ogTitle: () => product.value?.name,
   description: () => product.value?.fullName,
   ogDescription: () => product.value?.fullName,
@@ -75,7 +74,7 @@ const addToCartGEvent = () => {
     window.dataLayer.push({ ecommerce: null })
 
     let category = null
-    if(product.value.parentCategories?.length > 0){
+    if (product.value.parentCategories?.length > 0) {
       category = product.value.parentCategories[0]
     }
 
@@ -98,7 +97,7 @@ const addToCartGEvent = () => {
     })
 
     console.log("addToCartGEvent success")
-  }catch(e){
+  } catch (e) {
     console.error("Error addToCartGEvent", e)
   }
 }
@@ -112,15 +111,15 @@ const addToCart = async item => {
     addToCartGEvent()
     await nextTick()
     let cartItem = null
-    if(product.value.type === ProductType.Simple){
+    if (product.value.type === ProductType.Simple) {
       cartItem = {
         wuid: wuid,
         type: 0, // cart item product
         quantity: item.quantity,
         productItemId: item.productItemId,
       }
-    }else{
-      cartItem =  {
+    } else {
+      cartItem = {
         wuid: wuid,
         type: 0, // cart item product
         quantity: 1,
@@ -133,12 +132,11 @@ const addToCart = async item => {
     await cartStore.add(cartItem, wuid)
 
 
-
     window.location = "/cart"
 
-  }catch(e){
+  } catch (e) {
     alert("error: " + e.message)
-  }finally{
+  } finally {
     loading.value = false
   }
 }
@@ -150,10 +148,9 @@ const onSelectedColor = color => {
 }
 
 
-
 onMounted(() => {
 
-  if(product.value) {
+  if (product.value) {
 
 
     // 1. Clear previous ecommerce data (important for SPAs)
@@ -162,7 +159,7 @@ onMounted(() => {
 
     // 2. Push the new product view
     let category = null
-    if(product.value.parentCategories?.length > 0){
+    if (product.value.parentCategories?.length > 0) {
       category = product.value.parentCategories[0]
     }
 
@@ -190,16 +187,29 @@ onMounted(() => {
   }
 })
 
+const goToReviews = () => {
+  document.getElementById('product-reviews')?.scrollIntoView({ behavior: 'smooth' })
+}
 
 </script>
 
 <template>
-
-
-  <div v-if="error" class="container" style="padding: 60px 20px; text-align: center;">
-    <VIcon icon="tabler-package-off" size="64" color="grey" />
-    <h2 style="margin-top: 16px; color: #555;">Producto no encontrado</h2>
-    <p style="color: #888;">El producto que buscas no existe o ya no está disponible.</p>
+  <div
+    v-if="error"
+    class="container"
+    style="padding: 60px 20px; text-align: center;"
+  >
+    <VIcon
+      icon="tabler-package-off"
+      size="64"
+      color="grey"
+    />
+    <h2 style="margin-top: 16px; color: #555;">
+      Producto no encontrado
+    </h2>
+    <p style="color: #888;">
+      El producto que buscas no existe o ya no está disponible.
+    </p>
     <VBtn
       color="primary"
       style="margin-top: 20px;"
@@ -209,17 +219,19 @@ onMounted(() => {
     </VBtn>
   </div>
 
-  <article style="min-height: 600px" >
-    <div class="container product" v-if="product">
-      <section class="row product-main" >
+  <article style="min-height: 600px">
+    <div
+      v-if="product"
+      class="container product"
+    >
+      <section class="row product-main ml-sm-0  ml-md-2">
         <div
           class="col s12 m7 l7"
           style="padding-right: 20px;"
         >
           <div class="s12">
             <div>
-              <Breadcrumbs :product="product" />
-
+              <Breadcrumbs :product="product"/>
 
 
               <!-- product-title -->
@@ -228,7 +240,30 @@ onMounted(() => {
                   <h1>
                     {{ product.brand.name }}
                     <strong>{{ product.name }}</strong>
+                    <div class="title-rating">
+                      <div class="title-rating__stars">
+                        <VRating
+                          size="x-small"
+                          density="compact"
+                          color="primary"
+                          style="margin:0; padding:0; top: -10px;left: -2px;position: relative;"
+                          half-increments
+                          :model-value="product.rating / 2"
+                          readonly
+                        />
+
+                      </div>
+                      <span class="title-rating__divider">·</span>
+                      <a
+                        class="title-rating__link"
+                        href="#product-reviews"
+                        @click.prevent="goToReviews()"
+                      >
+                        Leer 18 evaluaciones
+                      </a>
+                    </div>
                   </h1>
+
                   <a
                     v-if="!isMobile"
                     :href="getBrandUrl(product.brand)"
@@ -252,7 +287,7 @@ onMounted(() => {
             </div>
           </div>
 
-          <ShareComponent />
+          <ShareComponent/>
           <!-- /share -->
 
           <ProductImagesCarousel
@@ -263,7 +298,7 @@ onMounted(() => {
         </div>
 
         <div class="col s12 m5 l5">
-          <PreProductBanner />
+          <PreProductBanner/>
 
           <ProductBuyPanel
             :product="product"
@@ -274,9 +309,9 @@ onMounted(() => {
         </div>
       </section>
 
-      <Packs :product="product" />
+      <Packs :product="product"/>
 
-      <ProductComplements :product-id="product?.id" />
+      <ProductComplements :product-id="product?.id"/>
 
       <!-- product-description-container -->
       <VRow class=" product-description-container mt-10">
@@ -284,7 +319,7 @@ onMounted(() => {
           cols="12"
           md="7"
         >
-          <ProductDescription :description="product?.description" />
+          <ProductDescription :description="product?.description"/>
         </VCol>
 
 
@@ -294,9 +329,12 @@ onMounted(() => {
           md="5"
         >
           <!-- blog -->
-          <RelatedBlog v-if="product?.relatedBlogArticle" :article="product.relatedBlogArticle"/>
+          <RelatedBlog
+            v-if="product?.relatedBlogArticle"
+            :article="product.relatedBlogArticle"
+          />
           <!-- /blog -->
-          <DataSheet :product="product" />
+          <DataSheet :product="product"/>
         </VCol>
         <!-- /ficha-tecnica -->
       </VRow>
@@ -304,13 +342,15 @@ onMounted(() => {
 
 
       <!-- recommend -->
-      <Recommend :product="product" />
+      <Recommend :product="product"/>
 
-      <ProductRating
-        v-if="product && product.id"
-        :key="product.id"
-        :product="product" />
-
+      <div id="product-reviews">
+        <ProductRating
+          v-if="product && product.id"
+          :key="product.id"
+          :product="product"
+        />
+      </div>
     </div>
   </article>
 
@@ -348,4 +388,38 @@ onMounted(() => {
   </VDialog>
 </template>
 
+<style>
+.title-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 0px;
+  flex-wrap: wrap;
+}
 
+.title-rating__stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
+.title-rating__divider {
+  color: #B21915;
+  font-size: 0.9rem;
+  position: relative;
+  top: -7px;
+}
+
+.title-rating__link {
+  font-size: 0.82rem;
+  text-transform: none;
+  text-decoration: none;
+  position: relative;
+  top: -1px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+  min-height: unset;
+
+}
+</style>

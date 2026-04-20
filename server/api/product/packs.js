@@ -8,6 +8,8 @@ export default defineCachedEventHandler(async event => {
     const baseUrl = config.public.w3BaseUrl
     const { productId } = getQuery(event)
 
+    console.log("baseUrl", baseUrl)
+
     return await $fetch(`${baseUrl}/${getDomainId()}/products/packs/${parseInt(productId)}`, {
       method: 'GET',
       headers: {
