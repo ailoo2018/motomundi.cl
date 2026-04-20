@@ -240,7 +240,7 @@ const goToReviews = () => {
                   <h1>
                     {{ product.brand.name }}
                     <strong>{{ product.name }}</strong>
-                    <div class="title-rating">
+                    <div class="title-rating" v-if="product.totalReviews > 0">
                       <div class="title-rating__stars">
                         <VRating
                           size="x-small"
@@ -255,11 +255,12 @@ const goToReviews = () => {
                       </div>
                       <span class="title-rating__divider">·</span>
                       <a
+
                         class="title-rating__link"
                         href="#product-reviews"
                         @click.prevent="goToReviews()"
                       >
-                        Leer 18 evaluaciones
+                        Leer {{product.totalReviews}} evaluaciones
                       </a>
                     </div>
                   </h1>
