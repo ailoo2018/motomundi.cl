@@ -214,7 +214,7 @@ if (import.meta.client) {
   <ClientOnly>
     <VContainer class="pb-10">
       <VRow
-        v-if="product.totalReviews > 0"
+        v-if="reviews.length > 0"
         id="reviews"
         style="padding: 12px;"
       >
