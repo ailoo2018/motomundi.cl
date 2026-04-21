@@ -89,7 +89,7 @@
           </svg>
           <div>
             <span class="hero__meta-label">Fecha</span>
-            <span class="hero__meta-value">Miércoles 23 de Abril</span>
+            <span class="hero__meta-value">Jueves 23 de Abril</span>
           </div>
         </div>
 
