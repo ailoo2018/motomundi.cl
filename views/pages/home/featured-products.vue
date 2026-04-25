@@ -481,10 +481,7 @@ swiper-container:not(.swiper-initialized) swiper-slide {
 }
 
 
-/* Container to allow absolute positioning of buttons relative to the slider */
-.product-list {
-  position: relative;
-}
+
 @media only screen and (max-width: 600px) {
   .product-list__title h2 {
     font-size: 26px;

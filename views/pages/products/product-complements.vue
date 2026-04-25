@@ -207,4 +207,24 @@ swiper-container:not(.swiper-initialized) swiper-slide {
 :deep(.product-list-item a) {
   cursor: pointer;
 }
+
+swiper-container {
+  --swiper-navigation-color: #ff0000; /* Changes arrow color */
+  --swiper-navigation-size: 10px;    /* Changes arrow size */
+  --swiper-navigation-color: rgba(0, 0, 0, .6);
+}
+
+swiper-container::part(button-prev){
+  background-color: rgb(0, 0, 0, .6);
+  color: white;
+  padding: 12px;
+  left: 5px;
+}
+swiper-container::part(button-next) {
+  background-color: rgb(0, 0, 0, .55);
+  color: white;
+  padding: 12px;
+  right: 5px;
+  /*border: 2px solid red;*/
+}
 </style>

@@ -13,7 +13,7 @@ const emit = defineEmits(['on-click'])
 const product = ref(props.product)
 const swiperEl = ref(null)
 const hideNavigation = ref(false)
-const { handleImageError } = useHandleImageError()
+const {handleImageError} = useHandleImageError()
 
 const images = computed(() => {
   if (!product.value)
@@ -118,13 +118,13 @@ register()
                   <div
                     v-if="img.type === 'video'"
                     class="video-thumb"
+                    @click="onClick(index, img)"
                   >
-                    <img
-                      style="cursor:pointer; width: 100%; height: 100%; display: inline-block; opacity: 1;"
+                    <VImg
+                      style="cursor:pointer; width: 100%; height: 100%;"
                       :src="img.urlThumb"
-                      @click="onClick(index, img)"
-
-                    >
+                      cover
+                    />
                   </div>
                 </swiper-slide>
               </swiper-container>
@@ -160,6 +160,42 @@ register()
 swiper-container.hide-navigation::part(button-prev),
 swiper-container.hide-navigation::part(button-next) {
   display: none !important;
+}
+
+
+swiper-container {
+  --swiper-navigation-color: #ff0000; /* Changes arrow color */
+  --swiper-navigation-size: 10px; /* Changes arrow size */
+  --swiper-navigation-color: rgba(0, 0, 0, .6);
+}
+
+swiper-container::part(button-prev) {
+  background-color: rgb(0, 0, 0, .6);
+  color: white;
+  padding: 12px;
+  left: 5px;
+}
+
+swiper-container::part(button-next) {
+  background-color: rgb(0, 0, 0, .55);
+  color: white;
+  padding: 12px;
+  right: 5px;
+  /*border: 2px solid red;*/
+}
+
+.video-thumb {
+  display: flex;
+  flex-direction: row;
+  min-height: 110px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 960px) {
+    min-height: 90px;
+
+  }
+
 }
 
 
