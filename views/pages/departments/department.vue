@@ -20,8 +20,9 @@ import CafeRacerBrandsBlock from "@/views/pages/home/cafe-racer-brands-block.vue
 import OffRoadCategories from "@/views/pages/home/OffRoadCategories.vue"
 import BrandsBlockMx from "@/views/pages/home/BrandsBlockMx.vue"
 import OutletPromo from "@/views/pages/home/outlet-promo.vue"
-import EventCreadoresContenidos from "@/views/pages/home/event-creadores-contenidos.vue"
+import Vulcanet from "@/views/pages/home/vulcanet.vue"
 import LifestyleCategories from "@/views/pages/home/lifestyle-categories.vue"
+import EventCreadoresContenidos from "@/views/pages/home/event-creadores-contenidos.vue"
 
 import Himalaya from "@/views/pages/home/himalaya.vue"
 import { Departments } from "@/models/index.js"
@@ -86,6 +87,7 @@ const componentMap = {
   OffRoadCategories,
   BrandsBlockMx,
   LifestyleCategories,
+  Vulcanet,
 }
 
 const { isMobile } = useDevice()
@@ -132,6 +134,7 @@ const widgets = computed( () => {
     :key="widget.id"
     :widget="widget"
   />
+
 
 
 
