@@ -63,11 +63,13 @@
         </ul>
 
         <div class="hero-actions">
-          <button class="btn-primary">
+          <button class="btn-primary" @click="navigateTo('/motocicleta/3273603-limpieza-y-proteccion-vulcanet-toallitas-limpiadoras')">
             Ver producto
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
-          <button class="btn-ghost">¿Cómo funciona?</button>
+          <button
+            @click="navigateTo('/moto-blog/funcionan-realmente-las-toallitas-vulcanet-mi-experiencia-limpiando-moto-y-auto')"
+            class="btn-ghost">¿Cómo funciona?</button>
         </div>
       </div>
 

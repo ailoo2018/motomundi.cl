@@ -11,10 +11,11 @@ const props = defineProps({
   <div class="related-blog-content">
     <h2>Lee la review en nuestro blog</h2>
     <a aaahref="/$linkHelper.GetBlogEntryUrl($relatedBlogContent.title.ToString())">
-      <div class="related-blog-post"><img
-                                       :src="getBaseCDN() + article.previewImage"
-                                       alt="${relatedBlogContent.title}"
-                                     >
+      <div class="related-blog-post">
+        <img
+          :src="getBaseCDN() + article.previewImage"
+          alt="${relatedBlogContent.title}"
+        >
         <div class="related-blog-post__content">
           <h3>{{ article.title }}</h3>
           <small>{{ article.createDate }} ·
