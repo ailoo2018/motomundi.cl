@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {register} from "swiper/element"
 import {getDomainId, getImageUrl, getYouTubeThumbnail} from "@core/utils/formatters"
+import {useHandleImageError} from "@/composables/useHandleImageError";
 
 const props = defineProps({
   product: {
@@ -12,6 +13,7 @@ const emit = defineEmits(['on-click'])
 const product = ref(props.product)
 const swiperEl = ref(null)
 const hideNavigation = ref(false)
+const { handleImageError } = useHandleImageError()
 
 const images = computed(() => {
   if (!product.value)
@@ -107,9 +109,10 @@ register()
                   <div v-if="img.type === 'image'">
                     <img
                       class="tmb-img"
-                      data-index="image-1"
-                      :src="getImageUrl(img.image, 600, getDomainId())"
+                      :data-index="`image-${index}`"
+                      :src="getImageUrl(img.image, 150, getDomainId())"
                       @click="onClick(index, img)"
+                      @error="handleImageError(img.image)"
                     >
                   </div>
                   <div
@@ -120,6 +123,7 @@ register()
                       style="cursor:pointer; width: 100%; height: 100%; display: inline-block; opacity: 1;"
                       :src="img.urlThumb"
                       @click="onClick(index, img)"
+
                     >
                   </div>
                 </swiper-slide>
