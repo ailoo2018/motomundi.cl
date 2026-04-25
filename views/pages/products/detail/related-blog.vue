@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
   <div class="related-blog-content">
     <h2>Lee la review en nuestro blog</h2>
-    <a aaahref="/$linkHelper.GetBlogEntryUrl($relatedBlogContent.title.ToString())">
+    <NuxtLink :to="article.friendlyUrl">
       <div class="related-blog-post">
         <img
           :src="getBaseCDN() + article.previewImage"
@@ -30,7 +30,7 @@ const props = defineProps({
             ></span>
         </div>
       </div>
-    </a>
+    </NuxtLink>
   </div>
 </template>
 
