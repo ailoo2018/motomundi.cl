@@ -47,11 +47,7 @@ const showPackDialog = pack => {
     />
     <!-- /packs dialog -->
 
-    <div class="row pack-header">
-      <div class="col s12">
-        <h2>Packs ahorro</h2>
-      </div>
-    </div>
+
     <VRow
       id="packs-container"
       class="row product-packs__container"

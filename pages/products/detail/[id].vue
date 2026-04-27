@@ -618,6 +618,11 @@ onMounted(() => {
         </section>
 
         <VContainer>
+          <div class="row pack-header">
+            <div class="col s12">
+              <h2>Packs ahorro</h2>
+            </div>
+          </div>
           <Packs :product="product" />
         </VContainer>
         <ProductComplements :product-id="product?.id" />
@@ -794,8 +799,13 @@ onMounted(() => {
             </div>
           </div>
 
-          <Packs :product="product" />
-
+          <div class="content-section">
+            <h2 class="section-title">
+              Packs Ahorro
+            </h2>
+            <VDivider class="section-divider mb-5" />
+            <Packs :product="product" />
+          </div>
           <!-- DESCRIPTION -->
           <div class="content-section">
             <h2 class="section-title">

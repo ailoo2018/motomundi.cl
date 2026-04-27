@@ -52,7 +52,7 @@ const showStockDialog = () => {
     <div
       class="shipping-options__container"
       :class="{ 'active': isAvailable}"
-      @click="showStockDialog"
+      @click="isAvailable && showStockDialog()"
     >
       <div class="shipping-options__content">
         <p class="shipping-options__heading">
@@ -61,14 +61,17 @@ const showStockDialog = () => {
         </p>
         <div class="shipping-options__body">
           <div class="shipping-options__option">
-            <p :class="isAvailable ? '' :  'option__not-checked'">
+            <p v-if="isAvailable" :class="isAvailable ? '' :  'option__not-checked'">
               Comprobar disponibilidad
+            </p>
+            <p v-else :class="isAvailable ? '' :  'option__not-checked'">
+              Producto exclusivo para venta online.
             </p>
           </div>
         </div>
       </div>
       <div class="shipping-options__actions">
-        <button>
+        <button v-if="isAvailable">
           Revisar Stock
           <VIcon icon="tabler-chevron-right"/>
         </button>
@@ -259,7 +262,8 @@ const showStockDialog = () => {
 }
 
 .shipping-options__container .shipping-options__option p.option__not-checked:before {
-  background-color: #c9c9c9;
+ /* background-color: #c9c9c9;*/
+  background-color: #ffae02;
 }
 
 .shipping-options__container .shipping-options__option p:before {
