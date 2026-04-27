@@ -178,7 +178,7 @@ const onSelectedColor = color => {
 }
 
 
-watch(activeSlide, (newVal, oldVal) => {
+/*watch(activeSlide, (newVal, oldVal) => {
 
 
   if(productImages.value?.length > newVal){
@@ -188,7 +188,7 @@ watch(activeSlide, (newVal, oldVal) => {
     }
   }
 
-})
+})*/
 
 const features = computed( () => {
   const ftrs = []
@@ -455,6 +455,7 @@ onMounted(() => {
     </VCard>
   </VDialog>
 
+  <!-- ============= SHOW VIDEO DIALOG ======================= -->
   <VDialog
     v-model="showVideoDialog"
     max-width="800"
@@ -723,12 +724,24 @@ onMounted(() => {
                     :src="getImageUrl(img.image, 800, getDomainId())"
                     @error="handleImageError(img.image)"
                   />
-                  <img
+
+                  <div class="video-container" v-if="img.type === 'video'" style="width:100%;">
+
+                    <iframe
+                      :src="`https://www.youtube.com/embed/${img.videoId}`"
+                      title="YouTube video player"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen
+                    />
+                  </div>
+<!--                  <img
                     v-if="img.type === 'video'"
                     style="width: 100%"
                     :alt="product.brand.name + product.name"
                     :src="img.url"
-                  >
+                  >-->
                 </div>
               </VCarouselItem>
 

@@ -33,7 +33,7 @@ const categoryUrl = computed(() => {
 })
 
 const brandCategoryUrl = computed(() => {
-  return getCategoryBrandUrl(category.value, props.product.brand)
+  return getCategoryBrandUrl(category.value, props.product?.brand)
 })
 
 </script>
