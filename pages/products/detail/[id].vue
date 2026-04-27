@@ -19,6 +19,7 @@ import ProductBuyPanel from "@/views/pages/products/product-buy-panel.vue"
 import ProductComplements from "@/views/pages/products/product-complements.vue"
 import StorePickup from "@/views/pages/products/detail/store-pickup.vue";
 import {useWishlistStore} from "@/stores/wishlist";
+import SeenCheaperForm from "@/views/pages/products/detail/seen-cheaper-form.vue";
 
 const deviceType = useState('device-type', () => {
   // This function only runs on the SERVER during the first request
@@ -84,6 +85,7 @@ const showVideoDialog = ref(false)
 const selectedVariant = ref()
 const loading = ref(false)
 const productSlider = ref()
+const showSeenCheaperForm = ref(false)
 
 const { formatCurrency, selectedCountryData } = useCurrencyConverter()
 const iso = computed(() => { return selectedCountryData.value.iso?.toLowerCase() })
@@ -536,7 +538,7 @@ onMounted(() => {
 
 
                 <!-- product-title -->
-                <div class="product-title">
+                <div class="product-title ">
                   <div class="product-title__container">
                     <h1>
                       {{ product.brand.name }}
@@ -550,7 +552,7 @@ onMounted(() => {
                             size="x-small"
                             density="compact"
                             color="primary"
-                            style="margin:0; padding:0; top: -10px;left: -2px;position: relative;"
+                            style="margin:0; padding:0; top: -4px;left: -2px;position: relative;"
                             half-increments
                             :model-value="product.rating / 2"
                             readonly
@@ -983,7 +985,7 @@ onMounted(() => {
                       label
                       class="font-weight-bold"
                     >
-                      –20%
+                      –{{product.discountPercent}}%
                     </VChip>
                   </div>
                   <div class="price-current">
@@ -991,11 +993,22 @@ onMounted(() => {
                     <span class="currency-flag">
                       <img :src="`/content/images/flags/${iso}.png`">
                     </span>
+                    <button
+                      class="seen-cheaper-button"
+                      @click="showSeenCheaperForm = true"
+                    >
+                      ¿Lo has visto más barato?
+                    </button>
                   </div>
                   <div class="price-sub mt-1">
                     IVA incluido · 12 cuotas sin interés desde <strong>{{ formatCurrency(price / 12) }}</strong>
+
+
                   </div>
                 </div>
+                <ClientOnly>
+                  <SeenCheaperForm v-model="showSeenCheaperForm" :product="product" />
+                </ClientOnly>
 
                 <!-- Promo banners -->
 
@@ -1625,4 +1638,15 @@ onMounted(() => {
   padding: 0;
   margin: 0;
 }
+
+.seen-cheaper-button {
+  @media(min-width: 900px) {
+    font-size: 12px;
+  }
+}
+
+.text-body-2{
+  line-height: 0;
+}
+
 </style>
