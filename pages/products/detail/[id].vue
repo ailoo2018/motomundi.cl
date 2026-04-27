@@ -136,16 +136,6 @@ const price = computed(() => {
 })
 
 
-
-// ── Breadcrumb ────────────────────────────────────────────
-const breadcrumbs = [
-  { title: 'Inicio',           href: '/' },
-  { title: 'Cascos',           href: '/cascos' },
-  { title: 'Cascos Integrales', href: '/cascos/integrales' },
-  { title: 'Shoei',            href: '/cascos/integrales/shoei' },
-  { title: 'X-SPR Pro Carbon', disabled: true },
-]
-
 // ── Slider ────────────────────────────────────────────────
 const activeSlide = ref(0)
 
@@ -185,11 +175,20 @@ const onSelectedColor = color => {
     }
     idx++
   }
-
-
 }
 
 
+watch(activeSlide, (newVal, oldVal) => {
+
+
+  if(productImages.value?.length > newVal){
+    if(productImages.value[newVal].type === 'video') {
+      console.log("activeSlideChange" + newVal)
+      onShowVideo(productImages.value[newVal].videoId)
+    }
+  }
+
+})
 
 const features = computed( () => {
   const ftrs = []
@@ -490,8 +489,11 @@ onMounted(() => {
   </VDialog>
 
   <!-- error -->
+  <div v-if="pending" class="container" style="padding: 60px 20px;">
+    <VSkeletonLoader type="image, article" />
+  </div>
   <div
-    v-if="!product"
+    v-else-if="!product"
     class="container"
     style="padding: 60px 20px; text-align: center;"
   >
@@ -504,7 +506,7 @@ onMounted(() => {
       Producto no encontrado
     </h2>
     <p style="color: #888;">
-      El producto que buscas no existe o ya no está disponible.
+      El producto que buscas no existe o ya no está disponible. pid: {{product?.id}}
     </p>
     <VBtn
       color="primary"
@@ -658,27 +660,8 @@ onMounted(() => {
   </div>
   <div v-else>
     <!-- ── BREADCRUMB ─────────────────────────────────────────── -->
-    <div class="breadcrumb-bar">
-      <VBreadcrumbs
-        :items="breadcrumbs"
-        density="compact"
-      >
-        <template #divider>
-          <VIcon
-            icon="tabler-chevron-right"
-            size="14"
-          />
-        </template>
-        <template #item="{ item }">
-          <VBreadcrumbsItem
-            :href="item.href"
-            :disabled="item.disabled"
-            :class="item.disabled ? 'text-black font-weight-semibold' : 'text-medium-emphasis'"
-          >
-            {{ item.title }}
-          </VBreadcrumbsItem>
-        </template>
-      </VBreadcrumbs>
+    <div class="ml-2 pt-2">
+    <Breadcrumbs :product="product" />
     </div>
 
     <!-- ── MAIN GRID ───────────────────────────────────────── -->
