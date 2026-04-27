@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ProductHelper } from "@/models/products"
 import { useProductsUtils } from "@/composables/useProductsUtils.js"
-import NotifyWhenAvailable from "@/views/pages/products/detail/notify-when-available.vue";
+import NotifyWhenAvailable from "@/views/pages/products/detail/notify-when-available.vue"
+import StorePickup from "@/views/pages/products/detail/store-pickup.vue";
 
 
 const props = defineProps(
@@ -42,9 +43,8 @@ const showNotifyWhenAvailable = ref(false)
 
 const openNotifyWhenAvailable = () => {
   showNotifyWhenAvailable.value = true
-  showNotifyWhenAvailable.value = true
-}
 
+}
 
 
 if (useComboForSize)
@@ -80,7 +80,7 @@ const isColorAvailable = color => {
     return false
   } catch (e) {
     console.error(e)
-    
+
     return false
   }
 }
@@ -89,7 +89,7 @@ const selectColor = color => {
   console.log("ProductVariantSelector::selectColor " + color)
   selectedColor.value = color
 
-  if(sizes.value?.length > 0 && !isSizeAvailable(selectedSize.value)){
+  if (sizes.value?.length > 0 && !isSizeAvailable(selectedSize.value)) {
     selectedSize.value = { id: 0 }
   }
 
@@ -132,6 +132,15 @@ const updateModel = () => {
     const sizeId = selectedSize.value.id
     const colorId = selectedColor.value.id
 
+
+    /*
+        if(colorId > 0){
+          console.log("Emit update:color")
+          emit('update:color', selectedColor.value)
+        }
+    */
+
+
     let productItem
 
     if (!ProductHelper.requiresFeatureSelect(props.product)) {
@@ -140,7 +149,7 @@ const updateModel = () => {
       productItem = prodUtil.findProductItemByFeatures(props.product, colorId, sizeId)
     }
 
-    console.log("updateModel")
+    console.log("updateModel" + JSON.stringify(productItem))
     selectedProductItem.value = productItem
   } catch (e) {
     console.error(e)
@@ -149,6 +158,7 @@ const updateModel = () => {
 }
 
 watch(selectedProductItem, () => {
+  // console.log("ProductVariantSelector::updateModel" + JSON.stringify(selectedProductItem))
   emit("selected-variant", selectedProductItem.value)
 })
 
@@ -209,40 +219,140 @@ onMounted(() => {
 <template>
   <span v-if="product.type == 0">
 
-    <!-- colors -->
     <div
       v-if="colors.length > 0"
-      class="row ng-scope"
-      style="margin-bottom: 16px;"
+      class="variant-section mb-4"
     >
-      <div class="col s12">
-        <div  class="product-colors ">
-          <div class="product-sizes__header">
-            <h2>Elige tu color</h2>
-          </div>
-          <div class="colors-form product-wrapper product-detail">
-            <div class="color-tile swatch-tile-container product-data">
-              <button
-                v-for="color in colors"
-                class="color-attribute"
-                :title="color.name"
-                :aria-label="color.name"
-                @click="selectColor(color)"
-              >
-                <span
-                  class="swatch color-value swatch-value selectable available"
-                  :class="{ 'selected': selectedColor?.id === color.id, 'unavailable' : !isColorAvailable(color)}"
-                  :style="`background-image: url(&quot;${getColorImageUrl(color.id, 600, getDomainId())}&quot;);`"
-                />
-                <span class="sr-only selected-assistive-text">selected</span>
-              </button>
-            </div>
-          </div>
+      <div class="variant-label mb-2">
+        Color: <strong>{{ selectedColor?.name }}</strong>
 
+      </div>
+      <div class="d-flex gap-2 colors-form product-wrapper product-detail">
+
+
+        <div class="color-tile swatch-tile-container product-data">
+          <button
+            v-for="color in colors"
+            class="color-attribute"
+            :title="color.name"
+            :aria-label="color.name"
+            @click="selectColor(color)"
+          >
+            <span
+              class="swatch color-value swatch-value selectable available"
+              :class="{ 'selected': selectedColor?.id === color.id, 'unavailable' : !isColorAvailable(color)}"
+              :style="`background-image: url(&quot;${getColorImageUrl(color.id, 600, getDomainId())}&quot;);`"
+            />
+            <span class="sr-only selected-assistive-text">selected</span>
+          </button>
         </div>
+
+
       </div>
     </div>
-    <!-- /colors -->
+
+    <!-- Size selector -->
+    <div class="variant-section mb-4">
+      <div class="variant-label mb-2 d-flex justify-space-between">
+        <div>
+          Talla: <strong>{{ selectedSize?.name || '—' }}</strong>
+        </div>
+        <a
+          class="size-guide-link ml-2"
+          @click="onShowSizeChart"
+        >
+          <VIcon
+            icon="tabler-ruler"
+            size="13"
+          />
+          Guía de tallas
+        </a>
+      </div>
+      <div class="sizes-form">
+        <div
+          v-if="!useComboForSize"
+          class="default-selector-container"
+        >
+          <div
+            v-for="size in sizes"
+            class="radio"
+            @click="isSizeAvailable(size) || openNotifyWhenAvailable(size)"
+          >
+            <div
+              class="paack-2h-label"
+              style="display: none;"
+            >2H</div>
+            <input
+              :id="'size-' + size.id"
+              v-model="selectedSize"
+              :class="{ 'oosk': !isSizeAvailable(size)}"
+              :value="size"
+
+              :checked="selectedSize.id === size.id"
+              type="radio"
+            >
+            <label @click="onSelectSize(size)">
+              {{ size.name }}
+              <span
+                v-if="!isSizeAvailable(size)"
+                class="oosk__badge"
+              />
+            </label>
+          </div>
+        </div>
+        <div v-else>
+          <VSelect
+            v-model="selectedSize"
+            :items="sizes"
+            :item-props="setSizeProps"
+            placeholder="Seleccione talla"
+            item-title="description"
+            item-value="id"
+            return-object
+          />
+        </div>
+        <NotifyWhenAvailable
+          v-model="showNotifyWhenAvailable"
+          :product-item="selectedProductItem || 0"
+        />
+      </div>
+      <div class="size-grid d-none">
+
+
+        <!--
+          <button
+          v-for="size in sizes"
+          :key="size.name"
+          class="size-btn"
+          :class="{
+          'size-active': selectedSize.id === size.id,
+          'size-soldout': !isSizeAvailable(size),
+          'oosk': !isSizeAvailable(size)
+          }"
+          :disabled="!isSizeAvailable(size)"
+          @click="onSelectSize(size)"
+
+          >
+          {{ size.name }}
+          </button>
+        -->
+      </div>
+      <div class="text-caption text-medium-emphasis mt-2 d-none">
+        XS y XXL: disponibles solo en tienda física.
+      </div>
+    </div>
+
+
+    <div class="availability-bar mb-4 d-none">
+      <span class="avail-dot" />
+      <span>
+        <strong class="text-success">En stock</strong>
+        — Ver disponibilidad por tienda
+      </span>
+    </div>
+  </span>
+  <span v-if="false && product.type == 0">
+
 
     <!-- sizes -->
     <div
@@ -296,7 +406,8 @@ onMounted(() => {
               >
                 <div
                   class="paack-2h-label"
-                  style="display: none;">2H</div>
+                  style="display: none;"
+                >2H</div>
                 <input
                   :id="'size-' + size.id"
                   v-model="selectedSize"
@@ -328,7 +439,10 @@ onMounted(() => {
             </div>
           </div>
 
-          <NotifyWhenAvailable v-model="showNotifyWhenAvailable" :product-item="selectedProductItem || 0" />
+          <NotifyWhenAvailable
+            v-model="showNotifyWhenAvailable"
+            :product-item="selectedProductItem || 0"
+          />
         </div>
       </div>
     </div>
@@ -337,12 +451,89 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+/* ── Variants ────────────────────────────────────── */
+.variant-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.variant-label strong {
+  color: black;
+}
+.color-swatch {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  outline: 2px solid #e0e0e0;
+  cursor: pointer;
+  transition: outline-color .2s, border-color .2s;
+}
+
+.color-swatch:hover { outline-color: #B21A15; }
+.swatch-active { outline-color: #B21A15 !important; border-color: #fff; }
+
+.size-grid { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.size-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  padding: 7px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fff;
+  color: #444;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, color .2s;
+  min-width: 46px;
+  text-align: center;
+}
+
+.size-btn:hover:not(.size-soldout) { border-color: #B21A15; color: #B21A15; background: #fff0f0; }
+.size-active { border-color: #B21A15 !important; background: #B21A15 !important; color: #fff !important; }
+.size-soldout { opacity: .35; cursor: not-allowed; text-decoration: line-through; }
+
+.size-guide-link {
+  font-size: 12px;
+  color: #B21A15;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ── Availability ────────────────────────────────── */
+.availability-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #f0fff5;
+  border: 1px solid #b8f0cd;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #333;
+}
+
+.avail-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #1a8a40;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(26,138,64,.2);
+  animation: pulse 2s infinite;
+}
+
 
 .radio input:checked.oosk + label:after {
   background-color: #ffae02 !important;
   border-color: #ffae02 !important;
   z-index: -1;
 }
+
 .radio input[type=radio]:checked.oosk + label .oosk__badge {
   background-color: #ffae02 !important;
 }
@@ -365,6 +556,16 @@ onMounted(() => {
     transform: rotate(-45deg);
     pointer-events: none;
   }
+}
+
+
+.product-wrapper.product-detail .swatch-tile-container.color-tile {
+  margin: 0;
+  padding: 0;
+}
+
+button.color-attribute {
+  padding-inline: 0;
 }
 
 .sizes-form {
@@ -399,10 +600,10 @@ onMounted(() => {
     display: block;
     height: 20px;
     position: absolute;
-    right: -2px;
+    right: 0px;
     top: 0;
     transition: all .2s ease;
-    width: 25px;
+    width: 20px;
   }
 
   .radio input[type=radio]:checked + label:after, .radio input[type=radio]:not(:checked) + label:after {

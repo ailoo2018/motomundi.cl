@@ -117,7 +117,6 @@ const onSelectedVariant = pit =>
 {
   selectedVariant.value = pit
   error.value = null
-
 }
 
 

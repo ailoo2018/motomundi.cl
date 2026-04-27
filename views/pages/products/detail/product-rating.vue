@@ -7,7 +7,6 @@ const props = defineProps(
   },
 )
 
-console.log("in product rating")
 
 const {data: reviewStats} = await useAsyncData(
   `stats-${props.product.id}`,
@@ -212,427 +211,427 @@ if (import.meta.client) {
 
 <template>
   <ClientOnly>
-    <VContainer class="pb-10">
-      <VRow
-        v-if="reviews.length > 0"
-        id="reviews"
-        style="padding: 12px;"
-      >
-        <VCol cols="12">
-          <aside
-            id="ratings"
-            class="v-row"
+
+    <VRow
+      v-if="reviews"
+      id="reviews"
+      style="padding: 12px;"
+    >
+      <VCol cols="12">
+        <aside
+          id="ratings"
+          class="v-row"
+        >
+          <VCol cols="12">
+            <div class="group-title">
+              <h2>Valoraciones</h2>
+            </div>
+          </VCol>
+          <VCol
+            cols="12"
+            md="4"
+            lg="3"
           >
-            <VCol cols="12">
-              <div class="group-title">
-                <h2>Valoraciones</h2>
-              </div>
-            </VCol>
-            <VCol
-              cols="12"
-              md="4"
-              lg="3"
+            <div
+              v-if="reviewStats"
+              class="ratings-summary"
             >
-              <div
-                v-if="reviewStats"
-                class="ratings-summary"
-              >
-                <span class="rating-block">
-                  <span>
-                    <VRating
-                      readonly
-                      color="primary"
-                      :model-value="reviewStats?.avgRating"
-                    />
-                  </span>
+              <span class="rating-block">
+                <span>
+                  <VRating
+                    readonly
+                    color="primary"
+                    :model-value="reviewStats?.avgRating"
+                  />
                 </span>
-                <p>
-                  Basada en <strong>{{ reviewStats?.totalReviews }}</strong> valoraciones
-                </p>
-                <div
-                  class="rating-star-summary"
-                  :class="{'rating-selected': ratingCriteria.rating == 5 }"
-                  @click="selectRating(5)"
-                >
-                  <span>5 estrellas</span>
-                  <div class="rating-outer">
-                    <div
-
-                      class="rating-inner"
-                      :style="`width: ${reviewStats['5']}%;`"
-                    />
-                  </div>
-                </div>
-                <div
-
-                  class="rating-star-summary"
-                  :class="{'rating-selected': ratingCriteria.rating == 4 }"
-                  @click="selectRating(4)"
-                >
-                  <span>4 estrellas</span>
-                  <div class="rating-outer">
-                    <div
-
-                      class="rating-inner"
-                      :style="`width: ${reviewStats['4']}%;`"
-                    />
-                  </div>
-                </div>
-                <div
-
-                  class="rating-star-summary"
-                  :class="{'rating-selected': ratingCriteria.rating == 3 }"
-                  @click="selectRating(3)"
-                >
-                  <span>3 estrellas</span>
-                  <div class="rating-outer">
-                    <div
-                      class="rating-inner"
-                      :style="`width: ${reviewStats['3']}%;`"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="rating-star-summary"
-                  :class="{'rating-selected': ratingCriteria.rating == 2 }"
-                  @click="selectRating(2)"
-                >
-                  <span>2 estrellas</span>
-                  <div class="rating-outer">
-                    <div
-                      class="rating-inner"
-                      :style="`width: ${reviewStats['2']}%;`"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="rating-star-summary"
-                  :class="{'rating-selected': ratingCriteria.rating == 1 }"
-                  @click="selectRating(1)"
-                >
-                  <span>1 estrella</span>
-                  <div class="rating-outer">
-                    <div
-                      class="rating-inner"
-                      :style="`width: ${reviewStats['1']}%;`"
-                    />
-                  </div>
-                </div>
-              </div>
-            </VCol>
-            <VCol
-              cols="12"
-              sm="12"
-              md="7"
-              lg="8"
-              class="col-lg-offset-1"
-            >
-              <div class="review-filters">
-                <button
-                  :class="{'selected': ratingCriteria.selected == 'TODOS'}"
-                  @click="showAll"
-                >
-                  Todas
-                </button>
-                <button
-                  :class="{'selected': ratingCriteria.selected == 'MEJOR_VALORADO'}"
-                  @click="orderBy('rating', 'desc', 'MEJOR_VALORADO')"
-                >
-                  Mejor valorado
-                </button>
-                <button
-                  :class="{'selected': ratingCriteria.selected == 'PEOR_VALORADO'}"
-                  @click="orderBy('rating', 'asc', 'PEOR_VALORADO')"
-                >
-                  Peor valorado
-                </button>
-                <button
-                  :class="{'selected': ratingCriteria.selected == 'CON_FOTOS'}"
-                  @click="ratingCriteria.selected = 'CON_FOTOS'"
-                >
-                  Con fotos
-                </button>
-                <button
-                  :class="{'selected': ratingCriteria.selected == 'CON_VIDEOS'}"
-                  @click="ratingCriteria.selected = 'CON_VIDEOS'"
-                >
-                  Con vídeos
-                </button>
-              </div>
-
-              <!-- review entries -->
+              </span>
+              <p>
+                Basada en <strong>{{ reviewStats?.totalReviews }}</strong> valoraciones
+              </p>
               <div
-                v-for="review in reviews"
-                class="user-reviews"
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 5 }"
+                @click="selectRating(5)"
               >
-                <div class="user-review-block">
-                  <div>
-                    <div class="rating">
-                      <div class="rating-aside">
-                        <span class="rating-block">
-                          <span>
-                            <VRating
-                              readonly
-                              color="primary"
-                              density="compact"
-                              size="x-small"
-                              :model-value="review.rating / 2 "
-                            />
-   
-                          </span>
+                <span>5 estrellas</span>
+                <div class="rating-outer">
+                  <div
+
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['5']}%;`"
+                  />
+                </div>
+              </div>
+              <div
+
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 4 }"
+                @click="selectRating(4)"
+              >
+                <span>4 estrellas</span>
+                <div class="rating-outer">
+                  <div
+
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['4']}%;`"
+                  />
+                </div>
+              </div>
+              <div
+
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 3 }"
+                @click="selectRating(3)"
+              >
+                <span>3 estrellas</span>
+                <div class="rating-outer">
+                  <div
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['3']}%;`"
+                  />
+                </div>
+              </div>
+              <div
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 2 }"
+                @click="selectRating(2)"
+              >
+                <span>2 estrellas</span>
+                <div class="rating-outer">
+                  <div
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['2']}%;`"
+                  />
+                </div>
+              </div>
+              <div
+                class="rating-star-summary"
+                :class="{'rating-selected': ratingCriteria.rating == 1 }"
+                @click="selectRating(1)"
+              >
+                <span>1 estrella</span>
+                <div class="rating-outer">
+                  <div
+                    class="rating-inner"
+                    :style="`width: ${reviewStats['1']}%;`"
+                  />
+                </div>
+              </div>
+            </div>
+          </VCol>
+          <VCol
+            cols="12"
+            sm="12"
+            md="7"
+            lg="9"
+            class="col-lg-offset-1"
+          >
+            <div class="review-filters">
+              <button
+                :class="{'selected': ratingCriteria.selected == 'TODOS'}"
+                @click="showAll"
+              >
+                Todas
+              </button>
+              <button
+                :class="{'selected': ratingCriteria.selected == 'MEJOR_VALORADO'}"
+                @click="orderBy('rating', 'desc', 'MEJOR_VALORADO')"
+              >
+                Mejor valorado
+              </button>
+              <button
+                :class="{'selected': ratingCriteria.selected == 'PEOR_VALORADO'}"
+                @click="orderBy('rating', 'asc', 'PEOR_VALORADO')"
+              >
+                Peor valorado
+              </button>
+              <button
+                :class="{'selected': ratingCriteria.selected == 'CON_FOTOS'}"
+                @click="ratingCriteria.selected = 'CON_FOTOS'"
+              >
+                Con fotos
+              </button>
+              <button
+                :class="{'selected': ratingCriteria.selected == 'CON_VIDEOS'}"
+                @click="ratingCriteria.selected = 'CON_VIDEOS'"
+              >
+                Con vídeos
+              </button>
+            </div>
+
+            <!-- review entries -->
+            <div
+              v-for="review in reviews"
+              class="user-reviews"
+            >
+              <div class="user-review-block">
+                <div>
+                  <div class="rating">
+                    <div class="rating-aside">
+                      <span class="rating-block">
+                        <span>
+                          <VRating
+                            readonly
+                            color="primary"
+                            density="compact"
+                            size="x-small"
+                            :model-value="review.rating / 2 "
+                          />
+
                         </span>
+                      </span>
 
-                        <a
-                          v-if="review.product"
-                          :href="getProductUrl(review.product)"
-                          class="rating-version mtc-link"
-                        >
-                          <span>{{ review.product?.fullName }}</span>
-                          <span>
-                            <img
-                              :src="getImageUrl(review.product?.image, 300, getDomainId())"
-                              class="cdn-img"
-                              alt=""
-                              width="21"
-                              height="21"
-                            > 
-                          </span>
-                        </a>
-                      </div>
-                      <h4>
-                        <div
-                          class="account__user-avatar small"
-                          style="background: linear-gradient(45deg, rgb(127, 167, 26) 0%, rgb(119, 138, 191) 100%);"
-                        >
-                          <img
-                            alt="user-avatar"
-                            style="display: none;"
-                          >
-                          {{ getReviewInitial(review) }}
-                        </div>
-                        <span>{{ getReviewerName(review) }} • {{
-                            formatDate(review.date, {
-                              day: '2-digit',
-                              month: '2-digit',
-                              year: 'numeric'
-                            })
-                          }}</span>
-                        <svg
-                          width="18"
-                          height="18"
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="language-icon icon sprite-icons"
-                        >
-                          <title>Español</title>
-                          <use href="/content/svg/motomundi.svg#i-ratings-es"/>
-                        </svg>
-                      </h4>
-                      <p>
-                        {{ review.comment }}
-                      </p>
-
-                      <!-- Replace the existing review-gallery div -->
-                      <div
-                        v-if="review.configuration?.images"
-                        class="review-gallery"
+                      <a
+                        v-if="review.product"
+                        :href="getProductUrl(review.product)"
+                        class="rating-version mtc-link"
                       >
-                        <span
-                          v-for="(revImg, imgIndex) in review.configuration.images"
-                          :key="revImg.id"
-                          class="image-cover"
-                          style="cursor: pointer;"
-                          @click="openLightbox(review.configuration.images, imgIndex)"
-                        >
+                        <span>{{ review.product?.fullName }}</span>
+                        <span>
                           <img
-                            v-if="revImg.id"
-                            :src="getImageUrl(revImg.id, 300, getDomainId())"
-                            class="cdn-img v-lazy-image v-lazy-image-loaded"
-                            alt="Review image"
-                            width="110"
-                            height="70"
-                            @error="handleImageError(revImg.id)"
+                            :src="getImageUrl(review.product?.image, 300, getDomainId())"
+                            class="cdn-img"
+                            alt=""
+                            width="21"
+                            height="21"
                           >
                         </span>
+                      </a>
+                    </div>
+                    <h4>
+                      <div
+                        class="account__user-avatar small"
+                        style="background: linear-gradient(45deg, rgb(127, 167, 26) 0%, rgb(119, 138, 191) 100%);"
+                      >
+                        <img
+                          alt="user-avatar"
+                          style="display: none;"
+                        >
+                        {{ getReviewInitial(review) }}
                       </div>
+                      <span>{{ getReviewerName(review) }} • {{
+                          formatDate(review.date, {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                          })
+                        }}</span>
+                      <svg
+                        width="18"
+                        height="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="language-icon icon sprite-icons"
+                      >
+                        <title>Español</title>
+                        <use href="/content/svg/motomundi.svg#i-ratings-es"/>
+                      </svg>
+                    </h4>
+                    <p>
+                      {{ review.comment }}
+                    </p>
+
+                    <!-- Replace the existing review-gallery div -->
+                    <div
+                      v-if="review.configuration?.images"
+                      class="review-gallery"
+                    >
+                      <span
+                        v-for="(revImg, imgIndex) in review.configuration.images"
+                        :key="revImg.id"
+                        class="image-cover"
+                        style="cursor: pointer;"
+                        @click="openLightbox(review.configuration.images, imgIndex)"
+                      >
+                        <img
+                          v-if="revImg.id"
+                          :src="getImageUrl(revImg.id, 300, getDomainId())"
+                          class="cdn-img v-lazy-image v-lazy-image-loaded"
+                          alt="Review image"
+                          width="110"
+                          height="70"
+                          @error="handleImageError(revImg.id)"
+                        >
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div
-                v-if="loading"
-                class="mt-10 pt-4 w-100 d-flex justify-center"
+            <div
+              v-if="loading"
+              class="mt-10 pt-4 w-100 d-flex justify-center"
+            >
+              <VProgressCircular
+                indeterminate
+                color="primary"
+              />
+            </div>
+
+            <div
+              v-if="!loading && reviews.length == 0"
+              class="empty-review"
+            >
+              <p>
+                <svg
+                  width="16"
+                  height="18"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon sprite-line-icons"
+                >
+                  <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-thumbs-up"/>
+                </svg>
+                <span>Aún no hay valoraciones</span>
+              </p>
+            </div>
+            <div
+              class="reviews-load-more"
+              v-if="hasNextPage"
+            >
+              <button
+                class="button"
+                @click="nextPage"
               >
-                <VProgressCircular
-                  indeterminate
-                  color="primary"
+                Ver más comentarios
+              </button>
+            </div>
+          </VCol>
+        </aside>
+      </VCol>
+    </VRow>
+
+
+    <!-- Add this lightbox dialog BEFORE the closing </VContainer> -->
+    <VDialog
+      v-model="lightboxOpen"
+      max-width="900"
+      @keydown.esc="closeLightbox"
+    >
+      <VCard class="lightbox-card pa-0">
+        <VToolbar
+          density="compact"
+          color="transparent"
+          class="lightbox-toolbar"
+        >
+          <VSpacer/>
+          <span class="text-caption text-medium-emphasis">
+            {{ lightboxIndex + 1 }} / {{ lightboxImages.length }}
+          </span>
+          <VBtn
+            icon
+            variant="text"
+            @click="closeLightbox"
+          >
+            <VIcon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
                 />
-              </div>
+                <path d="M18 6l-12 12"/>
+                <path d="M6 6l12 12"/>
+              </svg>
+            </VIcon>
+          </VBtn>
+        </VToolbar>
 
-              <div
-                v-if="!loading && reviews.length == 0"
-                class="empty-review"
-              >
-                <p>
-                  <svg
-                    width="16"
-                    height="18"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon sprite-line-icons"
-                  >
-                    <use href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-thumbs-up"/>
-                  </svg>
-                  <span>Aún no hay valoraciones</span>
-                </p>
-              </div>
-              <div
-                class="reviews-load-more"
-                v-if="hasNextPage"
-              >
-                <button
-                  class="button"
-                  @click="nextPage"
-                >
-                  Ver más comentarios
-                </button>
-              </div>
-            </VCol>
-          </aside>
-        </VCol>
-      </VRow>
-
-
-      <!-- Add this lightbox dialog BEFORE the closing </VContainer> -->
-      <VDialog
-        v-model="lightboxOpen"
-        max-width="900"
-        @keydown.esc="closeLightbox"
-      >
-        <VCard class="lightbox-card pa-0">
-          <VToolbar
-            density="compact"
-            color="transparent"
-            class="lightbox-toolbar"
+        <VCardText class="d-flex align-center justify-center pa-2 lightbox-content">
+          <VBtn
+            icon
+            variant="text"
+            :disabled="lightboxIndex === 0"
+            class="lightbox-nav"
+            @click="prevImage"
           >
-            <VSpacer/>
-            <span class="text-caption text-medium-emphasis">
-              {{ lightboxIndex + 1 }} / {{ lightboxImages.length }}
-            </span>
-            <VBtn
-              icon
-              variant="text"
-              @click="closeLightbox"
-            >
-              <VIcon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
+            <VIcon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
                   fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    stroke="none"
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path d="M18 6l-12 12"/>
-                  <path d="M6 6l12 12"/>
-                </svg>
-              </VIcon>
-            </VBtn>
-          </VToolbar>
+                />
+                <path d="M15 6l-6 6l6 6"/>
+              </svg>
+            </VIcon>
+          </VBtn>
 
-          <VCardText class="d-flex align-center justify-center pa-2 lightbox-content">
-            <VBtn
-              icon
-              variant="text"
-              :disabled="lightboxIndex === 0"
-              class="lightbox-nav"
-              @click="prevImage"
-            >
-              <VIcon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    stroke="none"
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path d="M15 6l-6 6l6 6"/>
-                </svg>
-              </VIcon>
-            </VBtn>
-
-            <img
-              :src="lightboxImage"
-              class="lightbox-img"
-              alt="Review image"
-            >
-
-            <VBtn
-              icon
-              variant="text"
-              :disabled="lightboxIndex === lightboxImages.length - 1"
-              class="lightbox-nav"
-              @click="nextImage"
-            >
-              <VIcon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    stroke="none"
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path d="M9 6l6 6l-6 6"/>
-                </svg>
-              </VIcon>
-            </VBtn>
-          </VCardText>
-
-          <!-- Thumbnail strip (only shown if multiple images) -->
-          <VCardText
-            v-if="lightboxImages.length > 1"
-            class="d-flex justify-center gap-2 pt-0 pb-3 flex-wrap"
+          <img
+            :src="lightboxImage"
+            class="lightbox-img"
+            alt="Review image"
           >
-            <img
-              v-for="(thumb, i) in lightboxImages"
-              :key="thumb.id"
-              :src="getImageUrl(thumb.id, 'org', getDomainId())"
-              class="lightbox-thumb"
-              :class="{ 'lightbox-thumb-active': i === lightboxIndex }"
-              alt=""
-              width="60"
-              height="40"
-              @click="lightboxIndex = i; lightboxImage = getImageUrl(thumb.id, 300, getDomainId())"
-            >
-          </VCardText>
-        </VCard>
-      </VDialog>
-    </VContainer>
+
+          <VBtn
+            icon
+            variant="text"
+            :disabled="lightboxIndex === lightboxImages.length - 1"
+            class="lightbox-nav"
+            @click="nextImage"
+          >
+            <VIcon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path d="M9 6l6 6l-6 6"/>
+              </svg>
+            </VIcon>
+          </VBtn>
+        </VCardText>
+
+        <!-- Thumbnail strip (only shown if multiple images) -->
+        <VCardText
+          v-if="lightboxImages.length > 1"
+          class="d-flex justify-center gap-2 pt-0 pb-3 flex-wrap"
+        >
+          <img
+            v-for="(thumb, i) in lightboxImages"
+            :key="thumb.id"
+            :src="getImageUrl(thumb.id, 'org', getDomainId())"
+            class="lightbox-thumb"
+            :class="{ 'lightbox-thumb-active': i === lightboxIndex }"
+            alt=""
+            width="60"
+            height="40"
+            @click="lightboxIndex = i; lightboxImage = getImageUrl(thumb.id, 300, getDomainId())"
+          >
+        </VCardText>
+      </VCard>
+    </VDialog>
+
   </ClientOnly>
 </template>
 

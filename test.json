@@ -1,29 +1,111 @@
-[
-  {
-    "id": 459061,
-    "description": "Pago exitoso. Código de autorización: 154768434406",
-    "userId": null,
-    "state": 2,
-    "orderId": 195620,
-    "creationDate": "2026-04-14T19:43:02.000Z",
-    "imageId": null
-  },
-  {
-    "id": 459149,
-    "description": "null",
-    "userId": 7391,
-    "state": 14,
-    "orderId": 195620,
-    "creationDate": "2026-04-15T10:24:45.000Z",
-    "imageId": null
-  },
-  {
-    "id": 459161,
-    "description": "Pago exitoso. Código de autorización: 154768434406",
-    "userId": null,
-    "state": 2,
-    "orderId": 195620,
-    "creationDate": "2026-04-15T15:02:44.000Z",
-    "imageId": null
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Beeline Moto II Bar Clamp Mount",
+  "description": "Sencillo y elegante, este soporte de manillar anodizado en negro es perfecto para bicicletas con manillar estándar. El inserto del soporte se puede girar a diferentes posiciones para adaptarse a manillares curvados. Contenido del paquete:Soporte de manillar de metalEspaciadores para los siguientes diámetros de manillar:22,2 mm25,4 mm28,6 mm31,8 mm",
+  "image": [
+    {
+      "@type": "ImageObject",
+      "height": "800",
+      "width": "1200",
+      "contentUrl": "https://static.wixstatic.com/media/27157a_1b8f3ec78a3a4c9fbd37a50fc7c94a6d~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+      "representativeOfPage": true,
+      "thumbnail": {
+        "@type": "ImageObject",
+        "height": "50",
+        "width": "50",
+        "contentUrl": "https://static.wixstatic.com/media/27157a_1b8f3ec78a3a4c9fbd37a50fc7c94a6d~mv2.webp/v1/fit/w_50,h_50,q_90/file.webp"
+      }
+    },
+    {
+      "@type": "ImageObject",
+      "height": "800",
+      "width": "1200",
+      "contentUrl": "https://static.wixstatic.com/media/27157a_7a06d514d02a4e4d8ebd34170e4136f9~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+      "representativeOfPage": true,
+      "thumbnail": {
+        "@type": "ImageObject",
+        "height": "50",
+        "width": "50",
+        "contentUrl": "https://static.wixstatic.com/media/27157a_7a06d514d02a4e4d8ebd34170e4136f9~mv2.webp/v1/fit/w_50,h_50,q_90/file.webp"
+      }
+    },
+    {
+      "@type": "ImageObject",
+      "height": "1200",
+      "width": "1200",
+      "contentUrl": "https://static.wixstatic.com/media/27157a_5adae6f243c84c7987f7c4d375b68b15~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+      "representativeOfPage": true,
+      "thumbnail": {
+        "@type": "ImageObject",
+        "height": "50",
+        "width": "50",
+        "contentUrl": "https://static.wixstatic.com/media/27157a_5adae6f243c84c7987f7c4d375b68b15~mv2.webp/v1/fit/w_50,h_50,q_90/file.webp"
+      }
+    },
+    {
+      "@type": "ImageObject",
+      "height": "1200",
+      "width": "1200",
+      "contentUrl": "https://static.wixstatic.com/media/27157a_5c34efed43c14168991af2dfd18be97f~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+      "representativeOfPage": true,
+      "thumbnail": {
+        "@type": "ImageObject",
+        "height": "50",
+        "width": "50",
+        "contentUrl": "https://static.wixstatic.com/media/27157a_5c34efed43c14168991af2dfd18be97f~mv2.webp/v1/fit/w_50,h_50,q_90/file.webp"
+      }
+    },
+    {
+      "@type": "ImageObject",
+      "height": "1200",
+      "width": "1200",
+      "contentUrl": "https://static.wixstatic.com/media/27157a_9b2b56fc883b4926997adc4a5bf06449~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+      "representativeOfPage": true,
+      "thumbnail": {
+        "@type": "ImageObject",
+        "height": "50",
+        "width": "50",
+        "contentUrl": "https://static.wixstatic.com/media/27157a_9b2b56fc883b4926997adc4a5bf06449~mv2.webp/v1/fit/w_50,h_50,q_90/file.webp"
+      }
+    },
+    {
+      "@type": "ImageObject",
+      "height": "800",
+      "width": "1200",
+      "contentUrl": "https://static.wixstatic.com/media/27157a_ccbe54a1bb75494e81f85c9ee02e10f8~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+      "representativeOfPage": true,
+      "thumbnail": {
+        "@type": "ImageObject",
+        "height": "50",
+        "width": "50",
+        "contentUrl": "https://static.wixstatic.com/media/27157a_ccbe54a1bb75494e81f85c9ee02e10f8~mv2.webp/v1/fit/w_50,h_50,q_90/file.webp"
+      }
+    },
+    {
+      "@type": "ImageObject",
+      "height": "944",
+      "width": "1587",
+      "contentUrl": "https://static.wixstatic.com/media/27157a_b3ffc962f6b74457adfdb85f28a1f748~mv2.jpeg/v1/fit/w_500,h_500,q_90/file.jpg",
+      "representativeOfPage": true,
+      "thumbnail": {
+        "@type": "ImageObject",
+        "height": "50",
+        "width": "50",
+        "contentUrl": "https://static.wixstatic.com/media/27157a_b3ffc962f6b74457adfdb85f28a1f748~mv2.jpeg/v1/fit/w_50,h_50,q_90/file.jpg"
+      }
+    }
+  ],
+  "Offers": {
+    "@type": "Offer",
+    "url": "https://www.motybamotos.cl/product-page/beeline-moto-ii-bar-clamp-mount",
+    "priceCurrency": "CLP",
+    "price": "59990",
+    "Availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "Motyba Motos Rider's Garage",
+      "sameAs": "https://www.motybamotos.cl"
+    }
   }
-]
+}

@@ -38,25 +38,25 @@ const baseQuery = []
 if(data.value?.type === "products") {
   const query = data.value.query
   if (query.categoryId) {
-    baseQuery.push({type: "categories", values: [query.categoryId]})
+    baseQuery.push({ type: "categories", values: [query.categoryId] })
   }
   if (query.brandId) {
-    baseQuery.push({type: "brands", values: [query.brandId]})
+    baseQuery.push({ type: "brands", values: [query.brandId] })
   }
   if (query.collection) {
-    baseQuery.push({type: "collection", value: query.collection})
+    baseQuery.push({ type: "collection", value: query.collection })
   }
   if (query.bikeManufacturer) {
     baseQuery.push({
       type: "bike",
-      value: {manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear},
+      value: { manufacturer: query.bikeManufacturer, model: query.bikeModel, year: query.bikeYear },
     })
   }
   if (query.minDiscount) {
-    baseQuery.push({type: "minDiscount", value: query.minDiscount})
+    baseQuery.push({ type: "minDiscount", value: query.minDiscount })
   }
   if (query.sword) {
-    baseQuery.push({type: "sword", value: query.sword})
+    baseQuery.push({ type: "sword", value: query.sword })
   }
 
   console.log("baseQuery: " + JSON.stringify(baseQuery))
@@ -72,6 +72,5 @@ if(data.value?.type === "products") {
   <ProductsList
     v-else-if="data?.type === 'products'"
     :base-query="baseQuery"
-
   />
 </template>

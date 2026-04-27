@@ -50,22 +50,13 @@ const showStockDialog = () => {
 <template>
   <div class="shop-lookup__container mt-4">
     <div
-      class="shipping-options__container not-clickable"
+      class="shipping-options__container"
+      :class="{ 'active': isAvailable}"
       @click="showStockDialog"
     >
       <div class="shipping-options__content">
         <p class="shipping-options__heading">
-          <svg
-            width="14"
-            height="18"
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon sprite-line-icons"
-          >
-            <use
-              href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-click-and-collect"
-              xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-click-and-collect"
-            />
-          </svg>
+          <VIcon icon="tabler-basket"/>
           <span>Retiro en Tienda</span>
         </p>
         <div class="shipping-options__body">
@@ -78,18 +69,8 @@ const showStockDialog = () => {
       </div>
       <div class="shipping-options__actions">
         <button>
-          Comprobar
-          <svg
-            width="12"
-            height="14"
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon sprite-line-icons"
-          >
-            <use
-              href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-angle-right"
-              xlink:href="/content/images/svg/5a3436bd5fabb67d5b4db2b6a90371b1.svg#i-icon-angle-right"
-            />
-          </svg>
+          Revisar Stock
+          <VIcon icon="tabler-chevron-right"/>
         </button>
       </div>
     </div>
@@ -246,7 +227,9 @@ const showStockDialog = () => {
 
 .shipping-options__container {
   align-items: center;
+
   background-color: #f5f5f5;
+  /*background-color: #1a8a40;*/
   cursor: pointer;
   display: flex;
   font-size: 12px;
@@ -254,6 +237,18 @@ const showStockDialog = () => {
   justify-content: space-between;
   margin-bottom: 2px;
   padding: 10px 9px;
+
+}
+
+.shipping-options__container.active {
+  color: #1a8a40;
+  background-color: #f0fff5;
+  border: 1px solid #b8f0cd;
+
+}
+
+.active use {
+  stroke: #1a8a40;
 }
 
 .shipping-options__container .shipping-options__option p {
@@ -296,12 +291,14 @@ const showStockDialog = () => {
 }
 
 .shipping-options__container .shipping-options__heading svg {
+  /*
   margin-right: 7px;
   min-width: 13px;
+  */
 }
 
 .shipping-options__heading svg use {
-  scale: .6;
+/*  scale: .6;*/
 }
 
 .shipping-options__container .shipping-options__heading svg use {

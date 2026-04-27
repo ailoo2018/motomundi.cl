@@ -174,6 +174,7 @@ defineExpose({
             <swiper-slide
               v-for="image in images"
               :key="image.id"
+              :class="{ 'swiper-slide-video' : image.type === 'video'}"
             >
               <div class="easyzoom easyzoom--overlay">
                 <a
@@ -253,6 +254,7 @@ defineExpose({
 swiper-slide {
   margin: auto 0
 }
+
 
 .product .video-thumb {
   position: relative;
@@ -386,6 +388,8 @@ swiper-container::part(button-next)::after {
   border-radius: 200px;
   background-color: #c3c3c3;
 }
+
+
 
 .product .product-media-dot.current, .product .product-media-dot:active, .product .product-media-dot:hover {
   background-color: #c74044;
