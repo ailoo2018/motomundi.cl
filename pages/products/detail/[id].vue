@@ -534,7 +534,9 @@ onMounted(() => {
           >
             <div class="s12">
               <div>
-                <Breadcrumbs :product="product" />
+
+
+                <Breadcrumbs v-if="product" :product="product" />
 
 
                 <!-- product-title -->
@@ -738,12 +740,7 @@ onMounted(() => {
                       allowfullscreen
                     />
                   </div>
-<!--                  <img
-                    v-if="img.type === 'video'"
-                    style="width: 100%"
-                    :alt="product.brand.name + product.name"
-                    :src="img.url"
-                  >-->
+
                 </div>
               </VCarouselItem>
 
@@ -777,7 +774,7 @@ onMounted(() => {
                 v-for="(img, i) in productImages"
                 :key="i"
                 class="thumb-item"
-                :class="{ 'thumb-active': activeSlide === i }"
+                :class="{ 'thumb-active': activeSlide === i, 'thumb-video' : img.type === 'video' }"
                 @click="activeSlide = i"
               >
                 <VImg
@@ -798,6 +795,7 @@ onMounted(() => {
           </div>
 
           <Packs :product="product" />
+
           <!-- DESCRIPTION -->
           <div class="content-section">
             <h2 class="section-title">
@@ -836,6 +834,17 @@ onMounted(() => {
             </VTable>
           </div>
 
+          <div class="content-section">
+            <h2 class="section-title">
+              Lee la review en nuestro blog
+            </h2>
+            <VDivider class="section-divider mb-5" />
+          <RelatedBlog
+            v-if="product?.relatedBlogArticle"
+            :article="product.relatedBlogArticle" />
+          </div>
+
+
           <!-- REVIEWS -->
           <div
             v-if="product"
@@ -868,7 +877,7 @@ onMounted(() => {
                 <VRating
                   density="compact"
                   color="primary"
-                  style="margin:0; padding:0; top: -10px;left: -2px;position: relative;"
+                  style="margin:0; padding:0; top: -3px;left: -2px;position: relative;"
                   half-increments
                   :model-value="product.rating / 2"
                   readonly

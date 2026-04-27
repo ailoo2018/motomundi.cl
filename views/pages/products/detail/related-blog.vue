@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
   <div class="related-blog-content">
-    <h2>Lee la review en nuestro blog</h2>
+<!--    <h2>Lee la review en nuestro blog</h2>-->
     <NuxtLink :to="article.friendlyUrl">
       <div class="related-blog-post">
         <img
