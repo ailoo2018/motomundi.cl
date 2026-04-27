@@ -834,7 +834,7 @@ onMounted(() => {
             </VTable>
           </div>
 
-          <div class="content-section">
+          <div class="content-section" v-if="product?.relatedBlogArticle">
             <h2 class="section-title">
               Lee la review en nuestro blog
             </h2>
