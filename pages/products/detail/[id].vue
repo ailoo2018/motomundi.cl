@@ -17,9 +17,9 @@ import DataSheet from "@/views/pages/products/detail/data-sheet.vue"
 import RelatedBlog from "@/views/pages/products/detail/related-blog.vue"
 import ProductBuyPanel from "@/views/pages/products/product-buy-panel.vue"
 import ProductComplements from "@/views/pages/products/product-complements.vue"
-import StorePickup from "@/views/pages/products/detail/store-pickup.vue";
-import {useWishlistStore} from "@/stores/wishlist";
-import SeenCheaperForm from "@/views/pages/products/detail/seen-cheaper-form.vue";
+import StorePickup from "@/views/pages/products/detail/store-pickup.vue"
+import { useWishlistStore } from "@/stores/wishlist"
+import SeenCheaperForm from "@/views/pages/products/detail/seen-cheaper-form.vue"
 
 const deviceType = useState('device-type', () => {
   // This function only runs on the SERVER during the first request
@@ -31,6 +31,7 @@ const deviceType = useState('device-type', () => {
 const isMobile = computed(() => deviceType.value === 'mobile')
 
 const productHelper = useProductsUtils()
+
 const isInStock = computed(() => {
   return productHelper.isInStock(product.value)
 })
@@ -65,6 +66,7 @@ useSeoMeta({
 })
 
 const wishStore = useWishlistStore()
+
 const localIsWished = computed(() => {
   // Assuming your store has a state or getter named 'items' or 'wishlist'
   // logic: return true if the current product.id is in the store's list
@@ -492,7 +494,11 @@ onMounted(() => {
   </VDialog>
 
   <!-- error -->
-  <div v-if="pending" class="container" style="padding: 60px 20px;">
+  <div
+    v-if="pending"
+    class="container"
+    style="padding: 60px 20px;"
+  >
     <VSkeletonLoader type="image, article" />
   </div>
   <div
@@ -509,7 +515,7 @@ onMounted(() => {
       Producto no encontrado
     </h2>
     <p style="color: #888;">
-      El producto que buscas no existe o ya no está disponible. pid: {{product?.id}}
+      El producto que buscas no existe o ya no está disponible. pid: {{ product?.id }}
     </p>
     <VBtn
       color="primary"
@@ -534,9 +540,10 @@ onMounted(() => {
           >
             <div class="s12">
               <div>
-
-
-                <Breadcrumbs v-if="product" :product="product" />
+                <Breadcrumbs
+                  v-if="product"
+                  :product="product"
+                />
 
 
                 <!-- product-title -->
@@ -587,6 +594,7 @@ onMounted(() => {
                           height="50"
                           class="cdn-img"
                         >
+
                       </span>
                     </a>
                   </div>
@@ -671,7 +679,7 @@ onMounted(() => {
   <div v-else>
     <!-- ── BREADCRUMB ─────────────────────────────────────────── -->
     <div class="ml-2 pt-2">
-    <Breadcrumbs :product="product" />
+      <Breadcrumbs :product="product" />
     </div>
 
     <!-- ── MAIN GRID ───────────────────────────────────────── -->
@@ -697,7 +705,7 @@ onMounted(() => {
                 label
                 class="font-weight-bold"
               >
-                –{{product.discountPercent}}% OFF
+                –{{ product.discountPercent }}% OFF
               </VChip>
               <VChip
                 v-if="product.isNew"
@@ -708,7 +716,6 @@ onMounted(() => {
               >
                 Nuevo
               </VChip>
-
             </div>
 
             <VCarousel
@@ -725,7 +732,10 @@ onMounted(() => {
                 :key="i"
                 class="carousel-item-inner"
               >
-                <div class="slide-placeholder" :class="{ 'slide-video' : img.type === 'video'}">
+                <div
+                  class="slide-placeholder"
+                  :class="{ 'slide-video' : img.type === 'video'}"
+                >
                   <VImg
                     v-if="img.type === 'image'"
                     style="width:100%;"
@@ -734,8 +744,11 @@ onMounted(() => {
                     @error="handleImageError(img.image)"
                   />
 
-                  <div class="video-container" v-if="img.type === 'video'" style="width:100%;">
-
+                  <div
+                    v-if="img.type === 'video'"
+                    class="video-container"
+                    style="width:100%;"
+                  >
                     <iframe
                       :src="`https://www.youtube.com/embed/${img.videoId}`"
                       title="YouTube video player"
@@ -745,7 +758,6 @@ onMounted(() => {
                       allowfullscreen
                     />
                   </div>
-
                 </div>
               </VCarouselItem>
 
@@ -789,12 +801,23 @@ onMounted(() => {
                   :src="getImageUrl(img.image, 150, getDomainId())"
                   @error="handleImageError(img.image)"
                 />
-                <img
-                  v-if="img.type === 'video'"
-                  style="width: 100%"
-                  :alt="product.brand.name + product.name"
-                  :src="img.url"
-                >
+                <div v-if="img.type === 'video'" class="video-thumbnail-container">
+                  <img
+                    class="video-bg"
+                    :alt="product.brand.name + ' ' + product.name"
+                    :src="img.url"
+                  >
+
+                  <div class="icon-overlay" >
+
+                    <VIcon
+                      icon="tabler-brand-youtube-filled"
+                      color="#FF0000"
+                      size="20"
+                    />
+
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -844,14 +867,18 @@ onMounted(() => {
             </VTable>
           </div>
 
-          <div class="content-section" v-if="product?.relatedBlogArticle">
+          <div
+            v-if="product?.relatedBlogArticle"
+            class="content-section"
+          >
             <h2 class="section-title">
               Lee la review en nuestro blog
             </h2>
             <VDivider class="section-divider mb-5" />
-          <RelatedBlog
-            v-if="product?.relatedBlogArticle"
-            :article="product.relatedBlogArticle" />
+            <RelatedBlog
+              v-if="product?.relatedBlogArticle"
+              :article="product.relatedBlogArticle"
+            />
           </div>
 
 
@@ -962,7 +989,7 @@ onMounted(() => {
                 </div>
 
                 <!-- Rating row -->
-                <div class="d-flex align-center gap-2 mb-5  border-bottom" >
+                <div class="d-flex align-center gap-2 mb-5  border-bottom">
                   <VRating
                     :model-value="product.rating / 2"
                     readonly
@@ -972,11 +999,11 @@ onMounted(() => {
                     size=""
                     color="primary"
                   />
-                  <span class="font-weight-bold text-body-2">{{product.rating / 2}}</span>
+                  <span class="font-weight-bold text-body-2">{{ product.rating / 2 }}</span>
                   <a
                     href="#resenas"
                     class="text-caption text-error text-decoration-none"
-                  >{{product.totalReviews}} opiniones</a>
+                  >{{ product.totalReviews }} opiniones</a>
                   <VSpacer />
                   <a
                     href="#"
@@ -1004,7 +1031,7 @@ onMounted(() => {
                       label
                       class="font-weight-bold"
                     >
-                      –{{product.discountPercent}}%
+                      –{{ product.discountPercent }}%
                     </VChip>
                   </div>
                   <div class="price-current">
@@ -1021,12 +1048,13 @@ onMounted(() => {
                   </div>
                   <div class="price-sub mt-1">
                     IVA incluido · 12 cuotas sin interés desde <strong>{{ formatCurrency(price / 12) }}</strong>
-
-
                   </div>
                 </div>
                 <ClientOnly>
-                  <SeenCheaperForm v-model="showSeenCheaperForm" :product="product" />
+                  <SeenCheaperForm
+                    v-model="showSeenCheaperForm"
+                    :product="product"
+                  />
                 </ClientOnly>
 
                 <!-- Promo banners -->
@@ -1120,8 +1148,6 @@ onMounted(() => {
 
                 <!-- Availability -->
                 <div class="mb-2">
-
-
                   <StorePickup
                     v-if="selectedVariant || product.isSimpleProduct"
                     :product-item-id="selectedVariant?.id || product.productItems[0].id"
@@ -1290,7 +1316,6 @@ onMounted(() => {
 
 
 <style scoped>
-
 /********************** mobile ***********************/
 
 .product.mobile .product-title .product-title__container {
@@ -1408,6 +1433,11 @@ onMounted(() => {
   background: #f6f6f6;
   transition: border-color .2s, box-shadow .2s;
 }
+
+.thumb-item.thumb-video {
+  background: #000;
+}
+
 
 .thumb-item:hover { border-color: #B21A15; }
 .thumb-active { border-color: #B21A15 !important; box-shadow: 0 0 0 2px #B21A15; }
@@ -1668,4 +1698,35 @@ onMounted(() => {
   line-height: 0;
 }
 
+
+
+.video-thumbnail-container {
+  position: relative; /* Reference point for the icon */
+  display: inline-block;
+  width: 100%;
+  line-height: 0; /* Removes extra whitespace under the image */
+}
+
+.video-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.icon-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* Flexbox centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Optional: slightly darken the image to make the icon pop */
+  background-color: rgba(0, 0, 0, 0.1);
+  pointer-events: none; /* Allows clicks to pass through to the image if needed */
+}
 </style>
