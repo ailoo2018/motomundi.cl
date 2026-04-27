@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-search.vue"
-
-
 const { currDept, deptPath } = useDepartment()
-
-
-
 </script>
 
 <template>
