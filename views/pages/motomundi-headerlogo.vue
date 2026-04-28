@@ -37,11 +37,8 @@
 
 
         <!-- Account -->
-        <NuxtLink to="/account/profile" class="action-btn action-btn-labeled" aria-label="Mi cuenta">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" aria-hidden="true">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
+        <NuxtLink v-if="userId > 0" to="/account/profile" class="action-btn action-btn-labeled" aria-label="Mi cuenta">
+          <VIcon icon="tabler-user" />
           <span style="color: white;">Mi cuenta</span>
 
           <VMenu
@@ -58,6 +55,12 @@
 
 
         </NuxtLink>
+        <NuxtLink v-if="userId === 0"
+                  class="action-btn action-btn-labeled"
+
+                  to="/login">
+          <VIcon icon="tabler-user" size="24" />
+          Ingresar </NuxtLink>
 
         <div class="action-divider" aria-hidden="true" />
 
@@ -90,26 +93,13 @@ const props = withDefaults(defineProps<Props>(), {
   wishlistCount: 0,
 })
 
-// ── Emits ────────────────────────────────────────────────────────────────────
-const emit = defineEmits<{
-  search: [query: string]
-}>()
 
-// ── State ────────────────────────────────────────────────────────────────────
-const searchQuery = ref('')
-const selectedCategory = ref('Todo')
-const searchInput = useTemplateRef<HTMLInputElement>('searchInput')
+const { logout } = useUser()
 
-// ── Methods ──────────────────────────────────────────────────────────────────
-function focusSearch() {
-  searchInput.value?.focus()
-}
+const userId = computed(() => {
+  return useUser().getUserId() || 0
+})
 
-function handleSearch() {
-  if (searchQuery.value.trim()) {
-    emit('search', searchQuery.value.trim())
-  }
-}
 </script>
 
 <style scoped>

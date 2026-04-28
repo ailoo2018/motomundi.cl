@@ -1,6 +1,5 @@
 <script setup lang="ts">
-
-import AccountMenu from "@/views/pages/account/account-menu.vue";
+import AccountMenu from "@/views/pages/account/account-menu.vue"
 
 const serverTimestamp = useState('cache-timestamp', () => new Date().toISOString())
 
@@ -9,48 +8,53 @@ const { logout } = useUser()
 const userId = computed(() => {
   return useUser().getUserId() || 0
 })
-
-
 </script>
 
 <template>
   <div id="headermenu">
     <div class="headermenucontent d-flex justify-space-between">
       <div>
-        <div class="hmnuentry">
+        <!--
+          <div class="hmnuentry">
           <i class="fa fa-phone" /> <a href="tel:26660690"> (2)26660690</a>
-        </div>
+          </div>
+        -->
 
         <div class="hmnuentry">
           <i class="fa fa-home" />
-          <NuxtLink to="/tiendas">Tiendas y
+          <NuxtLink to="/tiendas">
+            Tiendas y
             horarios
           </NuxtLink>
         </div>
-        <div class="hmnuentry">
+        <!--
+          <div class="hmnuentry">
           <i class="fa fa-shopping-cart" /> <NuxtLink to="/cart">Carro de compra</NuxtLink>
-        </div>
+          </div>
+        -->
         <div class="hmnuentry">
           <NuxtLink to="/contactenos">
             Contáctenos
           </NuxtLink>
         </div>
-        <div class="hmnuentry">
+        <!--
+          <div class="hmnuentry">
           <NuxtLink v-if="userId > 0" to="/account/profile"> Su cuenta </NuxtLink>
           <VMenu
-            v-if="userId > 0"
-            open-on-hover
-            :close-delay="200"
-            :open-delay="100"
-            activator="parent"
-            rounded="0"
-            transition="slide-y-transition"
+          v-if="userId > 0"
+          open-on-hover
+          :close-delay="200"
+          :open-delay="100"
+          activator="parent"
+          rounded="0"
+          transition="slide-y-transition"
           >
-            <AccountMenu class="user-menu__account-content" @logout="logout" />
+          <AccountMenu class="user-menu__account-content" @logout="logout" />
 
           </VMenu>
           <NuxtLink v-if="userId === 0" to="/login"> Ingresar </NuxtLink>
-        </div>
+          </div>
+        -->
         <div class="hmnuentry">
           <CountrySwitcher />
         </div>
