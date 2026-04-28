@@ -23,8 +23,8 @@ const userId = computed(() => {
         <div class="hmnuentry">
           <i class="fa fa-home" />
           <NuxtLink to="/tiendas">
-            Tiendas y
-            horarios
+            <VIcon icon="tabler-building-store" style="position:relative; top: -1px; margin-right:4px;" />
+            Tiendas y horarios
           </NuxtLink>
         </div>
         <!--

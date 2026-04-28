@@ -824,10 +824,7 @@ onMounted(() => {
           </div>
 
           <div class="content-section">
-            <h2 class="section-title">
-              Packs Ahorro
-            </h2>
-            <VDivider class="section-divider mb-5" />
+
             <Packs :product="product" />
           </div>
           <!-- DESCRIPTION -->
@@ -1446,21 +1443,6 @@ onMounted(() => {
 /* ── Content sections ────────────────────────────── */
 .content-section { display: flex; flex-direction: column; }
 
-.section-title {
-  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  color: #111;
-  margin-bottom: 0;
-}
-
-.section-divider {
-  border-color: #B21A15 !important;
-  border-width: 2px !important;
-  opacity: 1;
-}
 
 .description-body {
   color: #444;
