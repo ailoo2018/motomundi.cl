@@ -116,17 +116,7 @@ function handleSearch() {
 
 /* ── Design tokens ───────────────────────────────────────────────────────── */
 .header {
-  --mm-black:       #0a0a0a;
-  --mm-black-2:     #111111;
-  --mm-black-3:     #1a1a1a;
-  --mm-brand:       #B21915;
-  --mm-brand-hover: #d41f1a;
-  --mm-white:       white;
-  --mm-grey-mid:    white;
-  --mm-grey-light:  white;
-  --mm-border:      rgba(178, 25, 21, 0.18);
-  --mm-radius:      4px;
-  --mm-transition:  0.22s cubic-bezier(0.4, 0, 0.2, 1);
+
 }
 
 /* ── Header shell ────────────────────────────────────────────────────────── */
