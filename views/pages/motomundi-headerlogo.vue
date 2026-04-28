@@ -49,7 +49,7 @@
       <div class="header-actions">
 
         <!-- Wishlist -->
-        <NuxtLink to="/favoritos" class="action-btn tooltip-wrap" aria-label="Favoritos">
+        <NuxtLink to="/account/wishlist" class="action-btn tooltip-wrap" aria-label="Favoritos">
           <VIcon icon="tabler-heart" color="white"/>
           <span v-if="wishlistCount > 0" class="action-badge" aria-label="`${wishlistCount} favoritos`">
             {{ wishlistCount }}
@@ -62,7 +62,7 @@
         <div class="action-divider" aria-hidden="true" />
 
         <!-- Account -->
-        <NuxtLink to="/cuenta" class="action-btn action-btn-labeled" aria-label="Mi cuenta">
+        <NuxtLink to="/account/profile" class="action-btn action-btn-labeled" aria-label="Mi cuenta">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" aria-hidden="true">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
             <circle cx="12" cy="7" r="4" />
@@ -73,7 +73,7 @@
         <div class="action-divider" aria-hidden="true" />
 
         <!-- Cart -->
-        <NuxtLink to="/carrito" class="action-btn tooltip-wrap" aria-label="`Carrito, ${cartCount} productos`">
+        <NuxtLink to="/cart" class="action-btn tooltip-wrap" aria-label="`Carrito, ${cartCount} productos`">
          <VIcon icon="tabler-shopping-cart-filled" color="white"/>
           <span v-if="cartCount > 0" class="action-badge" :aria-label="`${cartCount} artículos`">
             {{ cartCount }}

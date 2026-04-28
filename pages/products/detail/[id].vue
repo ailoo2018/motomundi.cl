@@ -709,10 +709,11 @@ onMounted(() => {
               </VChip>
               <VChip
                 v-if="product.isNew"
-                color="black"
+
+                color="warning"
                 size="small"
                 label
-                class="font-weight-bold text-white"
+
               >
                 Nuevo
               </VChip>
