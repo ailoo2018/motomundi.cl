@@ -15,35 +15,8 @@
       </NuxtLink>
 
       <!-- SEARCH -->
-      <div class="search-wrap" style="color:white;">
-        <div class="search-category" @click="focusSearch" aria-label="Filtrar categoría">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" aria-hidden="true">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-          <span>{{ selectedCategory }}</span>
-        </div>
+      <MotomundiHeaderSearch />
 
-        <svg class="search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-
-        <input
-          ref="searchInput"
-          v-model="searchQuery"
-          type="search"
-          placeholder="Buscar motos, accesorios, repuestos…"
-          aria-label="Buscar productos"
-          @keydown.enter="handleSearch"
-        />
-
-        <button class="search-btn" aria-label="Buscar" @click="handleSearch">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" aria-hidden="true">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-        </button>
-      </div>
 
       <!-- ACTIONS -->
       <div class="header-actions">
@@ -89,6 +62,8 @@
 
 <script setup lang="ts">
 // ── Props ────────────────────────────────────────────────────────────────────
+import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-search.vue";
+
 interface Props {
   cartCount?: number
   wishlistCount?: number
@@ -184,113 +159,6 @@ function handleSearch() {
   transform: scale(1.03);
 }
 
-/* ── Search ──────────────────────────────────────────────────────────────── */
-.search-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 480px;
-  justify-self: center;
-}
-
-.search-wrap input {
-  width: 100%;
-  height: 44px;
-  background: black;
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--mm-radius);
-  color: var(--mm-white);
-  font-family: 'Barlow', sans-serif;
-  font-size: 14px;
-  /* leave room for category pill (≈106px) + search icon gap */
-  padding: 0 52px 0 118px;
-  outline: none;
-  transition:
-    border-color var(--mm-transition),
-    box-shadow var(--mm-transition),
-    background var(--mm-transition);
-}
-
-.search-wrap input::placeholder {
-  color: var(--mm-grey-mid);
-}
-
-.search-wrap input:focus {
-  border-color: var(--mm-brand);
-  background: #141414;
-  box-shadow:
-    0 0 0 3px rgba(178, 25, 21, 0.12),
-    0 0 20px rgba(178, 25, 21, 0.06);
-}
-
-/* category pill */
-.search-category {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  background: var(--mm-brand);
-  border-right: 1px solid rgba(178, 25, 21, 0.25);
-  padding: 0 8px 0 10px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--mm-brand);
-  cursor: pointer;
-  border-radius: var(--mm-radius) 0 0 var(--mm-radius);
-  height: 44px;
-  white-space: nowrap;
-  transition: background var(--mm-transition);
-  user-select: none;
-}
-
-.search-category:hover {
-  background: rgba(178, 25, 21, 0.25);
-}
-
-/* magnifier inside input — positioned after pill */
-.search-icon {
-  display:none;
-  position: absolute;
-  left: 90px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--mm-grey-mid);
-  pointer-events: none;
-  transition: color var(--mm-transition);
-}
-
-.search-wrap input:focus + .search-icon,
-.search-wrap:focus-within .search-icon {
-  color: var(--mm-brand);
-}
-
-/* search button */
-.search-btn {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 44px;
-  width: 48px;
-  background: var(--mm-brand);
-  border: none;
-  border-radius: 0 var(--mm-radius) var(--mm-radius) 0;
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    background var(--mm-transition),
-    transform var(--mm-transition);
-}
-
-.search-btn:hover  { background: var(--mm-brand-hover); }
-.search-btn:active { transform: scale(0.95); }
 
 /* ── Action strip ────────────────────────────────────────────────────────── */
 .header-actions {
