@@ -69,33 +69,6 @@ onMounted(() => {
 
 <style>
 
-
-/* Background for Desktop */
-@media (min-width: 961px) {
-  body {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
-    linear-gradient(to top, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0) 400px) center/auto repeat-x,
-    url("/mm-bg.jpg");
-  }
-
-  .desktop-only-container .main-content {
-    width: 90%;
-    min-width: 800px;
-    max-width: 1300px;
-    margin: auto;
-    background-color: white;
-  }
-}
-
-/* Main Content for Mobile */
-@media (max-width: 960px) {
-  .mobile-only-container .main-content {
-    width: 100%;
-    margin: auto;
-    background-color: white;
-  }
-}
-
 .layout-wrapper.layout-blank {
   flex-direction: column;
 }

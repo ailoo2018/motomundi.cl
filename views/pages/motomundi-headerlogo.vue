@@ -115,21 +115,40 @@ function handleSearch() {
 <style scoped>
 
 /* ── Design tokens ───────────────────────────────────────────────────────── */
-.header {
 
+.header {
+  --mm-black:       #0a0a0a;
+  --mm-black-2:     #111111;
+  --mm-black-3:     #1a1a1a;
+  --mm-brand:       #B21915;
+  --mm-brand-hover: #d41f1a;
+  --mm-white:       white;
+  --mm-grey-mid:    white;
+  --mm-grey-light:  white;
+  --mm-border:      rgba(178, 25, 21, 0.18);
+  --mm-radius:      4px;
+  --mm-transition:  0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 
 /* ── Header shell ────────────────────────────────────────────────────────── */
 .header {
+  /*
   background: var(--mm-black-2);
   border-bottom: 2px solid var(--mm-brand);
+  */
 
   top: 0;
   z-index: 100;
+  /*
   box-shadow:
     0 4px 32px rgba(0, 0, 0, 0.6),
     0 2px 0 var(--mm-brand);
-
+  */
+  max-width: 1350px;
+  min-width: 800px;
+  width: 95%;
+  margin:auto;
 }
 
 .header-inner {
@@ -320,14 +339,6 @@ function handleSearch() {
     padding: 0 5rem;
     gap: 1rem;
   }
-  .search-category {
-    display: none;
-  }
-  .search-wrap input {
-    padding-left: 40px;
-  }
-  .search-icon {
-    left: 12px;
-  }
+
 }
 </style>

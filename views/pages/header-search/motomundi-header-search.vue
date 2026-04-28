@@ -559,7 +559,7 @@ const closeSearch = () => {
 .search-wrap input {
   width: 100%;
   height: 44px;
-  background: black;
+  background-color: #252525;
   border: 1.5px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--mm-radius);
   color: var(--mm-white);
