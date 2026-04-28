@@ -27,12 +27,14 @@
           <span v-if="wishlistCount > 0" class="action-badge" aria-label="`${wishlistCount} favoritos`">
             {{ wishlistCount }}
           </span>
-          <span class="tooltip" role="tooltip">Favoritos</span>
+
         </NuxtLink>
 
 
 
         <div class="action-divider" aria-hidden="true" />
+
+
 
         <!-- Account -->
         <NuxtLink to="/account/profile" class="action-btn action-btn-labeled" aria-label="Mi cuenta">
@@ -41,6 +43,20 @@
             <circle cx="12" cy="7" r="4" />
           </svg>
           <span style="color: white;">Mi cuenta</span>
+
+          <VMenu
+            open-on-hover
+            :close-delay="200"
+            :open-delay="100"
+            activator="parent"
+            rounded="0"
+            transition="slide-y-transition"
+          >
+            <AccountMenu class="user-menu__account-content" @logout="logout" />
+
+          </VMenu>
+
+
         </NuxtLink>
 
         <div class="action-divider" aria-hidden="true" />
@@ -51,7 +67,7 @@
           <span v-if="cartCount > 0" class="action-badge" :aria-label="`${cartCount} artículos`">
             {{ cartCount }}
           </span>
-          <span class="tooltip" role="tooltip">Carrito ({{ cartCount }})</span>
+
         </NuxtLink>
 
       </div>
@@ -63,6 +79,7 @@
 <script setup lang="ts">
 // ── Props ────────────────────────────────────────────────────────────────────
 import MotomundiHeaderSearch from "@/views/pages/header-search/motomundi-header-search.vue";
+import AccountMenu from "@/views/pages/account/account-menu.vue";
 
 interface Props {
   cartCount?: number
@@ -98,7 +115,7 @@ function handleSearch() {
 <style scoped>
 
 /* ── Design tokens ───────────────────────────────────────────────────────── */
-:root {
+.header {
   --mm-black:       #0a0a0a;
   --mm-black-2:     #111111;
   --mm-black-3:     #1a1a1a;

@@ -36,6 +36,7 @@ const onChange = val => {
 }
 
 const router = useRouter()
+
 router.afterEach(() => {
   sword.value = ''
   showSearchWindow.value = false
@@ -199,30 +200,70 @@ const closeSearch = () => {
 </script>
 
 <template>
-
-  <div class="search-wrap" style="color:white;">
-
-    <svg class="search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true">
-      <circle cx="11" cy="11" r="8" />
-      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+  <div
+    class="search-wrap"
+    style="color:white;"
+  >
+    <svg
+      class="search-icon"
+      width="17"
+      height="17"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#fff"
+      stroke-width="2"
+      aria-hidden="true"
+    >
+      <circle
+        cx="11"
+        cy="11"
+        r="8"
+      />
+      <line
+        x1="21"
+        y1="21"
+        x2="16.65"
+        y2="16.65"
+      />
     </svg>
 
 
-           <input
-              ref="searchInput"
-              v-model="sword"
-              type="search"
-              placeholder="Buscar motos, accesorios, repuestos…"
-              aria-label="Buscar productos"
-              @keydown.enter="handleSearch"
-            />
+    <input
+      ref="searchInput"
+      v-model="sword"
+      type="search"
+      placeholder="Buscar motos, accesorios, repuestos…"
+      aria-label="Buscar productos"
+      @keydown.enter="handleSearch"
+    >
 
-            <button class="search-btn" aria-label="Buscar" @click="handleSearch">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" aria-hidden="true">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-            </button>
+    <button
+      class="search-btn"
+      aria-label="Buscar"
+      @click="redirectToSearch"
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#fff"
+        stroke-width="2.5"
+        aria-hidden="true"
+      >
+        <circle
+          cx="11"
+          cy="11"
+          r="8"
+        />
+        <line
+          x1="21"
+          y1="21"
+          x2="16.65"
+          y2="16.65"
+        />
+      </svg>
+    </button>
   </div>
 
 
@@ -231,7 +272,10 @@ const closeSearch = () => {
     class="search__dropdown"
   >
     <div class="search-dropdown__filters">
-      <SearchFilters :filters="filters" @filters-changed="onFilter" />
+      <SearchFilters
+        :filters="filters"
+        @filters-changed="onFilter"
+      />
     </div>
     <!-- /filters panel -->
 
@@ -264,7 +308,10 @@ const closeSearch = () => {
 
 
       <!-- search results -->
-      <SearchResults :products="products" @next-page="nextPage"/>
+      <SearchResults
+        :products="products"
+        @next-page="nextPage"
+      />
 
       <!-- /search results -->
     </div>
@@ -488,10 +535,24 @@ const closeSearch = () => {
 
 
 /* ── Search ──────────────────────────────────────────────────────────────── */
+.search-wrap  {
+  --mm-black:       #0a0a0a;
+  --mm-black-2:     #111111;
+  --mm-black-3:     #1a1a1a;
+  --mm-brand:       #B21915;
+  --mm-brand-hover: #d41f1a;
+  --mm-white:       white;
+  --mm-grey-mid:    white;
+  --mm-grey-light:  white;
+  --mm-border:      rgba(178, 25, 21, 0.18);
+  --mm-radius:      4px;
+  --mm-transition:  0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .search-wrap {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 580px;
   justify-self: center;
 }
 
@@ -595,5 +656,10 @@ const closeSearch = () => {
 .search-btn:hover  { background: var(--mm-brand-hover); }
 .search-btn:active { transform: scale(0.95); }
 
+@media (max-width: 1024px) {
+  .search-wrap {
+    max-width: 100%;
+  }
 
+}
 </style>
