@@ -666,13 +666,13 @@ onMounted(() => {
         <!-- recommend -->
         <Recommend :product="product" />
 
-        <div id="product-reviews">
+        <VContainer id="product-reviews">
           <ProductRating
             v-if="product && product.id"
             :key="product.id"
             :product="product"
           />
-        </div>
+        </VContainer>
       </div>
     </article>
   </div>
