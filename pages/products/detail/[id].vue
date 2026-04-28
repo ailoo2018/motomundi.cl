@@ -182,18 +182,6 @@ const onSelectedColor = color => {
 }
 
 
-/*watch(activeSlide, (newVal, oldVal) => {
-
-
-  if(productImages.value?.length > newVal){
-    if(productImages.value[newVal].type === 'video') {
-      console.log("activeSlideChange" + newVal)
-      onShowVideo(productImages.value[newVal].videoId)
-    }
-  }
-
-})*/
-
 const features = computed( () => {
   const ftrs = []
   const  p = product.value
@@ -217,31 +205,6 @@ const features = computed( () => {
 
   return ftrs
 })
-
-// ── Reviews ───────────────────────────────────────────────
-const ratingBars = [
-  { stars: 5, pct: 74 },
-  { stars: 4, pct: 18 },
-  { stars: 3, pct: 5 },
-  { stars: 2, pct: 2 },
-  { stars: 1, pct: 1 },
-]
-
-const reviews = [
-  {
-    name: 'Carlos M.', date: '12 abr 2025', rating: 5,
-    text: 'Increíble casco. Lo uso diario y en pista. El peso es notablemente menor a mi anterior AGV, y la ventilación es superior en todo. El visor es de primera calidad, sin distorsión.',
-  },
-  {
-    name: 'Valentina R.', date: '3 mar 2025', rating: 5,
-    text: 'Superó mis expectativas. Pedí la talla S según la guía de Motomundi y me quedó perfecta. El acabado de la fibra de carbono es espectacular.',
-  },
-  {
-    name: 'Rodrigo F.', date: '18 ene 2025', rating: 4,
-    text: 'Excelente casco, muy ligero y ventilado. Le saco una estrella porque la almohadilla de la mejilla izquierda me costó ajustar. En general estoy muy contento.',
-  },
-]
-
 
 
 
@@ -360,7 +323,6 @@ const addToCartMobile = async item => {
 }
 
 const addToCart = itemsToAdd => {
-
 
   if (product.value.type === ProductType.Simple) {
     let productItemId = null

@@ -132,15 +132,6 @@ const updateModel = () => {
     const sizeId = selectedSize.value.id
     const colorId = selectedColor.value.id
 
-
-    /*
-        if(colorId > 0){
-          console.log("Emit update:color")
-          emit('update:color', selectedColor.value)
-        }
-    */
-
-
     let productItem
 
     if (!ProductHelper.requiresFeatureSelect(props.product)) {
@@ -158,12 +149,10 @@ const updateModel = () => {
 }
 
 watch(selectedProductItem, () => {
-  // console.log("ProductVariantSelector::updateModel" + JSON.stringify(selectedProductItem))
   emit("selected-variant", selectedProductItem.value)
 })
 
 const isSizeAvailable = size => {
-
 
   if (!size)
     return false
@@ -190,6 +179,7 @@ const sizes = ref([])
 
 const hasColors = props.product.features.filter(f => f.type === 1).length > 1
 
+const hasSizes = props.product.features.filter(f => f.type === 0).length > 0
 
 for (var f of props.product.features) {
   if (f.type !== 0)
@@ -212,6 +202,8 @@ onMounted(() => {
   var colorFeature = props.product.features.find(f => f.type === 1)
   if (colorFeature) {
     selectedColor.value = colorFeature
+
+    updateModel()
   }
 })
 </script>
@@ -233,7 +225,7 @@ onMounted(() => {
         <div class="color-tile swatch-tile-container product-data">
           <button
             v-for="color in colors"
-            class="color-attribute"
+            class="color-attribute mr-2"
             :title="color.name"
             :aria-label="color.name"
             @click="selectColor(color)"
@@ -252,7 +244,7 @@ onMounted(() => {
     </div>
 
     <!-- Size selector -->
-    <div class="variant-section mb-4">
+    <div class="variant-section mb-4" v-if="hasSizes">
       <div class="variant-label mb-2 d-flex justify-space-between">
         <div>
           Talla: <strong>{{ selectedSize?.name || '—' }}</strong>
