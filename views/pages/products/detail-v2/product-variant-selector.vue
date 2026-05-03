@@ -37,8 +37,8 @@ const selectedProductItem = defineModel({
   type: Object,
 })
 
-const selectedSize = ref({ id: 0 })
-const selectedColor = ref({ id: 0 })
+const selectedSize = ref({ id: 0, name: null, description: "" })
+const selectedColor = ref({ id: 0, name: null, description: "" })
 const showNotifyWhenAvailable = ref(false)
 
 const openNotifyWhenAvailable = () => {
@@ -90,7 +90,7 @@ const selectColor = color => {
   selectedColor.value = color
 
   if (sizes.value?.length > 0 && !isSizeAvailable(selectedSize.value)) {
-    selectedSize.value = { id: 0 }
+    selectedSize.value = { id: 0, name: null, description: "" }
   }
 
 
@@ -129,8 +129,8 @@ watch(selectedSize, size => {
 
 const updateModel = () => {
   try {
-    const sizeId = selectedSize.value.id
-    const colorId = selectedColor.value.id
+    const sizeId = selectedSize.value?.id || 0
+    const colorId = selectedColor.value?.id || 0
 
     let productItem
 

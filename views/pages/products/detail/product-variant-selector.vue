@@ -129,8 +129,8 @@ watch(selectedSize, size => {
 
 const updateModel = () => {
   try {
-    const sizeId = selectedSize.value.id
-    const colorId = selectedColor.value.id
+    const sizeId = selectedSize.value?.id || 0
+    const colorId = selectedColor.value?.id || 0
 
     let productItem
 
