@@ -18,18 +18,25 @@ jobs:
         with:
           clean: false      # ← don't delete node_modules on checkout
 
+      # ── Cache node_modules, pnpm store AND nuxt build cache ──────────────
       - name: Get pnpm store path
         id: pnpm-store
         run: echo "path=$(pnpm store path)" >> $env:GITHUB_OUTPUT
         shell: powershell
 
-      - name: Cache pnpm store
+      - name: Cache dependencies and build cache
         uses: actions/cache@v4
         with:
-          path: ${{ steps.pnpm-store.outputs.path }}
-          key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          path: |
+            ${{ steps.pnpm-store.outputs.path }}
+            node_modules
+            node_modules/.cache/nuxt
+          key: build-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('nuxt.config.ts') }}
           restore-keys: |
-            pnpm-
+            build-${{ hashFiles('pnpm-lock.yaml') }}-
+            build-
+
+      # ─────────────────────────────────────────────────────────────────────
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -55,17 +62,40 @@ jobs:
 
       - name: Swap directories (atomic)
         run: |
-          & "$env:SystemRoot\system32\inetsrv\appcmd.exe" stop apppool "$env:APP_POOL"
-
+          # Stop app pool only if it's running
+          $state = & "$env:SystemRoot\system32\inetsrv\appcmd.exe" list apppool "$env:APP_POOL" /processModel.userName /state
+          if ($state -match "state:Started") {
+            & "$env:SystemRoot\system32\inetsrv\appcmd.exe" stop apppool "$env:APP_POOL"
+            Write-Host "App pool stopped."
+          } else {
+            Write-Host "App pool was already stopped."
+          }
+          
+          # Wait for IIS to fully release file locks
+          Write-Host "Waiting for file locks to release..."
+          Start-Sleep -Seconds 5
+          
+          # Kill any lingering node processes using the live dir
+          Get-Process -Name "node" -ErrorAction SilentlyContinue | ForEach-Object {
+            Write-Host "Stopping node process $($_.Id)..."
+            Stop-Process -Id $_.Id -Force -ErrorAction SilentlyContinue
+          }
+          
+          # Extra wait after killing processes
+          Start-Sleep -Seconds 3
+          
+          # Archive the current live dir for instant rollback
           if (Test-Path "$env:OLD_DIR") {
             Remove-Item -Recurse -Force "$env:OLD_DIR"
           }
           if (Test-Path "$env:LIVE_DIR") {
             Rename-Item "$env:LIVE_DIR" "$env:OLD_DIR"
           }
-
+          
+          # Promote staging to live
           Rename-Item "$env:STAGE_DIR" "$env:LIVE_DIR"
-
+          
+          # Restart the app pool
           & "$env:SystemRoot\system32\inetsrv\appcmd.exe" start apppool "$env:APP_POOL"
           Write-Host "Swap complete. Site is live."
         shell: powershell
