@@ -526,7 +526,7 @@ function selectStore(store) {
 /* Hero */
 .mm-detail__hero {
   position: relative;
-  height: 220px;
+  height: 420px;
   overflow: hidden;
   background: var(--gray-900);
 }
