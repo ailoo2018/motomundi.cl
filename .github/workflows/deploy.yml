@@ -47,9 +47,10 @@ jobs:
 
       - name: Stage the build
         run: |
-          robocopy .output "$env:STAGE_DIR" /E /NFL /NDL /NJH /NJS
+          robocopy .output "$env:STAGE_DIR\.output" /E /NFL /NDL /NJH /NJS
           if ($LASTEXITCODE -le 7) { $LASTEXITCODE = 0 }
           Copy-Item "E:\configs\web.config" "$env:STAGE_DIR\web.config" -Force
+          Copy-Item "run.cjs" "$env:STAGE_DIR\run.cjs" -Force
         shell: powershell
 
       - name: Swap directories (atomic)
