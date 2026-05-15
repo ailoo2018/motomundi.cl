@@ -19,6 +19,8 @@ jobs:
 
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          clean: false      # ← don't delete node_modules on checkout
 
       - name: Get pnpm store path
         id: pnpm-store
