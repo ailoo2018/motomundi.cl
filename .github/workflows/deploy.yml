@@ -63,7 +63,7 @@ jobs:
       - name: Swap directories (atomic)
         run: |
           # Stop app pool only if running
-          $state = & "$env:SystemRoot\system32\inetsrv\appcmd.exe" list apppool "$env:APP_POOL" /state
+          $state = & "$env:SystemRoot\system32\inetsrv\appcmd.exe" list apppool "nuxt"
           if ($state -match "state:Started") {
             & "$env:SystemRoot\system32\inetsrv\appcmd.exe" stop apppool "$env:APP_POOL"
             Write-Host "App pool stopped."
@@ -74,7 +74,7 @@ jobs:
 
           # Wait for OS to release all file handles
           Write-Host "Waiting for file handles to release..."
-          Start-Sleep -Seconds 3
+          Start-Sleep -Seconds 2
           
           # Rename with retry loop
           if (Test-Path "$env:OLD_DIR") {
