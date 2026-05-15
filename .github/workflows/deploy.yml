@@ -13,10 +13,6 @@ jobs:
       APP_POOL: 'nuxt'
 
     steps:
-      - name: Enable Git long paths
-        run: git config --system core.longPaths true
-        shell: powershell
-
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
