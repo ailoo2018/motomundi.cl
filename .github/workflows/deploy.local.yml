@@ -1,6 +1,3 @@
-####################################################################################################
-# local server — zero-downtime deploy via blue-green directory swap
-####################################################################################################
 name: Remote Deploy
 on:
   push:
@@ -10,14 +7,37 @@ jobs:
   build:
     runs-on: self-hosted
     env:
-      LIVE_DIR: 'e:\www.motomundi.cl'         # your current live path
-      STAGE_DIR: 'e:\staging_motomundi' # build goes here first
-      OLD_DIR: 'e:\_old_motomundi'       # previous release (rollback target)
-      APP_POOL: 'nuxt'                           # your IIS application pool name
+      LIVE_DIR: 'e:\www.motomundi.cl'
+      STAGE_DIR: 'e:\staging_motomundi'
+      OLD_DIR: 'e:\_old_motomundi'
+      APP_POOL: 'nuxt'
 
     steps:
+      - name: Enable Git long paths
+        run: git config --system core.longPaths true
+        shell: powershell
+
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Get pnpm store path
+        id: pnpm-store
+        run: echo "path=$(pnpm store path)" >> $env:GITHUB_OUTPUT
+        shell: powershell
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm run build
 
       - name: Clean staging directory
         run: |
@@ -27,33 +47,17 @@ jobs:
           New-Item -ItemType Directory -Path "$env:STAGE_DIR"
         shell: powershell
 
-      - name: Debug working directory
-        run: |
-          Get-Location
-          dir
-        shell: powershell
-      # ── Build happens here while the live site is still running ──────────────
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build project
-        run: pnpm run build
-
-      # ── Copy build output + config into staging ──────────────────────────────
       - name: Stage the build
         run: |
-          # Adjust .output or dist to wherever Nuxt puts the build
           robocopy .output "$env:STAGE_DIR" /E /NFL /NDL /NJH /NJS
+          if ($LASTEXITCODE -le 7) { $LASTEXITCODE = 0 }
           Copy-Item "E:\configs\web.config" "$env:STAGE_DIR\web.config" -Force
         shell: powershell
 
-      # ── Swap (this is the only moment the site is briefly unavailable) ───────
       - name: Swap directories (atomic)
         run: |
-          # Stop the app pool — takes < 2 seconds
           & "$env:SystemRoot\system32\inetsrv\appcmd.exe" stop apppool "$env:APP_POOL"
 
-          # Archive the current live dir for instant rollback
           if (Test-Path "$env:OLD_DIR") {
             Remove-Item -Recurse -Force "$env:OLD_DIR"
           }
@@ -61,28 +65,22 @@ jobs:
             Rename-Item "$env:LIVE_DIR" "$env:OLD_DIR"
           }
 
-          # Promote staging to live
           Rename-Item "$env:STAGE_DIR" "$env:LIVE_DIR"
 
-          # Restart the app pool
           & "$env:SystemRoot\system32\inetsrv\appcmd.exe" start apppool "$env:APP_POOL"
-
           Write-Host "Swap complete. Site is live."
         shell: powershell
 
-      # ── Optional: rollback step you can trigger manually if needed ───────────
       - name: Verify site is up
         run: |
           Start-Sleep -Seconds 5
           $response = Invoke-WebRequest -Uri "http://www2.motomundi.cl" -UseBasicParsing -TimeoutSec 15
           if ($response.StatusCode -ne 200) {
             Write-Error "Site check failed! Rolling back..."
-
             & "$env:SystemRoot\system32\inetsrv\appcmd.exe" stop apppool "$env:APP_POOL"
             Remove-Item -Recurse -Force "$env:LIVE_DIR"
             Rename-Item "$env:OLD_DIR" "$env:LIVE_DIR"
             & "$env:SystemRoot\system32\inetsrv\appcmd.exe" start apppool "$env:APP_POOL"
-
             exit 1
           }
           Write-Host "Site responded with 200 OK."
