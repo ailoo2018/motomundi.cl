@@ -978,7 +978,7 @@ onMounted(() => {
                   </a>
                 </div>
 
-                <!-- Price block -->
+                <!-- Price block v2 -->
                 <div class="price-block mb-5">
                   <div
                     v-if="product.hasDiscount"
