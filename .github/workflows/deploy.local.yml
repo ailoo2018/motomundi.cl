@@ -44,7 +44,7 @@ jobs:
         run: |
           # Adjust .output or dist to wherever Nuxt puts the build
           robocopy .output "$env:STAGE_DIR" /E /NFL /NDL /NJH /NJS
-          Copy-Item ..\web.config "$env:STAGE_DIR\web.config" -Force
+          Copy-Item "E:\configs\web.config" "$env:STAGE_DIR\web.config" -Force
         shell: powershell
 
       # ── Swap (this is the only moment the site is briefly unavailable) ───────
