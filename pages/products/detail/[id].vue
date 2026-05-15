@@ -667,7 +667,7 @@ onMounted(() => {
                 label
                 class="font-weight-bold"
               >
-                –{{ product.discountPercent }}% OFF
+                –{{ Math.round(product.discountPercent) }}% OFF
               </VChip>
               <VChip
                 v-if="product.isNew"
@@ -991,7 +991,7 @@ onMounted(() => {
                       label
                       class="font-weight-bold"
                     >
-                      –{{ product.discountPercent }}%
+                      –{{ Math.round(product.discountPercent) }}%
                     </VChip>
                   </div>
                   <div class="price-current">
