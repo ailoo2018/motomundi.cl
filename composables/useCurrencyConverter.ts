@@ -33,6 +33,20 @@ function formatMoney(number, currency, symbol, showDecimals){
   return formatted
 }
 
+export function formatNumber(val){
+  const decimals = 0
+
+  const formatter = new Intl.NumberFormat('es-CL', {
+
+
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+
+  })
+
+  return formatter.format(val)
+}
+
 
 export function useCurrencyConverter() {
   const { convert: _convert } = useExchangeRate()

@@ -5,7 +5,9 @@ definePageMeta({
   public: true,
 
 })
-
+useHead({
+  title: 'Login',
+})
 
 const onLoggedIn = async () => {
   console.log("index.vue::onLoggedIn")

@@ -1,5 +1,10 @@
-<script setup lang="ts">
-
+<script setup>
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => null,
+  },
+})
 </script>
 
 <template>
@@ -7,7 +12,7 @@
     <h1>Club Motomundi</h1>
     <p>
       Tu pasión por las motos convertida en <strong>descuentos, ventajas y
-      experiencias únicas</strong>.
+        experiencias únicas</strong>.
     </p>
     <div class="motocoins-card">
       <div class="motocoins-card__header">
@@ -23,21 +28,22 @@
       </div>
       <div class="motocoins-card__info">
         <strong>
-          <span class="motocoins-quantity">$229</span>
+          <span class="motocoins-quantity">{{ formatMoney(user.points) }}</span>
           mundipesos</strong>
-        <span class="motocoins-conversion">(229)</span>
+        <span class="motocoins-conversion">({{formatNumber(user.points)}})</span>
       </div>
     </div>
     <VBtn
-      @click="navigateTo('/account/club-mi-motomundi')"
       rounded="0"
       color="#000"
-    >Aprovecha las ventajas</VBtn>
+      @click="navigateTo('/account/club-mi-motomundi')"
+    >
+      Aprovecha las ventajas
+    </VBtn>
   </section>
 </template>
 
 <style lang="scss">
-
 .profile__club {
   margin: 25px 0;
   text-align: center;

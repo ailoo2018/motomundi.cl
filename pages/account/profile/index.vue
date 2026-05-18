@@ -59,7 +59,7 @@ await userStore.fetchUser()
     <div class="profile">
       <AvatarContainer />
 
-      <Club />
+      <Club :user="userStore.user"/>
 
 
 
