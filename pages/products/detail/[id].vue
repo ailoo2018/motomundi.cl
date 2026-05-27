@@ -239,9 +239,9 @@ onMounted(() => {
 // ── Trust items ───────────────────────────────────────────
 const trustItems = [
   { icon: 'tabler-lock',         label: 'Pago 100% seguro',    sub: 'SSL cifrado' },
-  { icon: 'tabler-arrow-back',   label: '30 días devolución',  sub: 'Sin preguntas' },
-  { icon: 'tabler-tool',         label: 'Garantía 6 años',     sub: 'Shoei + Motomundi' },
-  { icon: 'tabler-package',      label: 'Embalaje original',   sub: 'Caja Shoei sellada' },
+  { icon: 'tabler-arrow-back',   label: '10 días devolución',  sub: 'Sin preguntas' },
+  { icon: 'tabler-tool',         label: '30 días para cambio',     sub: 'Producto sin uso' },
+  { icon: 'tabler-package',      label: 'Embalaje original',   sub: 'Producto sellada' },
 ]
 
 const cartStore = useCartStore()

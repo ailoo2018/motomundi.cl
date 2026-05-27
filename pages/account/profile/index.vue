@@ -10,6 +10,10 @@ definePageMeta({
   middleware: 'auth' // Must match the filename (auth.ts)
 })
 
+useHead({
+  title: 'Perfil',
+})
+
 const userStore = useUserStore()
 
 await userStore.fetchUser()
