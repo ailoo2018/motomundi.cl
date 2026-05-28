@@ -41,7 +41,7 @@ const brandCategoryUrl = computed(() => {
 <template>
   <!-- breadcrumbs -->
   <div class="breadcrumb-container">
-    <ul class="breadcrumb">
+    <ul class="breadcrumb" v-if="product">
       <li v-if="category" >
         <NuxtLink
           :to="categoryUrl"
@@ -58,7 +58,7 @@ const brandCategoryUrl = computed(() => {
           {{ product.brand.name }}
         </NuxtLink>
       </li>
-      <li v-if="!isMobile"  class="d-none d-md-block"><span class="breadcrumb-current">{{ product.name }}</span></li>
+      <li v-if="!isMobile" v-if="product.name"  class="d-none d-md-block"><span class="breadcrumb-current">{{ product.name }}</span></li>
     </ul>
 
     <span class="desktop-reference">

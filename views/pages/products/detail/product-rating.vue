@@ -96,7 +96,7 @@ const getHasNextPage = () => {
 }
 
 const getReviewInitial = review => {
-  if (review.party != null && review.party.name != null && review.party.name.length > 0) {
+  if (review.party  && review.party.name  && review.party.name.length > 0) {
     return review.party.name[0].toUpperCase()
   }
 
@@ -105,7 +105,7 @@ const getReviewInitial = review => {
 }
 
 const getReviewerName = review => {
-  if (review.party != null && review.party.name != null) {
+  if (review.party  && review.party.name ) {
     var arr = review.party.name.split(' ')
 
     return formatName(arr[0])
