@@ -128,6 +128,11 @@ const addRemoveToWishList = async () => {
 
 const productHelper = useProductsUtils()
 
+const isAvailable = computed(() =>{
+  return selectedVariant.value?.quantityInStock > 0
+})
+
+
 const isInStock = computed(() => {
   return productHelper.isInStock(props.product)
 })
@@ -409,7 +414,7 @@ const localIsWished = computed(() => {
         <div class="product-buy-panel__buttons">
           <VBtn
             :loading="loading"
-            :disabled="!isInStock"
+            :disabled="!isInStock || !isAvailable"
             rounded="0"
             variant="outlined"
             :acolor="isInStock ? '' : 'secondary'"
