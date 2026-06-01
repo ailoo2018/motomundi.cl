@@ -274,7 +274,7 @@ onMounted(async () => {
             <div class="shipping-method__body">
               <div class="shipping-method__description">
                 Recoge tu pedido en una de nuestras
-                tiendas. ¡Ahora en 2 horas! (según disponibilidad).
+                tiendas. ¡Ahora dentro de 24 horas! (según disponibilidad).
               </div>
               <div
                 v-if="selectedShippingMethod === ShippingMethods.ClickAndCollect"

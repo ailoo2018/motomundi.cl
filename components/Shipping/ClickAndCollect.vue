@@ -156,7 +156,7 @@ onMounted(() => {
             name="click-and-collect__options"
             value="pickup_in_2_hours"
             :disabled="!has2HourPickup"
-          > <label for="pickup_in_2_hours">Recogida express: En 2 horas*  {{ !has2HourPickup ? '(no disponible)' : '' }}</label>
+          > <label for="pickup_in_2_hours">Recogida express: Dentro de 24 horas*  {{ !has2HourPickup ? '(no disponible)' : '' }}</label>
         </div>
         <div class="input__group radio">
           <input
@@ -178,7 +178,7 @@ onMounted(() => {
       <div class="click-and-collect__notice">
         <p>
           * Recogida express
-          en 2 horas desde apertura de la tienda. Consulta los horarios de las tiendas
+          dentro de 24 horas desde apertura de la tienda. Consulta los horarios de las tiendas
           <a
             href="https://www.motomundi.cl/tiendas/"
             target="_blank"

@@ -174,10 +174,10 @@ const showStockDialog = () => {
                       1 en stock
                     </p>
                     <p v-if="store.allowPickup && store.stock > 0" class="shop__available-2h">
-                      Recógelo en 2 horas
+                      Recógelo dentro de 24 horas
                     </p>
                     <p v-else class="shop__no-stock">
-                      Recógelo en 2 horas
+                      Recógelo dentro de 24 horas
                     </p>
                   </div>
                 </li>
@@ -194,7 +194,7 @@ const showStockDialog = () => {
                 momento
               </li>
               <li>
-                Recogida en 2 horas desde apertura de
+                Recogida dentro de 24 horas desde apertura de
                 la tienda. Consulta los horarios de las tiendas
 
                 <a
