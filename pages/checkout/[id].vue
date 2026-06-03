@@ -35,6 +35,8 @@ const props = defineProps({
   },
 })
 
+console.log("here! [id].vuep")
+
 // Emits - allow parent component to listen to events
 const emit = defineEmits(['payment-selected', 'payment-processed'])
 

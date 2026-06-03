@@ -31,13 +31,24 @@ export default defineEventHandler(async event => {
     const country = body.country
     const currency = body.currency || "CLP"
 
+    const exchangeRs = await $fetch("/api/currency/exchange", {
+      method: 'GET',
+      query: {
+        from: "CLP",
+        to: currency,
+      },
+    })
+
+    const conversionRate = exchangeRs.rate
+
+
     const returnUrl = getReturnUrl(paymentMethodTypeId, "invoice")
 
     var rq : ProcessPaymentRq = {
       paymentMethodId: paymentMethodTypeId,
       referenceId: referenceId,
       referenceType: referenceType,
-      amount: amount,
+      amount: amount * conversionRate,
       currency: currency,
       returnUrl: returnUrl,
       country: country || "cl"
