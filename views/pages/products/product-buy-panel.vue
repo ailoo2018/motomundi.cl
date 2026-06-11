@@ -416,6 +416,7 @@ const localIsWished = computed(() => {
           isInStock: {{isInStock}}
           isAvailable: {{isAvailable}}
           selectedVariant: {{selectedVariant}}
+          aa
           </span>
         <div class="product-buy-panel__buttons">
 
