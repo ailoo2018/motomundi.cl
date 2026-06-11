@@ -700,6 +700,12 @@ form span.h2{
     font-weight: 700;
 }
 
+.cart-summary .cart-summary__content .cart-summary__totals .totals__item.totals__item--total.discount .item__price {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
 .cart-summary .cart-summary__content .cart-summary__motocoins {
     font-size: 16px;
     line-height: 1.3em;

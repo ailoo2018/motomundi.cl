@@ -1,48 +1,174 @@
 {
-  "id": null,
-  "name": "Marketing",
-  "costCenters": [],
-  "accounts": {},
-  "acl": {
-    "users": [
-      {
-        "id": 191202,
-        "username": "nancy"
-      },
-      {
-        "id": 187728,
-        "username": "javierb"
-      }
-    ]
-  },
-  "prorated": {
-    "enable": false,
-    "costCenters": {
-      "isExclude": false,
-      "values": []
-    },
-    "accounts": {
-      "isExclude": false,
-      "values": []
-    }
-  },
-  "salesFilters": {
-    "enable": false,
-    "brands": {
-      "isExclude": false,
-      "values": []
-    },
-    "saleTypes": {
-      "isExclude": false,
-      "values": []
-    },
-    "facilities": {
-      "isExclude": false,
-      "values": []
-    }
-  },
+  "id": "NTP6tp4BBcdk5e8IVm2B",
+  "wuid": "33280833-6a87-4e3e-9875-b04a25a3fdcd",
+  "notificationsCount": 0,
+  "lastNotified": "0001-01-01T00:00:00",
+  "webSiteId": 0,
+  "createDate": "2026-06-11T13:58:40.120Z",
+  "modifiedDate": "2026-06-11T13:58:40.120Z",
+  "currency": "CLP",
+  "userId": 0,
   "domainId": 1,
-  "from": "202604",
-  "to": "202604",
-  "groupby": "month"
+  "items": [
+    {
+      "packId": 0,
+      "product": {
+        "image": "936331b05fbc4f85bfb2d14c70510745.jpg",
+        "productId": 2993397,
+        "productItemId": 3440855,
+        "name": "AGV K7 Kyber Negro/Rojo M",
+        "type": 0,
+        "url": "/motocicleta/2993397-cascos-integrales-agv-k7-kyber"
+      },
+      "quantity": 1,
+      "name": "AGV K7 Kyber Negro/Rojo M",
+      "id": "daae5e1b-594f-42ec-8c6e-5c6cf85d7348",
+      "type": 0,
+      "image": "936331b05fbc4f85bfb2d14c70510745.jpg",
+      "color": {
+        "name": "Negro/Rojo",
+        "orderWeight": 0,
+        "id": 48,
+        "type": 1
+      },
+      "size": {
+        "name": "L",
+        "orderWeight": 80,
+        "id": 987,
+        "type": 0
+      },
+      "description": "K7 Kyber",
+      "price": 599900,
+      "oldPrice": 599900,
+      "discount": 0,
+      "loading": false
+    },
+    {
+      "packId": 0,
+      "product": {
+        "image": "31592cf8699a499e93d5a91675a13349.jpg",
+        "productId": 1646,
+        "productItemId": 11210,
+        "name": "Muc-Off Esponja Microcelula Tamaño Unico",
+        "type": 0,
+        "url": "/motocicleta/1646-limpieza-y-proteccion-muc-off-esponja-microcelula"
+      },
+      "quantity": 1,
+      "name": "Muc-Off Esponja Microcelula Tamaño Unico",
+      "id": "8987a2a6-42ac-4dc8-842b-6e6ad2de6a6e",
+      "type": 0,
+      "image": "31592cf8699a499e93d5a91675a13349.jpg",
+      "color": null,
+      "size": {
+        "name": "Tamaño Unico",
+        "orderWeight": 0,
+        "id": 8,
+        "type": 0
+      },
+      "description": "Esponja Microcelula",
+      "price": 5900,
+      "oldPrice": 5900,
+      "discount": 0,
+      "loading": false
+    },
+    {
+      "name": "Test Dia del Padre Online",
+      "price": -5900,
+      "dct": {
+        "aggregateData": null,
+        "sku": null,
+        "appliedDiscount": {
+          "id": 2327,
+          "name": "Test Dia del Padre Online",
+          "discount": {
+            "amount": 100,
+            "type": "%"
+          },
+          "appliedTo": "TotalApplicableItemsOneSale"
+        },
+        "uid": "b43a067a-f499-4f2d-a4bd-47fc43091ae2",
+        "netAmount": 0,
+        "netPrice": 0,
+        "iva": 0,
+        "name": "Test Dia del Padre Online",
+        "discount": null,
+        "quantity": 1,
+        "productId": 0,
+        "taxable": true,
+        "price": -5900,
+        "comment": "Test Dia del Padre Online",
+        "type": "DISCOUNT",
+        "featuresIds": null,
+        "compositeItems": null,
+        "lotId": null,
+        "currency": null,
+        "productItemId": 0,
+        "productCode": null,
+        "couponId": 0,
+        "serialNumber": null,
+        "salesTax": null,
+        "supplierCode": null,
+        "returnReasonId": null,
+        "isCreatedByRule": true,
+        "position": 3,
+        "applicableItems": [
+          {
+            "aggregateData": null,
+            "sku": null,
+            "appliedDiscount": null,
+            "uid": null,
+            "netAmount": 0,
+            "netPrice": 0,
+            "iva": 0,
+            "name": null,
+            "discount": null,
+            "quantity": 0,
+            "productId": 1646,
+            "taxable": true,
+            "price": 5900,
+            "comment": null,
+            "type": null,
+            "featuresIds": null,
+            "compositeItems": null,
+            "lotId": null,
+            "currency": null,
+            "productItemId": 11210,
+            "productCode": null,
+            "couponId": 0,
+            "serialNumber": null,
+            "salesTax": null,
+            "supplierCode": null,
+            "returnReasonId": null,
+            "isCreatedByRule": false,
+            "position": 0,
+            "applicableItems": [],
+            "appliesTo": [],
+            "invoiceItemId": 0,
+            "returnedItemdId": 0,
+            "refInvoiceItemId": null,
+            "id": null
+          }
+        ],
+        "appliesTo": [],
+        "invoiceItemId": 0,
+        "returnedItemdId": 0,
+        "refInvoiceItemId": null,
+        "id": null
+      },
+      "loading": false
+    }
+  ],
+  "oldPrice": 0,
+  "shipping": {
+    "cost": 0
+  },
+  "financing": {
+    "installments": 12,
+    "cuota": 50483.333333333336
+  },
+  "totalItems": 2,
+  "netTotal": 509075.6302521009,
+  "iva": 96724.36974789912,
+  "total": 605800,
+  "points": 12116
 }

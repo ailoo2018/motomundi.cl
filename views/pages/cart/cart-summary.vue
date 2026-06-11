@@ -1,4 +1,5 @@
 <script setup>
+import { CartItemType } from "@/models/cart.ts"
 
 const cartStore = useCartStore()
 const cart = cartStore.cart
@@ -29,10 +30,23 @@ const totalItems = computed(() => {
 const itemsTotal = computed(() => {
   let total = 0
   for(var item of cartStore.cart.items){
+    if(item.type === CartItemType.Discount)
+      continue
     total = total + (item.quantity*item.price)
   }
 
   return total
+})
+
+const discountTotal = computed(() => {
+  let total = 0
+  for(var item of cartStore.cart.items){
+    if(item.type === CartItemType.Discount)
+      total = total + (item.quantity*item.price)
+  }
+
+  return total
+
 })
 
 const total = computed(() => {
@@ -52,7 +66,6 @@ const getTotalPoints = () => {
 
 <template>
   <aside class="cart__summary">
-
     <div class="cart-summary collapsed show-free-shipping">
       <div
         id="cart-summary__content"
@@ -102,6 +115,13 @@ const getTotalPoints = () => {
               <span class="item__label">{{ totalItems }} artículos</span>
               <span class="item__price">{{ formatCurrency( itemsTotal ) }}</span>
             </div>
+            <div
+              v-if="discountTotal < 0"
+              class="totals__item"
+            >
+              <span class="item__label">Descuentos</span>
+              <span class="item__price">{{ formatCurrency( discountTotal ) }}</span>
+            </div>
             <div class="totals__item">
               <span class="item__label">Envío</span>
               <span
@@ -115,11 +135,14 @@ const getTotalPoints = () => {
             </div>
             <div class="totals__item totals__item--total">
               <span class="item__label">Total</span>
-              <span class="item__price"><span id="cart-total">{{ formatCurrency( total ) }}</span>
+              <span class="item__price">
+                <span id="cart-total">{{ formatCurrency( total ) }}</span>
                 <span
-                  v-if="cart.oldPrice > cart.total"
+                  v-if="discountTotal < 0"
                   class="totals__item--old-total"
-                >{{ cart.oldPrice }}</span>
+                > 
+                  {{ formatCurrency( -1 * discountTotal + itemsTotal ) }}
+                </span>
               </span>
             </div>
           </div>
@@ -385,5 +408,14 @@ const getTotalPoints = () => {
 #shop-cart .cart-continue-button svg {
   vertical-align: -3px;
   margin-right: 4px;
+}
+
+#shop-cart .cart-summary .cart-summary__content .cart-summary__totals .totals__item.totals__item--total .totals__item--old-total {
+  display: block;
+  font-size: 14px;
+  font-weight: 300;
+  margin-top: 3px;
+  text-align: right;
+  text-decoration: line-through;
 }
 </style>

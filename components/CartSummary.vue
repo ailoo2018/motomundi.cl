@@ -3,7 +3,8 @@ import Coupon from "~/components/Cart/Coupon.vue"
 import { useGuestUser } from "@/composables/useGuestUser.js"
 import CartContent from "@/components/Cart/CartContent.vue"
 import { useShipping } from "@/composables/checkout/useShipping.js"
-import {useCartSummary} from "@/composables/checkout/useCartSummary";
+import { useCartSummary } from "@/composables/checkout/useCartSummary"
+import { CartItemType } from "@/models/cart"
 
 const props = defineProps({
   isCollapsed: {
@@ -105,10 +106,30 @@ const quantityChanged = async (item, qty) => {
   }
 }
 
+const itemsTotal = computed(() => {
+  let total = 0
+  for(var item of cartStore.cart.items){
+    if(item.type === CartItemType.Discount)
+      continue
+    total = total + (item.quantity*item.price)
+  }
+
+  return total
+})
+
+const discountTotal = computed(() => {
+  let total = 0
+  for(var item of cartStore.cart.items){
+    if(item.type === CartItemType.Discount)
+      total = total + (item.quantity*item.price)
+  }
+
+  return total
+
+})
+
 const cartStore = useCartStore()
 const wuid = useGuestUser().value
-
-
 </script>
 
 <template>
@@ -141,62 +162,149 @@ const wuid = useGuestUser().value
         </span>
       </div>
       <div class="cart-summary__content-body">
-        <VCard  class="mobile-plain-card">
+        <VCard class="mobile-plain-card">
           <VCardTitle>
             <h2 style="margin:4px">
               Resumen de pedido
             </h2>
-
-
           </VCardTitle>
           <VCardText>
-
             <div class="cart-summary__totals">
-              <div class="totals__item" >
+              <div class="totals__item">
                 <span class="item__label">Subtotal </span>
                 <span class="item__price">{{ formatCurrency(cartStore.subtotal, cartStore.currency, { isNet: iso !== 'CL' }) }}</span>
               </div>
-              <div class="totals__item" v-if="iso === 'cl'">
+              <div
+                v-if="iso === 'cl'"
+                class="totals__item"
+              >
                 <span class="item__label">Impuestos (I.V.A.) </span>
                 <span class="item__price">{{ formatCurrency(cartStore.iva) }}</span>
               </div>
               <div class="totals__item">
-                <span class="item__label">Envío</span>
+                <span class="item__label">Envío </span>
 
-                <span v-if="isShipmentSelected" class="item__price">
-                  {{ formatCurrency(shippingCost, cartStore.currency, { isNet: iso !== 'CL' })  }}
+                <span
+                  v-if="checkoutStore.getShippingInfo().method === 1"
+                  class="text-right w-100"
+                >
+                  Retiro en tienda
+                </span>
+
+                <span
+                  v-if="checkoutStore.getShippingInfo().method !== 1 && shippingCost === 0 "
+                  class="text-right w-100"
+                >
+                  Envío gratuito
+                </span>
+
+                <span
+                  v-if="isShipmentSelected"
+                  class="item__price"
+                >
+
+                  {{ formatCurrency(shippingCost, cartStore.currency, { isNet: iso !== 'CL' }) }}
                 </span>
                 <span v-else>(seleccione un método de envío) </span>
               </div>
-              <div v-if="cartStore.coupon" class="totals__item " >
-                <span class="item__label">Código Promo<VChip size="sm" class="ml-2 px-2 py-1 font-weight-medium" style="color: #f44a4a">{{cartStore.coupon.name}}</VChip></span>
+              <div
+                v-if="cartStore.coupon"
+                class="totals__item "
+              >
+                <span class="item__label">Código Promo
+                  <VChip
+                    size="sm"
+                    class="ml-2 px-2 py-1 font-weight-medium"
+                    style="color: #f44a4a"
+                  >
+                    {{ cartStore.coupon.name }}
+                  </VChip>
+                </span>
                 <span class="item__price">
 
-                  <span v-if="!cartStore.isApplyingCoupon" id="cart-total" style="color: #f44a4a">
+                  <span
+                    v-if="!cartStore.isApplyingCoupon"
+                    id="cart-total"
+                    style="color: #f44a4a"
+                  >
                     ({{ formatCurrency(cartStore.coupon.discount,cartStore.currency, { isNet: iso !== 'CL'}) }})
                   </span>
                   <span v-else>
-                    <VProgressCircular size="20" width="2" indeterminate color="primary"/>
+                    <VProgressCircular
+                      size="20"
+                      width="2"
+                      indeterminate
+                      color="primary"
+                    />
 
                   </span>
                 </span>
               </div>
-              <div class="totals__item totals__item--total">
+              <div
+                v-if="discountTotal < 0"
+                class="totals__item totals__item--total discount"
+              >
+                <span class="item__label" style="font-size: 0.8em;">
+                  Descuento
+                </span>
+
+                <span class="item__price">
+                  <span id="cart-total"> ({{ formatCurrency(Math.abs(discountTotal)) }})</span>
+
+
+                </span>
+              </div>
+
+              <!-- totals__item--total -->
+              <div
+                class="totals__item totals__item--total"
+                :class="{ 'totals-has-discount' : discountTotal < 0 }"
+              >
                 <span class="item__label">
                   Total
                 </span>
-                <span v-if="cartStore.currency === 'CLP'" class="item__price">
+
+                <span
+                  v-if="cartStore.currency === 'CLP'"
+                  class="item__price"
+                >
                   <span id="cart-total"> {{ formatCurrency(total) }}</span>
+                  <span
+                    v-if="discountTotal < 0"
+                    class="totals__item--old-total"
+                  >
+
+                    {{ formatCurrency( -1 * discountTotal + total ) }}
+                  </span>
+
                 </span>
-                <span v-else class="item__price">
+                <span
+                  v-else
+                  class="item__price"
+                >
                   <span id="cart-total">{{ formatCurrency(subtotal + shippingCost, cartStore.currency, { isNet: iso !== 'CL'}) }}</span>
+                  <span
+                    v-if="discountTotal < 0"
+                    class="totals__item--old-total"
+                  >
+
+                    {{ formatCurrency( -1 * discountTotal + total ) }}
+                  </span>
                 </span>
               </div>
-            </div>
+              <!-- /totals__item--total -->
+            </div> <!-- /cart-summary__totals -->
             <div class="motocoins-claim cart-summary__motocoins">
-              <VIcon class="tabler-coin-monero-filled" color="primary"></VIcon>
+              <VIcon
+                class="tabler-coin-monero-filled"
+                color="primary"
+              />
               <div class="motocoins-claim__info">
-                <span class="motocoins-claim__amount">Acumula <strong><VIcon class="tabler-coin-monero" size="12" color="secondary"></VIcon>{{ convert( cartStore.points, { decimals: 0} ) }} Mundipesos </strong> con esta compra.</span>
+                <span class="motocoins-claim__amount">Acumula <strong><VIcon
+                  class="tabler-coin-monero"
+                  size="12"
+                  color="secondary"
+                />{{ convert( cartStore.points, { decimals: 0} ) }} Mundipesos </strong> con esta compra.</span>
               </div>
             </div>
           </VCardText>
@@ -528,6 +636,23 @@ li .mtc-link, #shop-cart li > a {
   flex-grow: 1;
 }
 
+
+
+.cart-summary .cart-summary__content .cart-summary__totals .totals__item.totals__item--total .totals__item--old-total {
+  display: block;
+  font-size: 14px;
+  font-weight: 300;
+  margin-top: 3px;
+  text-align: right;
+  text-decoration: line-through;
+}
+
+.cart-summary .cart-summary__content .cart-summary__totals .totals__item.totals__item--total.totals-has-discount {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
 @media (max-width: 600px) {
   .mobile-plain-card {
     box-shadow: none !important;
@@ -535,5 +660,4 @@ li .mtc-link, #shop-cart li > a {
     border: none !important;
   }
 }
-
 </style>

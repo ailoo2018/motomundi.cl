@@ -4,6 +4,7 @@ import CartItemPack from "@/views/pages/cart/cart-item-pack.vue"
 import CartItemProduct from "@/views/pages/cart/cart-item-product.vue"
 import  { CartItemType } from "@/models/cart"
 import CartItemCoupon from "@/views/pages/cart/cart-item-coupon.vue";
+import CartItemDiscount from "@/views/pages/cart/cart-item-discount.vue";
 
 
 
@@ -34,6 +35,7 @@ const loading = ref(false)
         v-for="cartItem in cartStore.cart.items"
         :key="cartItem.id"
       >
+
         <CartItemProduct
           v-if="cartItem.type === CartItemType.Product && getProductType(cartItem.product) === ProductType.Simple"
           :cart-item="cartItem"
@@ -42,6 +44,8 @@ const loading = ref(false)
           v-if="cartItem.type === CartItemType.Pack || getProductType(cartItem.product) === ProductType.Composite"
           :cart-item="cartItem"
         />
+        <CartItemDiscount v-if="cartItem.type === CartItemType.Discount" :cart-item="cartItem"/>
+
         <CartItemCoupon v-if="cartItem.type === CartItemType.Coupon" :cart-item="cartItem"/>
 
         <div

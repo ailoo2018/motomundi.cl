@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+  /* eslint-disable camelcase */
 import { getDomainId } from "@/server/ailoo-domain"
 import {getReturnUrl, processPayment} from "@/services/gateways/gateway.ts"
 
