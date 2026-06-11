@@ -76,7 +76,7 @@ export function getBaseUrl(){
 
 
   if(!baseUrl.startsWith("https") || baseUrl.includes("localhost") || baseUrl.includes("cloudflare")){
-    baseUrl = "https://manchester-capture-gdp-cleared.trycloudflare.com"
+    baseUrl = "https://facilitate-craig-pump-arthur.trycloudflare.com" // https://manchester-capture-gdp-cleared.trycloudflare.com"
   }
 
 

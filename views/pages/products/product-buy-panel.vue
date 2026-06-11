@@ -411,7 +411,14 @@ const localIsWished = computed(() => {
           Actualmente no tenemos unidades disponibles de este artículo. Suscríbete a nuestra alerta de reposición y
           serás el primero en recibir un correo en cuanto entre de nuevo en el almacén.
         </VAlert>
+        <span style="display: none;">
+          isSimpleProd: {{product?.isSimpleProduct}}
+          isInStock: {{isInStock}}
+          isAvailable: {{isAvailable}}
+          selectedVariant: {{selectedVariant}}
+          </span>
         <div class="product-buy-panel__buttons">
+
           <VBtn
             :loading="loading"
             :disabled="!isInStock || !isAvailable"

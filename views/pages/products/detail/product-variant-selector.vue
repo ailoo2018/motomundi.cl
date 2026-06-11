@@ -203,6 +203,16 @@ onMounted(() => {
   if (colorFeature) {
     selectedColor.value = colorFeature
   }
+
+  if(props.product.isSimpleProduct){
+    if(sizes.value?.length > 0){
+      selectedSize.value = sizes.value[0]
+    }else{
+      selectedSize.value = { id: 0 }
+    }
+
+  }
+
 })
 </script>
 
