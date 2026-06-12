@@ -21,12 +21,14 @@ watch(() => props.cartItem.quantity, (newQty) => {
 })
 
 const increment = () => {
-  cartStore.updateQuantity(wuid, props.cartItem.id, props.cartItem.quantity + 1)
+  props.cartItem.quantity += 1
+  // cartStore.updateQuantity(wuid, props.cartItem.id, props.cartItem.quantity + 1)
 }
 
 const decrement = () => {
   if (props.cartItem.quantity > 1) {
-    cartStore.updateQuantity(wuid, props.cartItem.id, props.cartItem.quantity - 1)
+    props.cartItem.quantity -= 1
+    // cartStore.updateQuantity(wuid, props.cartItem.id, props.cartItem.quantity - 1)
   }
 }
 

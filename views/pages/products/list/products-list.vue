@@ -98,7 +98,10 @@ const onFilter = filters => {
                 :key="product.id"
                 class="col s6 m4 lc5"
               >
-                <ProductListItem :product="product" />
+                <article v-if="product.isPromo" class="item" style="padding: 0;">
+                  <VImg src="/cms/promos/dia-del-padre.jpeg" cover ></VImg>
+                </article>
+                <ProductListItem v-else :product="product" />
               </div>
             </div>
           </div>

@@ -15,10 +15,10 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   const parseFiltersFromUrl = (query = route.query): any[] => {
     const result: any[] = []
     for (const type of ARRAY_FACETS) {
-      if (query[type]) result.push({ type, values: (query[type] as string).split(',') })
+      if (query[type]) result.push({type, values: (query[type] as string).split(',')})
     }
     for (const type of SCALAR_FACETS) {
-      if (query[type]) result.push({ type, value: query[type] as string })
+      if (query[type]) result.push({type, value: query[type] as string})
     }
     return result
   }
@@ -60,14 +60,14 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     }
 
     for (const facet of cQuery) {
-      if      (facet.type === 'brands')     body.brands      = facet.values
-      else if (facet.type === 'categories') body.categories  = facet.values
-      else if (facet.type === 'tags')       facet.values.forEach((t: any) => body.tags.push(t))
-      else if (facet.type === 'sizes')      facet.values.forEach((t: any) => body.sizes.push(t))
-      else if (facet.type === 'models')     facet.values.forEach((t: any) => body.models.push(t))
+      if (facet.type === 'brands') body.brands = facet.values
+      else if (facet.type === 'categories') body.categories = facet.values
+      else if (facet.type === 'tags') facet.values.forEach((t: any) => body.tags.push(t))
+      else if (facet.type === 'sizes') facet.values.forEach((t: any) => body.sizes.push(t))
+      else if (facet.type === 'models') facet.values.forEach((t: any) => body.models.push(t))
       else if (facet.type === 'collection') body.collectionId = facet.value
-      else if (facet.type === 'colors')     facet.values.forEach((t: any) => body.colors.push(t))
-      else if (facet.type === 'bike')       body.bike        = facet.value
+      else if (facet.type === 'colors') facet.values.forEach((t: any) => body.colors.push(t))
+      else if (facet.type === 'bike') body.bike = facet.value
       else body[facet.type] = facet.value
     }
 
@@ -89,18 +89,19 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   // • `watch: [fetchBody]` is the explicit trigger on the client side.
   // • No separate search() / $fetch call needed anywhere.
 
-  const { data: searchData, pending } = useAsyncData(
+  const {data: searchData, pending} = useAsyncData(
     () => `products-${JSON.stringify(fetchBody.value)}`,  // reactive cache key
-    () => $fetch('/api/product/search', { method: 'POST', body: fetchBody.value }),
-    { watch: [fetchBody] },
+    () => $fetch('/api/product/search', {method: 'POST', body: fetchBody.value}),
+    {watch: [fetchBody]},
   )
 
   // ─── Derived state from searchData ────────────────────────────
 
   const products = computed(() => searchData.value?.products ?? [])
-  const total    = computed(() => searchData.value?.totalHits ?? 0)
+
+  const total = computed(() => searchData.value?.totalHits ?? 0)
   const totalPages = computed(() => Math.ceil(total.value / pageSize.value))
-  const title    = computed(() => searchData.value?.query?.description ?? '')
+  const title = computed(() => searchData.value?.query?.description ?? '')
 
   const queryDesc = computed(() => {
     if (!searchData.value) return undefined
@@ -112,21 +113,24 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
 
   // Populate filters only once (first response)
   watch(searchData, (val) => {
+    if(searchData.value?.products?.length > 0){
+       searchData.value.products.unshift({...searchData.value.products[0], isPromo: true})
+    }
     if (val && !filters.value) filters.value = val.filters
-  }, { immediate: true })
+  }, {immediate: true})
 
   // ─── URL → state sync (back/forward) ──────────────────────────
   //
   // Only updates the refs — the fetchBody computed reacts automatically.
 
   watch(() => route.query, (newRouteQuery) => {
-    currentPage.value  = parseInt(newRouteQuery.page as string) || 1
+    currentPage.value = parseInt(newRouteQuery.page as string) || 1
     currentQuery.value = parseFiltersFromUrl(newRouteQuery)
   })
 
   // Scroll to top whenever the data refreshes on the client
   watch(searchData, () => {
-    if (import.meta.client) window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (import.meta.client) window.scrollTo({top: 0, behavior: 'smooth'})
   })
 
   // ─── Public API ───────────────────────────────────────────────
@@ -136,22 +140,22 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     for (const f of newFilters) {
       for (const b of f.buckets) {
         if (b.checked) {
-          if (!map.has(f.type)) map.set(f.type, { type: f.type, values: [] })
+          if (!map.has(f.type)) map.set(f.type, {type: f.type, values: []})
           map.get(f.type)!.values.push(b.id)
         }
       }
     }
     const newQuery = [...map.values()]
     if (JSON.stringify(currentQuery.value) === JSON.stringify(newQuery)) return
-    await router.push({ query: filtersToUrlQuery(newQuery, 1) })
+    await router.push({query: filtersToUrlQuery(newQuery, 1)})
   }
 
   const setPage = async (page: number) => {
-    await router.push({ query: filtersToUrlQuery(currentQuery.value, page) })
+    await router.push({query: filtersToUrlQuery(currentQuery.value, page)})
   }
 
   watch(orderBy, async () => {
-    await router.push({ query: filtersToUrlQuery(currentQuery.value, 1) })
+    await router.push({query: filtersToUrlQuery(currentQuery.value, 1)})
   })
 
   watch(currentPage, async (page) => {

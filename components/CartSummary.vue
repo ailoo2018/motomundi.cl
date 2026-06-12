@@ -125,7 +125,6 @@ const discountTotal = computed(() => {
   }
 
   return total
-
 })
 
 const cartStore = useCartStore()
@@ -250,8 +249,6 @@ const wuid = useGuestUser().value
 
                 <span class="item__price">
                   <span id="cart-total"> ({{ formatCurrency(Math.abs(discountTotal)) }})</span>
-
-
                 </span>
               </div>
 
