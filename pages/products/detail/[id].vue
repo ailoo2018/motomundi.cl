@@ -638,6 +638,11 @@ onMounted(() => {
       </div>
     </article>
   </div>
+
+
+
+
+
   <div v-else>
     <!-- ── BREADCRUMB ─────────────────────────────────────────── -->
     <div class="ml-2 pt-2">
@@ -930,6 +935,11 @@ onMounted(() => {
           md="5"
           lg="5"
         >
+          <div>
+            <VCard class="mb-4">
+            <VImg src="/cms/promos/dia-del-padre-horizontal.jpeg" />
+            </VCard>
+          </div>
           <div class="sticky-col">
             <VCard
               elevation="3"

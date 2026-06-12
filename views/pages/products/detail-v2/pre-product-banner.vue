@@ -1,3 +1,5 @@
+<script setup lang="ts">
+</script>
 <template>
   <!-- pre product banners -->
   <div
@@ -11,10 +13,14 @@
           class="countdown-banner banner__theme--light"
           style="height: 110px;"
         >
+          <VImg v-if="true" src="/cms/promos/dia-del-padre-horizontal.jpeg"
+                class="banner__background"/>
           <a
+            v-else
             href="https://www.youtube.com/MotoMundiTv"
             target="_blank"
           >
+
             <VImg
               src="/images/cms/mmtv.png"
               alt="Promo banner"
