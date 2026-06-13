@@ -35,6 +35,7 @@ onMounted(() => {
 <template>
 
   <AppLoader />
+
   <!-- mobile -->
   <div v-if="isMobile" class="mobile-layout">
     <main class="main-content">
@@ -56,9 +57,12 @@ onMounted(() => {
       <MotomundiHeaderlogo/>
       <MotomundiNavigation />
       <main class="main-content">
+
         <slot/>
+
         <NewsletterSignUp />
         <YoutubeLatest />
+
         <MotomundiFooter/>
       </main>
     </div>

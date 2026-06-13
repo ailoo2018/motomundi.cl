@@ -94,14 +94,19 @@ const onFilter = filters => {
               class="row products banner--right has-banner"
             >
               <div
+                class="col s6 m4 lc5"
+              >
+                <article class="item" style="padding: 0;">
+                  <VImg src="/cms/promos/dia-del-padre.jpeg" cover ></VImg>
+                </article>
+
+              </div>
+              <div
                 v-for="product in products"
                 :key="product.id"
                 class="col s6 m4 lc5"
               >
-                <article v-if="product.isPromo" class="item" style="padding: 0;">
-                  <VImg src="/cms/promos/dia-del-padre.jpeg" cover ></VImg>
-                </article>
-                <ProductListItem v-else :product="product" />
+                <ProductListItem  :product="product" />
               </div>
             </div>
           </div>

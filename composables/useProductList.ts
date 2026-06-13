@@ -113,9 +113,6 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
 
   // Populate filters only once (first response)
   watch(searchData, (val) => {
-    if(searchData.value?.products?.length > 0){
-       searchData.value.products.unshift({...searchData.value.products[0], isPromo: true})
-    }
     if (val && !filters.value) filters.value = val.filters
   }, {immediate: true})
 
