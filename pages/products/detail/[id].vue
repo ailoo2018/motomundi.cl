@@ -1278,7 +1278,9 @@ onMounted(() => {
               </VCardText>
             </VCard>
             <!-- === Combinalo ================================== -->
-            <ProductComplements :product-id="product?.id" :breakpoints="{      320: { slidesPerView: 2, spaceBetween: 10 }}"/>
+<!--
+            <ProductComplements :product-id="product?.id" :breakpoints="{ 320: { slidesPerView: 2, spaceBetween: 10 }}"/>
+-->
 
           </div>
 
@@ -1290,6 +1292,10 @@ onMounted(() => {
       <!-- === Recommend ================================== -->
       <VRow>
         <VCol cols="12">
+          <!-- === Combinalo ================================== -->
+          <ProductComplements :product-id="product?.id"  />
+
+
           <Recommend :product="product" />
         </VCol>
       </VRow>

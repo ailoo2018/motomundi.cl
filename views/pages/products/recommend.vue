@@ -42,9 +42,10 @@ const products = computed(() => data?.value || [])
           style="--7e560bfa: 2; --32a5b472: 3; --15fff006: 5;"
         >
           <hgroup class="product-list__title">
-            <h2 class="">
+            <h2 class="section-title">
               Te recomendamos
             </h2>
+            <VDivider class="section-divider mb-5" />
           </hgroup>
           <div class="products px-3">
             <ProductListItem
