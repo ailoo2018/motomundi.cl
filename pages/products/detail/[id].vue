@@ -92,6 +92,17 @@ const showSeenCheaperForm = ref(false)
 const { formatCurrency, selectedCountryData } = useCurrencyConverter()
 const iso = computed(() => { return selectedCountryData.value.iso?.toLowerCase() })
 
+
+const mainCategory = computed(() => {
+  if(product){
+    var mainCategory = product.value.categories.find( (c:any) => {return c.isDirectCategory });
+    if(mainCategory){
+      return mainCategory.name
+    }
+  }
+  return "aaa"
+})
+
 const onShowVideo = videoId => {
   console.log("showVideo: " + videoId)
   currentVideoId.value = videoId
@@ -949,7 +960,7 @@ onMounted(() => {
               <VCardText class="pa-6">
                 <!-- Brand & Title -->
                 <div class="brand-label mb-1">
-                  {{ product.brand.name }} · Cascos Integrales
+                  {{ product.brand.name }} · {{ mainCategory }}
                 </div>
                 <h1 class="product-title mb-1">
                   {{ product.name }}
