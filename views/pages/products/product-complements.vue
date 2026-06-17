@@ -8,6 +8,16 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  breakpoints: {
+    type: Object,
+    default: () => ( {
+      320: { slidesPerView: 2, spaceBetween: 10 },
+      640: { slidesPerView: 3, spaceBetween: 10 },
+      1024: { slidesPerView: 4, spaceBetween: 10 },
+      1280: { slidesPerView: 5, spaceBetween: 10 },
+    } ),
+  },
+
 })
 
 
@@ -28,12 +38,7 @@ const complements = computed(() => {
   return data.value?.products || []
 })
 
-const swiperBreakpoints = {
-  320: { slidesPerView: 2, spaceBetween: 10 },
-  640: { slidesPerView: 3, spaceBetween: 10 },
-  1024: { slidesPerView: 4, spaceBetween: 10 },
-  1280: { slidesPerView: 5, spaceBetween: 10 },
-}
+const swiperBreakpoints = props.breakpoints
 
 
 const router = useRouter()
@@ -58,6 +63,7 @@ register()
           <ClientOnly>
             <swiper-container
               events-prefix="swiper-"
+              style="padding-bottom:22px;"
               navigation="true"
               :prevent-clicks="false"
               :prevent-clicks-propagation="false"
@@ -68,7 +74,6 @@ register()
               <swiper-slide
                 v-for="product in complements"
                 :key="product.id"
-
               >
                 <ProductListItem
                   :product="product"

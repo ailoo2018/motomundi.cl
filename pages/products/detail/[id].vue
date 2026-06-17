@@ -636,6 +636,8 @@ onMounted(() => {
         <!-- /product-description-container -->
 
 
+
+
         <!-- recommend -->
         <Recommend :product="product" />
 
@@ -815,6 +817,7 @@ onMounted(() => {
               <ProductDescription :description="product?.description" />
             </div>
           </div>
+
 
           <!-- FEATURES TABLE -->
           <div class="content-section">
@@ -1274,9 +1277,16 @@ onMounted(() => {
                 <PreProductBanner />
               </VCardText>
             </VCard>
+            <!-- === Combinalo ================================== -->
+            <ProductComplements :product-id="product?.id" :breakpoints="{      320: { slidesPerView: 2, spaceBetween: 10 }}"/>
+
           </div>
+
+
+
         </VCol>
       </VRow>
+
       <!-- === Recommend ================================== -->
       <VRow>
         <VCol cols="12">
