@@ -18,6 +18,7 @@ const props = defineProps({
     } ),
   },
 
+
 })
 
 
@@ -56,9 +57,10 @@ register()
       <aside class="related algolia-recommended">
         <section class="product-list px-4">
           <hgroup class="product-list__title">
-            <h2 class="">
-              COMBÍNALO CON
+            <h2 class="section-title">
+              Combínalo con
             </h2>
+            <VDivider class="section-divider mb-5" />
           </hgroup>
           <ClientOnly>
             <swiper-container
@@ -89,14 +91,14 @@ register()
 </template>
 
 <style scoped>
-h2 {
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 26.2px;
-  margin-bottom: 30px;
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  color: #111;
+  margin-bottom: 0;
 }
-
 
 
 .strike {
