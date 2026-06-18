@@ -45,6 +45,68 @@ watch( () => props.error, () => {
 const selectedSize = ref()
 const selectedColor = ref()
 
+const isSizeAvailable = size => {
+
+
+  if (!size)
+    return false
+
+  const selectedColorId = selectedColor.value ? selectedColor.value.id : 0
+
+
+  const prodItems = product?.value.productItems.filter(pit => (pit.colorId === selectedColorId || selectedColorId === 0) && size.id === pit.sizeId)
+  if (prodItems.length > 0) {
+    return prodItems.some(pit => pit.quantityInStock > 0)
+  }
+
+
+  return false
+}
+
+const isColorAvailable = color => {
+  try {
+    if (!color)
+      return false
+
+    const selectedSizeId = selectedSize.value ? selectedSize.value.id : 0
+
+    const prodItems = product?.value.productItems.filter(pit => (selectedSizeId === 0 || pit.sizeId === selectedSizeId) && pit.colorId === color.id)
+    if (prodItems) {
+      return prodItems.some(pit => pit.quantityInStock > 0)
+    }
+
+    return false
+  } catch (e) {
+    console.error(e)
+
+    return false
+  }
+}
+
+const setSizeProps = item => {
+  const available = isSizeAvailable(item)
+
+  return {
+    disabled: !available,
+    title: !available ? item.name + ' - Agotado' : item.name,
+
+    // You can even add custom classes here
+    class: !available ? 'opacity-50' : '',
+  }
+}
+const setColorProps = item => {
+  const available = isColorAvailable(item)
+
+  return {
+    disabled: !available,
+    title: !available ? item.name + ' - Agotado' : item.name,
+
+    // You can even add custom classes here
+    class: !available ? 'opacity-50' : '',
+  }
+}
+
+
 const onFeatureSelect = () => {
   const sizeId = (selectedSize.value && selectedSize.value.id > 0) ? selectedSize.value.id :  0
   const colorId = (selectedColor.value && selectedColor.value.id > 0) ? selectedColor.value.id : 0
@@ -157,6 +219,7 @@ register()
         v-model="selectedColor"
         class="pack-select-color mb-2"
         :items="colors"
+        :item-props="setColorProps"
         item-id="id"
         item-title="name"
         placeholder="Seleccione um color"
@@ -172,6 +235,7 @@ register()
         v-model="selectedSize"
         class="pack-select-size"
         :items="sizes"
+        :item-props="setSizeProps"
         item-id="id"
         item-title="name"
         placeholder="Seleccione uma talla"
