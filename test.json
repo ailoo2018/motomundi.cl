@@ -1,88 +1,77 @@
 {
-  "name": "Campaña día del Padre (Tiendas)",
-  "quantity": 1,
-  "type": 2,
-  "price": -199500,
-  "dct": {
-    "aggregateData": null,
-    "sku": null,
-    "appliedDiscount": {
-      "id": 2324,
-      "name": "Campaña día del Padre (Tiendas)",
-      "discount": {
-        "amount": 100,
-        "type": "%"
+  "orders": [
+    {
+      "id": 199041,
+      "number": 199041,
+      "documentDate": "2026-06-04T19:17:32.000Z",
+      "eta": {
+        "from": "2026-06-11T19:17:32.000Z",
+        "to": "2026-06-19T19:17:32.000Z"
       },
-      "appliedTo": "TotalApplicableItemsOneSale"
-    },
-    "uid": "973870c0-a174-4c4a-81ec-e185169776a8",
-    "netAmount": 0,
-    "netPrice": 0,
-    "iva": 0,
-    "name": "Campaña día del Padre (Tiendas)",
-    "discount": null,
-    "quantity": 1,
-    "productId": 0,
-    "taxable": true,
-    "price": -199500,
-    "comment": "Campaña día del Padre (Tiendas)",
-    "type": "DISCOUNT",
-    "featuresIds": null,
-    "compositeItems": null,
-    "lotId": null,
-    "currency": null,
-    "productItemId": 0,
-    "productCode": null,
-    "couponId": 0,
-    "serialNumber": null,
-    "salesTax": null,
-    "supplierCode": null,
-    "returnReasonId": null,
-    "isCreatedByRule": true,
-    "position": 3,
-    "applicableItems": [
-      {
-        "aggregateData": null,
-        "sku": null,
-        "appliedDiscount": null,
-        "uid": null,
-        "netAmount": 0,
-        "netPrice": 0,
-        "iva": 0,
-        "name": null,
-        "discount": null,
-        "quantity": 0,
-        "productId": 2878461,
-        "taxable": true,
-        "price": 39900,
-        "comment": null,
-        "type": null,
-        "featuresIds": null,
-        "compositeItems": null,
-        "lotId": null,
-        "currency": null,
-        "productItemId": 3322943,
-        "productCode": null,
-        "couponId": 0,
-        "serialNumber": null,
-        "salesTax": null,
-        "supplierCode": null,
-        "returnReasonId": null,
-        "isCreatedByRule": false,
-        "position": 0,
-        "applicableItems": [],
-        "appliesTo": [],
-        "invoiceItemId": 0,
-        "returnedItemdId": 0,
-        "refInvoiceItemId": null,
-        "id": null
-      }
-    ],
-    "appliesTo": [],
-    "invoiceItemId": 0,
-    "returnedItemdId": 0,
-    "refInvoiceItemId": null,
-    "id": null
-  },
-  "loading": false
+      "shipmentMethodType": "Alas Express",
+      "date": "2026-06-04T19:17:32.000Z",
+      "total": 132930,
+      "netTotal": 111705.88235294117,
+      "iva": 21224.117647058825,
+      "statusId": 12,
+      "status": "Listo para enviar",
+      "productItems": [
+        {
+          "id": 3346605,
+          "name": "C5 - Globe",
+          "fullName": "Schuberth C5 - Globe",
+          "brand": {
+            "featured": true,
+            "isAvailableForInternet": true,
+            "name": "Schuberth",
+            "logo": "0d3bba931d6e41bebd310609315d0bbc.jpg",
+            "id": 131,
+            "linkName": "Cascos Schuberth",
+            "showNameInWeb": true
+          },
+          "description": "Schuberth C5 - Globe Azul M",
+          "productItemId": 3916615,
+          "image": "bdcbb3082009415a9b233f1e599f9e05.jpg",
+          "quantity": "1",
+          "product": {
+            "id": 3346605,
+            "fullName": "Schuberth C5 - Globe",
+            "image": "05f3e1f22a9d4c349d0cebe4211a16b0.jpg",
+            "brand": {
+              "id": 131,
+              "name": "Schuberth",
+              "logo": "0d3bba931d6e41bebd310609315d0bbc.jpg"
+            }
+          }
+        },
+        {
+          "id": 2032414,
+          "name": "Spa",
+          "fullName": "Kore Spa",
+          "brand": {
+            "featured": false,
+            "isAvailableForInternet": true,
+            "name": "Kore",
+            "logo": "6c8293c60ca844589bbcf82007c85576.jpg",
+            "id": 30133,
+            "showNameInWeb": true
+          },
+          "description": "Kore Spa Negro/Blanco/Rojo/Azul 42",
+          "productItemId": 2356799,
+          "image": "39926a8d53294269bd92ed138b4c6efe.png",
+          "quantity": "1",
+          "product": {
+            "id": 2032414,
+            "fullName": "Kore Spa",
+            "image": "39926a8d53294269bd92ed138b4c6efe.png",
+            "brand": {
+              "id": 30133,
+              "name": "Kore",
+              "logo": "6c8293c60ca844589bbcf82007c85576.jpg"
+            }
+          }
+        }
+      ]
+    }
+  ]
 }

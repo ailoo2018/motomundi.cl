@@ -25,7 +25,7 @@ export default defineCachedEventHandler(async event => {
     })
   }
 }, {
-  maxAge: 60 * 60 * 24, // 24 hours
+  maxAge: 60 * 60 * 2, //60 * 60 * 24, // 24 hours
   name: 'packs',
   getKey: async event => {
     const { productId } = getQuery(event)
