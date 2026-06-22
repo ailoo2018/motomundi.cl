@@ -949,11 +949,6 @@ onMounted(() => {
           md="5"
           lg="5"
         >
-          <div>
-            <VCard class="mb-4">
-            <VImg src="/cms/promos/dia-del-padre-horizontal.jpeg" />
-            </VCard>
-          </div>
           <div class="sticky-col">
             <VCard
               elevation="3"
