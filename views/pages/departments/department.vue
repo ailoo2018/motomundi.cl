@@ -61,8 +61,6 @@ useHead({
 })
 
 
-
-
 const componentMap = {
   Swiper,
   AddedValues,
