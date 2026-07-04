@@ -5,7 +5,7 @@
     <!-- Directional scrim: keeps the helmet visible, darkens toward the text -->
     <div class="sr7-hero__scrim" />
 
-    <v-container class="sr7-hero__container" fluid>
+    <div class="sr7-hero__container" fluid>
       <div class="sr7-hero__content">
         <!-- Signature element: telemetry-style corner frame around the copy block -->
         <div class="sr7-hero__frame">
@@ -18,27 +18,24 @@
           </div>
 
           <h1 class="sr7-hero__title">
-            Al límite.<br />Sin miedo.
+            Alpinestars R-7: ADN de Pista, Rendimiento Puro.
           </h1>
 
           <p class="sr7-hero__subtitle">
-            El Alpinestars SR-7 ya está aquí: la protección que llevan
-            los pilotos de MotoGP, lista para tu próxima ruta.
+            Experimenta la combinación perfecta entre ligereza extrema, ventilación avanzada y seguridad sin precedentes. El casco definitivo para quienes buscan romper los límites en el asfalto.
           </p>
 
-          <v-btn
-            class="sr7-hero__cta"
-            size="large"
-            rounded="0"
-            :color="ctaColor"
-            append-icon="tabler-arrow-right"
-            @click="$emit('ver-casco')"
-          >
-            Ver Casco
-          </v-btn>
+          <a href="/products/list?sword=alpinestars+s-r7" class="btn-primary">
+            Ver cascos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+
         </div>
       </div>
-    </v-container>
+    </div>
   </section>
 </template>
 
@@ -162,7 +159,7 @@ defineEmits(['ver-casco'])
 .sr7-hero__title {
   font-family: 'Barlow Condensed', 'Oswald', system-ui, sans-serif;
   font-weight: 700;
-  font-size: clamp(2.4rem, 5.2vw, 4rem);
+  font-size: 2.5em;
   line-height: 0.95;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -195,6 +192,30 @@ defineEmits(['ver-casco'])
     max-width: none;
   }
 }
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #d6001c;
+  padding: 14px 28px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  border-color: #d6001c;
+  color: #FFFFFF;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #d6001c;
+  border-color: #d6001c;
+  color: #FFFFFF;
+}
+
 </style>
 
 <!--
