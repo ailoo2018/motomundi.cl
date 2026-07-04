@@ -13,7 +13,7 @@
           class="countdown-banner banner__theme--light"
           style="height: 110px;"
         >
-          <VImg v-if="true" src="/cms/promos/dia-del-padre-horizontal.jpeg"
+          <VImg v-if="false" src="/cms/promos/dia-del-padre-horizontal.jpeg"
                 class="banner__background"/>
           <a
             v-else

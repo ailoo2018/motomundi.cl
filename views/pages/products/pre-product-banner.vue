@@ -8,7 +8,6 @@
   >
     <div class="col s12">
       <span
-                
         data-dr="true"
         class="countdown-with-banner mtc-link"
         data-promotion-id="bannerProduct"
