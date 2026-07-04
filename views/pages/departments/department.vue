@@ -23,6 +23,7 @@ import OutletPromo from "@/views/pages/home/outlet-promo.vue"
 import Vulcanet from "@/views/pages/home/vulcanet.vue"
 import LifestyleCategories from "@/views/pages/home/lifestyle-categories.vue"
 import EventCreadoresContenidos from "@/views/pages/home/event-creadores-contenidos.vue"
+import Sr7 from "@/views/pages/home/sr7.vue"
 
 import Himalaya from "@/views/pages/home/himalaya.vue"
 import { Departments } from "@/models/index.js"
@@ -76,8 +77,8 @@ const componentMap = {
   LatestEvents,
   EmbajadoresHome,
   OutletPromo,
-  Kidult: Himalaya,
-  EventCreadoresContenidos,
+  // Kidult: Himalaya,
+  // EventCreadoresContenidos,
 
   //  Seo2,
   BikeSearch,
@@ -87,7 +88,8 @@ const componentMap = {
   OffRoadCategories,
   BrandsBlockMx,
   LifestyleCategories,
-  Vulcanet,
+  // Vulcanet,
+  Sr7,
 }
 
 const { isMobile } = useDevice()
