@@ -42,7 +42,7 @@ onMounted(() => {
                       loading="lazy"
                     >
                     <h3>
-                      <a href="/johndoe">
+                      <a href="/john-doe">
                         <img
                           class="logo"
                           src="/content/assets/logos/logo-johndoe.svg"
@@ -114,7 +114,7 @@ onMounted(() => {
                       loading="lazy"
                     >
                     <h3>
-                      <a href="/fuel">
+                      <a href="/fuel-motorcycles">
                         <img
                           class="logo"
                           src="/content/assets/logos/logo_fuel.png"
