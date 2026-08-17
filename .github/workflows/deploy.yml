@@ -6,23 +6,17 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    env:
+      LIVE_DIR: 'e:\www.motomundi.cl'
+      STAGE_DIR: 'e:\staging_motomundi'
+      OLD_DIR: 'e:\_old_motomundi'
+      APP_POOL: 'nuxt'
 
     steps:
       - name: Checkout Code
-        # Pinned commit SHA for v4.2.2 bypasses codeload archive rate-limits
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          clean: false
-
-      # ── Set Dynamic Paths from System Environment ─────────────────────────
-      - name: Configure Target Paths
-        run: |
-          "LIVE_DIR=$env:GIT_TARGET_PATH\www.motomundi.cl" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          "STAGE_DIR=$env:GIT_TARGET_PATH\staging_motomundi" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          "OLD_DIR=$env:GIT_TARGET_PATH\_old_motomundi" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          "APP_POOL=nuxt" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        shell: powershell
+          clean: false      # ← don't delete node_modules on checkout
 
       # ── Cache node_modules, pnpm store AND nuxt build cache ──────────────
       - name: Get pnpm store path
@@ -42,6 +36,8 @@ jobs:
             build-${{ hashFiles('pnpm-lock.yaml') }}-
             build-
 
+      # ─────────────────────────────────────────────────────────────────────
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -60,23 +56,27 @@ jobs:
         run: |
           robocopy .output "$env:STAGE_DIR\.output" /E /NFL /NDL /NJH /NJS
           if ($LASTEXITCODE -le 7) { $LASTEXITCODE = 0 }
-          Copy-Item "$env:GIT_TARGET_PATH\configs\web.config" "$env:STAGE_DIR\web.config" -Force
+          Copy-Item "E:\configs\web.config" "$env:STAGE_DIR\web.config" -Force
           Copy-Item "run.cjs" "$env:STAGE_DIR\run.cjs" -Force
         shell: powershell
 
       - name: Swap directories (atomic)
         run: |
-          $state = & "$env:SystemRoot\system32\inetsrv\appcmd.exe" list apppool "$env:APP_POOL"
+          # Stop app pool only if running
+          $state = & "$env:SystemRoot\system32\inetsrv\appcmd.exe" list apppool "nuxt"
           if ($state -match "state:Started") {
             & "$env:SystemRoot\system32\inetsrv\appcmd.exe" stop apppool "$env:APP_POOL"
             Write-Host "App pool stopped."
           } else {
             Write-Host "App pool was already stopped."
           }
+          
 
+          # Wait for OS to release all file handles
           Write-Host "Waiting for file handles to release..."
           Start-Sleep -Seconds 2
           
+          # Rename with retry loop
           if (Test-Path "$env:OLD_DIR") {
             Remove-Item -Recurse -Force "$env:OLD_DIR"
           }
@@ -101,7 +101,10 @@ jobs:
             }
           }
           
+          # Promote staging to live
           Rename-Item "$env:STAGE_DIR" "$env:LIVE_DIR"
+          
+          # Restart the app pool
           & "$env:SystemRoot\system32\inetsrv\appcmd.exe" start apppool "$env:APP_POOL"
           Write-Host "Swap complete. Site is live."
         shell: powershell
