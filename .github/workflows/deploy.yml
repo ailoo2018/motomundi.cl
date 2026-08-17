@@ -9,28 +9,29 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        # Pinned commit SHA for v4.2.2 bypasses codeload archive rate-limits
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           clean: false
 
-      # ── Set Dynamic Paths from System Environment ──────────
+      # ── Set Dynamic Paths from System Environment ─────────────────────────
       - name: Configure Target Paths
         run: |
-          # $env:GIT_TARGET_PATH is read directly from Windows System Variables
           "LIVE_DIR=$env:GIT_TARGET_PATH\www.motomundi.cl" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           "STAGE_DIR=$env:GIT_TARGET_PATH\staging_motomundi" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           "OLD_DIR=$env:GIT_TARGET_PATH\_old_motomundi" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           "APP_POOL=nuxt" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         shell: powershell
 
-      # ── Cache node_modules, pnpm store AND nuxt build cache ──
+      # ── Cache node_modules, pnpm store AND nuxt build cache ──────────────
       - name: Get pnpm store path
         id: pnpm-store
         run: echo "path=$(pnpm store path)" >> $env:GITHUB_OUTPUT
         shell: powershell
 
       - name: Cache dependencies and build cache
-        uses: actions/cache@v4
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         with:
           path: |
             ${{ steps.pnpm-store.outputs.path }}
@@ -59,7 +60,6 @@ jobs:
         run: |
           robocopy .output "$env:STAGE_DIR\.output" /E /NFL /NDL /NJH /NJS
           if ($LASTEXITCODE -le 7) { $LASTEXITCODE = 0 }
-          # Copy web.config dynamically from the server's drive root
           Copy-Item "$env:GIT_TARGET_PATH\configs\web.config" "$env:STAGE_DIR\web.config" -Force
           Copy-Item "run.cjs" "$env:STAGE_DIR\run.cjs" -Force
         shell: powershell
