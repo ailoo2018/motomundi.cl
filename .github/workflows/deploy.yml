@@ -6,19 +6,24 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    env:
-      LIVE_DIR: '${{ env.GIT_TARGET_PATH }}\www.motomundi.cl'
-      STAGE_DIR: '${{ env.GIT_TARGET_PATH }}\staging_motomundi'
-      OLD_DIR: '${{ env.GIT_TARGET_PATH }}\_old_motomundi'
-      APP_POOL: 'nuxt'
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          clean: false      # ← don't delete node_modules on checkout
+          clean: false
 
-      # ── Cache node_modules, pnpm store AND nuxt build cache ──────────────--
+      # ── Set Dynamic Paths from System Environment ──────────
+      - name: Configure Target Paths
+        run: |
+          # $env:GIT_TARGET_PATH is read directly from Windows System Variables
+          "LIVE_DIR=$env:GIT_TARGET_PATH\www.motomundi.cl" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "STAGE_DIR=$env:GIT_TARGET_PATH\staging_motomundi" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "OLD_DIR=$env:GIT_TARGET_PATH\_old_motomundi" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "APP_POOL=nuxt" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        shell: powershell
+
+      # ── Cache node_modules, pnpm store AND nuxt build cache ──
       - name: Get pnpm store path
         id: pnpm-store
         run: echo "path=$(pnpm store path)" >> $env:GITHUB_OUTPUT
@@ -35,8 +40,6 @@ jobs:
           restore-keys: |
             build-${{ hashFiles('pnpm-lock.yaml') }}-
             build-
-
-      # ─────────────────────────────────────────────────────────────────────
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -56,27 +59,24 @@ jobs:
         run: |
           robocopy .output "$env:STAGE_DIR\.output" /E /NFL /NDL /NJH /NJS
           if ($LASTEXITCODE -le 7) { $LASTEXITCODE = 0 }
-          Copy-Item "E:\configs\web.config" "$env:STAGE_DIR\web.config" -Force
+          # Copy web.config dynamically from the server's drive root
+          Copy-Item "$env:GIT_TARGET_PATH\configs\web.config" "$env:STAGE_DIR\web.config" -Force
           Copy-Item "run.cjs" "$env:STAGE_DIR\run.cjs" -Force
         shell: powershell
 
       - name: Swap directories (atomic)
         run: |
-          # Stop app pool only if running
-          $state = & "$env:SystemRoot\system32\inetsrv\appcmd.exe" list apppool "nuxt"
+          $state = & "$env:SystemRoot\system32\inetsrv\appcmd.exe" list apppool "$env:APP_POOL"
           if ($state -match "state:Started") {
             & "$env:SystemRoot\system32\inetsrv\appcmd.exe" stop apppool "$env:APP_POOL"
             Write-Host "App pool stopped."
           } else {
             Write-Host "App pool was already stopped."
           }
-          
 
-          # Wait for OS to release all file handles
           Write-Host "Waiting for file handles to release..."
           Start-Sleep -Seconds 2
           
-          # Rename with retry loop
           if (Test-Path "$env:OLD_DIR") {
             Remove-Item -Recurse -Force "$env:OLD_DIR"
           }
@@ -101,10 +101,7 @@ jobs:
             }
           }
           
-          # Promote staging to live
           Rename-Item "$env:STAGE_DIR" "$env:LIVE_DIR"
-          
-          # Restart the app pool
           & "$env:SystemRoot\system32\inetsrv\appcmd.exe" start apppool "$env:APP_POOL"
           Write-Host "Swap complete. Site is live."
         shell: powershell
