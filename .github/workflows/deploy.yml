@@ -7,9 +7,9 @@ jobs:
   build:
     runs-on: self-hosted
     env:
-      LIVE_DIR: 'e:\www.motomundi.cl'
-      STAGE_DIR: 'e:\staging_motomundi'
-      OLD_DIR: 'e:\_old_motomundi'
+      LIVE_DIR: '${{ env.GIT_TARGET_PATH }}\www.motomundi.cl'
+      STAGE_DIR: '${{ env.GIT_TARGET_PATH }}\staging_motomundi'
+      OLD_DIR: '${{ env.GIT_TARGET_PATH }}\_old_motomundi'
       APP_POOL: 'nuxt'
 
     steps:
