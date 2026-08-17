@@ -18,7 +18,7 @@ jobs:
         with:
           clean: false      # ← don't delete node_modules on checkout
 
-      # ── Cache node_modules, pnpm store AND nuxt build cache ──────────────-
+      # ── Cache node_modules, pnpm store AND nuxt build cache ──────────────--
       - name: Get pnpm store path
         id: pnpm-store
         run: echo "path=$(pnpm store path)" >> $env:GITHUB_OUTPUT
