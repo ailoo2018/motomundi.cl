@@ -62,7 +62,7 @@ jobs:
 
       - name: Swap directories (atomic)
         run: |
-          # Stop app pool only if running
+          # Stop app pool only if running  make sure permissiones
           $state = & "$env:SystemRoot\system32\inetsrv\appcmd.exe" list apppool "nuxt"
           if ($state -match "state:Started") {
             & "$env:SystemRoot\system32\inetsrv\appcmd.exe" stop apppool "$env:APP_POOL"
