@@ -1,6 +1,9 @@
 import { getDomainId } from "../../ailoo-domain"
 
 export default defineEventHandler(async (event) => {
+
+  var pos = 1;
+
   try {
 
     let w3ClearRs = null
@@ -8,12 +11,16 @@ export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig()
     const baseUrl = config.public.w3BaseUrl
 
+    pos = 2;
+
     w3ClearRs = await $fetch(`${baseUrl}/${getDomainId()}/refresh`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     })
+
+    pos = 3;
 
 
     const redisUrl = process.env.REDIS_URL
@@ -27,6 +34,7 @@ export default defineEventHandler(async (event) => {
     let totalDeleted = 0
     const prefix = 'w3:*'
 
+    pos = 4;
     do {
       // SCAN returns [nextCursor, keysArray]
       const [nextCursor, keys] = await redis.scan(cursor, 'MATCH', prefix, 'COUNT', 100)
@@ -39,6 +47,7 @@ export default defineEventHandler(async (event) => {
       }
     } while (cursor !== '0')
 
+    pos = 5;
 
     var rs =  {
       w3ClearRs: w3ClearRs,
@@ -50,7 +59,7 @@ export default defineEventHandler(async (event) => {
   } catch (e: any) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Manual cache clear failed',
+      statusMessage: 'Manual cache clear failed: ' + e.message + " pos: " + pos,
       data: e.message
     });
   }
