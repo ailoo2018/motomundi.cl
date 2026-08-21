@@ -2,15 +2,12 @@
 import ProductsList from "@/views/pages/products/list/products-list.vue"
 
 const route = useRoute()
-const query = route.query
+const query = computed(() => route.query )
 
-console.log("insile products/list/index")
+console.log("inside products/list/index: ", query.value)
 </script>
 
 <template>
   <ProductsList :injected-query="query"/>
 </template>
 
-<style scoped lang="scss">
-
-</style>

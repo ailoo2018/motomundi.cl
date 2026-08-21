@@ -12,6 +12,7 @@ const props = defineProps({
   },
 })
 
+console.log("props.baseQuery", props.baseQuery)
 
 const isFilterDrawerOpen = ref(false)
 

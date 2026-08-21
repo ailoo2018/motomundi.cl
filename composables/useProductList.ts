@@ -20,6 +20,19 @@ export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
     for (const type of SCALAR_FACETS) {
       if (query[type]) result.push({type, value: query[type] as string})
     }
+
+    if(query.bikeManufacturer) {
+      result.push({
+        type: "bike",
+        value: {
+          manufacturer: query.bikeManufacturer,
+          model: query.bikeModel,
+          year: query.bikeYear,
+
+        }
+      });
+    }
+
     return result
   }
 
