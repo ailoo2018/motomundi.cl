@@ -1,7 +1,7 @@
 // composables/useProductList.ts
 
 const ARRAY_FACETS = ['brands', 'categories', 'tags', 'sizes', 'models', 'colors'] as const
-const SCALAR_FACETS = ['bike', 'collection', 'sword', 'orderBy'] as const
+const SCALAR_FACETS = ['bike', 'collection', 'sword', 'orderBy', 'bikeManufacturer', 'bikeModel', 'bikeYear'] as const
 
 export const useProductList = (ops: { baseQuery?: any[] } = {}) => {
   const route = useRoute()
