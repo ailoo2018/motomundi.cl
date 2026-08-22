@@ -122,7 +122,7 @@ const filterMotorbikeProducts = () => {
           <VSelect
             v-model="selectedBrand"
             :items="marcas"
-            item-title="name"
+            :item-title="(item) => `${item.name} (${item.count})`"
             item-value="id"
             return-object
             attach
@@ -142,7 +142,7 @@ const filterMotorbikeProducts = () => {
           <VSelect
             v-model="selectedModel"
             :items="models"
-            item-title="name"
+            :item-title="(item) => `${item.name} (${item.count})`"
             :disabled="!enableModels"
             item-value="id"
             return-object
@@ -163,7 +163,7 @@ const filterMotorbikeProducts = () => {
             v-model="selectedYear"
             :items="years"
             :disabled="!enableYears"
-            item-title="name"
+            :item-title="(item) => `${item.name} (${item.count})`"
             item-value="id"
             return-object
             attach
