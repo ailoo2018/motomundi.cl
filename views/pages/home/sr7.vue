@@ -3,12 +3,12 @@
     <!-- Background image -->
     <div class="sr7-hero__bg" :style="{ backgroundImage: `url(${bgImage})` }" />
     <!-- Directional scrim: keeps the helmet visible, darkens toward the text -->
-    <div class="sr7-hero__scrim" />
+    <div class="sr7-hero__scrim" :class="`sr7-hero__scrim--${align}`" />
 
     <div class="sr7-hero__container" fluid>
-      <div class="sr7-hero__content">
+      <div class="sr7-hero__content" :class="`sr7-hero__content--${align}`">
         <!-- Signature element: telemetry-style corner frame around the copy block -->
-        <div class="sr7-hero__frame">
+        <div class="sr7-hero__frame" :class="`sr7-hero__frame--${align}`">
           <span class="sr7-hero__corner sr7-hero__corner--tl" />
           <span class="sr7-hero__corner sr7-hero__corner--br" />
 
@@ -18,15 +18,16 @@
           </div>
 
           <h1 class="sr7-hero__title">
-            Alpinestars R-7: ADN de Pista, Rendimiento Puro.
+            {{title}}
           </h1>
 
+
           <p class="sr7-hero__subtitle">
-            Experimenta la combinación perfecta entre ligereza extrema, ventilación avanzada y seguridad sin precedentes. El casco definitivo para quienes buscan romper los límites en el asfalto.
+            {{subtitle}}
           </p>
 
-          <a href="/products/list?sword=alpinestars+s-r7" class="btn-primary">
-            Ver cascos
+          <a :href="link" class="btn-primary">
+            {{ buttonText }}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
@@ -43,13 +44,25 @@
 defineProps({
   bgImage: {
     type: String,
-    default: '/cms/alpinestars-sr7.jpg',
+    default: '/cms/home/sena-sa30.jpg',
   },
   ctaColor: {
     type: String,
     default: '#BD0019',
   },
+  align: {
+    type: String,
+    default: 'left',
+    validator: (value) => ['left', 'center', 'right'].includes(value),
+  },
 })
+
+
+const title = 'Conexión Sin Límites en Cada Ruta'
+const subtitle = 'El nuevo SENA SA30 redefine la comunicación sobre dos ruedas. Gracias a su tecnología Mesh Intercom de última generación y sonido de alta definición, mantén a tu grupo conectado al instante con la máxima estabilidad y claridad cristalina.'
+const buttonText = "Ver Más"
+const link = '/motocicleta/3414710-intercomunicadores-sena-sa30'
+
 
 defineEmits(['ver-casco'])
 </script>
@@ -76,18 +89,42 @@ defineEmits(['ver-casco'])
   z-index: 0;
 }
 
-/* Darkens the right side (where copy lives) while keeping the
-   helmet legible on the left — a directional scrim, not a flat tint. */
+/* Directional scrim: darkens the side where the copy lives while
+   keeping the helmet legible on the opposite side. Flips direction
+   based on alignment; for center, darkens both edges evenly. */
 .sr7-hero__scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
+}
+
+.sr7-hero__scrim--right {
   background: linear-gradient(
     90deg,
     rgba(10, 10, 10, 0) 0%,
     rgba(10, 10, 10, 0.35) 45%,
     rgba(10, 10, 10, 0.82) 78%,
     rgba(10, 10, 10, 0.92) 100%
+  );
+}
+
+.sr7-hero__scrim--left {
+  background: linear-gradient(
+    270deg,
+    rgba(10, 10, 10, 0) 0%,
+    rgba(10, 10, 10, 0.35) 45%,
+    rgba(10, 10, 10, 0.82) 78%,
+    rgba(10, 10, 10, 0.92) 100%
+  );
+}
+
+.sr7-hero__scrim--center {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.55) 0%,
+    rgba(10, 10, 10, 0.25) 30%,
+    rgba(10, 10, 10, 0.25) 70%,
+    rgba(10, 10, 10, 0.6) 100%
   );
 }
 
@@ -103,6 +140,17 @@ defineEmits(['ver-casco'])
 .sr7-hero__content {
   width: 100%;
   display: flex;
+}
+
+.sr7-hero__content--left {
+  justify-content: flex-start;
+}
+
+.sr7-hero__content--center {
+  justify-content: center;
+}
+
+.sr7-hero__content--right {
   justify-content: flex-end;
 }
 
@@ -111,9 +159,22 @@ defineEmits(['ver-casco'])
   max-width: 460px;
   width: 100%;
   padding: 20px 24px 24px 20px;
-  text-align: right;
   display: flex;
   flex-direction: column;
+}
+
+.sr7-hero__frame--left {
+  text-align: left;
+  align-items: flex-start;
+}
+
+.sr7-hero__frame--center {
+  text-align: center;
+  align-items: center;
+}
+
+.sr7-hero__frame--right {
+  text-align: right;
   align-items: flex-end;
 }
 
@@ -176,6 +237,11 @@ defineEmits(['ver-casco'])
   margin: 0 0 22px;
 }
 
+.sr7-hero__frame--center .sr7-hero__subtitle {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .sr7-hero__cta {
   font-family: 'Inter', system-ui, sans-serif;
   font-weight: 600;
@@ -215,33 +281,4 @@ defineEmits(['ver-casco'])
   border-color: #d6001c;
   color: #FFFFFF;
 }
-
 </style>
-
-<!--
-  NOTES FOR INTEGRATION
-  ----------------------
-  1. Fonts: this component assumes "Barlow Condensed" (display) and "Inter" (body)
-     are available globally, e.g. via @nuxtjs/google-fonts module or a <link> in
-     nuxt.config.ts:
-
-       googleFonts: {
-         families: {
-           'Barlow Condensed': [600, 700],
-           Inter: [400, 600],
-         },
-       }
-
-  2. Tabler icons: requires the tabler icon set registered in Vuetify's icon
-     aliases (e.g. via vuetify-plugin using @tabler/icons or the
-     vuetify-nuxt-module iconfont: 'tabler' option). Icons used:
-     "tabler-flag-filled" and "tabler-arrow-right".
-
-  3. Image: swap bgImage prop or default path to match your CMS asset pipeline.
-     Image should be shot/cropped with the helmet weighted left-of-center so the
-     right-aligned copy sits over a clean, darker area — the scrim helps but a
-     well-composed source image will always look better.
-
-  4. Usage:
-       <HeroSR7 @ver-casco="goToProduct" />
--->
