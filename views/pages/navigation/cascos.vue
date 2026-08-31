@@ -143,6 +143,14 @@ function handleSubmenuClick(event) {
                         <img src="/content/assets/menu/categories/visor.jpg">
                         <p>Accesorios</p>
                       </NuxtLink>
+                      <NuxtLink
+                        to="/repuestos-cascos"
+                        class="mtc-link"
+                        title="Repuestos"
+                      >
+                        <img src="/content/assets/menu/categories/repuestos.jpg">
+                        <p>Repuestos</p>
+                      </NuxtLink>
                     </div>
                   </div>
                 </div>
