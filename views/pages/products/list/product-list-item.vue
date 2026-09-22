@@ -88,6 +88,12 @@ const miniatures = computed(() => {
   return uniqueImages
 })
 
+const getAvlSizes = (p) => {
+
+  return p.sizes;
+
+}
+
 const onToggleWishlist = async (val: boolean) => {
 
   console.log("product-list-item::onToggleWishlist", val)
@@ -215,6 +221,22 @@ const formatName = name => {
           </div>
         </NuxtLink>
 
+        <div class="swatch-content" v-if="product.sizes.length > 1 && !product.sizes.some(s => s.name.length > 4)">
+          <div class="swatch-wrap left swatchprimarywrap" style="visibility: visible;">
+            <!-- check variants value to assign variant id to swatches -->
+
+
+              <div
+                v-for="size in product.sizes"
+                :class="{ 'out-of-stock-option strike-outofstock-swatches': !size.isAvailable}"
+                class="individual-option data-inventory-1  rect-design small-size in-stock-option">
+                {{size.name}}
+              </div>
+
+
+          </div>
+        </div>
+
         <NuxtLink
           :prefetch="false"
           class="item__price-info mtc-linkaa"
@@ -252,5 +274,51 @@ const formatName = name => {
 </template>
 
 <style>
+
+
+.swatch-content {
+  margin-top: 10px;
+}
+.swatch-wrap.swatchprimarywrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.individual-option.small-size {
+  height: auto;
+  width: 24px;
+  line-height: 24px;
+  font-size: 16px;
+}
+.individual-option.small-size.rect-design, .individual-option.small-size.rounded-rect-design {
+  min-width: 24px;
+}
+.strike-outofstock-swatches {
+  text-decoration: line-through;
+}
+.individual-option.out-of-stock-option {
+  color: rgba(0, 0, 0, 0.16);
+  border-color: rgba(0, 0, 0, 0.16);
+  background-color: rgb(255, 255, 255);
+}
+.individual-option.rect-design.small-size
+{
+  width: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.individual-option {
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid rgb(61, 66, 70);
+  line-height: 35px;
+  margin: 0px 5px 5px 0px;
+  color: rgb(61, 66, 70);
+  border-color: rgb(61, 66, 70);
+  background-color: rgb(255, 255, 255);
+}
+
 </style>
 
