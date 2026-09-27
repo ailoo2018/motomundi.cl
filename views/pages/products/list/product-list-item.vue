@@ -80,7 +80,7 @@ const miniatures = computed(() => {
     })
 
   const uniqueImages = Array.from(uniqueImagesMap.values())
-  if (uniqueImages.length <= 1) {
+  if (!uniqueImages || uniqueImages.length <= 1) {
     return []
   }
 
@@ -221,7 +221,7 @@ const formatName = name => {
           </div>
         </NuxtLink>
 
-        <div class="swatch-content" v-if="product.sizes.length > 1 && !product.sizes.some(s => s.name.length > 4)">
+        <div class="swatch-content" v-if="product.sizes && product.sizes.length > 1 && !product.sizes.some(s => s.name && s.name.length > 4)">
           <div class="swatch-wrap left swatchprimarywrap" style="visibility: visible;">
             <!-- check variants value to assign variant id to swatches -->
 
