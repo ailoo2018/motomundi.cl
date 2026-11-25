@@ -1,5 +1,6 @@
 <script setup>
 import Department from "@/views/pages/departments/department.vue"
+
 import { Departments } from "@/models/index.js"
 
 definePageMeta({
@@ -12,6 +13,7 @@ definePageMeta({
 
 <template>
   <Department :wcc-id="Departments.Road" :key="Departments.Road" />
+
 </template>
 
 
