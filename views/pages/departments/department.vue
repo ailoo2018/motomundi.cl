@@ -84,7 +84,6 @@ const componentMap = {
   BrandsBlockMx,
   LifestyleCategories,
   BlackFridayHero,
-  // Vulcanet,
   Sr7,
 }
 
