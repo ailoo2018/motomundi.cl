@@ -493,6 +493,38 @@ swiper-container:not(.swiper-initialized) swiper-slide {
   cursor: pointer;
 }
 
+/* Equal-height cards: every slide stretches to the tallest one in the row,
+   and the price row is pushed to the bottom of each card. Scoped to this
+   carousel so other ProductListItem usages are unaffected. */
+.product-swiper-container swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.product-swiper-container swiper-slide > :deep(.item) {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  height: auto;
+}
+
+.product-swiper-container :deep(.item > section) {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.product-swiper-container :deep(.item__info) {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.product-swiper-container :deep(.item__price-info) {
+  margin-top: auto;
+}
+
 :deep(.product-list-item a) {
   cursor: pointer;
 }
