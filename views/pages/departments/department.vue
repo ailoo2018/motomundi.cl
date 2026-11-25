@@ -76,10 +76,6 @@ const componentMap = {
   LatestEvents,
   EmbajadoresHome,
   OutletPromo,
-  // Kidult: Himalaya,
-  // EventCreadoresContenidos,
-
-  //  Seo2,
   BikeSearch,
   CafeRacerCategories,
   YoutubeLatest,
