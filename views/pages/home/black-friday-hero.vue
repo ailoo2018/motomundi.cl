@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { NuxtLink } from '#components'
 
 const props = defineProps({
   // Optional CMS widget payload (kept for compatibility with the home componentMap)
@@ -143,11 +144,13 @@ const countdown = computed(() => {
           <span>Black Friday en vivo</span>
         </div>
 
+        <!-- CTA only appears once Black Friday has started -->
         <NuxtLink
+          v-if="isLive"
           :to="link"
           class="bf-hero__cta"
         >
-          <span class="bf-hero__cta-text">{{ isLive ? 'Comprar ahora' : 'Ver ofertas' }}</span>
+          <span class="bf-hero__cta-text">Ver ofertas</span>
           <span class="bf-hero__cta-arrow">
             <svg
               width="20"
@@ -169,8 +172,10 @@ const countdown = computed(() => {
       </div>
 
       <!-- Foreground gear illustration -->
-      <NuxtLink
-        :to="link"
+      <!-- Image links to the outlet only once Black Friday has started -->
+      <Component
+        :is="isLive ? NuxtLink : 'div'"
+        :to="isLive ? link : undefined"
         class="bf-hero__visual"
         tabindex="-1"
         aria-hidden="true"
@@ -183,7 +188,7 @@ const countdown = computed(() => {
           height="760"
           loading="lazy"
         >
-      </NuxtLink>
+      </Component>
     </div>
 
     <div class="bf-hero__accent-bar bf-hero__accent-bar--bottom" />
