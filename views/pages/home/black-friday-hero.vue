@@ -176,7 +176,7 @@ const countdown = computed(() => {
         aria-hidden="true"
       >
         <img
-          src="/cms/home/black-friday-gear.svg"
+          src="/cms/home/black-friday-fg.png"
           alt=""
           class="bf-hero__gear"
           width="900"
