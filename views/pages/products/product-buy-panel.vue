@@ -8,6 +8,8 @@ import StorePickup from "@/views/pages/products/detail/store-pickup.vue"
 import { useWishlistStore } from "@/stores/wishlist.js"
 import ProductPriceGuarantee from "@/views/pages/products/ProductPriceGuarantee.vue"
 import SeenCheaperForm from "@/views/pages/products/detail/seen-cheaper-form.vue"
+import BlackFridayCountdown from "@/views/pages/products/detail/black-friday-countdown.vue"
+import { BLACK_FRIDAY } from "@/utils/blackFridayConfig"
 
 const props = defineProps({
   product: {
@@ -25,6 +27,8 @@ const emit = defineEmits(['update:size', 'update:color', 'add-to-cart'])
 const { formatCurrency, selectedCountryData } = useCurrencyConverter()
 
 const iso = computed(() => { return selectedCountryData.value.iso?.toLowerCase() })
+// Black Friday on/off switch lives in utils/blackFridayConfig.ts
+const isBlackFriday = BLACK_FRIDAY.enabled
 
 const loading = toRef(props, 'loading')
 
@@ -219,6 +223,12 @@ const localIsWished = computed(() => {
           <ClientOnly>
           <SeenCheaperForm v-model="showSeenCheaperForm" :product="product" />
           </ClientOnly>
+
+          <!-- Black Friday countdown: right under the price, before financing and add-to-cart -->
+          <BlackFridayCountdown
+            v-if="product.discountPercent > 0 && isBlackFriday"
+            class="my-3"
+          />
 
           <Financing />
         </div>

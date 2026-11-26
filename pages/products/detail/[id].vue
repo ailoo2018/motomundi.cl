@@ -20,6 +20,11 @@ import ProductComplements from "@/views/pages/products/product-complements.vue"
 import StorePickup from "@/views/pages/products/detail/store-pickup.vue"
 import { useWishlistStore } from "@/stores/wishlist"
 import SeenCheaperForm from "@/views/pages/products/detail/seen-cheaper-form.vue"
+import BlackFridayCountdown from "@/views/pages/products/detail/black-friday-countdown.vue"
+import { BLACK_FRIDAY } from "@/utils/blackFridayConfig"
+
+// Black Friday on/off switch lives in utils/blackFridayConfig.ts
+const isBlackFriday = BLACK_FRIDAY.enabled
 
 const deviceType = useState('device-type', () => {
   // This function only runs on the SERVER during the first request
@@ -1029,6 +1034,12 @@ onMounted(() => {
                     IVA incluido · 12 cuotas sin interés desde <strong>{{ formatCurrency(price / 12) }}</strong>
                   </div>
                 </div>
+
+                <!-- Black Friday countdown: right under the price, before variants and add-to-cart -->
+                <BlackFridayCountdown
+                  v-if="product.discountPercent > 0 && isBlackFriday"
+                  class="mt-n2 mb-5"
+                />
                 <ClientOnly>
                   <SeenCheaperForm
                     v-model="showSeenCheaperForm"

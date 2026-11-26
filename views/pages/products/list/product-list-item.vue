@@ -3,6 +3,7 @@ import emptyImage from "@images/empty-image.avif"
 import AddToFavsBtn from "@/components/AddToFavsBtn.vue"
 import {useCurrencyConverter} from "@/composables/useCurrencyConverter";
 import {computed} from "vue";
+import { useBlackFridayCountdown } from "@/composables/useBlackFridayCountdown";
 
 const { formatCurrency, selectedCountryData } = useCurrencyConverter()
 const iso = computed (() => selectedCountryData.value?.iso?.toLowerCase() )
@@ -26,6 +27,12 @@ const props = defineProps(
 
 //const isWished = ref(props.product.isWished)
 const localIsWished = ref(props.product?.isWished ?? false)
+
+// Shared Black Friday countdown (one timer for all cards). Ticks only in the browser;
+// SSR renders "--" placeholders so server and client markup match.
+// isBlackFriday is configured in utils/blackFridayConfig.ts
+const { isBlackFriday, isExpired: bfExpired, hmsUnits: bfVisibleUnits } = useBlackFridayCountdown()
+const showBfClock = computed(() => isBlackFriday && !bfExpired.value)
 
 const wishListStore = useWishlistStore()
 if(wishListStore.isWished(props.product.id)) {
@@ -88,6 +95,11 @@ const miniatures = computed(() => {
   return uniqueImages
 })
 
+// Show at most 4 color miniatures; the rest are summarised in a "+N" tile
+const MAX_MINIATURES = 4
+const visibleMiniatures = computed(() => miniatures.value.slice(0, MAX_MINIATURES))
+const hiddenMiniaturesCount = computed(() => Math.max(0, miniatures.value.length - MAX_MINIATURES))
+
 const getAvlSizes = (p) => {
 
   return p.sizes;
@@ -129,11 +141,18 @@ const formatName = name => {
       >
         <div class="product-tags">
           <span
-            v-if="product.discountPercent > 0"
+            v-if="product.discountPercent > 0 && isBlackFriday"
+            class="tag product-tag product-tag--old custom-tag custom-tag-icon product-tag--black-friday"
+          >
+            <span class="discount">Black Friday -{{ Math.round(product.discountPercent) }}%</span>
+          </span>
+          <span
+            v-else-if="product.discountPercent > 0"
             class="tag product-tag product-tag--old product-tag--sales"
           >
             <span class="discount">Oferta -{{ Math.round(product.discountPercent) }}%</span>
           </span>
+
           <span
             v-if="product.isNew"
             class="tag product-tag product-tag--old product-tag--new"
@@ -178,7 +197,8 @@ const formatName = name => {
         <div class="prod-list-miniatures">
 
           <div
-            v-for="img in miniatures"
+            v-for="img in visibleMiniatures"
+            :key="img.image"
             class="prod-list-miniatures-item"
           >
 
@@ -191,9 +211,61 @@ const formatName = name => {
               @click="onClickMiniture(img)"
             />
           </div>
+
+          <!-- more colors cue -->
+          <div
+            v-if="hiddenMiniaturesCount > 0"
+            class="prod-list-miniatures-item prod-list-miniatures-more"
+          >
+            <NuxtLink
+              :prefetch="false"
+              :to="product.url"
+              :title="`Ver ${miniatures.length} colores`"
+              :aria-label="`${hiddenMiniaturesCount} colores más, ver los ${miniatures.length} colores`"
+            >
+              +{{ hiddenMiniaturesCount }}
+            </NuxtLink>
+          </div>
         </div>
       </section>
       <!-- /miniatures -->
+
+      <!-- Black Friday countdown -->
+      <div
+        v-if="product.discountPercent > 0 && showBfClock"
+        class="bf-card-clock"
+        role="timer"
+        aria-live="off"
+      >
+        <svg
+          class="bf-card-clock__icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="13" r="8" />
+          <path d="M12 9v4l2.5 2.5" />
+          <path d="M5 3 2 6" />
+          <path d="m22 6-3-3" />
+          <path d="M6.4 19.4 5 21" />
+          <path d="M17.6 19.4 19 21" />
+        </svg>
+        <span class="bf-card-clock__body">
+          <span class="bf-card-clock__label">Oferta termina en:</span>
+          <span class="bf-card-clock__time">
+            <span
+              v-for="unit in bfVisibleUnits"
+              :key="unit.key"
+              class="bf-card-clock__unit"
+            >{{ unit.value }}<small>{{ unit.key }}</small></span>
+          </span>
+        </span>
+      </div>
+      <!-- /Black Friday countdown -->
 
       <section class="item__info">
         <NuxtLink
@@ -275,6 +347,124 @@ const formatName = name => {
 
 <style>
 
+/* "+N" tile shown after the first 4 color miniatures */
+.prod-list-miniatures-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prod-list-miniatures-more a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  aspect-ratio: 1;
+  background: #f4f4f4;
+  color: #333;
+  font-family: 'Barlow Condensed', Barlow, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  inline-size: 100%;
+  max-inline-size: 44px;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.prod-list-miniatures-more a:hover {
+  border-color: #d6001c;
+  background: #fff;
+  color: #d6001c;
+}
+
+/* ── Black Friday countdown on product cards ── */
+/* Sizes scale with the card width (cqi units) so it fits any grid/carousel column */
+.bf-card-clock {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+  padding: 5px 6px;
+  margin: 4px -5px 8px;
+  background: #f3d3d6;
+  color: #111;
+  container-type: inline-size;
+  font-family: 'Barlow Condensed', Barlow, sans-serif;
+  line-height: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.bf-card-clock__icon {
+  flex: 0 0 auto;
+  color: #d6001c;
+  block-size: clamp(18px, 7cqi, 22px);
+  inline-size: clamp(18px, 7cqi, 22px);
+}
+
+.bf-card-clock__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+}
+
+.bf-card-clock__label {
+  font-size: clamp(8px, 3cqi, 11px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.bf-card-clock__time {
+  display: inline-flex;
+  gap: 4px;
+  font-size: clamp(16px, 4.6cqi, 16px);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+.bf-card-clock__unit small {
+  margin-inline-start: 1px;
+  color: #d6001c;
+  font-size: 0.75em;
+  font-weight: 800;
+}
+
+.tag.product-tag.product-tag--black-friday {
+  background-color: rgb(0, 0, 0);
+  --customIcon: url('/content/images/icons/discount-tag.png');
+  color: rgb(255, 255, 255);
+}
+
+.tag.product-tag.product-tag--black-fridayaaa {
+  content: "";
+  background-image: url('/content/images/icons/discount-tag.png') ;
+
+  /* size, position, etc. */
+}
+
+.tag.product-tag.custom-tag-icon>span:before {
+  background-image: var(--customIcon);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: "";
+  display: inline-block;
+  height: 12px;
+  margin: 0 5px 0 0;
+  vertical-align: middle;
+  width: 12px;
+}
+
+
+.tag.product-tag.product-tag--crazydays, .tag.product-tag.product-tag--offer, .tag.product-tag.product-tag--sales {
+  background-color: #d6001c;
+}
 
 .swatch-content {
   margin-top: 10px;
