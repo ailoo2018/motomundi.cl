@@ -32,7 +32,7 @@ const localIsWished = ref(props.product?.isWished ?? false)
 // SSR renders "--" placeholders so server and client markup match.
 // isBlackFriday is configured in utils/blackFridayConfig.ts
 const { isBlackFriday, isExpired: bfExpired, hmsUnits: bfVisibleUnits } = useBlackFridayCountdown()
-const showBfClock = computed(() => isBlackFriday && !bfExpired.value)
+const showBfClock = computed(() => isBlackFriday.value && !bfExpired.value)
 
 const wishListStore = useWishlistStore()
 if(wishListStore.isWished(props.product.id)) {

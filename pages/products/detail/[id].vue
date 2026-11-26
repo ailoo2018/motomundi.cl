@@ -21,10 +21,10 @@ import StorePickup from "@/views/pages/products/detail/store-pickup.vue"
 import { useWishlistStore } from "@/stores/wishlist"
 import SeenCheaperForm from "@/views/pages/products/detail/seen-cheaper-form.vue"
 import BlackFridayCountdown from "@/views/pages/products/detail/black-friday-countdown.vue"
-import { BLACK_FRIDAY } from "@/utils/blackFridayConfig"
+import { useBlackFridayCountdown } from "@/composables/useBlackFridayCountdown"
 
-// Black Friday on/off switch lives in utils/blackFridayConfig.ts
-const isBlackFriday = BLACK_FRIDAY.enabled
+// Black Friday switch + dates live in utils/blackFridayConfig.ts
+const { isBlackFriday } = useBlackFridayCountdown()
 
 const deviceType = useState('device-type', () => {
   // This function only runs on the SERVER during the first request

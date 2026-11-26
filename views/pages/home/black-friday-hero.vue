@@ -1,6 +1,8 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed } from 'vue'
 import { NuxtLink } from '#components'
+import { useBlackFridayCountdown } from '@/composables/useBlackFridayCountdown'
+import { BLACK_FRIDAY } from '@/utils/blackFridayConfig'
 
 const props = defineProps({
   // Optional CMS widget payload (kept for compatibility with the home componentMap)
@@ -9,69 +11,42 @@ const props = defineProps({
     default: null,
   },
 
-  // Black Friday start: 27/11/2026 00:00 Chile (America/Santiago, UTC-3 in November)
-  startsAt: {
-    type: String,
-    default: '2026-11-27T00:00:00-03:00',
-  },
   link: {
     type: String,
     default: '/outlet',
   },
 })
 
-const targetMs = new Date(props.startsAt).getTime()
 
-// `now` stays null during SSR so server and client render the same markup
-const now = ref(null)
-let timer = null
+// Dates and on/off switch come from utils/blackFridayConfig.ts (shared with product cards/pages).
+// Shared clock, SSR-safe: numbers show "--" until mounted.
+const { phase, startUnits } = useBlackFridayCountdown()
 
-const tick = () => {
-  now.value = Date.now()
-  if (now.value >= targetMs && timer) {
-    clearInterval(timer)
-    timer = null
-  }
-}
+// Teaser before startsAt, "live" state until endsAt; hidden when switched off or ended
+const isVisible = computed(() => phase.value === 'upcoming' || phase.value === 'live')
+const isLive = computed(() => phase.value === 'live')
 
-onMounted(() => {
-  tick()
-  if (now.value < targetMs)
-    timer = setInterval(tick, 1000)
-})
+const LABELS = { d: 'Días', h: 'Horas', m: 'Min', s: 'Seg' }
+const countdown = computed(() => startUnits.value.map(u => ({ label: LABELS[u.key], value: u.value })))
 
-onUnmounted(() => {
-  if (timer)
-    clearInterval(timer)
-})
+// "27 · Noviembre · 2026" built from startsAt, in Chile time
+const startDateLabel = (() => {
+  const parts = new Intl.DateTimeFormat('es-CL', {
+    timeZone: 'America/Santiago',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).formatToParts(new Date(BLACK_FRIDAY.startsAt))
+  const get = type => parts.find(p => p.type === type)?.value ?? ''
+  const month = get('month')
 
-const isLive = computed(() => now.value !== null && now.value >= targetMs)
-
-const pad = n => String(n).padStart(2, '0')
-
-const countdown = computed(() => {
-  if (now.value === null)
-    return [
-      { label: 'Días', value: '--' },
-      { label: 'Horas', value: '--' },
-      { label: 'Min', value: '--' },
-      { label: 'Seg', value: '--' },
-    ]
-
-  const diff = Math.max(0, targetMs - now.value)
-  const totalSeconds = Math.floor(diff / 1000)
-
-  return [
-    { label: 'Días', value: pad(Math.floor(totalSeconds / 86400)) },
-    { label: 'Horas', value: pad(Math.floor((totalSeconds % 86400) / 3600)) },
-    { label: 'Min', value: pad(Math.floor((totalSeconds % 3600) / 60)) },
-    { label: 'Seg', value: pad(totalSeconds % 60) },
-  ]
-})
+  return `${get('day')} · ${month.charAt(0).toUpperCase()}${month.slice(1)} · ${get('year')}`
+})()
 </script>
 
 <template>
   <section
+    v-if="isVisible"
     class="bf-hero"
     :class="{ 'bf-hero--live': isLive }"
     aria-label="Black Friday Motomundi"
@@ -95,7 +70,7 @@ const countdown = computed(() => {
             class="bf-tag"
             :class="{ 'bf-tag--live': isLive }"
           >
-            {{ isLive ? 'Activo ahora' : '27 · Noviembre · 2026' }}
+            {{ isLive ? 'Activo ahora' : startDateLabel }}
           </span>
         </div>
 
